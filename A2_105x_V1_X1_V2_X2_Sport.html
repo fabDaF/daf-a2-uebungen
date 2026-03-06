@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · Lektion 105x · Sport &amp; Fitness</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    min-height: 100vh; padding: 20px;
+  }
+  .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+  .header {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    color: #fff; padding: 24px 32px;
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 700; }
+  .header p { opacity: 0.85; margin-top: 4px; font-size: 0.95rem; }
+  .nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+  .nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+  .tab { display: none; padding: 28px 32px; }
+  .tab.active { display: block; }
+
+  /* Buttons */
+  .btn {
+    padding: 8px 18px; border: none; border-radius: 20px;
+    cursor: pointer; font-size: 0.88rem; font-weight: 600;
+    transition: all .2s;
+  }
+  .btn-show  { background: #e0f2f1; color: #00695c; }
+  .btn-reset { background: #fce4ec; color: #c62828; }
+  .btn-check { background: #11998e; color: #fff; }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* Timer Bar */
+  .timer-bar {
+    display: flex; align-items: center; gap: 10px;
+    background: #e0f2f1; border-radius: 10px;
+    padding: 8px 14px; margin-bottom: 20px;
+    border: 1px solid #b2dfdb; font-size: 0.95rem;
+  }
+  .timer-icon { font-size: 1.1rem; }
+  .timer-display { font-size: 1.3rem; font-weight: 700; color: #00695c; min-width: 58px; }
+  .timer-best { font-size: 0.8rem; color: #4db6ac; }
+
+  /* Zuordnung */
+  .zuordnung-area { display: flex; flex-direction: column; gap: 16px; }
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 14px; background: #f3f4f9;
+    border-radius: 10px; min-height: 52px;
+    border: 2px dashed #b2dfdb;
+  }
+  .chip {
+    padding: 6px 13px; background: #11998e; color: #fff;
+    border-radius: 20px; cursor: grab;
+    font-size: 0.9rem; font-weight: 500;
+    user-select: none; transition: transform .15s;
+  }
+  .chip:active { cursor: grabbing; transform: scale(1.05); }
+  .chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; color: white !important; }
+  .chip.wrong   { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; color: white !important; }
+  .categories { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .category {
+    border: 2px dashed #b2dfdb; border-radius: 10px;
+    padding: 12px; min-height: 90px;
+    background: #fafffe;
+  }
+  .category h3 {
+    font-size: 0.85rem; color: #00897b;
+    font-weight: 700; margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .drop-target { min-height: 48px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .feedback-ok  { color: #2e7d32; font-weight: 700; }
+  .feedback-err { color: #c62828; font-weight: 700; }
+
+  /* Lückentext */
+  .luecken-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .luecken-list li {
+    background: #f0faf8; border-radius: 10px;
+    padding: 14px 18px; line-height: 1.7;
+    border-left: 4px solid #11998e; font-size: 1rem;
+  }
+  .blank {
+    display: inline-block; min-width: 90px;
+    border-bottom: 2px solid #11998e;
+    margin: 0 4px; padding: 0 4px;
+    text-align: center; outline: none;
+    font-size: 1rem; color: #00695c;
+    font-weight: 600; background: transparent;
+  }
+  .blank.correct { border-color: #43a047; background: #e8f5e9; border-radius: 4px; }
+  .blank.wrong   { border-color: #e53935; background: #ffebee; border-radius: 4px; }
+  .hint-text { font-size: 0.82rem; color: #90a4ae; margin-left: 6px; }
+  .loesung-text { display: none; color: #00695c; font-weight: 700; margin-left: 4px; }
+
+  /* Satzbau */
+  .satzbau-area { display: flex; flex-direction: column; gap: 18px; }
+  .satzbau-item { background: #f0faf8; border-radius: 10px; padding: 16px 18px; }
+  .satzbau-item p { font-size: 0.82rem; color: #4db6ac; margin-bottom: 10px; }
+  .chip-bank {
+    display: flex; flex-wrap: wrap; gap: 7px;
+    margin-bottom: 10px;
+  }
+  .drop-row {
+    display: flex; flex-wrap: wrap; gap: 7px;
+    min-height: 40px; border: 2px dashed #b2dfdb;
+    border-radius: 8px; padding: 6px 10px;
+    background: #fff; align-items: center;
+  }
+  .fixed-dot { color: #11998e; font-weight: 700; font-size: 1.1rem; align-self: center; }
+  .s-chip {
+    padding: 5px 12px; background: #00897b; color: #fff;
+    border-radius: 16px; cursor: pointer; font-size: 0.9rem;
+    user-select: none;
+  }
+  .s-chip.placed { background: linear-gradient(135deg, #005f55, #00897b); }
+  .s-chip.correct { background: linear-gradient(135deg, #2e7d32, #43a047) !important; }
+  .s-chip.wrong   { background: linear-gradient(135deg, #c62828, #e53935) !important; }
+  .satzbau-fb { font-size: 0.85rem; margin-top: 6px; min-height: 1.2em; }
+  .satzbau-fb.ok  { color: #2e7d32; font-weight: 700; }
+  .satzbau-fb.err { color: #c62828; font-weight: 700; }
+
+  /* Wortschatz-Tab */
+  .vocab-item { display:flex; align-items:center; gap:10px; padding:10px 14px;
+    border-radius:8px; border:1px solid #e0e0e0; margin-bottom:8px;
+    background:#fafafa; flex-wrap:wrap; }
+  .vocab-en { font-weight:600; color:#00695c; min-width:160px; }
+  .vocab-arrow { color:#aaa; font-size:1.1em; }
+  .vocab-inputs { display:flex; gap:8px; flex-wrap:wrap; }
+  .vocab-inputs input { padding:5px 8px; border:2px solid #ddd; border-radius:6px; font-size:0.92em; }
+  .vocab-inputs input.art    { width:80px; }
+  .vocab-inputs input.wort   { width:140px; }
+  .vocab-inputs input.plural { width:120px; }
+  .vocab-inputs input.correct { border-color:#43a047; background:#e8f5e9; }
+  .vocab-inputs input.wrong   { border-color:#e53935; background:#ffebee; }
+  .vocab-hint { font-size:0.82em; color:#43a047; font-weight:700;
+    background:#e8f5e9; padding:2px 6px; border-radius:4px; }
+
+  /* Phrasen-Tab */
+  .phrase-grid { display: flex; flex-direction: column; gap: 10px; }
+  .phrase-card {
+    background: #f0faf8; border-radius: 10px; padding: 14px 18px;
+    border-left: 4px solid #00897b;
+  }
+  .phrase-card .phrase { font-size: 1.05rem; font-weight: 700; color: #00695c; }
+  .phrase-card .use { font-size: 0.85rem; color: #666; margin-top: 4px; }
+  .phrase-card .example { font-size: 0.9rem; color: #00897b; margin-top: 6px; font-style: italic; }
+
+  @media (max-width: 600px) {
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+    .tab { padding: 20px 16px; }
+    .categories { grid-template-columns: 1fr; }
+  }
+/* Aliase für neues satzbau-drag-drop Pattern */
+.chips-container { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; min-height: 40px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 7px; min-height: 40px; border: 2px dashed #b2dfdb; border-radius: 8px; padding: 6px 10px; background: #fff; align-items: center; margin-bottom: 8px; }
+.chip.incorrect { background: linear-gradient(135deg, #c62828, #e53935) !important; color: white !important; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.85rem; margin-top: 6px; min-height: 1.2em; font-weight: 600; }
+.satzbau-feedback.correct { color: #2e7d32; }
+.satzbau-feedback.incorrect { color: #c62828; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Lektion 105x &mdash; Sport &amp; Fitness</h1>
+    <p>A2 &middot; Vokabular &amp; Ausdr&uuml;cke &middot; V1 + X1 + V2 + X2</p>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab(0)">Sport-Zuordnung</button>
+    <button class="nav-btn" onclick="showTab(1)">Sport-L&uuml;ckentext</button>
+    <button class="nav-btn" onclick="showTab(2)">Bewegungsverben</button>
+    <button class="nav-btn" onclick="showTab(3)">Fitness-L&uuml;ckentext</button>
+    <button class="nav-btn" onclick="showTab(4)">Satzbau Sport</button>
+    <button class="nav-btn" onclick="showTab(5)">Wortschatz</button>
+  </nav>
+
+  <!-- TAB 0: V1 · Sport-Zuordnung -->
+  <div class="tab active" id="tab0">
+    <div class="timer-bar"><span class="timer-icon">⏱</span><span class="timer-display" id="td0">0:00</span><span class="timer-best" id="tb0">Bestzeit: —</span></div>
+    <h2 style="color:#00695c;margin-bottom:16px;">Welche Sportart? &mdash; Ordne zu!</h2>
+    <div class="zuordnung-area">
+      <div class="word-bank" id="bank0" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'bank0')"></div>
+      <div class="categories" id="cats0">
+        <div class="category">
+          <h3>&#9917; Mannschaftssport</h3>
+          <div class="drop-target" id="cat_team" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'cat_team')"></div>
+        </div>
+        <div class="category">
+          <h3>&#127932; Einzelsport</h3>
+          <div class="drop-target" id="cat_einzel" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'cat_einzel')"></div>
+        </div>
+        <div class="category">
+          <h3>&#127946; Wassersport</h3>
+          <div class="drop-target" id="cat_wasser" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'cat_wasser')"></div>
+        </div>
+        <div class="category">
+          <h3>&#127939; Ausdauersport</h3>
+          <div class="drop-target" id="cat_ausdauer" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'cat_ausdauer')"></div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-show"  onclick="showZuordnung0()">&#128065; L&ouml;sung</button>
+      <button class="btn btn-reset" onclick="resetZuordnung0()">&#8635; Neu</button>
+    </div>
+    <div id="fb0" style="margin-top:12px;font-size:0.95rem;"></div>
+  </div>
+
+  <!-- TAB 1: X1 · Sport-Lückentext -->
+  <div class="tab" id="tab1">
+    <div class="timer-bar"><span class="timer-icon">⏱</span><span class="timer-display" id="td1">0:00</span><span class="timer-best" id="tb1">Bestzeit: —</span></div>
+    <h2 style="color:#00695c;margin-bottom:16px;">Sport treiben &mdash; L&uuml;ckentext</h2>
+    <ul class="luecken-list" id="luecken1"></ul>
+    <div class="btn-row">
+      <button class="btn btn-show"  onclick="showLueckenLoesung(1)">&#128065; L&ouml;sung</button>
+      <button class="btn btn-reset" onclick="resetLuecken(1)">&#8635; Neu</button>
+    </div>
+    <div id="fb1" style="margin-top:12px;font-size:0.95rem;"></div>
+  </div>
+
+  <!-- TAB 2: V2/X2 · Bewegungsverben -->
+  <div class="tab" id="tab2">
+    <div class="timer-bar"><span class="timer-icon">⏱</span><span class="timer-display" id="td2">0:00</span><span class="timer-best" id="tb2">Bestzeit: —</span></div>
+    <h2 style="color:#00695c;margin-bottom:16px;">Bewegungsverben &mdash; Wie schnell?</h2>
+    <div class="phrase-grid" id="phrase-cards"></div>
+    <hr style="margin:24px 0;border-color:#b2dfdb;">
+    <h3 style="color:#00695c;margin-bottom:14px;">&#9998; Bewegungsverben &mdash; L&uuml;ckentext</h3>
+    <ul class="luecken-list" id="luecken2"></ul>
+    <div class="btn-row">
+      <button class="btn btn-show"  onclick="showLueckenLoesung(2)">&#128065; L&ouml;sung</button>
+      <button class="btn btn-reset" onclick="resetLuecken(2)">&#8635; Neu</button>
+    </div>
+    <div id="fb2" style="margin-top:12px;font-size:0.95rem;"></div>
+  </div>
+
+  <!-- TAB 3: V2 · Fitness-Lückentext -->
+  <div class="tab" id="tab3">
+    <div class="timer-bar"><span class="timer-icon">⏱</span><span class="timer-display" id="td3">0:00</span><span class="timer-best" id="tb3">Bestzeit: —</span></div>
+    <h2 style="color:#00695c;margin-bottom:16px;">Fit bleiben &mdash; L&uuml;ckentext</h2>
+    <ul class="luecken-list" id="luecken3"></ul>
+    <div class="btn-row">
+      <button class="btn btn-show"  onclick="showLueckenLoesung(3)">&#128065; L&ouml;sung</button>
+      <button class="btn btn-reset" onclick="resetLuecken(3)">&#8635; Neu</button>
+    </div>
+    <div id="fb3" style="margin-top:12px;font-size:0.95rem;"></div>
+  </div>
+
+  <!-- TAB 4: Satzbau Sport -->
+  <div class="tab" id="tab4">
+    <div class="timer-bar"><span class="timer-icon">⏱</span><span class="timer-display" id="td4">0:00</span><span class="timer-best" id="tb4">Bestzeit: —</span></div>
+    <h2 style="color:#00695c;margin-bottom:16px;">Sport &amp; Fitness &mdash; Satzbau</h2>
+    <div class="satzbau-area" id="satzbau4"></div>
+    <div class="btn-row">
+      <button class="btn btn-reset" onclick="resetSatzbau(4)">&#8635; Neu starten</button>
+    </div>
+  </div>
+
+  <!-- TAB 5: Wortschatz -->
+  <div class="tab" id="tab5">
+    <h2 style="color:#00695c;margin-bottom:18px;">🔠 Wortschatz-Training</h2>
+    <div class="help-box">
+      <strong>Aufgabe:</strong> Übersetze die Wörter ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
+    </div>
+    <div id="vocabContainer"></div>
+    <div class="btn-row">
+      <button class="btn btn-loesung" onclick="showVocabLoesung()">💡 Lösungen</button>
+      <button class="btn btn-reset" onclick="resetVocab()">🔄 Neu starten</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var TIMER_PREFIX = 'a2-105x-sport-v';
+var timerStarted  = [false,false,false,false,false,false];
+var timerRunning  = [false,false,false,false,false,false];
+var timerSeconds  = [0,0,0,0,0,0];
+var timerIntervals= [null,null,null,null,null,null];
+
+function pad(n){ return n<10?'0'+n:''+n; }
+function fmtTime(s){ return Math.floor(s/60)+':'+pad(s%60); }
+
+function timerAutoStart(n){
+  if(timerStarted[n]) return;
+  timerStarted[n]=true; timerRunning[n]=true;
+  timerIntervals[n]=setInterval(function(){
+    timerSeconds[n]++;
+    var el=document.getElementById('td'+n);
+    if(el) el.textContent=fmtTime(timerSeconds[n]);
+  },1000);
+}
+function timerStop(n){
+  if(!timerRunning[n]) return;
+  clearInterval(timerIntervals[n]); timerRunning[n]=false;
+  var key=TIMER_PREFIX+'-best-'+n;
+  var best=parseInt(localStorage.getItem(key)||'999999');
+  if(timerSeconds[n]<best){
+    localStorage.setItem(key,timerSeconds[n]);
+    var el=document.getElementById('tb'+n);
+    if(el) el.textContent='Bestzeit: '+fmtTime(timerSeconds[n])+' \u2605';
+  }
+}
+function timerResetOne(n){
+  clearInterval(timerIntervals[n]);
+  timerRunning[n]=false; timerStarted[n]=false; timerSeconds[n]=0;
+  var el=document.getElementById('td'+n);
+  if(el) el.textContent='0:00';
+}
+function loadBestTimes(){
+  for(var i=0;i<6;i++){
+    var key=TIMER_PREFIX+'-best-'+i;
+    var best=localStorage.getItem(key);
+    var el=document.getElementById('tb'+i);
+    if(el) el.textContent=best?'Bestzeit: '+fmtTime(parseInt(best)):'Bestzeit: \u2014';
+  }
+}
+
+function liveCheck(inp){
+  var val=inp.value.trim().toLowerCase();
+  var ans=(inp.dataset.answer||'').toLowerCase();
+  inp.classList.remove('correct','wrong');
+  if(val.length===0) return;
+  if(val===ans){ inp.classList.add('correct'); }
+  else if(ans.indexOf(val)===0){ /* valid prefix */ }
+  else{ inp.classList.add('wrong'); }
+}
+
+function showTab(n){ loadBestTimes();
+  var tabs=document.querySelectorAll('.tab');
+  var btns=document.querySelectorAll('.nav-btn');
+  for(var i=0;i<tabs.length;i++){
+    tabs[i].classList.remove('active');
+    btns[i].classList.remove('active');
+  }
+  document.getElementById('tab'+n).classList.add('active');
+  btns[n].classList.add('active');
+  var key=TIMER_PREFIX+'-best-'+n;
+  var best=localStorage.getItem(key);
+  if(document.getElementById('tb'+n)){
+    document.getElementById('tb'+n).textContent=best?'Bestzeit: '+fmtTime(parseInt(best)):'Bestzeit: \u2014';
+  }
+}
+
+// ─── ZUORDNUNG (Tab 0) ───────────────────────────────────────
+var SPORT_DATA = [
+  { word: 'Fu\u00dfball spielen',   cat: 'cat_team' },
+  { word: 'Basketball spielen', cat: 'cat_team' },
+  { word: 'Volleyball spielen', cat: 'cat_team' },
+  { word: 'Tennis spielen',     cat: 'cat_einzel' },
+  { word: 'Golf spielen',       cat: 'cat_einzel' },
+  { word: 'Ski fahren',         cat: 'cat_einzel' },
+  { word: 'Boxen',              cat: 'cat_einzel' },
+  { word: 'schwimmen gehen',    cat: 'cat_wasser' },
+  { word: 'surfen',             cat: 'cat_wasser' },
+  { word: 'tauchen',            cat: 'cat_wasser' },
+  { word: 'joggen gehen',       cat: 'cat_ausdauer' },
+  { word: 'Rad fahren',         cat: 'cat_ausdauer' },
+  { word: 'wandern',            cat: 'cat_ausdauer' },
+  { word: 'tanzen',             cat: 'cat_einzel' }
+];
+
+function shuffle(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+function makeChip(word, draggable){
+  var c=document.createElement('div');
+  c.className='chip'; c.textContent=word;
+  c.setAttribute('data-word',word);
+  if(draggable){
+    c.draggable=true;
+    c.addEventListener('dragstart',function(e){
+      e.dataTransfer.setData('text/plain',word);
+      e.dataTransfer.setData('source',c.parentElement.id);
+    });
+    c.addEventListener('click',function(e){ clickCat(e,'bank0'); });
+  }
+  return c;
+}
+function colorAllZuordnungChips(){
+  SPORT_DATA.forEach(function(item){
+    var zone=document.getElementById(item.cat);
+    if(!zone) return;
+    zone.querySelectorAll('.chip').forEach(function(chip){
+      chip.classList.remove('correct','wrong');
+      chip.classList.add(chip.getAttribute('data-word')===item.word?'correct':'wrong');
+    });
+  });
+  var bank=document.getElementById('bank0');
+  if(bank) bank.querySelectorAll('.chip').forEach(function(chip){
+    chip.classList.remove('correct','wrong');
+  });
+}
+function initZuordnung0(){ timerResetOne(0);
+  var bank=document.getElementById('bank0');
+  bank.innerHTML='';
+  ['cat_team','cat_einzel','cat_wasser','cat_ausdauer'].forEach(function(id){
+    document.getElementById(id).innerHTML='';
+  });
+  document.getElementById('fb0').innerHTML='';
+  shuffle(SPORT_DATA).forEach(function(item){
+    bank.appendChild(makeChip(item.word,true));
+  });
+}
+function dropGeneric(e,targetId){
+  e.preventDefault();
+  var word=e.dataTransfer.getData('text/plain');
+  var srcId=e.dataTransfer.getData('source');
+  var target=document.getElementById(targetId);
+  if(!target) return;
+  var src=document.getElementById(srcId);
+  if(src){
+    src.querySelectorAll('.chip').forEach(function(c){
+      if(c.getAttribute('data-word')===word) src.removeChild(c);
+    });
+  }
+  target.appendChild(makeChip(word,true));
+  colorAllZuordnungChips();
+}
+function clickCat(e,bankId){
+  var chip=e.currentTarget;
+  var parent=chip.parentElement;
+  if(parent.id===bankId) return;
+  var bank=document.getElementById(bankId);
+  parent.removeChild(chip);
+  bank.appendChild(chip);
+  colorAllZuordnungChips();
+}
+function showZuordnung0(){
+  var bank=document.getElementById('bank0');
+  bank.innerHTML='';
+  ['cat_team','cat_einzel','cat_wasser','cat_ausdauer'].forEach(function(id){
+    document.getElementById(id).innerHTML='';
+  });
+  SPORT_DATA.forEach(function(item){
+    document.getElementById(item.cat).appendChild(makeChip(item.word,false));
+  });
+  document.getElementById('fb0').innerHTML='<span class="feedback-ok">&#128065; L\u00f6sung angezeigt.</span>';
+}
+function resetZuordnung0(){ initZuordnung0(); }
+
+// ─── LÜCKENTEXT DATA ─────────────────────────────────────────
+var LUECKEN_DATA = {};
+
+LUECKEN_DATA[1] = [
+  { before: 'Alex spielt seit drei Jahren', blank:{answer:'Fu\u00dfball',hint:'football'}, after:' in einer Mannschaft.' },
+  { before: 'Wir haben das Spiel gewonnen! Der', blank:{answer:'Sieg',hint:'victory'}, after:' macht uns sehr gl\u00fccklich.' },
+  { before: 'Leider hat unsere Mannschaft', blank:{answer:'verloren',hint:'lost (perf.)'}, after:'. Die Niederlage war bitter.' },
+  { before: 'Tobias trainiert jeden Tag. Er m\u00f6chte am', blank:{answer:'Finale',hint:'final'}, after:' teilnehmen.' },
+  { before: 'Die Sportlerin hat eine', blank:{answer:'Goldmedaille',hint:'gold medal'}, after:' bei den Olympischen Spielen gewonnen.' },
+  { before: 'Im Fitnessstudio gibt es ein gro\u00dfes', blank:{answer:'Schwimmbad',hint:'swimming pool'}, after:' im Keller.' },
+  { before: 'Wir m\u00fcssen mehr', blank:{answer:'trainieren',hint:'to train'}, after:', wenn wir besser werden wollen.' },
+  { before: 'Welche', blank:{answer:'Sportart',hint:'sport/type of sport'}, after:' macht dir am meisten Spa\u00df?' },
+  { before: 'Die ganze', blank:{answer:'Mannschaft',hint:'team'}, after:' feiert den Sieg zusammen.' },
+  { before: 'Nächsten Monat fahre ich in die Berge —', blank:{answer:'Ski fahren',hint:'skiing (inf.)'}, after:' ist mein Hobby.' }
+];
+
+LUECKEN_DATA[2] = [
+  { before: 'Das Baby kann noch nicht', blank:{answer:'laufen',hint:'to walk/run'}, after:' \u2014 es krabbelt noch.' },
+  { before: 'Der Sportler', blank:{answer:'rennt',hint:'runs (fast)'}, after:' jeden Morgen 10 Kilometer.' },
+  { before: 'Wir', blank:{answer:'gehen',hint:'go (on foot)'}, after:' jeden Abend eine Stunde spazieren.' },
+  { before: 'Das Kind', blank:{answer:'springt',hint:'jumps'}, after:' \u00fcber die Pf\u00fctze.' },
+  { before: 'Der Bus f\u00e4hrt ab \u2014 ich muss', blank:{answer:'rennen',hint:'to run (fast)'}, after:'!' },
+  { before: 'Nach der Arbeit', blank:{answer:'jogge',hint:'jog (ich)'}, after:' ich 30 Minuten im Park.' },
+  { before: 'Die Kinder', blank:{answer:'schwimmen',hint:'swim'}, after:' im See.' },
+  { before: 'Im Urlaub', blank:{answer:'wandern',hint:'hike'}, after:' wir jeden Tag in den Bergen.' }
+];
+
+LUECKEN_DATA[3] = [
+  { before: 'Er geht dreimal pro Woche ins', blank:{answer:'Fitnessstudio',hint:'gym'}, after:' und trainiert.' },
+  { before: 'Ich m\u00f6chte fit bleiben \u2014 deshalb achte ich auf meine', blank:{answer:'Gesundheit',hint:'health'}, after:'.' },
+  { before: 'Sie m\u00f6chte 5 Kilo', blank:{answer:'abnehmen',hint:'to lose weight'}, after:' bis zum Sommer.' },
+  { before: 'Eine gesunde', blank:{answer:'Ern\u00e4hrung',hint:'diet/nutrition'}, after:' ist sehr wichtig f\u00fcr den K\u00f6rper.' },
+  { before: 'Er hat so viel Stress auf der Arbeit \u2014 er muss', blank:{answer:'entspannen',hint:'to relax'}, after:'.' },
+  { before: 'Nach dem langen Lauf muss ich mich', blank:{answer:'erholen',hint:'to recover'}, after:' \u2014 ich bin sehr m\u00fcde.' },
+  { before: 'Der Arzt empfiehlt, t\u00e4glich 30 Minuten', blank:{answer:'Sport',hint:'sport/exercise'}, after:' zu treiben.' },
+  { before: 'Zu viel Fast Food ist schlecht \u2014 ich mache jetzt eine', blank:{answer:'Di\u00e4t',hint:'diet'}, after:'.' },
+  { before: 'Yoga hilft dabei,', blank:{answer:'Stress',hint:'stress'}, after:' zu vermeiden und ruhig zu bleiben.' },
+  { before: 'Ich', blank:{answer:'trainiere',hint:'train (ich)'}, after:' jeden Montag mit einem Personal Trainer.' }
+];
+
+function renderLuecken(idx){
+  var ul=document.getElementById('luecken'+idx);
+  if(!ul) return;
+  ul.innerHTML='';
+  LUECKEN_DATA[idx].forEach(function(item,i){
+    var li=document.createElement('li');
+    var html='';
+    if(item.before) html+=item.before+' ';
+    html+='<input class="blank" id="bl'+idx+'_'+i+'" type="text" autocomplete="off" placeholder="" data-answer="'+item.blank.answer+'">';
+    html+='<span class="hint-text">('+item.blank.hint+')</span>';
+    if(item.after) html+=' '+item.after;
+    html+='<span class="loesung-text" id="ls'+idx+'_'+i+'">'+item.blank.answer+'</span>';
+    li.innerHTML=html;
+    ul.appendChild(li);
+    var inp=li.querySelector('.blank');
+    if(inp){
+      inp.addEventListener('input',function(){
+        liveCheck(inp);
+        timerAutoStart(idx);
+      });
+    }
+  });
+}
+function showLueckenLoesung(idx){
+  var data=LUECKEN_DATA[idx];
+  data.forEach(function(item,i){
+    var inp=document.getElementById('bl'+idx+'_'+i);
+    var ls=document.getElementById('ls'+idx+'_'+i);
+    if(inp){ inp.value=''; inp.style.display='none'; }
+    if(ls) ls.style.display='inline';
+  });
+  var fb=document.getElementById('fb'+idx);
+  if(fb) fb.innerHTML='<span class="feedback-ok">&#128065; L\u00f6sung angezeigt.</span>';
+}
+function resetLuecken(idx){
+  renderLuecken(idx);
+  var fb=document.getElementById('fb'+idx);
+  if(fb) fb.innerHTML='';
+}
+
+// ─── PHRASEN (Tab 2) ─────────────────────────────────────────
+var BEWEGUNGS_CARDS = [
+  {
+    phrase: 'gehen',
+    use: 'Langsam, entspannt \u2014 zu Fu\u00df fortbewegen',
+    example: 'Ich gehe jeden Abend eine Stunde spazieren.'
+  },
+  {
+    phrase: 'laufen',
+    use: 'Schneller als gehen \u2014 auch: joggen (umgangssprachlich)',
+    example: 'Sie l\u00e4uft morgens 5 Kilometer im Park.'
+  },
+  {
+    phrase: 'rennen',
+    use: 'Sehr schnell \u2014 in Eile oder beim Sprint',
+    example: 'Er rennt zum Bus, weil er sp\u00e4t dran ist.'
+  },
+  {
+    phrase: 'joggen gehen',
+    use: 'Regelm\u00e4\u00dfig laufen als Sport (Ausdauer)',
+    example: 'Wir gehen dreimal pro Woche joggen.'
+  },
+  {
+    phrase: 'schwimmen gehen',
+    use: 'Schwimmen als Sport oder Freizeitaktivit\u00e4t',
+    example: 'Ich gehe jeden Samstag im Hallenbad schwimmen.'
+  },
+  {
+    phrase: 'wandern',
+    use: 'Lange Strecken zu Fu\u00df, meist in der Natur',
+    example: 'Im Urlaub wandern wir in den Alpen.'
+  }
+];
+function renderBewegungsCards(){
+  var grid=document.getElementById('phrase-cards');
+  if(!grid) return;
+  grid.innerHTML='';
+  BEWEGUNGS_CARDS.forEach(function(item){
+    var div=document.createElement('div');
+    div.className='phrase-card';
+    div.innerHTML='<div class="phrase">'+item.phrase+'</div>'+
+      '<div class="use">'+item.use+'</div>'+
+      '<div class="example">'+item.example+'</div>';
+    grid.appendChild(div);
+  });
+}
+
+// ─── SATZBAU (Tab 4) ─────────────────────────────────────────
+var SATZBAU = [
+  {
+    hint: 'Sport treiben — Mannschaft',
+    parts: ['Alex', 'spielt', 'Fu\u00dfball', 'in', 'einer', 'Mannschaft'],
+    valid: [['Alex', 'spielt', 'Fu\u00dfball', 'in', 'einer', 'Mannschaft']]
+  },
+  {
+    hint: 'Fitnessstudio — Fitness',
+    parts: ['Er', 'geht', 'dreimal', 'pro', 'Woche', 'ins', 'Fitnessstudio'],
+    valid: [['Er', 'geht', 'dreimal', 'pro', 'Woche', 'ins', 'Fitnessstudio']]
+  },
+  {
+    hint: 'Gesunde Ernährung',
+    parts: ['Eine', 'gesunde', 'Ern\u00e4hrung', 'ist', 'sehr', 'wichtig'],
+    valid: [['Eine', 'gesunde', 'Ern\u00e4hrung', 'ist', 'sehr', 'wichtig']]
+  },
+  {
+    hint: 'Joggen gehen',
+    parts: ['Ich', 'gehe', 'jeden', 'Morgen', 'im', 'Park', 'joggen'],
+    valid: [['Ich', 'gehe', 'jeden', 'Morgen', 'im', 'Park', 'joggen']]
+  },
+  {
+    hint: 'Sieg / Gewinn',
+    parts: ['Wir', 'haben', 'das', 'Spiel', 'gewonnen', '\u2014', 'welch', 'ein', 'Sieg'],
+    valid: [['Wir', 'haben', 'das', 'Spiel', 'gewonnen', '\u2014', 'welch', 'ein', 'Sieg']]
+  },
+  {
+    hint: 'Abnehmen und fit bleiben',
+    parts: ['Sie', 'm\u00f6chte', 'abnehmen', 'und', 'fit', 'bleiben'],
+    valid: [['Sie', 'm\u00f6chte', 'abnehmen', 'und', 'fit', 'bleiben']]
+  },
+  {
+    hint: 'Stress vermeiden',
+    parts: ['Man', 'sollte', 'Sport', 'treiben', ',', 'um', 'Stress', 'zu', 'vermeiden'],
+    valid: [['Man', 'sollte', 'Sport', 'treiben', ',', 'um', 'Stress', 'zu', 'vermeiden']]
+  },
+  {
+    hint: 'Sich erholen nach dem Sport',
+    parts: ['Nach', 'dem', 'Training', 'muss', 'man', 'sich', 'erholen'],
+    valid: [['Nach', 'dem', 'Training', 'muss', 'man', 'sich', 'erholen']]
+  }
+];
+
+// ===== SATZBAU (neu: satzbau-drag-drop Pattern) =====
+var sbDragged = null;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
+}
+function sbCapitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
+    });
+}
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before); else zone.appendChild(cursor);
+    });
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = SATZBAU[idx].valid.some(function(v) {
+        return JSON.stringify(v) === JSON.stringify(order);
+    });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt'; punkt.textContent = '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('correct', 'incorrect'); });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+    setTimeout(function() {
+        timerAutoStart(4);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    }, 500);
+}
+function sbCheckAllDone() {
+    var allOk = SATZBAU.every(function(_, i) {
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
+    });
+    if (allOk) timerStop(4);
+}
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    var solution = SATZBAU[idx].valid[0];
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild)  row.removeChild(row.firstChild);
+    solution.forEach(function(word) {
+        var chip = allChips[word];
+        if (chip) { chip.classList.remove('correct', 'incorrect'); row.appendChild(chip); }
+    });
+    fb.textContent = '';
+    setTimeout(function() { sbUpdateCapitalization(row); sbCheckAuto(idx); }, 100);
+}
+function initSatzbau() {
+    var container = document.getElementById('satzbauContainer')
+                 || document.getElementById('satzbau-container')
+                 || document.getElementById('satzbau4');
+    if (!container) return;
+    while (container.firstChild) container.removeChild(container.firstChild);
+    SATZBAU.forEach(function(ex, idx) {
+        var item = document.createElement('div');
+        item.className = 'satzbau-item';
+        if (ex.hint) {
+            var hint = document.createElement('p');
+            hint.textContent = ex.hint;
+            item.appendChild(hint);
+        }
+        var bank = document.createElement('div');
+        bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
+        var row = document.createElement('div');
+        row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
+        var fb = document.createElement('div');
+        fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + idx;
+        var solBtn = document.createElement('button');
+        solBtn.className = 'btn btn-show'; solBtn.textContent = 'Lösung';
+        (function(i) { solBtn.onclick = function() { sbShowSolution(i); }; })(idx);
+        item.appendChild(bank); item.appendChild(row); item.appendChild(fb); item.appendChild(solBtn);
+        container.appendChild(item);
+        var parts = ex.parts.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+        }
+        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank, idx);
+        sbRegisterZone(row, idx);
+    });
+}
+function resetSatzbau() {
+    SATZBAU.forEach(function(_, idx) {
+        var bank = document.getElementById('sb-bank-' + idx);
+        var row  = document.getElementById('sb-row-' + idx);
+        var fb   = document.getElementById('sb-fb-' + idx);
+        if (bank) while (bank.firstChild) bank.removeChild(bank.firstChild);
+        if (row)  while (row.firstChild)  row.removeChild(row.firstChild);
+        if (fb)   { fb.textContent = ''; fb.className = 'satzbau-feedback'; }
+    });
+    initSatzbau();
+}
+
+
+// ─── WORTSCHATZ ───────────────────────────────────────────────
+var WORTSCHATZ = [
+  { id:1, type:"n", en:"⚽ football/soccer", artikel:"der", de:"Fußball", plural:"Fußbälle" },
+  { id:2, type:"n", en:"🏀 basketball", artikel:"der", de:"Basketball", plural:"Basketbälle" },
+  { id:3, type:"p", en:"🎾 tennis", de:"Tennis" },
+  { id:4, type:"p", en:"⛳ golf", de:"Golf" },
+  { id:5, type:"n", en:"👥 team", artikel:"die", de:"Mannschaft", plural:"Mannschaften" },
+  { id:6, type:"n", en:"🏆 victory", artikel:"der", de:"Sieg", plural:"Siege" },
+  { id:7, type:"n", en:"😢 defeat", artikel:"die", de:"Niederlage", plural:"Niederlagen" },
+  { id:8, type:"n", en:"🥇 final", artikel:"das", de:"Finale", plural:"Finals" },
+  { id:9, type:"n", en:"🥇 gold medal", artikel:"die", de:"Goldmedaille", plural:"Goldmedaillen" },
+  { id:10, type:"n", en:"🏅 type of sport", artikel:"die", de:"Sportart", plural:"Sportarten" },
+  { id:11, type:"p", en:"💪 to train", de:"trainieren" },
+  { id:12, type:"p", en:"✅ to win", de:"gewinnen" },
+  { id:13, type:"p", en:"❌ to lose", de:"verlieren" },
+  { id:14, type:"n", en:"🏋️ gym", artikel:"das", de:"Fitnessstudio", plural:"Fitnessstudios" },
+  { id:15, type:"n", en:"🏊 swimming pool", artikel:"das", de:"Schwimmbad", plural:"Schwimmbäder" },
+  { id:16, type:"n", en:"❤️ health", artikel:"die", de:"Gesundheit", plural:"Gesundheiten" },
+  { id:17, type:"n", en:"🍎 nutrition", artikel:"die", de:"Ernährung", plural:"Ernährungen" },
+  { id:18, type:"p", en:"⬇️ to lose weight", de:"abnehmen" },
+  { id:19, type:"n", en:"🥗 diet", artikel:"die", de:"Diät", plural:"Diäten" },
+  { id:20, type:"p", en:"😌 to relax", de:"entspannen" },
+  { id:21, type:"p", en:"💤 to recover", de:"sich erholen" },
+  { id:22, type:"p", en:"🧘 to avoid stress", de:"Stress vermeiden" },
+  { id:23, type:"p", en:"🏃 to jog", de:"joggen gehen" },
+  { id:24, type:"p", en:"🥾 to hike", de:"wandern" },
+  { id:25, type:"p", en:"🚴 to cycle", de:"Rad fahren" },
+  { id:26, type:"p", en:"💪 to stay fit", de:"fit bleiben" },
+  { id:27, type:"n", en:"😰 stress", artikel:"der", de:"Stress", plural:"Stresse" },
+  { id:28, type:"n", en:"🏋️ training", artikel:"das", de:"Training", plural:"Trainings" }
+];
+
+function initVocab() {
+  var container = document.getElementById('vocabContainer');
+  container.innerHTML = '';
+  var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
+  shuffled.forEach(function(item) {
+    var div = document.createElement('div');
+    div.className = 'vocab-item';
+    var en = document.createElement('span');
+    en.className = 'vocab-en';
+    en.textContent = item.en;
+    div.appendChild(en);
+    var arrow = document.createElement('span');
+    arrow.className = 'vocab-arrow';
+    arrow.textContent = '\u2192';
+    div.appendChild(arrow);
+    var inputs = document.createElement('div');
+    inputs.className = 'vocab-inputs';
+    if (item.type === 'n') {
+      var artInp = document.createElement('input');
+      artInp.className = 'art'; artInp.placeholder = 'der/die/das';
+      artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+      artInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
+      inputs.appendChild(artInp);
+      var wordInp = document.createElement('input');
+      wordInp.className = 'wort'; wordInp.placeholder = 'Deutsch';
+      wordInp.dataset.answer = item.de; wordInp.dataset.field = 'wort';
+      wordInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
+      inputs.appendChild(wordInp);
+      var pluralInp = document.createElement('input');
+      pluralInp.className = 'plural'; pluralInp.placeholder = 'Plural';
+      pluralInp.dataset.answer = item.plural; pluralInp.dataset.field = 'plural';
+      pluralInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
+      inputs.appendChild(pluralInp);
+    } else {
+      var deInp = document.createElement('input');
+      deInp.className = 'wort'; deInp.style.width = '200px'; deInp.placeholder = 'Deutsch';
+      deInp.dataset.answer = item.de; deInp.dataset.field = 'wort';
+      deInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
+      inputs.appendChild(deInp);
+    }
+    div.appendChild(inputs);
+    container.appendChild(div);
+  });
+}
+
+function checkVocabAllOk() {
+  var secId = 'tab5';
+  var all = document.querySelectorAll('#' + secId + ' .vocab-inputs input');
+  var allOk = Array.from(all).every(function(inp) { return inp.classList.contains('correct'); });
+  if (allOk && all.length > 0) timerStop(5);
+}
+
+function showVocabLoesung() {
+  document.querySelectorAll('#tab5 .vocab-inputs input').forEach(function(inp) {
+    var field = inp.dataset.field;
+    var user = (field==='art') ? inp.value.trim().toLowerCase() : inp.value.trim();
+    var answer = (field==='art') ? inp.dataset.answer.toLowerCase() : inp.dataset.answer;
+    var hint = inp.nextElementSibling;
+    if (hint && hint.classList.contains('vocab-hint')) hint.remove();
+    if (user === answer) { inp.classList.remove('wrong'); inp.classList.add('correct'); }
+    else {
+      inp.classList.add('wrong');
+      var h = document.createElement('span');
+      h.className = 'vocab-hint'; h.textContent = inp.dataset.answer;
+      inp.insertAdjacentElement('afterend', h);
+    }
+  });
+  timerStop(5);
+}
+
+function resetVocab() {
+  document.querySelectorAll('#tab5 .vocab-inputs input').forEach(function(inp) {
+    inp.value = ''; inp.classList.remove('correct', 'wrong');
+    var hint = inp.nextElementSibling;
+    if (hint && hint.classList.contains('vocab-hint')) hint.remove();
+  });
+  timerResetOne(5);
+  initVocab();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+(function init(){
+  initZuordnung0();
+  renderLuecken(1);
+  renderBewegungsCards();
+  renderLuecken(2);
+  initSatzbau(4);
+  renderLuecken(3);
+  initVocab();
+  for(var i=0;i<6;i++){
+    var key=TIMER_PREFIX+'-best-'+i;
+    var best=localStorage.getItem(key);
+    if(document.getElementById('tb'+i)){
+      document.getElementById('tb'+i).textContent=best?'Bestzeit: '+fmtTime(parseInt(best)):'Bestzeit: \u2014';
+    }
+  }
+})();
+
+/* ── Tap-to-Select / Tap-to-Place (Mobile Satzbau) ─────────────────── */
+(function(){
+  var sbSelected = null;
+
+  var selStyle = document.createElement('style');
+  selStyle.textContent = '.chip.sb-tap-selected { outline: 3px solid #f39c12; transform: scale(1.08); box-shadow: 0 0 10px rgba(243,156,18,0.6); z-index: 10; position:relative; }';
+  document.head.appendChild(selStyle);
+
+  function clearSelection(){
+    if(sbSelected){ sbSelected.classList.remove('sb-tap-selected'); sbSelected = null; }
+  }
+
+  function findZone(el){
+    while(el){
+      if(el.classList && (el.classList.contains('chips-container') || el.classList.contains('sentence-builder') || el.classList.contains('chip-bank') || el.classList.contains('drop-row'))) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function getIdxFromZone(zone){
+    var id = zone.id || '';
+    var m = id.match(/sb-(bank|row)-(\d+)/);
+    return m ? parseInt(m[2]) : -1;
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest ? e.target.closest('.chip') : null;
+    if(chip){
+      if(chip === sbSelected){ clearSelection(); return; }
+      clearSelection();
+      sbSelected = chip;
+      chip.classList.add('sb-tap-selected');
+      return;
+    }
+    var zone = findZone(e.target);
+    if(zone && sbSelected){
+      zone.appendChild(sbSelected);
+      var idx = getIdxFromZone(zone);
+      if(idx >= 0){
+        var row = document.getElementById('sb-row-' + idx);
+        if(row && typeof sbUpdateCapitalization === 'function') sbUpdateCapitalization(row);
+        if(typeof sbCheckAuto === 'function') sbCheckAuto(idx);
+      }
+      clearSelection();
+      return;
+    }
+    clearSelection();
+  }, false);
+})();
+/* ── Ende Tap-to-Select ─────────────────────────────────────────────── */
+</script>
+<div class="author-footer">
+  <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+  <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
+</body>
+</html>

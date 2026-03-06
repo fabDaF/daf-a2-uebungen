@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wohnen &ndash; Grammatik (A2.1)</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+h1 { text-align: center; color: #333; margin-bottom: 4px; font-size: 1.5em; }
+.subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.95em; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.section { display: none; }
+.section.active { display: block; }
+h2 { color: #333; font-size: 1.15em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+.btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+.btn { padding: 10px 22px; border: none; border-radius: 25px; font-weight: 600; font-size: 0.9em; cursor: pointer; transition: all 0.2s; }
+.btn-show { background: #f0f0f0; color: #555; }
+.btn-show:hover { background: #e0e0e0; }
+.btn-reset { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn-reset:hover { background: #e74c3c; color: white; }
+.timer-display { display: flex; justify-content: center; gap: 20px; margin-top: 10px; font-size: 0.95em; }
+.current-time { font-weight: 600; color: #667eea; }
+.best-time { font-weight: 600; color: #f39c12; }
+.help-box { background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 20px; font-size: 0.9em; line-height: 1.7; color: #444; }
+.help-box strong { color: #667eea; }
+.info-box { background: #fff3cd; border-left: 4px solid #f39c12; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 20px; font-size: 0.9em; line-height: 1.8; color: #444; }
+.info-box strong { color: #e67e22; }
+.info-box .example { display: block; margin: 4px 0; padding: 4px 8px; background: #fff8e1; border-radius: 6px; font-family: monospace; font-size: 0.9em; }
+
+/* Komparativ-Tabelle */
+.komp-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.komp-table th { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 14px; font-size: 0.9em; text-align: center; }
+.komp-table td { padding: 10px 14px; text-align: center; border-bottom: 1px solid #eee; font-size: 0.95em; }
+.komp-table tr:nth-child(even) td { background: #f8f9ff; }
+.komp-table input.komp-blank { border: none; border-bottom: 2px solid #667eea; background: transparent; padding: 4px 6px; font-family: inherit; font-size: 0.95em; outline: none; width: 110px; text-align: center; transition: all 0.2s; }
+.komp-table input.komp-blank:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+.komp-table input.komp-blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+.komp-table input.komp-blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+
+/* Lueckentext */
+.ex-card { background: #f8f9ff; padding: 16px 20px; margin-bottom: 14px; border-radius: 10px; border-left: 4px solid #667eea; position: relative; }
+.ex-sentence { font-size: 1.0em; line-height: 2.4; color: #333; display: block; }
+.nowrap-group { display: inline-flex; align-items: baseline; white-space: nowrap; gap: 0; }
+input.blank { border: none; border-bottom: 2px solid #667eea; background: #fff; padding: 4px 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; }
+input.blank:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+input.blank.s { min-width: 60px; width: 60px; }
+input.blank.m { min-width: 110px; width: 110px; }
+input.blank.l { min-width: 160px; width: 160px; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+.correction-hint { color: #27ae60; font-weight: 600; font-size: 0.85em; margin-left: 4px; white-space: nowrap; }
+
+/* Zuordnung temporale Praep */
+.praep-categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.praep-cat { background: #f0f0f0; border: 2px dashed #ccc; border-radius: 10px; padding: 12px; min-height: 100px; }
+.praep-cat-title { font-weight: 700; color: #667eea; text-align: center; margin-bottom: 8px; font-size: 0.9em; }
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 60px; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; }
+.chip:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(102,126,234,0.3); }
+.chip.placed { background: #667eea; color: white; }
+.chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; border-color: #27ae60 !important; color: white !important; }
+.chip.wrong { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; border-color: #e74c3c !important; color: white !important; }
+
+/* Satzbau */
+.satzbau-item { background: #f8f9ff; padding: 16px 20px; margin-bottom: 20px; border-radius: 10px; border-left: 4px solid #667eea; }
+.drop-row { background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; min-height: 60px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.drop-row .chip { margin: 0; }
+.chip.punct { min-width: 32px; padding: 8px 10px; font-size: 1.2em; font-weight: 700; text-align: center; }
+.drop-row .chip.punct { margin-left: -4px; }
+
+/* Lesetext */
+.read-box { background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 20px; font-size: 0.97em; line-height: 1.9; color: #333; }
+.read-box p { margin-bottom: 12px; }
+.frage-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #764ba2; }
+.frage-label { font-weight: 700; color: #764ba2; margin-bottom: 8px; font-size: 0.95em; }
+.frage-input { width: 100%; border: none; border-bottom: 2px solid #667eea; background: transparent; padding: 6px 4px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; }
+.frage-input:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+.frage-loesung { display: none; margin-top: 8px; color: #27ae60; font-weight: 600; font-size: 0.9em; }
+.frage-loesung.visible { display: block; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+    .container { padding: 18px 14px; }
+    .praep-categories { grid-template-columns: 1fr; }
+    .nav-btn { font-size: 0.78em; padding: 8px 12px; }
+}
+
+/* Author Footer */
+.author-footer { margin-top: 40px; padding: 16px 20px; text-align: center; font-size: 0.8em; color: #888; border-top: 1px solid #e0e0e0; }
+.author-footer a { color: #667eea; text-decoration: none; font-weight: 500; }
+.author-footer a:hover { text-decoration: underline; color: #764ba2; }
+.author-footer .author-name { font-weight: 600; color: #555; }
+/* Aliase für neues satzbau-drag-drop Pattern */
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 60px; margin-bottom: 10px; }
+.sentence-builder { background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; min-height: 60px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* Entdeckungs-Tab */
+.mc-container { background: #f8f9ff; border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; border-left: 4px solid #667eea; }
+.mc-btn { padding: 9px 18px; margin: 5px 6px 5px 0; border: 2px solid #667eea; border-radius: 20px; background: white; color: #667eea; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.2s; }
+.mc-btn:hover { background: #667eea; color: white; }
+.mc-btn.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.mc-btn.wrong { background: #e74c3c; border-color: #e74c3c; color: white; }
+.mc-feedback { margin-top: 10px; font-size: 0.9em; font-weight: 600; min-height: 1.4em; }
+.mc-feedback.ok { color: #27ae60; }
+.mc-feedback.nok { color: #e74c3c; }
+.mc-regel { background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-top: 16px; font-size: 0.9em; line-height: 1.7; color: #1b5e20; display: none; }
+.mc-regel.visible { display: block; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 16px; }
+.p-dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; transition: background 0.3s; }
+.p-dot.done { background: #27ae60; }
+.p-dot.active { background: #667eea; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Einziehen und ausziehen</h1>
+    <div class="subtitle">Komparativ &middot; Superlativ &middot; Temporale Pr&auml;positionen &middot; DE_A2_103x &middot; G1 &middot; G2 &middot; R</div>
+
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)">&#128161; Entdeckung</div>
+        <div class="nav-btn" onclick="showSection(1)">&#128200; Komparativ</div>
+        <div class="nav-btn" onclick="showSection(2)">&#9997; Komparativ L&uuml;cken</div>
+        <div class="nav-btn" onclick="showSection(3)">&#128344; Temp. Pr&auml;p.</div>
+        <div class="nav-btn" onclick="showSection(4)">&#9997; Pr&auml;p. L&uuml;cken</div>
+        <div class="nav-btn" onclick="showSection(5)">&#127279; Satzbau</div>
+        <div class="nav-btn" onclick="showSection(6)">&#128218; Lesetext</div>
+    </div>
+
+    <!-- ===== TAB 0: ENTDECKUNGS-TAB ===== -->
+    <div class="section active" id="sec-0">
+        <h2>&#128161; Grammatik entdecken: Komparativ &amp; Temporale Pr&auml;positionen</h2>
+
+        <div class="progress-dots">
+            <div class="p-dot active" id="pdot0"></div>
+            <div class="p-dot" id="pdot1"></div>
+            <div class="p-dot" id="pdot2"></div>
+            <div class="p-dot" id="pdot3"></div>
+        </div>
+
+        <div class="mc-container">
+            <p><strong>Schritt 1:</strong> Welcher Satz verwendet den Komparativ korrekt?</p>
+            <button class="mc-btn" onclick="mcCheck(0, this, false)">Die neue Wohnung ist <strong>mehr gro&szlig;</strong> als die alte.</button>
+            <button class="mc-btn" data-correct="1" onclick="mcCheck(0, this, true)">Die neue Wohnung ist <strong>gr&ouml;&szlig;er</strong> als die alte.</button>
+            <button class="mc-btn" onclick="mcCheck(0, this, false)">Die neue Wohnung ist <strong>am gr&ouml;&szlig;ten</strong> als die alte.</button>
+            <div class="mc-feedback" id="mcfb0"></div>
+        </div>
+
+        <div class="mc-container">
+            <p><strong>Schritt 2:</strong> Wie bildet man den Superlativ?</p>
+            <button class="mc-btn" onclick="mcCheck(1, this, false)">Adjektiv + <em>-er</em></button>
+            <button class="mc-btn" data-correct="1" onclick="mcCheck(1, this, true)"><em>am</em> + Adjektiv + <em>-(e)sten</em></button>
+            <button class="mc-btn" onclick="mcCheck(1, this, false)"><em>sehr</em> + Adjektiv</button>
+            <div class="mc-feedback" id="mcfb1"></div>
+        </div>
+
+        <div class="mc-container">
+            <p><strong>Schritt 3:</strong> Welche Pr&auml;position passt? — <em>______ drei Jahren zog sie um.</em></p>
+            <button class="mc-btn" onclick="mcCheck(2, this, false)">In</button>
+            <button class="mc-btn" onclick="mcCheck(2, this, false)">W&auml;hrend</button>
+            <button class="mc-btn" data-correct="1" onclick="mcCheck(2, this, true)">Vor</button>
+            <div class="mc-feedback" id="mcfb2"></div>
+        </div>
+
+        <div class="mc-container">
+            <p><strong>Schritt 4:</strong> Welche Pr&auml;position benutzt man f&uuml;r einen Zeitraum in der Zukunft? — <em>Ich ziehe ______ einem Monat um.</em></p>
+            <button class="mc-btn" data-correct="1" onclick="mcCheck(3, this, true)">in</button>
+            <button class="mc-btn" onclick="mcCheck(3, this, false)">seit</button>
+            <button class="mc-btn" onclick="mcCheck(3, this, false)">vor</button>
+            <div class="mc-feedback" id="mcfb3"></div>
+        </div>
+
+        <div class="mc-regel" id="entdeckung-regel">
+            &#10003; <strong>Regel:</strong><br>
+            <strong>Komparativ</strong>: Adjektiv + <em>-er</em> (+ Umlaut) &nbsp;|&nbsp; Vergleich: <em>als</em><br>
+            <strong>Superlativ</strong>: <em>am</em> + Adjektiv + <em>-(e)sten</em><br>
+            <strong>Temporale Pr&auml;positionen:</strong> <em>vor</em> (Vergangenheit), <em>in</em> (Zukunft), <em>seit</em> (Beginn bis jetzt), <em>f&uuml;r</em> (geplante Dauer)
+        </div>
+    </div>
+
+    <!-- TAB 0: Komparativ & Superlativ Tabelle -->
+    <div class="section" id="sec1">
+        <h2>&#128200; Komparativ &amp; Superlativ</h2>
+        <div class="info-box">
+            <strong>Komparativ</strong>: Adjektiv + <strong>-er</strong> (+ Umlaut bei a/o/u)<br>
+            <strong>Superlativ</strong>: <strong>am</strong> + Adjektiv + <strong>-(e)sten</strong><br>
+            <span class="example">gro&szlig; &rarr; gr&ouml;&szlig;er &rarr; am gr&ouml;&szlig;ten</span>
+            <span class="example">gut &rarr; besser &rarr; am besten &nbsp;&nbsp; (unregelm&auml;&szlig;ig!)</span>
+        </div>
+        <table class="komp-table">
+            <thead>
+                <tr><th>Grundform</th><th>Komparativ</th><th>Superlativ</th></tr>
+            </thead>
+            <tbody id="komp-tbody"></tbody>
+        </table>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showKompLoesung()">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetKomp()">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-1">&#9201; 0:00</span>
+            <span class="best-time" id="best-1">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 1: Komparativ Lückentext -->
+    <div class="section" id="sec2">
+        <h2>&#9997; Komparativ &amp; Superlativ einsetzen</h2>
+        <div class="help-box">
+            Setze die richtige Form ein: <strong>Komparativ</strong> (Vergleich mit &bdquo;als&ldquo;) oder <strong>Superlativ</strong> (h&ouml;chste Stufe).
+        </div>
+        <div id="komp-luecken"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showLueckenLoesung('komp-l')">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetLuecken('komp-l')">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-2">&#9201; 0:00</span>
+            <span class="best-time" id="best-2">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 2: Temporale Präpositionen Zuordnung -->
+    <div class="section" id="sec3">
+        <h2>&#128344; Temporale Pr&auml;positionen</h2>
+        <div class="info-box">
+            <strong>seit</strong> + Dativ: l&auml;uft noch (Pr&auml;sens)<br>
+            <span class="example">Ich wohne seit drei Jahren in Berlin.</span>
+            <strong>vor</strong> + Dativ: abgeschlossen (Vergangenheit)<br>
+            <span class="example">Wir sind vor einem Jahr umgezogen.</span>
+            <strong>ab</strong> + Dativ: Startpunkt (Zukunft)<br>
+            <span class="example">Ab n&auml;chstem Monat zahlt sie weniger Miete.</span>
+            <strong>bis</strong> + Akkusativ: Endpunkt<br>
+            <span class="example">Sie wohnt dort bis Ende des Jahres.</span>
+            <strong>nach</strong> + Dativ: danach<br>
+            <span class="example">Nach dem Umzug hat sie neue M&ouml;bel gekauft.</span>
+        </div>
+        <div class="praep-categories" id="praep-cats">
+            <div class="praep-cat" id="tp-seit" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'praep-bank')" onclick="clickCat(event,'praep-bank')">
+                <div class="praep-cat-title">seit<br><small>(noch aktiv)</small></div>
+            </div>
+            <div class="praep-cat" id="tp-vor" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'praep-bank')" onclick="clickCat(event,'praep-bank')">
+                <div class="praep-cat-title">vor<br><small>(Vergangenheit)</small></div>
+            </div>
+            <div class="praep-cat" id="tp-nach" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'praep-bank')" onclick="clickCat(event,'praep-bank')">
+                <div class="praep-cat-title">nach / ab / bis<br><small>(Zukunft / Endpunkt)</small></div>
+            </div>
+        </div>
+        <div class="chip-bank" id="praep-bank"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showLoesungGeneric('sec2', PRAEP_DATA, 'tp', '.praep-cat')">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetZuordnung('sec2', '.praep-cat', 'praep-bank', PRAEP_DATA, 'tp', 2, initPraepZuordnung)">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-3">&#9201; 0:00</span>
+            <span class="best-time" id="best-3">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 3: Temporale Präpositionen Lückentext -->
+    <div class="section" id="sec4">
+        <h2>&#9997; Temporale Pr&auml;positionen einsetzen</h2>
+        <div class="help-box">
+            Setze die richtige Pr&auml;position ein: <strong>seit &middot; vor &middot; ab &middot; bis &middot; nach</strong>
+        </div>
+        <div id="praep-luecken"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showLueckenLoesung('praep-l')">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetLuecken('praep-l')">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-4">&#9201; 0:00</span>
+            <span class="best-time" id="best-4">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 4: Satzbau -->
+    <div class="section" id="sec5">
+        <h2>&#127279; Satzbau &ndash; Satz zusammensetzen</h2>
+        <div id="satzbau-container"></div>
+        <div class="btn-row">
+            <button class="btn btn-reset" onclick="resetSatzbau()">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-5">&#9201; 0:00</span>
+            <span class="best-time" id="best-5">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 5: Lesetext -->
+    <div class="section" id="sec6">
+        <h2>&#128218; Die neue Wohnung</h2>
+        <div class="read-box">
+            <p>Louise wohnt <strong>seit</strong> zwei Jahren in einer kleinen, dunklen Wohnung in Berlin. Die Wohnung ist zu klein und zu alt. <strong>Vor</strong> einem Monat hat sie ihren Freund Alex angerufen: &bdquo;Ich brauche eine neue Wohnung &ndash; kannst du mir helfen?&ldquo;</p>
+            <p>Alex und Louise besichtigen zuerst eine Wohnung im Erdgeschoss. Sie ist aber noch <strong>dunkler</strong> und <strong>&auml;lter</strong> als Louises aktuelle Wohnung. &bdquo;Das ist nicht besser, das ist <strong>schlechter</strong>!&ldquo;, sagt Louise.</p>
+            <p>Die zweite Wohnung ist viel <strong>gr&ouml;&szlig;er</strong> und <strong>heller</strong>. Sie liegt im zweiten Stock, hat einen sch&ouml;nen Hof und eine moderne Einbauküche. &bdquo;Das ist die <strong>sch&ouml;nste</strong> Wohnung, die ich je gesehen habe!&ldquo;, ruft Louise.</p>
+            <p>Die Miete ist 600 Euro kalt &ndash; <strong>günstiger</strong> als erwartet. Louise kann <strong>ab</strong> n&auml;chster Woche einziehen. Sie muss ihren alten Mietvertrag <strong>bis</strong> Ende des Monats k&uuml;ndigen. <strong>Nach</strong> dem Umzug will sie neue M&ouml;bel kaufen, denn die Wohnung ist moderner als ihre alten Sachen.</p>
+            <p>Alex ist stolz. &bdquo;Das war die <strong>beste</strong> Entscheidung &ndash; du wirst dich dort sehr wohl fühlen!&ldquo;</p>
+        </div>
+
+        <h2 style="margin-top:24px;">&#128221; Fragen zum Text</h2>
+        <div class="frage-item">
+            <div class="frage-label">1. Wie lange wohnt Louise schon in ihrer alten Wohnung?</div>
+            <input class="frage-input" type="text" placeholder="Deine Antwort ...">
+            <div class="frage-loesung" id="fl1">Sie wohnt seit zwei Jahren dort.</div>
+        </div>
+        <div class="frage-item">
+            <div class="frage-label">2. Warum gef&auml;llt die erste Wohnung Louise nicht?</div>
+            <input class="frage-input" type="text" placeholder="Deine Antwort ...">
+            <div class="frage-loesung" id="fl2">Sie ist noch dunkler und &auml;lter als Louises aktuelle Wohnung.</div>
+        </div>
+        <div class="frage-item">
+            <div class="frage-label">3. Wann kann Louise in die neue Wohnung einziehen?</div>
+            <input class="frage-input" type="text" placeholder="Deine Antwort ...">
+            <div class="frage-loesung" id="fl3">Ab n&auml;chster Woche.</div>
+        </div>
+        <div class="frage-item">
+            <div class="frage-label">4. Finde zwei Komparativformen im Text.</div>
+            <input class="frage-input" type="text" placeholder="Deine Antwort ...">
+            <div class="frage-loesung" id="fl4">z.B.: dunkler, &auml;lter, gr&ouml;&szlig;er, heller, schlechter, günstiger</div>
+        </div>
+        <div class="frage-item">
+            <div class="frage-label">5. Welche temporale Pr&auml;position zeigt, dass eine Handlung noch l&auml;uft?</div>
+            <input class="frage-input" type="text" placeholder="Deine Antwort ...">
+            <div class="frage-loesung" id="fl5">seit (Louise wohnt seit zwei Jahren ...)</div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showFragenLoesung()">L&ouml;sungen zeigen</button>
+            <button class="btn btn-reset" onclick="resetFragen()">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-6">&#9201; 0:00</span>
+            <span class="best-time" id="best-6">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        Erstellt von <span class="author-name">Frank Burkert</span> &middot;
+        <a href="mailto:frankburkert@gmx.net">frankburkert@gmx.net</a> &middot;
+        DaF A2.1 &middot; Lektion 103x
+    </div>
+</div>
+
+<script>
+var TIMER_PREFIX = 'a2-103x-wohnen-g';
+
+/* ============================================================
+   TIMER SYSTEM
+   ============================================================ */
+var timerState = {};
+function padZ(n) { return n < 10 ? '0' + n : '' + n; }
+function fmtTime(s) { return Math.floor(s / 60) + ':' + padZ(s % 60); }
+
+function startTimer(idx) {
+    if (timerState[idx] && timerState[idx].running) return;
+    if (timerState[idx] && timerState[idx].stopped) return;
+    if (!timerState[idx]) timerState[idx] = { interval: null, seconds: 0, running: false, stopped: false };
+    timerState[idx].running = true;
+    timerState[idx].interval = setInterval(function() {
+        timerState[idx].seconds++;
+        var el = document.getElementById('timer-' + idx);
+        if (el) el.textContent = '\u23F1 ' + fmtTime(timerState[idx].seconds);
+    }, 1000);
+}
+
+function stopTimer(idx) {
+    if (!timerState[idx] || !timerState[idx].running) return;
+    clearInterval(timerState[idx].interval);
+    timerState[idx].running = false;
+    timerState[idx].stopped = true;
+    var best = localStorage.getItem(TIMER_PREFIX + '-best-' + idx);
+    var cur = timerState[idx].seconds;
+    if (!best || cur < parseInt(best)) {
+        localStorage.setItem(TIMER_PREFIX + '-best-' + idx, cur);
+        var bEl = document.getElementById('best-' + idx);
+        if (bEl) bEl.textContent = '\uD83C\uDFC6 ' + fmtTime(cur);
+    }
+}
+
+function resetTimer(idx) {
+    if (timerState[idx]) clearInterval(timerState[idx].interval);
+    timerState[idx] = { interval: null, seconds: 0, running: false, stopped: false };
+    var el = document.getElementById('timer-' + idx);
+    if (el) el.textContent = '\u23F1 0:00';
+}
+
+function loadBestTimes() {
+    for (var i = 0; i < 6; i++) {
+        var best = localStorage.getItem(TIMER_PREFIX + '-best-' + i);
+        if (best) {
+            var bEl = document.getElementById('best-' + i);
+            if (bEl) bEl.textContent = '\uD83C\uDFC6 ' + fmtTime(parseInt(best));
+        }
+    }
+}
+
+/* ============================================================
+   LIVECHECK
+   ============================================================ */
+function liveCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer;
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (user.length === 0) return;
+    var cmpUser = user;
+    var cmpAnswer = answer;
+    if (field === 'art') { cmpUser = user.toLowerCase(); cmpAnswer = answer.toLowerCase(); }
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* prefix ok */ }
+    else { inp.classList.add('wrong'); }
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function showSection(idx) {
+    var secs = document.querySelectorAll('.section');
+    var btns = document.querySelectorAll('.nav-btn');
+    for (var i = 0; i < secs.length; i++) {
+        secs[i].classList.remove('active');
+        btns[i].classList.remove('active');
+    }
+    secs[idx].classList.add('active');
+    btns[idx].classList.add('active');
+}
+
+/* ============================================================
+   DATA: Komparativ-Tabelle
+   ============================================================ */
+var KOMP_DATA = [
+    { pos: 'gro\u00df',  komp: 'gr\u00f6\u00dfer',  sup: 'am gr\u00f6\u00dften',  showPos: true,  showKomp: false, showSup: false },
+    { pos: 'klein',     komp: 'kleiner',   sup: 'am kleinsten',  showPos: true,  showKomp: false, showSup: false },
+    { pos: 'hell',      komp: 'heller',    sup: 'am hellsten',   showPos: true,  showKomp: false, showSup: false },
+    { pos: 'dunkel',    komp: 'dunkler',   sup: 'am dunkelsten', showPos: true,  showKomp: false, showSup: false },
+    { pos: 'modern',    komp: 'moderner',  sup: 'am modernsten', showPos: true,  showKomp: false, showSup: false },
+    { pos: 'alt',       komp: '\u00e4lter',   sup: 'am \u00e4ltesten',  showPos: true,  showKomp: false, showSup: false },
+    { pos: 'gut',       komp: 'besser',    sup: 'am besten',     showPos: true,  showKomp: false, showSup: false },
+    { pos: 'viel',      komp: 'mehr',      sup: 'am meisten',    showPos: true,  showKomp: false, showSup: false },
+    { pos: 'gern',      komp: 'lieber',    sup: 'am liebsten',   showPos: true,  showKomp: false, showSup: false }
+];
+
+function initKompTabelle() {
+    var tbody = document.getElementById('komp-tbody');
+    tbody.innerHTML = '';
+    KOMP_DATA.forEach(function(row, idx) {
+        var tr = document.createElement('tr');
+        // Grundform
+        var tdPos = document.createElement('td');
+        if (row.showPos) {
+            tdPos.textContent = row.pos;
+        } else {
+            var inp = makeKompInput(row.pos, 0, idx);
+            tdPos.appendChild(inp);
+        }
+        // Komparativ
+        var tdKomp = document.createElement('td');
+        if (row.showKomp) {
+            tdKomp.textContent = row.komp;
+        } else {
+            var inp2 = makeKompInput(row.komp, 1, idx);
+            tdKomp.appendChild(inp2);
+        }
+        // Superlativ
+        var tdSup = document.createElement('td');
+        if (row.showSup) {
+            tdSup.textContent = row.sup;
+        } else {
+            var inp3 = makeKompInput(row.sup, 2, idx);
+            tdSup.appendChild(inp3);
+        }
+        tr.appendChild(tdPos);
+        tr.appendChild(tdKomp);
+        tr.appendChild(tdSup);
+        tbody.appendChild(tr);
+    });
+}
+
+function makeKompInput(answer, col, rowIdx) {
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'komp-blank komp-inp-' + rowIdx + '-' + col;
+    inp.dataset.answer = answer;
+    inp.placeholder = '...';
+    inp.addEventListener('focus', function() { startTimer(1); });
+    inp.addEventListener('input', function() {
+        liveCheck(inp);
+    });
+    return inp;
+}
+
+function showKompLoesung() {
+    var inputs = document.querySelectorAll('.komp-blank');
+    inputs.forEach(function(inp) {
+        inp.value = inp.dataset.answer;
+        inp.classList.remove('correct', 'wrong');
+        inp.classList.add('correct');
+    });
+    stopTimer(1);
+}
+
+function resetKomp() {
+    resetTimer(1);
+    initKompTabelle();
+}
+
+/* ============================================================
+   DATA: Komparativ Lückentext
+   ============================================================ */
+var KOMP_LUECKEN = [
+    { text: 'Die neue Wohnung ist viel <b>___</b> als die alte. (gro\u00df \u2192 Komparativ)', blank: { answer: 'gr\u00f6\u00dfer', size: 'm', css: 'komp-l' } },
+    { text: 'Diese Wohnung ist <b>___</b> als erwartet \u2013 nur 600 Euro kalt. (g\u00fcnstig \u2192 Komparativ)', blank: { answer: 'g\u00fcnstiger', size: 'm', css: 'komp-l' } },
+    { text: 'Hier ist es viel <b>___</b> \u2013 weniger Stra\u00dfenl\u00e4rm. (ruhig \u2192 Komparativ)', blank: { answer: 'ruhiger', size: 'm', css: 'komp-l' } },
+    { text: 'Das ist die <b>___</b> Wohnung, die ich je gesehen habe! (sch\u00f6n \u2192 Superlativ)', blank: { answer: 'sch\u00f6nste', size: 'm', css: 'komp-l' } },
+    { text: 'Alex kennt die <b>___</b> Wohnungen in Berlin. (gut \u2192 Superlativ)', blank: { answer: 'besten', size: 'm', css: 'komp-l' } },
+    { text: 'Die alte Wohnung war noch <b>___</b> als diese hier. (dunkel \u2192 Komparativ)', blank: { answer: 'dunkler', size: 'm', css: 'komp-l' } },
+    { text: 'Unter allen Angeboten war dieses das <b>___</b>. (preiswert \u2192 Superlativ)', blank: { answer: 'preiswerteste', size: 'l', css: 'komp-l' } },
+    { text: 'Sie wohnt jetzt <b>___</b> als fr\u00fcher \u2013 viel mehr Platz! (bequem \u2192 Komparativ)', blank: { answer: 'bequemer', size: 'm', css: 'komp-l' } }
+];
+
+/* ============================================================
+   DATA: Temporale Präpositionen Zuordnung
+   ============================================================ */
+var PRAEP_DATA = [
+    { id: 'tp1',  text: 'Sie wohnt seit drei Jahren in Berlin.',          cat: 'tp-seit' },
+    { id: 'tp2',  text: 'Ich lerne seit sechs Monaten Deutsch.',          cat: 'tp-seit' },
+    { id: 'tp3',  text: 'Wir sind vor zwei Jahren umgezogen.',            cat: 'tp-vor'  },
+    { id: 'tp4',  text: 'Er hat vor einer Woche die Wohnung besichtigt.', cat: 'tp-vor'  },
+    { id: 'tp5',  text: 'Ab n\u00e4chstem Monat zahlt sie weniger Miete.',     cat: 'tp-nach' },
+    { id: 'tp6',  text: 'Sie muss bis Ende des Monats k\u00fcndigen.',         cat: 'tp-nach' },
+    { id: 'tp7',  text: 'Nach dem Umzug kauft sie neue M\u00f6bel.',           cat: 'tp-nach' }
+];
+
+/* ============================================================
+   DATA: Lückentext Temporale Präpositionen
+   ============================================================ */
+var PRAEP_LUECKEN = [
+    { text: 'Er wohnt <b>___</b> drei Jahren in dieser Wohnung und will nicht umziehen.', blank: { answer: 'seit', size: 's', css: 'praep-l' } },
+    { text: 'Wir sind <b>___</b> einem Jahr in diesen sch\u00f6nen Hof eingezogen.', blank: { answer: 'vor', size: 's', css: 'praep-l' } },
+    { text: '<b>___</b> n\u00e4chster Woche kann sie in die neue Wohnung einziehen.', blank: { answer: 'Ab', size: 's', css: 'praep-l' } },
+    { text: 'Sie muss den Mietvertrag <b>___</b> Ende des Monats k\u00fcndigen.', blank: { answer: 'bis', size: 's', css: 'praep-l' } },
+    { text: '<b>___</b> dem Umzug hat sie die Wohnung gem\u00fctlich eingerichtet.', blank: { answer: 'Nach', size: 's', css: 'praep-l' } },
+    { text: 'Die Baustelle l\u00e4rmt <b>___</b> sechs Monaten \u2013 es nervt uns sehr.', blank: { answer: 'seit', size: 's', css: 'praep-l' } },
+    { text: '<b>___</b> zwei Jahren hat sie ihre alte Wohnung verlassen.', blank: { answer: 'Vor', size: 's', css: 'praep-l' } },
+    { text: '<b>___</b> dem Einzug geh\u00f6rt die Kaution zur\u00fcck an den Mieter.', blank: { answer: 'Nach', size: 's', css: 'praep-l' } }
+];
+
+/* ============================================================
+   DATA: Satzbau
+   ============================================================ */
+var SATZBAU_DATA = [
+    {
+        parts: ['die', 'neue', 'wohnung', 'ist', 'viel', 'gr\u00f6\u00dfer', 'als', 'die', 'alte'],
+        valid: [['die', 'neue', 'wohnung', 'ist', 'viel', 'gr\u00f6\u00dfer', 'als', 'die', 'alte']]
+    },
+    {
+        parts: ['sie', 'wohnt', 'seit', 'zwei', 'jahren', 'in', 'berlin'],
+        valid: [['sie', 'wohnt', 'seit', 'zwei', 'jahren', 'in', 'berlin']]
+    },
+    {
+        parts: ['nach', 'dem', 'umzug', 'kauft', 'sie', 'neue', 'm\u00f6bel'],
+        valid: [['nach', 'dem', 'umzug', 'kauft', 'sie', 'neue', 'm\u00f6bel']]
+    },
+    {
+        parts: ['das', 'ist', 'die', 'sch\u00f6nste', 'wohnung', 'in', 'der', 'stadt'],
+        valid: [['das', 'ist', 'die', 'sch\u00f6nste', 'wohnung', 'in', 'der', 'stadt']]
+    },
+    {
+        parts: ['wann', 'k\u00f6nnen', 'wir', 'einziehen'],
+        valid: [['wann', 'k\u00f6nnen', 'wir', 'einziehen']]
+    }
+];
+
+/* ============================================================
+   GENERIC DRAG & DROP
+   ============================================================ */
+var draggedChip = null;
+
+function makeChipZuordnung(data, bankId, chipPrefix, catSelector, timerIdx) {
+    var bank = document.getElementById(bankId);
+    bank.innerHTML = '';
+    var shuffled = data.slice().sort(function() { return Math.random() - 0.5; });
+    shuffled.forEach(function(item) {
+        var chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.id = chipPrefix + '-chip-' + item.id;
+        chip.draggable = true;
+        chip.textContent = item.text;
+        chip.dataset.answer = item.cat;
+        chip.addEventListener('dragstart', function(e) {
+            draggedChip = chip;
+            e.dataTransfer.setData('text/plain', chip.id);
+            startTimer(timerIdx);
+        });
+        chip.addEventListener('click', function() {
+            if (!chip.classList.contains('placed')) startTimer(timerIdx);
+        });
+        bank.appendChild(chip);
+    });
+}
+
+
+// ── Direct-Feedback für Zuordnungs-Chips ─────────────────────────────────
+function colorZuordnungChip(chip) {
+    var parent = chip.parentElement;
+    if (!parent) { chip.classList.remove('correct','wrong'); return; }
+    // Ist der Chip in einer Bank? (hat class chip-bank, word-bank, oder id endet auf -bank)
+    var inBank = parent.classList.contains('chip-bank') 
+              || parent.classList.contains('word-bank')
+              || (parent.id && parent.id.indexOf('bank') !== -1 && parent.id.indexOf('cat') === -1);
+    chip.classList.remove('correct','wrong');
+    if (inBank) return;  // in Bank -> neutral
+    // In einer Zone: prüfe ob richtig
+    var answer = chip.dataset.answer;
+    if (!answer) return;  // kein answer -> kein Feedback
+    if (parent.id === answer) {
+        chip.classList.add('correct');
+    } else {
+        chip.classList.add('wrong');
+    }
+}
+
+function colorAllZuordnungChips() {
+    document.querySelectorAll('.chip[data-answer]').forEach(function(chip) {
+        colorZuordnungChip(chip);
+    });
+}
+
+function dropGeneric(e, bankId) {
+    e.preventDefault();
+    var id = e.dataTransfer.getData('text/plain');
+    var chip = document.getElementById(id);
+    if (!chip) return;
+    var target = e.currentTarget;
+    target.appendChild(chip);
+    chip.classList.add('placed');
+    colorAllZuordnungChips();
+}
+
+function clickCat(e, bankId) {
+    if (e.target.classList.contains('chip') && e.target.classList.contains('placed')) {
+        document.getElementById(bankId).appendChild(e.target);
+        e.target.classList.remove('placed', 'correct', 'wrong');
+        colorAllZuordnungChips();
+    }
+}
+
+function showLoesungGeneric(secId, data, chipPrefix, catSelector) {
+    data.forEach(function(item) {
+        var chip = document.getElementById(chipPrefix + '-chip-' + item.id);
+        if (!chip) return;
+        if (chip.parentNode && chip.parentNode.id !== item.cat) {
+            var target = document.getElementById(item.cat);
+            if (target) target.appendChild(chip);
+            chip.classList.add('placed');
+        }
+        chip.classList.remove('correct', 'wrong');
+        chip.classList.add(chip.parentNode && chip.parentNode.id === item.cat ? 'correct' : 'wrong');
+    });
+    stopTimer(parseInt(secId.replace('sec', '')));
+}
+
+function resetZuordnung(secId, catSelector, bankId, data, chipPrefix, timerIdx, initFn) {
+    var sec = document.getElementById(secId);
+    var cats = sec.querySelectorAll(catSelector);
+    cats.forEach(function(cat) {
+        var chips = cat.querySelectorAll('.chip');
+        chips.forEach(function(chip) {
+            chip.classList.remove('placed', 'correct', 'wrong');
+            document.getElementById(bankId).appendChild(chip);
+        });
+    });
+    resetTimer(timerIdx);
+    if (initFn) initFn();
+}
+
+/* ============================================================
+   GENERIC LÜCKENTEXT
+   ============================================================ */
+function renderLuecken(data, containerId, cssClass, timerIdx) {
+    var container = document.getElementById(containerId);
+    container.innerHTML = '';
+    data.forEach(function(item) {
+        var card = document.createElement('div');
+        card.className = 'ex-card';
+        var span = document.createElement('span');
+        span.className = 'ex-sentence';
+        var parts = item.text.split('<b>___</b>');
+        var before = document.createElement('span');
+        before.innerHTML = parts[0] || '';
+        span.appendChild(before);
+        var group = document.createElement('span');
+        group.className = 'nowrap-group';
+        var inp = document.createElement('input');
+        inp.type = 'text';
+        inp.className = 'blank ' + item.blank.size + ' ' + cssClass;
+        inp.dataset.answer = item.blank.answer;
+        (function(ti) {
+            inp.addEventListener('focus', function() { startTimer(ti); });
+            inp.addEventListener('input', function() {
+                liveCheck(inp);
+            });
+        })(timerIdx);
+        var hint = document.createElement('span');
+        hint.className = 'correction-hint';
+        group.appendChild(inp);
+        group.appendChild(hint);
+        span.appendChild(group);
+        var after = document.createElement('span');
+        after.innerHTML = parts[1] || '';
+        span.appendChild(after);
+        card.appendChild(span);
+        container.appendChild(card);
+    });
+}
+
+function showLueckenLoesung(cssClass) {
+    var inputs = document.querySelectorAll('input.' + cssClass);
+    inputs.forEach(function(inp) {
+        inp.value = inp.dataset.answer;
+        inp.classList.remove('correct', 'wrong');
+        inp.classList.add('correct');
+        var hint = inp.nextElementSibling;
+        if (hint && hint.classList.contains('correction-hint')) hint.textContent = '\u2713 ' + inp.dataset.answer;
+    });
+    if (cssClass === 'komp-l') stopTimer(2);
+    if (cssClass === 'praep-l') stopTimer(4);
+}
+
+function resetLuecken(cssClass) {
+    var inputs = document.querySelectorAll('input.' + cssClass);
+    inputs.forEach(function(inp) {
+        inp.value = '';
+        inp.classList.remove('correct', 'wrong');
+        var hint = inp.nextElementSibling;
+        if (hint && hint.classList.contains('correction-hint')) hint.textContent = '';
+    });
+    if (cssClass === 'komp-l') resetTimer(2);
+    if (cssClass === 'praep-l') resetTimer(4);
+}
+
+/* ============================================================
+   SATZBAU
+   ============================================================ */
+
+
+
+// ===== SATZBAU (neu: satzbau-drag-drop Pattern) =====
+var sbDragged = null;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
+}
+
+function sbCapitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
+    });
+}
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before); else zone.appendChild(cursor);
+    });
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = SATZBAU_DATA[idx].valid.some(function(v) {
+        return JSON.stringify(v) === JSON.stringify(order);
+    });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt';
+        punkt.textContent = '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('correct', 'incorrect'); });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+    setTimeout(function() {
+        startTimer(5);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    }, 500);
+}
+
+function sbCheckAllDone() {
+    var allOk = SATZBAU_DATA.every(function(_, i) {
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
+    });
+    if (allOk) stopTimer(5);
+}
+
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    var solution = SATZBAU_DATA[idx].valid[0];
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild)  row.removeChild(row.firstChild);
+    solution.forEach(function(word) {
+        var chip = allChips[word];
+        if (chip) { chip.classList.remove('correct', 'incorrect'); row.appendChild(chip); }
+    });
+    fb.textContent = '';
+    setTimeout(function() { sbUpdateCapitalization(row); sbCheckAuto(idx); }, 100);
+}
+
+function initSatzbau() {
+    var container = document.getElementById('satzbauContainer')
+                 || document.getElementById('satzbau-container');
+    if (!container) return;
+    while (container.firstChild) container.removeChild(container.firstChild);
+    SATZBAU_DATA.forEach(function(ex, idx) {
+        var item = document.createElement('div');
+        item.className = 'satzbau-item';
+        var bank = document.createElement('div');
+        bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
+        var row = document.createElement('div');
+        row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
+        var fb = document.createElement('div');
+        fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + idx;
+        var solBtn = document.createElement('button');
+        solBtn.className = 'btn btn-show'; solBtn.textContent = 'Lösung';
+        (function(i) { solBtn.onclick = function() { sbShowSolution(i); }; })(idx);
+        item.appendChild(bank); item.appendChild(row); item.appendChild(fb); item.appendChild(solBtn);
+        container.appendChild(item);
+        var parts = ex.parts.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+        }
+        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank, idx);
+        sbRegisterZone(row, idx);
+    });
+}
+
+function resetSatzbau() {
+    SATZBAU_DATA.forEach(function(_, idx) {
+        var bank = document.getElementById('sb-bank-' + idx);
+        var row  = document.getElementById('sb-row-' + idx);
+        var fb   = document.getElementById('sb-fb-' + idx);
+        if (bank) while (bank.firstChild) bank.removeChild(bank.firstChild);
+        if (row)  while (row.firstChild)  row.removeChild(row.firstChild);
+        if (fb)   { fb.textContent = ''; fb.className = 'satzbau-feedback'; }
+    });
+    initSatzbau();
+}
+
+
+/* ============================================================
+   LESETEXT FRAGEN
+   ============================================================ */
+function showFragenLoesung() {
+    for (var i = 1; i <= 5; i++) {
+        var el = document.getElementById('fl' + i);
+        if (el) el.classList.add('visible');
+    }
+    stopTimer(6);
+}
+
+function resetFragen() {
+    for (var i = 1; i <= 5; i++) {
+        var el = document.getElementById('fl' + i);
+        if (el) el.classList.remove('visible');
+    }
+    document.querySelectorAll('.frage-input').forEach(function(inp) { inp.value = ''; });
+    resetTimer(6);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function initPraepZuordnung() {
+    makeChipZuordnung(PRAEP_DATA, 'praep-bank', 'tp', '.praep-cat', 2);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadBestTimes();
+    initKompTabelle();
+    renderLuecken(KOMP_LUECKEN, 'komp-luecken', 'komp-l', 1);
+    initPraepZuordnung();
+    renderLuecken(PRAEP_LUECKEN, 'praep-luecken', 'praep-l', 3);
+    initSatzbau();
+    document.querySelectorAll('.frage-input').forEach(function(inp) {
+        inp.addEventListener('focus', function() { startTimer(6); }, { once: true });
+    });
+});
+
+/* ========== TAB 0: ENTDECKUNG ========== */
+var entdeckungStep = 0;
+var entdeckungTotal = 4;
+function mcCheck(step, btn, correct) {{
+    var fb = document.getElementById('mcfb' + step);
+    var btns = btn.parentElement.querySelectorAll('.mc-btn');
+    btns.forEach(function(b) {{ b.disabled = true; }});
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    fb.textContent = correct ? '✓ Richtig!' : '✗ Nicht ganz — die Antwort ist markiert.';
+    fb.className = 'mc-feedback ' + (correct ? 'ok' : 'nok');
+    if (!correct) {{
+        btns.forEach(function(b) {{
+            if (b.dataset.correct === '1') b.classList.add('correct');
+        }});
+    }}
+    var dot = document.getElementById('pdot' + step);
+    if (dot) {{ dot.classList.remove('active'); dot.classList.add('done'); }}
+    entdeckungStep = step + 1;
+    if (entdeckungStep < entdeckungTotal) {{
+        var nextDot = document.getElementById('pdot' + entdeckungStep);
+        if (nextDot) nextDot.classList.add('active');
+    }}
+    if (entdeckungStep >= entdeckungTotal) {{
+        var regel = document.getElementById('entdeckung-regel');
+        if (regel) regel.classList.add('visible');
+    }}
+}}
+
+/* ── Tap-to-Select / Tap-to-Place (Mobile Satzbau) ─────────────────── */
+(function(){
+  var sbSelected = null;
+
+  var selStyle = document.createElement('style');
+  selStyle.textContent = '.chip.sb-tap-selected { outline: 3px solid #f39c12; transform: scale(1.08); box-shadow: 0 0 10px rgba(243,156,18,0.6); z-index: 10; position:relative; }';
+  document.head.appendChild(selStyle);
+
+  function clearSelection(){
+    if(sbSelected){ sbSelected.classList.remove('sb-tap-selected'); sbSelected = null; }
+  }
+
+  function findZone(el){
+    while(el){
+      if(el.classList && (el.classList.contains('chips-container') || el.classList.contains('sentence-builder') || el.classList.contains('chip-bank') || el.classList.contains('drop-row'))) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function getIdxFromZone(zone){
+    var id = zone.id || '';
+    var m = id.match(/sb-(bank|row)-(\d+)/);
+    return m ? parseInt(m[2]) : -1;
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest ? e.target.closest('.chip') : null;
+    if(chip){
+      if(chip === sbSelected){ clearSelection(); return; }
+      clearSelection();
+      sbSelected = chip;
+      chip.classList.add('sb-tap-selected');
+      return;
+    }
+    var zone = findZone(e.target);
+    if(zone && sbSelected){
+      zone.appendChild(sbSelected);
+      var idx = getIdxFromZone(zone);
+      if(idx >= 0){
+        var row = document.getElementById('sb-row-' + idx);
+        if(row && typeof sbUpdateCapitalization === 'function') sbUpdateCapitalization(row);
+        if(typeof sbCheckAuto === 'function') sbCheckAuto(idx);
+      }
+      clearSelection();
+      return;
+    }
+    clearSelection();
+  }, false);
+})();
+/* ── Ende Tap-to-Select ─────────────────────────────────────────────── */
+</script>
+<div class="author-footer">
+  <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+  <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
+</body>
+</html>

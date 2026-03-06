@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wohnen &ndash; Vokabular (A2.1)</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+h1 { text-align: center; color: #333; margin-bottom: 4px; font-size: 1.5em; }
+.subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.95em; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.section { display: none; }
+.section.active { display: block; }
+h2 { color: #333; font-size: 1.15em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+.btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+.btn { padding: 10px 22px; border: none; border-radius: 25px; font-weight: 600; font-size: 0.9em; cursor: pointer; transition: all 0.2s; }
+.btn-show { background: #f0f0f0; color: #555; }
+.btn-show:hover { background: #e0e0e0; }
+.btn-reset { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn-reset:hover { background: #e74c3c; color: white; }
+.timer-display { display: flex; justify-content: center; gap: 20px; margin-top: 10px; font-size: 0.95em; }
+.current-time { font-weight: 600; color: #667eea; }
+.best-time { font-weight: 600; color: #f39c12; }
+.help-box { background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 20px; font-size: 0.9em; line-height: 1.7; color: #444; }
+.help-box strong { color: #667eea; }
+
+/* Lueckentext */
+.ex-card { background: #f8f9ff; padding: 16px 20px; margin-bottom: 14px; border-radius: 10px; border-left: 4px solid #667eea; position: relative; }
+.ex-sentence { font-size: 1.0em; line-height: 2.4; color: #333; display: block; }
+.nowrap-group { display: inline-flex; align-items: baseline; white-space: nowrap; gap: 0; }
+input.blank { border: none; border-bottom: 2px solid #667eea; background: #fff; padding: 4px 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; }
+input.blank:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+input.blank.s { min-width: 50px; width: 50px; }
+input.blank.m { min-width: 100px; width: 100px; }
+input.blank.l { min-width: 150px; width: 150px; }
+input.blank.xl { min-width: 200px; width: 200px; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+.correction-hint { color: #27ae60; font-weight: 600; font-size: 0.85em; margin-left: 4px; white-space: nowrap; }
+
+/* Zuordnung */
+.zuordnung-categories { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+.zuordnung-cat { background: #f0f0f0; border: 2px dashed #ccc; border-radius: 10px; padding: 12px; min-height: 120px; }
+.zuordnung-cat-title { font-weight: 700; color: #667eea; text-align: center; margin-bottom: 8px; font-size: 0.95em; }
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 60px; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; }
+.chip:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(102,126,234,0.3); }
+.chip.placed { background: #667eea; color: white; }
+.chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; border-color: #27ae60 !important; color: white !important; }
+.chip.wrong { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; border-color: #e74c3c !important; color: white !important; }
+
+/* Satzbau */
+.satzbau-item { background: #f8f9ff; padding: 16px 20px; margin-bottom: 20px; border-radius: 10px; border-left: 4px solid #667eea; }
+.drop-row { background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; min-height: 60px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.drop-row .chip { margin: 0; }
+.chip.punct { min-width: 32px; padding: 8px 10px; font-size: 1.2em; font-weight: 700; text-align: center; }
+.drop-row .chip.punct { margin-left: -4px; }
+
+/* Wortschatz */
+.vocab-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.vocab-en { font-weight: 600; color: #764ba2; min-width: 160px; font-size: 0.95em; }
+.vocab-arrow { color: #ccc; font-size: 1.2em; }
+.vocab-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.vocab-inputs input { border: none; border-bottom: 2px solid #667eea; background: #fff; padding: 4px 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; }
+.vocab-inputs input:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+.vocab-inputs input.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+.vocab-inputs input.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+.vocab-inputs input.art { width: 50px; }
+.vocab-inputs input.wort { width: 140px; }
+.vocab-inputs input.plural { width: 150px; }
+.vocab-inputs input.phrase { width: 190px; }
+.vocab-hint { color: #27ae60; font-weight: 600; font-size: 0.8em; margin-left: 6px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+    .container { padding: 18px 14px; }
+    .zuordnung-categories { grid-template-columns: 1fr; }
+    .nav-btn { font-size: 0.78em; padding: 8px 12px; }
+    .vocab-item { flex-direction: column; align-items: flex-start; }
+}
+
+/* Author Footer */
+.author-footer { margin-top: 40px; padding: 16px 20px; text-align: center; font-size: 0.8em; color: #888; border-top: 1px solid #e0e0e0; }
+.author-footer a { color: #667eea; text-decoration: none; font-weight: 500; }
+.author-footer a:hover { text-decoration: underline; color: #764ba2; }
+.author-footer .author-name { font-weight: 600; color: #555; }
+/* Aliase für neues satzbau-drag-drop Pattern */
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 60px; margin-bottom: 10px; }
+.sentence-builder { background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; min-height: 60px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Einziehen und ausziehen</h1>
+    <div class="subtitle">Wohnen &middot; Umzug &middot; DE_A2_103x &middot; V1 &middot; X1 &middot; V2 &middot; X2</div>
+
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)">&#127968; Umzug-Vokabular</div>
+        <div class="nav-btn" onclick="showSection(1)">&#9997; Umzug-L&uuml;cken</div>
+        <div class="nav-btn" onclick="showSection(2)">&#127748; Zuhause</div>
+        <div class="nav-btn" onclick="showSection(3)">&#9997; Zuhause-L&uuml;cken</div>
+        <div class="nav-btn" onclick="showSection(4)">&#127279; Satzbau</div>
+        <div class="nav-btn" onclick="showSection(5)">&#128218; Wortschatz</div>
+    </div>
+
+    <!-- TAB 0: Umzug-Vokabular Zuordnung -->
+    <div class="section active" id="sec0">
+        <h2>&#127968; Umzug-Vokabular – Wo geh&ouml;rt es hin?</h2>
+        <div class="help-box">
+            Ordne die W&ouml;rter den richtigen Kategorien zu: <strong>Wohnungssuche</strong> (vor dem Umzug) oder <strong>Umzug</strong> (beim/nach dem Umzug).
+        </div>
+        <div class="zuordnung-categories" id="umzug-cats">
+            <div class="zuordnung-cat" id="umzug-suche" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'umzug-bank')" onclick="clickCat(event,'umzug-bank')">
+                <div class="zuordnung-cat-title">&#128270; Wohnungssuche</div>
+            </div>
+            <div class="zuordnung-cat" id="umzug-umzug" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'umzug-bank')" onclick="clickCat(event,'umzug-bank')">
+                <div class="zuordnung-cat-title">&#128667; Beim Umzug</div>
+            </div>
+        </div>
+        <div class="chip-bank" id="umzug-bank"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showLoesungGeneric('sec0', UMZUG_DATA, 'uz', '.zuordnung-cat')">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetZuordnung('sec0', '.zuordnung-cat', 'umzug-bank', UMZUG_DATA, 'uz', 0, initUmzugZuordnung)">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-0">&#9201; 0:00</span>
+            <span class="best-time" id="best-0">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 1: Umzug Lückentext -->
+    <div class="section" id="sec1">
+        <h2>&#9997; Umzug – L&uuml;ckentext</h2>
+        <div class="help-box">
+            Setze das richtige Wort ein: <strong>einziehen &middot; ausziehen &middot; umziehen &middot; mieten &middot; besichtigen &middot; einrichten &middot; kündigen &middot; die Kaution</strong>
+        </div>
+        <div id="umzug-luecken"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showLueckenLoesung('umzug-l')">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetLuecken('umzug-l')">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-1">&#9201; 0:00</span>
+            <span class="best-time" id="best-1">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 2: Zuhause Zuordnung drinnen/draußen -->
+    <div class="section" id="sec2">
+        <h2>&#127748; Zuhause – drinnen oder drau&szlig;en?</h2>
+        <div class="help-box">
+            Ordne die W&ouml;rter zu: Was ist <strong>drinnen</strong> (im Geb&auml;ude) und was ist <strong>drau&szlig;en</strong>?
+        </div>
+        <div class="zuordnung-categories" id="zuhause-cats">
+            <div class="zuordnung-cat" id="zh-drinnen" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'zuhause-bank')" onclick="clickCat(event,'zuhause-bank')">
+                <div class="zuordnung-cat-title">&#127968; drinnen</div>
+            </div>
+            <div class="zuordnung-cat" id="zh-draussen" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'zuhause-bank')" onclick="clickCat(event,'zuhause-bank')">
+                <div class="zuordnung-cat-title">&#127807; drau&szlig;en</div>
+            </div>
+        </div>
+        <div class="chip-bank" id="zuhause-bank"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showLoesungGeneric('sec2', ZUHAUSE_DATA, 'zh', '.zuordnung-cat')">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetZuordnung('sec2', '.zuordnung-cat', 'zuhause-bank', ZUHAUSE_DATA, 'zh', 2, initZuhauseZuordnung)">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-2">&#9201; 0:00</span>
+            <span class="best-time" id="best-2">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 3: Zuhause Lückentext -->
+    <div class="section" id="sec3">
+        <h2>&#9997; Zuhause – L&uuml;ckentext</h2>
+        <div class="help-box">
+            Setze das richtige Wort ein: <strong>das Erdgeschoss &middot; der Stock &middot; die Nachbarschaft &middot; das Geb&auml;ude &middot; der Hof &middot; die Mauer &middot; das Tor &middot; die Baustelle</strong>
+        </div>
+        <div id="zuhause-luecken"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showLueckenLoesung('zh-l')">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetLuecken('zh-l')">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-3">&#9201; 0:00</span>
+            <span class="best-time" id="best-3">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 4: Satzbau -->
+    <div class="section" id="sec4">
+        <h2>&#127279; Satzbau &ndash; Satz zusammensetzen</h2>
+        <div id="satzbau-container"></div>
+        <div class="btn-row">
+            <button class="btn btn-reset" onclick="resetSatzbau()">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-4">&#9201; 0:00</span>
+            <span class="best-time" id="best-4">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <!-- TAB 5: Wortschatz -->
+    <div class="section" id="sec5">
+        <h2>&#128218; Wortschatz &uuml;ben</h2>
+        <div class="help-box">
+            Tippe die deutsche &Uuml;bersetzung. Bei Nomen: <strong>Artikel &middot; Wort &middot; Plural</strong>
+        </div>
+        <div id="vocab-container"></div>
+        <div class="btn-row">
+            <button class="btn btn-show" onclick="showVocabLoesung()">L&ouml;sung zeigen</button>
+            <button class="btn btn-reset" onclick="resetVocab()">Reset</button>
+        </div>
+        <div class="timer-display">
+            <span class="current-time" id="timer-5">&#9201; 0:00</span>
+            <span class="best-time" id="best-5">&#127942; --:--</span>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        Erstellt von <span class="author-name">Frank Burkert</span> &middot;
+        <a href="mailto:frankburkert@gmx.net">frankburkert@gmx.net</a> &middot;
+        DaF A2.1 &middot; Lektion 103x
+    </div>
+</div>
+
+<script>
+var TIMER_PREFIX = 'a2-103x-wohnen-v';
+
+/* ============================================================
+   TIMER SYSTEM
+   ============================================================ */
+var timerState = {};
+
+function padZ(n) { return n < 10 ? '0' + n : '' + n; }
+function fmtTime(s) { return Math.floor(s / 60) + ':' + padZ(s % 60); }
+
+function startTimer(idx) {
+    if (timerState[idx] && timerState[idx].running) return;
+    if (timerState[idx] && timerState[idx].stopped) return;
+    if (!timerState[idx]) timerState[idx] = { interval: null, seconds: 0, running: false, stopped: false };
+    timerState[idx].running = true;
+    timerState[idx].interval = setInterval(function() {
+        timerState[idx].seconds++;
+        var el = document.getElementById('timer-' + idx);
+        if (el) el.textContent = '\u23F1 ' + fmtTime(timerState[idx].seconds);
+    }, 1000);
+}
+
+function stopTimer(idx) {
+    if (!timerState[idx] || !timerState[idx].running) return;
+    clearInterval(timerState[idx].interval);
+    timerState[idx].running = false;
+    timerState[idx].stopped = true;
+    var best = localStorage.getItem(TIMER_PREFIX + '-best-' + idx);
+    var cur = timerState[idx].seconds;
+    if (!best || cur < parseInt(best)) {
+        localStorage.setItem(TIMER_PREFIX + '-best-' + idx, cur);
+        var bEl = document.getElementById('best-' + idx);
+        if (bEl) bEl.textContent = '\uD83C\uDFC6 ' + fmtTime(cur);
+    }
+}
+
+function resetTimer(idx) {
+    if (timerState[idx]) clearInterval(timerState[idx].interval);
+    timerState[idx] = { interval: null, seconds: 0, running: false, stopped: false };
+    var el = document.getElementById('timer-' + idx);
+    if (el) el.textContent = '\u23F1 0:00';
+}
+
+function loadBestTimes() {
+    for (var i = 0; i < 6; i++) {
+        var best = localStorage.getItem(TIMER_PREFIX + '-best-' + i);
+        if (best) {
+            var bEl = document.getElementById('best-' + i);
+            if (bEl) bEl.textContent = '\uD83C\uDFC6 ' + fmtTime(parseInt(best));
+        }
+    }
+}
+
+/* ============================================================
+   LIVECHECK
+   ============================================================ */
+function liveCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer;
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (user.length === 0) return;
+    var cmpUser = user;
+    var cmpAnswer = answer;
+    if (field === 'art') { cmpUser = user.toLowerCase(); cmpAnswer = answer.toLowerCase(); }
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* prefix ok */ }
+    else { inp.classList.add('wrong'); }
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function showSection(idx) {
+    var secs = document.querySelectorAll('.section');
+    var btns = document.querySelectorAll('.nav-btn');
+    for (var i = 0; i < secs.length; i++) {
+        secs[i].classList.remove('active');
+        btns[i].classList.remove('active');
+    }
+    secs[idx].classList.add('active');
+    btns[idx].classList.add('active');
+}
+
+/* ============================================================
+   DATA: Umzug-Zuordnung
+   ============================================================ */
+var UMZUG_DATA = [
+    { id: 'uz1',  text: 'die Anzeige',       cat: 'umzug-suche' },
+    { id: 'uz2',  text: 'der Grundriss',      cat: 'umzug-suche' },
+    { id: 'uz3',  text: 'besichtigen',        cat: 'umzug-suche' },
+    { id: 'uz4',  text: 'der Vermieter',      cat: 'umzug-suche' },
+    { id: 'uz5',  text: 'die Nebenkosten',    cat: 'umzug-suche' },
+    { id: 'uz6',  text: 'die M\u00f6bel schleppen', cat: 'umzug-umzug' },
+    { id: 'uz7',  text: 'einziehen',          cat: 'umzug-umzug' },
+    { id: 'uz8',  text: 'einrichten',         cat: 'umzug-umzug' },
+    { id: 'uz9',  text: 'die Kaution',        cat: 'umzug-umzug' },
+    { id: 'uz10', text: 'ausziehen',          cat: 'umzug-umzug' },
+    { id: 'uz11', text: 'k\u00fcndigen',      cat: 'umzug-umzug' }
+];
+
+/* ============================================================
+   DATA: Zuhause-Zuordnung
+   ============================================================ */
+var ZUHAUSE_DATA = [
+    { id: 'zh1',  text: 'das Schlafzimmer',  cat: 'zh-drinnen' },
+    { id: 'zh2',  text: 'der Flur',          cat: 'zh-drinnen' },
+    { id: 'zh3',  text: 'die Einbauk\u00fcche', cat: 'zh-drinnen' },
+    { id: 'zh4',  text: 'das Badezimmer',    cat: 'zh-drinnen' },
+    { id: 'zh5',  text: 'das Erdgeschoss',   cat: 'zh-drinnen' },
+    { id: 'zh6',  text: 'der Garten',        cat: 'zh-draussen' },
+    { id: 'zh7',  text: 'der Hof',           cat: 'zh-draussen' },
+    { id: 'zh8',  text: 'die Mauer',         cat: 'zh-draussen' },
+    { id: 'zh9',  text: 'das Tor',           cat: 'zh-draussen' },
+    { id: 'zh10', text: 'die Baustelle',     cat: 'zh-draussen' }
+];
+
+/* ============================================================
+   DATA: Lückentext Umzug
+   ============================================================ */
+var UMZUG_LUECKEN = [
+    { text: 'Sie m\u00f6chte eine neue Wohnung <b>___</b> \u2013 sie schaut viele Anzeigen an.', blank: { answer: 'mieten', size: 'm', css: 'umzug-l' } },
+    { text: 'Morgen gehen wir die Wohnung <b>___</b> \u2013 der Grundriss sieht gut aus.', blank: { answer: 'besichtigen', size: 'l', css: 'umzug-l' } },
+    { text: 'Er muss seinen alten Mietvertrag <b>___</b>, bevor er umzieht.', blank: { answer: 'k\u00fcndigen', size: 'm', css: 'umzug-l' } },
+    { text: 'N\u00e4chsten Monat zieht sie in die neue Wohnung <b>___</b>.', blank: { answer: 'ein', size: 's', css: 'umzug-l' } },
+    { text: 'Nach dem Studium zieht er aus dem Wohnheim <b>___</b>.', blank: { answer: 'aus', size: 's', css: 'umzug-l' } },
+    { text: 'Wir wollen n\u00e4chstes Jahr <b>___</b> \u2013 Berlin ist uns zu teuer geworden.', blank: { answer: 'umziehen', size: 'm', css: 'umzug-l' } },
+    { text: '<b>___</b> zahlt man meistens drei Monatsmieten im Voraus.', blank: { answer: 'Die Kaution', size: 'l', css: 'umzug-l' } },
+    { text: 'Nach dem Einzug m\u00f6chte sie die Wohnung gem\u00fctlich <b>___</b>.', blank: { answer: 'einrichten', size: 'l', css: 'umzug-l' } }
+];
+
+/* ============================================================
+   DATA: Lückentext Zuhause
+   ============================================================ */
+var ZUHAUSE_LUECKEN = [
+    { text: 'Das B\u00fcro liegt im ersten <b>___</b>, nicht im Erdgeschoss.', blank: { answer: 'Stock', size: 'm', css: 'zh-l' } },
+    { text: 'Die Kinder spielen im <b>___</b> hinter dem Haus.', blank: { answer: 'Hof', size: 'm', css: 'zh-l' } },
+    { text: 'Die <b>___</b> ist sehr laut \u2013 sie bauen dort ein neues Geb\u00e4ude.', blank: { answer: 'Baustelle', size: 'l', css: 'zh-l' } },
+    { text: 'Das <b>___</b> hat zehn Stockwerke und einen gro\u00dfen Eingang.', blank: { answer: 'Geb\u00e4ude', size: 'm', css: 'zh-l' } },
+    { text: 'Die <b>___</b> ist sehr ruhig \u2013 alle Nachbarn sind nett.', blank: { answer: 'Nachbarschaft', size: 'l', css: 'zh-l' } },
+    { text: 'Das <b>___</b> zum Garten ist alt und knarrt laut.', blank: { answer: 'Tor', size: 'm', css: 'zh-l' } },
+    { text: 'Die alte <b>___</b> aus Stein steht seit hundert Jahren.', blank: { answer: 'Mauer', size: 'm', css: 'zh-l' } },
+    { text: 'Im <b>___</b> gibt es einen Supermarkt und eine Apotheke.', blank: { answer: 'Erdgeschoss', size: 'l', css: 'zh-l' } }
+];
+
+/* ============================================================
+   DATA: Satzbau
+   ============================================================ */
+var SATZBAU_DATA = [
+    {
+        parts: ['sie', 'hat', 'eine', 'sch\u00f6ne', 'wohnung', 'gemietet'],
+        valid: [['sie', 'hat', 'eine', 'sch\u00f6ne', 'wohnung', 'gemietet']]
+    },
+    {
+        parts: ['er', 'zieht', 'n\u00e4chsten', 'monat', 'in', 'berlin', 'ein'],
+        valid: [['er', 'zieht', 'n\u00e4chsten', 'monat', 'in', 'berlin', 'ein']]
+    },
+    {
+        parts: ['die', 'nachbarschaft', 'ist', 'sehr', 'ruhig', 'und', 'freundlich'],
+        valid: [['die', 'nachbarschaft', 'ist', 'sehr', 'ruhig', 'und', 'freundlich']]
+    },
+    {
+        parts: ['wir', 'm\u00fcssen', 'die', 'm\u00f6bel', 'in', 'den', 'hof', 'tragen'],
+        valid: [['wir', 'm\u00fcssen', 'die', 'm\u00f6bel', 'in', 'den', 'hof', 'tragen']]
+    },
+    {
+        parts: ['hat', 'sie', 'den', 'vermieter', 'schon', 'angerufen'],
+        valid: [['hat', 'sie', 'den', 'vermieter', 'schon', 'angerufen']]
+    }
+];
+
+/* ============================================================
+   DATA: Wortschatz
+   ============================================================ */
+var VOCAB_DATA = [
+    { en: 'to move in',          type: 'verb',  phrase: 'einziehen' },
+    { en: 'to move out',         type: 'verb',  phrase: 'ausziehen' },
+    { en: 'to move (to a new place)', type: 'verb', phrase: 'umziehen' },
+    { en: 'the deposit',         type: 'noun',  art: 'die', wort: 'Kaution', plural: 'Kautionen' },
+    { en: 'the rent',            type: 'noun',  art: 'die', wort: 'Miete', plural: 'Mieten' },
+    { en: 'the tenant',          type: 'noun',  art: 'der', wort: 'Mieter', plural: 'Mieter' },
+    { en: 'the landlord',        type: 'noun',  art: 'der', wort: 'Vermieter', plural: 'Vermieter' },
+    { en: 'the move (relocation)', type: 'noun', art: 'der', wort: 'Umzug', plural: 'Umz\u00fcge' },
+    { en: 'the advertisement',   type: 'noun',  art: 'die', wort: 'Anzeige', plural: 'Anzeigen' },
+    { en: 'the floor plan',      type: 'noun',  art: 'der', wort: 'Grundriss', plural: 'Grundrisse' },
+    { en: 'additional costs',    type: 'noun',  art: 'die', wort: 'Nebenkosten', plural: 'Nebenkosten' },
+    { en: 'the furniture',       type: 'noun',  art: 'die', wort: 'M\u00f6bel', plural: 'M\u00f6bel' },
+    { en: 'the building',        type: 'noun',  art: 'das', wort: 'Geb\u00e4ude', plural: 'Geb\u00e4ude' },
+    { en: 'the neighbourhood',   type: 'noun',  art: 'die', wort: 'Nachbarschaft', plural: 'Nachbarschaften' },
+    { en: 'the courtyard',       type: 'noun',  art: 'der', wort: 'Hof', plural: 'H\u00f6fe' },
+    { en: 'the wall (outdoor)',  type: 'noun',  art: 'die', wort: 'Mauer', plural: 'Mauern' },
+    { en: 'the gate',            type: 'noun',  art: 'das', wort: 'Tor', plural: 'Tore' },
+    { en: 'the construction site', type: 'noun', art: 'die', wort: 'Baustelle', plural: 'Baustellen' },
+    { en: 'to furnish / decorate', type: 'verb', phrase: 'einrichten' },
+    { en: 'to cancel (a contract)', type: 'verb', phrase: 'k\u00fcndigen' },
+    { en: 'to view / inspect',   type: 'verb',  phrase: 'besichtigen' },
+    { en: 'furnished',           type: 'verb',  phrase: 'm\u00f6bliert' }
+];
+
+/* ============================================================
+   GENERIC DRAG & DROP
+   ============================================================ */
+var draggedChip = null;
+
+function makeChipZuordnung(data, bankId, chipPrefix, catSelector, timerIdx) {
+    var bank = document.getElementById(bankId);
+    bank.innerHTML = '';
+    var shuffled = data.slice().sort(function() { return Math.random() - 0.5; });
+    shuffled.forEach(function(item) {
+        var chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.id = chipPrefix + '-chip-' + item.id;
+        chip.draggable = true;
+        chip.textContent = item.text;
+        chip.dataset.answer = item.cat;
+        chip.addEventListener('dragstart', function(e) {
+            draggedChip = chip;
+            e.dataTransfer.setData('text/plain', chip.id);
+            startTimer(timerIdx);
+        });
+        chip.addEventListener('click', function() {
+            if (!chip.classList.contains('placed')) startTimer(timerIdx);
+        });
+        bank.appendChild(chip);
+    });
+}
+
+
+// ── Direct-Feedback für Zuordnungs-Chips ─────────────────────────────────
+function colorZuordnungChip(chip) {
+    var parent = chip.parentElement;
+    if (!parent) { chip.classList.remove('correct','wrong'); return; }
+    // Ist der Chip in einer Bank? (hat class chip-bank, word-bank, oder id endet auf -bank)
+    var inBank = parent.classList.contains('chip-bank') 
+              || parent.classList.contains('word-bank')
+              || (parent.id && parent.id.indexOf('bank') !== -1 && parent.id.indexOf('cat') === -1);
+    chip.classList.remove('correct','wrong');
+    if (inBank) return;  // in Bank -> neutral
+    // In einer Zone: prüfe ob richtig
+    var answer = chip.dataset.answer;
+    if (!answer) return;  // kein answer -> kein Feedback
+    if (parent.id === answer) {
+        chip.classList.add('correct');
+    } else {
+        chip.classList.add('wrong');
+    }
+}
+
+function colorAllZuordnungChips() {
+    document.querySelectorAll('.chip[data-answer]').forEach(function(chip) {
+        colorZuordnungChip(chip);
+    });
+}
+
+function dropGeneric(e, bankId) {
+    e.preventDefault();
+    var id = e.dataTransfer.getData('text/plain');
+    var chip = document.getElementById(id);
+    if (!chip) return;
+    var target = e.currentTarget;
+    target.appendChild(chip);
+    chip.classList.add('placed');
+    colorAllZuordnungChips();
+}
+
+function clickCat(e, bankId) {
+    if (e.target.classList.contains('chip') && e.target.classList.contains('placed')) {
+        document.getElementById(bankId).appendChild(e.target);
+        e.target.classList.remove('placed', 'correct', 'wrong');
+        colorAllZuordnungChips();
+    }
+}
+
+function showLoesungGeneric(secId, data, chipPrefix, catSelector) {
+    data.forEach(function(item) {
+        var chip = document.getElementById(chipPrefix + '-chip-' + item.id);
+        if (!chip) return;
+        if (chip.parentNode && chip.parentNode.id !== item.cat) {
+            var target = document.getElementById(item.cat);
+            if (target) target.appendChild(chip);
+            chip.classList.add('placed');
+        }
+        chip.classList.remove('correct', 'wrong');
+        chip.classList.add(chip.parentNode && chip.parentNode.id === item.cat ? 'correct' : 'wrong');
+    });
+    stopTimer(parseInt(secId.replace('sec', '')));
+}
+
+function resetZuordnung(secId, catSelector, bankId, data, chipPrefix, timerIdx, initFn) {
+    var sec = document.getElementById(secId);
+    var cats = sec.querySelectorAll(catSelector);
+    cats.forEach(function(cat) {
+        var chips = cat.querySelectorAll('.chip');
+        chips.forEach(function(chip) {
+            chip.classList.remove('placed', 'correct', 'wrong');
+            document.getElementById(bankId).appendChild(chip);
+        });
+    });
+    resetTimer(timerIdx);
+    if (initFn) initFn();
+}
+
+/* ============================================================
+   GENERIC LÜCKENTEXT
+   ============================================================ */
+function renderLuecken(data, containerId, cssClass, timerIdx) {
+    var container = document.getElementById(containerId);
+    container.innerHTML = '';
+    data.forEach(function(item) {
+        var card = document.createElement('div');
+        card.className = 'ex-card';
+        var span = document.createElement('span');
+        span.className = 'ex-sentence';
+        var parts = item.text.split('<b>___</b>');
+        var before = document.createElement('span');
+        before.innerHTML = parts[0] || '';
+        span.appendChild(before);
+        var group = document.createElement('span');
+        group.className = 'nowrap-group';
+        var inp = document.createElement('input');
+        inp.type = 'text';
+        inp.className = 'blank ' + item.blank.size + ' ' + cssClass;
+        inp.dataset.answer = item.blank.answer;
+        (function(ti) {
+            inp.addEventListener('focus', function() { startTimer(ti); });
+            inp.addEventListener('input', function() {
+                liveCheck(inp);
+            });
+        })(timerIdx);
+        var hint = document.createElement('span');
+        hint.className = 'correction-hint';
+        group.appendChild(inp);
+        group.appendChild(hint);
+        span.appendChild(group);
+        var after = document.createElement('span');
+        after.innerHTML = parts[1] || '';
+        span.appendChild(after);
+        card.appendChild(span);
+        container.appendChild(card);
+    });
+}
+
+function showLueckenLoesung(cssClass) {
+    var inputs = document.querySelectorAll('input.' + cssClass);
+    inputs.forEach(function(inp) {
+        inp.value = inp.dataset.answer;
+        inp.classList.remove('correct', 'wrong');
+        inp.classList.add('correct');
+        var hint = inp.nextElementSibling;
+        if (hint && hint.classList.contains('correction-hint')) hint.textContent = '\u2713 ' + inp.dataset.answer;
+    });
+    if (cssClass === 'umzug-l') stopTimer(1);
+    if (cssClass === 'zh-l') stopTimer(3);
+}
+
+function resetLuecken(cssClass) {
+    var inputs = document.querySelectorAll('input.' + cssClass);
+    inputs.forEach(function(inp) {
+        inp.value = '';
+        inp.classList.remove('correct', 'wrong');
+        var hint = inp.nextElementSibling;
+        if (hint && hint.classList.contains('correction-hint')) hint.textContent = '';
+    });
+    if (cssClass === 'umzug-l') resetTimer(1);
+    if (cssClass === 'zh-l') resetTimer(3);
+}
+
+/* ============================================================
+   SATZBAU
+   ============================================================ */
+
+
+
+// ===== SATZBAU (neu: satzbau-drag-drop Pattern) =====
+var sbDragged = null;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
+}
+
+function sbCapitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
+    });
+}
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before); else zone.appendChild(cursor);
+    });
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = SATZBAU_DATA[idx].valid.some(function(v) {
+        return JSON.stringify(v) === JSON.stringify(order);
+    });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt';
+        punkt.textContent = '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('correct', 'incorrect'); });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+    setTimeout(function() {
+        startTimer(4);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    }, 500);
+}
+
+function sbCheckAllDone() {
+    var allOk = SATZBAU_DATA.every(function(_, i) {
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
+    });
+    if (allOk) stopTimer(4);
+}
+
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    var solution = SATZBAU_DATA[idx].valid[0];
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild)  row.removeChild(row.firstChild);
+    solution.forEach(function(word) {
+        var chip = allChips[word];
+        if (chip) { chip.classList.remove('correct', 'incorrect'); row.appendChild(chip); }
+    });
+    fb.textContent = '';
+    setTimeout(function() { sbUpdateCapitalization(row); sbCheckAuto(idx); }, 100);
+}
+
+function initSatzbau() {
+    var container = document.getElementById('satzbauContainer')
+                 || document.getElementById('satzbau-container');
+    if (!container) return;
+    while (container.firstChild) container.removeChild(container.firstChild);
+    SATZBAU_DATA.forEach(function(ex, idx) {
+        var item = document.createElement('div');
+        item.className = 'satzbau-item';
+        var bank = document.createElement('div');
+        bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
+        var row = document.createElement('div');
+        row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
+        var fb = document.createElement('div');
+        fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + idx;
+        var solBtn = document.createElement('button');
+        solBtn.className = 'btn btn-show'; solBtn.textContent = 'Lösung';
+        (function(i) { solBtn.onclick = function() { sbShowSolution(i); }; })(idx);
+        item.appendChild(bank); item.appendChild(row); item.appendChild(fb); item.appendChild(solBtn);
+        container.appendChild(item);
+        var parts = ex.parts.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+        }
+        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank, idx);
+        sbRegisterZone(row, idx);
+    });
+}
+
+function resetSatzbau() {
+    SATZBAU_DATA.forEach(function(_, idx) {
+        var bank = document.getElementById('sb-bank-' + idx);
+        var row  = document.getElementById('sb-row-' + idx);
+        var fb   = document.getElementById('sb-fb-' + idx);
+        if (bank) while (bank.firstChild) bank.removeChild(bank.firstChild);
+        if (row)  while (row.firstChild)  row.removeChild(row.firstChild);
+        if (fb)   { fb.textContent = ''; fb.className = 'satzbau-feedback'; }
+    });
+    initSatzbau();
+}
+
+
+/* ============================================================
+   WORTSCHATZ
+   ============================================================ */
+function initVocab() {
+    var container = document.getElementById('vocab-container');
+    container.innerHTML = '';
+    VOCAB_DATA.forEach(function(item, idx) {
+        var div = document.createElement('div');
+        div.className = 'vocab-item';
+        var enDiv = document.createElement('div');
+        enDiv.className = 'vocab-en';
+        enDiv.textContent = item.en;
+        var arrow = document.createElement('div');
+        arrow.className = 'vocab-arrow';
+        arrow.textContent = '\u2192';
+        var inputsDiv = document.createElement('div');
+        inputsDiv.className = 'vocab-inputs';
+
+        if (item.type === 'noun') {
+            var iArt = document.createElement('input');
+            iArt.type = 'text'; iArt.className = 'art'; iArt.placeholder = 'Art.';
+            iArt.dataset.answer = item.art;
+            var iWort = document.createElement('input');
+            iWort.type = 'text'; iWort.className = 'wort'; iWort.placeholder = 'Nomen';
+            iWort.dataset.answer = item.wort;
+            var iPlural = document.createElement('input');
+            iPlural.type = 'text'; iPlural.className = 'plural'; iPlural.placeholder = 'Plural';
+            iPlural.dataset.answer = item.plural;
+            [iArt, iWort, iPlural].forEach(function(inp) {
+                inp.classList.add('vocab-inp-' + idx);
+                (function(ti) {
+                    inp.addEventListener('focus', function() { startTimer(ti); });
+                    inp.addEventListener('input', function() {
+                        liveCheck(inp);
+                    });
+                })(5);
+                inputsDiv.appendChild(inp);
+            });
+        } else {
+            var iPhrase = document.createElement('input');
+            iPhrase.type = 'text'; iPhrase.className = 'phrase'; iPhrase.placeholder = 'Deutsch';
+            iPhrase.dataset.answer = item.phrase;
+            iPhrase.classList.add('vocab-inp-' + idx);
+            (function(ti) {
+                iPhrase.addEventListener('focus', function() { startTimer(ti); });
+                iPhrase.addEventListener('input', function() {
+                    liveCheck(iPhrase);
+                });
+            })(5);
+            inputsDiv.appendChild(iPhrase);
+        }
+
+        div.appendChild(enDiv);
+        div.appendChild(arrow);
+        div.appendChild(inputsDiv);
+        container.appendChild(div);
+    });
+}
+
+function showVocabLoesung() {
+    VOCAB_DATA.forEach(function(item, idx) {
+        var inputs = document.querySelectorAll('.vocab-inp-' + idx);
+        inputs.forEach(function(inp) {
+            inp.value = inp.dataset.answer;
+            inp.classList.remove('correct', 'wrong');
+            inp.classList.add('correct');
+        });
+    });
+    stopTimer(5);
+}
+
+function resetVocab() {
+    var inputs = document.querySelectorAll('[class*="vocab-inp-"]');
+    inputs.forEach(function(inp) {
+        inp.value = '';
+        inp.classList.remove('correct', 'wrong');
+    });
+    resetTimer(5);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function initUmzugZuordnung() {
+    makeChipZuordnung(UMZUG_DATA, 'umzug-bank', 'uz', '.zuordnung-cat', 0);
+}
+
+function initZuhauseZuordnung() {
+    makeChipZuordnung(ZUHAUSE_DATA, 'zuhause-bank', 'zh', '.zuordnung-cat', 2);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadBestTimes();
+    initUmzugZuordnung();
+    renderLuecken(UMZUG_LUECKEN, 'umzug-luecken', 'umzug-l', 1);
+    initZuhauseZuordnung();
+    renderLuecken(ZUHAUSE_LUECKEN, 'zuhause-luecken', 'zh-l', 3);
+    initSatzbau();
+    initVocab();
+});
+
+/* ── Tap-to-Select / Tap-to-Place (Mobile Satzbau) ─────────────────── */
+(function(){
+  var sbSelected = null;
+
+  var selStyle = document.createElement('style');
+  selStyle.textContent = '.chip.sb-tap-selected { outline: 3px solid #f39c12; transform: scale(1.08); box-shadow: 0 0 10px rgba(243,156,18,0.6); z-index: 10; position:relative; }';
+  document.head.appendChild(selStyle);
+
+  function clearSelection(){
+    if(sbSelected){ sbSelected.classList.remove('sb-tap-selected'); sbSelected = null; }
+  }
+
+  function findZone(el){
+    while(el){
+      if(el.classList && (el.classList.contains('chips-container') || el.classList.contains('sentence-builder') || el.classList.contains('chip-bank') || el.classList.contains('drop-row'))) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function getIdxFromZone(zone){
+    var id = zone.id || '';
+    var m = id.match(/sb-(bank|row)-(\d+)/);
+    return m ? parseInt(m[2]) : -1;
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest ? e.target.closest('.chip') : null;
+    if(chip){
+      if(chip === sbSelected){ clearSelection(); return; }
+      clearSelection();
+      sbSelected = chip;
+      chip.classList.add('sb-tap-selected');
+      return;
+    }
+    var zone = findZone(e.target);
+    if(zone && sbSelected){
+      zone.appendChild(sbSelected);
+      var idx = getIdxFromZone(zone);
+      if(idx >= 0){
+        var row = document.getElementById('sb-row-' + idx);
+        if(row && typeof sbUpdateCapitalization === 'function') sbUpdateCapitalization(row);
+        if(typeof sbCheckAuto === 'function') sbCheckAuto(idx);
+      }
+      clearSelection();
+      return;
+    }
+    clearSelection();
+  }, false);
+})();
+/* ── Ende Tap-to-Select ─────────────────────────────────────────────── */
+</script>
+<div class="author-footer">
+  <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+  <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
+</body>
+</html>
