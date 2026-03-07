@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1018S · Diphthonge & Sprechen</title>
+<style>
+/* ── Reset & Body ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* ── Container ────────────────────────────────────────────── */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 24px 30px 18px;
+  text-align: center;
+}
+.header h1 { font-size: 1.55rem; font-weight: 700; margin-bottom: 4px; }
+.header p  { font-size: 0.88rem; opacity: 0.82; }
+
+/* ── Nav ──────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  background: #f8f8fc;
+  border-bottom: 2px solid #e0e0ef;
+}
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 14px 8px;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  background: #f0f0f8;
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: #666;
+  transition: all 0.18s;
+  gap: 3px;
+  margin-right: 2px;
+  border-radius: 6px 6px 0 0;
+}
+.nav-emoji { font-size: 1.3rem; line-height: 1; }
+.nav-label { font-size: 0.73rem; font-weight: 500; }
+.nav-btn:hover { background: #e8e8ff; color: #555; }
+.nav-btn.active { background: #fff; color: #764ba2; font-weight: 700; border-color: #c5cae9; border-bottom-color: #fff; }
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+
+/* ── Diphthong-Cards ──────────────────────────────────────── */
+.dipht-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+.dipht-card {
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+.dipht-card.ei-card {
+  background: linear-gradient(135deg, #ede7f6, #f3e5f5);
+  border-color: #9c27b0;
+}
+.dipht-card.eu-card {
+  background: linear-gradient(135deg, #e3f2fd, #e8eaf6);
+  border-color: #3949ab;
+}
+.dipht-card.au-card {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border-color: #388e3c;
+}
+.dipht-letters {
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.ei-card .dipht-letters { color: #6a1b9a; }
+.eu-card .dipht-letters { color: #1a237e; }
+.au-card .dipht-letters { color: #1b5e20; }
+.dipht-sound {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+}
+.ei-card .dipht-sound { background: #ce93d8; color: #4a148c; }
+.eu-card .dipht-sound { background: #90caf9; color: #0d47a1; }
+.au-card .dipht-sound { background: #a5d6a7; color: #1b5e20; }
+.dipht-examples {
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.8;
+}
+.dipht-examples b { color: #333; }
+
+/* ── Wort-Karten ──────────────────────────────────────────── */
+.wort-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.wort-card {
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid #e0e0ef;
+  background: #fafbff;
+  transition: all 0.2s;
+  user-select: none;
+}
+.wort-card:hover { border-color: #667eea; background: #f0f0ff; transform: translateY(-2px); }
+.wort-card.tapped { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-color: #764ba2; }
+.wort-card.tapped .wort-phonetic { color: rgba(255,255,255,0.85); }
+.wort-de { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.wort-phonetic { font-size: 0.82rem; color: #888; font-style: italic; }
+.wort-hl { background: #e1bee7; border-radius: 3px; padding: 0 2px; }
+.wort-card.tapped .wort-hl { background: rgba(255,255,255,0.3); }
+
+.wort-hint {
+  text-align: center; font-size: 0.85rem; color: #999;
+  margin-bottom: 12px; font-style: italic;
+}
+
+/* ── Lückentext ───────────────────────────────────────────── */
+.luecke-item {
+  background: #fafbff; border-radius: 10px; padding: 14px 18px;
+  margin-bottom: 12px; border: 1px solid #e8eaff;
+  font-size: 0.95rem; line-height: 1.7;
+}
+.item-nr {
+  display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white; border-radius: 50%; width: 22px; height: 22px;
+  text-align: center; line-height: 22px; font-size: 0.75rem;
+  font-weight: 700; margin-right: 8px;
+}
+input.blank {
+  border: 2px solid #c5cae9; border-radius: 6px;
+  padding: 3px 8px; font-size: 0.9rem;
+  font-family: inherit; outline: none;
+  transition: border-color .2s, background .2s;
+  background: white; margin: 0 2px;
+}
+input.blank:focus { border-color: #667eea; }
+input.blank.correct { border-color: #27ae60; background: #e8f5e9; }
+input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
+.correction-hint {
+  font-size: 0.78rem; color: #27ae60; font-weight: 700;
+  margin-left: 4px; white-space: nowrap;
+}
+.score-box { text-align: right; font-size: 0.83rem; color: #888; margin-bottom: 8px; }
+.score-box span { font-weight: 700; color: #667eea; }
+
+/* ── Timer ────────────────────────────────────────────────── */
+.timer-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: white; border-radius: 10px;
+  padding: 10px 16px; margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  font-size: 0.85rem; color: #666;
+}
+.timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
+.best-display  { color: #f39c12; font-weight: 600; }
+.ctrl-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 0.82em;
+  color: #888;
+  cursor: pointer;
+}
+.ctrl-btn:hover { background: #f0f0f8; }
+
+/* ── Zungenbrecher ────────────────────────────────────────── */
+.zunge-box {
+  background: linear-gradient(135deg, #ede7f6, #e8eaf6);
+  border-radius: 16px;
+  padding: 28px 30px;
+  text-align: center;
+  border-left: 6px solid #667eea;
+  margin: 20px 0;
+}
+.zunge-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a237e;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.zunge-hl-ei { color: #7b1fa2; background: #e1bee7; border-radius: 4px; padding: 0 3px; }
+.zunge-hl-au { color: #1b5e20; background: #c8e6c9; border-radius: 4px; padding: 0 3px; }
+.zunge-hl-eu { color: #0d47a1; background: #bbdefb; border-radius: 4px; padding: 0 3px; }
+
+.zunge-steps {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  margin-top: 16px;
+}
+.speed-btn {
+  padding: 8px 18px; border-radius: 20px; border: 2px solid #c5cae9;
+  background: #fff; cursor: pointer; font-size: 0.9rem; font-weight: 600;
+  color: #667eea; transition: all 0.2s;
+}
+.speed-btn:hover { border-color: #667eea; background: #f0f0ff; }
+.speed-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-color: transparent; }
+
+/* ── Sprech-Anlässe ───────────────────────────────────────── */
+.sprech-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+.sprech-card {
+  background: #fafbff;
+  border-radius: 12px;
+  padding: 18px;
+  border: 2px solid #e0e0ef;
+}
+.sprech-card h4 {
+  color: #667eea; font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+}
+.sprech-card p { font-size: 0.88rem; color: #555; line-height: 1.7; }
+.redemittel-list {
+  list-style: none; padding: 0; margin: 10px 0 0;
+}
+.redemittel-list li {
+  font-size: 0.87rem; color: #444; padding: 5px 0;
+  border-bottom: 1px solid #f0f0f8;
+  line-height: 1.5;
+}
+.redemittel-list li:last-child { border-bottom: none; }
+.rm-de { font-weight: 700; color: #3949ab; }
+.rm-en { color: #888; font-size: 0.82rem; font-style: italic; }
+
+.dipht-legende {
+  display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px;
+  padding: 10px 14px; background: #f8f8fc; border-radius: 8px;
+  font-size: 0.85rem;
+}
+.leg-item { display: flex; align-items: center; gap: 6px; }
+.leg-dot {
+  width: 12px; height: 12px; border-radius: 3px;
+  display: inline-block;
+}
+.leg-dot.ei { background: #ce93d8; }
+.leg-dot.eu { background: #90caf9; }
+.leg-dot.au { background: #a5d6a7; }
+
+/* ── Footer ───────────────────────────────────────────────── */
+.author-footer {
+  text-align: center; margin-top: 40px; padding: 16px;
+  font-size: 0.8rem; color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+@media (max-width: 600px) {
+  body { padding: 10px; }
+  .header h1 { font-size: 1.2rem; }
+  .dipht-grid { grid-template-columns: 1fr; }
+  .sprech-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ── Header ── -->
+  <div class="header">
+    <h1>Diphthonge &amp; Über Beziehungen sprechen</h1>
+    <p>A2 · Einheit 101x · 1018S · Sprechen &amp; Aussprache</p>
+  </div>
+
+  <!-- ── Nav ── -->
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab(0,this)">
+      <span class="nav-emoji">🎵</span>
+      <span class="nav-label">Diphthonge</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(1,this)">
+      <span class="nav-emoji">🗣️</span>
+      <span class="nav-label">Wörter</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(2,this)">
+      <span class="nav-emoji">✏️</span>
+      <span class="nav-label">Lückentext</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(3,this)">
+      <span class="nav-emoji">🌀</span>
+      <span class="nav-label">Zungenbrecher</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(4,this)">
+      <span class="nav-emoji">💬</span>
+      <span class="nav-label">Sprechen</span>
+    </button>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 0 — DIPHTHONGE ERKLÄREN
+  ══════════════════════════════════════════════════════ -->
+  <div class="section aktiv" id="sec-0">
+
+    <h2 style="color:#1a237e;margin-bottom:8px;font-size:1.1rem;">Was ist ein Diphthong?</h2>
+    <p style="color:#555;font-size:0.95rem;line-height:1.7;margin-bottom:20px;">
+      Ein <b>Diphthong</b> besteht aus zwei Vokalen, die zusammen als ein Laut gesprochen werden.
+      Im Deutschen gibt es drei Diphthonge: <b>ei / ai</b>, <b>eu / äu</b> und <b>au</b>.
+    </p>
+
+    <div class="dipht-grid">
+
+      <div class="dipht-card ei-card">
+        <div class="dipht-letters">ei · ai</div>
+        <div class="dipht-sound">klingt wie: <b>ai</b></div>
+        <div class="dipht-examples">
+          <b>Ei</b>, <b>Bein</b>, <b>Zeit</b><br>
+          <b>Mai</b>, <b>Kaiser</b><br>
+          <span style="font-size:0.8rem;color:#9c27b0;">wie englisch „I" in „<i>mine</i>"</span>
+        </div>
+      </div>
+
+      <div class="dipht-card eu-card">
+        <div class="dipht-letters">eu · äu</div>
+        <div class="dipht-sound">klingt wie: <b>oi</b></div>
+        <div class="dipht-examples">
+          <b>heute</b>, <b>Freund</b><br>
+          <b>Häuser</b>, <b>Bäume</b><br>
+          <span style="font-size:0.8rem;color:#3949ab;">wie englisch „oy" in „<i>boy</i>"</span>
+        </div>
+      </div>
+
+      <div class="dipht-card au-card">
+        <div class="dipht-letters">au</div>
+        <div class="dipht-sound">klingt wie: <b>au</b></div>
+        <div class="dipht-examples">
+          <b>Haus</b>, <b>Baum</b><br>
+          <b>Frau</b>, <b>kaufen</b><br>
+          <span style="font-size:0.8rem;color:#388e3c;">wie englisch „ow" in „<i>now</i>"</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="background:#fff3e0;border-radius:10px;padding:14px 18px;border-left:4px solid #f39c12;font-size:0.9rem;color:#555;line-height:1.7;">
+      <b>🔑 Merkhilfe:</b><br>
+      <b style="color:#7b1fa2;">ei / ai → „ai"</b> · &nbsp;
+      <b style="color:#1a237e;">eu / äu → „oi"</b> · &nbsp;
+      <b style="color:#1b5e20;">au → „au"</b>
+    </div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-0 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 1 — WÖRTER HÖREN UND SPRECHEN
+  ══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-1">
+
+    <p class="wort-hint">Klicke auf eine Karte und sprich das Wort laut aus. Der Diphthong ist farbig markiert.</p>
+
+    <div class="dipht-legende">
+      <div class="leg-item"><span class="leg-dot ei"></span> ei / ai</div>
+      <div class="leg-item"><span class="leg-dot eu"></span> eu / äu</div>
+      <div class="leg-item"><span class="leg-dot au"></span> au</div>
+    </div>
+
+    <div class="wort-grid" id="wort-grid"></div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-1 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 2 — LÜCKENTEXT
+  ══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-2">
+
+    <div class="timer-bar">
+      <span>⏱ <span class="timer-display" id="timer-2">0:00</span></span>
+      <span>🏆 <span class="best-display" id="best-2">–</span></span>
+      <span style="margin-left:auto;display:flex;gap:8px;">
+        <button class="ctrl-btn" onclick="resetLuecke()">↺ Neustart</button>
+        <button class="ctrl-btn" onclick="showAllHints()">💡 Lösungen</button>
+      </span>
+    </div>
+
+    <p style="font-size:0.9rem;color:#555;margin-bottom:14px;">
+      Ergänze den fehlenden Diphthong. Tippe nur die fehlenden Buchstaben (<b>ei, eu, äu, au</b>).
+    </p>
+
+    <div class="score-box">Richtig: <span id="score-2">0</span> / <span id="total-2">10</span></div>
+    <div id="luecke-container"></div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-2 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 3 — ZUNGENBRECHER
+  ══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-3">
+
+    <h2 style="color:#1a237e;margin-bottom:12px;font-size:1.1rem;">🌀 Der Zungenbrecher</h2>
+
+    <div class="zunge-box">
+      <div class="zunge-text">
+        <span class="zunge-hl-au">Bl<span style="text-decoration:underline;">au</span>kr<span style="text-decoration:underline;">au</span>t</span>
+        bl<span class="zunge-hl-ei">ei</span>bt
+        <span class="zunge-hl-au">Bl<span style="text-decoration:underline;">au</span>kr<span style="text-decoration:underline;">au</span>t</span><br>
+        und
+        <span class="zunge-hl-ei">Br<span style="text-decoration:underline;">au</span>tkl<span style="text-decoration:underline;">ei</span>d</span>
+        bl<span class="zunge-hl-ei">ei</span>bt
+        <span class="zunge-hl-ei">Br<span style="text-decoration:underline;">au</span>tkl<span style="text-decoration:underline;">ei</span>d</span>.
+      </div>
+      <p style="font-size:0.9rem;color:#555;font-style:italic;">
+        „Red cabbage stays red cabbage and bridal gown stays bridal gown."
+      </p>
+    </div>
+
+    <div class="dipht-legende" style="margin-top:16px;">
+      <div class="leg-item"><span class="leg-dot au"></span> au (grün)</div>
+      <div class="leg-item"><span class="leg-dot ei"></span> ei (lila)</div>
+    </div>
+
+    <h3 style="color:#3949ab;font-size:0.95rem;margin:20px 0 10px;">Übung: Tempo steigern</h3>
+    <p style="font-size:0.88rem;color:#666;margin-bottom:14px;">
+      Sprich den Zungenbrecher 3× — erst langsam, dann mittel, dann schnell. Klicke auf das Tempo, wenn du fertig bist.
+    </p>
+
+    <div class="zunge-steps">
+      <button class="speed-btn" id="speed-slow" onclick="markSpeed('slow')">🐢 Langsam</button>
+      <button class="speed-btn" id="speed-mid"  onclick="markSpeed('mid')">🚶 Mittel</button>
+      <button class="speed-btn" id="speed-fast" onclick="markSpeed('fast')">🚀 Schnell</button>
+    </div>
+
+    <div id="zunge-result" style="margin-top:20px;display:none;background:#e8f5e9;border-radius:10px;padding:14px 18px;color:#2e7d32;font-weight:700;font-size:0.95rem;text-align:center;">
+      ✓ Ausgezeichnet! Du hast alle drei Tempos geschafft.
+    </div>
+
+    <h3 style="color:#3949ab;font-size:0.95rem;margin:24px 0 10px;">Weitere Diphthong-Sätze zum Üben</h3>
+    <div id="uebung-list"></div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-3 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 4 — SPRECHEN: ÜBER BEZIEHUNGEN
+  ══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-4">
+
+    <h2 style="color:#1a237e;margin-bottom:14px;font-size:1.1rem;">💬 Über Beziehungen sprechen</h2>
+
+    <div class="sprech-grid">
+
+      <div class="sprech-card">
+        <h4>❓ Fragen</h4>
+        <ul class="redemittel-list">
+          <li><span class="rm-de">Wie lange seid ihr zusammen?</span><br><span class="rm-en">How long have you been together?</span></li>
+          <li><span class="rm-de">Wo habt ihr euch kennengelernt?</span><br><span class="rm-en">Where did you meet?</span></li>
+          <li><span class="rm-de">Wann habt ihr geheiratet?</span><br><span class="rm-en">When did you get married?</span></li>
+          <li><span class="rm-de">Wie war euer erstes Date?</span><br><span class="rm-en">How was your first date?</span></li>
+          <li><span class="rm-de">Seid ihr verlobt?</span><br><span class="rm-en">Are you engaged?</span></li>
+        </ul>
+      </div>
+
+      <div class="sprech-card">
+        <h4>💬 Antworten</h4>
+        <ul class="redemittel-list">
+          <li><span class="rm-de">Wir sind seit drei Jahren zusammen.</span><br><span class="rm-en">We have been together for three years.</span></li>
+          <li><span class="rm-de">Wir haben uns auf einer Hochzeit kennengelernt.</span><br><span class="rm-en">We met at a wedding.</span></li>
+          <li><span class="rm-de">Wir haben 2022 geheiratet.</span><br><span class="rm-en">We got married in 2022.</span></li>
+          <li><span class="rm-de">Unser erstes Date war wunderschön.</span><br><span class="rm-en">Our first date was wonderful.</span></li>
+          <li><span class="rm-de">Ja, wir haben uns verlobt!</span><br><span class="rm-en">Yes, we got engaged!</span></li>
+        </ul>
+      </div>
+
+      <div class="sprech-card">
+        <h4>🎭 Rollenspiel 1: Nach dem Date</h4>
+        <p>Person A ist Melanie, Person B ist Sabine.</p>
+        <ul class="redemittel-list" style="margin-top:10px;">
+          <li><span class="rm-de">A: Hallo! Wie war dein Date mit Thomas?</span></li>
+          <li><span class="rm-de">B: Es war super! Er hat mir Blumen gegeben.</span></li>
+          <li><span class="rm-de">A: Oh! Seid ihr jetzt zusammen?</span></li>
+          <li><span class="rm-de">B: Noch nicht — aber wir gehen morgen wieder aus!</span></li>
+        </ul>
+      </div>
+
+      <div class="sprech-card">
+        <h4>🎭 Rollenspiel 2: Auf der Hochzeit</h4>
+        <p>Beschreibe die Hochzeit von Alex und Louise.</p>
+        <ul class="redemittel-list" style="margin-top:10px;">
+          <li><span class="rm-de">Die Feier war sehr schön.</span></li>
+          <li><span class="rm-de">Das Brautpaar war überglücklich.</span></li>
+          <li><span class="rm-de">Wir haben viel getanzt und gefeiert.</span></li>
+          <li><span class="rm-de">Die Gäste kamen aus verschiedenen Ländern.</span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="background:#ede7f6;border-radius:12px;padding:18px 20px;margin-top:10px;">
+      <h4 style="color:#6a1b9a;margin-bottom:10px;font-size:0.95rem;">📝 Freies Sprechen — Wähle ein Thema:</h4>
+      <ul style="list-style:none;padding:0;font-size:0.9rem;color:#444;line-height:2;">
+        <li>🌹 Beschreibe ein schönes Date, das du hattest oder dir vorstellen kannst.</li>
+        <li>💒 Erzähle von einer Hochzeit, auf der du warst.</li>
+        <li>💬 Bestelle höflich etwas im Café (Redemittel: <i>„Ich hätte gern…"</i>).</li>
+        <li>🗺️ Erkläre jemandem höflich den Weg (<i>„Könnten Sie mir sagen…?"</i>).</li>
+      </ul>
+    </div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-4 -->
+
+</div><!-- /container -->
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════════════════ */
+
+var WORT_DATA = [
+  {de:'Ei', phonetic:'[ai]', dipht:'ei', type:'ei'},
+  {de:'Bein', phonetic:'[bain]', dipht:'ei', type:'ei'},
+  {de:'Zeit', phonetic:'[tsait]', dipht:'ei', type:'ei'},
+  {de:'Feier', phonetic:'[faia]', dipht:'ei', type:'ei'},
+  {de:'Kleid', phonetic:'[klait]', dipht:'ei', type:'ei'},
+  {de:'Freund', phonetic:'[froint]', dipht:'eu', type:'eu'},
+  {de:'heute', phonetic:'[hoi-tə]', dipht:'eu', type:'eu'},
+  {de:'freuen', phonetic:'[froi-ən]', dipht:'eu', type:'eu'},
+  {de:'Bäume', phonetic:'[boi-mə]', dipht:'äu', type:'eu'},
+  {de:'Gebäude', phonetic:'[gə-boi-də]', dipht:'äu', type:'eu'},
+  {de:'Häuser', phonetic:'[hoi-zər]', dipht:'äu', type:'eu'},
+  {de:'Haus', phonetic:'[haus]', dipht:'au', type:'au'},
+  {de:'Baum', phonetic:'[baum]', dipht:'au', type:'au'},
+  {de:'Frau', phonetic:'[frau]', dipht:'au', type:'au'},
+  {de:'kaufen', phonetic:'[kau-fən]', dipht:'au', type:'au'},
+  {de:'Braut', phonetic:'[braut]', dipht:'au', type:'au'},
+];
+
+var LUECKEN_DATA = [
+  {segs:[{t:'H'},{b:'eu',s:'s'},{t:'te fahre ich nach H'},{b:'au',s:'s'},{t:'se.'}]},
+  {segs:[{t:'Im Supermarkt muss ich Brot und '},{b:'Ei',s:'m'},{t:'er kaufen.'}]},
+  {segs:[{t:'Ich werde bald einen B'},{b:'au',s:'s'},{t:'m im Garten pflanzen.'}]},
+  {segs:[{t:'Der Pr'},{b:'ei',s:'s'},{t:'s ist ziemlich hoch!'}]},
+  {segs:[{t:'M'},{b:'ei',s:'s'},{t:'ne Fr'},{b:'eu',s:'s'},{t:'ndin möchte h'},{b:'eu',s:'s'},{t:'te zu mir kommen.'}]},
+  {segs:[{t:'Das Br'},{b:'au',s:'s'},{t:'tpaar war überglücklich.'}]},
+  {segs:[{t:'Alex und Lou'},{b:'is',s:'s'},{t:'e haben sich v'},{b:'er',s:'s'},{t:'liebt.'}], special:true},
+  {segs:[{t:'Paul ist mit dem F'},{b:'eu',s:'s'},{t:'erwerk aufgewacht.'}]},
+  {segs:[{t:'Die Gäste t'},{b:'ei',s:'s'},{t:'lten den K'},{b:'au',s:'s'},{t:'chen.'}]},
+  {segs:[{t:'Tina f'},{b:'eu',s:'s'},{t:'te sich sehr über die Einladung.'}]},
+];
+
+// Korrigiere die Lücken mit sinnvollen Diphthong-Aufgaben
+var LUECKEN_CLEAN = [
+  {segs:[{t:'H'},{b:'eu',s:'s'},{t:'te fahre ich nach H'},{b:'au',s:'s'},{t:'se.'}]},
+  {segs:[{t:'Im Supermarkt muss ich Brot und '},{b:'Ei',s:'m'},{t:'er kaufen.'}]},
+  {segs:[{t:'Ich werde bald einen B'},{b:'au',s:'s'},{t:'m im Garten pflanzen.'}]},
+  {segs:[{t:'Der Pr'},{b:'ei',s:'s'},{t:'s ist ziemlich hoch!'}]},
+  {segs:[{t:'M'},{b:'ei',s:'s'},{t:'ne Fr'},{b:'eu',s:'s'},{t:'ndin möchte h'},{b:'eu',s:'s'},{t:'te zu mir kommen.'}]},
+  {segs:[{t:'Das Br'},{b:'au',s:'s'},{t:'tpaar war überglücklich.'}]},
+  {segs:[{t:'Die Bl'},{b:'au',s:'s'},{t:'men sind für die Br'},{b:'au',s:'s'},{t:'t.'}]},
+  {segs:[{t:'Paul ist mit dem F'},{b:'eu',s:'s'},{t:'erwerk aufgewacht.'}]},
+  {segs:[{t:'Die Gäste h'},{b:'eu',s:'s'},{t:'te f'},{b:'ei',s:'s'},{t:'ern bis zum n'},{b:'äch',s:'m'},{t:'sten Morgen.'}], skip:true},
+  {segs:[{t:'Tina fr'},{b:'eu',s:'s'},{t:'t sich sehr über die Einladung.'}]},
+];
+
+// Vereinfachte, klare Lückentextdaten
+var LUECKEN = [
+  {
+    before: 'H', blank: 'eu', after: 'te fahre ich nach H',
+    blank2: 'au', after2: 'se.',
+    multi: true
+  },
+];
+
+// Komplett neu, sauber:
+var L_DATA = [
+  { parts: ['H', {b:'eu'}, 'te fahre ich nach H', {b:'au'}, 'se.'] },
+  { parts: ['Im Supermarkt muss ich Brot und ', {b:'Ei'}, 'er kaufen.'] },
+  { parts: ['Ich werde bald einen B', {b:'au'}, 'm im Garten pflanzen.'] },
+  { parts: ['Der Pr', {b:'ei'}, 's ist ziemlich hoch!'] },
+  { parts: ['M', {b:'ei'}, 'ne Fr', {b:'eu'}, 'ndin möchte h', {b:'eu'}, 'te zu mir kommen.'] },
+  { parts: ['Das Br', {b:'au'}, 'tpaar war überglücklich.'] },
+  { parts: ['Die Bl', {b:'au'}, 'men sind für die Br', {b:'au'}, 't.'] },
+  { parts: ['Paul ist mit dem F', {b:'eu'}, 'erwerk aufgewacht.'] },
+  { parts: ['Der Br', {b:'äu'}, 'tigam freute sich über die Feier.'] },
+  { parts: ['Tina fr', {b:'eu'}, 't sich sehr über die Einladung.'] },
+];
+
+var UEBUNG_SAETZE = [
+  'Heute gehe ich zum Friseur.',
+  'Das Brautkleid ist wunderschön.',
+  'Die Häuser im Dorf sind sehr alt.',
+  'Mein Freund kommt aus Bayern.',
+  'Sie kauft heute Blumen auf dem Markt.',
+  'Das Feuerwerk war beeindruckend.',
+];
+
+/* ══════════════════════════════════════════════════════════
+   TIMER
+══════════════════════════════════════════════════════════ */
+var TIMER_PREFIX = 'diphthonge-1018s-';
+var timerStarted  = [false, false, false, false, false];
+var timerRunning  = [false, false, false, false, false];
+var timerSeconds  = [0, 0, 0, 0, 0];
+var timerIntervals = [null, null, null, null, null];
+
+function timerAutoStart(n) {
+  if (timerStarted[n]) return;
+  timerStarted[n] = true;
+  timerRunning[n] = true;
+  timerIntervals[n] = setInterval(function() {
+    timerSeconds[n]++;
+    var el = document.getElementById('timer-' + n);
+    if (el) el.textContent = fmtTime(timerSeconds[n]);
+  }, 1000);
+}
+function timerStop(n) {
+  if (!timerRunning[n]) return;
+  clearInterval(timerIntervals[n]);
+  timerRunning[n] = false;
+  var best = parseInt(localStorage.getItem(TIMER_PREFIX + n) || '999999');
+  if (timerSeconds[n] > 0 && timerSeconds[n] < best) {
+    localStorage.setItem(TIMER_PREFIX + n, timerSeconds[n]);
+    var el = document.getElementById('best-' + n);
+    if (el) el.textContent = fmtTime(timerSeconds[n]);
+  }
+}
+function timerResetOne(n) {
+  clearInterval(timerIntervals[n]);
+  timerRunning[n] = false;
+  timerStarted[n] = false;
+  timerSeconds[n] = 0;
+  var el = document.getElementById('timer-' + n);
+  if (el) el.textContent = '0:00';
+}
+function fmtTime(s) {
+  return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60);
+}
+function loadBestTimes() {
+  for (var i = 2; i <= 2; i++) {
+    var v = localStorage.getItem(TIMER_PREFIX + i);
+    if (v) {
+      var el = document.getElementById('best-' + i);
+      if (el) el.textContent = fmtTime(parseInt(v));
+    }
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════════════ */
+function showTab(n, btn) {
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('aktiv'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('sec-' + n).classList.add('aktiv');
+  btn.classList.add('active');
+}
+
+/* ══════════════════════════════════════════════════════════
+   TAB 1 — WÖRTER KARTEN
+══════════════════════════════════════════════════════════ */
+function wortInit() {
+  var grid = document.getElementById('wort-grid');
+  WORT_DATA.forEach(function(w) {
+    var card = document.createElement('div');
+    card.className = 'wort-card';
+    // Diphthong im Wort hervorheben
+    var highlighted = w.de.replace(w.dipht, '<span class="wort-hl">' + w.dipht + '</span>');
+    card.innerHTML = '<div class="wort-de">' + highlighted + '</div>' +
+                     '<div class="wort-phonetic">' + w.phonetic + '</div>';
+    card.style.borderColor = w.type === 'ei' ? '#ce93d8' : w.type === 'eu' ? '#90caf9' : '#a5d6a7';
+    card.addEventListener('click', function() {
+      card.classList.toggle('tapped');
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   TAB 2 — LÜCKENTEXT
+══════════════════════════════════════════════════════════ */
+function lueckeInit() {
+  var container = document.getElementById('luecke-container');
+  var total = 0;
+  L_DATA.forEach(function(item, idx) {
+    total += item.parts.filter(function(p) { return typeof p === 'object'; }).length;
+  });
+  document.getElementById('total-2').textContent = total;
+
+  L_DATA.forEach(function(item, idx) {
+    var div = document.createElement('div');
+    div.className = 'luecke-item';
+    var html = '<span class="item-nr">' + (idx + 1) + '</span>';
+    item.parts.forEach(function(part) {
+      if (typeof part === 'string') {
+        html += part;
+      } else {
+        var ans = part.b;
+        var w = ans.length <= 2 ? '50px' : '70px';
+        html += '<input class="blank" type="text" data-answer="' + ans +
+                '" placeholder="" style="width:' + w + '" ' +
+                'oninput="liveCheck(this);updateScore2();checkAllOk()" ' +
+                'onblur="noop()">';
+      }
+    });
+    div.innerHTML = html;
+    container.appendChild(div);
+  });
+}
+
+function noop() {}
+
+function liveCheck(inp) {
+  var val = inp.value.trim().toLowerCase();
+  var ans = (inp.dataset.answer || '').toLowerCase();
+  inp.classList.remove('correct', 'wrong');
+  if (val.length === 0) return;
+  if (val === ans) {
+    inp.classList.add('correct');
+  } else if (ans.indexOf(val) === 0) {
+    // gültiger Präfix → neutral
+  } else {
+    inp.classList.add('wrong');
+  }
+}
+
+function updateScore2() {
+  timerAutoStart(2);
+  var inputs = document.querySelectorAll('#sec-2 input.blank');
+  var ok = Array.from(inputs).filter(function(i) { return i.classList.contains('correct'); }).length;
+  document.getElementById('score-2').textContent = ok;
+}
+
+function checkAllOk() {
+  var inputs = document.querySelectorAll('#sec-2 input.blank');
+  var allOk = inputs.length > 0 &&
+    Array.from(inputs).every(function(i) { return i.classList.contains('correct'); });
+  if (allOk) timerStop(2);
+}
+
+function showAllHints() {
+  document.querySelectorAll('#sec-2 input.blank').forEach(function(inp) {
+    var next = inp.nextElementSibling;
+    if (next && next.classList.contains('correction-hint')) next.remove();
+    if (!inp.classList.contains('correct')) {
+      var hint = document.createElement('span');
+      hint.className = 'correction-hint';
+      hint.textContent = inp.dataset.answer;
+      inp.insertAdjacentElement('afterend', hint);
+    }
+    inp.value = inp.dataset.answer;
+    inp.classList.add('correct');
+    inp.classList.remove('wrong');
+  });
+  updateScore2();
+}
+
+function resetLuecke() {
+  timerResetOne(2);
+  document.querySelectorAll('#sec-2 input.blank').forEach(function(inp) {
+    inp.value = '';
+    inp.classList.remove('correct', 'wrong');
+    var next = inp.nextElementSibling;
+    if (next && next.classList.contains('correction-hint')) next.remove();
+  });
+  document.getElementById('score-2').textContent = '0';
+}
+
+/* ══════════════════════════════════════════════════════════
+   TAB 3 — ZUNGENBRECHER
+══════════════════════════════════════════════════════════ */
+var speedDone = {slow: false, mid: false, fast: false};
+
+function markSpeed(speed) {
+  speedDone[speed] = true;
+  document.getElementById('speed-' + speed).classList.add('active');
+  if (speedDone.slow && speedDone.mid && speedDone.fast) {
+    document.getElementById('zunge-result').style.display = 'block';
+  }
+}
+
+function uebungInit() {
+  var list = document.getElementById('uebung-list');
+  UEBUNG_SAETZE.forEach(function(satz, idx) {
+    var div = document.createElement('div');
+    div.style.cssText = 'background:#fafbff;border-radius:8px;padding:10px 14px;margin-bottom:8px;border:1px solid #e0e0ef;font-size:0.92rem;color:#333;cursor:pointer;';
+    div.innerHTML = '<span style="color:#667eea;font-weight:700;margin-right:8px;">' + (idx+1) + '.</span>' + satz +
+                    '<span style="float:right;font-size:0.8rem;color:#bbb;">klicken zum Markieren</span>';
+    div.addEventListener('click', function() {
+      if (div.style.background === 'rgb(232, 245, 233)') {
+        div.style.background = '#fafbff';
+        div.style.borderColor = '#e0e0ef';
+      } else {
+        div.style.background = '#e8f5e9';
+        div.style.borderColor = '#a5d6a7';
+      }
+    });
+    list.appendChild(div);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+wortInit();
+lueckeInit();
+uebungInit();
+loadBestTimes();
+</script>
+</body>
+</html>
