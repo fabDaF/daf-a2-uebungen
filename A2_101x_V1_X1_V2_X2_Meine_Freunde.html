@@ -7,14 +7,13 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
 h1 { text-align: center; color: #333; margin-bottom: 4px; font-size: 1.5em; }
 .subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.95em; }
-.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
-.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.nav-btn:last-child { border-right: none; }
-.nav-btn:hover { background: #e8ecff; color: #667eea; }
-.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; justify-content: center; }
+.nav-btn { padding: 10px 16px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 0.85em; border: 2px solid #e0e0e0; background: white; color: #555; transition: all 0.2s; user-select: none; }
+.nav-btn:hover { border-color: #667eea; color: #667eea; }
+.nav-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-color: transparent; }
 .section { display: none; }
 .section.active { display: block; }
 h2 { color: #333; font-size: 1.15em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
@@ -79,9 +78,6 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
 
 /* Responsive */
 @media (max-width: 600px) {
-    .nav { flex-wrap: wrap; }
-    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
-    .nav-btn:last-child { border-right: 1px solid #ddd; }
     .container { padding: 18px 14px; }
     .zuordnung-categories { grid-template-columns: 1fr; }
     .nav-btn { font-size: 0.78em; padding: 8px 12px; }
@@ -93,14 +89,25 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
 .author-footer a { color: #667eea; text-decoration: none; font-weight: 500; }
 .author-footer a:hover { text-decoration: underline; color: #764ba2; }
 .author-footer .author-name { font-weight: 600; color: #555; }
-/* Aliase für neues satzbau-drag-drop Pattern */
-.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 60px; margin-bottom: 10px; }
-.sentence-builder { background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; min-height: 60px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
-.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
-.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
-.satzbau-feedback.correct { color: #27ae60; }
-.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* Bilder */
+.hero-img { width: 100%; border-radius: 12px; object-fit: cover; max-height: 260px; display: block; margin-bottom: 20px; box-shadow: 0 4px 18px rgba(0,0,0,0.12); }
+.img-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.img-grid-2 img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,0.10); }
+.img-caption { font-size: 0.78em; color: #999; text-align: center; margin-top: -8px; margin-bottom: 16px; font-style: italic; }
+.img-strip { display: flex; gap: 8px; margin-bottom: 20px; }
+.img-strip img { flex: 1; height: 130px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.10); }
+.gefuehle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 22px; }
+.gefuehle-grid .gef-card { border-radius: 10px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.10); }
+.gefuehle-grid .gef-card img { width: 100%; height: 100px; object-fit: cover; display: block; }
+.gefuehle-grid .gef-card .gef-label { background: #667eea; color: white; text-align: center; font-size: 0.72em; font-weight: 700; padding: 4px 6px; }
+@media (max-width: 600px) {
+    .img-grid-2 { grid-template-columns: 1fr; }
+    .img-strip { flex-wrap: wrap; }
+    .img-strip img { flex: 1 1 45%; height: 110px; }
+    .gefuehle-grid { grid-template-columns: repeat(2, 1fr); }
+    .gefuehle-grid .gef-card img { height: 90px; }
+}
 </style>
 </head>
 <body>
@@ -120,6 +127,13 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- ===== TAB 0: V1 BEZIEHUNGEN ZUORDNUNG ===== -->
     <div class="section active" id="sec-0">
         <h2>&#128101; Beziehungen: positiv oder negativ?</h2>
+        <img src="img/e1_freunde_wiese.png" alt="Freunde auf der Wiese" class="hero-img">
+        <div class="img-strip">
+            <img src="img/e1_paar_umarmung.png" alt="Paar">
+            <img src="img/e1_geschwister.png" alt="Geschwister">
+            <img src="img/e1_paar_strand.png" alt="Verliebtes Paar">
+            <img src="img/e1_streit.png" alt="Streit">
+        </div>
         <div class="help-box">
             <strong>Aufgabe:</strong> Ordne die W&ouml;rter und Ausdr&uuml;cke zu: <em>positiv</em> oder <em>negativ</em>?<br>
             &#128313; <strong>zusammen sein</strong> = to be together &middot; <strong>heiraten</strong> = to get married<br>
@@ -166,6 +180,24 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- ===== TAB 2: V2 GEFUEHLE ZUORDNUNG ===== -->
     <div class="section" id="sec-2">
         <h2>&#128149; Gef&uuml;hle: positiv oder negativ?</h2>
+        <div class="gefuehle-grid">
+            <div class="gef-card">
+                <img src="img/e1_gefuehl_froh.png" alt="froh / gl&uuml;cklich">
+                <div class="gef-label">froh &bull; gl&uuml;cklich</div>
+            </div>
+            <div class="gef-card">
+                <img src="img/e1_gefuehl_enttaeuscht.png" alt="entt&auml;uscht">
+                <div class="gef-label">entt&auml;uscht</div>
+            </div>
+            <div class="gef-card">
+                <img src="img/e1_gefuehl_nervoes.png" alt="nerv&ouml;s">
+                <div class="gef-label">nerv&ouml;s</div>
+            </div>
+            <div class="gef-card">
+                <img src="img/e1_gefuehl_gestresst.png" alt="gestresst &bull; w&uuml;tend">
+                <div class="gef-label">gestresst &bull; w&uuml;tend</div>
+            </div>
+        </div>
         <div class="help-box">
             <strong>Aufgabe:</strong> Ordne die Gef&uuml;hle zu!<br>
             &#128313; <strong>gl&uuml;cklich</strong> = happy &middot; <strong>traurig</strong> = sad<br>
@@ -342,7 +374,36 @@ var GEF_LUECKEN = [
     ]}
 ];
 
-
+var SATZBAU = [
+    { id:1, parts:["das Paar","lebt","seit Jahren","zusammen"], valid:[
+        ["das Paar","lebt","seit Jahren","zusammen"],
+        ["seit Jahren","lebt","das Paar","zusammen"]
+    ]},
+    { id:2, parts:["sie","haben","sich","getrennt"], valid:[
+        ["sie","haben","sich","getrennt"]
+    ]},
+    { id:3, parts:["er","ist","sichtlich","stolz","auf sie"], valid:[
+        ["er","ist","sichtlich","stolz","auf sie"]
+    ]},
+    { id:4, parts:["die Freundschaft","ist","sehr tief"], valid:[
+        ["die Freundschaft","ist","sehr tief"]
+    ]},
+    { id:5, parts:["sie","streiten","sich","manchmal"], valid:[
+        ["sie","streiten","sich","manchmal"],
+        ["manchmal","streiten","sie","sich"]
+    ]},
+    { id:6, parts:["das Vertrauen","ist","langsam","gewachsen"], valid:[
+        ["das Vertrauen","ist","langsam","gewachsen"],
+        ["langsam","ist","das Vertrauen","gewachsen"]
+    ]},
+    { id:7, parts:["er","ist","wahnsinnig","nerv\u00F6s"], valid:[
+        ["er","ist","wahnsinnig","nerv\u00F6s"]
+    ]},
+    { id:8, parts:["sie","will","im Sommer","heiraten"], valid:[
+        ["sie","will","im Sommer","heiraten"],
+        ["im Sommer","will","sie","heiraten"]
+    ]}
+];
 
 var WORTSCHATZ = [
     { id:1, type:"n", en:"relationship", artikel:"die", de:"Beziehung", plural:"Beziehungen" },
@@ -857,255 +918,135 @@ function resetGefLuecken() {
 
 var selectedSBChip = null;
 
-
-var SATZBAU = [
-    { id:1, parts:["das Paar","lebt","seit Jahren","zusammen"], valid:[
-        ["das Paar","lebt","seit Jahren","zusammen"],
-        ["seit Jahren","lebt","das Paar","zusammen"]
-    ]},
-    { id:2, parts:["sie","haben","sich","getrennt"], valid:[
-        ["sie","haben","sich","getrennt"]
-    ]},
-    { id:3, parts:["er","ist","sichtlich","stolz","auf sie"], valid:[
-        ["er","ist","sichtlich","stolz","auf sie"]
-    ]},
-    { id:4, parts:["die Freundschaft","ist","sehr tief"], valid:[
-        ["die Freundschaft","ist","sehr tief"]
-    ]},
-    { id:5, parts:["sie","streiten","sich","manchmal"], valid:[
-        ["sie","streiten","sich","manchmal"],
-        ["manchmal","streiten","sie","sich"]
-    ]},
-    { id:6, parts:["das Vertrauen","ist","langsam","gewachsen"], valid:[
-        ["das Vertrauen","ist","langsam","gewachsen"],
-        ["langsam","ist","das Vertrauen","gewachsen"]
-    ]},
-    { id:7, parts:["er","ist","wahnsinnig","nerv\u00F6s"], valid:[
-        ["er","ist","wahnsinnig","nerv\u00F6s"]
-    ]},
-    { id:8, parts:["sie","will","im Sommer","heiraten"], valid:[
-        ["sie","will","im Sommer","heiraten"],
-        ["im Sommer","will","sie","heiraten"]
-    ]}
-];
-
-// ===== TAB 5: SATZBAU (neu: satzbau-drag-drop Pattern) =====
-var sbDragged = null;
-
-function getSbCursor() {
-    var c = document.getElementById('sb-insert-cursor');
-    if (!c) {
-        c = document.createElement('div');
-        c.id = 'sb-insert-cursor';
-        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
-    }
-    return c;
-}
-
-function getSbInsertPos(zone, clientX) {
-    var chips = Array.from(zone.querySelectorAll('.chip'));
-    for (var i = 0; i < chips.length; i++) {
-        var r = chips[i].getBoundingClientRect();
-        if (clientX < r.left + r.width / 2) return chips[i];
-    }
-    return null;
-}
-
-function sbCapitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function sbUpdateCapitalization(row) {
-    var chips = Array.from(row.querySelectorAll('.chip'));
-    chips.forEach(function(c, i) {
-        var orig = c.dataset.orig;
-        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
-                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
-        if (isProper) {
-            c.textContent = orig;
-        } else {
-            c.textContent = (i === 0) ? sbCapitalize(orig) : orig;
-        }
-    });
-}
-
-function sbMakeChip(word) {
-    var chip = document.createElement('div');
-    chip.className = 'chip';
-    chip.textContent = word;
-    chip.dataset.orig = word;
-    chip.draggable = true;
-    chip.addEventListener('dragstart', function(e) {
-        sbDragged = chip;
-        e.dataTransfer.setData('text/plain', '');
-        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
-    });
-    chip.addEventListener('dragend', function() {
-        chip.style.opacity = '';
-        sbDragged = null;
-        var c = document.getElementById('sb-insert-cursor');
-        if (c && c.parentNode) c.parentNode.removeChild(c);
-    });
-    return chip;
-}
-
-function sbRegisterZone(zone, idx) {
-    zone.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        if (!sbDragged) return;
-        var cursor = getSbCursor();
-        var before = getSbInsertPos(zone, e.clientX);
-        if (before) zone.insertBefore(cursor, before);
-        else zone.appendChild(cursor);
-    });
-    zone.addEventListener('dragleave', function(e) {
-        if (!zone.contains(e.relatedTarget)) {
-            var c = document.getElementById('sb-insert-cursor');
-            if (c && c.parentNode === zone) zone.removeChild(c);
-        }
-    });
-    zone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        if (!sbDragged) return;
-        var cursor = document.getElementById('sb-insert-cursor');
-        if (cursor && cursor.parentNode === zone) {
-            zone.insertBefore(sbDragged, cursor);
-            zone.removeChild(cursor);
-        } else {
-            zone.appendChild(sbDragged);
-        }
-        sbDragged = null;
-        var row = document.getElementById('sb-row-' + idx);
-        sbUpdateCapitalization(row);
-        sbCheckAuto(idx);
-    });
-}
-
-function sbColorRow(idx) {
-    var row = document.getElementById('sb-row-' + idx);
-    var chips = Array.from(row.querySelectorAll('.chip'));
-    var order = chips.map(function(c) { return c.dataset.orig; });
-    var ok = SATZBAU[idx].valid.some(function(v) {
-        return JSON.stringify(v) === JSON.stringify(order);
-    });
-    chips.forEach(function(c) {
-        c.classList.remove('correct', 'incorrect');
-        c.classList.add(ok ? 'correct' : 'incorrect');
-    });
-    var existing = row.querySelector('.sb-punkt');
-    if (existing) existing.parentNode.removeChild(existing);
-    if (ok) {
-        var punkt = document.createElement('span');
-        punkt.className = 'sb-punkt';
-        punkt.textContent = '.';
-        row.appendChild(punkt);
-    }
-    return ok;
-}
-
-function sbCheckAuto(idx) {
-    var bank = document.getElementById('sb-bank-' + idx);
-    var row  = document.getElementById('sb-row-' + idx);
-    var fb   = document.getElementById('sb-fb-' + idx);
-    if (bank.querySelectorAll('.chip').length > 0) {
-        row.querySelectorAll('.chip').forEach(function(c) {
-            c.classList.remove('correct', 'incorrect');
-        });
-        row.classList.remove('correct', 'incorrect');
-        fb.textContent = '';
-        return;
-    }
-    setTimeout(function() {
-        startTimer(4);
-        var ok = sbColorRow(idx);
-        if (ok) {
-            row.classList.add('correct'); row.classList.remove('incorrect');
-            fb.className = 'satzbau-feedback correct';
-            fb.textContent = '✓ Korrekt!';
-            sbCheckAllDone();
-        } else {
-            row.classList.add('incorrect'); row.classList.remove('correct');
-            fb.className = 'satzbau-feedback incorrect';
-            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
-        }
-    }, 500);
-}
-
-function sbCheckAllDone() {
-    var allOk = SATZBAU.every(function(_, i) {
-        var row = document.getElementById('sb-row-' + i);
-        return row && row.classList.contains('correct');
-    });
-    if (allOk) stopTimer(4);
-}
-
-function sbShowSolution(idx) {
-    var bank = document.getElementById('sb-bank-' + idx);
-    var row  = document.getElementById('sb-row-' + idx);
-    var fb   = document.getElementById('sb-fb-' + idx);
-    var solution = SATZBAU[idx].valid[0];
-    var allChips = {};
-    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
-    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
-    while (bank.firstChild) bank.removeChild(bank.firstChild);
-    while (row.firstChild)  row.removeChild(row.firstChild);
-    solution.forEach(function(word) {
-        var chip = allChips[word];
-        if (chip) { chip.classList.remove('correct', 'incorrect'); row.appendChild(chip); }
-    });
-    fb.textContent = '';
-    setTimeout(function() { sbUpdateCapitalization(row); sbCheckAuto(idx); }, 100);
-}
-
 function initSatzbau() {
-    var container = document.getElementById('satzbauContainer')
-                 || document.getElementById('satzbau-container');
-    if (!container) return;
-    while (container.firstChild) container.removeChild(container.firstChild);
-    SATZBAU.forEach(function(ex, idx) {
-        var item = document.createElement('div');
-        item.className = 'satzbau-item';
+    var container = document.getElementById('satzbauContainer');
+    container.innerHTML = '';
+    SATZBAU.forEach(function(ex) {
+        var div = document.createElement('div');
+        div.className = 'satzbau-item';
+        var dropRow = document.createElement('div');
+        dropRow.className = 'drop-row';
+        dropRow.id = 'sb-drop-' + ex.id;
+        dropRow.dataset.exId = ex.id;
+        dropRow.ondrop = dropSB;
+        dropRow.ondragover = allowDrop;
+        dropRow.onclick = function() {
+            if (selectedSBChip && selectedSBChip.dataset.exId == ex.id) {
+                var dot = dropRow.querySelector('.fixed-dot');
+                dropRow.insertBefore(selectedSBChip, dot);
+                selectedSBChip.style.outline = '';
+                selectedSBChip = null;
+                updateCaps(ex.id);
+            }
+        };
         var bank = document.createElement('div');
-        bank.className = 'chips-container';
-        bank.id = 'sb-bank-' + idx;
-        var row = document.createElement('div');
-        row.className = 'sentence-builder';
-        row.id = 'sb-row-' + idx;
-        var fb = document.createElement('div');
-        fb.className = 'satzbau-feedback';
-        fb.id = 'sb-fb-' + idx;
-        var solBtn = document.createElement('button');
-        solBtn.className = 'btn btn-show';
-        solBtn.textContent = 'Lösung';
-        (function(i) { solBtn.onclick = function() { sbShowSolution(i); }; })(idx);
-        item.appendChild(bank);
-        item.appendChild(row);
-        item.appendChild(fb);
-        item.appendChild(solBtn);
-        container.appendChild(item);
-        var parts = ex.parts.slice();
-        for (var i = parts.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
-        }
-        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
-        sbRegisterZone(bank, idx);
-        sbRegisterZone(row, idx);
+        bank.className = 'chip-bank';
+        bank.id = 'sb-bank-' + ex.id;
+        bank.ondrop = dropSB;
+        bank.ondragover = allowDrop;
+        bank.onclick = function() {
+            if (selectedSBChip && selectedSBChip.dataset.exId == ex.id && selectedSBChip.parentElement.classList.contains('drop-row')) {
+                bank.appendChild(selectedSBChip);
+                selectedSBChip.style.outline = '';
+                selectedSBChip = null;
+                updateCaps(ex.id);
+            }
+        };
+        var shuffled = ex.parts.slice().sort(function() { return Math.random() - 0.5; });
+        shuffled.forEach(function(p, pi) {
+            var chip = document.createElement('div');
+            chip.className = 'chip';
+            chip.textContent = p;
+            chip.draggable = true;
+            chip.dataset.text = p;
+            chip.dataset.exId = ex.id;
+            chip.id = 'sb-chip-' + ex.id + '-' + pi;
+            chip.ondragstart = dragSB;
+            chip.onclick = function() { selectSBChip(chip); };
+            if (p === ',' || p === ';' || p === ':') chip.classList.add('punct');
+            bank.appendChild(chip);
+        });
+        var point = document.createElement('span');
+        point.className = 'fixed-dot';
+        point.textContent = '.';
+        point.style.fontSize = '1.5em';
+        point.style.marginLeft = '4px';
+        dropRow.appendChild(point);
+        div.appendChild(dropRow);
+        div.appendChild(bank);
+        container.appendChild(div);
+    });
+}
+
+function selectSBChip(chip) {
+    if (selectedSBChip) selectedSBChip.style.outline = '';
+    selectedSBChip = chip;
+    chip.style.outline = '3px solid #f39c12';
+    startTimer(4);
+}
+
+function dragSB(e) {
+    e.dataTransfer.setData('text', e.target.id);
+    startTimer(4);
+}
+
+function dropSB(e) {
+    e.preventDefault();
+    var chipId = e.dataTransfer.getData('text');
+    var chip = document.getElementById(chipId);
+    if (!chip) return;
+    var target = e.currentTarget;
+    if (target.classList.contains('drop-row')) {
+        var dot = target.querySelector('.fixed-dot');
+        target.insertBefore(chip, dot);
+    } else {
+        target.appendChild(chip);
+    }
+    updateCaps(chip.dataset.exId);
+    checkSatzbauAuto(chip.dataset.exId);
+}
+
+function updateCaps(exId) {
+    var row = document.getElementById('sb-drop-' + exId);
+    row.querySelectorAll('.chip').forEach(function(c) {
+        var t = c.dataset.text;
+        if (t && t.length > 0 && t[0] === t[0].toLowerCase()) { c.textContent = t; }
+    });
+    var first = row.querySelector('.chip');
+    if (first && first.textContent !== '.' && !first.classList.contains('punct')) {
+        var t = first.dataset.text;
+        if (t && t.length > 0) { first.textContent = t.charAt(0).toUpperCase() + t.slice(1); }
+    }
+}
+
+function showSatzbauLoesung() {
+    SATZBAU.forEach(function(ex) {
+        var row = document.getElementById('sb-drop-' + ex.id);
+        var bank = document.getElementById('sb-bank-' + ex.id);
+        var allChips = Array.from(row.querySelectorAll('.chip')).concat(Array.from(bank.querySelectorAll('.chip')));
+        row.innerHTML = '';
+        ex.valid[0].forEach(function(p) {
+            var chip = allChips.find(function(c) { return c.dataset.text === p; });
+            if (chip) {
+                row.appendChild(chip);
+                chip.classList.remove('wrong');
+                chip.classList.add('correct');
+            }
+        });
+        var point = document.createElement('span');
+        point.className = 'fixed-dot';
+        point.textContent = '.';
+        point.style.fontSize = '1.5em';
+        point.style.marginLeft = '4px';
+        row.appendChild(point);
+        updateCaps(ex.id);
     });
 }
 
 function resetSatzbau() {
-    SATZBAU.forEach(function(_, idx) {
-        var bank = document.getElementById('sb-bank-' + idx);
-        var row  = document.getElementById('sb-row-' + idx);
-        var fb   = document.getElementById('sb-fb-' + idx);
-        if (bank) while (bank.firstChild) bank.removeChild(bank.firstChild);
-        if (row)  while (row.firstChild)  row.removeChild(row.firstChild);
-        if (fb)   { fb.textContent = ''; fb.className = 'satzbau-feedback'; }
-    });
     initSatzbau();
+    selectedSBChip = null;
 }
-
 
 /* ========== TAB 5: WORTSCHATZ ========== */
 
@@ -1214,58 +1155,6 @@ renderGefLuecken();
 initSatzbau();
 initVocab();
 loadBestTimes();
-
-/* ── Tap-to-Select / Tap-to-Place (Mobile Satzbau) ─────────────────── */
-(function(){
-  var sbSelected = null;
-
-  var selStyle = document.createElement('style');
-  selStyle.textContent = '.chip.sb-tap-selected { outline: 3px solid #f39c12; transform: scale(1.08); box-shadow: 0 0 10px rgba(243,156,18,0.6); z-index: 10; position:relative; }';
-  document.head.appendChild(selStyle);
-
-  function clearSelection(){
-    if(sbSelected){ sbSelected.classList.remove('sb-tap-selected'); sbSelected = null; }
-  }
-
-  function findZone(el){
-    while(el){
-      if(el.classList && (el.classList.contains('chips-container') || el.classList.contains('sentence-builder') || el.classList.contains('chip-bank') || el.classList.contains('drop-row'))) return el;
-      el = el.parentElement;
-    }
-    return null;
-  }
-
-  function getIdxFromZone(zone){
-    var id = zone.id || '';
-    var m = id.match(/sb-(bank|row)-(\d+)/);
-    return m ? parseInt(m[2]) : -1;
-  }
-
-  document.addEventListener('click', function(e){
-    var chip = e.target.closest ? e.target.closest('.chip') : null;
-    if(chip){
-      if(chip === sbSelected){ clearSelection(); return; }
-      clearSelection();
-      sbSelected = chip;
-      chip.classList.add('sb-tap-selected');
-      return;
-    }
-    var zone = findZone(e.target);
-    if(zone && sbSelected){
-      zone.appendChild(sbSelected);
-      var idx = getIdxFromZone(zone);
-      if(idx >= 0){
-        var row = document.getElementById('sb-row-' + idx);
-        if(row && typeof sbUpdateCapitalization === 'function') sbUpdateCapitalization(row);
-        if(typeof sbCheckAuto === 'function') sbCheckAuto(idx);
-      }
-      clearSelection();
-      return;
-    }
-    clearSelection();
-  }, false);
-})();
-/* ── Ende Tap-to-Select ─────────────────────────────────────────────── */
 </script>
 
 <div class="author-footer">
