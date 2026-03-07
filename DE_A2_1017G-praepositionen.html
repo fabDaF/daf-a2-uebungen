@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1017G · Präpositionen mit Akkusativ und Dativ</title>
+<style>
+/* ── Reset & Body ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* ── Container ────────────────────────────────────────────── */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 24px 30px 18px;
+  text-align: center;
+}
+.header h1 { font-size: 1.55rem; font-weight: 700; margin-bottom: 4px; }
+.header p  { font-size: 0.88rem; opacity: 0.82; }
+
+/* ── Nav ──────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  background: #f8f8fc;
+  border-bottom: 2px solid #e0e0ef;
+}
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 14px 8px;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  background: #f0f0f8;
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: #666;
+  transition: all 0.18s;
+  gap: 3px;
+  margin-right: 2px;
+  border-radius: 6px 6px 0 0;
+}
+.nav-emoji { font-size: 1.3rem; line-height: 1; }
+.nav-label { font-size: 0.73rem; font-weight: 500; }
+.nav-btn:hover { background: #e8e8ff; color: #555; }
+.nav-btn.active { background: #fff; color: #764ba2; font-weight: 700; border-color: #c5cae9; border-bottom-color: #fff; }
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+
+/* ── Control-Bar ──────────────────────────────────────────── */
+.control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding: 6px 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+.ctrl-btns { display: flex; gap: 8px; }
+.ctrl-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 0.82em;
+  color: #888;
+  cursor: pointer;
+}
+.ctrl-btn:hover { background: #f0f0f8; }
+.ctrl-timer {
+  font-size: 0.82em;
+  color: #bbb;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Entdeckungs-Tab ──────────────────────────────────────── */
+.entdeck-intro {
+  background: #f3e5f5; border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 20px;
+  border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75;
+}
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.hl2 { background: #c8e6c9; border-radius: 4px; padding: 0 4px; color: #1b5e20; font-weight: 700; }
+
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-btn {
+  padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px;
+  background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem;
+  transition: all .2s;
+}
+.mc-btn:hover { border-color: #667eea; background: #f3f4ff; }
+.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 16px; font-size: 1.05rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
+
+.praepo-table {
+  width: 100%; border-collapse: collapse; margin: 12px 0;
+  font-size: 0.92rem;
+}
+.praepo-table th {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white; padding: 8px 12px; text-align: left;
+}
+.praepo-table td { padding: 7px 12px; border-bottom: 1px solid #e0e0ef; }
+.praepo-table tr:nth-child(even) td { background: #f8f8fc; }
+.praepo-table .kasus-akk { color: #7c4dff; font-weight: 700; }
+.praepo-table .kasus-dat { color: #2e7d32; font-weight: 700; }
+
+/* ── Lückentext ───────────────────────────────────────────── */
+.luecke-item {
+  background: #fafbff; border-radius: 10px; padding: 14px 18px;
+  margin-bottom: 12px; border: 1px solid #e8eaff;
+  font-size: 0.95rem; line-height: 1.7;
+}
+.luecke-item .item-nr {
+  display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white; border-radius: 50%; width: 22px; height: 22px;
+  text-align: center; line-height: 22px; font-size: 0.75rem;
+  font-weight: 700; margin-right: 8px; flex-shrink: 0;
+}
+input.blank {
+  border: 2px solid #c5cae9; border-radius: 6px;
+  padding: 3px 8px; font-size: 0.9rem;
+  font-family: inherit; outline: none;
+  transition: border-color .2s, background .2s;
+  background: white; margin: 0 2px;
+}
+input.blank:focus { border-color: #667eea; }
+input.blank.correct { border-color: #27ae60; background: #e8f5e9; }
+input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
+.correction-hint {
+  font-size: 0.78rem; color: #27ae60; font-weight: 700;
+  margin-left: 4px; white-space: nowrap;
+}
+.score-box { text-align: right; font-size: 0.83rem; color: #888; margin-bottom: 8px; }
+.score-box span { font-weight: 700; color: #667eea; }
+
+/* ── Zuordnung ────────────────────────────────────────────── */
+.chip {
+  padding: 6px 14px; border-radius: 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white; cursor: grab; font-size: 0.85rem;
+  font-weight: 600; user-select: none;
+  transition: transform .15s, opacity .15s;
+  white-space: nowrap;
+}
+.chip:active { cursor: grabbing; transform: scale(1.04); }
+.chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; }
+.chip.wrong   { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; }
+
+.chip-bank {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 12px; background: #f8f9fa;
+  border-radius: 10px; margin-bottom: 14px; min-height: 54px;
+}
+.zuo-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;
+}
+.zuo-zone-wrap h4 {
+  font-size: 0.88rem; color: #555; margin-bottom: 8px; font-weight: 600;
+}
+.drop-zone {
+  min-height: 120px; border-radius: 10px;
+  border: 2px dashed #c5cae9;
+  padding: 10px; background: #fafbff;
+  transition: background .2s;
+  display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start;
+}
+.drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.zone-label {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em;
+  padding: 3px 10px; border-radius: 12px; margin-bottom: 6px; display: block;
+  width: 100%;
+}
+.zone-akk { background: #ede7f6; color: #4a148c; }
+.zone-dat { background: #e8f5e9; color: #1b5e20; }
+
+/* ── Satzbau ──────────────────────────────────────────────── */
+.sb-exercise { margin-bottom: 20px; }
+.sb-exercise-label {
+  font-size: 0.78rem; color: #aaa; margin-bottom: 8px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.drop-row {
+  display: flex; flex-wrap: wrap; gap: 6px; min-height: 44px;
+  padding: 8px 10px; border-radius: 8px;
+  border: 2px dashed #c5cae9; background: #fafbff;
+  margin-bottom: 8px;
+}
+.drop-row.dragover { background: #e8eaff; border-color: #667eea; }
+.chip-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 44px; }
+.sb-fb { font-size: 0.82rem; min-height: 1.2em; color: #27ae60; font-weight: 700; }
+
+/* ── Timer / Score ────────────────────────────────────────── */
+.timer-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: white; border-radius: 10px;
+  padding: 10px 16px; margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  font-size: 0.85rem; color: #666;
+}
+.timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
+.best-display  { color: #f39c12; font-weight: 600; }
+
+/* ── Footer ───────────────────────────────────────────────── */
+.author-footer {
+  text-align: center; margin-top: 40px; padding: 16px;
+  font-size: 0.8rem; color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+@media (max-width: 600px) {
+  body { padding: 10px; }
+  .header h1 { font-size: 1.2rem; }
+  .zuo-layout { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ── Header ── -->
+  <div class="header">
+    <h1>Präpositionen mit Akkusativ und Dativ</h1>
+    <p>A2 · Einheit 101x · 1017G · Grammatik</p>
+  </div>
+
+  <!-- ── Nav ── -->
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab(0,this)">
+      <span class="nav-emoji">📖</span>
+      <span class="nav-label">Entdecken</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(1,this)">
+      <span class="nav-emoji">✏️</span>
+      <span class="nav-label">Lückentext</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(2,this)">
+      <span class="nav-emoji">🔀</span>
+      <span class="nav-label">Zuordnung</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(3,this)">
+      <span class="nav-emoji">🧩</span>
+      <span class="nav-label">Satzbau</span>
+    </button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 0 — ENTDECKEN
+  ══════════════════════════════════════════════════════ -->
+  <div class="section aktiv" id="sec-0">
+
+    <div class="entdeck-intro">
+      <h3>🔍 Welche Präposition — welcher Kasus?</h3>
+      <p>Alex fährt <span class="hl">durch</span> <span class="hl">den</span> Tunnel. (Akkusativ)<br>
+         Louise kauft Blumen <span class="hl">für</span> <span class="hl">die</span> Hochzeit. (Akkusativ)<br>
+         Paul kommt <span class="hl">mit</span> <span class="hl">dem</span> Zug. (Dativ)<br>
+         Tina wohnt <span class="hl">bei</span> <span class="hl">ihrer</span> Schwester. (Dativ)<br>
+         Gwyneth fährt <span class="hl">ohne</span> <span class="hl">einen</span> Plan. (Akkusativ)<br>
+         Max geht <span class="hl">zu</span> <span class="hl">dem</span> Fest. (Dativ)</p>
+    </div>
+
+    <div class="progress-dots">
+      <div class="pdot" id="pdot0"></div>
+      <div class="pdot" id="pdot1"></div>
+      <div class="pdot" id="pdot2"></div>
+      <div class="pdot" id="pdot3"></div>
+    </div>
+
+    <!-- MC Schritt 0 -->
+    <div class="mc-step active" id="mc-step0">
+      <h4>Schau dir die hervorgehobenen Wörter an. Was verändern die Präpositionen?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(0,this,false)">Sie verändern das Subjekt des Satzes.</button>
+        <button class="mc-btn" onclick="mcCheck(0,this,true)">Sie bestimmen den Kasus des nächsten Nomens.</button>
+        <button class="mc-btn" onclick="mcCheck(0,this,false)">Sie verändern das Verb im Satz.</button>
+      </div>
+      <div class="mc-feedback" id="mcfb0"></div>
+    </div>
+
+    <!-- MC Schritt 1 -->
+    <div class="mc-step" id="mc-step1">
+      <h4>„durch den Tunnel" und „für die Hochzeit" und „ohne einen Plan" — welchen Kasus haben diese Nomen?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(1,this,false)">Dativ</button>
+        <button class="mc-btn" onclick="mcCheck(1,this,false)">Nominativ</button>
+        <button class="mc-btn" onclick="mcCheck(1,this,true)">Akkusativ</button>
+      </div>
+      <div class="mc-feedback" id="mcfb1"></div>
+    </div>
+
+    <!-- MC Schritt 2 -->
+    <div class="mc-step" id="mc-step2">
+      <h4>„mit dem Zug", „bei ihrer Schwester", „zu dem Fest" — welchen Kasus haben diese Nomen?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(2,this,true)">Dativ</button>
+        <button class="mc-btn" onclick="mcCheck(2,this,false)">Akkusativ</button>
+        <button class="mc-btn" onclick="mcCheck(2,this,false)">Genitiv</button>
+      </div>
+      <div class="mc-feedback" id="mcfb2"></div>
+    </div>
+
+    <!-- MC Schritt 3 -->
+    <div class="mc-step" id="mc-step3">
+      <h4>Welche dieser Präpositionen brauchen den Dativ?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(3,this,false)">durch, für, ohne, gegen, um, bis</button>
+        <button class="mc-btn" onclick="mcCheck(3,this,true)">mit, bei, zu, von, aus, nach, seit, gegenüber</button>
+        <button class="mc-btn" onclick="mcCheck(3,this,false)">für, mit, zu, durch, aus, gegen</button>
+      </div>
+      <div class="mc-feedback" id="mcfb3"></div>
+    </div>
+
+    <!-- Regelkarte -->
+    <div class="regel-karte" id="regelkarte">
+      <h3>📋 Die Regel: Präpositionen mit Akkusativ und Dativ</h3>
+
+      <table class="praepo-table">
+        <tr>
+          <th>Kasus</th>
+          <th>Präpositionen</th>
+          <th>Eselsbrücke</th>
+        </tr>
+        <tr>
+          <td><span class="kasus-akk">Akkusativ</span></td>
+          <td><b>durch · für · ohne · gegen · um · bis</b></td>
+          <td style="font-style:italic;color:#555;">„durch für ohne gegen um bis"</td>
+        </tr>
+        <tr>
+          <td><span class="kasus-dat">Dativ</span></td>
+          <td><b>mit · bei · zu · von · aus · nach · seit · gegenüber</b></td>
+          <td style="font-style:italic;color:#555;">„mit bei zu von aus nach seit"</td>
+        </tr>
+      </table>
+
+      <div class="rk-example">
+        <b>Akkusativ:</b> Alex fährt <b>durch den</b> Tunnel. / Louise kauft Blumen <b>für die</b> Hochzeit.<br>
+        <b>Dativ:</b> Paul kommt <b>mit dem</b> Zug. / Tina wohnt <b>bei ihrer</b> Schwester.
+      </div>
+    </div>
+
+  </div><!-- /sec-0 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 1 — LÜCKENTEXT
+  ══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-1">
+
+    <div class="timer-bar">
+      <span>⏱ <span class="timer-display" id="timer-1">0:00</span></span>
+      <span>🏆 <span class="best-display" id="best-1">–</span></span>
+      <span style="margin-left:auto;display:flex;gap:8px;">
+        <button class="ctrl-btn" onclick="resetLuecke(1)">↺ Neustart</button>
+        <button class="ctrl-btn" onclick="showAllHints(1)">💡 Lösungen</button>
+      </span>
+    </div>
+
+    <div class="score-box">Richtig: <span id="score-1">0</span> / <span id="total-1">12</span></div>
+    <div id="luecke-container-1"></div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-1 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 2 — ZUORDNUNG (Akkusativ vs. Dativ)
+  ══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-2">
+
+    <div class="timer-bar">
+      <span>⏱ <span class="timer-display" id="timer-2">0:00</span></span>
+      <span>🏆 <span class="best-display" id="best-2">–</span></span>
+      <span style="margin-left:auto;display:flex;gap:8px;">
+        <button class="ctrl-btn" onclick="resetZuo()">↺ Neustart</button>
+      </span>
+    </div>
+
+    <p style="font-size:0.9rem;color:#555;margin-bottom:14px;">
+      Ziehe jede Präposition in die richtige Kategorie — Akkusativ oder Dativ.
+    </p>
+
+    <div class="chip-bank" id="zuo-bank"></div>
+
+    <div class="zuo-layout">
+      <div class="zuo-zone-wrap">
+        <h4>Präpositionen mit Akkusativ</h4>
+        <div class="drop-zone" id="zone-akk" data-cat="akk"
+             ondragover="allowDrop(event)" ondrop="dropZuo(event,this)"
+             onclick="zoneClick(this)">
+          <span class="zone-label zone-akk">Akkusativ</span>
+        </div>
+      </div>
+      <div class="zuo-zone-wrap">
+        <h4>Präpositionen mit Dativ</h4>
+        <div class="drop-zone" id="zone-dat" data-cat="dat"
+             ondragover="allowDrop(event)" ondrop="dropZuo(event,this)"
+             onclick="zoneClick(this)">
+          <span class="zone-label zone-dat">Dativ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="score-box" style="margin-top:12px;">Richtig: <span id="zuo-score">0</span> / <span id="zuo-total">14</span></div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-2 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 3 — SATZBAU
+  ══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-3">
+
+    <div class="timer-bar">
+      <span>⏱ <span class="timer-display" id="timer-3">0:00</span></span>
+      <span>🏆 <span class="best-display" id="best-3">–</span></span>
+      <span style="margin-left:auto;display:flex;gap:8px;">
+        <button class="ctrl-btn" onclick="resetSb()">↺ Neustart</button>
+        <button class="ctrl-btn" onclick="showSbAll()">💡 Lösungen</button>
+      </span>
+    </div>
+
+    <div id="sb-container"></div>
+
+    <div class="author-footer">
+      <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+      <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+  </div><!-- /sec-3 -->
+
+</div><!-- /container -->
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════════════════ */
+
+/* Lückentext-Daten: Präpositionen mit Akkusativ und Dativ
+   Alle Sätze greifen die Hochzeitsgeschichte auf (Alex, Louise, Tina, Gwyneth, Paul, Max)
+*/
+var LUECKEN_DATA = [
+  // Akkusativ-Präpositionen
+  { segs: [{t:'Alex fährt '},{b:'durch',s:'m'},{t:' den langen Tunnel, um pünktlich zur Hochzeit zu kommen.'}] },
+  { segs: [{t:'Louise kauft wunderschöne Rosen '},{b:'für',s:'m'},{t:' die Braut.'}] },
+  { segs: [{t:'Gwyneth geht '},{b:'ohne',s:'m'},{t:' einen Regenschirm zur Kirche — sie hofft auf schönes Wetter.'}] },
+  { segs: [{t:'Paul ist mit seinem Fahrrad '},{b:'gegen',s:'m'},{t:' den Laternenpfahl gefahren.'}] },
+  { segs: [{t:'Die Kinder laufen fröhlich '},{b:'um',s:'m'},{t:' den Brunnen herum.'}] },
+  { segs: [{t:'Sie bleiben '},{b:'bis',s:'m'},{t:' den nächsten Morgen auf dem Fest.'}] },
+  // Dativ-Präpositionen
+  { segs: [{t:'Tina kommt '},{b:'mit',s:'m'},{t:' dem Zug aus Hamburg angereist.'}] },
+  { segs: [{t:'Max übernachtet '},{b:'bei',s:'m'},{t:' seinem Bruder, weil das Hotel voll ist.'}] },
+  { segs: [{t:'Alle gehen nach der Zeremonie '},{b:'zu',s:'m'},{t:' dem großen Festsaal.'}] },
+  { segs: [{t:'Die Einladung kommt '},{b:'von',s:'m'},{t:' dem Brautpaar persönlich.'}] },
+  { segs: [{t:'Gwyneth kommt '},{b:'aus',s:'m'},{t:' der Schweiz und spricht perfekt Deutsch.'}] },
+  { segs: [{t:'Alex und Louise kennen sich '},{b:'seit',s:'m'},{t:' drei Jahren.'}] },
+];
+
+/* Zuordnungs-Daten */
+var ZUO_DATA = [
+  {text:'durch',  cat:'akk'},
+  {text:'für',    cat:'akk'},
+  {text:'ohne',   cat:'akk'},
+  {text:'gegen',  cat:'akk'},
+  {text:'um',     cat:'akk'},
+  {text:'bis',    cat:'akk'},
+  {text:'mit',    cat:'dat'},
+  {text:'bei',    cat:'dat'},
+  {text:'zu',     cat:'dat'},
+  {text:'von',    cat:'dat'},
+  {text:'aus',    cat:'dat'},
+  {text:'nach',   cat:'dat'},
+  {text:'seit',   cat:'dat'},
+  {text:'gegenüber', cat:'dat'},
+];
+
+/* Satzbau-Daten */
+var SB_DATA = [
+  {
+    words: ['alex','fährt','durch','den','tunnel','nach','münchen'],
+    answer: ['alex','fährt','durch','den','tunnel','nach','münchen']
+  },
+  {
+    words: ['louise','kauft','blumen','für','die','hochzeit'],
+    answer: ['louise','kauft','blumen','für','die','hochzeit']
+  },
+  {
+    words: ['paul','kommt','mit','dem','zug','aus','hamburg'],
+    answer: ['paul','kommt','mit','dem','zug','aus','hamburg']
+  },
+  {
+    words: ['tina','geht','ohne','einen','schirm','zur','kirche'],
+    answer: ['tina','geht','ohne','einen','schirm','zur','kirche']
+  },
+  {
+    words: ['max','wohnt','seit','zwei','jahren','in','berlin'],
+    answer: ['max','wohnt','seit','zwei','jahren','in','berlin']
+  },
+  {
+    words: ['gwyneth','tanzt','mit','alex','um','den','tisch','herum'],
+    answer: ['gwyneth','tanzt','mit','alex','um','den','tisch','herum']
+  },
+  {
+    words: ['sie','bleiben','bis','den','nächsten','morgen','auf','dem','fest'],
+    answer: ['sie','bleiben','bis','den','nächsten','morgen','auf','dem','fest']
+  },
+  {
+    words: ['alle','gehen','nach','der','zeremonie','zu','dem','festsaal'],
+    answer: ['alle','gehen','nach','der','zeremonie','zu','dem','festsaal']
+  },
+];
+
+/* ══════════════════════════════════════════════════════════
+   TIMER
+══════════════════════════════════════════════════════════ */
+var TIMER_PREFIX = 'praepositionen-1017g-';
+var timerStarted  = [false, false, false, false];
+var timerRunning  = [false, false, false, false];
+var timerSeconds  = [0, 0, 0, 0];
+var timerIntervals = [null, null, null, null];
+
+function timerAutoStart(n) {
+  if (timerStarted[n]) return;
+  timerStarted[n] = true;
+  timerRunning[n] = true;
+  timerIntervals[n] = setInterval(function() {
+    timerSeconds[n]++;
+    var el = document.getElementById('timer-' + n);
+    if (el) el.textContent = fmtTime(timerSeconds[n]);
+  }, 1000);
+}
+function timerStop(n) {
+  if (!timerRunning[n]) return;
+  clearInterval(timerIntervals[n]);
+  timerRunning[n] = false;
+  var best = parseInt(localStorage.getItem(TIMER_PREFIX + n) || '999999');
+  if (timerSeconds[n] > 0 && timerSeconds[n] < best) {
+    localStorage.setItem(TIMER_PREFIX + n, timerSeconds[n]);
+    var el = document.getElementById('best-' + n);
+    if (el) el.textContent = fmtTime(timerSeconds[n]);
+  }
+}
+function timerResetOne(n) {
+  clearInterval(timerIntervals[n]);
+  timerRunning[n] = false;
+  timerStarted[n] = false;
+  timerSeconds[n] = 0;
+  var el = document.getElementById('timer-' + n);
+  if (el) el.textContent = '0:00';
+}
+function fmtTime(s) {
+  return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60);
+}
+function loadBestTimes() {
+  for (var i = 1; i <= 3; i++) {
+    var v = localStorage.getItem(TIMER_PREFIX + i);
+    if (v) {
+      var el = document.getElementById('best-' + i);
+      if (el) el.textContent = fmtTime(parseInt(v));
+    }
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════════════ */
+function showTab(n, btn) {
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('aktiv'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('sec-' + n).classList.add('aktiv');
+  btn.classList.add('active');
+}
+
+/* ══════════════════════════════════════════════════════════
+   MC-SYSTEM (Tab 0)
+══════════════════════════════════════════════════════════ */
+var mcDone = [false, false, false, false];
+
+function mcCheck(step, btn, correct) {
+  var btns = btn.parentElement.querySelectorAll('.mc-btn');
+  btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+  var fb = document.getElementById('mcfb' + step);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+    fb.className = 'mc-feedback ok';
+    mcDone[step] = true;
+    document.getElementById('pdot' + step).classList.add('done');
+    setTimeout(function() {
+      var next = document.getElementById('mc-step' + (step + 1));
+      if (next) { next.classList.add('active'); }
+      else { document.getElementById('regelkarte').style.display = 'block'; }
+    }, 700);
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '\u2717 Nicht ganz \u2014 schau nochmal genau hin und versuche es erneut.';
+    fb.className = 'mc-feedback err';
+    setTimeout(function() {
+      btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+      fb.textContent = '';
+      fb.className = 'mc-feedback';
+    }, 1400);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   LÜCKENTEXT (Tab 1)
+══════════════════════════════════════════════════════════ */
+var SIZE_MAP = {s:'50px', m:'90px', l:'150px', xl:'200px'};
+
+function lueckeInit() {
+  var container = document.getElementById('luecke-container-1');
+  document.getElementById('total-1').textContent = LUECKEN_DATA.length;
+  LUECKEN_DATA.forEach(function(item, idx) {
+    var div = document.createElement('div');
+    div.className = 'luecke-item';
+    var html = '<span class="item-nr">' + (idx + 1) + '</span>';
+    item.segs.forEach(function(seg) {
+      if (seg.t !== undefined) {
+        html += seg.t;
+      } else {
+        var w = SIZE_MAP[seg.s] || '90px';
+        html += '<input class="blank" type="text" data-answer="' + seg.b +
+                '" placeholder="" style="width:' + w + '" ' +
+                'oninput="liveCheck(this);updateScore1();checkLuecke1AllOk()" ' +
+                'onblur="showHint(this)">';
+      }
+    });
+    div.innerHTML = html;
+    container.appendChild(div);
+  });
+}
+
+function liveCheck(inp) {
+  var val = inp.value.trim().toLowerCase();
+  var ans = (inp.dataset.answer || '').toLowerCase();
+  inp.classList.remove('correct', 'wrong');
+  if (val.length === 0) return;
+  if (val === ans) {
+    inp.classList.add('correct');
+  } else if (ans.indexOf(val) === 0) {
+    // gültiger Präfix → neutral
+  } else {
+    inp.classList.add('wrong');
+  }
+}
+
+function showHint(inp) {
+  var next = inp.nextElementSibling;
+  if (next && next.classList.contains('correction-hint')) next.remove();
+  // Hint nur beim manuellen "Lösungen"-Klick, nicht bei blur
+}
+
+function showAllHints(n) {
+  document.querySelectorAll('#sec-' + n + ' input.blank').forEach(function(inp) {
+    var next = inp.nextElementSibling;
+    if (next && next.classList.contains('correction-hint')) next.remove();
+    if (!inp.classList.contains('correct')) {
+      var hint = document.createElement('span');
+      hint.className = 'correction-hint';
+      hint.textContent = inp.dataset.answer;
+      inp.insertAdjacentElement('afterend', hint);
+    }
+    inp.value = inp.dataset.answer;
+    inp.classList.add('correct');
+    inp.classList.remove('wrong');
+  });
+  updateScore1();
+}
+
+function updateScore1() {
+  var inputs = document.querySelectorAll('#sec-1 input.blank');
+  var ok = Array.from(inputs).filter(function(i) { return i.classList.contains('correct'); }).length;
+  document.getElementById('score-1').textContent = ok;
+  timerAutoStart(1);
+}
+
+function checkLuecke1AllOk() {
+  var inputs = document.querySelectorAll('#sec-1 input.blank');
+  var allOk = inputs.length > 0 &&
+    Array.from(inputs).every(function(i) { return i.classList.contains('correct'); });
+  if (allOk) timerStop(1);
+}
+
+function resetLuecke(n) {
+  timerResetOne(n);
+  document.querySelectorAll('#sec-' + n + ' input.blank').forEach(function(inp) {
+    inp.value = '';
+    inp.classList.remove('correct', 'wrong');
+    var next = inp.nextElementSibling;
+    if (next && next.classList.contains('correction-hint')) next.remove();
+  });
+  document.getElementById('score-' + n).textContent = '0';
+}
+
+/* ══════════════════════════════════════════════════════════
+   ZUORDNUNG (Tab 2)
+══════════════════════════════════════════════════════════ */
+var draggedChip = null;
+
+function zuoInit() {
+  var bank = document.getElementById('zuo-bank');
+  document.getElementById('zuo-total').textContent = ZUO_DATA.length;
+
+  var shuffled = shuffle(ZUO_DATA);
+  shuffled.forEach(function(item) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = item.text;
+    chip.dataset.cat = item.cat;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e) {
+      draggedChip = chip;
+      e.dataTransfer.setData('text/plain', '');
+    });
+    chip.addEventListener('dragend', function() {
+      colorAllZuordnungChips();
+    });
+    chip.addEventListener('click', function() {
+      chipClick(chip);
+    });
+    bank.appendChild(chip);
+  });
+}
+
+function allowDrop(e) { e.preventDefault(); }
+
+function dropZuo(e, zone) {
+  e.preventDefault();
+  if (!draggedChip) return;
+  zone.appendChild(draggedChip);
+  draggedChip = null;
+  colorAllZuordnungChips();
+  timerAutoStart(2);
+}
+
+function zoneClick(zone) {
+  // Klick auf Zone: wenn ein Chip "selected" ist, hierhin verschieben
+  var selected = document.querySelector('#sec-2 .chip.selected');
+  if (selected) {
+    zone.appendChild(selected);
+    selected.classList.remove('selected');
+    colorAllZuordnungChips();
+    timerAutoStart(2);
+  }
+}
+
+function chipClick(chip) {
+  var prev = document.querySelector('#sec-2 .chip.selected');
+  if (prev && prev !== chip) prev.classList.remove('selected');
+  chip.classList.toggle('selected');
+  // Falls Chip aus einer Zone zurück in Bank
+  if (!chip.classList.contains('selected')) return;
+}
+
+function colorZuordnungChip(chip) {
+  var zone = chip.closest('.drop-zone');
+  if (zone) {
+    chip.classList.remove('correct', 'wrong');
+    chip.classList.add(chip.dataset.cat === zone.dataset.cat ? 'correct' : 'wrong');
+  } else {
+    chip.classList.remove('correct', 'wrong');
+  }
+}
+
+function colorAllZuordnungChips() {
+  document.querySelectorAll('#sec-2 .chip').forEach(function(chip) {
+    colorZuordnungChip(chip);
+  });
+  updateZuoCounter();
+  checkZuoAllOk();
+}
+
+function updateZuoCounter() {
+  var chips = document.querySelectorAll('#sec-2 .chip');
+  var ok = Array.from(chips).filter(function(c) { return c.classList.contains('correct'); }).length;
+  document.getElementById('zuo-score').textContent = ok;
+}
+
+function checkZuoAllOk() {
+  var chips = document.querySelectorAll('#sec-2 .chip');
+  var allOk = chips.length > 0 &&
+    Array.from(chips).every(function(c) { return c.classList.contains('correct'); });
+  if (allOk) timerStop(2);
+}
+
+function resetZuo() {
+  timerResetOne(2);
+  var bank = document.getElementById('zuo-bank');
+  document.querySelectorAll('#sec-2 .chip').forEach(function(chip) {
+    chip.classList.remove('correct', 'wrong', 'selected');
+    bank.appendChild(chip);
+  });
+  document.getElementById('zuo-score').textContent = '0';
+}
+
+/* ══════════════════════════════════════════════════════════
+   SATZBAU (Tab 3)
+══════════════════════════════════════════════════════════ */
+var sbDragged = null;
+
+function sbInit() {
+  var container = document.getElementById('sb-container');
+  SB_DATA.forEach(function(item, idx) {
+    var ex = document.createElement('div');
+    ex.className = 'sb-exercise';
+
+    var label = document.createElement('div');
+    label.className = 'sb-exercise-label';
+    label.textContent = 'Satz ' + (idx + 1);
+    ex.appendChild(label);
+
+    var row = document.createElement('div');
+    row.className = 'drop-row';
+    row.id = 'sb-row-' + idx;
+    row.ondragover = function(e) { e.preventDefault(); row.classList.add('dragover'); };
+    row.ondragleave = function() { row.classList.remove('dragover'); };
+    row.ondrop = function(e) {
+      e.preventDefault();
+      row.classList.remove('dragover');
+      if (sbDragged) {
+        row.appendChild(sbDragged);
+        sbDragged = null;
+        updateCaps(idx);
+        colorSbRow(idx);
+      }
+    };
+    ex.appendChild(row);
+
+    var pool = document.createElement('div');
+    pool.className = 'chip-pool';
+    pool.id = 'sb-bank-' + idx;
+    pool.ondragover = function(e) { e.preventDefault(); };
+    pool.ondrop = function(e) {
+      e.preventDefault();
+      if (sbDragged) {
+        pool.appendChild(sbDragged);
+        sbDragged = null;
+        updateCaps(idx);
+        colorSbRow(idx);
+      }
+    };
+
+    shuffle(item.words).forEach(function(word) {
+      var chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.dataset.orig = word;
+      chip.textContent = word;
+      chip.draggable = true;
+      chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+      });
+      pool.appendChild(chip);
+    });
+    ex.appendChild(pool);
+
+    var fb = document.createElement('div');
+    fb.className = 'sb-fb';
+    fb.id = 'sb-fb-' + idx;
+    ex.appendChild(fb);
+
+    container.appendChild(ex);
+  });
+}
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function updateCaps(idx) {
+  var row = document.getElementById('sb-row-' + idx);
+  Array.from(row.querySelectorAll('.chip')).forEach(function(c, i) {
+    var orig = c.dataset.orig;
+    c.textContent = (i === 0 && orig !== ',' && orig !== '.') ?
+      orig.charAt(0).toUpperCase() + orig.slice(1) : orig;
+  });
+}
+
+function colorSbRow(idx) {
+  timerAutoStart(3);
+  var row = document.getElementById('sb-row-' + idx);
+  var data = SB_DATA[idx];
+  setTimeout(function() {
+    Array.from(row.querySelectorAll('.chip')).forEach(function(chip, i) {
+      chip.classList.remove('correct', 'wrong');
+      if (i < data.answer.length) {
+        chip.classList.add(
+          chip.dataset.orig.toLowerCase() === data.answer[i] ? 'correct' : 'wrong'
+        );
+      } else {
+        chip.classList.add('wrong');
+      }
+    });
+    checkSbAllOk();
+  }, 500);
+}
+
+function checkSbAllOk() {
+  var allOk = true;
+  SB_DATA.forEach(function(item, idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = row.querySelectorAll('.chip');
+    if (chips.length !== item.answer.length) { allOk = false; return; }
+    Array.from(chips).forEach(function(c) {
+      if (!c.classList.contains('correct')) allOk = false;
+    });
+  });
+  if (allOk) timerStop(3);
+}
+
+function showSbAll() {
+  SB_DATA.forEach(function(item, idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var bank = document.getElementById('sb-bank-' + idx);
+    // Alle Chips sammeln
+    var allChips = Array.from(row.querySelectorAll('.chip')).concat(
+                   Array.from(bank.querySelectorAll('.chip')));
+    // In Zielreihenfolge sortieren
+    item.answer.forEach(function(word) {
+      var chip = allChips.find(function(c) { return c.dataset.orig === word; });
+      if (chip) {
+        row.appendChild(chip);
+        chip.classList.add('correct');
+        chip.classList.remove('wrong');
+      }
+    });
+    updateCaps(idx);
+  });
+}
+
+function resetSb() {
+  timerResetOne(3);
+  SB_DATA.forEach(function(item, idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var bank = document.getElementById('sb-bank-' + idx);
+    var allChips = Array.from(row.querySelectorAll('.chip')).concat(
+                   Array.from(bank.querySelectorAll('.chip')));
+    shuffle(allChips).forEach(function(c) {
+      c.classList.remove('correct', 'wrong');
+      c.textContent = c.dataset.orig;
+      bank.appendChild(c);
+    });
+    document.getElementById('sb-fb-' + idx).textContent = '';
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+zuoInit();
+lueckeInit();
+sbInit();
+loadBestTimes();
+</script>
+</body>
+</html>
