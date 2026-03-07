@@ -363,7 +363,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
       <p>Alex und Louise sind beste Freunde. Lies diese Sätze aus ihrer Geschichte:</p>
       <br>
       <p>1. Nachdem Louise den Koffer sorgfältig <span class="hl">gepackt hatte</span>, klingelte es. Alex war dran.</p>
-      <p>2. Nachdem Tina freudestrahlend die Eheringe <span class="hl">bestellt hatte</span>, verschickte sie direkt danach alle Einladungen.</p>
+      <p>2. Nachdem Petra freudestrahlend die Eheringe <span class="hl">bestellt hatte</span>, verschickte sie direkt danach alle Einladungen.</p>
       <p>3. Nachdem Alex ein ganzes Restaurant für die Hochzeitsgesellschaft <span class="hl">reserviert hatte</span>, kaufte er im Anschluss daran noch riesige Blumensträuße dazu.</p>
       <p>4. Sie <span class="hl">hatten</span> schon lange und leidenschaftlich <span class="hl">getanzt</span>, als endlich auch Gwyneth dazustieß.</p>
     </div>
@@ -451,7 +451,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
       </div>
 
       <div class="rk-example">
-        Nachdem Tina die zwei Eheringe beim Juwelier <b>bestellt hatte</b>, verschickte sie direkt danach alle Einladungen.<br>
+        Nachdem Petra die zwei Eheringe beim Juwelier <b>bestellt hatte</b>, verschickte sie direkt danach alle Einladungen.<br>
         Alex <b>hatte</b> schon lange sehnsüchtig auf Louise <b>gewartet</b>, bevor sie dann endlich ankam.
       </div>
     </div>
@@ -564,7 +564,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 // Lückentext-Daten (Tab 1)
 // Sätze aus der 1014R-Hochzeitsgeschichte mit Plusquamperfekt
 var LUECKEN_DATA = [
-  { segs: [{t:'Nachdem Tina alle Einladungen '},{b:'verschickt hatte',s:'xl',hint:'verschicken'},{t:', meldete sich schon am nächsten Tag Louise bei ihr.'}] },
+  { segs: [{t:'Nachdem Petra alle Einladungen '},{b:'verschickt hatte',s:'xl',hint:'verschicken'},{t:', meldete sich schon am nächsten Tag Jens bei ihr.'}] },
   { segs: [{t:'Bevor Alex das Restaurant '},{b:'reservierte',s:'l',hint:'reservieren'},{t:', hatte er ein längeres Gespräch mit dem Koch geführt.'}] },
   { segs: [{t:'Nachdem Louise ihren Koffer sorgfältig '},{b:'gepackt hatte',s:'xl',hint:'packen'},{t:', rief sie sofort ein Taxi.'}] },
   { segs: [{t:'Gwyneth '},{b:'hatte',s:'s',hint:'hatte'},{t:' schon bevor sie zur Hochzeit fuhr, einen Blumenstrauß '},{b:'gekauft',s:'m',hint:'kaufen'},{t:'.'}] },
@@ -575,7 +575,7 @@ var LUECKEN_DATA = [
   { segs: [{t:'Louise und Alex '},{b:'hatten',s:'s',hint:'hatten'},{t:' schon lange mit großer Ausgelassenheit '},{b:'getanzt',s:'m',hint:'tanzen'},{t:', als Gwyneth plötzlich ein Foto von ihnen machte.'}] },
   { segs: [{t:'Tina verlor ihre ganze Nervosität, nachdem sie die Gäste besser '},{b:'kennengelernt hatte',s:'xl',hint:'kennenlernen'},{t:'.'}] },
   { segs: [{t:'Bevor Gwyneth nach Berlin fliegen '},{b:'konnte',s:'m',hint:'können'},{t:', musste sie lange auf ein Visum dafür warten.'}] },
-  { segs: [{t:'Nachdem Paul und Tina sich freudig das Ja-Wort '},{b:'gegeben hatten',s:'xl',hint:'geben'},{t:', stießen alle Freunde überglücklich mit Sekt darauf an.'}] },
+  { segs: [{t:'Nachdem Petra und Jens sich freudig das Ja-Wort '},{b:'gegeben hatten',s:'xl',hint:'geben'},{t:', stießen alle Freunde überglücklich mit Sekt darauf an.'}] },
 ];
 
 // Zuordnungs-Daten (Tab 2): hatte vs. war
@@ -602,8 +602,8 @@ var satzbauData = [
     punct:  '.'
   },
   {
-    parts:  ['bevor', 'Tina', 'die', 'Einladungen', 'verschickte,', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt.'],
-    valid:  [['bevor', 'Tina', 'die', 'Einladungen', 'verschickte,', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt.']],
+    parts:  ['bevor', 'Petra', 'die', 'Einladungen', 'verschickte,', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt.'],
+    valid:  [['bevor', 'Petra', 'die', 'Einladungen', 'verschickte,', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt.']],
     punct:  '.'
   },
   {
@@ -612,8 +612,8 @@ var satzbauData = [
     punct:  '.'
   },
   {
-    parts:  ['nachdem', 'Tina', 'und', 'Paul', 'schon', 'lange', 'ausgelassen', 'getanzt', 'hatten,', 'kam', 'endlich', 'auch', 'Louise', 'an.'],
-    valid:  [['nachdem', 'Tina', 'und', 'Paul', 'schon', 'lange', 'ausgelassen', 'getanzt', 'hatten,', 'kam', 'endlich', 'auch', 'Louise', 'an.']],
+    parts:  ['nachdem', 'Alex', 'und', 'Louise', 'schon', 'lange', 'getanzt', 'hatten,', 'kam', 'endlich', 'auch', 'Gwyneth', 'dazu.'],
+    valid:  [['nachdem', 'Alex', 'und', 'Louise', 'schon', 'lange', 'getanzt', 'hatten,', 'kam', 'endlich', 'auch', 'Gwyneth', 'dazu.']],
     punct:  '.'
   },
   {
@@ -632,8 +632,8 @@ var satzbauData = [
     punct:  '.'
   },
   {
-    parts:  ['bevor', 'die', 'eigentliche', 'Feier', 'begann,', 'hatten', 'Alex', 'und', 'Paul', 'schon', 'für', 'die', 'Musik', 'gesorgt.'],
-    valid:  [['bevor', 'die', 'eigentliche', 'Feier', 'begann,', 'hatten', 'Alex', 'und', 'Paul', 'schon', 'für', 'die', 'Musik', 'gesorgt.']],
+    parts:  ['bevor', 'die', 'eigentliche', 'Feier', 'begann,', 'hatten', 'Alex', 'und', 'Max', 'schon', 'für', 'die', 'Musik', 'gesorgt.'],
+    valid:  [['bevor', 'die', 'eigentliche', 'Feier', 'begann,', 'hatten', 'Alex', 'und', 'Max', 'schon', 'für', 'die', 'Musik', 'gesorgt.']],
     punct:  '.'
   },
 ];
