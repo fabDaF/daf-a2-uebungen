@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 · 1015V · Gefühle &amp; Stimmungen</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+
+.nav {
+    display: flex;
+    flex-wrap: nowrap;
+    background: #f8f9fa;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+.nav-btn {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    transition: all 0.3s;
+    font-size: 0.92em;
+    font-weight: 500;
+    color: #666;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── WÖRTER-TAB: Lingoda-Stil ─────────────────────────────────── */
+.vocab-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 28px 30px;
+}
+
+.vocab-card {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(100,80,160,0.13);
+    background: white;
+    border: 1px solid #ede8f8;
+    display: flex;
+    flex-direction: column;
+}
+
+.vocab-card.wide {
+    grid-column: span 2;
+}
+
+.vocab-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+}
+
+.vocab-card.wide .vocab-img {
+    aspect-ratio: 21/9;
+}
+
+.vocab-label {
+    background: #cce4f8;
+    padding: 10px 16px;
+    font-size: 1.15em;
+    font-weight: 700;
+    color: #1a3a5c;
+    letter-spacing: 0.01em;
+}
+
+.vocab-label .artikel {
+    font-weight: 400;
+    color: #4a7abf;
+    margin-right: 4px;
+}
+
+.vocab-label .plural {
+    font-size: 0.78em;
+    color: #7a9abf;
+    margin-left: 6px;
+    font-weight: 400;
+}
+
+.vocab-example {
+    background: #e8f4fd;
+    padding: 10px 16px;
+    font-size: 0.92em;
+    color: #2d4a6a;
+    line-height: 1.5;
+    font-style: italic;
+    flex: 1;
+}
+
+.vocab-translation {
+    background: #f5f0ff;
+    padding: 7px 16px;
+    font-size: 0.82em;
+    color: #7a5abf;
+    border-top: 1px solid #e4daf8;
+}
+
+/* ─── REDEMITTEL-TAB ────────────────────────────────────────────── */
+.chip-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px;
+    background: #f0f0f8;
+    border-radius: 10px;
+    min-height: 56px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+    border: 1px dashed #bbb;
+}
+.qa-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+.qa-frage-cell {
+    background: #f0ecff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-weight: 600;
+    color: #4a148c;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    border-left: 3px solid #764ba2;
+}
+.drop-zone {
+    min-height: 52px;
+    border-radius: 10px;
+    border: 2px dashed #c5cae9;
+    padding: 8px 10px;
+    background: #fafbff;
+    transition: background .2s;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+.drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.chip {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: move;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: all 0.2s;
+    user-select: none;
+    white-space: normal;
+    display: inline-block;
+}
+.chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.chip.selected  { background: #667eea; color: white; }
+
+/* ─── LÜCKENTEXT-TAB ────────────────────────────────────────────── */
+.luecken-text {
+    font-size: 1.05em;
+    line-height: 2.0;
+    color: #333;
+}
+.luecken-inp, .ws-inp {
+    border: none;
+    border-bottom: 2px solid #c5cae9;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 1em;
+    width: 130px;
+    transition: border-color 0.2s;
+    padding: 0 4px;
+}
+.luecken-inp:focus, .ws-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok, .ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no, .ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.art { width: 70px; }
+
+/* ─── SATZBAU ───────────────────────────────────────────────────── */
+.chips-container {
+    display: flex; flex-wrap: wrap; gap: 8px; padding: 14px;
+    background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px;
+}
+.sentence-builder {
+    display: flex; flex-wrap: wrap; gap: 6px; padding: 14px;
+    background: white; border: 2px dashed #ccc; border-radius: 10px;
+    min-height: 56px; align-items: center; margin-bottom: 6px;
+}
+.sentence-builder.correct   { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct   { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* ─── WORTSCHATZ-ÜBUNG ──────────────────────────────────────────── */
+.ws-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+}
+.ws-en {
+    min-width: 160px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95em;
+}
+.ws-inp-wrap { display: flex; gap: 8px; align-items: center; }
+
+/* ─── TIMER ─────────────────────────────────────────────────────── */
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding: 6px 12px; background: #f8f9fa; border-radius: 8px; }
+.timer-display { display: flex; gap: 14px; font-size: 0.82em; color: #bbb; font-variant-numeric: tabular-nums; }
+.current-time { }
+.best-time { }
+.btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.82em; color: #888; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { border-color: #aaa; color: #555; }
+
+/* ─── HILFE-BOX ─────────────────────────────────────────────────── */
+.hilfe-box {
+    background: #f0f4ff;
+    border-left: 4px solid #667eea;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 0.9em;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* ─── SECTION PADDING ───────────────────────────────────────────── */
+.sec-inner { padding: 28px 30px; }
+
+/* ─── TEXT & FRAGEN ─────────────────────────────────────────────── */
+.lesetext {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.05em;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 24px;
+    background: #fafbff;
+    border-radius: 10px;
+    padding: 20px 24px;
+    border: 1px solid #e8eaf8;
+}
+.lesetext p { margin-bottom: 12px; }
+.rf-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.97em;
+    color: #333;
+}
+.rf-btn {
+    padding: 6px 16px;
+    border: 2px solid #667eea;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.88em;
+    background: white;
+    color: #667eea;
+    transition: all 0.2s;
+}
+.rf-btn:hover { background: #667eea; color: white; }
+.rf-btn.ok  { background: #27ae60; border-color: #27ae60; color: white; }
+.rf-btn.no  { background: #e74c3c; border-color: #e74c3c; color: white; }
+
+/* ─── FOOTER ────────────────────────────────────────────────────── */
+.author-footer {
+    text-align: center;
+    margin-top: 40px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+/* ─── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+    .vocab-grid { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
+    .vocab-card.wide { grid-column: span 1; }
+    .qa-grid { grid-template-columns: 1fr; }
+    .qa-frage-cell { border-left: none; border-bottom: 2px solid #764ba2; border-radius: 8px 8px 0 0; }
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Gefühle &amp; Stimmungen</h1>
+        <p style="font-family: Georgia, serif;">A2.1 · Lektion 1015V &nbsp;|&nbsp; Wortschatz &amp; Übungen</p>
+        <div class="big-emoji">👫</div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">📸</span><span class="nav-label">Wörter</span></div>
+        <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">💬</span><span class="nav-label">Redemittel</span></div>
+        <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+        <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">📖</span><span class="nav-label">Text &amp; Fragen</span></div>
+        <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+        <div class="nav-btn" onclick="showSection(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         TAB 0 — WÖRTER (Lingoda-Stil: großes Foto + Label + Satz)
+    ════════════════════════════════════════════════════════════════ -->
+        <div class="section aktiv" id="sec-0">
+        <div class="vocab-grid">
+
+            <!-- 1. das Gefühl — volle Breite -->
+            <div class="vocab-card wide">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Nachdenklicher junger Mann">
+                <div class="vocab-label"><span class="artikel">das</span> Gefühl <span class="plural">(-e)</span></div>
+                <div class="vocab-example">Alex hat ein komisches Gefühl, wenn er an Louise denkt.</div>
+                <div class="vocab-translation">feeling / emotion</div>
+            </div>
+
+            <!-- 2. zufrieden -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3807690/pexels-photo-3807690.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Zufriedene Frau">
+                <div class="vocab-label">zufrieden <span class="plural">(mit + Dativ)</span></div>
+                <div class="vocab-example">Louise ist zufrieden mit ihrem Leben in Berlin.</div>
+                <div class="vocab-translation">satisfied / content</div>
+            </div>
+
+            <!-- 3. stolz -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Stolzer Mann">
+                <div class="vocab-label">stolz <span class="plural">(auf + Akkusativ)</span></div>
+                <div class="vocab-example">Louise ist stolz auf Alex, weil er immer für seine Freunde da ist.</div>
+                <div class="vocab-translation">proud</div>
+            </div>
+
+            <!-- 4. froh — volle Breite -->
+            <div class="vocab-card wide">
+                <img class="vocab-img" src="https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fröhliche Frau">
+                <div class="vocab-label">froh <span class="plural">(über + Akkusativ)</span></div>
+                <div class="vocab-example">Tina ist froh über die Einladung zur Hochzeit von Petra und Jens.</div>
+                <div class="vocab-translation">glad / happy</div>
+            </div>
+
+            <!-- 5. enttäuscht -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3777572/pexels-photo-3777572.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Enttäuschte Person">
+                <div class="vocab-label">enttäuscht <span class="plural">(von + Dativ)</span></div>
+                <div class="vocab-example">Tina ist sehr enttäuscht von Paul, weil er sie verlassen hat.</div>
+                <div class="vocab-translation">disappointed</div>
+            </div>
+
+            <!-- 6. Angst haben -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3808803/pexels-photo-3808803.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ängstliche Person">
+                <div class="vocab-label">Angst haben <span class="plural">(vor + Dativ)</span></div>
+                <div class="vocab-example">Alex hat manchmal Angst vor dem Gespräch mit Louise.</div>
+                <div class="vocab-translation">to be afraid / to fear</div>
+            </div>
+
+            <!-- 7. nervös -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3808831/pexels-photo-3808831.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Nervöse Person">
+                <div class="vocab-label">nervös</div>
+                <div class="vocab-example">Gwyneth war nervös, bevor sie Max das erste Mal getroffen hat.</div>
+                <div class="vocab-translation">nervous</div>
+            </div>
+
+            <!-- 8. unglücklich -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3808832/pexels-photo-3808832.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Unglückliche Person">
+                <div class="vocab-label">unglücklich</div>
+                <div class="vocab-example">Nach der Trennung war Tina sehr unglücklich und wollte niemanden sehen.</div>
+                <div class="vocab-translation">unhappy</div>
+            </div>
+
+            <!-- 9. traurig — volle Breite -->
+            <div class="vocab-card wide">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3808868/pexels-photo-3808868.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Traurige Person">
+                <div class="vocab-label">traurig</div>
+                <div class="vocab-example">Louise hat auf der Hochzeit geweint, aber nicht weil sie traurig war.</div>
+                <div class="vocab-translation">sad</div>
+            </div>
+
+            <!-- 10. wütend -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3808888/pexels-photo-3808888.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Wütender Mann">
+                <div class="vocab-label">wütend <span class="plural">(auf + Akkusativ)</span></div>
+                <div class="vocab-example">Alex war wütend auf sich selbst, weil er so lange gewartet hatte.</div>
+                <div class="vocab-translation">angry / furious</div>
+            </div>
+
+            <!-- 11. lachen -->
+            <div class="vocab-card">
+                <img class="vocab-img" src="https://images.pexels.com/photos/3808889/pexels-photo-3808889.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Lachende Freunde">
+                <div class="vocab-label">lachen</div>
+                <div class="vocab-example">Alex und Louise haben auf der Hochzeit viel gelacht und getanzt.</div>
+                <div class="vocab-translation">to laugh</div>
+            </div>
+
+            <!-- 12. lächeln — volle Breite -->
+            <div class="vocab-card wide">
+                <img class="vocab-img" src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Lächelnde Frau">
+                <div class="vocab-label">lächeln</div>
+                <div class="vocab-example">Als Alex Louise fragte, ob sie tanzen möchte, hat sie ihn angelächelt.</div>
+                <div class="vocab-translation">to smile</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="section" id="sec-1">
+        <div class="sec-inner">
+            <h2 style="font-size:1.3em;color:#4a148c;margin-bottom:6px;">💬 Über Freundschaft sprechen</h2>
+            <div class="control-bar">
+                <div class="btn-row"><button class="btn btn-loesung" onclick="colorAllQaChips()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetQa1()">↺ Neustart</button></div>
+                <div class="timer-display"><span class="current-time">⏱ <span id="timer-1">00:00</span></span> <span class="best-time">🏆 <span id="best-1">--:--</span></span></div>
+            </div>
+            <p style="color:#666;font-size:0.93em;margin-bottom:18px;">Ordne die Antworten den richtigen Fragen zu.</p>
+            <div id="qaContainer1"></div>
+
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         TAB 2 — LÜCKENTEXT
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section" id="sec-2">
+        <div class="sec-inner">
+            <h2 style="font-size:1.3em;color:#4a148c;margin-bottom:12px;">✏️ Lückentext</h2>
+            <div class="control-bar">
+                <div class="btn-row"><button class="btn btn-loesung" onclick="showLuecken2()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetLuecken2()">↺ Neustart</button></div>
+                <div class="timer-display"><span class="current-time">⏱ <span id="timer-2">00:00</span></span> <span class="best-time">🏆 <span id="best-2">--:--</span></span></div>
+            </div>
+
+            <p style="font-weight:700;color:#4a148c;margin-bottom:10px;">Text 1 – Wie geht es dir?</p>
+            <div class="luecken-text">
+                Alex schaut Louise an. Sie sieht heute nicht glücklich aus.
+                „Louise, bist du <input class="luecken-inp" data-ans="traurig" placeholder="">?", fragt er.
+                „Nein, ich bin nur etwas <input class="luecken-inp" data-ans="nervös" placeholder="">",
+                sagt sie. „Ich habe morgen ein wichtiges Gespräch."
+                Alex lächelt. „Du musst keine <input class="luecken-inp" data-ans="Angst" placeholder=""> haben.
+                Ich bin <input class="luecken-inp" data-ans="stolz" placeholder=""> auf dich!"
+                Louise ist <input class="luecken-inp" data-ans="froh" placeholder=""> über die Worte von Alex.
+                Sie <input class="luecken-inp" data-ans="lächelt" placeholder=""> ihn an.
+            </div>
+
+            <div style="margin-top:28px;"></div>
+
+            <p style="font-weight:700;color:#4a148c;margin-bottom:10px;">Text 2 – Nach der Hochzeit</p>
+            <div class="luecken-text">
+                Tina war auf der Hochzeit von Petra und Jens. Danach hatte sie ein
+                gemischtes <input class="luecken-inp" data-ans="Gefühl" placeholder="">.
+                Sie war <input class="luecken-inp" data-ans="glücklich" placeholder=""> für das Brautpaar,
+                aber auch <input class="luecken-inp" data-ans="traurig" placeholder="">,
+                weil sie an Paul dachte. Sie ist noch immer <input class="luecken-inp" data-ans="enttäuscht" placeholder="">
+                von ihm. Gwyneth und Max haben sie aufgeheitert.
+                Am Ende des Abends war Tina wieder <input class="luecken-inp" data-ans="zufrieden" placeholder="">.
+            </div>
+        </div>
+
+        id="sec-3">
+        <div class="sec-inner">
+            <h2 style="font-size:1.3em;color:#4a148c;margin-bottom:12px;">📖 Text &amp; Fragen</h2>
+            <div class="control-bar">
+                <div class="btn-row"><button class="btn btn-loesung" onclick="showRF()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetRF()">↺ Neustart</button></div>
+                <div class="timer-display"><span class="current-time">⏱ <span id="timer-3">00:00</span></span> <span class="best-time">🏆 <span id="best-3">--:--</span></span></div>
+            </div>
+
+            <div class="lesetext" style="font-family: Georgia, 'Times New Roman', serif; font-size: 1.02em; line-height: 1.82; color: #1a1a1a; text-align: justify; hyphens: auto; -webkit-hyphens: auto; margin-bottom: 22px;">
+                <p style="margin-bottom:0.9em; text-indent:0;">Lena hat kein gutes Gefühl. Sie hat heute ein Vorstellungsgespräch und ist sehr nervös. Ihr Freund Tim bringt sie zum Interview.</p>
+                <p style="margin-bottom:0.9em; text-indent:1.4em;">Nach dem Interview ist Lena traurig. Es ist nicht gut gelaufen. Sie hat Angst, dass sie den Job nicht bekommt.</p>
+                <p style="margin-bottom:0.9em; text-indent:1.4em;">Nach drei Tagen kommt ein Anruf: Lena hat den Job! Jetzt ist sie glücklich und lächelt wieder. Tim ist stolz auf sie. Er lacht und sagt: „Ich wusste, du wirst mich nicht enttäuschen!"</p>
+            </div>
+
+            <h3 style="font-size:1.05em;color:#4a148c;margin-bottom:12px;">Richtig oder falsch?</h3>
+            <div id="rf-container"></div>
+        </div>
+
+        id="sec-4">
+        <div class="sec-inner">
+            <h2 style="font-size:1.3em;color:#4a148c;margin-bottom:12px;">🧩 Satzbau</h2>
+            <div class="control-bar">
+                <div class="btn-row"><button class="btn btn-loesung" onclick="for(var i=0;i&lt;satzbauData.length;i++)sbShowSolution(i)">💡 Lösungen</button><button class="btn btn-reset" onclick="initSatzbau()">↺ Neustart</button></div>
+                <div class="timer-display"><span class="current-time">⏱ <span id="timer-4">00:00</span></span> <span class="best-time">🏆 <span id="best-4">--:--</span></span></div>
+            </div>
+            <p style="color:#666;font-size:0.93em;margin-bottom:18px;">Bringe die Wörter in die richtige Reihenfolge.</p>
+
+            <div id="sb-area"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         TAB 5 — WORTSCHATZ-TRAINING
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section" id="sec-5">
+        <div class="sec-inner">
+            <h2 style="font-size:1.3em;color:#4a148c;margin-bottom:12px;">🔠 Wortschatz-Training</h2>
+            <div class="control-bar">
+                <div class="btn-row"><button class="btn btn-loesung" onclick="showWSLoesung()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetWS()">↺ Neustart</button></div>
+                <div class="timer-display"><span class="current-time">⏱ <span id="timer-5">00:00</span></span> <span class="best-time">🏆 <span id="best-5">--:--</span></span></div>
+            </div>
+            <p style="color:#666;font-size:0.93em;margin-bottom:16px;">Schreib Artikel + Wort + Plural auf Deutsch. Bei Adjektiven/Verben: nur das Wort.</p>
+
+            <div id="ws-container"></div>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        <span class="author-name">&copy; Frank Burkert</span> &middot; fabDaF &middot; Fotos: Pexels (freie Lizenz)
+    </div>
+
+</div><!-- /container -->
+
+<script>
+// ─── NAV ──────────────────────────────────────────────────────────────────────
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+    if (idx === 1) initQa();
+    if (idx === 4) initSatzbau();
+    if (idx === 5) initWS();
+}
+
+// ─── TIMER ────────────────────────────────────────────────────────────────────
+var timers = {};
+function timerTick(idx) {
+    if (!timers[idx] || !timers[idx].running) return;
+    timers[idx].sec++;
+    var m = Math.floor(timers[idx].sec / 60), s = timers[idx].sec % 60;
+    document.getElementById('timer-' + idx).textContent = m + ':' + (s < 10 ? '0' : '') + s;
+}
+function timerAutoStart(idx) {
+    if (timers[idx] && timers[idx].running) return;
+    if (!timers[idx]) timers[idx] = {sec:0, running:false, iv:null};
+    timers[idx].running = true;
+    timers[idx].iv = setInterval(function(){ timerTick(idx); }, 1000);
+}
+function timerStop(idx) {
+    if (!timers[idx] || !timers[idx].running) return;
+    timers[idx].running = false;
+    clearInterval(timers[idx].iv);
+    var key = 'daf-1011v-best-' + idx;
+    var best = parseInt(localStorage.getItem(key) || '999999');
+    if (timers[idx].sec < best) {
+        localStorage.setItem(key, timers[idx].sec);
+        var m = Math.floor(timers[idx].sec / 60), s = timers[idx].sec % 60;
+        document.getElementById('best-' + idx).textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+}
+function timerReset(idx) {
+    if (timers[idx]) { clearInterval(timers[idx].iv); }
+    timers[idx] = {sec:0, running:false, iv:null};
+    document.getElementById('timer-' + idx).textContent = '0:00';
+    var key = 'daf-1011v-best-' + idx;
+    var best = parseInt(localStorage.getItem(key) || '0');
+    if (best > 0) {
+        var m = Math.floor(best/60), s = best%60;
+        document.getElementById('best-' + idx).textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    [2,4,5].forEach(function(idx) {
+        var key = 'daf-1011v-best-' + idx;
+        var best = parseInt(localStorage.getItem(key) || '0');
+        if (best > 0) {
+            var m = Math.floor(best/60), s = best%60;
+            document.getElementById('best-' + idx).textContent = m + ':' + (s < 10 ? '0' : '') + s;
+        }
+    });
+    document.querySelectorAll('.luecken-inp').forEach(function(inp) {
+        inp.addEventListener('input', function() {
+            liveCheck(inp, function(){ timerAutoStart(2); }, '.luecken-inp', function(){ timerStop(2); });
+        });
+    });
+});
+
+// ─── LIVE-FEEDBACK ───────────────────────────────────────────────────────────
+function liveCheck(inp, timerAutoStartFn, allSel, timerStopFn) {
+    var val = inp.value.trim().toLowerCase();
+    var ans = (inp.dataset.ans || '').toLowerCase();
+    inp.classList.remove('ok', 'no');
+    if (!val) return;
+    if (val === ans) {
+        inp.classList.add('ok');
+        if (timerAutoStartFn) timerAutoStartFn();
+        if (timerStopFn && allSel) {
+            var alle = Array.from(document.querySelectorAll(allSel));
+            if (alle.every(function(i){ return i.classList.contains('ok'); })) timerStopFn();
+        }
+        return;
+    }
+    if (ans.startsWith(val)) { if (timerAutoStartFn) timerAutoStartFn(); return; }
+    inp.classList.add('no');
+}
+
+// ─── LÜCKENTEXT RESET / LÖSUNGEN ─────────────────────────────────────────────
+function resetLuecken2() {
+    document.querySelectorAll('.luecken-inp').forEach(function(inp) {
+        inp.value = '';
+        inp.classList.remove('ok','no');
+    });
+    timerReset(2);
+}
+function showLuecken2() {
+    document.querySelectorAll('.luecken-inp').forEach(function(inp) {
+        inp.value = inp.dataset.ans;
+        inp.classList.remove('no'); inp.classList.add('ok');
+    });
+    timerStop(2);
+}
+
+// ─── RICHTIG/FALSCH ──────────────────────────────────────────────────────────
+function checkRF(btn, isCorrect) {
+    timerAutoStart(3);
+    var item = btn.closest('.rf-item');
+    var btns = item.querySelectorAll('.rf-btn');
+    btns.forEach(function(b){ b.classList.remove('ok','no'); });
+    btn.classList.add(isCorrect ? 'ok' : 'no');
+    // Timer stoppen wenn alle rf-items beantwortet
+    var alle = document.querySelectorAll('#sec-3 .rf-item');
+    var beantwortet = document.querySelectorAll('#sec-3 .rf-btn.ok, #sec-3 .rf-btn.no');
+    if (beantwortet.length >= alle.length) timerStop(3);
+}
+
+// ─── QA REDEMITTEL ───────────────────────────────────────────────────────────
+var QA_DATA = [
+    { frage: "Wie fühlt sich Tina nach der Trennung von Paul?", antwort: "Sie ist sehr unglücklich und enttäuscht." },
+    { frage: "Warum ist Louise auf der Hochzeit stolz auf Alex?", antwort: "Weil er immer für seine Freunde da ist." },
+    { frage: "Wie fühlt sich Alex, bevor er Louise zum Tanzen fragt?", antwort: "Er ist sehr nervös und hat Angst." },
+    { frage: "Was macht Louise auf der Hochzeit, und warum?", antwort: "Sie weint vor Freude – sie ist glücklich für das Brautpaar." },
+    { frage: "Wie fühlen sich die Freunde am Ende der Hochzeit?", antwort: "Sie sind alle glücklich und zufrieden." },
+    { frage: "Was drückt ein Lächeln aus?", antwort: "Ein Lächeln drückt Freude oder Zufriedenheit aus." }
+];
+
+var draggedChip = null;
+function allowDrop(e){ e.preventDefault(); }
+function shuffle(arr) {
+    var a = arr.slice();
+    for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+}
+
+function colorAllQaChips() {
+    document.querySelectorAll('#sec-1 .drop-zone').forEach(function(zone) {
+        var chip = zone.querySelector('.chip');
+        if (!chip) return;
+        chip.classList.remove('correct','incorrect');
+        chip.classList.add(chip.dataset.ans === zone.dataset.ans ? 'correct' : 'incorrect');
+    });
+}
+
+function resetQa1() {
+    qaInited = false;
+    timerReset(1);
+    initQa();
+}
+
+function resetRF() {
+    document.querySelectorAll('#sec-3 .rf-btn').forEach(function(b){ b.classList.remove('ok','no'); });
+    timerReset(3);
+}
+
+function showRFLoesung() {
+    document.querySelectorAll('#sec-3 .rf-item').forEach(function(item) {
+        var btns = item.querySelectorAll('.rf-btn');
+        btns.forEach(function(b){ b.classList.remove('ok','no'); });
+        // Richtig-Button ist immer der erste oder zweite je nach onclick
+        btns.forEach(function(b){
+            var correct = b.getAttribute('onclick').includes('true');
+            if(correct) b.classList.add('ok');
+        });
+    });
+    timerStop(3);
+}
+
+var qaInited = false;
+function initQa() {
+    if (qaInited) return;
+    qaInited = true;
+    var container = document.getElementById('qaContainer1');
+    container.innerHTML = '';
+
+    var bank = document.createElement('div');
+    bank.className = 'chip-bank'; bank.id = 'qaBank1';
+    bank.addEventListener('dragover', allowDrop);
+    bank.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!draggedChip) return;
+        bank.appendChild(draggedChip); draggedChip = null;
+        colorAllQaChips();
+    });
+    bank.addEventListener('click', function(e) {
+        if (e.target === bank) {
+            var sel = document.querySelector('#sec-1 .chip.selected');
+            if (sel) { bank.appendChild(sel); sel.classList.remove('selected'); colorAllQaChips(); }
+        }
+    });
+    shuffle(QA_DATA.map(function(q){ return q.antwort; })).forEach(function(ans) {
+        var chip = document.createElement('div');
+        chip.className = 'chip'; chip.textContent = ans; chip.dataset.ans = ans; chip.draggable = true;
+        chip.addEventListener('dragstart', function(e){ draggedChip=chip; e.dataTransfer.setData('text/plain',''); });
+        chip.addEventListener('dragend', function(){ colorAllQaChips(); });
+        chip.addEventListener('click', function() {
+            if (chip.classList.contains('selected')){ chip.classList.remove('selected'); return; }
+            document.querySelectorAll('#sec-1 .chip.selected').forEach(function(c){ c.classList.remove('selected'); });
+            chip.classList.add('selected');
+        });
+        bank.appendChild(chip);
+    });
+    container.appendChild(bank);
+
+    var grid = document.createElement('div'); grid.className = 'qa-grid';
+    QA_DATA.forEach(function(q) {
+        var fc = document.createElement('div'); fc.className = 'qa-frage-cell'; fc.textContent = q.frage;
+        grid.appendChild(fc);
+        var zone = document.createElement('div'); zone.className = 'drop-zone'; zone.dataset.ans = q.antwort;
+        zone.style.minHeight = '44px';
+        zone.addEventListener('dragover', allowDrop);
+        zone.addEventListener('drop', function(e) {
+            e.preventDefault(); if (!draggedChip) return;
+            zone.appendChild(draggedChip); draggedChip=null; colorAllQaChips();
+            timerAutoStart(1);
+            var filled = document.querySelectorAll('#sec-1 .drop-zone .chip');
+            if (filled.length >= QA_DATA.length) timerStop(1);
+        });
+        zone.addEventListener('click', function() {
+            var sel = document.querySelector('#sec-1 .chip.selected');
+            if (sel){ zone.appendChild(sel); sel.classList.remove('selected'); colorAllQaChips();
+                timerAutoStart(1);
+                var filled = document.querySelectorAll('#sec-1 .drop-zone .chip');
+                if (filled.length >= QA_DATA.length) timerStop(1);
+            }
+        });
+        grid.appendChild(zone);
+    });
+    container.appendChild(grid);
+}
+
+// ─── SATZBAU ─────────────────────────────────────────────────────────────────
+var satzbauData = [
+    { parts:['Tina','ist','sehr','enttäuscht','von','Paul'], valid:[['Tina','ist','sehr','enttäuscht','von','Paul']], punct:'.' },
+    { parts:['Louise','ist','stolz','auf','Alex'], valid:[['Louise','ist','stolz','auf','Alex']], punct:'.' },
+    { parts:['Alex','hat','Angst','vor','dem','Gespräch'], valid:[['Alex','hat','Angst','vor','dem','Gespräch']], punct:'.' },
+    { parts:['Gwyneth','war','nervös','beim','ersten','Date'], valid:[['Gwyneth','war','nervös','beim','ersten','Date']], punct:'.' },
+    { parts:['Louise','weint','vor','Freude','auf','der','Hochzeit'], valid:[['Louise','weint','vor','Freude','auf','der','Hochzeit']], punct:'.' },
+    { parts:['Alex','lächelt','weil','Louise','ihn','anlächelt'], valid:[['Alex','lächelt','weil','Louise','ihn','anlächelt']], punct:'.' },
+    { parts:['Tina','ist','froh','über','die','Einladung'], valid:[['Tina','ist','froh','über','die','Einladung']], punct:'.' },
+    { parts:['die','Freunde','lachen','zusammen','auf','der','Tanzfläche'], valid:[['die','Freunde','lachen','zusammen','auf','der','Tanzfläche']], punct:'.' }
+];
+
+var sbDragged = null;
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) { c=document.createElement('div'); c.id='sb-insert-cursor'; c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;'; }
+    return c;
+}
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect(); if(clientX<r.left+r.width/2) return chips[i];}
+    return null;
+}
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
+function sbUpdateCapitalization(row) {
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
+        var orig=c.dataset.orig;
+        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
+        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+    });
+}
+function sbMakeChip(word) {
+    var chip=document.createElement('div'); chip.className='chip'; chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
+    chip.addEventListener('dragstart',function(e){ sbDragged=chip; e.dataTransfer.setData('text/plain',''); setTimeout(function(){chip.style.opacity='0.4';},0); });
+    chip.addEventListener('dragend',function(){ chip.style.opacity=''; sbDragged=null; var c=document.getElementById('sb-insert-cursor'); if(c&&c.parentNode)c.parentNode.removeChild(c); });
+    return chip;
+}
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover',function(e){ e.preventDefault(); if(!sbDragged)return; var cursor=getSbCursor(); var before=getSbInsertPos(zone,e.clientX); if(before)zone.insertBefore(cursor,before); else zone.appendChild(cursor); });
+    zone.addEventListener('dragleave',function(e){ if(!zone.contains(e.relatedTarget)){var c=document.getElementById('sb-insert-cursor'); if(c&&c.parentNode===zone)zone.removeChild(c);} });
+    zone.addEventListener('drop',function(e){ e.preventDefault(); if(!sbDragged)return; var cursor=document.getElementById('sb-insert-cursor'); if(cursor&&cursor.parentNode===zone){zone.insertBefore(sbDragged,cursor);zone.removeChild(cursor);}else{zone.appendChild(sbDragged);} sbDragged=null; sbUpdateCapitalization(document.getElementById('sb-row-'+idx)); sbCheckAuto(idx); });
+}
+function sbColorRow(idx) {
+    var row=document.getElementById('sb-row-'+idx);
+    var chips=Array.from(row.querySelectorAll('.chip'));
+    var order=chips.map(function(c){return c.dataset.orig;});
+    var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});
+    chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});
+    var existing=row.querySelector('.sb-punkt'); if(existing)existing.parentNode.removeChild(existing);
+    if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}
+    return ok;
+}
+function sbCheckAuto(idx) {
+    var bank=document.getElementById('sb-bank-'+idx);
+    var row=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    if(bank.querySelectorAll('.chip').length>0){
+        row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});
+        row.classList.remove('correct','incorrect'); fb.textContent=''; return;
+    }
+    setTimeout(function(){
+        timerAutoStart(4);
+        var ok=sbColorRow(idx);
+        if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='✓ Korrekt!';sbCheckAllDone();}
+        else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!';}
+    },500);
+}
+function sbCheckAllDone(){
+    var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});
+    if(allOk)timerStop(4);
+}
+function sbShowSolution(idx){
+    var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx);
+    var solution=satzbauData[idx].valid[0];
+    var allChips={};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});
+    while(bank.firstChild)bank.removeChild(bank.firstChild);
+    while(row.firstChild)row.removeChild(row.firstChild);
+    solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCapitalize(word):word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});
+    fb.textContent='';
+    setTimeout(function(){sbCheckAuto(idx);},100);
+}
+function initSatzbau(){
+    var area=document.getElementById('sb-area');
+    area.innerHTML='';
+    timerReset(4);
+    satzbauData.forEach(function(ex,idx){
+        var label=document.createElement('p');
+        label.style.cssText='font-weight:600;color:#4a148c;margin:16px 0 8px;';
+        label.textContent=(idx+1)+'. Satz';
+        area.appendChild(label);
+        var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx;
+        var row=document.createElement('div');  row.className='sentence-builder';  row.id='sb-row-'+idx;
+        var fb=document.createElement('div');   fb.className='satzbau-feedback';   fb.id='sb-fb-'+idx;
+        var parts=ex.parts.slice();
+        for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}
+        parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});
+        sbRegisterZone(bank,idx); sbRegisterZone(row,idx);
+        area.appendChild(bank); area.appendChild(row); area.appendChild(fb);
+    });
+}
+
+// ─── WORTSCHATZ-TRAINING ──────────────────────────────────────────────────────
+var WS_DATA = [
+    { en:'feeling / emotion',    de:'Gefühl',        artikel:'das', plural:'Gefühle' },
+    { en:'satisfied / content',  de:'zufrieden',     artikel:'',    plural:'' },
+    { en:'proud',                de:'stolz',         artikel:'',    plural:'' },
+    { en:'glad / happy',         de:'froh',          artikel:'',    plural:'' },
+    { en:'disappointed',         de:'enttäuscht',    artikel:'',    plural:'' },
+    { en:'to be afraid',         de:'Angst haben',   artikel:'',    plural:'' },
+    { en:'nervous',              de:'nervös',        artikel:'',    plural:'' },
+    { en:'unhappy',              de:'unglücklich',   artikel:'',    plural:'' },
+    { en:'sad',                  de:'traurig',       artikel:'',    plural:'' },
+    { en:'angry / furious',      de:'wütend',        artikel:'',    plural:'' },
+    { en:'to laugh',             de:'lachen',        artikel:'',    plural:'' },
+    { en:'to smile',             de:'lächeln',       artikel:'',    plural:'' }
+];
+
+var wsInited = false;
+function initWS(){
+    if (wsInited) return;
+    wsInited = true;
+    timerReset(5);
+    var container = document.getElementById('ws-container');
+    container.innerHTML = '';
+    WS_DATA.forEach(function(item){
+        var row = document.createElement('div'); row.className = 'ws-row';
+        var enLabel = document.createElement('span'); enLabel.className = 'ws-en'; enLabel.textContent = item.en;
+        row.appendChild(enLabel);
+        var wrap = document.createElement('div'); wrap.className = 'ws-inp-wrap';
+        if (item.artikel) {
+            var artInp = document.createElement('input'); artInp.className = 'ws-inp art'; artInp.placeholder = 'Artikel';
+            artInp.dataset.ans = item.artikel.toLowerCase();
+            artInp.addEventListener('input', function(){ liveCheck(artInp, function(){timerAutoStart(5);}, '#sec-5 .ws-inp', function(){timerStop(5);}); });
+            wrap.appendChild(artInp);
+        }
+        var wordInp = document.createElement('input'); wordInp.className = 'ws-inp'; wordInp.style.width = '180px';
+        wordInp.dataset.ans = item.de.toLowerCase(); wordInp.placeholder = 'Wort';
+        wordInp.addEventListener('input', function(){ liveCheck(wordInp, function(){timerAutoStart(5);}, '#sec-5 .ws-inp', function(){timerStop(5);}); });
+        wrap.appendChild(wordInp);
+        if (item.plural) {
+            var pluralInp = document.createElement('input'); pluralInp.className = 'ws-inp'; pluralInp.style.width = '150px';
+            pluralInp.dataset.ans = item.plural.toLowerCase(); pluralInp.placeholder = 'Plural';
+            pluralInp.addEventListener('input', function(){ liveCheck(pluralInp, function(){timerAutoStart(5);}, '#sec-5 .ws-inp', function(){timerStop(5);}); });
+            wrap.appendChild(pluralInp);
+        }
+        row.appendChild(wrap);
+        container.appendChild(row);
+    });
+}
+function resetWS(){
+    document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp){ inp.value=''; inp.classList.remove('ok','no'); });
+    wsInited = false;
+    initWS();
+    timerReset(5);
+}
+function showWSLoesung(){
+    document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp){ inp.value=inp.dataset.ans; inp.classList.remove('no'); inp.classList.add('ok'); });
+    timerStop(5);
+}
+</script>
+</body>
+</html>
