@@ -272,21 +272,7 @@
             border-radius: 10px;
             border-left: 4px solid #667eea;
         }
-        .drop-row {
-            background: white;
-            border: 2px dashed #ccc;
-            border-radius: 10px;
-            padding: 14px;
-            min-height: 60px;
-            margin-bottom: 12px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            align-items: center;
-        }
-        .drop-row .chip { margin: 0; }
-        .chip.punct { min-width: 32px; padding: 8px 10px; font-size: 1.2em; font-weight: 700; text-align: center; }
-        .drop-row .chip.punct { margin-left: -4px; }
+
 
         /* Footer */
         .author-footer { text-align: center; margin-top: 12px; border-top: 1px solid #f0f0f0; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
@@ -491,7 +477,7 @@
         <div class="section-title">🧩 Satzbau</div>
         <div class="section-sub">Bringe die Wörter in die richtige Reihenfolge.</div>
         <div class="control-bar">
-            <div class="btn-row"><button class="btn btn-loesung" onclick="showSatzbauLoesung()">💡 Lösungen</button>
+            <div class="btn-row"><button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">💡 Lösungen</button>
             <button class="btn btn-reset" onclick="resetSatzbau()">🔄 Neu starten</button></div>
             <div class="timer-display"><span class="current-time">&#9201; <span id="timer-5">00:00</span></span> <span class="best-time">&#127942; <span id="best-5">--:--</span></span></div>
         </div>
@@ -822,34 +808,34 @@ function resetGenus() {
 // ===== TAB 3: LÜCKENTEXT =====
 var LUECKEN = [
     { id: 1, segments: [
-        {t: "Alex ist noch "}, {b: "müde", s: "m"}, {t: ", aber er "}, {b: "lächelt", s: "m"}, {t: " und ist "}, {b: "zufrieden", s: "l"}, {t: ".”}
+        {t: "Alex ist noch "}, {b: "müde", s: "m"}, {t: ", aber er "}, {b: "lächelt", s: "m"}, {t: " und ist "}, {b: "zufrieden", s: "l"}, {t: "."}
     ]},
     { id: 2, segments: [
-        {t: "Gestern war Alex auf der "}, {b: "Hochzeit", s: "l"}, {t: " von Petra und Jens.”}
+        {t: "Gestern war Alex auf der "}, {b: "Hochzeit", s: "l"}, {t: " von Petra und Jens."}
     ]},
     { id: 3, segments: [
-        {t: "Alex ist um Viertel vor drei an der "}, {b: "Kirche", s: "m"}, {t: " "}, {b: "angekommen", s: "l"}, {t: ".”}
+        {t: "Alex ist um Viertel vor drei an der "}, {b: "Kirche", s: "m"}, {t: " "}, {b: "angekommen", s: "l"}, {t: "."}
     ]},
     { id: 4, segments: [
-        {t: "Zum Glück hat Louise einen "}, {b: "Platz", s: "m"}, {t: " für ihn "}, {b: "reserviert", s: "l"}, {t: ".”}
+        {t: "Zum Glück hat Louise einen "}, {b: "Platz", s: "m"}, {t: " für ihn "}, {b: "reserviert", s: "l"}, {t: "."}
     ]},
     { id: 5, segments: [
-        {t: "Gwyneth und Max hatten sich vor "}, {b: "sieben", s: "m"}, {t: " Jahren "}, {b: "kennengelernt", s: "xl"}, {t: ".”}
+        {t: "Gwyneth und Max hatten sich vor "}, {b: "sieben", s: "m"}, {t: " Jahren "}, {b: "kennengelernt", s: "xl"}, {t: "."}
     ]},
     { id: 6, segments: [
-        {t: "Tina und Paul haben sich "}, {b: "getrennt", s: "l"}, {t: ". Sie sind nicht mehr "}, {b: "zusammen", s: "l"}, {t: ".”}
+        {t: "Tina und Paul haben sich "}, {b: "getrennt", s: "l"}, {t: ". Sie sind nicht mehr "}, {b: "zusammen", s: "l"}, {t: "."}
     ]},
     { id: 7, segments: [
-        {t: "Nachdem alle Gäste einen "}, {b: "Sekt", s: "m"}, {t: " getrunken hatten, haben sie zu Abend "}, {b: "gegessen", s: "l"}, {t: ".”}
+        {t: "Nachdem alle Gäste einen "}, {b: "Sekt", s: "m"}, {t: " getrunken hatten, haben sie zu Abend "}, {b: "gegessen", s: "l"}, {t: "."}
     ]},
     { id: 8, segments: [
-        {t: "„Auf das "}, {b: "Brautpaar", s: "l"}, {t: "!”, hat Alex "}, {b: "gerufen", s: "m"}, {t: ".”}
+        {t: '„Auf das '}, {b: "Brautpaar", s: "l"}, {t: '!, hat Alex '}, {b: "gerufen", s: "m"}, {t: '.'}
     ]},
     { id: 9, segments: [
-        {t: "Alex wollte mit Louise "}, {b: "tanzen", s: "m"}, {t: ", aber er war zu "}, {b: "nervös", s: "m"}, {t: ".”}
+        {t: "Alex wollte mit Louise "}, {b: "tanzen", s: "m"}, {t: ", aber er war zu "}, {b: "nervös", s: "m"}, {t: "."}
     ]},
     { id: 10, segments: [
-        {t: "„Es ist schon 5 Uhr "}, {b: "morgens", s: "l"}, {t: "!”, hat Louise "}, {b: "gerufen", s: "m"}, {t: ".”}
+        {t: '„Es ist schon 5 Uhr '}, {b: "morgens", s: "l"}, {t: '!, hat Louise '}, {b: "gerufen", s: "m"}, {t: '.'}
     ]}
 ];
 
@@ -961,34 +947,34 @@ function resetLuecken() {
 
 // ===== TAB 4: MULTIPLE CHOICE =====
 var MC_DATA = [
-    { q: "Warum ist Alex am Sonntagmorgen müde?”,
-      opts: ["Er hat die ganze Nacht gearbeitet.”, "Er war gestern auf einer Hochzeit.”, "Er hat schlecht geschlafen.”, "Er hat lange Deutsch gelernt.”],
+    { q: "Warum ist Alex am Sonntagmorgen müde?",
+      opts: ["Er hat die ganze Nacht gearbeitet.", "Er war gestern auf einer Hochzeit.", "Er hat schlecht geschlafen.", "Er hat lange Deutsch gelernt."],
       correct: 1 },
-    { q: "Wann hat die Hochzeit von Petra und Jens begonnen?”,
+    { q: "Wann hat die Hochzeit von Petra und Jens begonnen?",
       opts: ["Um 12 Uhr", "Um 14 Uhr", "Um 15 Uhr", "Um 16 Uhr"],
       correct: 2 },
-    { q: "Wer hat für Alex einen Platz reserviert?”,
+    { q: "Wer hat für Alex einen Platz reserviert?",
       opts: ["Gwyneth", "Tina", "Petra", "Louise"],
       correct: 3 },
-    { q: "Seit wie vielen Jahren sind Gwyneth und Max zusammen?”,
+    { q: "Seit wie vielen Jahren sind Gwyneth und Max zusammen?",
       opts: ["Seit drei Jahren", "Seit fünf Jahren", "Seit sieben Jahren", "Seit zehn Jahren"],
       correct: 2 },
-    { q: "Warum ist Tina allein auf der Hochzeit?”,
-      opts: ["Ihr Freund ist krank.”, "Paul und Tina haben sich getrennt.”, "Paul ist im Ausland.”, "Tina hat keinen Freund.”],
+    { q: "Warum ist Tina allein auf der Hochzeit?",
+      opts: ["Ihr Freund ist krank.", "Paul und Tina haben sich getrennt.", "Paul ist im Ausland.", "Tina hat keinen Freund."],
       correct: 1 },
-    { q: "Warum weint Louise in der Kirche?”,
-      opts: ["Sie ist traurig.”, "Sie ist vor Freude bewegt.”, "Sie ist nervös.”, "Sie ist müde.”],
+    { q: "Warum weint Louise in der Kirche?",
+      opts: ["Sie ist traurig.", "Sie ist vor Freude bewegt.", "Sie ist nervös.", "Sie ist müde."],
       correct: 1 },
-    { q: "Was ruft Alex an der Bar?”,
-      opts: ["„Auf die Freundschaft!”", "„Auf die Ehe!”", "„Auf das Brautpaar!”", "„Auf den Tanz!”"],
+    { q: "Was ruft Alex an der Bar?",
+      opts: ['„Auf die Freundschaft!"', '„Auf die Ehe!"', '„Auf das Brautpaar!"', '„Auf den Tanz!"'],
       correct: 2 },
-    { q: "Was fragt Alex Louise auf der Tanzfläche?”,
-      opts: ["Er fragt, ob sie Sekt möchte.”, "Er fragt, ob sie nach Hause fahren will.”, "Er fragt, ob sie mit ihm tanzen möchte.”, "Er fragt, ob sie glücklich ist.”],
+    { q: "Was fragt Alex Louise auf der Tanzfläche?",
+      opts: ["Er fragt, ob sie Sekt möchte.", "Er fragt, ob sie nach Hause fahren will.", "Er fragt, ob sie mit ihm tanzen möchte.", "Er fragt, ob sie glücklich ist."],
       correct: 2 },
-    { q: "Wie lange haben Alex und Louise getanzt?”,
+    { q: "Wie lange haben Alex und Louise getanzt?",
       opts: ["Bis Mitternacht", "Bis 3 Uhr morgens", "Bis 5 Uhr morgens", "Bis zum Morgengrauen"],
       correct: 2 },
-    { q: "Wie fühlen sich die Freunde am Ende?”,
+    { q: "Wie fühlen sich die Freunde am Ende?",
       opts: ["Müde und traurig", "Glücklich und zufrieden", "Nervös und aufgeregt", "Verletzt und allein"],
       correct: 1 }
 ];
@@ -1046,26 +1032,26 @@ function resetMC() {
 
 
 var satzbauData = [
-    { id: 1,  parts: ["Alex", "ist", "noch müde"],
-      valid: [["Alex", "ist", "noch müde"]], punct: ".” },
-    { id: 2,  parts: ["Louise", "reserviert", "einen Platz"],
-      valid: [["Louise", "reserviert", "einen Platz"]], punct: ".” },
-    { id: 3,  parts: ["die Kirche", "war", "schon voll"],
-      valid: [["die Kirche", "war", "schon voll"]], punct: ".” },
-    { id: 4,  parts: ["Tina", "ist", "allein hier"],
-      valid: [["Tina", "ist", "allein hier"]], punct: ".” },
-    { id: 5,  parts: ["der Priester", "spricht", "über die Ehe"],
-      valid: [["der Priester", "spricht", "über die Ehe"]], punct: ".” },
-    { id: 6,  parts: ["Louise", "weint", "vor Freude"],
-      valid: [["Louise", "weint", "vor Freude"]], punct: ".” },
-    { id: 7,  parts: ["alle Gäste", "trinken", "Sekt"],
-      valid: [["alle Gäste", "trinken", "Sekt"]], punct: ".” },
-    { id: 8,  parts: ["Alex", "fragt", "Louise"],
-      valid: [["Alex", "fragt", "Louise"]], punct: ".” },
-    { id: 9,  parts: ["sie", "tanzen", "sehr lange"],
-      valid: [["sie", "tanzen", "sehr lange"]], punct: ".” },
-    { id: 10, parts: ["die Freunde", "fahren", "nach Hause"],
-      valid: [["die Freunde", "fahren", "nach Hause"]], punct: ".” }
+    { parts: ["Alex", "ist", "noch müde"],
+      valid: [["Alex", "ist", "noch müde"]], punct: "." },
+    { parts: ["Louise", "reserviert", "einen Platz"],
+      valid: [["Louise", "reserviert", "einen Platz"]], punct: "." },
+    { parts: ["die Kirche", "war", "schon voll"],
+      valid: [["die Kirche", "war", "schon voll"]], punct: "." },
+    { parts: ["Tina", "ist", "allein hier"],
+      valid: [["Tina", "ist", "allein hier"]], punct: "." },
+    { parts: ["der Priester", "spricht", "über die Ehe"],
+      valid: [["der Priester", "spricht", "über die Ehe"]], punct: "." },
+    { parts: ["Louise", "weint", "vor Freude"],
+      valid: [["Louise", "weint", "vor Freude"]], punct: "." },
+    { parts: ["alle Gäste", "trinken", "Sekt"],
+      valid: [["alle Gäste", "trinken", "Sekt"]], punct: "." },
+    { parts: ["Alex", "fragt", "Louise"],
+      valid: [["Alex", "fragt", "Louise"]], punct: "." },
+    { parts: ["sie", "tanzen", "sehr lange"],
+      valid: [["sie", "tanzen", "sehr lange"]], punct: "." },
+    { parts: ["die Freunde", "fahren", "nach Hause"],
+      valid: [["die Freunde", "fahren", "nach Hause"]], punct: "." }
 ];
 
 
