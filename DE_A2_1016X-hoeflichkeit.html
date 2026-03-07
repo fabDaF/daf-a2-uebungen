@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1016X · Höflichkeit</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+
+/* ── HEADER ── */
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+
+/* ── NAV ── */
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+
+/* ── SECTIONS ── */
+.sec { display: none; padding: 28px 30px; }
+.sec.aktiv { display: block; }
+.sec-title { font-size: 1.15em; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #e8ecff; }
+.sec-title span { color: #667eea; }
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+
+/* ── VOCAB GRID ── */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 14px; margin-top: 8px; }
+.vocab-karte { border-radius: 10px; overflow: hidden; box-shadow: 0 3px 12px rgba(0,0,0,0.10); background: #fff; transition: transform 0.2s, box-shadow 0.2s; }
+.vocab-karte:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+.vocab-foto { width: 100%; height: 130px; object-fit: cover; display: block; background: #e8ecff; }
+.vocab-info { padding: 10px 12px; border-top: 2px solid #667eea; }
+.vocab-de { font-size: 1em; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+.vocab-artikel { color: #667eea; font-weight: 700; }
+.vocab-plural { font-size: 0.78em; color: #888; }
+.vocab-en { font-size: 0.8em; color: #666; font-style: italic; margin-top: 2px; }
+.vocab-beispiel { font-size: 0.8em; color: #444; margin-top: 6px; padding-top: 6px; border-top: 1px solid #f0f0f0; font-style: italic; }
+
+/* ── REGELKARTE ── */
+.regel-box { background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 12px; padding: 20px 24px; border-left: 5px solid #667eea; margin-bottom: 22px; }
+.regel-box h3 { color: #1a1a2e; font-size: 1.05em; margin-bottom: 14px; }
+.regel-tabelle { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-bottom: 12px; }
+.regel-tabelle th { background: #667eea; color: white; padding: 8px 12px; text-align: left; }
+.regel-tabelle td { padding: 7px 12px; border-bottom: 1px solid #c5cae9; }
+.regel-tabelle tr:last-child td { border-bottom: none; }
+.regel-tabelle td:first-child { font-weight: 600; color: #4a148c; }
+.regel-hinweis { font-size: 0.85em; color: #555; background: white; border-radius: 8px; padding: 10px 14px; margin-top: 10px; border-left: 3px solid #764ba2; }
+
+/* ── DRAG & DROP (Was für?) ── */
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f0f8; border-radius: 10px; min-height: 56px; margin-bottom: 16px; align-items: flex-start; border: 1px dashed #bbb; }
+.qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.qa-frage-cell { background: #f0ecff; border-radius: 8px; padding: 10px 14px; font-weight: 600; color: #4a148c; font-size: 0.9em; display: flex; align-items: center; border-left: 3px solid #764ba2; }
+.drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.qa-chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 7px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.88em; user-select: none; white-space: normal; display: inline-block; }
+.qa-chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.qa-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+
+/* ── LÜCKENTEXT ── */
+.luecken-aufgabe { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; padding: 10px 14px; background: #fafbff; border-radius: 8px; border-left: 3px solid #c5cae9; }
+.luecken-nr { font-size: 0.78em; font-weight: 700; color: #667eea; min-width: 18px; }
+.luecken-satz { font-size: 0.95em; color: #333; line-height: 1.8; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; font-size: 0.95em; padding: 2px 4px; outline: none; font-family: inherit; color: #1a1a2e; width: 110px; transition: border-color 0.2s; }
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortkasten { background: #f0f4ff; border: 1px solid #c5cae9; border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.88em; }
+.wort-chip { background: white; border: 1px solid #667eea; color: #667eea; padding: 4px 12px; border-radius: 14px; font-weight: 600; }
+
+/* ── SATZBAU ── */
+.satzbau-aufgabe { margin-bottom: 22px; }
+.satzbau-frage { font-size: 0.88em; color: #888; margin-bottom: 8px; font-style: italic; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* ── WORTSCHATZ ── */
+.ws-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 14px; margin-top: 8px; }
+.ws-karte { border-radius: 10px; overflow: hidden; box-shadow: 0 3px 12px rgba(0,0,0,0.10); background: #fff; }
+.ws-foto { width: 100%; height: 120px; object-fit: cover; display: block; background: #e8ecff; }
+.ws-body { padding: 10px 12px; }
+.ws-en { font-size: 0.86em; color: #667eea; font-weight: 700; margin-bottom: 8px; text-align: center; }
+.ws-inputs { display: flex; flex-direction: column; gap: 6px; }
+.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; font-size: 0.86em; padding: 3px 4px; outline: none; font-family: inherit; color: #1a1a2e; width: 100%; transition: border-color 0.2s; }
+.ws-inp:focus { border-bottom-color: #667eea; }
+.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.ws-feedback { font-size: 0.74em; margin-top: 5px; min-height: 14px; font-weight: 600; color: #e74c3c; }
+
+/* ── TIMER + BTN-ROW ── */
+.btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding: 6px 12px; background: #f8f9fa; border-radius: 8px; }
+.timer-display { display: flex; gap: 14px; font-size: 0.82em; color: #bbb; font-variant-numeric: tabular-nums; }
+.current-time { }
+.best-time { }
+.btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.82em; color: #888; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { border-color: #aaa; color: #555; }
+
+/* ── FOOTER ── */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+@media (max-width: 600px) {
+  body { padding: 8px; }
+  .nav { flex-wrap: wrap; }
+  .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+  .nav-btn:last-child { border-right: 1px solid #ddd; }
+  .qa-grid { grid-template-columns: 1fr; }
+  .qa-frage-cell { border-left: none; border-bottom: 2px solid #764ba2; border-radius: 8px 8px 0 0; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Höflichkeit</h1>
+    <p style="font-family: Georgia, serif;">A2 – Lektion 1016X &nbsp;|&nbsp; Wortschatz &amp; Was für…?</p>
+    <div class="big-emoji">💕</div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="zeigeSec(0,this)"><span class="nav-emoji">🖼️</span><span class="nav-label">Wörter</span></div>
+    <div class="nav-btn" onclick="zeigeSec(1,this)"><span class="nav-emoji">❓</span><span class="nav-label">Was für…?</span></div>
+    <div class="nav-btn" onclick="zeigeSec(2,this)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+    <div class="nav-btn" onclick="zeigeSec(3,this)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+    <div class="nav-btn" onclick="zeigeSec(4,this)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
+  </div>
+
+  <!-- ══ TAB 0 — WÖRTER ══ -->
+  <div class="sec aktiv" id="sec-0">
+    <div class="sec-title">🖼️ Wörter — <span>Höflichkeit &amp; Umgangsformen</span></div>
+    <div class="vocab-grid">
+
+      <div class="vocab-karte wide">
+        <img class="vocab-foto" src="https://images.pexels.com/photos/3727511/pexels-photo-3727511.jpeg?auto=compress&cs=tinysrgb&w=600" alt="duzen — Freunde" loading="lazy">
+        <div class="vocab-info">
+          <div class="vocab-de">duzen</div>
+          <div class="vocab-en">to use first name / informal <em>du</em></div>
+          <div class="vocab-beispiel">Alex und Louise duzen sich — sie sind alte Freunde.</div>
+        </div>
+      </div>
+
+      <div class="vocab-karte">
+        <img class="vocab-foto" src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600" alt="siezen — formell" loading="lazy">
+        <div class="vocab-info">
+          <div class="vocab-de">siezen</div>
+          <div class="vocab-en">to use formal <em>Sie</em></div>
+          <div class="vocab-beispiel">Tina siezt ihren Chef. Sie sagt „Herr Müller" und „Sie".</div>
+        </div>
+      </div>
+
+      <div class="vocab-karte">
+        <img class="vocab-foto" src="https://images.pexels.com/photos/3771045/pexels-photo-3771045.jpeg?auto=compress&cs=tinysrgb&w=600" alt="höflich sein" loading="lazy">
+        <div class="vocab-info">
+          <div class="vocab-de">höflich</div>
+          <div class="vocab-en">polite / courteous</div>
+          <div class="vocab-beispiel">Gwyneth ist immer sehr höflich — sie sagt immer „Bitte" und „Danke".</div>
+        </div>
+      </div>
+
+      <div class="vocab-karte">
+        <img class="vocab-foto" src="https://images.pexels.com/photos/3807571/pexels-photo-3807571.jpeg?auto=compress&cs=tinysrgb&w=600" alt="aufmerksam" loading="lazy">
+        <div class="vocab-info">
+          <div class="vocab-de">aufmerksam</div>
+          <div class="vocab-en">attentive / thoughtful</div>
+          <div class="vocab-beispiel">Max hält Louise die Tür auf — wie aufmerksam!</div>
+        </div>
+      </div>
+
+      <div class="vocab-karte wide">
+        <img class="vocab-foto" src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Bitte um Hilfe" loading="lazy">
+        <div class="vocab-info">
+          <div class="vocab-de">Könnten Sie …? / Könntest du …?</div>
+          <div class="vocab-en">Could you …? (formal / informal)</div>
+          <div class="vocab-beispiel">„Könnten Sie mir bitte helfen?" — „Könntest du mir kurz helfen?"</div>
+        </div>
+      </div>
+
+      <div class="vocab-karte">
+        <img class="vocab-foto" src="https://images.pexels.com/photos/3808803/pexels-photo-3808803.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Entschuldigung" loading="lazy">
+        <div class="vocab-info">
+          <div class="vocab-de">die Entschuldigung (-en)</div>
+          <div class="vocab-en">apology / excuse me</div>
+          <div class="vocab-beispiel">„Entschuldigung, ich habe mich verlaufen. Könnten Sie mir helfen?"</div>
+        </div>
+      </div>
+
+    </div>
+
+    id="sec-1">
+    <div class="sec-title">📋 Regel &amp; Zuordnung — <span>Duzen, Siezen &amp; Konjunktiv II</span></div>
+
+    <div class="regel-box">
+      <h3>Duzen oder Siezen?</h3>
+      <table class="regel-tabelle">
+        <tr><th>Duzen (informell)</th><th>Siezen (formell)</th></tr>
+        <tr><td>Freunde, Familie, Kinder</td><td>Chef, Arzt, fremde Erwachsene</td></tr>
+        <tr><td>„Kannst du mir helfen?"</td><td>„Könnten Sie mir helfen?"</td></tr>
+        <tr><td>„Wie heißt du?"</td><td>„Wie heißen Sie?"</td></tr>
+      </table>
+    </div>
+
+    <div class="regel-box" style="margin-top:18px;">
+      <h3>Höfliche Bitten mit Konjunktiv II</h3>
+      <table class="regel-tabelle">
+        <tr><th>Infinitiv</th><th>Konjunktiv II (formell)</th><th>Konjunktiv II (informell)</th></tr>
+        <tr><td>können</td><td>Könnten Sie …?</td><td>Könntest du …?</td></tr>
+        <tr><td>haben</td><td>Ich hätte gern …</td><td>Ich hätte gern …</td></tr>
+        <tr><td>mögen</td><td>Ich möchte …</td><td>Ich möchte …</td></tr>
+      </table>
+    </div>
+
+    <div class="control-bar" style="margin-top:20px;">
+      <div class="btn-row"><button class="btn btn-loesung" onclick="zeigeLoesung1()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetZuordnung()">↺ Neustart</button></div>
+      <div class="timer-display"><span class="current-time">⏱ <span id="timer-1">00:00</span></span> <span class="best-time">🏆 <span id="best-1">--:--</span></span></div>
+    </div>
+
+    <p style="font-weight:700;color:#4a148c;margin:14px 0 10px;">Ziehe die Sätze in die richtige Spalte:</p>
+    <div class="chip-bank" id="zuo-bank-1"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;">
+      <div>
+        <div style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:8px 14px;border-radius:8px 8px 0 0;font-weight:700;">👥 Duzen (informell)</div>
+        <div class="drop-zone" id="zone-du" data-cat="du" ondragover="allowDrop(event)" ondrop="dropZuo(event,this)" style="min-height:100px;border:2px dashed #c5cae9;border-top:none;padding:10px;background:#fafbff;border-radius:0 0 10px 10px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;"></div>
+      </div>
+      <div>
+        <div style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:8px 14px;border-radius:8px 8px 0 0;font-weight:700;">🤝 Siezen (formell)</div>
+        <div class="drop-zone" id="zone-sie" data-cat="sie" ondragover="allowDrop(event)" ondrop="dropZuo(event,this)" style="min-height:100px;border:2px dashed #c5cae9;border-top:none;padding:10px;background:#fafbff;border-radius:0 0 10px 10px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;"></div>
+      </div>
+    </div>
+
+    id="sec-2">
+    <div class="control-bar">
+      <div class="btn-row"><button class="btn btn-loesung" onclick="zeigeLoesung2()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetLueckentext()">↺ Neustart</button></div>
+      <div class="timer-display"><span class="current-time">⏱ <span id="timer-2">00:00</span></span> <span class="best-time">🏆 <span id="best-2">--:--</span></span></div>
+    </div>
+    <p style="font-weight:700;color:#4a148c;margin-bottom:10px;">✏️ Lückentext — Ergänze die fehlenden Wörter:</p>
+    <div class="luecken-text" style="line-height:2.2;font-size:0.97em;">
+      <p>1. Alex trifft Louisens Chef. Er siezt ihn: „<input class="luecken-inp" data-ans="Könnten" placeholder=""> Sie mir kurz helfen?"</p>
+      <p>2. Louise und Tina duzen sich. Tina fragt: „<input class="luecken-inp" data-ans="Könntest" placeholder=""> du mir bitte helfen?"</p>
+      <p>3. Gwyneth ist im Restaurant. Sie sagt: „Ich <input class="luecken-inp" data-ans="hätte" placeholder=""> gern einen Tisch für zwei Personen."</p>
+      <p>4. Max hält Tina die Tür auf. Tina sagt: „Danke, das ist sehr <input class="luecken-inp" data-ans="aufmerksam" placeholder=""> von dir!"</p>
+      <p>5. Alex begrüßt seinen Arzt. Er siezt ihn: „Guten Tag, <input class="luecken-inp" data-ans="wie" placeholder=""> <input class="luecken-inp" data-ans="heißen" placeholder=""> Sie?"</p>
+      <p>6. Tina ist im Büro. Sie fragt <input class="luecken-inp" data-ans="höflich" placeholder="">: „<input class="luecken-inp" data-ans="Entschuldigung" placeholder="">, wo ist das Archiv?"</p>
+    </div>
+
+    id="sec-3">
+    <div class="control-bar">
+      <div class="btn-row"><button class="btn btn-loesung" onclick="zeigeLoesung3()">💡 Lösungen</button><button class="btn btn-reset" onclick="initSatzbau(); resetTimer(3);">↺ Neustart</button></div>
+      <div class="timer-display"><span class="current-time">⏱ <span id="timer-3">00:00</span></span> <span class="best-time">🏆 <span id="best-3">--:--</span></span></div>
+    </div>
+    <p style="font-weight:700;color:#4a148c;margin-bottom:14px;">🧩 Satzbau — Bringe die Chips in die richtige Reihenfolge:</p>
+    <div id="satzbau-container"></div>
+
+    id="sec-4">
+    <div class="control-bar">
+      <div class="btn-row"><button class="btn btn-loesung" onclick="zeigeLoesung4()">💡 Lösungen</button><button class="btn btn-reset" onclick="baueWortschatz(); resetTimer(4);">↺ Neustart</button></div>
+      <div class="timer-display"><span class="current-time">⏱ <span id="timer-4">00:00</span></span> <span class="best-time">🏆 <span id="best-4">--:--</span></span></div>
+    </div>
+    <div class="sec-title">🔠 Wortschatz — <span>Artikel · Wort · Plural tippen</span></div>
+    <div class="hilfe-box">Schau das Foto an und tippe: <strong>Artikel</strong> + <strong>deutsches Wort</strong> + <strong>Plural</strong>. Du bekommst sofort Feedback!</div>
+    <div class="ws-grid" id="ws-grid"></div>
+  </div>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; fabDaF &middot; Fotos: Pexels (freie Lizenz)
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ── NAV ──
+function zeigeSec(n, btn) {
+  document.querySelectorAll('.sec').forEach(function(s) { s.classList.remove('aktiv'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('sec-' + n).classList.add('aktiv');
+  btn.classList.add('active');
+}
+
+// ── QA DRAG & DROP ──
+var QA_DATA = [
+    { text: "Kannst du mir helfen?",          cat: "du" },
+    { text: "Könnten Sie bitte warten?",       cat: "sie" },
+    { text: "Wie heißt du?",                   cat: "du" },
+    { text: "Könnten Sie mir sagen …?",        cat: "sie" },
+    { text: "Hast du einen Moment?",           cat: "du" },
+    { text: "Ich hätte gern die Rechnung.",    cat: "sie" },
+    { text: "Könntest du mir helfen?",         cat: "du" },
+    { text: "Wie heißen Sie?",                 cat: "sie" }
+];
+
+var draggedQa = null;
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function colorQaChips() {
+  document.querySelectorAll('.drop-zone').forEach(function(zone) {
+    var chip = zone.querySelector('.qa-chip');
+    if (!chip) return;
+    var correct = chip.dataset.ans === zone.dataset.ans;
+    chip.classList.remove('correct', 'incorrect');
+    chip.classList.add(correct ? 'correct' : 'incorrect');
+  });
+}
+
+function initQa() {
+  var container = document.getElementById('qaContainer');
+  container.innerHTML = '';
+
+  var bank = document.createElement('div');
+  bank.className = 'chip-bank';
+  bank.id = 'qaBank';
+  bank.addEventListener('dragover', function(e) { e.preventDefault(); });
+  bank.addEventListener('drop', function(e) {
+    e.preventDefault();
+    if (!draggedQa) return;
+    bank.appendChild(draggedQa); draggedQa = null;
+    colorQaChips();
+  });
+
+  shuffle(QA_DATA.map(function(q) { return q.antwort; })).forEach(function(ans) {
+    var chip = document.createElement('div');
+    chip.className = 'qa-chip';
+    chip.textContent = ans;
+    chip.dataset.ans = ans;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e) {
+      draggedQa = chip; e.dataTransfer.setData('text/plain', '');
+    });
+    chip.addEventListener('dragend', function() { colorQaChips(); });
+    bank.appendChild(chip);
+  });
+  container.appendChild(bank);
+
+  var grid = document.createElement('div');
+  grid.className = 'qa-grid';
+  QA_DATA.forEach(function(q) {
+    var fc = document.createElement('div');
+    fc.className = 'qa-frage-cell';
+    fc.textContent = q.frage;
+    grid.appendChild(fc);
+
+    var zone = document.createElement('div');
+    zone.className = 'drop-zone';
+    zone.dataset.ans = q.antwort;
+    zone.addEventListener('dragover', function(e) {
+      e.preventDefault(); zone.classList.add('dragover');
+    });
+    zone.addEventListener('dragleave', function() { zone.classList.remove('dragover'); });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault(); zone.classList.remove('dragover');
+      if (!draggedQa) return;
+      // Alten Chip zurück in Bank
+      var old = zone.querySelector('.qa-chip');
+      if (old) document.getElementById('qaBank').appendChild(old);
+      zone.appendChild(draggedQa); draggedQa = null;
+      colorQaChips();
+    });
+    grid.appendChild(zone);
+  });
+  container.appendChild(grid);
+}
+
+// ── LÜCKENTEXT LIVE-FEEDBACK ──
+document.querySelectorAll('.luecken-inp').forEach(function(inp) {
+  inp.addEventListener('input', function() {
+    timerAutoStart(2);
+    var val = inp.value.trim().toLowerCase();
+    var ans = inp.dataset.ans.toLowerCase();
+    inp.classList.remove('ok', 'no');
+    if (!val) return;
+    if (val === ans) {
+      inp.classList.add('ok');
+      var alle = Array.from(document.querySelectorAll('#sec-2 .luecken-inp'));
+      if (alle.every(function(i) { return i.classList.contains('ok'); })) timerStop(2);
+      return;
+    }
+    if (ans.startsWith(val)) return;
+    inp.classList.add('no');
+  });
+});
+
+function resetLueckentext() {
+  document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp) {
+    inp.value = ''; inp.classList.remove('ok', 'no');
+  });
+  resetTimer(2);
+}
+
+function zeigeLoesung2() {
+  document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp) {
+    inp.value = inp.dataset.ans;
+    inp.classList.remove('ok', 'no');
+    inp.classList.add('ok');
+  });
+  timerStop(2);
+}
+
+// ── SATZBAU ──
+var satzbauData = [
+    { parts:['könnten','Sie','mir','bitte','helfen'], valid:[['könnten','Sie','mir','bitte','helfen']], punct:'?' },
+    { parts:['ich','hätte','gern','einen','Kaffee'], valid:[['ich','hätte','gern','einen','Kaffee']], punct:'.' },
+    { parts:['Alex','und','Louise','duzen','sich'], valid:[['Alex','und','Louise','duzen','sich']], punct:'.' },
+    { parts:['Tina','siezt','ihren','Chef'], valid:[['Tina','siezt','ihren','Chef']], punct:'.' },
+    { parts:['könntest','du','mir','kurz','helfen'], valid:[['könntest','du','mir','kurz','helfen']], punct:'?' },
+    { parts:['Max','ist','sehr','aufmerksam','und','höflich'], valid:[['Max','ist','sehr','aufmerksam','und','höflich']], punct:'.' }
+];
+
+var sbDragged = null;
+
+function getSbCursor() {
+  var c = document.getElementById('sb-insert-cursor');
+  if (!c) {
+    c = document.createElement('div');
+    c.id = 'sb-insert-cursor';
+    c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+  }
+  return c;
+}
+
+function getSbInsertPos(zone, clientX) {
+  var chips = Array.from(zone.querySelectorAll('.chip'));
+  for (var i = 0; i < chips.length; i++) {
+    var r = chips[i].getBoundingClientRect();
+    if (clientX < r.left + r.width / 2) return chips[i];
+  }
+  return null;
+}
+
+function sbCapitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+
+function sbUpdateCapitalization(row) {
+  var chips = Array.from(row.querySelectorAll('.chip'));
+  chips.forEach(function(c, i) {
+    var orig = c.dataset.orig;
+    var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase() && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+    c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
+  });
+}
+
+function sbMakeChip(word) {
+  var chip = document.createElement('div');
+  chip.className = 'chip';
+  chip.textContent = word;
+  chip.dataset.orig = word;
+  chip.draggable = true;
+  chip.addEventListener('dragstart', function(e) {
+    sbDragged = chip; e.dataTransfer.setData('text/plain', '');
+    setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+  });
+  chip.addEventListener('dragend', function() {
+    chip.style.opacity = '';
+    sbDragged = null;
+    var c = document.getElementById('sb-insert-cursor');
+    if (c && c.parentNode) c.parentNode.removeChild(c);
+  });
+  return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    if (!sbDragged) return;
+    var cursor = getSbCursor();
+    var before = getSbInsertPos(zone, e.clientX);
+    if (before) zone.insertBefore(cursor, before);
+    else zone.appendChild(cursor);
+  });
+  zone.addEventListener('dragleave', function(e) {
+    if (!zone.contains(e.relatedTarget)) {
+      var c = document.getElementById('sb-insert-cursor');
+      if (c && c.parentNode === zone) zone.removeChild(c);
+    }
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    if (!sbDragged) return;
+    var cursor = document.getElementById('sb-insert-cursor');
+    if (cursor && cursor.parentNode === zone) {
+      zone.insertBefore(sbDragged, cursor);
+      zone.removeChild(cursor);
+    } else {
+      zone.appendChild(sbDragged);
+    }
+    sbDragged = null;
+    var row = document.getElementById('sb-row-' + idx);
+    sbUpdateCapitalization(row);
+    sbCheckAuto(idx);
+  });
+}
+
+function sbColorRow(idx) {
+  var row = document.getElementById('sb-row-' + idx);
+  var chips = Array.from(row.querySelectorAll('.chip'));
+  var order = chips.map(function(c) { return c.dataset.orig; });
+  var ok = satzbauData[idx].valid.some(function(v) {
+    return JSON.stringify(v) === JSON.stringify(order);
+  });
+  chips.forEach(function(c) {
+    c.classList.remove('correct', 'incorrect');
+    c.classList.add(ok ? 'correct' : 'incorrect');
+  });
+  var existing = row.querySelector('.sb-punkt');
+  if (existing) existing.parentNode.removeChild(existing);
+  if (ok) {
+    var punkt = document.createElement('span');
+    punkt.className = 'sb-punkt';
+    punkt.textContent = satzbauData[idx].punct || '.';
+    row.appendChild(punkt);
+  }
+  return ok;
+}
+
+function sbCheckAuto(idx) {
+  var bank = document.getElementById('sb-bank-' + idx);
+  var row  = document.getElementById('sb-row-' + idx);
+  var fb   = document.getElementById('sb-fb-' + idx);
+  if (bank.querySelectorAll('.chip').length > 0) {
+    row.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('correct', 'incorrect'); });
+    row.classList.remove('correct', 'incorrect');
+    fb.textContent = '';
+    return;
+  }
+  setTimeout(function() {
+    timerAutoStart(3);
+    var ok = sbColorRow(idx);
+    if (ok) {
+      row.classList.add('correct'); row.classList.remove('incorrect');
+      fb.className = 'satzbau-feedback correct'; fb.textContent = '✓ Korrekt!';
+      var allOk = satzbauData.every(function(_, i) {
+        var r = document.getElementById('sb-row-' + i);
+        return r && r.classList.contains('correct');
+      });
+      if (allOk) timerStop(3);
+    } else {
+      row.classList.add('incorrect'); row.classList.remove('correct');
+      fb.className = 'satzbau-feedback incorrect'; fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+    }
+  }, 500);
+}
+
+function initSatzbau() {
+  satzbauData.forEach(function(ex, idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    if (!bank || !row) return;
+    bank.innerHTML = ''; row.innerHTML = '';
+    var parts = ex.parts.slice();
+    for (var i = parts.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = parts[i]; parts[i] = parts[j]; parts[j] = t;
+    }
+    parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+    sbRegisterZone(bank, idx);
+    sbRegisterZone(row, idx);
+  });
+}
+
+function zeigeLoesung3() {
+  satzbauData.forEach(function(ex, idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    if (!bank || !row) return;
+    bank.innerHTML = ''; row.innerHTML = '';
+    ex.parts.forEach(function(word, i) {
+      var chip = sbMakeChip(word);
+      chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+      chip.style.background = '#d4edda'; chip.style.borderColor = '#27ae60'; chip.style.color = '#155724';
+      row.appendChild(chip);
+    });
+    row.classList.add('correct'); row.classList.remove('incorrect');
+    if (fb) { fb.textContent = '✓ Korrekt!'; fb.className = 'satzbau-feedback correct'; }
+  });
+  timerStop(3);
+}
+
+// ── WORTSCHATZ ──
+var WORTSCHATZ = [
+    { de:'duzen',          en:'to address informally (du)' },
+    { de:'siezen',         en:'to address formally (Sie)' },
+    { de:'höflich',        en:'polite' },
+    { de:'aufmerksam',     en:'attentive / thoughtful' },
+    { de:'Entschuldigung', en:'excuse me / apology' },
+    { de:'könnten Sie',    en:'could you (formal)' },
+    { de:'hätte gern',     en:'would like to have' },
+    { de:'möchte',         en:'would like' },
+    { de:'bitte',          en:'please' },
+    { de:'danke',          en:'thank you' }
+];
+
+function baueWortschatz() {
+  var grid = document.getElementById('ws-grid');
+  grid.innerHTML = '';
+  WORTSCHATZ.forEach(function(v) {
+    var karte = document.createElement('div');
+    karte.className = 'ws-karte';
+    var src = 'https://images.pexels.com/photos/' + v.foto + '/pexels-photo-' + v.foto + '.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop';
+    karte.innerHTML =
+      '<img class="ws-foto" src="' + src + '" alt="' + v.en + '" loading="lazy">' +
+      '<div class="ws-body">' +
+        '<div class="ws-en">' + v.en + '</div>' +
+        '<div class="ws-inputs">' +
+          '<input class="ws-inp" placeholder="Artikel" autocomplete="off" autocorrect="off" spellcheck="false" data-loesung="' + v.art + '">' +
+          '<input class="ws-inp" placeholder="Wort" autocomplete="off" autocorrect="off" spellcheck="false" data-loesung="' + v.wort + '">' +
+          '<input class="ws-inp" placeholder="Plural" autocomplete="off" autocorrect="off" spellcheck="false" data-loesung="' + v.plural + '">' +
+        '</div>' +
+        '<div class="ws-feedback"></div>' +
+      '</div>';
+    grid.appendChild(karte);
+    karte.querySelectorAll('.ws-inp').forEach(function(inp) {
+      inp.addEventListener('input', function() { timerAutoStart(4); pruefWsInp(inp, karte, v); });
+      inp.addEventListener('blur', function() {
+        var val = inp.value.trim().toLowerCase();
+        var ans = inp.dataset.loesung.toLowerCase();
+        var fb = karte.querySelector('.ws-feedback');
+        if (val && val !== ans && !ans.startsWith(val)) {
+          fb.textContent = '✗  ' + v.art + ' ' + v.wort + ' · Pl.: ' + v.plural;
+        } else { fb.textContent = ''; }
+      });
+    });
+  });
+}
+
+function pruefWsInp(inp) {
+  var val = inp.value.trim().toLowerCase();
+  var ans = inp.dataset.loesung.toLowerCase();
+  inp.classList.remove('ok', 'no');
+  if (!val) return;
+  if (val === ans) {
+    inp.classList.add('ok');
+    var alle = Array.from(document.querySelectorAll('#sec-4 .ws-inp'));
+    if (alle.every(function(i) { return i.classList.contains('ok'); })) timerStop(4);
+    return;
+  }
+  if (ans.startsWith(val)) return;
+  inp.classList.add('no');
+}
+
+function zeigeLoesung4() {
+  document.querySelectorAll('#sec-4 .ws-karte').forEach(function(karte) {
+    karte.querySelectorAll('.ws-inp').forEach(function(inp) {
+      inp.value = inp.dataset.loesung;
+      inp.classList.remove('ok', 'no');
+      inp.classList.add('ok');
+    });
+    var fb = karte.querySelector('.ws-feedback');
+    if (fb) fb.textContent = '';
+  });
+  timerStop(4);
+}
+
+// ── TIMER ──
+var TIMER_PREFIX = 'romantik-1016x';
+var timerState = {};
+
+function initTimer(idx) { timerState[idx] = { interval: null, seconds: 0, running: false, stopped: false }; }
+
+function formatTime(s) {
+  var m = Math.floor(s / 60);
+  var sec = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function startTimer(idx) {
+  var s = timerState[idx];
+  if (!s || s.running) return;
+  s.running = true;
+  s.interval = setInterval(function() {
+    s.seconds++;
+    var el = document.getElementById('timer-' + idx);
+    if (el) el.textContent = formatTime(s.seconds);
+  }, 1000);
+}
+
+function timerAutoStart(idx) {
+  var s = timerState[idx];
+  if (!s || s.running || s.stopped) return;
+  startTimer(idx);
+}
+
+function timerStop(idx) {
+  var s = timerState[idx];
+  if (!s || !s.running) return;
+  clearInterval(s.interval);
+  s.running = false;
+  s.stopped = true;
+  var key = TIMER_PREFIX + '-best-' + idx;
+  var prev = localStorage.getItem(key);
+  if (!prev || s.seconds < parseInt(prev)) {
+    localStorage.setItem(key, s.seconds);
+    var el = document.getElementById('best-' + idx);
+    if (el) el.textContent = formatTime(s.seconds);
+  }
+}
+
+function resetTimer(idx) {
+  var s = timerState[idx];
+  if (!s) return;
+  clearInterval(s.interval);
+  s.seconds = 0; s.running = false; s.stopped = false;
+  var el = document.getElementById('timer-' + idx);
+  if (el) el.textContent = '00:00';
+}
+
+function loadBestTimes() {
+  [2, 3, 4].forEach(function(idx) {
+    var val = localStorage.getItem(TIMER_PREFIX + '-best-' + idx);
+    var el = document.getElementById('best-' + idx);
+    if (val && el) el.textContent = formatTime(parseInt(val));
+  });
+}
+
+// ── START ──
+initTimer(2); initTimer(3); initTimer(4); loadBestTimes();
+initQa();
+initSatzbau();
+baueWortschatz();
+</script>
+</body>
+</html>
