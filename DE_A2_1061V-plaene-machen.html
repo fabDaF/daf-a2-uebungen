@@ -311,18 +311,18 @@ var satzbauData = [
 ];
 
 var WS_DATA = [
-  { en: '(plan)', ans: 'der Plan, -\u0308e' },
-  { en: '(intention)', ans: 'die Absicht, -en' },
-  { en: '(wish)', ans: 'der Wunsch, -\u0308e' },
-  { en: '(to wish / hope for)', ans: 'sich wünschen' },
-  { en: '(goal / aim)', ans: 'das Ziel, -e' },
-  { en: '(to plan / intend)', ans: 'etwas vorhaben' },
-  { en: '(to promise)', ans: 'etwas versprechen' },
-  { en: '(future)', ans: 'die Zukunft' },
-  { en: '(to hope)', ans: 'hoffen' },
-  { en: '(probably)', ans: 'wahrscheinlich' },
-  { en: '(perhaps / maybe)', ans: 'vielleicht' },
-  { en: '(to put into action)', ans: 'in die Tat umsetzen' }
+  { en: '(plan)',                 art: 'der', de: 'Plan',           plural: '-̈e' },
+  { en: '(intention)',            art: 'die', de: 'Absicht',        plural: '-en' },
+  { en: '(wish)',                 art: 'der', de: 'Wunsch',         plural: '-̈e' },
+  { en: '(to wish / hope for)',   art: '',    de: 'sich wünschen',    plural: '' },
+  { en: '(goal / aim)',           art: 'das', de: 'Ziel',           plural: '-e' },
+  { en: '(to plan / intend)',     art: '',    de: 'etwas vorhaben', plural: '' },
+  { en: '(to promise)',           art: '',    de: 'etwas versprechen', plural: '' },
+  { en: '(future)',               art: 'die', de: 'Zukunft',        plural: '' },
+  { en: '(to hope)',              art: '',    de: 'hoffen',          plural: '' },
+  { en: '(probably)',             art: '',    de: 'wahrscheinlich', plural: '' },
+  { en: '(perhaps / maybe)',      art: '',    de: 'vielleicht',     plural: '' },
+  { en: '(to put into action)',   art: '',    de: 'in die Tat umsetzen', plural: '' }
 ];
 
 var TIMER_PREFIX = 'a2-1061v-';
@@ -629,40 +629,59 @@ function initSatzbau(){
 }
 
 // ===== WORTSCHATZ =====
-function initWs(){
-  var container=document.getElementById('wsContainer');
-  container.innerHTML='';
-  WS_DATA.forEach(function(item,i){
-    var div=document.createElement('div'); div.className='ws-item';
-    var en=document.createElement('div'); en.className='ws-en'; en.textContent=item.en;
-    var inp=document.createElement('input'); inp.type='text'; inp.className='ws-inp'; inp.placeholder='';
-    inp.dataset.ans=item.ans; inp.id='ws'+i;
-    inp.addEventListener('input',function(){
-      timerAutoStart(5);
-      var val=inp.value.trim(); var ans=inp.dataset.ans;
-      if(val===ans){ inp.classList.add('ok'); inp.classList.remove('no'); checkWsAll(); }
-      else if(ans.startsWith(val)&&val.length>0){ inp.classList.remove('ok','no'); }
-      else if(val.length>0){ inp.classList.add('no'); inp.classList.remove('ok'); }
-      else { inp.classList.remove('ok','no'); }
-    });
-    div.appendChild(en); div.appendChild(inp);
+function makeWsInp(ans, placeholder, width) {
+  var inp = document.createElement('input');
+  inp.type = 'text'; inp.className = 'ws-inp';
+  inp.placeholder = placeholder;
+  inp.style.width = width + 'px';
+  inp.dataset.ans = ans.toLowerCase();
+  inp.setAttribute('autocomplete', 'off');
+  inp.addEventListener('input', function() {
+    timerAutoStart(5);
+    var val = inp.value.trim().toLowerCase();
+    var a = inp.dataset.ans;
+    inp.classList.remove('ok', 'no');
+    if (!val) return;
+    if (val === a) { inp.classList.add('ok'); checkWsAll(); return; }
+    if (a.startsWith(val)) return;
+    inp.classList.add('no');
+  });
+  return inp;
+}
+
+function checkWsAll() {
+  var all = document.querySelectorAll('#sec-5 .ws-inp');
+  if (Array.from(all).every(function(i){ return i.classList.contains('ok'); })) timerStop(5);
+}
+
+function initWs() {
+  var container = document.getElementById('wsContainer');
+  container.innerHTML = '';
+  WS_DATA.forEach(function(item) {
+    var div = document.createElement('div'); div.className = 'ws-item';
+    var en = document.createElement('div'); en.className = 'ws-en'; en.textContent = item.en;
+    var inputs = document.createElement('div');
+    inputs.style.display = 'flex'; inputs.style.gap = '8px'; inputs.style.flexWrap = 'wrap'; inputs.style.alignItems = 'center';
+    if (item.art) {
+      inputs.appendChild(makeWsInp(item.art, 'Artikel', 70));
+    }
+    inputs.appendChild(makeWsInp(item.de, item.art ? 'Wort' : 'Verb/Adj.', Math.max(100, item.de.length * 9 + 20)));
+    if (item.plural) {
+      var sep = document.createElement('span'); sep.textContent = ','; sep.style.color = '#888';
+      inputs.appendChild(sep);
+      inputs.appendChild(makeWsInp(item.plural, 'Plural', Math.max(80, item.plural.length * 9 + 20)));
+    }
+    div.appendChild(en); div.appendChild(inputs);
     container.appendChild(div);
   });
-  timerStarted[5]=false; timerRunning[5]=false; timerSeconds[5]=0;
-  var el=document.getElementById('t5'); if(el) el.textContent='0:00';
+  timerStarted[5] = false; timerRunning[5] = false; timerSeconds[5] = 0;
+  var el = document.getElementById('t5'); if (el) el.textContent = '0:00';
 }
-function checkWsAll(){
-  var all=true;
-  for(var i=0;i<WS_DATA.length;i++){
-    var el=document.getElementById('ws'+i);
-    if(el&&!el.classList.contains('ok')) all=false;
-  }
-  if(all) timerStop(5);
-}
-function showWs(){
-  WS_DATA.forEach(function(item,i){
-    var el=document.getElementById('ws'+i);
-    if(el){ el.value=item.ans; el.classList.add('ok'); el.classList.remove('no'); }
+
+function showWs() {
+  document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp) {
+    inp.value = inp.dataset.ans;
+    inp.classList.remove('no'); inp.classList.add('ok');
   });
   timerStop(5);
 }

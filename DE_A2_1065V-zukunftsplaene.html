@@ -523,21 +523,61 @@ function sbBuild(){
   });
 }
 
-// ── WORTSCHATZ ──────────────────────────────────────────────
-function wsBuild(){
-  var grid=document.getElementById('wsGrid'); grid.innerHTML='';
-  WS_DATA.forEach(function(item,i){
-    var div=document.createElement('div'); div.className='ws-item';
-    var num=document.createElement('span'); num.className='ws-num'; num.textContent=(i+1)+'.';
-    var en=document.createElement('span'); en.className='ws-en'; en.textContent=item.en;
-    var inp=document.createElement('input'); inp.className='ws-inp'; inp.dataset.ans=item.de; inp.placeholder='';
-    inp.addEventListener('input',function(){ wsTimerAutoStart(); var val=inp.value.trim(); var ans=inp.dataset.ans; if(val===ans){inp.classList.remove('no');inp.classList.add('ok');}else if(ans.startsWith(val)&&val.length>0){inp.classList.remove('ok','no');}else if(val.length>0){inp.classList.remove('ok');inp.classList.add('no');}else{inp.classList.remove('ok','no');} var all=Array.from(document.querySelectorAll('.ws-inp')).every(function(el){return el.classList.contains('ok');}); if(all) wsTimerStop(); });
-    div.appendChild(num); div.appendChild(en); div.appendChild(inp);
+// ── WORTSCHATZ ────────────────────────────────────────────
+function makeWsInp(ans, placeholder, width) {
+  var inp = document.createElement('input');
+  inp.className = 'ws-inp';
+  inp.placeholder = placeholder;
+  inp.style.width = width + 'px';
+  inp.dataset.ans = ans.toLowerCase();
+  inp.setAttribute('autocomplete', 'off');
+  inp.addEventListener('input', function() {
+    wsTimerAutoStart();
+    var val = inp.value.trim().toLowerCase();
+    var a = inp.dataset.ans;
+    inp.classList.remove('ok', 'no');
+    if (!val) return;
+    if (val === a) {
+      inp.classList.add('ok');
+      var all = Array.from(document.querySelectorAll('#sec-5 .ws-inp')).every(function(el){ return el.classList.contains('ok'); });
+      if (all) wsTimerStop();
+      return;
+    }
+    if (a.startsWith(val)) return;
+    inp.classList.add('no');
+  });
+  return inp;
+}
+
+function wsBuild() {
+  var grid = document.getElementById('wsGrid'); grid.innerHTML = '';
+  WS_DATA.forEach(function(item, i) {
+    var div = document.createElement('div'); div.className = 'ws-item';
+    var num = document.createElement('span'); num.className = 'ws-num'; num.textContent = (i+1) + '.';
+    var en = document.createElement('span'); en.className = 'ws-en'; en.textContent = item.en;
+    var inputs = document.createElement('div');
+    inputs.style.display = 'flex'; inputs.style.gap = '8px'; inputs.style.flexWrap = 'wrap'; inputs.style.alignItems = 'center';
+    if (item.art) {
+      inputs.appendChild(makeWsInp(item.art, 'Artikel', 70));
+    }
+    inputs.appendChild(makeWsInp(item.de, item.art ? 'Wort' : 'Verb/Adj.', Math.max(100, item.de.length * 9 + 20)));
+    if (item.plural) {
+      var sep = document.createElement('span'); sep.textContent = ','; sep.style.color = '#888';
+      inputs.appendChild(sep);
+      inputs.appendChild(makeWsInp(item.plural, 'Plural', Math.max(80, item.plural.length * 9 + 20)));
+    }
+    div.appendChild(num); div.appendChild(en); div.appendChild(inputs);
     grid.appendChild(div);
   });
 }
-function wsReset(){ document.querySelectorAll('.ws-inp').forEach(function(el){el.value='';el.classList.remove('ok','no');}); wsTimerReset(); wsStarted=false; }
-function wsShowAll(){ document.querySelectorAll('.ws-inp').forEach(function(el){el.value=el.dataset.ans;el.classList.remove('no');el.classList.add('ok');}); wsTimerStop(); }
+function wsReset() {
+  document.querySelectorAll('.ws-inp').forEach(function(el){ el.value=''; el.classList.remove('ok','no'); });
+  wsTimerReset(); wsStarted = false;
+}
+function wsShowAll() {
+  document.querySelectorAll('.ws-inp').forEach(function(el){ el.value = el.dataset.ans; el.classList.remove('no'); el.classList.add('ok'); });
+  wsTimerStop();
+}
 
 // ── INIT ────────────────────────────────────────────────────
 (function init(){

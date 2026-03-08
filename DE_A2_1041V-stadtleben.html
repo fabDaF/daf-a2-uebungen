@@ -486,23 +486,49 @@ function initSatzbau() {
 initSatzbau();
 
 /* ===== WORTSCHATZ ===== */
+function makeWsInp(ans, placeholder, width) {
+    var inp = document.createElement('input');
+    inp.type = 'text'; inp.className = 'ws-inp';
+    inp.placeholder = placeholder;
+    inp.style.width = width + 'px';
+    inp.dataset.ans = ans.toLowerCase();
+    inp.setAttribute('autocomplete','off');
+    inp.addEventListener('input', function() {
+        timerAutoStart(5);
+        var val = inp.value.trim().toLowerCase();
+        var a = inp.dataset.ans;
+        inp.classList.remove('ok','no');
+        if (!val) return;
+        if (val === a) { inp.classList.add('ok'); checkAllWs5(); return; }
+        if (a.startsWith(val)) return;
+        inp.classList.add('no');
+    });
+    return inp;
+}
+
+function checkAllWs5() {
+    var all = document.querySelectorAll('#sec-5 .ws-inp');
+    if (Array.from(all).every(function(i){ return i.classList.contains('ok'); })) timerStop(5);
+}
+
 function buildWs() {
     var c = document.getElementById('wsContainer');
     WS_VOCAB.forEach(function(v) {
         var row = document.createElement('div'); row.className = 'ws-row';
         var en = document.createElement('div'); en.className = 'ws-en'; en.textContent = v.en;
-        var answer = (v.art ? v.art + ' ' : '') + v.term + (v.plural ? ', ' + v.plural : '');
-        var inp = document.createElement('input'); inp.type = 'text'; inp.className = 'ws-inp'; inp.placeholder = ''; inp.dataset.ans = answer.toLowerCase(); inp.setAttribute('autocomplete','off');
-        inp.addEventListener('input', function() {
-            timerAutoStart(5);
-            var val = inp.value.trim().toLowerCase(), ans = inp.dataset.ans;
-            inp.classList.remove('ok','no');
-            if (!val) return;
-            if (val === ans) { inp.classList.add('ok'); if (Array.from(document.querySelectorAll('#sec-5 .ws-inp')).every(function(i){ return i.classList.contains('ok'); })) timerStop(5); return; }
-            if (ans.startsWith(val)) return;
-            inp.classList.add('no');
-        });
-        row.appendChild(en); row.appendChild(inp); c.appendChild(row);
+        var inputs = document.createElement('div');
+        inputs.style.display = 'flex'; inputs.style.gap = '8px'; inputs.style.flexWrap = 'wrap'; inputs.style.alignItems = 'center';
+        if (v.art) {
+            inputs.appendChild(makeWsInp(v.art, 'Artikel', 70));
+        }
+        inputs.appendChild(makeWsInp(v.term, v.art ? 'Wort' : 'Verb/Adj.', Math.max(100, v.term.length * 9 + 20)));
+        if (v.plural) {
+            var sep = document.createElement('span'); sep.textContent = ','; sep.style.color = '#888';
+            inputs.appendChild(sep);
+            inputs.appendChild(makeWsInp(v.plural, 'Plural', Math.max(80, v.plural.length * 9 + 20)));
+        }
+        row.appendChild(en); row.appendChild(inputs);
+        c.appendChild(row);
     });
 }
 buildWs();
