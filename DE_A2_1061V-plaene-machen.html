@@ -667,8 +667,6 @@ function initWs() {
     }
     inputs.appendChild(makeWsInp(item.de, item.art ? 'Wort' : 'Verb/Adj.', Math.max(100, item.de.length * 9 + 20)));
     if (item.plural) {
-      var sep = document.createElement('span'); sep.textContent = ','; sep.style.color = '#888';
-      inputs.appendChild(sep);
       inputs.appendChild(makeWsInp(item.plural, 'Plural', Math.max(80, item.plural.length * 9 + 20)));
     }
     div.appendChild(en); div.appendChild(inputs);
