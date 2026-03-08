@@ -483,7 +483,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
       </span>
     </div>
 
-    <div id="sb-container"></div>
+    <div id="satzbauContainer"></div>
 
     <div class="author-footer">
       <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
@@ -1037,7 +1037,7 @@ function sbShowSolution(idx) {
 }
 
 function sbInit() {
-  var container = document.getElementById('sb-container');
+  var container = document.getElementById('satzbauContainer');
   container.innerHTML = '';
   satzbauData.forEach(function(ex, idx) {
     var pair = document.createElement('div');

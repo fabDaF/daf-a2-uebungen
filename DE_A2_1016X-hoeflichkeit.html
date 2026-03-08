@@ -481,7 +481,7 @@ body {
             <div class="hilfe-box">
                 Bringe die Wörter in die richtige Reihenfolge. Ziehe die Chips in das weiße Feld.
             </div>
-            <div id="sb-container"></div>
+            <div id="satzbauContainer"></div>
         </div>
     </div>
 
@@ -970,7 +970,7 @@ function sbShowSolution(idx) {
 }
 
 function initSatzbau() {
-    var container = document.getElementById('sb-container');
+    var container = document.getElementById('satzbauContainer');
     container.innerHTML = '';
     satzbauData.forEach(function(ex, idx) {
         var pair = document.createElement('div');

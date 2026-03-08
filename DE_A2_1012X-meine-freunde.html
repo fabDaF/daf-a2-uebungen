@@ -319,12 +319,13 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   <!-- ══ TAB 3 — SATZBAU ══ -->
   <div class="sec" id="sec-3">
     <div class="control-bar">
-      <div class="btn-row"><button class="btn btn-loesung" onclick="zeigeLoesung3()">💡 Lösungen</button><button class="btn btn-reset" onclick="initSatzbau(); resetTimer(3);">↺ Neustart</button></div>
+      <div class="btn-row"><button class="btn btn-loesung" onclick="for(var i=0;i<satzbauData.length;i++)sbShowSolution(i)">💡 Lösungen</button><button class="btn btn-reset" onclick="initSatzbau(); resetTimer(3);">↺ Neustart</button></div>
       <div class="timer-display"><span class="current-time">⏱ <span id="timer-3">00:00</span></span> <span class="best-time">🏆 <span id="best-3">--:--</span></span></div>
     </div>
     <div class="sec-title">🧩 Satzbau — <span>Sätze ordnen</span></div>
     <div class="hilfe-box">Ziehe die Chips in die richtige Reihenfolge. Automatisches Feedback wenn alle Chips platziert sind.</div>
 
+    <div id="satzbauContainer">
     <div class="satzbau-aufgabe">
       <div class="satzbau-frage">Ordne die Wörter zum richtigen Satz:</div>
       <div class="chips-container" id="sb-bank-0"></div>
@@ -361,6 +362,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
       <div class="sentence-builder" id="sb-row-5"></div>
       <div class="satzbau-feedback" id="sb-fb-5"></div>
     </div>
+    </div><!-- /satzbauContainer -->
   </div>
 
   <!-- ══ TAB 4 — WORTSCHATZ ══ -->
@@ -673,24 +675,7 @@ function initSatzbau() {
   });
 }
 
-function zeigeLoesung3() {
-  satzbauData.forEach(function(ex, idx) {
-    var bank = document.getElementById('sb-bank-' + idx);
-    var row  = document.getElementById('sb-row-' + idx);
-    var fb   = document.getElementById('sb-fb-' + idx);
-    if (!bank || !row) return;
-    bank.innerHTML = ''; row.innerHTML = '';
-    ex.parts.forEach(function(word, i) {
-      var chip = sbMakeChip(word);
-      chip.textContent = (i === 0) ? sbCapitalize(word) : word;
-      chip.style.background = '#d4edda'; chip.style.borderColor = '#27ae60'; chip.style.color = '#155724';
-      row.appendChild(chip);
-    });
-    row.classList.add('correct'); row.classList.remove('incorrect');
-    if (fb) { fb.textContent = '✓ Korrekt!'; fb.className = 'satzbau-feedback correct'; }
-  });
-  timerStop(3);
-}
+// zeigeLoesung3() entfernt — sbShowSolution(i) aus dem satzbau-drag-drop Skill wird verwendet
 
 // ── WORTSCHATZ ──
 var WORTSCHATZ = [
