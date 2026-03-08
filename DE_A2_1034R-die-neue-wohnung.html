@@ -445,7 +445,7 @@ function buildWortschatz(){
         }
         if(w.art)inputsDiv.appendChild(makeInp(w.art,'Artikel','art',70));
         inputsDiv.appendChild(makeInp(w.term,w.art?'Wort':'Verb/Adj.','',Math.max(w.term.length*10,110)));
-        if(w.plural){var sep=document.createElement('span');sep.textContent=',';sep.style.color='#aaa';inputsDiv.appendChild(sep);inputsDiv.appendChild(makeInp(w.plural,'Plural','',Math.max(w.plural.length*9,90)));}
+        if(w.plural){inputsDiv.appendChild(makeInp(w.plural,'Plural','',Math.max(w.plural.length*9,90)));}
         row.appendChild(inputsDiv);container.appendChild(row);
     });
 }

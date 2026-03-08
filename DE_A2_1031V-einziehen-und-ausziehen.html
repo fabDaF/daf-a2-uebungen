@@ -616,8 +616,6 @@ function buildWortschatz() {
         }
         inputsDiv.appendChild(makeInp(w.term, w.art ? 'Wort' : 'Verb/Adj.', '', w.term.length > 8 ? w.term.length*10+20 : 120));
         if (w.plural) {
-            var sep = document.createElement('span'); sep.textContent=','; sep.style.color='#aaa';
-            inputsDiv.appendChild(sep);
             inputsDiv.appendChild(makeInp(w.plural, 'Plural', '', w.plural.length*9+20));
         }
         row.appendChild(inputsDiv);
