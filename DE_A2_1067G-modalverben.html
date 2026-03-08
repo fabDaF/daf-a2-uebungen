@@ -9,8 +9,10 @@
 body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
 .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
 .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
-.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
-.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; }
+.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); }
+
+/* NAV */
 .nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
 .nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border-top: none; border-left: none; }
 .nav-btn:last-child { border-right: none; }
@@ -21,65 +23,89 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .section { display: none; padding: 28px 30px; }
 .section.aktiv { display: block; }
 @media (max-width: 600px) {
-  body { padding: 8px; }
+  body { padding: 10px; }
+  .header h1 { font-size: 1.4rem; }
   .section { padding: 18px 14px; }
   .nav { flex-wrap: wrap; }
-  .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
-  .nav-btn:last-child { border-right: 1px solid #ddd; }
+  .nav-btn { flex: 1 1 33%; font-size: 0.8em; padding: 10px 6px; }
 }
-/* INFO CARD */
-.info-card { background: #f0edf8; border-left: 4px solid #667eea; border-radius: 8px; padding: 14px 20px; margin-bottom: 18px; }
-.info-card h3 { color: #5a3e9e; margin-bottom: 8px; font-size: 1.05rem; }
-.info-card p { color: #333; line-height: 1.6; font-size: .95rem; }
+
+/* ENTDECKUNGS-TAB */
+.entdeck-intro { background: #f3e5f5; border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75; }
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-btn { padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem; transition: all .2s; }
+.mc-btn:hover { border-color: #667eea; background: #f3f4ff; }
+.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
+
+/* LÜCKENTEXT */
+input.blank { border: 2px solid #c5cae9; border-radius: 6px; padding: 3px 8px; font-size: 0.9rem; font-family: inherit; outline: none; transition: border-color .2s, background .2s; background: white; margin: 0 2px; }
+input.blank:focus { border-color: #667eea; }
+input.blank.correct { border-color: #27ae60; background: #e8f5e9; }
+input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
+input.blank.s  { width: 70px; }
+input.blank.m  { width: 100px; }
+input.blank.l  { width: 150px; }
+input.blank.xl { width: 220px; }
+.correction-hint { font-size: 0.78rem; color: #27ae60; font-weight: 700; margin-left: 4px; white-space: nowrap; }
+.luecke-section { margin-bottom: 28px; }
+.luecke-title { font-weight: 700; color: #5a3e9e; margin-bottom: 12px; font-size: 1rem; border-bottom: 2px solid #e8e0f7; padding-bottom: 6px; }
+.luecke-row { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; line-height: 1.9; font-size: 0.95rem; }
+.luecke-num { color: #888; font-size: .85rem; min-width: 22px; }
+
+/* CHIPS & SATZBAU */
+.chip { padding: 6px 14px; border-radius: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; transition: transform .15s, opacity .15s; white-space: nowrap; }
+.chip:active { cursor: grabbing; transform: scale(1.04); }
+.chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; }
+.chip.wrong   { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; }
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f8f9fa; border-radius: 10px; margin-bottom: 14px; min-height: 54px; }
+.drop-row { display: flex; flex-wrap: wrap; gap: 6px; min-height: 44px; padding: 8px 10px; border-radius: 8px; border: 2px dashed #c5cae9; background: #fafbff; }
+.drop-row.dragover { background: #e8eaff; border-color: #667eea; }
+.sb-wrap { margin-bottom: 22px; }
+.sb-label { font-size: .85rem; color: #888; margin-bottom: 6px; }
+.sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; margin-left: 2px; }
+.sb-feedback { font-size: .88rem; margin-top: 6px; min-height: 20px; }
+.sb-feedback.ok { color: #27ae60; }
+.sb-feedback.no { color: #e74c3c; }
+
+/* TIMER-BAR */
+.timer-bar { display: flex; align-items: center; gap: 12px; background: white; border-radius: 10px; padding: 10px 16px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); font-size: 0.85rem; color: #666; }
+.timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
+.best-display  { color: #f39c12; font-weight: 600; }
+.btn-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid #eee; }
+.btn-row button { background: none; border: 1px solid #c0b0e8; border-radius: 16px; padding: 5px 16px; cursor: pointer; font-size: .88rem; color: #5a3e9e; transition: background .2s; }
+.btn-row button:hover { background: #f0edf8; }
+
 /* TABLES */
-.modal-table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: .88rem; }
-.modal-table th { background: #667eea; color: white; padding: 8px 12px; text-align: center; }
+.modal-table { width: 100%; border-collapse: collapse; margin: 10px 0 20px; font-size: .88rem; }
+.modal-table th { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 8px 12px; text-align: center; }
 .modal-table th:first-child { text-align: left; }
 .modal-table td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; text-align: center; }
 .modal-table td:first-child { text-align: left; color: #555; }
 .modal-table tr:nth-child(even) td { background: #f8f6ff; }
-.verb-cell { color: #c0392b; font-weight: 700; }
-.verb-cell-b { color: #2980b9; font-weight: 700; }
-/* LÜCKENTEXT */
-.lt-section { margin-bottom: 24px; }
-.lt-title { font-weight: 700; color: #5a3e9e; margin-bottom: 12px; font-size: 1rem; border-bottom: 2px solid #e8e0f7; padding-bottom: 6px; }
-.lt-row { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; line-height: 1.7; }
-.lt-num { color: #888; font-size: .85rem; min-width: 22px; }
-.lt-inp { border: none; border-bottom: 2px solid #aaa; outline: none; font-size: .95rem; padding: 2px 4px; width: 130px; background: transparent; transition: border-color .2s; }
-.lt-inp:focus { border-color: #667eea; }
-.lt-inp.ok { border-color: #27ae60; color: #27ae60; }
-.lt-inp.no { border-color: #e74c3c; color: #e74c3c; }
-.lt-inp-lg { width: 220px; }
-/* SATZBAU */
-.sentence-builder { margin-bottom: 22px; }
-.sb-label { font-size: .85rem; color: #888; margin-bottom: 6px; }
-.chips-container { display: flex; flex-wrap: wrap; gap: 6px; background: #f5f3fc; border: 2px dashed #c0b0e8; border-radius: 8px; padding: 10px; min-height: 44px; margin-bottom: 6px; }
-.sb-zone { display: flex; flex-wrap: wrap; gap: 6px; background: #fff; border: 2px dashed #ccc; border-radius: 8px; padding: 8px; min-height: 44px; position: relative; }
-.sb-zone.drag-over { border-color: #667eea; background: #f0edf8; }
-.chip { background: #667eea; color: white; border-radius: 20px; padding: 5px 12px; font-size: .88rem; cursor: grab; user-select: none; white-space: nowrap; transition: opacity .15s; }
-.chip:active { cursor: grabbing; opacity: .7; }
-.chip.sb-placed { background: #764ba2; }
-.sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; }
-.satzbau-feedback { font-size: .88rem; margin-top: 4px; min-height: 20px; }
-.satzbau-feedback.ok { color: #27ae60; }
-.satzbau-feedback.no { color: #e74c3c; }
-.sb-insert-cursor { display: inline-block; width: 2px; height: 28px; background: #667eea; animation: blink 1s infinite; align-self: center; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-/* MC */
-.mc-item { margin-bottom: 18px; }
-.mc-question { font-size: .95rem; color: #222; font-weight: 600; margin-bottom: 8px; }
-.mc-options { display: flex; flex-wrap: wrap; gap: 8px; }
-.mc-opt { padding: 6px 16px; border: 2px solid #c0b0e8; border-radius: 20px; cursor: pointer; font-size: .88rem; color: #5a3e9e; transition: all .2s; background: #f8f6ff; }
-.mc-opt:hover { background: #e8e0f7; }
-.mc-opt.correct { background: #27ae60; color: white; border-color: #27ae60; }
-.mc-opt.wrong { background: #e74c3c; color: white; border-color: #e74c3c; }
-.mc-opt.reveal { background: #27ae60; color: white; border-color: #27ae60; }
-/* BTN-ROW */
-.btn-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid #eee; font-size: .9rem; color: #555; }
-.btn-row button { background: none; border: 1px solid #c0b0e8; border-radius: 16px; padding: 4px 14px; cursor: pointer; font-size: .88rem; color: #5a3e9e; transition: background .2s; }
-.btn-row button:hover { background: #f0edf8; }
-/* FOOTER */
-.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.vc { color: #c0392b; font-weight: 700; }
+.vc2 { color: #2980b9; font-weight: 700; }
+.table-title { color: #5a3e9e; margin: 16px 0 8px; font-size: .95rem; font-weight: 700; }
+
+/* AUTHOR FOOTER */
+.author-footer { text-align: center; margin-top: 40px; padding: 16px; font-size: 0.8rem; color: #aaa; }
 .author-footer a { color: #aaa; }
 .author-name { font-weight: 700; }
 </style>
@@ -88,206 +114,171 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <div class="container">
 
   <div class="header">
-    <h1>1067G · Modalverben</h1>
-    <p style="font-family: Georgia, serif;">A2.1 · Grammatik · Wiederholung &amp; Vergangenheit</p>
+    <h1>1067G &middot; Modalverben</h1>
+    <p>A2.1 &middot; Grammatik &middot; Wiederholung &amp; Vergangenheit</p>
   </div>
 
   <div class="nav">
-    <div class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></div>
+    <div class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">📖</span><span class="nav-label">Entdecken</span></div>
     <div class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">📋</span><span class="nav-label">Regel</span></div>
     <div class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
     <div class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
-    <div class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
   </div>
 
   <!-- TAB 0: ENTDECKEN -->
-  <section class="section aktiv" id="tab0">
-    <div class="info-card">
-      <h3>🔍 Entdecke das Muster</h3>
-      <p>Lies die Sätze. Was fällt auf? Wie bildet man das Perfekt von Modalverben?</p>
+  <section class="section aktiv" id="sec-0">
+    <div class="entdeck-intro">
+      <h3>📖 Lies die Sätze — was fällt auf?</h3>
+      <p>Als Kind habe ich nicht arbeiten <span class="hl">müssen</span>. Aber heute <span class="hl">muss</span> ich jeden Tag arbeiten.<br>
+      Als Kind habe ich auch nicht Auto fahren <span class="hl">können</span>. Heute <span class="hl">kann</span> ich sehr gut Auto fahren.<br>
+      Lena hat nie ihr Zimmer aufräumen <span class="hl">wollen</span>. Aber sie hat jeden Tag ihr Zimmer aufräumen <span class="hl">sollen</span>.<br>
+      Manchmal hat Lena ein Eis essen <span class="hl">dürfen</span>. Aber danach hat sie immer die Zähne putzen <span class="hl">müssen</span>.</p>
     </div>
 
-    <div class="info-card" style="background:#fff8e1;border-color:#ffe082;">
-      <h3>📖 Einführungstext</h3>
-      <p>„Als Kind habe ich nicht arbeiten <strong>müssen</strong>. Aber heute muss ich jeden Tag arbeiten. Aber als Kind habe ich auch nicht Auto fahren <strong>können</strong>. Heute kann ich sehr gut Auto fahren."</p>
+    <div class="progress-dots">
+      <div class="pdot" id="pdot0"></div>
+      <div class="pdot" id="pdot1"></div>
+      <div class="pdot" id="pdot2"></div>
+      <div class="pdot" id="pdot3"></div>
     </div>
 
-    <div class="info-card">
-      <h3>💡 Was fällt auf?</h3>
-      <p>
-        Im Perfekt der Modalverben steht <strong>kein Partizip II</strong>!<br>
-        Stattdessen: <strong>haben</strong> (konjugiert) + Vollverb (Infinitiv) + Modalverb (Infinitiv)<br><br>
-        ❌ <del>Ich habe nicht arbeiten gemusst.</del><br>
-        ✅ Ich habe nicht arbeiten <strong>müssen</strong>.<br><br>
-        Das nennt man den <strong>Ersatzinfinitiv</strong>.
-      </p>
+    <div class="mc-step active" id="mc-step0">
+      <h4>Schritt 1 — Was ist besonders an der hervorgehobenen Form im Perfekt?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(0, this, false)">Das Modalverb wird zu einem Partizip II (z.&nbsp;B. <em>gemusst</em>).</button>
+        <button class="mc-btn" onclick="mcCheck(0, this, true)">Das Modalverb bleibt im Infinitiv — es gibt kein Partizip II.</button>
+        <button class="mc-btn" onclick="mcCheck(0, this, false)">Das Modalverb fällt im Perfekt ganz weg.</button>
+      </div>
+      <div class="mc-feedback" id="mcfb0"></div>
     </div>
 
-    <div class="info-card">
-      <h3>📌 Übersicht: Wann welche Form?</h3>
-      <p>
-        <strong>Präsens</strong>: Gegenwart → Ich <em>muss</em> heute arbeiten.<br>
-        <strong>Präteritum</strong>: Erzählende Vergangenheit → Ich <em>musste</em> gestern arbeiten.<br>
-        <strong>Perfekt</strong>: Mündliche Vergangenheit → Ich habe gestern arbeiten <em>müssen</em>.
-      </p>
+    <div class="mc-step" id="mc-step1">
+      <h4>Schritt 2 — Welches Hilfsverb steht im Perfekt bei Modalverben?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(1, this, false)">sein</button>
+        <button class="mc-btn" onclick="mcCheck(1, this, true)">haben</button>
+        <button class="mc-btn" onclick="mcCheck(1, this, false)">werden</button>
+      </div>
+      <div class="mc-feedback" id="mcfb1"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step2">
+      <h4>Schritt 3 — Wo stehen Vollverb und Modalverb im Perfektsatz?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(2, this, false)">haben + Modalverb + Vollverb (Modalverb zuerst)</button>
+        <button class="mc-btn" onclick="mcCheck(2, this, true)">haben + Vollverb (Inf.) + Modalverb (Inf.) — beide am Satzende</button>
+        <button class="mc-btn" onclick="mcCheck(2, this, false)">haben + Vollverb (Partizip II) + Modalverb am Ende</button>
+      </div>
+      <div class="mc-feedback" id="mcfb2"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step3">
+      <h4>Schritt 4 — Welcher Satz ist korrekt?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(3, this, false)">Ich habe nicht arbeiten <em>gemusst</em>.</button>
+        <button class="mc-btn" onclick="mcCheck(3, this, false)">Ich habe <em>müssen</em> nicht arbeiten.</button>
+        <button class="mc-btn" onclick="mcCheck(3, this, true)">Ich habe nicht arbeiten <em>müssen</em>.</button>
+      </div>
+      <div class="mc-feedback" id="mcfb3"></div>
+    </div>
+
+    <div class="regel-karte" id="regelkarte">
+      <h3>&#10003; Die Regel: Perfekt der Modalverben — Ersatzinfinitiv</h3>
+      <ul>
+        <li><strong>haben</strong> (konjugiert) + Vollverb (Infinitiv) + Modalverb (Infinitiv)</li>
+        <li>Kein Partizip II! Beide Verben stehen am Satzende.</li>
+        <li>Das nennt man den <strong>Ersatzinfinitiv</strong>.</li>
+      </ul>
+      <div class="rk-example">
+        &#10060; Ich habe nicht arbeiten <b>gemusst</b>.<br>
+        &#10003; Ich habe nicht arbeiten <b>müssen</b>.<br>
+        &#10003; Lena hat nie ihr Zimmer aufräumen <b>wollen</b>.
+      </div>
     </div>
   </section>
 
   <!-- TAB 1: REGEL -->
-  <section class="section" id="tab1">
-    <div class="info-card">
-      <h3>📐 Modalverben im Präsens</h3>
-      <p>6 Modalverben: können · wollen · dürfen · möchten · müssen · sollen</p>
-    </div>
+  <section class="section" id="sec-1">
 
-    <h3 style="color:#5a3e9e;margin-bottom:8px;font-size:.95rem;">Konjugation Präsens — Gruppe 1</h3>
+    <p class="table-title">Konjugation Präsens — können · wollen · dürfen</p>
     <table class="modal-table">
-      <thead><tr><th>Person</th><th class="verb-cell">können</th><th class="verb-cell">wollen</th><th class="verb-cell">dürfen</th></tr></thead>
+      <thead><tr><th>Person</th><th class="vc">können</th><th class="vc">wollen</th><th class="vc">dürfen</th></tr></thead>
       <tbody>
-        <tr><td>ich</td><td class="verb-cell">kann</td><td class="verb-cell">will</td><td class="verb-cell">darf</td></tr>
-        <tr><td>du</td><td class="verb-cell">kannst</td><td class="verb-cell">willst</td><td class="verb-cell">darfst</td></tr>
-        <tr><td>er/sie/es</td><td class="verb-cell">kann</td><td class="verb-cell">will</td><td class="verb-cell">darf</td></tr>
-        <tr><td>wir</td><td class="verb-cell">können</td><td class="verb-cell">wollen</td><td class="verb-cell">dürfen</td></tr>
-        <tr><td>ihr</td><td class="verb-cell">könnt</td><td class="verb-cell">wollt</td><td class="verb-cell">dürft</td></tr>
-        <tr><td>sie/Sie</td><td class="verb-cell">können</td><td class="verb-cell">wollen</td><td class="verb-cell">dürfen</td></tr>
+        <tr><td>ich</td><td class="vc">kann</td><td class="vc">will</td><td class="vc">darf</td></tr>
+        <tr><td>du</td><td class="vc">kannst</td><td class="vc">willst</td><td class="vc">darfst</td></tr>
+        <tr><td>er/sie/es</td><td class="vc">kann</td><td class="vc">will</td><td class="vc">darf</td></tr>
+        <tr><td>wir</td><td class="vc">können</td><td class="vc">wollen</td><td class="vc">dürfen</td></tr>
+        <tr><td>ihr</td><td class="vc">könnt</td><td class="vc">wollt</td><td class="vc">dürft</td></tr>
+        <tr><td>sie/Sie</td><td class="vc">können</td><td class="vc">wollen</td><td class="vc">dürfen</td></tr>
       </tbody>
     </table>
 
-    <h3 style="color:#5a3e9e;margin-bottom:8px;font-size:.95rem;margin-top:10px;">Konjugation Präsens — Gruppe 2</h3>
+    <p class="table-title">Konjugation Präsens — möchten · müssen · sollen</p>
     <table class="modal-table">
-      <thead><tr><th>Person</th><th class="verb-cell">möchten</th><th class="verb-cell">müssen</th><th class="verb-cell">sollen</th></tr></thead>
+      <thead><tr><th>Person</th><th class="vc">möchten</th><th class="vc">müssen</th><th class="vc">sollen</th></tr></thead>
       <tbody>
-        <tr><td>ich</td><td class="verb-cell">möchte</td><td class="verb-cell">muss</td><td class="verb-cell">soll</td></tr>
-        <tr><td>du</td><td class="verb-cell">möchtest</td><td class="verb-cell">musst</td><td class="verb-cell">sollst</td></tr>
-        <tr><td>er/sie/es</td><td class="verb-cell">möchte</td><td class="verb-cell">muss</td><td class="verb-cell">soll</td></tr>
-        <tr><td>wir</td><td class="verb-cell">möchten</td><td class="verb-cell">müssen</td><td class="verb-cell">sollen</td></tr>
-        <tr><td>ihr</td><td class="verb-cell">möchtet</td><td class="verb-cell">müsst</td><td class="verb-cell">sollt</td></tr>
-        <tr><td>sie/Sie</td><td class="verb-cell">möchten</td><td class="verb-cell">müssen</td><td class="verb-cell">sollen</td></tr>
+        <tr><td>ich</td><td class="vc">möchte</td><td class="vc">muss</td><td class="vc">soll</td></tr>
+        <tr><td>du</td><td class="vc">möchtest</td><td class="vc">musst</td><td class="vc">sollst</td></tr>
+        <tr><td>er/sie/es</td><td class="vc">möchte</td><td class="vc">muss</td><td class="vc">soll</td></tr>
+        <tr><td>wir</td><td class="vc">möchten</td><td class="vc">müssen</td><td class="vc">sollen</td></tr>
+        <tr><td>ihr</td><td class="vc">möchtet</td><td class="vc">müsst</td><td class="vc">sollt</td></tr>
+        <tr><td>sie/Sie</td><td class="vc">möchten</td><td class="vc">müssen</td><td class="vc">sollen</td></tr>
       </tbody>
     </table>
 
-    <h3 style="color:#5a3e9e;margin-bottom:8px;font-size:.95rem;margin-top:10px;">Präteritum (Erzählvergangenheit)</h3>
+    <p class="table-title">Präteritum — Erzählvergangenheit</p>
     <table class="modal-table">
-      <thead><tr><th>Infinitiv</th><th class="verb-cell-b">Präteritum (ich/er)</th></tr></thead>
+      <thead><tr><th>Infinitiv</th><th class="vc2">ich / er / sie</th></tr></thead>
       <tbody>
-        <tr><td>können</td><td class="verb-cell-b">konnte</td></tr>
-        <tr><td>wollen</td><td class="verb-cell-b">wollte</td></tr>
-        <tr><td>dürfen</td><td class="verb-cell-b">durfte</td></tr>
-        <tr><td>müssen</td><td class="verb-cell-b">musste</td></tr>
-        <tr><td>sollen</td><td class="verb-cell-b">sollte</td></tr>
+        <tr><td>können</td><td class="vc2">konnte</td></tr>
+        <tr><td>wollen</td><td class="vc2">wollte</td></tr>
+        <tr><td>dürfen</td><td class="vc2">durfte</td></tr>
+        <tr><td>müssen</td><td class="vc2">musste</td></tr>
+        <tr><td>sollen</td><td class="vc2">sollte</td></tr>
+        <tr><td>möchten</td><td class="vc2">wollte <span style="font-weight:400;color:#888;">(= wollte im Präteritum)</span></td></tr>
       </tbody>
     </table>
 
-    <h3 style="color:#5a3e9e;margin-bottom:8px;font-size:.95rem;margin-top:10px;">Perfekt mit Ersatzinfinitiv</h3>
-    <div class="info-card">
-      <h3>📌 Bildung: haben + Vollverb (Inf.) + Modalverb (Inf.)</h3>
-      <p>Kein Partizip II! Beide Verben stehen im Infinitiv am Satzende.</p>
-    </div>
+    <p class="table-title">Perfekt — Ersatzinfinitiv</p>
     <table class="modal-table">
-      <thead><tr><th>Modalverb</th><th>Beispiel (Perfekt)</th></tr></thead>
+      <thead><tr><th>Modalverb</th><th>Beispiel</th></tr></thead>
       <tbody>
-        <tr><td>können</td><td>Als Kind habe ich nicht Auto fahren <span class="verb-cell-b">können</span>.</td></tr>
-        <tr><td>wollen</td><td>Max hat gestern mit seinem Freund spielen <span class="verb-cell-b">wollen</span>.</td></tr>
-        <tr><td>dürfen</td><td>Mit 14 hat Max kein Bier trinken <span class="verb-cell-b">dürfen</span>.</td></tr>
-        <tr><td>müssen</td><td>Nina hat letzte Woche arbeiten <span class="verb-cell-b">müssen</span>.</td></tr>
-        <tr><td>sollen</td><td>Ich habe gestern mein Zimmer aufräumen <span class="verb-cell-b">sollen</span>.</td></tr>
-        <tr><td>wollen (für möchten)</td><td>Ben hat ein neues Auto kaufen <span class="verb-cell-b">wollen</span>.</td></tr>
+        <tr><td>können</td><td>Früher habe ich nicht Auto fahren <span class="vc2">können</span>.</td></tr>
+        <tr><td>wollen</td><td>Max hat ein neues Auto kaufen <span class="vc2">wollen</span>.</td></tr>
+        <tr><td>dürfen</td><td>Louisa hat nicht fernsehen <span class="vc2">dürfen</span>.</td></tr>
+        <tr><td>müssen</td><td>Du hast zur Schule gehen <span class="vc2">müssen</span>.</td></tr>
+        <tr><td>sollen</td><td>Lotta hat die Wohnung putzen <span class="vc2">sollen</span>.</td></tr>
+        <tr><td>möchten</td><td>Ben hat ein neues Auto kaufen <span class="vc2">wollen</span>.</td></tr>
       </tbody>
     </table>
   </section>
 
   <!-- TAB 2: LÜCKENTEXT -->
-  <section class="section" id="tab2">
-    <div class="lt-section">
-      <div class="lt-title">Teil 1 · Modalverben im Präsens</div>
-      <div class="lt-row"><span class="lt-num">1.</span>
-        Sabine <input class="lt-inp" id="lt0" data-ans="kann" placeholder="" oninput="ltCheck(this)"> sehr gut singen.
-      </div>
-      <div class="lt-row"><span class="lt-num">2.</span>
-        Was <input class="lt-inp" id="lt1" data-ans="möchte" placeholder="" oninput="ltCheck(this)"> Niko essen?
-      </div>
-      <div class="lt-row"><span class="lt-num">3.</span>
-        Wir <input class="lt-inp" id="lt2" data-ans="müssen" placeholder="" oninput="ltCheck(this)"> heute lange arbeiten.
-      </div>
-      <div class="lt-row"><span class="lt-num">4.</span>
-        Hier <input class="lt-inp" id="lt3" data-ans="darf" placeholder="" oninput="ltCheck(this)"> man rauchen.
-      </div>
-      <div class="lt-row"><span class="lt-num">5.</span>
-        <input class="lt-inp" id="lt4" data-ans="Wollt" placeholder="" oninput="ltCheck(this)"> ihr heute ins Kino gehen?
-      </div>
-      <div class="lt-row"><span class="lt-num">6.</span>
-        Du <input class="lt-inp" id="lt5" data-ans="sollst" placeholder="" oninput="ltCheck(this)"> dein Zimmer aufräumen, Anna!
-      </div>
-      <div class="lt-row"><span class="lt-num">7.</span>
-        <input class="lt-inp" id="lt6" data-ans="Darf" placeholder="" oninput="ltCheck(this)"> ich heute bei Louisa schlafen, Mama?
-      </div>
+  <section class="section" id="sec-2">
+    <div class="timer-bar">
+      <span>&#9201; <span class="timer-display" id="timer-2">0:00</span></span>
+      <span>&#127942; <span class="best-display" id="best-2">–</span></span>
     </div>
 
-    <div class="lt-section">
-      <div class="lt-title">Teil 2 · Modalverben im Perfekt (Ersatzinfinitiv)</div>
-      <p style="font-size:.85rem;color:#888;margin-bottom:10px;">Schreibe den Satz im Perfekt (vollständig).</p>
-      <div class="lt-row"><span class="lt-num">8.</span>
-        Anita darf allein zur Schule fahren. →
-        Anita <input class="lt-inp lt-inp-lg" id="lt7" data-ans="hat allein zur Schule fahren dürfen" placeholder="" oninput="ltCheck(this)">.
-      </div>
-      <div class="lt-row"><span class="lt-num">9.</span>
-        Klaus muss heute arbeiten. →
-        Klaus <input class="lt-inp lt-inp-lg" id="lt8" data-ans="hat heute arbeiten müssen" placeholder="" oninput="ltCheck(this)">.
-      </div>
-      <div class="lt-row"><span class="lt-num">10.</span>
-        Ben möchte ein neues Auto kaufen. →
-        Ben <input class="lt-inp lt-inp-lg" id="lt9" data-ans="hat ein neues Auto kaufen wollen" placeholder="" oninput="ltCheck(this)">.
-      </div>
-      <div class="lt-row"><span class="lt-num">11.</span>
-        Carlos kann Gitarre spielen. →
-        Carlos <input class="lt-inp lt-inp-lg" id="lt10" data-ans="hat Gitarre spielen können" placeholder="" oninput="ltCheck(this)">.
-      </div>
-      <div class="lt-row"><span class="lt-num">12.</span>
-        Uta will noch nicht schlafen. →
-        Uta <input class="lt-inp lt-inp-lg" id="lt11" data-ans="hat noch nicht schlafen wollen" placeholder="" oninput="ltCheck(this)">.
-      </div>
-    </div>
-
-    <div class="lt-section">
-      <div class="lt-title">Teil 3 · Verneinung von Modalverben</div>
-      <div class="lt-row"><span class="lt-num">13.</span>
-        Antonia muss heute nicht arbeiten. → Verneinung: <input class="lt-inp" id="lt12" data-ans="nicht" placeholder="" oninput="ltCheck(this)">
-      </div>
-      <div class="lt-row"><span class="lt-num">14.</span>
-        Hier darf man <input class="lt-inp" id="lt13" data-ans="nicht" placeholder="" oninput="ltCheck(this)"> parken. (Verbot!)
-      </div>
-      <div class="lt-row"><span class="lt-num">15.</span>
-        Ihr müsst morgen die Küche <input class="lt-inp" id="lt14" data-ans="nicht" placeholder="" oninput="ltCheck(this)"> putzen. (nicht nötig)
-      </div>
-    </div>
+    <div id="luecke-container"></div>
 
     <div class="btn-row">
-      <span>⏱ <span id="lt-timer">0:00</span></span>
-      <span>🏆 <span id="lt-best">–</span></span>
-      <button onclick="ltResetAll()">↺ Neustart</button>
-      <button onclick="ltShowAll()">💡 Lösungen</button>
+      <button onclick="resetLuecke()">&#8635; Neustart</button>
+      <button onclick="showLuecke()">&#128161; Lösungen</button>
     </div>
   </section>
 
   <!-- TAB 3: SATZBAU -->
-  <section class="section" id="tab3">
-    <p style="color:#555;margin-bottom:16px;">Bilde Sätze mit Modalverben — achte auf die Wortstellung!</p>
-    <div id="satzbauContainer"></div>
-    <div class="btn-row">
-      <span>⏱ <span id="sb-timer">0:00</span></span>
-      <span>🏆 <span id="sb-best">–</span></span>
-      <button onclick="sbTimerReset()">↺ Neustart</button>
-      <button onclick="sbShowSolution()">💡 Lösungen</button>
+  <section class="section" id="sec-3">
+    <div class="timer-bar">
+      <span>&#9201; <span class="timer-display" id="timer-3">0:00</span></span>
+      <span>&#127942; <span class="best-display" id="best-3">–</span></span>
     </div>
-  </section>
-
-  <!-- TAB 4: MULTIPLE CHOICE -->
-  <section class="section" id="tab4">
-    <p style="color:#555;margin-bottom:16px;">Wähle die richtige Form des Modalverbs oder die richtige Zeitform.</p>
-    <div id="mcContainer"></div>
+    <p style="color:#555;margin-bottom:16px;font-size:.9rem;">Bringe die Chips in die richtige Reihenfolge. Achte auf Wortstellung und Ersatzinfinitiv!</p>
+    <div id="sb-container"></div>
     <div class="btn-row">
-      <button onclick="mcReset()">↺ Neustart</button>
-      <button onclick="mcSolve()">💡 Lösungen</button>
+      <button onclick="resetSb()">&#8635; Neustart</button>
+      <button onclick="showSb()">&#128161; Lösungen</button>
     </div>
   </section>
 
@@ -299,92 +290,371 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 </div><!-- /container -->
 
 <script>
-// ── TAB NAVIGATION ─────────────────────────────────────────
+// ── TAB NAVIGATION ──────────────────────────────────────────
 function showTab(n) {
-  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('aktiv', i===n); });
-  document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
-  if (n === 2) ltTimerAutoStart();
-  if (n === 3) sbTimerAutoStart();
+  document.querySelectorAll('.section').forEach(function(s, i) { s.classList.toggle('aktiv', i === n); });
+  document.querySelectorAll('.nav-btn').forEach(function(b, i) { b.classList.toggle('active', i === n); });
 }
 
-// ── TIMER ───────────────────────────────────────────────────
-var TIMER_PREFIX = 'a2-1067g-';
-var ltStarted=false, ltRunning=false, ltSecs=0, ltInterval=null;
-var sbStarted=false, sbRunning=false, sbSecs=0, sbInterval=null;
-function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
-function timerLoadBest(key,elId){ var b=localStorage.getItem(key); document.getElementById(elId).textContent=b?timerFmt(parseInt(b)):'–'; }
-function ltTimerAutoStart(){ if(ltStarted) return; ltStarted=true; ltRunning=true; ltInterval=setInterval(function(){ ltSecs++; document.getElementById('lt-timer').textContent=timerFmt(ltSecs); },1000); }
-function ltTimerStop(){ if(!ltRunning) return; ltRunning=false; clearInterval(ltInterval); var b=localStorage.getItem(TIMER_PREFIX+'best-lt'); if(!b||ltSecs<parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-lt',ltSecs); document.getElementById('lt-best').textContent=timerFmt(ltSecs); } }
-function ltTimerReset(){ ltRunning=false; ltStarted=false; ltSecs=0; clearInterval(ltInterval); document.getElementById('lt-timer').textContent='0:00'; }
-function sbTimerAutoStart(){ if(sbStarted) return; sbStarted=true; sbRunning=true; sbInterval=setInterval(function(){ sbSecs++; document.getElementById('sb-timer').textContent=timerFmt(sbSecs); },1000); }
-function sbTimerStop(){ if(!sbRunning) return; sbRunning=false; clearInterval(sbInterval); var b=localStorage.getItem(TIMER_PREFIX+'best-sb'); if(!b||sbSecs<parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-sb',sbSecs); document.getElementById('sb-best').textContent=timerFmt(sbSecs); } }
-function sbTimerReset(){ sbRunning=false; sbStarted=false; sbSecs=0; clearInterval(sbInterval); document.getElementById('sb-timer').textContent='0:00'; sbCorrect=[]; sbBuild(); }
-
-// ── LÜCKENTEXT ──────────────────────────────────────────────
-var LT_COUNT = 15;
-function ltCheck(inp){
-  ltTimerAutoStart();
-  var val=inp.value.trim(); var ans=inp.dataset.ans;
-  if(val===ans){ inp.classList.remove('no'); inp.classList.add('ok'); }
-  else if(ans.startsWith(val)&&val.length>0){ inp.classList.remove('ok','no'); }
-  else if(val.length>0){ inp.classList.remove('ok'); inp.classList.add('no'); }
-  else{ inp.classList.remove('ok','no'); }
-  var all=true;
-  for(var i=0;i<LT_COUNT;i++){ var el=document.getElementById('lt'+i); if(el&&!el.classList.contains('ok')){ all=false; break; } }
-  if(all) ltTimerStop();
-}
-function ltResetAll(){
-  for(var i=0;i<LT_COUNT;i++){ var el=document.getElementById('lt'+i); if(el){ el.value=''; el.classList.remove('ok','no'); } }
-  ltTimerReset();
-}
-function ltShowAll(){
-  for(var i=0;i<LT_COUNT;i++){ var el=document.getElementById('lt'+i); if(el){ el.value=el.dataset.ans; el.classList.remove('no'); el.classList.add('ok'); } }
-  ltTimerStop();
+// ── ENTDECKUNGS-TAB: MC-System ───────────────────────────────
+var mcDone = [false, false, false, false];
+function mcCheck(step, btn, correct) {
+  var btns = btn.parentElement.querySelectorAll('.mc-btn');
+  btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct', 'wrong'); });
+  var fb = document.getElementById('mcfb' + step);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+    fb.className = 'mc-feedback ok';
+    mcDone[step] = true;
+    document.getElementById('pdot' + step).classList.add('done');
+    setTimeout(function() {
+      var next = document.getElementById('mc-step' + (step + 1));
+      if (next) { next.classList.add('active'); }
+      else { document.getElementById('regelkarte').style.display = 'block'; }
+    }, 700);
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '\u2717 Nicht ganz — schau nochmal genau hin.';
+    fb.className = 'mc-feedback err';
+    setTimeout(function() {
+      btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong', 'correct'); });
+      fb.textContent = '';
+      fb.className = 'mc-feedback';
+    }, 1400);
+  }
 }
 
-// ── SATZBAU ─────────────────────────────────────────────────
-var satzbauData = [
-  { words: ['Ich', 'kann', 'gut', 'Gitarre', 'spielen'], punct: '.' },
-  { words: ['Als', 'Kind', 'habe', 'ich', 'nicht', 'fernsehen', 'dürfen'], punct: '.' },
-  { words: ['Nina', 'hat', 'letzte', 'Woche', 'arbeiten', 'müssen'], punct: '.' },
-  { words: ['Wir', 'sollen', 'heute', 'die', 'Küche', 'putzen'], punct: '.' },
-  { words: ['Max', 'hat', 'ein', 'neues', 'Auto', 'kaufen', 'wollen'], punct: '.' },
-  { words: ['Hier', 'darf', 'man', 'nicht', 'rauchen'], punct: '.' },
-  { words: ['Anita', 'hat', 'allein', 'zur', 'Schule', 'fahren', 'dürfen'], punct: '.' }
+// ── TIMER-SYSTEM ─────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1067g-v2-';
+var timerStarted  = [false, false, false, false];
+var timerRunning  = [false, false, false, false];
+var timerSeconds  = [0, 0, 0, 0];
+var timerIntervals = [null, null, null, null];
+
+function timerAutoStart(n) {
+  if (timerStarted[n]) return;
+  timerStarted[n] = true;
+  timerRunning[n] = true;
+  timerIntervals[n] = setInterval(function() {
+    timerSeconds[n]++;
+    var el = document.getElementById('timer-' + n);
+    if (el) el.textContent = fmtTime(timerSeconds[n]);
+  }, 1000);
+}
+function timerStop(n) {
+  if (!timerRunning[n]) return;
+  clearInterval(timerIntervals[n]);
+  timerRunning[n] = false;
+  var best = parseInt(localStorage.getItem(TIMER_PREFIX + n) || '999999');
+  if (timerSeconds[n] > 0 && timerSeconds[n] < best) {
+    localStorage.setItem(TIMER_PREFIX + n, timerSeconds[n]);
+    var el = document.getElementById('best-' + n);
+    if (el) el.textContent = fmtTime(timerSeconds[n]);
+  }
+}
+function timerResetOne(n) {
+  clearInterval(timerIntervals[n]);
+  timerRunning[n] = false;
+  timerStarted[n] = false;
+  timerSeconds[n] = 0;
+  var el = document.getElementById('timer-' + n);
+  if (el) el.textContent = '0:00';
+}
+function fmtTime(s) { return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60); }
+function loadBestTimes() {
+  [2, 3].forEach(function(n) {
+    var v = localStorage.getItem(TIMER_PREFIX + n);
+    if (v) { var el = document.getElementById('best-' + n); if (el) el.textContent = fmtTime(parseInt(v)); }
+  });
+}
+
+// ── LÜCKENTEXT ───────────────────────────────────────────────
+var LUECKE_DATA = [
+  // Teil 1: Präsens
+  { teil: 'Teil 1 · Präsens — richtige Modalverbform eintippen', secs: [
+    { segs: [{t:'Sabine '},{b:'kann',s:'m'},{t:' sehr gut singen.'}] },
+    { segs: [{t:'Was '},{b:'möchte',s:'m'},{t:' Niko essen?'}] },
+    { segs: [{t:'Wir '},{b:'müssen',s:'m'},{t:' heute lange arbeiten.'}] },
+    { segs: [{t:'Hier '},{b:'darf',s:'s'},{t:' man nicht rauchen.'}] },
+    { segs: [{b:'Wollt',s:'m'},{t:' ihr heute ins Kino gehen?'}] },
+    { segs: [{t:'Du '},{b:'sollst',s:'m'},{t:' dein Zimmer aufräumen, Anna!'}] },
+    { segs: [{b:'Darf',s:'s'},{t:' ich heute bei Louisa schlafen, Mama?'}] },
+    { segs: [{t:'Marina '},{b:'kann',s:'m'},{t:' nicht schwimmen.'}] }
+  ]},
+  // Teil 2: Perfekt (Ersatzinfinitiv)
+  { teil: 'Teil 2 · Perfekt — Satz vollständig in die Lücke schreiben', secs: [
+    { segs: [{t:'Ich will nicht arbeiten. \u2192 Ich '},{b:'habe nicht arbeiten wollen',s:'xl'},{t:'.'}] },
+    { segs: [{t:'Max möchte ein Auto kaufen. \u2192 Max '},{b:'hat ein Auto kaufen wollen',s:'xl'},{t:'.'}] },
+    { segs: [{t:'Marina kann nicht schwimmen. \u2192 Marina '},{b:'hat nicht schwimmen können',s:'xl'},{t:'.'}] },
+    { segs: [{t:'Lotta soll die Wohnung putzen. \u2192 Lotta '},{b:'hat die Wohnung putzen sollen',s:'xl'},{t:'.'}] },
+    { segs: [{t:'Louisa darf nicht fernsehen. \u2192 Louisa '},{b:'hat nicht fernsehen dürfen',s:'xl'},{t:'.'}] }
+  ]}
 ];
-var sbDragged = null;
+
+var lueckeInputs = [];
+
+function lueckeInit() {
+  var container = document.getElementById('luecke-container');
+  container.innerHTML = '';
+  lueckeInputs = [];
+  var globalIdx = 0;
+  LUECKE_DATA.forEach(function(teil) {
+    var sec = document.createElement('div');
+    sec.className = 'luecke-section';
+    var title = document.createElement('div');
+    title.className = 'luecke-title';
+    title.textContent = teil.teil;
+    sec.appendChild(title);
+    teil.secs.forEach(function(item) {
+      var row = document.createElement('div');
+      row.className = 'luecke-row';
+      var num = document.createElement('span');
+      num.className = 'luecke-num';
+      num.textContent = (globalIdx + 1) + '.';
+      row.appendChild(num);
+      item.segs.forEach(function(seg) {
+        if (seg.t !== undefined) {
+          var span = document.createElement('span');
+          span.textContent = seg.t;
+          row.appendChild(span);
+        } else {
+          var inp = document.createElement('input');
+          inp.type = 'text';
+          inp.className = 'blank ' + (seg.s || 'm');
+          inp.dataset.answer = seg.b;
+          inp.autocomplete = 'off';
+          inp.spellcheck = false;
+          (function(el) {
+            el.addEventListener('input', function() {
+              timerAutoStart(2);
+              liveCheck(el);
+              checkLueckeAllOk();
+            });
+          })(inp);
+          row.appendChild(inp);
+          lueckeInputs.push(inp);
+        }
+      });
+      sec.appendChild(row);
+      globalIdx++;
+    });
+    container.appendChild(sec);
+  });
+}
+
+function liveCheck(inp) {
+  var val = inp.value.trim().toLowerCase();
+  var ans = (inp.dataset.answer || '').toLowerCase();
+  inp.classList.remove('correct', 'wrong');
+  if (val.length === 0) return;
+  if (val === ans) {
+    inp.classList.add('correct');
+    // Hint entfernen falls vorhanden
+    var next = inp.nextElementSibling;
+    if (next && next.classList.contains('correction-hint')) next.remove();
+  } else if (ans.indexOf(val) === 0) {
+    // gültiger Präfix — neutral
+  } else {
+    inp.classList.add('wrong');
+  }
+}
+
+function checkLueckeAllOk() {
+  var allOk = lueckeInputs.length > 0 && lueckeInputs.every(function(i) { return i.classList.contains('correct'); });
+  if (allOk) timerStop(2);
+}
+
+function resetLuecke() {
+  lueckeInit();
+  timerResetOne(2);
+}
+
+function showLuecke() {
+  lueckeInputs.forEach(function(inp) {
+    // Hint entfernen
+    var next = inp.nextElementSibling;
+    if (next && next.classList.contains('correction-hint')) next.remove();
+    var hint = document.createElement('span');
+    hint.className = 'correction-hint';
+    hint.textContent = inp.dataset.answer;
+    inp.insertAdjacentElement('afterend', hint);
+    inp.value = inp.dataset.answer;
+    inp.classList.remove('wrong');
+    inp.classList.add('correct');
+  });
+  timerStop(2);
+}
+
+// ── SATZBAU ──────────────────────────────────────────────────
+var SB_DATA = [
+  { words: ['ich','kann','sehr','gut','singen'], answer: ['ich','kann','sehr','gut','singen'], punct: '.' },
+  { words: ['früher','habe','ich','nicht','Auto','fahren','können'], answer: ['früher','habe','ich','nicht','auto','fahren','können'], punct: '.' },
+  { words: ['nina','hat','die','wohnung','putzen','sollen'], answer: ['nina','hat','die','wohnung','putzen','sollen'], punct: '.' },
+  { words: ['max','hat','ein','neues','auto','kaufen','wollen'], answer: ['max','hat','ein','neues','auto','kaufen','wollen'], punct: '.' },
+  { words: ['louisa','hat','nicht','fernsehen','dürfen'], answer: ['louisa','hat','nicht','fernsehen','dürfen'], punct: '.' },
+  { words: ['du','hast','zur','schule','gehen','müssen'], answer: ['du','hast','zur','schule','gehen','müssen'], punct: '.' },
+  { words: ['hier','darf','man','nicht','rauchen'], answer: ['hier','darf','man','nicht','rauchen'], punct: '.' },
+  { words: ['vera','und','ich','haben','zusammen','arbeiten','müssen'], answer: ['vera','und','ich','haben','zusammen','arbeiten','müssen'], punct: '.' }
+];
+
+var draggedChip = null;
 var sbCorrect = [];
-function sbMakeChip(word,orig){ var ch=document.createElement('span'); ch.className='chip'; ch.textContent=word; ch.dataset.orig=orig!==undefined?orig:word; ch.draggable=true; ch.addEventListener('dragstart',function(){ sbDragged=ch; }); return ch; }
-function sbGetDragAfter(container,x){ var chips=Array.from(container.querySelectorAll('.chip:not(.dragging)')); return chips.reduce(function(closest,child){ var box=child.getBoundingClientRect(); var offset=x-box.left-box.width/2; if(offset<0&&offset>closest.offset) return{offset:offset,element:child}; return closest; },{offset:Number.NEGATIVE_INFINITY}).element; }
-function sbUpdateCapitalization(rowIdx){ var row=document.getElementById('sb-row-'+rowIdx); if(!row) return; row.querySelectorAll('.chip').forEach(function(ch,i){ var orig=ch.dataset.orig; ch.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig; }); }
-function sbColorRow(rowIdx,correct){ var fb=document.getElementById('sb-fb-'+rowIdx); if(fb){ fb.textContent=correct?'✅':'❌'; fb.className='satzbau-feedback '+(correct?'ok':'no'); } }
-function sbCheckAuto(rowIdx){ var row=document.getElementById('sb-row-'+rowIdx); if(!row) return; var placed=Array.from(row.querySelectorAll('.chip')).map(function(ch){ return ch.dataset.orig; }); var data=satzbauData[rowIdx]; var expected=data.words; if(placed.length===0){ sbColorRow(rowIdx,false); return; } var ok=placed.length===expected.length; if(ok){ for(var i=0;i<placed.length;i++){ var p=placed[i].charAt(0).toUpperCase()+placed[i].slice(1); var ex=expected[i].charAt(0).toUpperCase()+expected[i].slice(1); if(p!==ex){ok=false;break;} } } sbColorRow(rowIdx,ok); if(ok) sbCorrect[rowIdx]=true; if(sbCorrect.filter(Boolean).length===satzbauData.length) sbTimerStop(); }
-function sbRegisterZone(zone,rowIdx){ zone.addEventListener('dragover',function(e){ e.preventDefault(); zone.classList.add('drag-over'); var cursor=zone.querySelector('.sb-insert-cursor'); if(!cursor){cursor=document.createElement('span');cursor.className='sb-insert-cursor';} var afterEl=sbGetDragAfter(zone,e.clientX); if(afterEl) zone.insertBefore(cursor,afterEl); else zone.appendChild(cursor); }); zone.addEventListener('dragleave',function(){ zone.classList.remove('drag-over'); var c=zone.querySelector('.sb-insert-cursor'); if(c) c.remove(); }); zone.addEventListener('drop',function(e){ e.preventDefault(); zone.classList.remove('drag-over'); var cursor=zone.querySelector('.sb-insert-cursor'); if(!sbDragged){if(cursor) cursor.remove(); return;} if(cursor) zone.insertBefore(sbDragged,cursor); else zone.appendChild(sbDragged); if(cursor) cursor.remove(); sbDragged.classList.add('sb-placed'); sbDragged=null; sbUpdateCapitalization(rowIdx); setTimeout(function(){ sbCheckAuto(rowIdx); },500); }); var bank=document.getElementById('sb-bank-'+rowIdx); bank.addEventListener('dragover',function(e){ e.preventDefault(); }); bank.addEventListener('drop',function(e){ e.preventDefault(); if(!sbDragged) return; sbDragged.classList.remove('sb-placed'); bank.appendChild(sbDragged); sbDragged=null; sbUpdateCapitalization(rowIdx); setTimeout(function(){ sbCheckAuto(rowIdx); },500); }); }
-function sbShowSolution(){ satzbauData.forEach(function(data,rowIdx){ var bank=document.getElementById('sb-bank-'+rowIdx); var row=document.getElementById('sb-row-'+rowIdx); if(!bank||!row) return; bank.innerHTML=''; row.innerHTML=''; data.words.forEach(function(word,i){ var ch=sbMakeChip(i===0?word.charAt(0).toUpperCase()+word.slice(1):word,word); ch.classList.add('sb-placed'); row.appendChild(ch); }); var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt); sbColorRow(rowIdx,true); sbCorrect[rowIdx]=true; }); sbTimerStop(); }
-function sbBuild(){ var container=document.getElementById('satzbauContainer'); container.innerHTML=''; sbCorrect=new Array(satzbauData.length).fill(false); satzbauData.forEach(function(data,rowIdx){ var shuffled=data.words.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;} var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>'; var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx; shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); }); wrap.appendChild(bank); var row=document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx; var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt); wrap.appendChild(row); var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+rowIdx; wrap.appendChild(fb); container.appendChild(wrap); sbRegisterZone(row,rowIdx); }); }
 
-// ── MULTIPLE CHOICE ─────────────────────────────────────────
-var MC_DATA = [
-  { q: 'Kim ___ morgen früh aufstehen. (3. Person Singular von „müssen")', opts: ['muss', 'müssen', 'musste', 'müsst'], ans: 0 },
-  { q: 'Als Kind habe ich nicht fernsehen ___.', opts: ['gedurft', 'dürfen', 'durfte', 'darf'], ans: 1 },
-  { q: 'Gestern ___ ich lange arbeiten.', opts: ['muss', 'müssen', 'musste', 'mussten'], ans: 2 },
-  { q: 'Nina hat letzte Woche arbeiten ___. (Perfekt)', opts: ['gemusst', 'musste', 'müssen', 'muss'], ans: 2 },
-  { q: 'Hier ___ man nicht rauchen. (Verbot)', opts: ['muss', 'darf', 'soll', 'will'], ans: 1 },
-  { q: '___ du schon Auto fahren? (Fähigkeit)', opts: ['Darfst', 'Kannst', 'Musst', 'Sollst'], ans: 1 },
-  { q: 'Max hat ein Auto kaufen ___. (Perfekt von „wollen")', opts: ['gewollt', 'wollen', 'wollte', 'will'], ans: 1 }
-];
-var mcAnswered = [];
-function mcBuild(){ var container=document.getElementById('mcContainer'); container.innerHTML=''; mcAnswered=new Array(MC_DATA.length).fill(false); MC_DATA.forEach(function(item,idx){ var div=document.createElement('div'); div.className='mc-item'; var q=document.createElement('div'); q.className='mc-question'; q.textContent=(idx+1)+'. '+item.q; div.appendChild(q); var opts=document.createElement('div'); opts.className='mc-options'; item.opts.forEach(function(opt,oi){ var btn=document.createElement('button'); btn.className='mc-opt'; btn.textContent=opt; btn.addEventListener('click',function(){ if(mcAnswered[idx]) return; mcAnswered[idx]=true; opts.querySelectorAll('.mc-opt').forEach(function(b,bi){ if(bi===item.ans) b.classList.add('correct'); else b.classList.add('wrong'); }); if(oi===item.ans) btn.classList.remove('wrong'); }); opts.appendChild(btn); }); div.appendChild(opts); container.appendChild(div); }); }
-function mcReset(){ mcBuild(); }
-function mcSolve(){ MC_DATA.forEach(function(item,idx){ var container=document.getElementById('mcContainer'); var items=container.querySelectorAll('.mc-item'); if(!items[idx]) return; var opts=items[idx].querySelectorAll('.mc-opt'); opts.forEach(function(btn,oi){ if(oi===item.ans) btn.classList.add('reveal'); }); mcAnswered[idx]=true; }); }
+function sbMakeChip(word, orig) {
+  var ch = document.createElement('span');
+  ch.className = 'chip';
+  ch.textContent = word;
+  ch.dataset.orig = orig;
+  ch.draggable = true;
+  ch.addEventListener('dragstart', function(e) {
+    draggedChip = ch;
+    e.dataTransfer.setData('text/plain', '');
+  });
+  return ch;
+}
 
-// ── INIT ────────────────────────────────────────────────────
-(function init(){
-  timerLoadBest(TIMER_PREFIX+'best-lt','lt-best');
-  timerLoadBest(TIMER_PREFIX+'best-sb','sb-best');
+function sbUpdateCaps(idx) {
+  var row = document.getElementById('sb-row-' + idx);
+  if (!row) return;
+  Array.from(row.querySelectorAll('.chip')).forEach(function(ch, i) {
+    var orig = ch.dataset.orig;
+    ch.textContent = (i === 0) ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig;
+  });
+}
+
+function sbColorRow(idx) {
+  var row = document.getElementById('sb-row-' + idx);
+  var fb = document.getElementById('sb-fb-' + idx);
+  if (!row || !fb) return;
+  var chips = Array.from(row.querySelectorAll('.chip'));
+  var data = SB_DATA[idx];
+  var allCorrect = chips.length === data.answer.length;
+  chips.forEach(function(ch, i) {
+    ch.classList.remove('correct', 'wrong');
+    if (i < data.answer.length) {
+      var ok = ch.dataset.orig.toLowerCase() === data.answer[i].toLowerCase();
+      ch.classList.add(ok ? 'correct' : 'wrong');
+      if (!ok) allCorrect = false;
+    } else {
+      ch.classList.add('wrong');
+      allCorrect = false;
+    }
+  });
+  if (chips.length === 0) allCorrect = false;
+  fb.textContent = chips.length > 0 ? (allCorrect ? '✅' : '❌') : '';
+  fb.className = 'sb-feedback ' + (allCorrect ? 'ok' : 'no');
+  sbCorrect[idx] = allCorrect;
+  checkSbAllOk();
+}
+
+function checkSbAllOk() {
+  if (sbCorrect.length === SB_DATA.length && sbCorrect.every(Boolean)) timerStop(3);
+}
+
+function sbRegisterZone(zone, bank, idx) {
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('dragover'); });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    zone.classList.remove('dragover');
+    if (!draggedChip) return;
+    // Punkt bleibt am Ende
+    var pt = zone.querySelector('.sb-punkt');
+    if (pt) zone.insertBefore(draggedChip, pt);
+    else zone.appendChild(draggedChip);
+    draggedChip.classList.add('sb-placed');
+    draggedChip = null;
+    timerAutoStart(3);
+    sbUpdateCaps(idx);
+    setTimeout(function() { sbColorRow(idx); }, 300);
+  });
+  bank.addEventListener('dragover', function(e) { e.preventDefault(); });
+  bank.addEventListener('drop', function(e) {
+    e.preventDefault();
+    if (!draggedChip) return;
+    draggedChip.classList.remove('sb-placed', 'correct', 'wrong');
+    bank.appendChild(draggedChip);
+    draggedChip = null;
+    timerAutoStart(3);
+    sbUpdateCaps(idx);
+    setTimeout(function() { sbColorRow(idx); }, 300);
+  });
+}
+
+function sbBuild() {
+  var container = document.getElementById('sb-container');
+  container.innerHTML = '';
+  sbCorrect = new Array(SB_DATA.length).fill(false);
+  SB_DATA.forEach(function(data, idx) {
+    // Shuffle
+    var shuffled = data.words.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = t;
+    }
+    var wrap = document.createElement('div');
+    wrap.className = 'sb-wrap';
+    var label = document.createElement('div');
+    label.className = 'sb-label';
+    label.textContent = 'Satz ' + (idx + 1);
+    wrap.appendChild(label);
+
+    var bank = document.createElement('div');
+    bank.className = 'chip-bank';
+    bank.id = 'sb-bank-' + idx;
+    shuffled.forEach(function(word) { bank.appendChild(sbMakeChip(word, word)); });
+    wrap.appendChild(bank);
+
+    var row = document.createElement('div');
+    row.className = 'drop-row';
+    row.id = 'sb-row-' + idx;
+    var pt = document.createElement('span');
+    pt.className = 'sb-punkt';
+    pt.textContent = data.punct;
+    row.appendChild(pt);
+    wrap.appendChild(row);
+
+    var fb = document.createElement('div');
+    fb.className = 'sb-feedback';
+    fb.id = 'sb-fb-' + idx;
+    wrap.appendChild(fb);
+
+    container.appendChild(wrap);
+    sbRegisterZone(row, bank, idx);
+  });
+}
+
+function resetSb() {
   sbBuild();
-  mcBuild();
-})();
+  timerResetOne(3);
+}
+
+function showSb() {
+  SB_DATA.forEach(function(data, idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row = document.getElementById('sb-row-' + idx);
+    if (!bank || !row) return;
+    bank.innerHTML = '';
+    // Alle Chips außer Punkt entfernen
+    Array.from(row.querySelectorAll('.chip')).forEach(function(ch) { ch.remove(); });
+    var pt = row.querySelector('.sb-punkt');
+    data.words.forEach(function(word, i) {
+      var ch = sbMakeChip(i === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word, word);
+      ch.classList.add('sb-placed', 'correct');
+      if (pt) row.insertBefore(ch, pt); else row.appendChild(ch);
+    });
+    var fb = document.getElementById('sb-fb-' + idx);
+    if (fb) { fb.textContent = '✅'; fb.className = 'sb-feedback ok'; }
+    sbCorrect[idx] = true;
+  });
+  timerStop(3);
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+lueckeInit();
+sbBuild();
+loadBestTimes();
 </script>
 </body>
 </html>
