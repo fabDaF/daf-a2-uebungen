@@ -297,10 +297,10 @@ var draggedChip=null;
 var QA_DATA=[
     {q:'Du rufst an, aber niemand antwortet.',a:'Ich hinterlasse eine Sprachnachricht.'},
     {q:'Du möchtest mit Herrn Müller sprechen.',a:'Könnte ich bitte mit Herrn Müller sprechen?'},
-    {q:'Du weißt nicht, ob dein Chef am Telefon ist.',a:'Ist Herr Wagner da?'},
-    {q:'Du stellst dich am Anfang eines Telefonats vor.',a:'Hallo, hier ist Anna Schmidt.'},
+    {q:'Du weißt nicht, ob dein Chef (Herr Wagner) am Telefon ist.',a:'Sind Sie es, Herr Wagner?'},
+    {q:'Du stellst dich am Anfang eines Telefonats vor.',a:'Guten Tag, hier ist Anna Schmidt.'},
     {q:'Du beendest ein formelles Telefonat.',a:'Vielen Dank. Auf Wiederhören!'},
-    {q:'Die Person, die du suchst, ist nicht da.',a:'Kann sie Sie zurückrufen?'}
+    {q:'Die Person, die du suchst, ist nicht da.',a:'Könnte sie mich bitte zurückrufen?'}
 ];
 function qaInit(){draggedChip=null;var bank=document.getElementById('qaBank');var items=document.getElementById('qa-items');var drops=document.getElementById('qa-drops');bank.innerHTML='';items.innerHTML='';drops.innerHTML='';var answers=QA_DATA.map(function(d){return d.a;}).sort(function(){return Math.random()-0.5;});answers.forEach(function(ans){bank.appendChild(makeChip(ans));});QA_DATA.forEach(function(d,i){var qDiv=document.createElement('div');qDiv.innerHTML='<div class="qa-label">'+d.q+'</div>';items.appendChild(qDiv);var zone=document.createElement('div');zone.className='drop-zone';zone.dataset.answer=d.a;zone.dataset.idx=i;zone.innerHTML='<div class="qa-fb" id="qa-fb-'+i+'"></div>';registerZone(zone);drops.appendChild(zone);});registerZone(bank);}
 function makeChip(text){var chip=document.createElement('div');chip.className='chip';chip.textContent=text;chip.draggable=true;chip.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain','');draggedChip=chip;setTimeout(function(){chip.style.opacity='0.4';},0);});chip.addEventListener('dragend',function(){chip.style.opacity='';colorAllQaChips();});return chip;}
@@ -313,10 +313,10 @@ function qaShowSolution(){var bank=document.getElementById('qaBank');var drops=d
 // ══════════════════════════════════════
 var sbDragged=null;
 var satzbauData=[
-    {parts:['Hallo','hier','ist','Anna'],valid:[['Hallo','hier','ist','Anna']],punct:'.'},
+    {parts:['Guten','Tag','hier','ist','Anna','Schmidt'],valid:[['Guten','Tag','hier','ist','Anna','Schmidt']],punct:'.'},
     {parts:['ist','Frau','Gruber','da'],valid:[['ist','Frau','Gruber','da']],punct:'?'},
     {parts:['die','Leitung','ist','besetzt'],valid:[['die','Leitung','ist','besetzt']],punct:'.'},
-    {parts:['kann','sie','Sie','zurückrufen'],valid:[['kann','sie','Sie','zurückrufen']],punct:'?'},
+    {parts:['könnte','sie','mich','bitte','zurückrufen'],valid:[['könnte','sie','mich','bitte','zurückrufen']],punct:'?'},
     {parts:['wie','kann','ich','Ihnen','weiterhelfen'],valid:[['wie','kann','ich','Ihnen','weiterhelfen']],punct:'?'},
     {parts:['er','hat','mich','gestern','angerufen'],valid:[['er','hat','mich','gestern','angerufen']],punct:'.'},
     {parts:['vielen','Dank','Auf','Wiederhören'],valid:[['vielen','Dank','Auf','Wiederhören']],punct:'!'}
