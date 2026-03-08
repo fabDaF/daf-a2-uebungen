@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1068S · Über die Zukunft sprechen</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; padding: 20px;
+}
+.container {
+    max-width: 1000px; margin: 0 auto;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 30px; text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p  { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav {
+    display: flex; flex-wrap: nowrap; background: #f8f9fa;
+    border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
+}
+.nav-btn {
+    flex: 1; padding: 14px 10px; text-align: center; cursor: pointer;
+    border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;
+    transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: transparent; border-top: none; border-left: none;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+}
+
+/* ===== AUSSPRACHE ===== */
+.aussprachebox { background: #f8f7ff; border-radius: 12px; padding: 20px 24px; margin-bottom: 18px; }
+.aussprachebox h3 { color: #4a148c; font-size: 1em; margin-bottom: 12px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.sound-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.sound-card { background: white; border-radius: 10px; padding: 14px; text-align: center; border: 2px solid #e0d7ff; }
+.sound-card .sound-symbol { font-size: 1.8em; font-weight: 700; color: #667eea; margin-bottom: 4px; }
+.sound-card .sound-rule { font-size: 0.8em; color: #555; line-height: 1.4; }
+.word-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.word-chip { background: #e8e0ff; color: #4a148c; border-radius: 16px; padding: 5px 12px; font-size: 0.88em; font-weight: 600; }
+.word-chip .hl { color: #e74c3c; font-weight: 900; }
+.sort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.sort-col { border-radius: 10px; overflow: hidden; }
+.sort-col-hdr { background: #667eea; color: white; padding: 8px 14px; font-size: 0.9em; font-weight: 700; text-align: center; }
+.sort-drop { min-height: 60px; padding: 10px; border: 2px dashed #c5cae9; display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; background: #fafbff; border-radius: 0 0 10px 10px; transition: background .2s; }
+.sort-drop.dragover { background: #e8eaff; border-color: #667eea; }
+.sort-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 56px; border: 1px dashed #bbb; margin-bottom: 14px; }
+.sort-chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 5px 12px; cursor: grab; font-size: 0.85em; user-select: none; white-space: nowrap; transition: all .15s; }
+.sort-chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; cursor: default; }
+.sort-chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+@media (max-width: 600px) { .sort-grid { grid-template-columns: 1fr; } }
+
+/* ===== REDEMITTEL ===== */
+.rm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.rm-card { background: #f0ecff; border-radius: 8px; padding: 10px 14px; font-size: 0.88em; color: #4a148c; border-left: 3px solid #764ba2; line-height: 1.5; }
+.rm-card em { color: #667eea; font-style: normal; font-weight: 600; }
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f0f8; border-radius: 10px; min-height: 56px; margin-bottom: 16px; border: 1px dashed #bbb; }
+.qa-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.qa-frage { background: #f0ecff; border-radius: 8px; padding: 10px 14px; font-weight: 600; color: #4a148c; font-size: 0.9em; display: flex; align-items: center; border-left: 3px solid #764ba2; }
+.drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 5px 12px; cursor: grab; font-size: 0.85em; display: inline-block; white-space: normal; user-select: none; transition: all .15s; }
+.chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; cursor: default; }
+.chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+@media (max-width: 600px) { .qa-pair { grid-template-columns: 1fr; } }
+
+/* ===== LÜCKENTEXT ===== */
+.lt-block { margin-bottom: 24px; }
+.lt-block h3 { font-size: 1em; color: #4a148c; margin-bottom: 10px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.lt-text { background: #f8f7ff; border-radius: 10px; padding: 16px 20px; line-height: 2.4; font-size: 0.97em; color: #333; }
+.luecken-inp {
+    border: none; border-bottom: 2px solid #c5cae9; background: transparent;
+    outline: none; font-family: inherit; font-size: inherit;
+    transition: border-color .2s; width: 130px; text-align: center; padding: 2px 4px;
+}
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortkasten { background: #f0ecff; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.88em; color: #4a148c; }
+.wortkasten span { font-style: italic; margin-right: 8px; }
+
+/* ===== SATZBAU ===== */
+.sb-item { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct   { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip-sb { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip-sb.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip-sb.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct   { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* ===== ROLLENSPIEL ===== */
+.rolle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.rolle-card { background: #f8f7ff; border-radius: 12px; padding: 18px 20px; border-top: 4px solid #667eea; }
+.rolle-card h3 { color: #4a148c; font-size: 0.97em; margin-bottom: 10px; }
+.rolle-card p { font-size: 0.88em; color: #555; line-height: 1.5; margin-bottom: 8px; }
+.starter-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.starter { background: #e8e0ff; color: #4a148c; border-radius: 16px; padding: 5px 12px; font-size: 0.82em; font-style: italic; }
+.if-dann-box { background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; font-size: 0.92em; line-height: 1.7; }
+.if-dann-box strong { color: #e65100; }
+
+/* ===== SHARED ===== */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; font-size: .88em; color: #555; }
+.btn { background: #667eea; color: white; border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: .88em; }
+.btn:hover { background: #5a6fd6; }
+.btn.reset-btn { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn.reset-btn:hover { background: #fdecea; }
+.timer-val { font-weight: 700; color: #4a148c; min-width: 36px; }
+h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+
+/* ===== FOOTER ===== */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="big-emoji">🔮</div>
+    <h1>Über die Zukunft sprechen</h1>
+    <p style="font-family: Georgia, serif;">A2 · Lektion 1068S · Zukunft &amp; Pläne</p>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showTab(0)">
+      <span class="nav-emoji">🔊</span><span class="nav-label">Aussprache</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(1)">
+      <span class="nav-emoji">💬</span><span class="nav-label">Redemittel</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(2)">
+      <span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(3)">
+      <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(4)">
+      <span class="nav-emoji">🎭</span><span class="nav-label">Rollenspiel</span>
+    </div>
+  </div>
+
+  <!-- ===== TAB 0: AUSSPRACHE pf ===== -->
+  <div id="sec-0" class="section aktiv">
+    <h2>🔊 Aussprache: pf</h2>
+
+    <div class="aussprachebox">
+      <h3>Der Laut pf</h3>
+      <div class="sound-grid">
+        <div class="sound-card">
+          <div class="sound-symbol">pf</div>
+          <div class="sound-rule">Am Wortanfang:<br><em>Pferd, Pflanze, Pfanne</em></div>
+        </div>
+        <div class="sound-card">
+          <div class="sound-symbol">pf</div>
+          <div class="sound-rule">In der Wortmitte:<br><em>klopfen, kämpfen, hüpfen</em></div>
+        </div>
+        <div class="sound-card">
+          <div class="sound-symbol">pf</div>
+          <div class="sound-rule">Am Wortende:<br><em>Kopf, Sumpf, Knopf</em></div>
+        </div>
+      </div>
+      <p style="font-size:.88em;color:#555;margin-bottom:10px;">
+        Bei <strong>pf</strong> sprichst du beide Buchstaben <strong>p</strong> und <strong>f</strong> zusammen aus — als einen einzigen Laut.
+      </p>
+      <div class="word-row">
+        <span class="word-chip"><span class="hl">Pf</span>erd</span>
+        <span class="word-chip"><span class="hl">pf</span>eifen</span>
+        <span class="word-chip">A<span class="hl">pf</span>el</span>
+        <span class="word-chip">Kno<span class="hl">pf</span></span>
+        <span class="word-chip">küm<span class="hl">pf</span>en</span>
+        <span class="word-chip"><span class="hl">Pf</span>licht</span>
+        <span class="word-chip">em<span class="hl">pf</span>ehlen</span>
+        <span class="word-chip">hü<span class="hl">pf</span>en</span>
+      </div>
+    </div>
+
+    <div class="aussprachebox">
+      <h3>Sortier-Übung: pf oder f?</h3>
+      <p style="font-size:.88em;color:#888;margin-bottom:10px;">Ziehe die Wörter in die richtige Spalte!</p>
+      <div class="sort-bank" id="sortBank"></div>
+      <div class="sort-grid">
+        <div class="sort-col">
+          <div class="sort-col-hdr">pf (beides zusammen)</div>
+          <div class="sort-drop" id="sort-pf" data-cat="pf"></div>
+        </div>
+        <div class="sort-col">
+          <div class="sort-col-hdr">f (nur f-Laut)</div>
+          <div class="sort-drop" id="sort-f" data-cat="f"></div>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:14px;">
+        <button class="btn reset-btn" onclick="resetSort()">↺ Neu starten</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 1: REDEMITTEL ===== -->
+  <div id="sec-1" class="section">
+    <h2>💬 Redemittel: Zukunftspläne besprechen</h2>
+    <div class="hilfe-box">
+      Ziehe jede Antwort in das Feld neben die passende Frage.
+    </div>
+    <div class="rm-grid">
+      <div class="rm-card">Ich <em>hoffe</em>, dass ich bald eine neue Stelle finde.</div>
+      <div class="rm-card">Mein <em>Lebensziel</em> ist es, eine glückliche Familie zu haben.</div>
+      <div class="rm-card">Ich <em>wünsche mir</em>, im Ausland zu arbeiten.</div>
+      <div class="rm-card">Ich habe die <em>Vermutung</em>, dass es schwer wird.</div>
+      <div class="rm-card">Wenn ich meine <em>Ziele verfolge</em>, werde ich erfolgreich sein.</div>
+      <div class="rm-card">Ich muss mir meine <em>Zeit einteilen</em>.</div>
+    </div>
+
+    <h3 style="color:#4a148c;font-size:1em;margin-bottom:12px;">Frage &amp; Antwort — Drag &amp; Drop</h3>
+    <div class="chip-bank" id="rm-bank"></div>
+    <div id="rm-pairs"></div>
+    <div class="btn-row">
+      <button class="btn reset-btn" onclick="resetRM()">↺ Neu starten</button>
+    </div>
+  </div>
+
+  <!-- ===== TAB 2: LÜCKENTEXT ===== -->
+  <div id="sec-2" class="section">
+    <h2>✏️ Lückentext: Zukunftspläne</h2>
+    <div class="btn-row" style="margin-bottom:20px;">
+      ⏱ <span id="timer-lt">0:00</span> &nbsp;·&nbsp;
+      🏆 <span id="best-lt">–</span> &nbsp;·&nbsp;
+      <button class="btn reset-btn" onclick="resetLT()">↺ Neustart</button>
+      &nbsp;·&nbsp;
+      <button class="btn" onclick="showLTSolution()">💡 Lösungen</button>
+    </div>
+
+    <div class="lt-block">
+      <h3>Teil 1 — Pläne machen</h3>
+      <div class="wortkasten">
+        Wortkasten:
+        <span>hoffen</span><span>wünschen</span><span>Lebensziel</span>
+        <span>verfolgen</span><span>einteilen</span><span>Vermutung</span>
+      </div>
+      <div class="lt-text">
+        Marco möchte gesund bleiben. Er
+        <input class="luecken-inp" id="lt0" data-ans="hofft" placeholder="" oninput="liveCheck(this)">
+        darauf, nie ernsthaft krank zu werden.
+        Sein
+        <input class="luecken-inp" id="lt1" data-ans="Lebensziel" placeholder="" oninput="liveCheck(this)">
+        ist es, eine glückliche Familie zu haben.
+        Pia
+        <input class="luecken-inp" id="lt2" data-ans="wünscht" placeholder="" oninput="liveCheck(this)">
+        sich, eine berühmte Schauspielerin zu werden.
+        Wenn man seine Ziele
+        <input class="luecken-inp" id="lt3" data-ans="verfolgt" placeholder="" oninput="liveCheck(this)">,
+        dann wird man erfolgreich sein.
+        Corinna hat zwei Kinder und einen Job — sie muss sich ihre Zeit gut
+        <input class="luecken-inp" id="lt4" data-ans="einteilen" placeholder="" oninput="liveCheck(this)">.
+        Mia hat die
+        <input class="luecken-inp" id="lt5" data-ans="Vermutung" placeholder="" oninput="liveCheck(this)">,
+        dass sie den Job nicht bekommen wird.
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Teil 2 — Wenn…, dann…</h3>
+      <div class="wortkasten">
+        Wortkasten:
+        <span>dann</span><span>werde</span><span>wenn</span>
+        <span>kann</span><span>wird</span><span>muss</span>
+      </div>
+      <div class="lt-text">
+        <input class="luecken-inp" id="lt6" data-ans="Wenn" placeholder="" oninput="liveCheck(this)">
+        ich in der Zukunft viel Geld verdiene,
+        <input class="luecken-inp" id="lt7" data-ans="dann" placeholder="" oninput="liveCheck(this)">
+        <input class="luecken-inp" id="lt8" data-ans="werde" placeholder="" oninput="liveCheck(this)">
+        ich um die Welt reisen.
+        Wenn ich keinen Job finde,
+        <input class="luecken-inp" id="lt9" data-ans="muss" placeholder="" oninput="liveCheck(this)">
+        ich weiter studieren.
+        <input class="luecken-inp" id="lt10" data-ans="Wenn" placeholder="" oninput="liveCheck(this)">
+        Nina ihre Ziele verfolgt, dann
+        <input class="luecken-inp" id="lt11" data-ans="wird" placeholder="" oninput="liveCheck(this)">
+        sie erfolgreich sein.
+        Wenn man hart arbeitet,
+        <input class="luecken-inp" id="lt12" data-ans="kann" placeholder="" oninput="liveCheck(this)">
+        man viel erreichen.
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Teil 3 — Die Wahrsagerin</h3>
+      <div class="wortkasten">
+        Wortkasten:
+        <span>Vorhersage</span><span>bald</span><span>aufgeregt</span>
+        <span>optimistisch</span><span>Überraschung</span><span>wahrsagen</span>
+      </div>
+      <div class="lt-text">
+        Anna ist
+        <input class="luecken-inp" id="lt13" data-ans="aufgeregt" placeholder="" oninput="liveCheck(this)">,
+        denn sie geht heute zur Wahrsagerin.
+        Die Wahrsagerin kann
+        <input class="luecken-inp" id="lt14" data-ans="wahrsagen" placeholder="" oninput="liveCheck(this)">
+        und sagt Anna die Zukunft voraus.
+        Ihre
+        <input class="luecken-inp" id="lt15" data-ans="Vorhersage" placeholder="" oninput="liveCheck(this)">
+        klingt sehr positiv.
+        Anna wird
+        <input class="luecken-inp" id="lt16" data-ans="bald" placeholder="" oninput="liveCheck(this)">
+        eine große Veränderung erleben.
+        Sie ist jetzt sehr
+        <input class="luecken-inp" id="lt17" data-ans="optimistisch" placeholder="" oninput="liveCheck(this)">
+        und freut sich auf die Zukunft.
+        Was für eine
+        <input class="luecken-inp" id="lt18" data-ans="Überraschung" placeholder="" oninput="liveCheck(this)">!
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 3: SATZBAU ===== -->
+  <div id="sec-3" class="section">
+    <h2>🧩 Satzbau: Zukunfts-Sätze ordnen</h2>
+    <div class="btn-row" style="margin-bottom:20px;">
+      ⏱ <span id="timer-sb">0:00</span> &nbsp;·&nbsp;
+      🏆 <span id="best-sb">–</span> &nbsp;·&nbsp;
+      <button class="btn reset-btn" onclick="resetSB()">↺ Neustart</button>
+      &nbsp;·&nbsp;
+      <button class="btn" onclick="sbShowAllSolutions()">💡 Lösungen</button>
+    </div>
+    <div id="satzbauContainer"></div>
+  </div>
+
+  <!-- ===== TAB 4: ROLLENSPIEL ===== -->
+  <div id="sec-4" class="section">
+    <h2>🎭 Rollenspiel: Bei der Wahrsagerin</h2>
+
+    <div class="if-dann-box">
+      <strong>Erinnerung: wenn…, dann…</strong><br>
+      <em>Wenn ich meine Ziele verfolge, dann werde ich erfolgreich sein.</em><br>
+      <em>Wenn ich eine Million gewinne, dann kann ich um die Welt reisen.</em>
+    </div>
+
+    <div class="rolle-grid">
+      <div class="rolle-card">
+        <h3>🙋 Rolle A: Der/Die Ratsuchende</h3>
+        <p>Du bist unsicher. Du hast keine festen Zukunftspläne und gehst zur Wahrsagerin.</p>
+        <p>Frage nach deiner Zukunft: Beruf, Familie, Geld, Reisen…</p>
+        <div class="starter-chips">
+          <span class="starter">Was wird meine Zukunft bringen?</span>
+          <span class="starter">Werde ich Erfolg haben?</span>
+          <span class="starter">Was soll ich tun?</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>🔮 Rolle B: Die Wahrsagerin</h3>
+        <p>Du kannst die Zukunft vorhersagen. Sprich mit Futur I (werden) und Modalverben.</p>
+        <p>Benutze: <em>wenn…, dann…</em> und Zukunfts-Vokabular.</p>
+        <div class="starter-chips">
+          <span class="starter">Ich werde dir deine Zukunft wahrsagen.</span>
+          <span class="starter">Du wirst bald…</span>
+          <span class="starter">Wenn du…, dann wirst du…</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>👥 Thema 1: Deutsch lernen</h3>
+        <p>Wenn ich Deutsch gelernt habe, dann…</p>
+        <p>Sprich: Was passiert als Nächstes? Welche Voraussetzungen brauchst du?</p>
+        <div class="starter-chips">
+          <span class="starter">Ich werde Deutsch sprechen können.</span>
+          <span class="starter">Dann werde ich in Deutschland arbeiten.</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>✈️ Thema 2: Eine Weltreise machen</h3>
+        <p>Wenn ich eine Weltreise mache, dann…</p>
+        <p>Erzähle: Welche Länder? Was wirst du dort erleben?</p>
+        <div class="starter-chips">
+          <span class="starter">Ich werde viele Erlebnisse haben.</span>
+          <span class="starter">Wenn ich nach Japan fliege, dann…</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>💼 Thema 3: Karrierepläne</h3>
+        <p>Du hast dein Studium gerade beendet. Was kannst, sollst, musst, darfst du jetzt machen?</p>
+        <div class="starter-chips">
+          <span class="starter">Ich kann jetzt Praktika machen.</span>
+          <span class="starter">Ich muss Bewerbungen schreiben.</span>
+          <span class="starter">Ich möchte ins Ausland gehen.</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>🌟 Meine Zukunft in 20 Jahren</h3>
+        <p>Wie wird dein Leben in 20 Jahren aussehen? Was sind deine Träume, Hoffnungen, Wünsche?</p>
+        <div class="starter-chips">
+          <span class="starter">Ich hoffe, dass ich…</span>
+          <span class="starter">Ich wünsche mir…</span>
+          <span class="starter">Mein Lebensziel ist…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ─── Tab-Navigation ────────────────────────────────────────────────────────
+function showTab(idx) {
+    document.querySelectorAll('.section').forEach(function(s,i){
+        s.classList.toggle('aktiv', i===idx);
+    });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){
+        b.classList.toggle('active', i===idx);
+    });
+    if (idx === 3 && !sbInited) { initSatzbau(); sbInited = true; }
+}
+
+// ─── Timer ─────────────────────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1068s-';
+var timers = {
+    lt: { running: false, secs: 0, iv: null, elTime: null, elBest: null, key: null },
+    sb: { running: false, secs: 0, iv: null, elTime: null, elBest: null, key: null }
+};
+function timerInit() {
+    timers.lt.elTime = document.getElementById('timer-lt');
+    timers.lt.elBest = document.getElementById('best-lt');
+    timers.lt.key    = TIMER_PREFIX + 'best-lt';
+    timers.sb.elTime = document.getElementById('timer-sb');
+    timers.sb.elBest = document.getElementById('best-sb');
+    timers.sb.key    = TIMER_PREFIX + 'best-sb';
+    ['lt','sb'].forEach(function(k) {
+        var best = localStorage.getItem(timers[k].key);
+        if (best) timers[k].elBest.textContent = fmtSecs(parseInt(best));
+    });
+}
+function fmtSecs(s) {
+    return Math.floor(s/60) + ':' + (s%60<10?'0':'') + (s%60);
+}
+function timerStart(k) {
+    if (timers[k].running) return;
+    timers[k].running = true;
+    timers[k].iv = setInterval(function(){
+        timers[k].secs++;
+        timers[k].elTime.textContent = fmtSecs(timers[k].secs);
+    }, 1000);
+}
+function timerStop(k) {
+    if (!timers[k].running) return;
+    timers[k].running = false;
+    clearInterval(timers[k].iv);
+    var best = localStorage.getItem(timers[k].key);
+    if (!best || timers[k].secs < parseInt(best)) {
+        localStorage.setItem(timers[k].key, timers[k].secs);
+        timers[k].elBest.textContent = fmtSecs(timers[k].secs);
+    }
+}
+function timerReset(k) {
+    timerStop(k);
+    timers[k].secs = 0;
+    timers[k].elTime.textContent = '0:00';
+}
+
+// ─── Live-Feedback Lückentext ──────────────────────────────────────────────
+var LT_COUNT = 19;
+var ltStarted = false;
+function liveCheck(inp) {
+    if (!ltStarted) { timerStart('lt'); ltStarted = true; }
+    var val = inp.value.trim();
+    var ans = inp.dataset.ans;
+    if (val === '') {
+        inp.classList.remove('ok','no');
+    } else if (val === ans) {
+        inp.classList.add('ok'); inp.classList.remove('no');
+        checkAllLT();
+    } else if (ans.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
+        inp.classList.remove('ok','no');
+    } else {
+        inp.classList.add('no'); inp.classList.remove('ok');
+    }
+}
+function checkAllLT() {
+    var allOk = true;
+    for (var i = 0; i < LT_COUNT; i++) {
+        var el = document.getElementById('lt'+i);
+        if (!el || !el.classList.contains('ok')) { allOk = false; break; }
+    }
+    if (allOk) timerStop('lt');
+}
+function resetLT() {
+    timerReset('lt'); ltStarted = false;
+    for (var i = 0; i < LT_COUNT; i++) {
+        var el = document.getElementById('lt'+i);
+        if (el) { el.value = ''; el.classList.remove('ok','no'); }
+    }
+}
+function showLTSolution() {
+    timerStop('lt');
+    for (var i = 0; i < LT_COUNT; i++) {
+        var el = document.getElementById('lt'+i);
+        if (el) { el.value = el.dataset.ans; el.classList.add('ok'); el.classList.remove('no'); }
+    }
+}
+
+// ─── Sortier-Übung Aussprache ──────────────────────────────────────────────
+var SORT_ITEMS = [
+    { word: 'Pferd',       cat: 'pf' },
+    { word: 'Apfel',       cat: 'pf' },
+    { word: 'Pflicht',     cat: 'pf' },
+    { word: 'Kopf',        cat: 'pf' },
+    { word: 'kämpfen',     cat: 'pf' },
+    { word: 'pfeifen',     cat: 'pf' },
+    { word: 'fliegen',     cat: 'f'  },
+    { word: 'Fehler',      cat: 'f'  },
+    { word: 'falsch',      cat: 'f'  },
+    { word: 'Fenster',     cat: 'f'  },
+    { word: 'finden',      cat: 'f'  },
+    { word: 'Fernsehen',   cat: 'f'  }
+];
+var sortDragged = null;
+function initSort() {
+    var bank = document.getElementById('sortBank');
+    if (!bank) return;
+    // Fisher-Yates shuffle
+    var items = SORT_ITEMS.slice();
+    for (var i = items.length-1; i>0; i--) {
+        var j = Math.floor(Math.random()*(i+1));
+        var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+    }
+    items.forEach(function(it) {
+        var chip = document.createElement('div');
+        chip.className = 'sort-chip';
+        chip.textContent = it.word;
+        chip.dataset.cat = it.cat;
+        chip.draggable = true;
+        chip.addEventListener('dragstart', function(){ sortDragged = chip; });
+        chip.addEventListener('dragend',   function(){ sortDragged = null; });
+        chip.addEventListener('click', function() {
+            // Mobile: kein Drag — klicke auf Chip um Zone zu wählen
+        });
+        bank.appendChild(chip);
+    });
+    ['sort-pf','sort-f'].forEach(function(id) {
+        var zone = document.getElementById(id);
+        zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+        zone.addEventListener('dragleave', function(){ zone.classList.remove('dragover'); });
+        zone.addEventListener('drop', function(e){
+            e.preventDefault(); zone.classList.remove('dragover');
+            if (!sortDragged) return;
+            zone.appendChild(sortDragged);
+            var correct = (zone.dataset.cat === sortDragged.dataset.cat);
+            sortDragged.classList.remove('ok','no');
+            sortDragged.classList.add(correct ? 'ok' : 'no');
+            if (correct) sortDragged.draggable = false;
+            sortDragged = null;
+        });
+    });
+}
+function resetSort() {
+    var bank = document.getElementById('sortBank');
+    ['sort-pf','sort-f'].forEach(function(id){
+        var zone = document.getElementById(id);
+        while (zone.firstChild) bank.appendChild(zone.firstChild);
+    });
+    Array.from(bank.querySelectorAll('.sort-chip')).forEach(function(c){
+        c.classList.remove('ok','no'); c.draggable = true;
+    });
+}
+
+// ─── Redemittel Drag & Drop ─────────────────────────────────────────────────
+var RM_DATA = [
+    { q: 'Was hofft Marco?',                      a: 'Er hofft, immer gesund zu bleiben.' },
+    { q: 'Was ist Leons Lebensziel?',              a: 'Einen guten Job zu finden und eine gesunde Familie zu haben.' },
+    { q: 'Was wünscht sich Pia?',                  a: 'Sie wünscht sich, eine berühmte Schauspielerin zu werden.' },
+    { q: 'Was sagt die Wahrsagerin?',              a: 'Sie macht eine Vorhersage über meine Zukunft.' },
+    { q: 'Was hat Mia für eine Vermutung?',        a: 'Sie hat die Vermutung, dass sie den Job nicht bekommt.' },
+    { q: 'Was passiert, wenn man Ziele verfolgt?', a: 'Dann wird man erfolgreich sein.' }
+];
+var rmDragged = null;
+function initRM() {
+    var bank = document.getElementById('rm-bank');
+    var pairs = document.getElementById('rm-pairs');
+    if (!bank || !pairs) return;
+    // Shuffle answers
+    var answers = RM_DATA.map(function(d){ return d.a; });
+    for (var i=answers.length-1;i>0;i--){
+        var j=Math.floor(Math.random()*(i+1)); var tmp=answers[i]; answers[i]=answers[j]; answers[j]=tmp;
+    }
+    answers.forEach(function(a) {
+        var chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = a;
+        chip.dataset.ans = a;
+        chip.draggable = true;
+        chip.addEventListener('dragstart', function(){ rmDragged = chip; });
+        chip.addEventListener('dragend',   function(){ rmDragged = null; });
+        bank.appendChild(chip);
+    });
+    RM_DATA.forEach(function(d, i) {
+        var row = document.createElement('div');
+        row.className = 'qa-pair';
+        var frage = document.createElement('div');
+        frage.className = 'qa-frage';
+        frage.textContent = d.q;
+        var zone = document.createElement('div');
+        zone.className = 'drop-zone';
+        zone.dataset.ans = d.a;
+        zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+        zone.addEventListener('dragleave', function(){ zone.classList.remove('dragover'); });
+        zone.addEventListener('drop', function(e){
+            e.preventDefault(); zone.classList.remove('dragover');
+            if (!rmDragged) return;
+            // Remove any existing chip in zone
+            var existing = zone.querySelector('.chip');
+            if (existing) bank.appendChild(existing);
+            zone.appendChild(rmDragged);
+            var correct = (rmDragged.dataset.ans === zone.dataset.ans);
+            rmDragged.classList.remove('ok','no');
+            rmDragged.classList.add(correct ? 'ok' : 'no');
+            rmDragged = null;
+        });
+        row.appendChild(frage);
+        row.appendChild(zone);
+        pairs.appendChild(row);
+    });
+}
+function resetRM() {
+    var bank = document.getElementById('rm-bank');
+    document.querySelectorAll('.drop-zone').forEach(function(zone){
+        Array.from(zone.querySelectorAll('.chip')).forEach(function(c){
+            c.classList.remove('ok','no');
+            bank.appendChild(c);
+        });
+    });
+}
+
+// ─── Satzbau ────────────────────────────────────────────────────────────────
+var satzbauData = [
+    { words: ['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen'], punct: '.' },
+    { words: ['Wenn', 'du', 'deine', 'Ziele', 'verfolgst', ',', 'dann', 'wirst', 'du', 'erfolgreich', 'sein'], punct: '.' },
+    { words: ['Mia', 'hat', 'die', 'Vermutung', ',', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt'], punct: '.' },
+    { words: ['Leons', 'Lebensziel', 'ist', 'es', ',', 'eine', 'gesunde', 'Familie', 'zu', 'haben'], punct: '.' },
+    { words: ['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], punct: '.' },
+    { words: ['Wenn', 'ich', 'eine', 'Million', 'gewinne', ',', 'dann', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen'], punct: '.' },
+    { words: ['ich', 'wünsche', 'mir', ',', 'im', 'Ausland', 'zu', 'arbeiten'], punct: '.' }
+];
+var sbInited = false;
+var sbDragged = null;
+var sbStarted = false;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip-sb'));
+    for (var i=0;i<chips.length;i++){
+        var r=chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width/2) return chips[i];
+    }
+    return null;
+}
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip-sb'));
+    chips.forEach(function(c,i){
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0)===orig.charAt(0).toUpperCase() && orig.charAt(0)!==orig.charAt(0).toLowerCase();
+        if (isProper) { c.textContent = orig; }
+        else { c.textContent = (i===0) ? sbCapitalize(orig) : orig; }
+    });
+}
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip-sb';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e){
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain','');
+        setTimeout(function(){ chip.style.opacity='0.4'; },0);
+    });
+    chip.addEventListener('dragend', function(){
+        chip.style.opacity='';
+        sbDragged = null;
+        var c=document.getElementById('sb-insert-cursor');
+        if(c&&c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e){
+        e.preventDefault();
+        if(!sbDragged) return;
+        var cursor=getSbCursor();
+        var before=getSbInsertPos(zone, e.clientX);
+        if(before) zone.insertBefore(cursor,before); else zone.appendChild(cursor);
+    });
+    zone.addEventListener('dragleave', function(e){
+        if(!zone.contains(e.relatedTarget)){
+            var c=document.getElementById('sb-insert-cursor');
+            if(c&&c.parentNode===zone) zone.removeChild(c);
+        }
+    });
+    zone.addEventListener('drop', function(e){
+        e.preventDefault();
+        if(!sbDragged) return;
+        var cursor=document.getElementById('sb-insert-cursor');
+        if(cursor&&cursor.parentNode===zone){ zone.insertBefore(sbDragged,cursor); zone.removeChild(cursor); }
+        else zone.appendChild(sbDragged);
+        sbDragged=null;
+        var row=document.getElementById('sb-row-'+idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+function sbColorRow(idx) {
+    var row=document.getElementById('sb-row-'+idx);
+    var chips=Array.from(row.querySelectorAll('.chip-sb'));
+    var order=chips.map(function(c){ return c.dataset.orig; });
+    var data=satzbauData[idx];
+    // Build valid from words order (no commas in comparison)
+    var wordsOnly = data.words.filter(function(w){ return w !== ','; });
+    var ok = JSON.stringify(wordsOnly) === JSON.stringify(order.filter(function(w){ return w !== ','; }));
+    // Also check exact match
+    ok = JSON.stringify(data.words) === JSON.stringify(order);
+    chips.forEach(function(c){
+        c.classList.remove('correct','incorrect');
+        c.classList.add(ok?'correct':'incorrect');
+    });
+    var existing=row.querySelector('.sb-punkt');
+    if(existing) existing.parentNode.removeChild(existing);
+    if(ok){
+        var punkt=document.createElement('span');
+        punkt.className='sb-punkt';
+        punkt.textContent=data.punct||'.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+function sbCheckAuto(idx) {
+    if(!sbStarted){ timerStart('sb'); sbStarted=true; }
+    var bank=document.getElementById('sb-bank-'+idx);
+    var row=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    if(bank.querySelectorAll('.chip-sb').length>0){
+        row.querySelectorAll('.chip-sb').forEach(function(c){ c.classList.remove('correct','incorrect'); });
+        row.classList.remove('correct','incorrect');
+        fb.textContent=''; return;
+    }
+    setTimeout(function(){
+        var ok=sbColorRow(idx);
+        if(ok){
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className='satzbau-feedback correct'; fb.textContent='✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className='satzbau-feedback incorrect'; fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    },500);
+}
+function sbCheckAllDone() {
+    var allOk=satzbauData.every(function(_,i){
+        var row=document.getElementById('sb-row-'+i);
+        return row&&row.classList.contains('correct');
+    });
+    if(allOk) timerStop('sb');
+}
+function sbShowSolution(idx) {
+    var bank=document.getElementById('sb-bank-'+idx);
+    var row=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    var solution=satzbauData[idx].words;
+    var allChips={};
+    Array.from(bank.querySelectorAll('.chip-sb')).forEach(function(c){ allChips[c.dataset.orig]=c; });
+    Array.from(row.querySelectorAll('.chip-sb')).forEach(function(c){ allChips[c.dataset.orig]=c; });
+    while(bank.firstChild) bank.removeChild(bank.firstChild);
+    while(row.firstChild)  row.removeChild(row.firstChild);
+    solution.forEach(function(word,i){
+        var chip=allChips[word];
+        if(chip){
+            var isProper=word.charAt(0)===word.charAt(0).toUpperCase()&&word.charAt(0)!==word.charAt(0).toLowerCase();
+            chip.textContent=(i===0&&!isProper)?sbCapitalize(word):word;
+            chip.classList.remove('correct','incorrect');
+            row.appendChild(chip);
+        }
+    });
+    fb.textContent='';
+    setTimeout(function(){ sbCheckAuto(idx); },100);
+}
+function sbShowAllSolutions() {
+    timerStop('sb');
+    satzbauData.forEach(function(_,i){ sbShowSolution(i); });
+}
+function initSatzbau() {
+    var container=document.getElementById('satzbauContainer');
+    if(!container) return;
+    satzbauData.forEach(function(ex,idx){
+        var wrap=document.createElement('div');
+        wrap.className='sb-item';
+        var bank=document.createElement('div');
+        bank.className='chips-container'; bank.id='sb-bank-'+idx;
+        var row=document.createElement('div');
+        row.className='sentence-builder'; row.id='sb-row-'+idx;
+        var fb=document.createElement('div');
+        fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx;
+        wrap.appendChild(bank); wrap.appendChild(row); wrap.appendChild(fb);
+        container.appendChild(wrap);
+        var parts=ex.words.slice();
+        for(var i=parts.length-1;i>0;i--){
+            var j=Math.floor(Math.random()*(i+1));
+            var tmp=parts[i]; parts[i]=parts[j]; parts[j]=tmp;
+        }
+        parts.forEach(function(word){ bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank,idx);
+        sbRegisterZone(row,idx);
+    });
+}
+function resetSB() {
+    timerReset('sb'); sbStarted=false;
+    satzbauData.forEach(function(ex,idx){
+        var bank=document.getElementById('sb-bank-'+idx);
+        var row=document.getElementById('sb-row-'+idx);
+        var fb=document.getElementById('sb-fb-'+idx);
+        if(!bank||!row) return;
+        var allChips=[];
+        Array.from(bank.querySelectorAll('.chip-sb')).forEach(function(c){ allChips.push(c); });
+        Array.from(row.querySelectorAll('.chip-sb')).forEach(function(c){ allChips.push(c); });
+        var existing=row.querySelector('.sb-punkt');
+        if(existing) row.removeChild(existing);
+        while(bank.firstChild) bank.removeChild(bank.firstChild);
+        while(row.firstChild)  row.removeChild(row.firstChild);
+        row.classList.remove('correct','incorrect');
+        fb.textContent=''; fb.className='satzbau-feedback';
+        // Shuffle
+        for(var i=allChips.length-1;i>0;i--){
+            var j=Math.floor(Math.random()*(i+1));
+            var tmp=allChips[i]; allChips[i]=allChips[j]; allChips[j]=tmp;
+        }
+        allChips.forEach(function(c){
+            c.classList.remove('correct','incorrect');
+            c.textContent=c.dataset.orig;
+            c.style.opacity='';
+            bank.appendChild(c);
+        });
+    });
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+    timerInit();
+    initSort();
+    initRM();
+});
+</script>
+</body>
+</html>

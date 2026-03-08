@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1056X · Das Verb lassen</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; padding: 20px;
+}
+.container {
+    max-width: 1000px; margin: 0 auto;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 30px; text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p  { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav {
+    display: flex; flex-wrap: nowrap; background: #f8f9fa;
+    border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
+}
+.nav-btn {
+    flex: 1; padding: 14px 10px; text-align: center; cursor: pointer;
+    border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;
+    transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: transparent; border-top: none; border-left: none;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: none; }
+}
+
+/* ===== OVERVIEW / TABLES ===== */
+.card-box { background: #f8f7ff; border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+.card-box h3 { font-size: 1em; color: #4a148c; margin-bottom: 12px; }
+.konjug-table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
+.konjug-table th { background: #667eea; color: white; padding: 8px 12px; text-align: left; }
+.konjug-table td { padding: 7px 12px; border-bottom: 1px solid #e0d7ff; }
+.konjug-table tr:last-child td { border-bottom: none; }
+.meaning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+@media (max-width: 600px) { .meaning-grid { grid-template-columns: 1fr; } }
+.meaning-item { background: #f0ecff; border-radius: 8px; padding: 10px 14px; }
+.meaning-item .meaning-label { font-size: 0.8em; font-weight: 700; color: #764ba2; margin-bottom: 4px; }
+.meaning-item .meaning-ex { font-size: 0.88em; color: #333; font-style: italic; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.tag { background: #e8e0ff; color: #4a148c; border-radius: 16px; padding: 4px 12px; font-size: 0.82em; font-weight: 600; }
+
+/* ===== LÜCKENTEXT ===== */
+.lt-block { margin-bottom: 24px; }
+.lt-block h3 { font-size: 1em; color: #4a148c; margin-bottom: 10px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.lt-text { background: #f8f7ff; border-radius: 10px; padding: 16px 20px; line-height: 2.2; font-size: 0.97em; color: #333; }
+.luecken-inp {
+    border: none; border-bottom: 2px solid #c5cae9; background: transparent;
+    outline: none; font-family: inherit; font-size: inherit;
+    transition: border-color .2s; width: 130px; text-align: center; padding: 2px 4px;
+}
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* ===== ZUORDNUNG ===== */
+.zuord-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f0f8; border-radius: 10px; min-height: 56px; margin-bottom: 20px; border: 1px dashed #bbb; }
+.zuord-chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 5px 12px; cursor: grab; font-size: 0.85em; user-select: none; white-space: nowrap; transition: background .15s, color .15s; }
+.zuord-chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
+.zuord-chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+.zuord-categories { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .zuord-categories { grid-template-columns: 1fr; } }
+.zuord-col { border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.zuord-col-header { background: #667eea; color: white; padding: 8px 14px; font-size: 0.9em; font-weight: 700; }
+.zuord-drop { min-height: 60px; padding: 10px; border: 2px dashed #c5cae9; display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; transition: background .2s; background: #fafbff; border-radius: 0 0 10px 10px; }
+.zuord-drop.dragover { background: #e8eaff; border-color: #667eea; }
+
+/* ===== SATZBAU ===== */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 50px; border: 1px dashed #bbb; margin-bottom: 8px; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 2px dashed #c5cae9; border-radius: 10px; min-height: 48px; background: #fafbff; transition: background .2s; align-items: center; }
+.sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.sb-chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; cursor: grab; font-size: .88em; user-select: none; white-space: nowrap; }
+.sb-chip.ok { background: #27ae60; }
+.sb-chip.no { background: #e74c3c; }
+.sb-punkt { font-weight: 700; color: #4a148c; font-size: 1.1em; padding: 0 4px; align-self: center; }
+.sb-insert-cursor { width: 3px; height: 30px; background: #ffd600; border-radius: 2px; display: none; pointer-events: none; }
+.satzbau-feedback { font-size: .85em; margin-top: 6px; min-height: 20px; color: #555; }
+
+/* ===== WORTSCHATZ ===== */
+.ws-item { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+.ws-en { background: #f0ecff; border-radius: 8px; padding: 8px 14px; font-size: 0.88em; color: #4a148c; font-weight: 600; }
+.ws-inp {
+    border: none; border-bottom: 2px solid #c5cae9; background: transparent;
+    outline: none; font-family: inherit; font-size: 0.93em;
+    transition: border-color .2s; width: 100%; padding: 4px 6px;
+}
+.ws-inp:focus { border-bottom-color: #667eea; }
+.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* ===== SHARED ===== */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; font-size: .88em; color: #555; }
+.btn { background: #667eea; color: white; border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: .88em; }
+.btn:hover { background: #5a6fd6; }
+.btn.secondary { background: #9e9e9e; }
+.btn.secondary:hover { background: #757575; }
+.timer-val { font-weight: 700; color: #4a148c; min-width: 36px; }
+h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
+
+/* Footer */
+.footer { text-align: center; padding: 16px; font-size: .8em; color: #888; border-top: 1px solid #eee; }
+.footer a { color: #667eea; text-decoration: none; }
+.author-name { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <span class="big-emoji">🔧</span>
+    <h1>Das Verb <em>lassen</em></h1>
+    <p>A2 · Lektion 1056X · Sport &amp; Freizeit</p>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab(0,this)">
+      <span class="nav-emoji">📋</span><span class="nav-label">Übersicht</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(1,this)">
+      <span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(2,this)">
+      <span class="nav-emoji">💬</span><span class="nav-label">Zuordnung</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(3,this)">
+      <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(4,this)">
+      <span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span>
+    </button>
+  </nav>
+
+  <!-- ===== TAB 0: ÜBERSICHT ===== -->
+  <section id="sec-0" class="section aktiv">
+    <h2>📋 Das Verb <em>lassen</em> — Übersicht</h2>
+
+    <div class="card-box">
+      <h3>Konjugation</h3>
+      <table class="konjug-table">
+        <thead><tr><th>Personalpronomen</th><th>lassen</th></tr></thead>
+        <tbody>
+          <tr><td>ich</td><td>lasse</td></tr>
+          <tr><td>du</td><td>lässt</td></tr>
+          <tr><td>er / sie / es</td><td>lässt</td></tr>
+          <tr><td>wir</td><td>lassen</td></tr>
+          <tr><td>ihr</td><td>lasst</td></tr>
+          <tr><td>Sie / sie</td><td>lassen</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-box">
+      <h3>Bedeutungen von <em>lassen</em></h3>
+      <div class="meaning-grid">
+        <div class="meaning-item">
+          <div class="meaning-label">1. Vollverb — etwas nicht mitnehmen / unterlassen</div>
+          <div class="meaning-ex">Sie lässt die Brille auf dem Tisch.<br>Lass das, bitte!</div>
+        </div>
+        <div class="meaning-item">
+          <div class="meaning-label">2. Handlung von jemand anderem machen lassen</div>
+          <div class="meaning-ex">Ich lasse mir die Haare schneiden.<br>Er lässt das Auto waschen.</div>
+        </div>
+        <div class="meaning-item">
+          <div class="meaning-label">3. Erlaubnis / Verbot</div>
+          <div class="meaning-ex">Ich lasse dich heute fernsehen.<br>Er lässt sie nicht ausgehen.</div>
+        </div>
+        <div class="meaning-item">
+          <div class="meaning-label">4. Vorschlag mit <em>lass uns</em></div>
+          <div class="meaning-ex">Lass uns einen Ausflug machen!<br>Lasst uns zusammen essen!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-box">
+      <h3>Wortstellung — <em>lassen</em> + Infinitiv</h3>
+      <p style="font-size:.9em;color:#555;margin-bottom:10px;"><em>lassen</em> steht an Position 2, der Infinitiv steht am Ende des Satzes.</p>
+      <table class="konjug-table">
+        <thead><tr><th>Subjekt</th><th>lassen (Pos. 2)</th><th>Objekt</th><th>Infinitiv</th></tr></thead>
+        <tbody>
+          <tr><td>Ich</td><td>lasse</td><td>mir die Haare</td><td>schneiden.</td></tr>
+          <tr><td>Du</td><td>lässt</td><td>den Rasen</td><td>mähen.</td></tr>
+          <tr><td>Pia</td><td>lässt</td><td>sich vom Friseur</td><td>stylen.</td></tr>
+        </tbody>
+      </table>
+      <div class="chip-row">
+        <span class="tag">lassen + von + Dativ → von wem</span>
+        <span class="tag">Perfekt: haben + Infinitiv + lassen</span>
+      </div>
+    </div>
+
+    <div class="card-box">
+      <h3>Perfekt mit <em>lassen</em></h3>
+      <table class="konjug-table">
+        <thead><tr><th>Präsens</th><th>Perfekt</th></tr></thead>
+        <tbody>
+          <tr><td>Ich lasse mir die Haare schneiden.</td><td>Ich habe mir die Haare schneiden <strong>lassen</strong>.</td></tr>
+          <tr><td>Er lässt das Haus bauen.</td><td>Er hat das Haus bauen <strong>lassen</strong>.</td></tr>
+          <tr><td>Sie lässt die Brille auf dem Tisch.</td><td>Sie hat die Brille auf dem Tisch <strong>gelassen</strong>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== TAB 1: LÜCKENTEXT ===== -->
+  <section id="sec-1" class="section">
+    <h2>✏️ Lückentext</h2>
+    <div class="btn-row" style="margin-bottom:14px;">
+      ⏱ <span id="t1">0:00</span>
+      <span class="timer-val">🏆 <span id="b1">–</span></span>
+      <button class="btn" onclick="timerResetOne(1)">↺ Neustart</button>
+      <button class="btn secondary" onclick="showLt()">💡 Lösungen</button>
+    </div>
+
+    <div class="lt-block">
+      <h3>Mias perfekter Tag</h3>
+      <div class="lt-text">
+        Mia ist sehr reich. Sie <input class="luecken-inp" id="lt0" data-ans="lässt" placeholder=""> sich morgens Frühstück ans Bett bringen.
+        Danach <input class="luecken-inp" id="lt1" data-ans="lässt" placeholder=""> sie sich vom Friseur die Haare schneiden.
+        Nachmittags <input class="luecken-inp" id="lt2" data-ans="lässt" placeholder=""> sie das Auto waschen.
+        Abends <input class="luecken-inp" id="lt3" data-ans="lässt" placeholder=""> sie von einem Koch das Abendessen kochen.
+        Mia <input class="luecken-inp" id="lt4" data-ans="lässt" placeholder=""> nie etwas selbst machen!
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Im Perfekt</h3>
+      <div class="lt-text">
+        Gestern hat Mia sich das Frühstück ans Bett bringen
+        <input class="luecken-inp" id="lt5" data-ans="lassen" placeholder="">.
+        Dann hat sie die Haare schneiden
+        <input class="luecken-inp" id="lt6" data-ans="lassen" placeholder="">.
+        Das Auto hat sie waschen
+        <input class="luecken-inp" id="lt7" data-ans="lassen" placeholder="">.
+        Das Abendessen hat sie kochen
+        <input class="luecken-inp" id="lt8" data-ans="lassen" placeholder="">.
+        Die Brille hat sie auf dem Tisch
+        <input class="luecken-inp" id="lt9" data-ans="gelassen" placeholder="">.
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Mit von + Dativ</h3>
+      <div class="lt-text">
+        Ich lasse <input class="luecken-inp" id="lt10" data-ans="von" placeholder=""> einem Architekten ein Haus bauen.
+        Pia lässt sich <input class="luecken-inp" id="lt11" data-ans="vom" placeholder=""> Friseur die Haare stylen.
+        Das Baby lässt sich <input class="luecken-inp" id="lt12" data-ans="von" placeholder=""> der Mutter füttern.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2: ZUORDNUNG ===== -->
+  <section id="sec-2" class="section">
+    <h2>💬 Zuordnung — Bedeutung von <em>lassen</em></h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:14px;">Ordne die Sätze der richtigen Bedeutung zu!</p>
+    <div class="zuord-bank" id="zuordBank"></div>
+    <div class="zuord-categories" id="zuordCats"></div>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="resetZuord()">↺ Neu</button>
+      <span id="zuordScore" style="font-weight:700;color:#4a148c;"></span>
+    </div>
+  </section>
+
+  <!-- ===== TAB 3: SATZBAU ===== -->
+  <section id="sec-3" class="section">
+    <h2>🧩 Satzbau</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:14px;">Bringe die Wörter in die richtige Reihenfolge!</p>
+    <div class="btn-row" style="margin-bottom:16px;">
+      ⏱ <span id="t3">0:00</span>
+      <span class="timer-val">🏆 <span id="b3">–</span></span>
+      <button class="btn" onclick="timerResetOne(3)">↺ Neustart</button>
+      <button class="btn secondary" onclick="sbShowSolution()">💡 Lösungen</button>
+    </div>
+    <div id="satzbauContainer"></div>
+  </section>
+
+  <!-- ===== TAB 4: WORTSCHATZ ===== -->
+  <section id="sec-4" class="section">
+    <h2>🔠 Wortschatz üben</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:14px;">Tippe die richtige Form von <em>lassen</em>!</p>
+    <div class="btn-row" style="margin-bottom:16px;">
+      ⏱ <span id="t4">0:00</span>
+      <span class="timer-val">🏆 <span id="b4">–</span></span>
+      <button class="btn" onclick="timerResetOne(4)">↺ Neustart</button>
+      <button class="btn secondary" onclick="showWs()">💡 Lösungen</button>
+    </div>
+    <div id="wsContainer"></div>
+  </section>
+
+  <div class="footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+var ZUORD_CATS = [
+  'Etwas nicht mitnehmen / unterlassen',
+  'Handlung von jemand anderem machen lassen',
+  'Erlaubnis / Verbot',
+  'Vorschlag mit lass uns'
+];
+
+var ZUORD_DATA = [
+  { sent: 'Sie lässt die Brille auf dem Tisch.', cat: 'Etwas nicht mitnehmen / unterlassen' },
+  { sent: 'Lass das bitte!', cat: 'Etwas nicht mitnehmen / unterlassen' },
+  { sent: 'Ich lasse mir die Haare schneiden.', cat: 'Handlung von jemand anderem machen lassen' },
+  { sent: 'Er lässt das Auto waschen.', cat: 'Handlung von jemand anderem machen lassen' },
+  { sent: 'Wir lassen uns massieren.', cat: 'Handlung von jemand anderem machen lassen' },
+  { sent: 'Ich lasse dich heute fernsehen.', cat: 'Erlaubnis / Verbot' },
+  { sent: 'Er lässt sie nicht ausgehen.', cat: 'Erlaubnis / Verbot' },
+  { sent: 'Du lässt mich nicht in Ruhe lesen.', cat: 'Erlaubnis / Verbot' },
+  { sent: 'Lass uns einen Ausflug machen!', cat: 'Vorschlag mit lass uns' },
+  { sent: 'Lasst uns zusammen kochen!', cat: 'Vorschlag mit lass uns' }
+];
+
+var satzbauData = [
+  { words: ['Ich', 'lasse', 'mir', 'die', 'Haare', 'schneiden'], punct: '.' },
+  { words: ['Du', 'lässt', 'den', 'Rasen', 'mähen'], punct: '.' },
+  { words: ['Lass', 'uns', 'einen', 'Ausflug', 'machen'], punct: '!' },
+  { words: ['Er', 'lässt', 'das', 'Auto', 'von', 'einem', 'Mechaniker', 'reparieren'], punct: '.' },
+  { words: ['Ich', 'habe', 'mir', 'die', 'Haare', 'schneiden', 'lassen'], punct: '.' },
+  { words: ['Hast', 'du', 'die', 'Brille', 'auf', 'dem', 'Tisch', 'gelassen'], punct: '?' },
+  { words: ['Mia', 'lässt', 'sich', 'das', 'Frühstück', 'ans', 'Bett', 'bringen'], punct: '.' }
+];
+
+var WS_DATA = [
+  { en: 'ich — lassen (Präsens)', ans: 'lasse' },
+  { en: 'du — lassen (Präsens)', ans: 'lässt' },
+  { en: 'er/sie/es — lassen (Präsens)', ans: 'lässt' },
+  { en: 'wir — lassen (Präsens)', ans: 'lassen' },
+  { en: 'ihr — lassen (Präsens)', ans: 'lasst' },
+  { en: 'lassen (Perfekt, Hilfsverb)', ans: 'lassen' },
+  { en: 'lassen als Vollverb (Perfekt, Partizip)', ans: 'gelassen' },
+  { en: 'lassen + von + ? (von wem?)', ans: 'Dativ' },
+  { en: 'Ich lasse dich fernsehen. → Bedeutung', ans: 'Erlaubnis' },
+  { en: 'Lass das! → Bedeutung', ans: 'unterlassen' }
+];
+
+var TIMER_PREFIX = 'a2-1056x-';
+
+// ===== TIMER =====
+var timerStarted   = [false,false,false,false,false];
+var timerRunning   = [false,false,false,false,false];
+var timerSeconds   = [0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null];
+
+function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerAutoStart(n){
+  if(timerStarted[n]) return;
+  timerStarted[n]=true; timerRunning[n]=true;
+  timerIntervals[n]=setInterval(function(){
+    if(!timerRunning[n]) return;
+    timerSeconds[n]++;
+    var el=document.getElementById('t'+n);
+    if(el) el.textContent=timerFmt(timerSeconds[n]);
+  },1000);
+}
+function timerStop(n){
+  if(!timerRunning[n]) return;
+  timerRunning[n]=false;
+  var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');
+  if(timerSeconds[n]<best){
+    best=timerSeconds[n];
+    localStorage.setItem(TIMER_PREFIX+'best-'+n,best);
+    var el=document.getElementById('b'+n);
+    if(el) el.textContent=timerFmt(best);
+  }
+}
+function timerResetOne(n){
+  clearInterval(timerIntervals[n]);
+  timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
+  var el=document.getElementById('t'+n); if(el) el.textContent='0:00';
+  if(n===1) resetLt();
+  if(n===3) initSatzbau();
+  if(n===4) initWs();
+}
+function loadBests(){
+  [1,3,4].forEach(function(n){
+    var v=localStorage.getItem(TIMER_PREFIX+'best-'+n);
+    var el=document.getElementById('b'+n);
+    if(v&&el) el.textContent=timerFmt(parseInt(v));
+  });
+}
+
+// ===== TAB NAVIGATION =====
+function showTab(n, btn){
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('aktiv'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('sec-'+n).classList.add('aktiv');
+  btn.classList.add('active');
+}
+
+// ===== LÜCKENTEXT =====
+var LT_COUNT = 13;
+function resetLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=''; el.classList.remove('ok','no'); }
+  }
+}
+function checkLtInput(el){
+  var ans=el.dataset.ans; var val=el.value.trim();
+  if(val===ans){ el.classList.add('ok'); el.classList.remove('no'); }
+  else if(ans.startsWith(val)&&val.length>0){ el.classList.remove('ok','no'); }
+  else if(val.length>0){ el.classList.add('no'); el.classList.remove('ok'); }
+  else { el.classList.remove('ok','no'); }
+  checkLtAll();
+}
+function checkLtAll(){
+  var all=true;
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el&&!el.classList.contains('ok')) all=false;
+  }
+  if(all) timerStop(1);
+}
+function showLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=el.dataset.ans; el.classList.add('ok'); el.classList.remove('no'); }
+  }
+  timerStop(1);
+}
+
+// ===== ZUORDNUNG =====
+var draggedZuord = null;
+function initZuord(){
+  var bank=document.getElementById('zuordBank');
+  var cats=document.getElementById('zuordCats');
+  bank.innerHTML=''; cats.innerHTML='';
+  document.getElementById('zuordScore').textContent='';
+  // shuffle
+  var items=ZUORD_DATA.slice();
+  for(var i=items.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=items[i];items[i]=items[j];items[j]=t; }
+  // chips
+  items.forEach(function(item){
+    var chip=document.createElement('div'); chip.className='zuord-chip'; chip.textContent=item.sent;
+    chip.dataset.cat=item.cat; chip.draggable=true;
+    chip.addEventListener('dragstart',function(e){ draggedZuord=chip; e.dataTransfer.effectAllowed='move'; });
+    bank.appendChild(chip);
+  });
+  // categories
+  ZUORD_CATS.forEach(function(cat){
+    var col=document.createElement('div'); col.className='zuord-col';
+    var hdr=document.createElement('div'); hdr.className='zuord-col-header'; hdr.textContent=cat;
+    var drop=document.createElement('div'); drop.className='zuord-drop'; drop.dataset.cat=cat;
+    drop.addEventListener('dragover',function(e){ e.preventDefault(); drop.classList.add('dragover'); });
+    drop.addEventListener('dragleave',function(){ drop.classList.remove('dragover'); });
+    drop.addEventListener('drop',function(e){
+      e.preventDefault(); drop.classList.remove('dragover');
+      if(draggedZuord){
+        drop.appendChild(draggedZuord);
+        var correct=draggedZuord.dataset.cat===cat;
+        draggedZuord.classList.toggle('ok',correct);
+        draggedZuord.classList.toggle('no',!correct);
+        draggedZuord=null;
+        checkZuordAuto();
+      }
+    });
+    col.appendChild(hdr); col.appendChild(drop);
+    cats.appendChild(col);
+  });
+  // bank drop
+  bank.addEventListener('dragover',function(e){ e.preventDefault(); });
+  bank.addEventListener('drop',function(e){
+    e.preventDefault();
+    if(draggedZuord){ bank.appendChild(draggedZuord); draggedZuord.classList.remove('ok','no'); draggedZuord=null; }
+  });
+}
+function checkZuordAuto(){
+  var placed=document.querySelectorAll('.zuord-drop .zuord-chip');
+  var correct=0;
+  placed.forEach(function(c){ if(c.classList.contains('ok')) correct++; });
+  if(placed.length===ZUORD_DATA.length){
+    document.getElementById('zuordScore').textContent=correct+' / '+ZUORD_DATA.length+' richtig';
+  }
+}
+function resetZuord(){ initZuord(); }
+
+// ===== SATZBAU =====
+var sbDragged = null;
+function sbFisherYates(arr){
+  for(var i=arr.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=arr[i];arr[i]=arr[j];arr[j]=t; }
+  return arr;
+}
+function sbMakeChip(word, idx, sentIdx){
+  var chip=document.createElement('div');
+  chip.className='sb-chip'; chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
+  chip.addEventListener('dragstart',function(e){ sbDragged=chip; e.dataTransfer.effectAllowed='move'; });
+  chip.addEventListener('dragend',function(){ sbDragged=null; });
+  return chip;
+}
+function sbRegisterZone(zone, sentIdx){
+  var cursor=zone.querySelector('.sb-insert-cursor');
+  zone.addEventListener('dragover',function(e){
+    e.preventDefault(); zone.classList.add('dragover');
+    if(cursor&&sbDragged){
+      var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+      var inserted=false;
+      for(var i=0;i<chips.length;i++){
+        var r=chips[i].getBoundingClientRect();
+        if(e.clientX<r.left+r.width/2){ zone.insertBefore(cursor,chips[i]); cursor.style.display='block'; inserted=true; break; }
+      }
+      if(!inserted){ zone.appendChild(cursor); cursor.style.display='block'; }
+    }
+  });
+  zone.addEventListener('dragleave',function(){ zone.classList.remove('dragover'); if(cursor) cursor.style.display='none'; });
+  zone.addEventListener('drop',function(e){
+    e.preventDefault(); zone.classList.remove('dragover');
+    if(sbDragged){
+      if(cursor&&cursor.parentNode===zone){ zone.insertBefore(sbDragged,cursor); } else { zone.appendChild(sbDragged); }
+      if(cursor) cursor.style.display='none';
+      sbDragged=null;
+      sbUpdateCapitalization(sentIdx);
+      setTimeout(function(){ sbCheckAuto(sentIdx); }, 500);
+    }
+  });
+}
+function sbUpdateCapitalization(idx){
+  var zone=document.getElementById('sb-row-'+idx);
+  if(!zone) return;
+  var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+  chips.forEach(function(chip,pos){
+    var orig=chip.dataset.orig;
+    chip.textContent = pos===0 ? orig.charAt(0).toUpperCase()+orig.slice(1) : orig;
+  });
+}
+function sbColorRow(idx){
+  var zone=document.getElementById('sb-row-'+idx);
+  var fb=document.getElementById('sb-fb-'+idx);
+  if(!zone||!fb) return;
+  var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+  var correct=satzbauData[idx].words;
+  var ok=true;
+  if(chips.length!==correct.length){ ok=false; chips.forEach(function(c){ c.classList.add('no'); c.classList.remove('ok'); }); }
+  else {
+    chips.forEach(function(chip,i){
+      var match=chip.dataset.orig.toLowerCase()===correct[i].toLowerCase();
+      chip.classList.toggle('ok',match); chip.classList.toggle('no',!match);
+      if(!match) ok=false;
+    });
+  }
+  fb.textContent=ok?'✓ Richtig!':'';
+  fb.style.color='#27ae60';
+  return ok;
+}
+function sbCheckAuto(idx){
+  var ok=sbColorRow(idx);
+  if(ok){
+    var allOk=true;
+    for(var i=0;i<satzbauData.length;i++){ if(!sbColorRow(i)) allOk=false; }
+    if(allOk) timerStop(3);
+  }
+}
+function sbShowSolution(){
+  satzbauData.forEach(function(item,idx){
+    var bank=document.getElementById('sb-bank-'+idx);
+    var zone=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    if(!bank||!zone) return;
+    Array.from(zone.querySelectorAll('.sb-chip')).forEach(function(c){ bank.appendChild(c); c.classList.remove('ok','no'); });
+    item.words.forEach(function(w){
+      var chips=Array.from(bank.querySelectorAll('.sb-chip'));
+      var chip=chips.find(function(c){ return c.dataset.orig.toLowerCase()===w.toLowerCase(); });
+      if(chip){ zone.appendChild(chip); }
+    });
+    sbUpdateCapitalization(idx);
+    Array.from(zone.querySelectorAll('.sb-chip')).forEach(function(c){ c.classList.add('ok'); c.classList.remove('no'); });
+    if(fb){ fb.textContent='✓ Lösung'; fb.style.color='#27ae60'; }
+  });
+  timerStop(3);
+}
+function initSatzbau(){
+  var container=document.getElementById('satzbauContainer');
+  container.innerHTML='';
+  satzbauData.forEach(function(item,idx){
+    var builder=document.createElement('div'); builder.className='sentence-builder';
+    var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx;
+    var shuffled=sbFisherYates(item.words.slice());
+    shuffled.forEach(function(w,i){ bank.appendChild(sbMakeChip(w,i,idx)); });
+    var zone=document.createElement('div'); zone.className='sb-zone'; zone.id='sb-row-'+idx;
+    var cursor=document.createElement('div'); cursor.className='sb-insert-cursor'; zone.appendChild(cursor);
+    var punkt=document.createElement('span'); punkt.className='sb-punkt'; punkt.textContent=item.punct;
+    bank.addEventListener('dragover',function(e){ e.preventDefault(); });
+    bank.addEventListener('drop',function(e){
+      e.preventDefault();
+      if(sbDragged){ bank.appendChild(sbDragged); sbDragged=null; sbUpdateCapitalization(idx); setTimeout(function(){ sbCheckAuto(idx); },500); }
+    });
+    sbRegisterZone(zone, idx);
+    var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx;
+    builder.appendChild(bank); builder.appendChild(zone); builder.appendChild(punkt); builder.appendChild(fb);
+    container.appendChild(builder);
+  });
+  timerStarted[3]=false; timerRunning[3]=false; timerSeconds[3]=0;
+  var el=document.getElementById('t3'); if(el) el.textContent='0:00';
+}
+
+// ===== WORTSCHATZ =====
+function initWs(){
+  var container=document.getElementById('wsContainer');
+  container.innerHTML='';
+  WS_DATA.forEach(function(item,i){
+    var div=document.createElement('div'); div.className='ws-item';
+    var en=document.createElement('div'); en.className='ws-en'; en.textContent=item.en;
+    var inp=document.createElement('input'); inp.type='text'; inp.className='ws-inp'; inp.placeholder='';
+    inp.dataset.ans=item.ans; inp.id='ws'+i;
+    inp.addEventListener('input',function(){
+      timerAutoStart(4);
+      var val=inp.value.trim(); var ans=inp.dataset.ans;
+      if(val===ans){ inp.classList.add('ok'); inp.classList.remove('no'); checkWsAll(); }
+      else if(ans.startsWith(val)&&val.length>0){ inp.classList.remove('ok','no'); }
+      else if(val.length>0){ inp.classList.add('no'); inp.classList.remove('ok'); }
+      else { inp.classList.remove('ok','no'); }
+    });
+    div.appendChild(en); div.appendChild(inp);
+    container.appendChild(div);
+  });
+  timerStarted[4]=false; timerRunning[4]=false; timerSeconds[4]=0;
+  var el=document.getElementById('t4'); if(el) el.textContent='0:00';
+}
+function checkWsAll(){
+  var all=true;
+  for(var i=0;i<WS_DATA.length;i++){
+    var el=document.getElementById('ws'+i);
+    if(el&&!el.classList.contains('ok')) all=false;
+  }
+  if(all) timerStop(4);
+}
+function showWs(){
+  WS_DATA.forEach(function(item,i){
+    var el=document.getElementById('ws'+i);
+    if(el){ el.value=item.ans; el.classList.add('ok'); el.classList.remove('no'); }
+  });
+  timerStop(4);
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', function(){
+  initZuord();
+  initSatzbau();
+  initWs();
+  loadBests();
+  for(var i=0;i<LT_COUNT;i++){
+    (function(idx){
+      var el=document.getElementById('lt'+idx);
+      if(el) el.addEventListener('input',function(){ timerAutoStart(1); checkLtInput(el); });
+    })(i);
+  }
+});
+</script>
+</body>
+</html>

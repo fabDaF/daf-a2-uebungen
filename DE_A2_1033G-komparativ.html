@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Der Komparativ – DaF A2 Grammatik</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header .subtitle, .header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; }
+.section.active { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+}
+
+.tab-content { padding: 28px 30px; }
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+h2 { color: #4a148c; font-size: 1.25em; margin-bottom: 14px; }
+h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
+
+/* Entdecken-Tab */
+.example-box { background: #f7f0ff; border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+.example-box p { font-size: 1.0em; line-height: 1.9; color: #333; }
+.hl { color: #764ba2; font-weight: 700; }
+.progress-dots { display: flex; gap: 8px; margin: 16px 0; }
+.dot { width: 14px; height: 14px; border-radius: 50%; background: #ddd; transition: background 0.3s; }
+.dot.done { background: #667eea; }
+.mc-step { display: none; margin-bottom: 16px; }
+.mc-step.visible { display: block; }
+.mc-question { font-weight: 600; color: #333; margin-bottom: 10px; font-size: 0.95em; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-opt { background: white; border: 2px solid #c5cae9; border-radius: 8px; padding: 10px 14px; cursor: pointer; font-size: 0.9em; transition: all 0.2s; }
+.mc-opt:hover { border-color: #667eea; background: #f0f4ff; }
+.mc-opt.correct { border-color: #27ae60; background: #f0fff4; color: #27ae60; font-weight: 700; cursor: default; }
+.mc-opt.wrong { border-color: #e74c3c; background: #fff5f5; color: #e74c3c; cursor: default; }
+.regel-karte { display: none; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 12px; padding: 20px 24px; margin-top: 18px; }
+.regel-karte.visible { display: block; }
+.regel-karte h3 { color: white; margin-top: 0; }
+.regel-karte p { font-size: 0.9em; line-height: 1.7; opacity: 0.95; margin-top: 6px; }
+
+/* Regel-Tab */
+.regel-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92em; }
+.regel-table th { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 14px; text-align: left; }
+.regel-table td { padding: 10px 14px; border-bottom: 1px solid #eee; }
+.regel-table tr:nth-child(even) td { background: #f8f8ff; }
+.regel-table td .hl { color: #e53935; }
+.pattern-box { background: #f0ecff; border-radius: 10px; padding: 14px 18px; margin: 12px 0; font-size: 0.92em; color: #333; line-height: 1.7; }
+.tag { display: inline-block; border-radius: 12px; padding: 3px 10px; font-size: 0.8em; font-weight: 700; margin: 2px; }
+.tag-normal { background: #e8f4fd; color: #1565c0; }
+.tag-komp { background: #fce4ec; color: #880e4f; }
+.tag-unreg { background: #fff3e0; color: #e65100; }
+.tag-umlaut { background: #f3e5f5; color: #6a1b9a; }
+
+/* Lückentext */
+.luecken-block { background: #f9f9ff; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+.luecken-block h3 { margin-top: 0; }
+.luecken-satz { margin-bottom: 12px; font-size: 0.95em; line-height: 2; color: #333; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: inherit; transition: border-color 0.2s; padding: 0 4px; }
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* Satzbau */
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; display: inline-block; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+.sb-nr { font-size: 0.8em; color: #999; margin-bottom: 4px; margin-top: 14px; font-weight: 600; }
+
+/* Multiple Choice */
+.mc-aufgabe { background: #f9f9ff; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+.mc-aufgabe .mc-frage { font-size: 0.95em; color: #333; margin-bottom: 10px; }
+.mc-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+.mc-choice { background: white; border: 2px solid #c5cae9; border-radius: 20px; padding: 7px 16px; cursor: pointer; font-size: 0.88em; transition: all 0.2s; }
+.mc-choice:hover { border-color: #667eea; background: #f0f4ff; }
+.mc-choice.ok { border-color: #27ae60; background: #27ae60; color: white; font-weight: 700; cursor: default; }
+.mc-choice.no { border-color: #e74c3c; background: #fff5f5; color: #e74c3c; cursor: default; }
+
+/* Buttons / Timer */
+.btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.btn { padding: 10px 22px; border: none; border-radius: 25px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.2s; }
+.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+.btn-reset { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.timer-box { display: inline-flex; align-items: center; gap: 8px; background: #f0f4ff; border-radius: 20px; padding: 8px 16px; font-size: 0.9em; color: #555; font-weight: 500; }
+.timer-display { font-family: monospace; font-weight: 700; color: #667eea; min-width: 52px; text-align: center; }
+.best-display { font-size: 0.85em; color: #999; }
+.solution-btn { background: #f0f4ff; border: 1px solid #667eea; color: #667eea; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.2s; }
+.solution-btn:hover { background: #667eea; color: white; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Der Komparativ</h1>
+        <p style="font-family: Georgia, serif;">A2 – Lektion 1033G &nbsp;|&nbsp; Grammatik &amp; Üben</p>
+        <div class="big-emoji">📊</div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></div>
+        <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">📋</span><span class="nav-label">Regel</span></div>
+        <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+        <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+        <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
+    </div>
+
+    <!-- ===== TAB 0: ENTDECKEN ===== -->
+    <div class="section active" id="sec-0">
+        <div class="tab-content">
+            <h2>Entdecken — Wie vergleichen wir?</h2>
+            <div class="example-box">
+                <p>
+                    Der Tiger rennt <span class="hl">schneller als</span> die Schnecke.<br>
+                    Der Elefant ist <span class="hl">größer als</span> die Maus.<br>
+                    Mein Sohn ist <span class="hl">klüger als</span> ich.<br>
+                    Der Bär ist <span class="hl">stärker als</span> der Hase.<br>
+                    Tim rennt <span class="hl">schneller als</span> Anna.
+                </p>
+            </div>
+            <div class="progress-dots">
+                <div class="dot" id="dot-0"></div>
+                <div class="dot" id="dot-1"></div>
+                <div class="dot" id="dot-2"></div>
+                <div class="dot" id="dot-3"></div>
+            </div>
+            <div id="mc-steps"></div>
+            <div class="regel-karte" id="regelKarte">
+                <h3>✓ Die Komparativ-Regel</h3>
+                <p>
+                    <strong>Komparativ</strong> = Adjektiv + <strong>-er</strong><br>
+                    Vergleich: Adjektiv-er + <strong>als</strong><br>
+                    Adjektive mit einer Silbe: Umlaut (a→ä, o→ö, u→ü): groß → <strong>größer</strong>, alt → <strong>älter</strong><br>
+                    Unregelmäßig: gut → <strong>besser</strong>, viel → <strong>mehr</strong>, gern → <strong>lieber</strong>, hoch → <strong>höher</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 1: REGEL ===== -->
+    <div class="section" id="sec-1">
+        <div class="tab-content">
+            <h2>Die Komparativ-Regel</h2>
+
+            <div class="pattern-box">
+                <strong>Bildung:</strong> Adjektiv + <strong style="color:#764ba2;">-er</strong> &nbsp;|&nbsp;
+                <strong>Vergleich:</strong> … <strong style="color:#764ba2;">-er als</strong> …
+            </div>
+
+            <h3>1. Regelmäßiger Komparativ (+er)</h3>
+            <table class="regel-table">
+                <tr><th>Grundform</th><th>Komparativ</th><th>Beispiel</th></tr>
+                <tr><td>schnell</td><td><span class="hl">schneller</span></td><td>Tim rennt schneller als Anna.</td></tr>
+                <tr><td>lustig</td><td><span class="hl">lustiger</span></td><td>Der Film ist lustiger als das Buch.</td></tr>
+                <tr><td>intelligent</td><td><span class="hl">intelligenter</span></td><td>Paul ist intelligenter als Max.</td></tr>
+                <tr><td>dünn</td><td><span class="hl">dünner</span></td><td>Lisa ist dünner als ihr Bruder.</td></tr>
+            </table>
+
+            <h3>2. Komparativ mit Umlaut</h3>
+            <div class="pattern-box">a → ä &nbsp;·&nbsp; o → ö &nbsp;·&nbsp; u → ü &nbsp;&nbsp;(meist einsilbige Adjektive)</div>
+            <table class="regel-table">
+                <tr><th>Grundform</th><th>Komparativ</th><th>Beispiel</th></tr>
+                <tr><td>groß</td><td><span class="hl">größer</span></td><td>Ich bin größer als du.</td></tr>
+                <tr><td>alt</td><td><span class="hl">älter</span></td><td>Du bist älter als ich.</td></tr>
+                <tr><td>jung</td><td><span class="hl">jünger</span></td><td>Maria ist jünger als ihre Cousine.</td></tr>
+                <tr><td>kalt</td><td><span class="hl">kälter</span></td><td>Im Winter ist es kälter als im Herbst.</td></tr>
+            </table>
+
+            <h3>3. Unregelmäßige Formen</h3>
+            <table class="regel-table">
+                <tr><th>Grundform</th><th>Komparativ</th><th>Beispiel</th></tr>
+                <tr><td>gut</td><td><span class="hl">besser</span></td><td>Mein Lehrer erklärt besser als andere.</td></tr>
+                <tr><td>viel</td><td><span class="hl">mehr</span></td><td>Ich esse mehr als meine Frau.</td></tr>
+                <tr><td>gern</td><td><span class="hl">lieber</span></td><td>Ich esse lieber Tomaten als Zwiebeln.</td></tr>
+                <tr><td>hoch</td><td><span class="hl">höher</span></td><td>Der Eiffelturm ist höher als das Haus.</td></tr>
+            </table>
+
+            <h3>4. Positiver Vergleich: so … wie / genauso … wie</h3>
+            <table class="regel-table">
+                <tr><th>Vergleich</th><th>Beispiel</th></tr>
+                <tr><td>so … wie</td><td>Peter ist <span class="hl">so groß wie</span> Felix.</td></tr>
+                <tr><td>genauso … wie</td><td>Maria ist <span class="hl">genauso alt wie</span> ihre Cousine.</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== TAB 2: LÜCKENTEXT ===== -->
+    <div class="section" id="sec-2">
+        <div class="tab-content">
+            <h2>Lückentext — Komparativ bilden</h2>
+            <div class="hilfe-box">Tippe die richtige Komparativform in die Lücke.</div>
+            <div class="luecken-block">
+                <h3>Teil 1 — Komparativ mit -er</h3>
+                <div id="luecken1"></div>
+            </div>
+            <div class="luecken-block">
+                <h3>Teil 2 — Komparativ mit Umlaut &amp; unregelmäßig</h3>
+                <div id="luecken2"></div>
+            </div>
+            <div class="btn-row">
+                <div class="timer-box">⏱ <span class="timer-display" id="timer-2">0:00</span> &nbsp;🏆 <span class="best-display" id="best-2">–</span></div>
+                <button class="btn btn-reset" onclick="lueckenReset()">↺ Neustart</button>
+                <button class="solution-btn" onclick="lueckenLoesungen()">💡 Lösungen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 3: SATZBAU ===== -->
+    <div class="section" id="sec-3">
+        <div class="tab-content">
+            <h2>Satzbau — Vergleichssätze</h2>
+            <div class="hilfe-box">Bringe die Wort-Chips in die richtige Reihenfolge.</div>
+            <div id="satzbauContainer"></div>
+            <div class="btn-row">
+                <div class="timer-box">⏱ <span class="timer-display" id="timer-3">0:00</span> &nbsp;🏆 <span class="best-display" id="best-3">–</span></div>
+                <button class="btn btn-reset" onclick="sbResetAll()">↺ Neustart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 4: MULTIPLE CHOICE ===== -->
+    <div class="section" id="sec-4">
+        <div class="tab-content">
+            <h2>Multiple Choice — richtige Form wählen</h2>
+            <div class="hilfe-box">Wähle die richtige Komparativform.</div>
+            <div id="mcContainer"></div>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+        <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+
+</div><!-- /container -->
+
+<script>
+// ─── Tab-Navigation ──────────────────────────────────────────────────────────
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+}
+
+// ─── Timer ───────────────────────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1033g-';
+var timerStarted = [false,false,false,false,false];
+var timerRunning = [false,false,false,false,false];
+var timerSeconds = [0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null];
+function fmtTime(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerSeconds[n]=0;timerIntervals[n]=setInterval(function(){if(!timerRunning[n])return;timerSeconds[n]++;var el=document.getElementById('timer-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);},1000);}
+function timerStop(n){if(!timerRunning[n])return;timerRunning[n]=false;clearInterval(timerIntervals[n]);var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'999999');if(timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);best=timerSeconds[n];}var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(best);}
+function timerResetOne(n){timerRunning[n]=false;timerStarted[n]=false;clearInterval(timerIntervals[n]);timerSeconds[n]=0;var el=document.getElementById('timer-'+n);if(el)el.textContent='0:00';}
+(function(){[2,3].forEach(function(n){var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);if(b){var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(parseInt(b));}});})();
+
+// ─── Entdecken-Tab ───────────────────────────────────────────────────────────
+var MC_STEPS = [
+    {
+        q: 'Was haben die hervorgehobenen Wörter gemeinsam?',
+        opts: ['Sie beschreiben Gleichheit.','Sie zeigen einen Vergleich — etwas ist mehr.','Sie sind Substantive.'],
+        correct: 1
+    },
+    {
+        q: 'Wie werden die Komparativformen gebildet?',
+        opts: ['Adjektiv + "-ste"','Adjektiv + "-er"','Adjektiv + "-lich"'],
+        correct: 1
+    },
+    {
+        q: 'Was steht zwischen den beiden verglichenen Dingen?',
+        opts: ['"wie"','"aber"','"als"'],
+        correct: 2
+    },
+    {
+        q: 'Was ist richtig über Umlaut-Formen?',
+        opts: ['Alle Adjektive bekommen einen Umlaut.','Einsilbige Adjektive bekommen oft einen Umlaut: groß→größer, alt→älter.','Nur Verben bekommen einen Umlaut.'],
+        correct: 1
+    }
+];
+var mcDone = [false,false,false,false];
+
+function buildMcSteps(){
+    var container = document.getElementById('mc-steps'); container.innerHTML='';
+    MC_STEPS.forEach(function(step,idx){
+        var div = document.createElement('div'); div.className='mc-step'; div.id='mc-step-'+idx;
+        var qDiv = document.createElement('div'); qDiv.className='mc-question'; qDiv.textContent=step.q;
+        div.appendChild(qDiv);
+        var optsDiv = document.createElement('div'); optsDiv.className='mc-options';
+        step.opts.forEach(function(opt,oi){
+            var btn = document.createElement('div'); btn.className='mc-opt'; btn.textContent=opt;
+            btn.addEventListener('click', function(){
+                if(mcDone[idx]) return;
+                if(oi===step.correct){
+                    btn.classList.add('correct');
+                    mcDone[idx]=true;
+                    document.getElementById('dot-'+idx).classList.add('done');
+                    // Show next step
+                    if(idx+1<MC_STEPS.length) document.getElementById('mc-step-'+(idx+1)).classList.add('visible');
+                    else document.getElementById('regelKarte').classList.add('visible');
+                } else {
+                    btn.classList.add('wrong');
+                    setTimeout(function(){btn.classList.remove('wrong');},800);
+                }
+            });
+            optsDiv.appendChild(btn);
+        });
+        div.appendChild(optsDiv);
+        container.appendChild(div);
+    });
+    document.getElementById('mc-step-0').classList.add('visible');
+}
+
+// ─── Lückentext ──────────────────────────────────────────────────────────────
+var LT1 = [
+    { vor:'Georg rennt ', nach:' als Philip. (schnell)', ans:'schneller', size:90 },
+    { vor:'Das Lineal ist ', nach:' als der Zollstock. (kurz → kürzer)', ans:'kürzer', size:70 },
+    { vor:'In der Stadt ist es ', nach:' als im Dorf. (laut)', ans:'lauter', size:70 },
+    { vor:'Das Bild ist ', nach:' als die Lampe. (billig)', ans:'billiger', size:75 },
+    { vor:'Paul ist ', nach:' als Max. (intelligent)', ans:'intelligenter', size:115 },
+    { vor:'Der Flug ist ', nach:' als die Bahn. (teuer → teurer)', ans:'teurer', size:70 }
+];
+var LT2 = [
+    { vor:'Der Elefant ist ', nach:' als die Maus. (groß)', ans:'größer', size:65 },
+    { vor:'Bernd ist ', nach:' als Louisa. (alt)', ans:'älter', size:55 },
+    { vor:'Maria ist ', nach:' als ihre Cousine. (jung)', ans:'jünger', size:70 },
+    { vor:'Ich esse ', nach:' Tomaten als Zwiebeln. (gern)', ans:'lieber', size:65 },
+    { vor:'Mein Lehrer erklärt ', nach:' als andere. (gut)', ans:'besser', size:65 },
+    { vor:'Ich esse ', nach:' als meine Frau. (viel)', ans:'mehr', size:50 },
+    { vor:'Der Eiffelturm ist ', nach:' als das Haus. (hoch)', ans:'höher', size:65 }
+];
+
+function buildLuecken(data, containerId) {
+    var container=document.getElementById(containerId); container.innerHTML='';
+    data.forEach(function(item,idx){
+        var div=document.createElement('div'); div.className='luecken-satz';
+        div.innerHTML=(idx+1)+'. '+item.vor;
+        var inp=document.createElement('input'); inp.type='text'; inp.className='luecken-inp'; inp.placeholder=''; inp.style.width=item.size+'px';
+        inp.dataset.ans=item.ans.toLowerCase(); inp.dataset.orig=item.ans;
+        inp.addEventListener('input',function(){
+            var val=inp.value.trim().toLowerCase(),ans=inp.dataset.ans;
+            inp.classList.remove('ok','no');
+            if(!val)return;
+            if(val===ans){inp.classList.add('ok');timerAutoStart(2);checkAllLuecken();}
+            else if(ans.startsWith(val)){timerAutoStart(2);}
+            else{inp.classList.add('no');}
+        });
+        div.appendChild(inp);
+        div.innerHTML+=item.nach;
+        container.appendChild(div);
+    });
+}
+function checkAllLuecken(){var all=Array.from(document.querySelectorAll('#sec-2 .luecken-inp'));if(all.every(function(i){return i.classList.contains('ok');}))timerStop(2);}
+function lueckenReset(){timerResetOne(2);buildLuecken(LT1,'luecken1');buildLuecken(LT2,'luecken2');}
+function lueckenLoesungen(){document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){inp.value=inp.dataset.orig;inp.classList.remove('no');inp.classList.add('ok');});}
+
+// ─── Satzbau ─────────────────────────────────────────────────────────────────
+var sbDragged = null;
+var satzbauData = [
+    { parts:['Tim','rennt','schneller','als','Anna'], valid:[['Tim','rennt','schneller','als','Anna']], punct:'.' },
+    { parts:['ich','bin','größer','als','du'], valid:[['ich','bin','größer','als','du']], punct:'.' },
+    { parts:['Bernd','ist','älter','als','Louisa'], valid:[['Bernd','ist','älter','als','Louisa']], punct:'.' },
+    { parts:['mein','Lehrer','erklärt','besser','als','andere'], valid:[['mein','Lehrer','erklärt','besser','als','andere']], punct:'.' },
+    { parts:['der','Eiffelturm','ist','höher','als','das','Haus'], valid:[['der','Eiffelturm','ist','höher','als','das','Haus']], punct:'.' },
+    { parts:['ich','esse','lieber','Tomaten','als','Zwiebeln'], valid:[['ich','esse','lieber','Tomaten','als','Zwiebeln']], punct:'.' },
+    { parts:['Peter','ist','so','groß','wie','Felix'], valid:[['Peter','ist','so','groß','wie','Felix']], punct:'.' }
+];
+
+function getSbCursor(){var c=document.getElementById('sb-insert-cursor');if(!c){c=document.createElement('div');c.id='sb-insert-cursor';c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';}return c;}
+function getSbInsertPos(zone,clientX){var chips=Array.from(zone.querySelectorAll('.chip'));for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}return null;}
+function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}
+function sbUpdateCapitalization(row){Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);});}
+function sbMakeChip(word){var chip=document.createElement('div');chip.className='chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;chip.addEventListener('dragstart',function(e){sbDragged=chip;e.dataTransfer.setData('text/plain','');setTimeout(function(){chip.style.opacity='0.4';},0);});chip.addEventListener('dragend',function(){chip.style.opacity='';sbDragged=null;var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode)c.parentNode.removeChild(c);});return chip;}
+function sbRegisterZone(zone,idx){zone.addEventListener('dragover',function(e){e.preventDefault();if(!sbDragged)return;var cursor=getSbCursor();var before=getSbInsertPos(zone,e.clientX);if(before)zone.insertBefore(cursor,before);else zone.appendChild(cursor);});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode===zone)zone.removeChild(c);}});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged)return;var cursor=document.getElementById('sb-insert-cursor');if(cursor&&cursor.parentNode===zone){zone.insertBefore(sbDragged,cursor);zone.removeChild(cursor);}else zone.appendChild(sbDragged);sbDragged=null;sbUpdateCapitalization(document.getElementById('sb-row-'+idx));sbCheckAuto(idx);});}
+function sbColorRow(idx){var row=document.getElementById('sb-row-'+idx);var chips=Array.from(row.querySelectorAll('.chip'));var order=chips.map(function(c){return c.dataset.orig;});var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});var ex=row.querySelector('.sb-punkt');if(ex)ex.parentNode.removeChild(ex);if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}return ok;}
+function sbCheckAuto(idx){var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx);if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}setTimeout(function(){timerAutoStart(3);var ok=sbColorRow(idx);if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='✓ Korrekt!';sbCheckAllDone();}else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!';}},500);}
+function sbCheckAllDone(){var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});if(allOk)timerStop(3);}
+function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx),solution=satzbauData[idx].valid[0];var allChips={};Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCapitalize(word):word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});fb.textContent='';setTimeout(function(){sbCheckAuto(idx);},100);}
+
+function initSatzbau(){
+    var container=document.getElementById('satzbauContainer');container.innerHTML='';
+    satzbauData.forEach(function(ex,idx){
+        var nr=document.createElement('div');nr.className='sb-nr';nr.textContent='Satz '+(idx+1);container.appendChild(nr);
+        var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;container.appendChild(bank);
+        var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;container.appendChild(row);
+        var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;container.appendChild(fb);
+        var solBtn=document.createElement('button');solBtn.className='solution-btn';solBtn.textContent='Lösung anzeigen';solBtn.style.marginBottom='18px';
+        (function(i){solBtn.addEventListener('click',function(){sbShowSolution(i);});})(idx);
+        container.appendChild(solBtn);
+        var parts=ex.parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}
+        parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});
+        sbRegisterZone(bank,idx);sbRegisterZone(row,idx);
+    });
+}
+function sbResetAll(){timerResetOne(3);initSatzbau();}
+
+// ─── Multiple Choice ──────────────────────────────────────────────────────────
+var MC_DATA = [
+    { frage:'Mein Sohn ist _____ als ich. (klug)', choices:['klug','kluger','klüger'], correct:'klüger' },
+    { frage:'Der Elefant ist _____ als die Maus. (groß)', choices:['großer','größer','größter'], correct:'größer' },
+    { frage:'In Berlin wohnen _____ Menschen als in Gronau. (viel)', choices:['vieler','mehr','mehrer'], correct:'mehr' },
+    { frage:'Mein Lehrer erklärt _____ als andere. (gut)', choices:['guter','besser','mehr gut'], correct:'besser' },
+    { frage:'Sie ist _____ als ihr Bruder. (jung)', choices:['junger','jünger','jüngste'], correct:'jünger' },
+    { frage:'Das Glas ist _____ als die Flasche. (voll)', choices:['voller','völler','füller'], correct:'voller' },
+    { frage:'Ich esse _____ Tomaten als Zwiebeln. (gern)', choices:['gerner','lieber','liebend'], correct:'lieber' },
+    { frage:'Der Eiffelturm ist _____ als das Haus. (hoch)', choices:['hocher','höher','hochter'], correct:'höher' },
+    { frage:'Die Küche ist _____ als das Schlafzimmer. (teuer → teurer)', choices:['teuerer','teurer','teuerst'], correct:'teurer' },
+    { frage:'Das Zimmer ist _____ als der Flur. (dunkel → dunkler)', choices:['dunkeler','dunkler','dunklerer'], correct:'dunkler' }
+];
+var mcDoneArr = new Array(MC_DATA.length).fill(false);
+
+function buildMc(){
+    var container=document.getElementById('mcContainer');container.innerHTML='';
+    MC_DATA.forEach(function(item,idx){
+        var div=document.createElement('div');div.className='mc-aufgabe';
+        var frage=document.createElement('div');frage.className='mc-frage';frage.textContent=(idx+1)+'. '+item.frage;
+        div.appendChild(frage);
+        var choices=document.createElement('div');choices.className='mc-choices';
+        item.choices.forEach(function(c){
+            var btn=document.createElement('button');btn.className='mc-choice';btn.textContent=c;
+            btn.addEventListener('click',function(){
+                if(mcDoneArr[idx])return;
+                if(c===item.correct){btn.classList.add('ok');mcDoneArr[idx]=true;}
+                else{btn.classList.add('no');setTimeout(function(){btn.classList.remove('no');},800);}
+            });
+            choices.appendChild(btn);
+        });
+        div.appendChild(choices);
+        container.appendChild(div);
+    });
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function(){
+    buildMcSteps();
+    buildLuecken(LT1,'luecken1');
+    buildLuecken(LT2,'luecken2');
+    initSatzbau();
+    buildMc();
+});
+</script>
+</body>
+</html>

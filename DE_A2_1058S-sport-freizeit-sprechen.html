@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1058S · Über Sport und Freizeit sprechen</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; padding: 20px;
+}
+.container {
+    max-width: 1000px; margin: 0 auto;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 30px; text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p  { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav {
+    display: flex; flex-wrap: nowrap; background: #f8f9fa;
+    border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
+}
+.nav-btn {
+    flex: 1; padding: 14px 10px; text-align: center; cursor: pointer;
+    border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;
+    transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: transparent; border-top: none; border-left: none;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: none; }
+}
+
+/* ===== AUSSPRACHE ===== */
+.aussprachebox { background: #f8f7ff; border-radius: 12px; padding: 20px 24px; margin-bottom: 18px; }
+.aussprachebox h3 { color: #4a148c; font-size: 1em; margin-bottom: 12px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.sound-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.sound-card { background: white; border-radius: 10px; padding: 12px 14px; text-align: center; border: 2px solid #e0d7ff; }
+.sound-card .sound-symbol { font-size: 1.6em; font-weight: 700; color: #667eea; margin-bottom: 4px; }
+.sound-card .sound-rule { font-size: 0.8em; color: #555; }
+.word-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.word-chip { background: #e8e0ff; color: #4a148c; border-radius: 16px; padding: 5px 12px; font-size: 0.88em; font-weight: 600; cursor: default; }
+.word-chip .highlight { color: #e74c3c; font-weight: 900; }
+.sort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.sort-col { border-radius: 10px; overflow: hidden; }
+.sort-col-hdr { background: #667eea; color: white; padding: 8px 14px; font-size: 0.9em; font-weight: 700; }
+.sort-drop { min-height: 56px; padding: 10px; border: 2px dashed #c5cae9; display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; background: #fafbff; border-radius: 0 0 10px 10px; transition: background .2s; }
+.sort-drop.dragover { background: #e8eaff; border-color: #667eea; }
+.sort-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 56px; border: 1px dashed #bbb; margin-bottom: 14px; }
+.sort-chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 5px 12px; cursor: grab; font-size: 0.85em; user-select: none; white-space: nowrap; transition: background .15s; }
+.sort-chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
+.sort-chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+
+/* ===== REDEMITTEL / QA ===== */
+.rm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.rm-card { background: #f0ecff; border-radius: 8px; padding: 10px 14px; font-size: 0.88em; color: #4a148c; border-left: 3px solid #764ba2; }
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f0f8; border-radius: 10px; min-height: 56px; margin-bottom: 16px; border: 1px dashed #bbb; }
+.qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.qa-frage-cell { background: #f0ecff; border-radius: 8px; padding: 10px 14px; font-weight: 600; color: #4a148c; font-size: 0.9em; display: flex; align-items: center; border-left: 3px solid #764ba2; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 5px 12px; cursor: pointer; font-size: 0.85em; display: inline-block; white-space: normal; user-select: none; transition: background .15s, color .15s; }
+.chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
+.chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+.drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
+@media (max-width: 600px) {
+    .qa-grid { grid-template-columns: 1fr; }
+    .sort-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== LÜCKENTEXT ===== */
+.lt-block { margin-bottom: 24px; }
+.lt-block h3 { font-size: 1em; color: #4a148c; margin-bottom: 10px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.lt-text { background: #f8f7ff; border-radius: 10px; padding: 16px 20px; line-height: 2.2; font-size: 0.97em; color: #333; }
+.luecken-inp {
+    border: none; border-bottom: 2px solid #c5cae9; background: transparent;
+    outline: none; font-family: inherit; font-size: inherit;
+    transition: border-color .2s; width: 120px; text-align: center; padding: 2px 4px;
+}
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* ===== SATZBAU ===== */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 50px; border: 1px dashed #bbb; margin-bottom: 8px; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 2px dashed #c5cae9; border-radius: 10px; min-height: 48px; background: #fafbff; transition: background .2s; align-items: center; }
+.sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.sb-chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; cursor: grab; font-size: .88em; user-select: none; white-space: nowrap; }
+.sb-chip.ok { background: #27ae60; }
+.sb-chip.no { background: #e74c3c; }
+.sb-punkt { font-weight: 700; color: #4a148c; font-size: 1.1em; padding: 0 4px; align-self: center; }
+.sb-insert-cursor { width: 3px; height: 30px; background: #ffd600; border-radius: 2px; display: none; pointer-events: none; }
+.satzbau-feedback { font-size: .85em; margin-top: 6px; min-height: 20px; color: #555; }
+
+/* ===== ROLLENSPIEL ===== */
+.rolle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.rolle-card { background: #f8f7ff; border-radius: 12px; padding: 18px 20px; border-top: 4px solid #667eea; }
+.rolle-card h3 { color: #4a148c; font-size: 0.97em; margin-bottom: 10px; }
+.rolle-card p { font-size: 0.88em; color: #555; line-height: 1.5; }
+.starter-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.starter { background: #e8e0ff; color: #4a148c; border-radius: 16px; padding: 5px 12px; font-size: 0.82em; font-style: italic; }
+
+/* ===== SHARED ===== */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; font-size: .88em; color: #555; }
+.btn { background: #667eea; color: white; border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: .88em; }
+.btn:hover { background: #5a6fd6; }
+.btn.secondary { background: #9e9e9e; }
+.btn.secondary:hover { background: #757575; }
+.timer-val { font-weight: 700; color: #4a148c; min-width: 36px; }
+h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
+
+/* Footer */
+.footer { text-align: center; padding: 16px; font-size: .8em; color: #888; border-top: 1px solid #eee; }
+.footer a { color: #667eea; text-decoration: none; }
+.author-name { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <span class="big-emoji">🏋️</span>
+    <h1>Über Sport und Freizeit sprechen</h1>
+    <p>A2 · Lektion 1058S · Sport &amp; Freizeit</p>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab(0,this)">
+      <span class="nav-emoji">🔊</span><span class="nav-label">Aussprache</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(1,this)">
+      <span class="nav-emoji">💬</span><span class="nav-label">Redemittel</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(2,this)">
+      <span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(3,this)">
+      <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(4,this)">
+      <span class="nav-emoji">🎭</span><span class="nav-label">Rollenspiel</span>
+    </button>
+  </nav>
+
+  <!-- ===== TAB 0: AUSSPRACHE ===== -->
+  <section id="sec-0" class="section aktiv">
+    <h2>🔊 Aussprache: f, v und w</h2>
+    <div class="aussprachebox">
+      <h3>Die drei Laute</h3>
+      <div class="sound-grid">
+        <div class="sound-card">
+          <div class="sound-symbol">[f]</div>
+          <div class="sound-rule"><strong>f</strong> → immer [f]<br>z.B. <em>Fitness, fliegen</em></div>
+        </div>
+        <div class="sound-card">
+          <div class="sound-symbol">[f] oder [v]</div>
+          <div class="sound-rule"><strong>v</strong> → meistens [f]<br>bei Fremdwörtern: [v]</div>
+        </div>
+        <div class="sound-card">
+          <div class="sound-symbol">[v]</div>
+          <div class="sound-rule"><strong>w</strong> → immer [v]<br>z.B. <em>wohnen, Wasser</em></div>
+        </div>
+      </div>
+      <div class="word-row">
+        <span class="word-chip"><span class="highlight">V</span>ater [f]</span>
+        <span class="word-chip"><span class="highlight">v</span>erlieren [f]</span>
+        <span class="word-chip"><span class="highlight">V</span>ogel [f]</span>
+        <span class="word-chip">ge<span class="highlight">w</span>innen [v]</span>
+        <span class="word-chip"><span class="highlight">W</span>ohnung [v]</span>
+        <span class="word-chip"><span class="highlight">f</span>eiern [f]</span>
+        <span class="word-chip"><span class="highlight">V</span>ase [v]</span>
+        <span class="word-chip">Uni<span class="highlight">v</span>ersität [v]</span>
+      </div>
+    </div>
+
+    <div class="aussprachebox">
+      <h3>Sortier-Übung: v wie [f] oder v wie [v]?</h3>
+      <p style="font-size:.88em;color:#888;margin-bottom:10px;">Ziehe die Wörter in die richtige Spalte!</p>
+      <div class="sort-bank" id="sortBank"></div>
+      <div class="sort-grid">
+        <div class="sort-col">
+          <div class="sort-col-hdr">v wie [f]</div>
+          <div class="sort-drop" id="sort-f" data-cat="f"></div>
+        </div>
+        <div class="sort-col">
+          <div class="sort-col-hdr">v wie [v]</div>
+          <div class="sort-drop" id="sort-v" data-cat="v"></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn secondary" onclick="resetSort()">↺ Neu</button>
+        <span id="sortScore" style="font-weight:700;color:#4a148c;"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 1: REDEMITTEL ===== -->
+  <section id="sec-1" class="section">
+    <h2>💬 Über Sport und Freizeit sprechen — Redemittel</h2>
+
+    <div class="aussprachebox" style="margin-bottom:14px;">
+      <h3>Nützliche Redemittel</h3>
+      <div class="rm-grid">
+        <div class="rm-card">Ich mache gern Sport, weil ich fit bleiben möchte.</div>
+        <div class="rm-card">Ich treibe dreimal pro Woche Sport.</div>
+        <div class="rm-card">In meiner Freizeit gehe ich ins Fitnessstudio.</div>
+        <div class="rm-card">Ich achte auf eine gesunde Ernährung.</div>
+        <div class="rm-card">Ich lasse mich nach dem Training massieren.</div>
+        <div class="rm-card">Ich erhole mich am Wochenende beim Spazierengehen.</div>
+        <div class="rm-card">Ich vermeide Stress und schlafe viel.</div>
+        <div class="rm-card">Manche Sportarten sind zu anstrengend für mich.</div>
+      </div>
+    </div>
+
+    <h2>❓ Fragen &amp; Antworten zuordnen</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:14px;">Ordne die Antworten den Fragen zu!</p>
+    <div id="qaContainer"></div>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="resetQa()">↺ Neu</button>
+    </div>
+    <div id="qaFeedback" style="margin-top:10px;font-size:.9em;"></div>
+  </section>
+
+  <!-- ===== TAB 2: LÜCKENTEXT ===== -->
+  <section id="sec-2" class="section">
+    <h2>✏️ Lückentext</h2>
+    <div class="btn-row" style="margin-bottom:14px;">
+      ⏱ <span id="t2">0:00</span>
+      <span class="timer-val">🏆 <span id="b2">–</span></span>
+      <button class="btn" onclick="timerResetOne(2)">↺ Neustart</button>
+      <button class="btn secondary" onclick="showLt()">💡 Lösungen</button>
+    </div>
+    <div class="lt-block">
+      <h3>Freds Sport-Routine</h3>
+      <div class="lt-text">
+        Fred macht viel Sport, weil er fit <input class="luecken-inp" id="lt0" data-ans="bleiben" placeholder=""> möchte.
+        Er <input class="luecken-inp" id="lt1" data-ans="trainiert" placeholder=""> immer abends im Fitnessstudio.
+        Außerdem achtet Fred auf eine <input class="luecken-inp" id="lt2" data-ans="gesunde" placeholder=""> Ernährung.
+        Nach der Arbeit und dem Training <input class="luecken-inp" id="lt3" data-ans="erholt" placeholder=""> Fred sich auf dem Sofa.
+      </div>
+    </div>
+    <div class="lt-block">
+      <h3>Lisas freier Tag</h3>
+      <div class="lt-text">
+        Nachdem Lisa alle Aufgaben <input class="luecken-inp" id="lt4" data-ans="erledigt" placeholder=""> hat, kann sie sich erholen.
+        Sie <input class="luecken-inp" id="lt5" data-ans="lässt" placeholder=""> sich massieren.
+        Danach <input class="luecken-inp" id="lt6" data-ans="lässt" placeholder=""> sie sich die Nägel lackieren.
+        Max <input class="luecken-inp" id="lt7" data-ans="mag" placeholder=""> jedes Obst, aber nicht jedes <input class="luecken-inp" id="lt8" data-ans="Gemüse" placeholder="">.
+        Nur <input class="luecken-inp" id="lt9" data-ans="manches" placeholder=""> Gemüse schmeckt ihm gut.
+      </div>
+    </div>
+    <div class="lt-block">
+      <h3>Aussprache: f, v, w</h3>
+      <div class="lt-text">
+        <strong>f</strong> und <strong>v</strong> sprechen wir in deutschen Wörtern beide wie <input class="luecken-inp" id="lt10" data-ans="f" placeholder=""> aus.
+        Das Wort <em>Vater</em> klingt wie <input class="luecken-inp" id="lt11" data-ans="Fater" placeholder="">.
+        Das <strong>w</strong> ist weicher und <input class="luecken-inp" id="lt12" data-ans="stimmhaft" placeholder="">.
+        Bei Fremdwörtern wie <em>Universität</em> spricht man das <strong>v</strong> wie <input class="luecken-inp" id="lt13" data-ans="w" placeholder=""> aus.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 3: SATZBAU ===== -->
+  <section id="sec-3" class="section">
+    <h2>🧩 Satzbau</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:14px;">Bringe die Wörter in die richtige Reihenfolge!</p>
+    <div class="btn-row" style="margin-bottom:16px;">
+      ⏱ <span id="t3">0:00</span>
+      <span class="timer-val">🏆 <span id="b3">–</span></span>
+      <button class="btn" onclick="timerResetOne(3)">↺ Neustart</button>
+      <button class="btn secondary" onclick="sbShowSolution()">💡 Lösungen</button>
+    </div>
+    <div id="satzbauContainer"></div>
+  </section>
+
+  <!-- ===== TAB 4: ROLLENSPIEL ===== -->
+  <section id="sec-4" class="section">
+    <h2>🎭 Rollenspiel</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:16px;">Wähle eine Situation und sprich mit deinem Lernpartner!</p>
+    <div class="rolle-grid">
+      <div class="rolle-card">
+        <h3>💪 Sport oder kein Sport?</h3>
+        <p>Person A: Sport ist sehr wichtig. Erkläre, warum du Sport treibst und wie du fit bleibst.<br><br>Person B: Ich bin zu faul für Sport. Gib Ausreden und lass dich von A überzeugen.</p>
+        <div class="starter-chips">
+          <span class="starter">Ich mache Sport, weil…</span>
+          <span class="starter">Das finde ich zu anstrengend…</span>
+          <span class="starter">Du könntest doch…</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>🥗 Gesunde Ernährung</h3>
+        <p>Erzähle deinem Lernpartner von deiner Ernährung. Was isst du? Achtest du auf gesundes Essen? Machst du Diät?</p>
+        <div class="starter-chips">
+          <span class="starter">Ich achte auf…</span>
+          <span class="starter">Ich esse lieber…</span>
+          <span class="starter">Ich vermeide…</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>😌 Wie erholt man sich?</h3>
+        <p>Person A: Stell Fragen über Freizeit und Erholung.<br><br>Person B: Beantworte die Fragen. Was machst du in der Freizeit? Wie vermeide ich Stress?</p>
+        <div class="starter-chips">
+          <span class="starter">Was machst du in deiner Freizeit?</span>
+          <span class="starter">Wie erholst du dich?</span>
+          <span class="starter">Ich lasse mich…</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+var SORT_DATA = [
+  { word: 'Volk', cat: 'f' },
+  { word: 'verlieren', cat: 'f' },
+  { word: 'Vater', cat: 'f' },
+  { word: 'viel', cat: 'f' },
+  { word: 'brav', cat: 'f' },
+  { word: 'Universität', cat: 'v' },
+  { word: 'Vase', cat: 'v' },
+  { word: 'Advent', cat: 'v' },
+  { word: 'Motiv', cat: 'v' },
+  { word: 'Version', cat: 'v' }
+];
+
+var QA_DATA = [
+  { frage: 'Treibst du gern Sport?', antwort: 'Ja, ich gehe dreimal pro Woche ins Fitnessstudio.' },
+  { frage: 'Wie bleibst du fit?', antwort: 'Ich trainiere und achte auf gesunde Ernährung.' },
+  { frage: 'Was machst du in deiner Freizeit?', antwort: 'Ich erhole mich beim Lesen und Spazierengehen.' },
+  { frage: 'Wie vermeidest du Stress?', antwort: 'Ich mache Yoga und schlafe viel.' },
+  { frage: 'Lässt du manchmal etwas für dich machen?', antwort: 'Ja, ich lasse mich ab und zu massieren.' },
+  { frage: 'Achtest du auf deine Ernährung?', antwort: 'Ich esse fettarm und vermeide Fast Food.' }
+];
+
+var satzbauData = [
+  { words: ['Fred', 'macht', 'viel', 'Sport', 'weil', 'er', 'fit', 'bleiben', 'möchte'], punct: '.' },
+  { words: ['Ich', 'lasse', 'mich', 'nach', 'dem', 'Training', 'massieren'], punct: '.' },
+  { words: ['Manches', 'Gemüse', 'schmeckt', 'ihm', 'sehr', 'gut'], punct: '.' },
+  { words: ['Wie', 'erholst', 'du', 'dich', 'nach', 'der', 'Arbeit'], punct: '?' },
+  { words: ['Ich', 'vermeide', 'Stress', 'und', 'schlafe', 'viel'], punct: '.' },
+  { words: ['f', 'und', 'v', 'klingen', 'in', 'deutschen', 'Wörtern', 'gleich'], punct: '.' },
+  { words: ['Ich', 'achte', 'auf', 'eine', 'gesunde', 'Ernährung'], punct: '.' }
+];
+
+var TIMER_PREFIX = 'a2-1058s-';
+
+// ===== TIMER =====
+var timerStarted   = [false,false,false,false,false];
+var timerRunning   = [false,false,false,false,false];
+var timerSeconds   = [0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null];
+
+function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerAutoStart(n){
+  if(timerStarted[n]) return;
+  timerStarted[n]=true; timerRunning[n]=true;
+  timerIntervals[n]=setInterval(function(){
+    if(!timerRunning[n]) return;
+    timerSeconds[n]++;
+    var el=document.getElementById('t'+n);
+    if(el) el.textContent=timerFmt(timerSeconds[n]);
+  },1000);
+}
+function timerStop(n){
+  if(!timerRunning[n]) return;
+  timerRunning[n]=false;
+  var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');
+  if(timerSeconds[n]<best){
+    best=timerSeconds[n];
+    localStorage.setItem(TIMER_PREFIX+'best-'+n,best);
+    var el=document.getElementById('b'+n);
+    if(el) el.textContent=timerFmt(best);
+  }
+}
+function timerResetOne(n){
+  clearInterval(timerIntervals[n]);
+  timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
+  var el=document.getElementById('t'+n); if(el) el.textContent='0:00';
+  if(n===2) resetLt();
+  if(n===3) initSatzbau();
+}
+function loadBests(){
+  [2,3].forEach(function(n){
+    var v=localStorage.getItem(TIMER_PREFIX+'best-'+n);
+    var el=document.getElementById('b'+n);
+    if(v&&el) el.textContent=timerFmt(parseInt(v));
+  });
+}
+
+// ===== TAB NAVIGATION =====
+function showTab(n, btn){
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('aktiv'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('sec-'+n).classList.add('aktiv');
+  btn.classList.add('active');
+}
+
+// ===== SORTIER-ÜBUNG =====
+var draggedSort = null;
+function initSort(){
+  var bank=document.getElementById('sortBank');
+  bank.innerHTML='';
+  document.getElementById('sort-f').innerHTML='';
+  document.getElementById('sort-v').innerHTML='';
+  document.getElementById('sortScore').textContent='';
+  var items=SORT_DATA.slice();
+  for(var i=items.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=items[i];items[i]=items[j];items[j]=t; }
+  items.forEach(function(item){
+    var chip=document.createElement('div'); chip.className='sort-chip'; chip.textContent=item.word;
+    chip.dataset.cat=item.cat; chip.draggable=true;
+    chip.addEventListener('dragstart',function(e){ draggedSort=chip; e.dataTransfer.effectAllowed='move'; });
+    bank.appendChild(chip);
+  });
+  ['sort-f','sort-v'].forEach(function(id){
+    var drop=document.getElementById(id);
+    drop.addEventListener('dragover',function(e){ e.preventDefault(); drop.classList.add('dragover'); });
+    drop.addEventListener('dragleave',function(){ drop.classList.remove('dragover'); });
+    drop.addEventListener('drop',function(e){
+      e.preventDefault(); drop.classList.remove('dragover');
+      if(draggedSort){
+        drop.appendChild(draggedSort);
+        var correct=draggedSort.dataset.cat===drop.dataset.cat;
+        draggedSort.classList.toggle('ok',correct);
+        draggedSort.classList.toggle('no',!correct);
+        draggedSort=null;
+        checkSortAuto();
+      }
+    });
+  });
+  bank.addEventListener('dragover',function(e){ e.preventDefault(); });
+  bank.addEventListener('drop',function(e){
+    e.preventDefault();
+    if(draggedSort){ bank.appendChild(draggedSort); draggedSort.classList.remove('ok','no'); draggedSort=null; }
+  });
+}
+function checkSortAuto(){
+  var placed=document.querySelectorAll('#sort-f .sort-chip, #sort-v .sort-chip');
+  var correct=0;
+  placed.forEach(function(c){ if(c.classList.contains('ok')) correct++; });
+  if(placed.length===SORT_DATA.length){
+    document.getElementById('sortScore').textContent=correct+' / '+SORT_DATA.length+' richtig';
+  }
+}
+function resetSort(){ initSort(); }
+
+// ===== QA =====
+var draggedChip = null;
+function initQa(){
+  var container=document.getElementById('qaContainer');
+  container.innerHTML='';
+  var answers=QA_DATA.map(function(d){ return d.antwort; });
+  for(var i=answers.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=answers[i];answers[i]=answers[j];answers[j]=t; }
+  var bank=document.createElement('div'); bank.className='chip-bank'; bank.id='qaBank';
+  answers.forEach(function(a){
+    var c=document.createElement('div'); c.className='chip'; c.textContent=a; c.draggable=true;
+    c.addEventListener('dragstart',function(e){ draggedChip=c; e.dataTransfer.effectAllowed='move'; });
+    bank.appendChild(c);
+  });
+  container.appendChild(bank);
+  QA_DATA.forEach(function(item){
+    var grid=document.createElement('div'); grid.className='qa-grid';
+    var fCell=document.createElement('div'); fCell.className='qa-frage-cell'; fCell.textContent=item.frage;
+    var dCell=document.createElement('div'); dCell.className='drop-zone qa-drop-cell'; dCell.dataset.ans=item.antwort;
+    dCell.addEventListener('dragover',function(e){ e.preventDefault(); dCell.classList.add('dragover'); });
+    dCell.addEventListener('dragleave',function(){ dCell.classList.remove('dragover'); });
+    dCell.addEventListener('drop',function(e){
+      e.preventDefault(); dCell.classList.remove('dragover');
+      if(draggedChip){
+        var prev=dCell.querySelector('.chip');
+        if(prev){ document.getElementById('qaBank').appendChild(prev); prev.classList.remove('ok','no'); }
+        dCell.appendChild(draggedChip);
+        var correct=draggedChip.textContent===dCell.dataset.ans;
+        draggedChip.classList.toggle('ok',correct);
+        draggedChip.classList.toggle('no',!correct);
+        draggedChip=null;
+        checkQaAuto();
+      }
+    });
+    grid.appendChild(fCell); grid.appendChild(dCell);
+    container.appendChild(grid);
+  });
+}
+function checkQaAuto(){
+  var all=document.querySelectorAll('#qaContainer .drop-zone');
+  var done=true;
+  all.forEach(function(z){ if(!z.querySelector('.chip.ok')) done=false; });
+  if(done) document.getElementById('qaFeedback').innerHTML='<span style="color:#27ae60;font-weight:700;">✓ Alle Antworten richtig!</span>';
+}
+function resetQa(){ initQa(); document.getElementById('qaFeedback').innerHTML=''; }
+
+// ===== LÜCKENTEXT =====
+var LT_COUNT = 14;
+function resetLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=''; el.classList.remove('ok','no'); }
+  }
+}
+function checkLtInput(el){
+  var ans=el.dataset.ans; var val=el.value.trim();
+  if(val===ans){ el.classList.add('ok'); el.classList.remove('no'); }
+  else if(ans.startsWith(val)&&val.length>0){ el.classList.remove('ok','no'); }
+  else if(val.length>0){ el.classList.add('no'); el.classList.remove('ok'); }
+  else { el.classList.remove('ok','no'); }
+  checkLtAll();
+}
+function checkLtAll(){
+  var all=true;
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el&&!el.classList.contains('ok')) all=false;
+  }
+  if(all) timerStop(2);
+}
+function showLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=el.dataset.ans; el.classList.add('ok'); el.classList.remove('no'); }
+  }
+  timerStop(2);
+}
+
+// ===== SATZBAU =====
+var sbDragged = null;
+function sbFisherYates(arr){
+  for(var i=arr.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=arr[i];arr[i]=arr[j];arr[j]=t; }
+  return arr;
+}
+function sbMakeChip(word, idx, sentIdx){
+  var chip=document.createElement('div');
+  chip.className='sb-chip'; chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
+  chip.addEventListener('dragstart',function(e){ sbDragged=chip; e.dataTransfer.effectAllowed='move'; });
+  chip.addEventListener('dragend',function(){ sbDragged=null; });
+  return chip;
+}
+function sbRegisterZone(zone, sentIdx){
+  var cursor=zone.querySelector('.sb-insert-cursor');
+  zone.addEventListener('dragover',function(e){
+    e.preventDefault(); zone.classList.add('dragover');
+    if(cursor&&sbDragged){
+      var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+      var inserted=false;
+      for(var i=0;i<chips.length;i++){
+        var r=chips[i].getBoundingClientRect();
+        if(e.clientX<r.left+r.width/2){ zone.insertBefore(cursor,chips[i]); cursor.style.display='block'; inserted=true; break; }
+      }
+      if(!inserted){ zone.appendChild(cursor); cursor.style.display='block'; }
+    }
+  });
+  zone.addEventListener('dragleave',function(){ zone.classList.remove('dragover'); if(cursor) cursor.style.display='none'; });
+  zone.addEventListener('drop',function(e){
+    e.preventDefault(); zone.classList.remove('dragover');
+    if(sbDragged){
+      if(cursor&&cursor.parentNode===zone){ zone.insertBefore(sbDragged,cursor); } else { zone.appendChild(sbDragged); }
+      if(cursor) cursor.style.display='none';
+      sbDragged=null;
+      sbUpdateCapitalization(sentIdx);
+      setTimeout(function(){ sbCheckAuto(sentIdx); }, 500);
+    }
+  });
+}
+function sbUpdateCapitalization(idx){
+  var zone=document.getElementById('sb-row-'+idx);
+  if(!zone) return;
+  var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+  chips.forEach(function(chip,pos){
+    var orig=chip.dataset.orig;
+    chip.textContent = pos===0 ? orig.charAt(0).toUpperCase()+orig.slice(1) : orig;
+  });
+}
+function sbColorRow(idx){
+  var zone=document.getElementById('sb-row-'+idx);
+  var fb=document.getElementById('sb-fb-'+idx);
+  if(!zone||!fb) return;
+  var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+  var correct=satzbauData[idx].words;
+  var ok=true;
+  if(chips.length!==correct.length){ ok=false; chips.forEach(function(c){ c.classList.add('no'); c.classList.remove('ok'); }); }
+  else {
+    chips.forEach(function(chip,i){
+      var match=chip.dataset.orig.toLowerCase()===correct[i].toLowerCase();
+      chip.classList.toggle('ok',match); chip.classList.toggle('no',!match);
+      if(!match) ok=false;
+    });
+  }
+  fb.textContent=ok?'✓ Richtig!':'';
+  fb.style.color='#27ae60';
+  return ok;
+}
+function sbCheckAuto(idx){
+  var ok=sbColorRow(idx);
+  if(ok){
+    var allOk=true;
+    for(var i=0;i<satzbauData.length;i++){ if(!sbColorRow(i)) allOk=false; }
+    if(allOk) timerStop(3);
+  }
+}
+function sbShowSolution(){
+  satzbauData.forEach(function(item,idx){
+    var bank=document.getElementById('sb-bank-'+idx);
+    var zone=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    if(!bank||!zone) return;
+    Array.from(zone.querySelectorAll('.sb-chip')).forEach(function(c){ bank.appendChild(c); c.classList.remove('ok','no'); });
+    item.words.forEach(function(w){
+      var chips=Array.from(bank.querySelectorAll('.sb-chip'));
+      var chip=chips.find(function(c){ return c.dataset.orig.toLowerCase()===w.toLowerCase(); });
+      if(chip){ zone.appendChild(chip); }
+    });
+    sbUpdateCapitalization(idx);
+    Array.from(zone.querySelectorAll('.sb-chip')).forEach(function(c){ c.classList.add('ok'); c.classList.remove('no'); });
+    if(fb){ fb.textContent='✓ Lösung'; fb.style.color='#27ae60'; }
+  });
+  timerStop(3);
+}
+function initSatzbau(){
+  var container=document.getElementById('satzbauContainer');
+  container.innerHTML='';
+  satzbauData.forEach(function(item,idx){
+    var builder=document.createElement('div'); builder.className='sentence-builder';
+    var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx;
+    var shuffled=sbFisherYates(item.words.slice());
+    shuffled.forEach(function(w,i){ bank.appendChild(sbMakeChip(w,i,idx)); });
+    var zone=document.createElement('div'); zone.className='sb-zone'; zone.id='sb-row-'+idx;
+    var cursor=document.createElement('div'); cursor.className='sb-insert-cursor'; zone.appendChild(cursor);
+    var punkt=document.createElement('span'); punkt.className='sb-punkt'; punkt.textContent=item.punct;
+    bank.addEventListener('dragover',function(e){ e.preventDefault(); });
+    bank.addEventListener('drop',function(e){
+      e.preventDefault();
+      if(sbDragged){ bank.appendChild(sbDragged); sbDragged=null; sbUpdateCapitalization(idx); setTimeout(function(){ sbCheckAuto(idx); },500); }
+    });
+    sbRegisterZone(zone, idx);
+    var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx;
+    builder.appendChild(bank); builder.appendChild(zone); builder.appendChild(punkt); builder.appendChild(fb);
+    container.appendChild(builder);
+  });
+  timerStarted[3]=false; timerRunning[3]=false; timerSeconds[3]=0;
+  var el=document.getElementById('t3'); if(el) el.textContent='0:00';
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', function(){
+  initSort();
+  initQa();
+  initSatzbau();
+  loadBests();
+  for(var i=0;i<LT_COUNT;i++){
+    (function(idx){
+      var el=document.getElementById('lt'+idx);
+      if(el) el.addEventListener('input',function(){ timerAutoStart(2); checkLtInput(el); });
+    })(i);
+  }
+});
+</script>
+</body>
+</html>

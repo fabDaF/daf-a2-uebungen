@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1043G · Nebensätze mit dass und weil</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+h1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 22px 28px; font-size: 1.5rem; letter-spacing: .5px; }
+h1 span { font-size: .9rem; opacity: .85; margin-left: 10px; }
+
+/* Nav */
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+@media (max-width: 600px) { body { padding: 8px; } .nav { flex-wrap: wrap; } .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; } .nav-btn:last-child { border-right: 1px solid #ddd; } }
+
+/* Sections */
+.section { display: none; }
+.section.active { display: block; }
+.section > div { padding: 28px 28px; }
+h2 { color: #667eea; margin-bottom: 16px; font-size: 1.15rem; }
+h3 { color: #764ba2; margin: 18px 0 8px; font-size: 1rem; }
+p { line-height: 1.7; color: #333; margin-bottom: 10px; }
+
+/* Grammatik-Tabelle */
+.gram-table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; }
+.gram-table th { background: #667eea; color: white; padding: 10px 14px; text-align: left; font-size: .9rem; }
+.gram-table td { padding: 9px 14px; border-bottom: 1px solid #eee; font-size: .92rem; }
+.gram-table tr:nth-child(even) td { background: #f8f8ff; }
+.gram-table .verb { color: #e53935; font-weight: 700; }
+.gram-table .subj { color: #1976d2; font-weight: 700; }
+
+/* Entdecken-Karten */
+.discover-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+@media (max-width: 600px) { .discover-grid { grid-template-columns: 1fr; } }
+.disc-card { background: #f8f8ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: .95rem; }
+.disc-card .label { font-size: .75rem; color: #764ba2; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+
+/* Regel-Box */
+.regel-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 18px; }
+.regel-box h4 { color: #667eea; margin-bottom: 8px; font-size: .95rem; }
+
+/* Lückentext */
+.lt-block { background: #f8f8ff; border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+.lt-block p { margin-bottom: 8px; }
+.lt-input { border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: 1rem; color: #333; width: 80px; outline: none; padding: 2px 4px; transition: border-color .2s; }
+.lt-input:focus { border-color: #667eea; }
+.lt-input.ok { border-color: #4caf50; color: #2e7d32; }
+.lt-input.no { border-color: #e53935; color: #c62828; }
+
+/* Satzbau */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
+.chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
+.chip:active { cursor: grabbing; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
+.sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
+.sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
+.satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
+.satzbau-feedback.ok { color: #4caf50; }
+.satzbau-feedback.no { color: #e53935; }
+
+/* Multiple Choice */
+.mc-item { background: #f8f8ff; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+.mc-item p { margin-bottom: 10px; font-weight: 600; color: #333; }
+.mc-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.mc-btn { padding: 7px 18px; border: 2px solid #667eea; border-radius: 20px; background: white; cursor: pointer; font-size: .9rem; transition: all .2s; }
+.mc-btn:hover { background: #ede7f6; }
+.mc-btn.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+.mc-btn.wrong { background: #ffebee; border-color: #e53935; color: #c62828; }
+.mc-fb { font-size: .82rem; margin-top: 8px; min-height: 1.1em; }
+.mc-fb.ok { color: #4caf50; }
+.mc-fb.no { color: #e53935; }
+
+/* Timer / Btn */
+.btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.btn-small { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 20px; padding: 6px 16px; font-size: .82rem; cursor: pointer; }
+.btn-small:hover { opacity: .88; }
+.timer-display { font-size: .88rem; color: #555; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>1043G · Nebensätze mit <em>dass</em> und <em>weil</em> <span>Grammatik · A2.1</span></h1>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></button>
+  <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">📋</span><span class="nav-label">Regel</span></button>
+  <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+  <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+  <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></button>
+</nav>
+
+<!-- TAB 0: Entdecken -->
+<section class="section active" id="tab-0">
+<div>
+  <h2>🔍 Entdecken — dass oder weil?</h2>
+  <p>Lies die Sätze. Was fällt dir auf? Wo steht das Verb im Nebensatz?</p>
+  <div class="discover-grid">
+    <div class="disc-card">
+      <div class="label">weil — Grund angeben</div>
+      Ich gehe heute ins Kino, <strong>weil</strong> ich den neuen Film sehen <span style="color:#e53935;font-weight:700">möchte</span>.
+    </div>
+    <div class="disc-card">
+      <div class="label">dass — Meinung / Gedanke</div>
+      Ich glaube, <strong>dass</strong> es heute <span style="color:#e53935;font-weight:700">regnet</span>.
+    </div>
+    <div class="disc-card">
+      <div class="label">weil — am Satzanfang</div>
+      <strong>Weil</strong> du Urlaub <span style="color:#e53935;font-weight:700">brauchst</span>, fliegst du nach Mallorca.
+    </div>
+    <div class="disc-card">
+      <div class="label">dass — am Satzanfang</div>
+      <strong>Dass</strong> du nicht kommen <span style="color:#e53935;font-weight:700">kannst</span>, ist schade.
+    </div>
+  </div>
+  <div class="regel-box">
+    <h4>💡 Erkennst du das Muster?</h4>
+    <p>Im Nebensatz (nach <em>dass</em> oder <em>weil</em>) steht das Verb immer am <strong>Ende</strong>!</p>
+  </div>
+</div>
+</section>
+
+<!-- TAB 1: Regel -->
+<section class="section" id="tab-1">
+<div>
+  <h2>📋 Grammatikregel</h2>
+
+  <div class="regel-box">
+    <h4>Nebensätze mit <em>weil</em> — Grund</h4>
+    <p><em>Weil</em> leitet einen Nebensatz ein, der einen <strong>Grund</strong> nennt. Das Verb steht am Ende.</p>
+  </div>
+  <table class="gram-table">
+    <tr><th>Hauptsatz</th><th>Nebensatz mit <em>weil</em> (Verb am Ende!)</th></tr>
+    <tr><td>Ich gehe heute ins Kino,</td><td>weil ich den neuen Film sehen <span class="verb">möchte</span>.</td></tr>
+    <tr><td>Du fliegst nach Mallorca,</td><td>weil du Urlaub <span class="verb">brauchst</span>.</td></tr>
+    <tr><td>Er weint,</td><td>weil er traurig <span class="verb">ist</span>.</td></tr>
+  </table>
+
+  <div class="regel-box">
+    <h4>Nebensätze mit <em>dass</em> — Meinung / Gedanke / Gefühl</h4>
+    <p><em>Dass</em> leitet Nebensätze ein, die Meinungen, Gedanken oder Gefühle ausdrücken. Das Verb steht am Ende.</p>
+  </div>
+  <table class="gram-table">
+    <tr><th>Hauptsatz (Ausdruck)</th><th>Nebensatz mit <em>dass</em> (Verb am Ende!)</th></tr>
+    <tr><td>Ich glaube,</td><td>dass es heute <span class="verb">regnet</span>.</td></tr>
+    <tr><td>Es ist schade,</td><td>dass du nicht kommen <span class="verb">kannst</span>.</td></tr>
+    <tr><td>Ihr seid überzeugt,</td><td>dass ihr eine gute Note <span class="verb">bekommt</span>.</td></tr>
+  </table>
+
+  <div class="regel-box">
+    <h4>Nebensatz am Satzanfang</h4>
+    <p>Der Nebensatz kann auch <strong>vor</strong> dem Hauptsatz stehen. Dann steht das Verb des Hauptsatzes direkt nach dem Komma (Position 1).</p>
+  </div>
+  <table class="gram-table">
+    <tr><th>Nebensatz</th><th>Hauptsatz (Verb an Position 1)</th></tr>
+    <tr><td>Weil ich den neuen Film sehen möchte,</td><td><span class="verb">gehe</span> ich heute ins Kino.</td></tr>
+    <tr><td>Dass du nicht kommen kannst,</td><td><span class="verb">ist</span> schade.</td></tr>
+  </table>
+</div>
+</section>
+
+<!-- TAB 2: Lückentext -->
+<section class="section" id="tab-2">
+<div>
+  <h2>✏️ Lückentext</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="lt-best">—</span></span>
+    <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
+    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 1 — <em>dass</em> oder <em>weil</em>?</h3>
+    <p>1. Hans und Hanni gehen nach Hause, <input class="lt-input" id="lt0" data-ans="weil" placeholder="" oninput="ltCheck(this)"> sie müde sind.</p>
+    <p>2. Franzi isst ein Brot, <input class="lt-input" id="lt1" data-ans="weil" placeholder="" oninput="ltCheck(this)"> sie Hunger hat.</p>
+    <p>3. Bene denkt, <input class="lt-input" id="lt2" data-ans="dass" placeholder="" oninput="ltCheck(this)"> er nicht dünn genug ist.</p>
+    <p>4. Ihr findet, <input class="lt-input" id="lt3" data-ans="dass" placeholder="" oninput="ltCheck(this)"> ihr zu viel arbeitet.</p>
+    <p>5. Du kündigst, <input class="lt-input" id="lt4" data-ans="weil" placeholder="" oninput="ltCheck(this)"> die Arbeit keinen Spaß macht.</p>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 2 — Verb am Ende eintragen</h3>
+    <p>1. Ich übe, weil ich Klavier spielen <input class="lt-input" id="lt5" data-ans="möchte" placeholder="" oninput="ltCheck(this)" style="width:100px">.</p>
+    <p>2. Er spart, weil er Urlaub machen <input class="lt-input" id="lt6" data-ans="will" placeholder="" oninput="ltCheck(this)" style="width:80px">.</p>
+    <p>3. Wir besuchen das Museum, weil es neu <input class="lt-input" id="lt7" data-ans="ist" placeholder="" oninput="ltCheck(this)" style="width:60px">.</p>
+    <p>4. Sie geht nach Hause, weil der Laden zu <input class="lt-input" id="lt8" data-ans="ist" placeholder="" oninput="ltCheck(this)" style="width:60px">.</p>
+    <p>5. Ich glaube, dass du sehr nett <input class="lt-input" id="lt9" data-ans="bist" placeholder="" oninput="ltCheck(this)" style="width:70px">.</p>
+    <p>6. Es ist schade, dass du nicht kommen <input class="lt-input" id="lt10" data-ans="kannst" placeholder="" oninput="ltCheck(this)" style="width:90px">.</p>
+  </div>
+</div>
+</section>
+
+<!-- TAB 3: Satzbau -->
+<section class="section" id="tab-3">
+<div>
+  <h2>🧩 Satzbau</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="sb-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(3)">↺ Neustart</button>
+    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+  </div>
+  <div id="satzbauContainer"></div>
+</div>
+</section>
+
+<!-- TAB 4: Multiple Choice -->
+<section class="section" id="tab-4">
+<div>
+  <h2>🎯 Multiple Choice</h2>
+  <div id="mcContainer"></div>
+  <button class="btn-small" onclick="mcReset()">↺ Neustart</button>
+</div>
+</section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ===== TAB NAVIGATION ===== */
+var TABS = 5;
+function showTab(n) {
+  for (var i = 0; i < TABS; i++) {
+    var s = document.getElementById('tab-' + i);
+    var b = document.querySelectorAll('.nav-btn')[i];
+    if (s) s.classList.toggle('active', i === n);
+    if (b) b.classList.toggle('active', i === n);
+  }
+  if (n === 3) timerAutoStart(3);
+}
+
+/* ===== TIMER ===== */
+var TIMER_PREFIX = 'a2-1043g-';
+var timerStarted = [false, false, false, false, false];
+var timerRunning = [false, false, false, false, false];
+var timerSeconds = [0, 0, 0, 0, 0];
+var timerIntervals = [null, null, null, null, null];
+function timerFmt(s) { return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + s % 60; }
+function timerTick(n) { timerSeconds[n]++; var el = document.getElementById(['', '', 'lt-time', 'sb-time', ''][n]); if (el) el.textContent = timerFmt(timerSeconds[n]); }
+function timerAutoStart(n) {
+  if (timerStarted[n]) return; timerStarted[n] = true; timerRunning[n] = true;
+  timerIntervals[n] = setInterval(function() { timerTick(n); }, 1000);
+}
+function timerStop(n) {
+  if (!timerRunning[n]) return; timerRunning[n] = false;
+  clearInterval(timerIntervals[n]);
+  var best = parseInt(localStorage.getItem(TIMER_PREFIX + 'best-' + n) || '99999');
+  if (timerSeconds[n] < best) localStorage.setItem(TIMER_PREFIX + 'best-' + n, timerSeconds[n]);
+  var b = parseInt(localStorage.getItem(TIMER_PREFIX + 'best-' + n));
+  var el = document.getElementById(['', '', 'lt-best', 'sb-best', ''][n]);
+  if (el) el.textContent = timerFmt(b);
+}
+function timerResetOne(n) {
+  clearInterval(timerIntervals[n]); timerStarted[n] = false; timerRunning[n] = false; timerSeconds[n] = 0;
+  var el = document.getElementById(['', '', 'lt-time', 'sb-time', ''][n]);
+  if (el) el.textContent = '0:00';
+  if (n === 3) initSatzbau();
+}
+[2, 3].forEach(function(n) {
+  var b = localStorage.getItem(TIMER_PREFIX + 'best-' + n);
+  if (b) { var el = document.getElementById(['', '', 'lt-best', 'sb-best', ''][n]); if (el) el.textContent = timerFmt(parseInt(b)); }
+});
+
+/* ===== LÜCKENTEXT ===== */
+var ltDone = false; var ltStarted = false; var ltTimer = null; var ltSec = 0;
+function ltCheck(inp) {
+  if (!ltStarted) { ltStarted = true; timerAutoStart(2); }
+  var val = inp.value.trim();
+  var ans = inp.dataset.ans;
+  if (val === ans) { inp.classList.add('ok'); inp.classList.remove('no'); }
+  else if (ans.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) { inp.classList.remove('ok', 'no'); }
+  else if (val.length > 0) { inp.classList.add('no'); inp.classList.remove('ok'); }
+  else { inp.classList.remove('ok', 'no'); }
+  var all = document.querySelectorAll('.lt-input');
+  if (Array.from(all).every(function(i) { return i.classList.contains('ok'); })) {
+    if (!ltDone) { ltDone = true; timerStop(2); }
+  }
+}
+function ltRestart() {
+  timerResetOne(2); ltStarted = false; ltDone = false; ltSec = 0;
+  document.querySelectorAll('.lt-input').forEach(function(i) { i.value = ''; i.classList.remove('ok', 'no'); });
+}
+function ltShowSolutions() {
+  document.querySelectorAll('.lt-input').forEach(function(i) { i.value = i.dataset.ans; i.classList.add('ok'); i.classList.remove('no'); });
+}
+
+/* ===== SATZBAU ===== */
+var satzbauData = [
+  { words: ['Ich', 'gehe', 'ins', 'Kino', 'weil', 'ich', 'den', 'Film', 'sehen', 'möchte'], punct: '.' },
+  { words: ['Weil', 'du', 'Urlaub', 'brauchst', 'fliegst', 'du', 'nach', 'Mallorca'], punct: '.' },
+  { words: ['Er', 'weint', 'weil', 'er', 'traurig', 'ist'], punct: '.' },
+  { words: ['Ich', 'glaube', 'dass', 'es', 'heute', 'regnet'], punct: '.' },
+  { words: ['Es', 'ist', 'schade', 'dass', 'du', 'nicht', 'kommen', 'kannst'], punct: '.' },
+  { words: ['Sie', 'weiß', 'viel', 'weil', 'sie', 'viel', 'liest'], punct: '.' },
+  { words: ['Ich', 'finde', 'dass', 'das', 'Museum', 'sehr', 'schön', 'ist'], punct: '.' }
+];
+var sbDragged = null;
+
+function sbMakeChip(word, orig) {
+  var c = document.createElement('div');
+  c.className = 'chip'; c.textContent = word; c.dataset.orig = orig; c.draggable = true;
+  c.addEventListener('dragstart', function(e) { sbDragged = c; e.dataTransfer.effectAllowed = 'move'; });
+  c.addEventListener('dragend', function() { sbDragged = null; document.querySelectorAll('.sb-insert-cursor').forEach(function(x) { x.remove(); }); });
+  return c;
+}
+function sbRegisterZone(zone, rowIdx) {
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+    var cursor = zone.querySelector('.sb-insert-cursor');
+    if (!cursor) { cursor = document.createElement('div'); cursor.className = 'sb-insert-cursor'; cursor.style.height = '28px'; }
+    var after = null; var children = Array.from(zone.children).filter(function(c) { return !c.classList.contains('sb-insert-cursor') && !c.classList.contains('sb-punkt'); });
+    for (var i = 0; i < children.length; i++) { var r = children[i].getBoundingClientRect(); if (e.clientX < r.left + r.width / 2) { after = children[i]; break; } }
+    if (after) zone.insertBefore(cursor, after); else { var p = zone.querySelector('.sb-punkt'); if (p) zone.insertBefore(cursor, p); else zone.appendChild(cursor); }
+    zone.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave', function(e) { if (!zone.contains(e.relatedTarget)) { zone.classList.remove('drag-over'); zone.querySelectorAll('.sb-insert-cursor').forEach(function(x) { x.remove(); }); } });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    var cursor = zone.querySelector('.sb-insert-cursor');
+    if (sbDragged) {
+      if (cursor) zone.insertBefore(sbDragged, cursor);
+      else { var p = zone.querySelector('.sb-punkt'); if (p) zone.insertBefore(sbDragged, p); else zone.appendChild(sbDragged); }
+    }
+    zone.querySelectorAll('.sb-insert-cursor').forEach(function(x) { x.remove(); });
+    sbUpdateCapitalization(zone);
+    setTimeout(function() { sbCheckAuto(rowIdx); }, 500);
+  });
+}
+function sbColorRow(zone, ok) {
+  zone.querySelectorAll('.chip').forEach(function(c) {
+    c.style.background = ok ? '#e8f5e9' : ok === false ? '#ffebee' : '#fff';
+    c.style.borderColor = ok ? '#4caf50' : ok === false ? '#e53935' : '#667eea';
+  });
+}
+function sbUpdateCapitalization(zone) {
+  var chips = Array.from(zone.querySelectorAll('.chip'));
+  chips.forEach(function(c, i) {
+    var orig = c.dataset.orig;
+    c.textContent = i === 0 ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig;
+  });
+}
+function sbCheckAuto(rowIdx) {
+  var zone = document.getElementById('sb-row-' + rowIdx);
+  var fb = document.getElementById('sb-fb-' + rowIdx);
+  if (!zone) return;
+  var chips = Array.from(zone.querySelectorAll('.chip'));
+  var words = chips.map(function(c) { return c.dataset.orig.toLowerCase(); });
+  var expected = satzbauData[rowIdx].words.map(function(w) { return w.toLowerCase(); });
+  var ok = words.length === expected.length && words.every(function(w, i) { return w === expected[i]; });
+  sbColorRow(zone, ok ? true : chips.length > 0 ? false : null);
+  if (fb) { fb.textContent = ok ? '✓ Richtig!' : chips.length > 0 ? 'Noch nicht richtig …' : ''; fb.className = 'satzbau-feedback' + (ok ? ' ok' : chips.length > 0 ? ' no' : ''); }
+  if (ok) {
+    var allOk = satzbauData.every(function(_, i) {
+      var z = document.getElementById('sb-row-' + i); if (!z) return false;
+      var ch = Array.from(z.querySelectorAll('.chip'));
+      var ex = satzbauData[i].words.map(function(w) { return w.toLowerCase(); });
+      return ch.length === ex.length && ch.every(function(c, j) { return c.dataset.orig.toLowerCase() === ex[j]; });
+    });
+    if (allOk) timerStop(3);
+  }
+}
+function sbShowSolution() {
+  satzbauData.forEach(function(d, i) {
+    var bank = document.getElementById('sb-bank-' + i);
+    var zone = document.getElementById('sb-row-' + i);
+    if (!bank || !zone) return;
+    bank.innerHTML = '';
+    var pt = zone.querySelector('.sb-punkt');
+    Array.from(zone.querySelectorAll('.chip')).forEach(function(c) { bank.appendChild(c); });
+    d.words.forEach(function(w, j) {
+      var c = sbMakeChip(j === 0 ? w.charAt(0).toUpperCase() + w.slice(1) : w, w);
+      if (pt) zone.insertBefore(c, pt); else zone.appendChild(c);
+    });
+    sbColorRow(zone, true);
+    var fb = document.getElementById('sb-fb-' + i);
+    if (fb) { fb.textContent = '✓ Lösung'; fb.className = 'satzbau-feedback ok'; }
+  });
+}
+function initSatzbau() {
+  var cont = document.getElementById('satzbauContainer');
+  cont.innerHTML = '';
+  satzbauData.forEach(function(d, i) {
+    var shuffled = d.words.slice();
+    for (var k = shuffled.length - 1; k > 0; k--) { var r = Math.floor(Math.random() * (k + 1)); var t = shuffled[k]; shuffled[k] = shuffled[r]; shuffled[r] = t; }
+    var wrap = document.createElement('div'); wrap.className = 'sentence-builder';
+    var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + i;
+    shuffled.forEach(function(w) { bank.appendChild(sbMakeChip(w, w)); });
+    var zone = document.createElement('div'); zone.className = 'sb-zone'; zone.id = 'sb-row-' + i;
+    var pt = document.createElement('span'); pt.className = 'sb-punkt'; pt.textContent = d.punct;
+    zone.appendChild(pt);
+    sbRegisterZone(zone, i);
+    var fb = document.createElement('div'); fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + i;
+    wrap.appendChild(bank); wrap.appendChild(zone); wrap.appendChild(fb);
+    cont.appendChild(wrap);
+  });
+}
+
+/* ===== MULTIPLE CHOICE ===== */
+var MC_DATA = [
+  { q: 'Welche Subjunktion passt? Ich gehe nach Hause, ___ es schon spät ist.', opts: ['weil', 'dass'], ans: 'weil' },
+  { q: 'Welche Subjunktion passt? Ich glaube, ___ du Recht hast.', opts: ['weil', 'dass'], ans: 'dass' },
+  { q: 'Wo steht das Verb im Nebensatz?', opts: ['am Anfang', 'am Ende', 'in der Mitte'], ans: 'am Ende' },
+  { q: 'Was drückt <em>weil</em> aus?', opts: ['einen Grund', 'eine Meinung', 'eine Zeit'], ans: 'einen Grund' },
+  { q: 'Was drückt <em>dass</em> aus?', opts: ['einen Grund', 'eine Meinung/einen Gedanken', 'eine Zeit'], ans: 'eine Meinung/einen Gedanken' },
+  { q: 'Welcher Satz ist richtig?', opts: ['Ich glaube, dass er kommt morgen.', 'Ich glaube, dass er morgen kommt.', 'Ich glaube, dass morgen kommt er.'], ans: 'Ich glaube, dass er morgen kommt.' },
+  { q: 'Welcher Satz ist richtig?', opts: ['Weil er müde ist, er geht schlafen.', 'Weil er müde ist, geht er schlafen.', 'Er geht schlafen weil er ist müde.'], ans: 'Weil er müde ist, geht er schlafen.' }
+];
+function initMc() {
+  var cont = document.getElementById('mcContainer');
+  cont.innerHTML = '';
+  MC_DATA.forEach(function(d, i) {
+    var div = document.createElement('div'); div.className = 'mc-item';
+    var pq = document.createElement('p'); pq.innerHTML = (i + 1) + '. ' + d.q;
+    var opts = document.createElement('div'); opts.className = 'mc-opts';
+    var fb = document.createElement('div'); fb.className = 'mc-fb'; fb.id = 'mc-fb-' + i;
+    d.opts.forEach(function(o) {
+      var btn = document.createElement('button'); btn.className = 'mc-btn'; btn.textContent = o;
+      btn.onclick = function() {
+        var btns = opts.querySelectorAll('.mc-btn');
+        btns.forEach(function(b) { b.classList.remove('correct', 'wrong'); });
+        var correct = o === d.ans;
+        btn.classList.add(correct ? 'correct' : 'wrong');
+        fb.textContent = correct ? '✓ Richtig!' : '✗ Nicht ganz — die richtige Antwort ist: ' + d.ans;
+        fb.className = 'mc-fb ' + (correct ? 'ok' : 'no');
+      };
+      opts.appendChild(btn);
+    });
+    div.appendChild(pq); div.appendChild(opts); div.appendChild(fb);
+    cont.appendChild(div);
+  });
+}
+function mcReset() { initMc(); }
+
+/* ===== INIT ===== */
+initSatzbau();
+initMc();
+</script>
+</body>
+</html>

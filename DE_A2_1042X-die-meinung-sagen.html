@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1042X · Die Meinung sagen</title>
+<style>
+/* ===== LAYOUT (daf-html-layout Skill) ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}
+.container{max-width:1000px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.2)}
+h1{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:22px 28px;font-size:1.5rem;letter-spacing:.5px}
+h1 span{font-size:.95rem;opacity:.85;margin-left:10px}
+
+/* Nav */
+.nav{display:flex;flex-wrap:nowrap;background:#f8f9fa;border-top:1px solid #ddd;border-left:1px solid #ddd;border-right:1px solid #ddd}
+.nav-btn{flex:1;padding:14px 10px;text-align:center;cursor:pointer;border-right:1px solid #ddd;border-bottom:1px solid #ddd;transition:all 0.3s;font-size:0.92em;font-weight:500;color:#666;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.nav-btn:last-child{border-right:none}
+.nav-btn:hover{background:#e8ecff;color:#667eea}
+.nav-btn.active{background:white;color:#667eea;font-weight:700;border-bottom:3px solid #667eea}
+.nav-emoji{font-size:1.3em;line-height:1.2}
+.nav-label{font-size:0.78em;margin-top:2px;line-height:1.2}
+@media(max-width:600px){body{padding:8px}.nav{flex-wrap:wrap}.nav-btn{flex:1 1 33%;min-width:0;font-size:0.8em;padding:10px 6px;border-right:1px solid #ddd}.nav-btn:last-child{border-right:1px solid #ddd}}
+
+/* Sections */
+.section{display:none;padding:28px 24px}
+.section.active{display:block}
+h2{color:#667eea;margin-bottom:16px;font-size:1.15rem}
+h3{color:#764ba2;margin:18px 0 8px;font-size:1rem}
+
+/* Überblick */
+.redmittel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:20px}
+.rm-card{border:2px solid #e8e0f0;border-radius:10px;padding:14px;background:#faf8ff}
+.rm-card .rm-de{font-weight:700;color:#667eea;font-size:1rem;margin-bottom:4px}
+.rm-card .rm-en{color:#888;font-size:.85rem;margin-bottom:8px}
+.rm-card .rm-ex{color:#444;font-size:.9rem;font-style:italic;border-left:3px solid #667eea;padding-left:8px}
+
+/* Lückentext */
+.lt-block{background:#f8f8ff;border-radius:10px;padding:18px;margin-bottom:18px}
+.lt-block p{margin-bottom:10px;line-height:1.7;color:#333}
+.lt-input{border:none;border-bottom:2px solid #aaa;background:transparent;font-size:1rem;color:#333;width:140px;outline:none;padding:2px 4px;transition:border-color .2s}
+.lt-input:focus{border-color:#667eea}
+.lt-input.ok{border-color:#4caf50;color:#2e7d32}
+.lt-input.no{border-color:#e53935;color:#c62828}
+
+/* Zuordnung */
+.zuord-container{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:600px){.zuord-container{grid-template-columns:1fr}}
+.chip-pool{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:#f0f0f0;border-radius:10px;margin-bottom:18px;min-height:48px}
+.zuord-chip{background:#fff;border:2px solid #667eea;border-radius:20px;padding:6px 14px;font-size:.9rem;cursor:grab;user-select:none;transition:background .2s}
+.zuord-chip:active{cursor:grabbing}
+.zuord-chip.placed{opacity:.35}
+.zuord-col{background:#f8f8ff;border-radius:10px;padding:14px}
+.zuord-col h4{color:#764ba2;font-size:.9rem;font-weight:700;margin-bottom:10px;text-align:center}
+.zuord-zone{min-height:44px;border:2px dashed #ccc;border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;transition:background .2s;margin-bottom:6px}
+.zuord-zone.drag-over{background:#ede7f6;border-color:#667eea}
+.zuord-zone .zuord-chip{background:#ede7f6;cursor:default}
+.zuord-zone .zuord-chip.ok{background:#e8f5e9;border-color:#4caf50}
+.zuord-zone .zuord-chip.no{background:#ffebee;border-color:#e53935}
+
+/* Satzbau */
+.sentence-builder{margin-bottom:24px}
+.chips-container{display:flex;flex-wrap:wrap;gap:7px;padding:10px;background:#f0f0f0;border-radius:8px;min-height:46px;margin-bottom:6px}
+.chip{background:#fff;border:2px solid #667eea;border-radius:18px;padding:5px 13px;font-size:.9rem;cursor:grab;user-select:none}
+.chip:active{cursor:grabbing}
+.sb-zone{display:flex;flex-wrap:wrap;gap:7px;padding:10px;min-height:46px;background:#fafafa;border:2px dashed #aaa;border-radius:8px;position:relative}
+.sb-zone.drag-over{background:#ede7f6;border-color:#667eea}
+.sb-insert-cursor{width:3px;background:#667eea;border-radius:2px;align-self:stretch;pointer-events:none}
+.sb-punkt{color:#333;font-size:1rem;align-self:center;margin-left:2px}
+.satzbau-feedback{font-size:.85rem;min-height:1.2em;margin-top:4px}
+.satzbau-feedback.ok{color:#4caf50}
+.satzbau-feedback.no{color:#e53935}
+
+/* Wortschatz */
+.ws-table{width:100%;border-collapse:collapse;margin-top:10px}
+.ws-table th{background:#667eea;color:#fff;padding:8px 10px;text-align:left;font-size:.85rem}
+.ws-table td{padding:8px 10px;border-bottom:1px solid #eee;font-size:.9rem}
+.ws-table tr:nth-child(even) td{background:#f8f8ff}
+.ws-input{border:none;border-bottom:2px solid #aaa;background:transparent;font-size:.95rem;color:#333;width:100%;outline:none;padding:2px 4px}
+.ws-input:focus{border-color:#667eea}
+.ws-input.ok{border-color:#4caf50;color:#2e7d32}
+.ws-input.no{border-color:#e53935;color:#c62828}
+
+/* Timer */
+.btn-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.btn-small{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:20px;padding:6px 16px;font-size:.82rem;cursor:pointer}
+.btn-small:hover{opacity:.88}
+.timer-display{font-size:.88rem;color:#555}
+.score-display{font-size:.85rem;color:#764ba2;font-weight:600;margin-left:auto}
+
+/* Footer */
+.author-footer{text-align:center;margin-top:40px;max-width:1000px;margin-left:auto;margin-right:auto;padding:16px;font-size:0.8rem;color:#aaa}
+.author-footer a{color:#aaa}
+.author-name{font-weight:700}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>1042X · Die Meinung sagen <span>dass-Subjunktion · Redemittel</span></h1>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">📋</span><span class="nav-label">Überblick</span></button>
+  <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+  <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">💬</span><span class="nav-label">Zuordnung</span></button>
+  <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+  <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></button>
+</nav>
+
+<!-- TAB 0: Überblick -->
+<section class="section active" id="tab-0">
+  <h2>📋 Meinung äußern — Redemittel</h2>
+  <div class="redmittel-grid">
+    <div class="rm-card">
+      <div class="rm-de">Ich glaube, dass …</div>
+      <div class="rm-en">I believe that …</div>
+      <div class="rm-ex">Ich glaube, dass Paul um 14 Uhr von der Schule kommt.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Ich denke, dass …</div>
+      <div class="rm-en">I think that …</div>
+      <div class="rm-ex">Ich denke, dass mein Feedback wichtig ist.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Ich finde, dass …</div>
+      <div class="rm-en">I find / I think that …</div>
+      <div class="rm-ex">Ich finde, dass das Museum sehr schön ist.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Meiner Meinung nach …</div>
+      <div class="rm-en">In my opinion …</div>
+      <div class="rm-ex">Meiner Meinung nach ist das Hotel sehr gut.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Ich bin überzeugt davon, dass …</div>
+      <div class="rm-en">I am convinced that …</div>
+      <div class="rm-ex">Ich bin überzeugt davon, dass Laufen gut für den Körper ist.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Ich bin dafür, dass …</div>
+      <div class="rm-en">I am in favour of …</div>
+      <div class="rm-ex">Ich bin dafür, dass wir Sie einstellen.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Ich bin dagegen, dass …</div>
+      <div class="rm-en">I am against …</div>
+      <div class="rm-ex">Ich bin dagegen, dass wir den Mitarbeitern weniger Gehalt zahlen.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Du hast Recht.</div>
+      <div class="rm-en">You are right.</div>
+      <div class="rm-ex">Du hast Recht! Das ist eine gute Idee!</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Da bin ich mir nicht sicher.</div>
+      <div class="rm-en">I'm not sure about that.</div>
+      <div class="rm-ex">Da bin ich mir nicht sicher. Ich weiß es nicht.</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-de">Das glaube ich nicht.</div>
+      <div class="rm-en">I don't believe that.</div>
+      <div class="rm-ex">Das glaube ich nicht! Jetzt muss ich wieder Überstunden machen.</div>
+    </div>
+  </div>
+
+  <h3>📌 Grammatik: Nebensätze mit <em>dass</em></h3>
+  <p style="line-height:1.7;color:#333;">Im Nebensatz steht das Verb am <strong>Ende</strong> des Satzes:</p>
+  <table style="width:100%;border-collapse:collapse;margin-top:10px">
+    <tr style="background:#667eea;color:#fff">
+      <th style="padding:8px 12px;text-align:left">Hauptsatz</th>
+      <th style="padding:8px 12px;text-align:left">Nebensatz (Verb am Ende!)</th>
+    </tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid #eee">Ich glaube,</td><td style="padding:8px 12px;border-bottom:1px solid #eee">dass du sehr nett <strong>bist</strong>.</td></tr>
+    <tr style="background:#f8f8ff"><td style="padding:8px 12px;border-bottom:1px solid #eee">Ich denke,</td><td style="padding:8px 12px;border-bottom:1px solid #eee">dass wir heute ins Museum <strong>gehen</strong>.</td></tr>
+    <tr><td style="padding:8px 12px">Ich finde,</td><td style="padding:8px 12px">dass dir der Pullover sehr gut <strong>steht</strong>.</td></tr>
+  </table>
+</section>
+
+<!-- TAB 1: Lückentext -->
+<section class="section" id="tab-1">
+  <h2>✏️ Lückentext</h2>
+
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="lt-best">—</span></span>
+    <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
+    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 1 — Die richtige Wahl</h3>
+    <p>1. Du hast <input class="lt-input" id="lt0" data-ans="Recht" placeholder="" oninput="ltCheck(this)">! Ich denke auch, wir müssen heute zuhause bleiben.</p>
+    <p>2. Meiner <input class="lt-input" id="lt1" data-ans="Meinung" placeholder="" oninput="ltCheck(this)"> nach ist das eine gute Idee.</p>
+    <p>3. Ich bin überzeugt <input class="lt-input" id="lt2" data-ans="davon" placeholder="" oninput="ltCheck(this)">, dass Sport gut ist.</p>
+    <p>4. Ich <input class="lt-input" id="lt3" data-ans="finde" placeholder="" oninput="ltCheck(this)">, dass du gut aussiehst.</p>
+    <p>5. Ich bin <input class="lt-input" id="lt4" data-ans="dagegen" placeholder="" oninput="ltCheck(this)">, dass mein Kind abends lange draußen bleibt.</p>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 2 — Hauptsatz → Nebensatz mit <em>dass</em></h3>
+    <p style="margin-bottom:10px;color:#555;font-size:.9rem">Schreibe den Satz um: „Ich glaube, dass …"</p>
+    <p>1. Paul kommt um 14 Uhr von der Schule.<br>
+    → Ich glaube, dass Paul um 14 Uhr von der Schule <input class="lt-input" id="lt5" data-ans="kommt" placeholder="" oninput="ltCheck(this)" style="width:90px">.</p>
+    <p>2. Meine Eltern gehen einkaufen.<br>
+    → Ich glaube, dass meine Eltern einkaufen <input class="lt-input" id="lt6" data-ans="gehen" placeholder="" oninput="ltCheck(this)" style="width:90px">.</p>
+    <p>3. Draußen ist schlechtes Wetter.<br>
+    → Ich glaube, dass draußen schlechtes Wetter <input class="lt-input" id="lt7" data-ans="ist" placeholder="" oninput="ltCheck(this)" style="width:90px">.</p>
+    <p>4. Maria und Anna gehen am Wochenende ins Kino.<br>
+    → Ich glaube, dass Maria und Anna am Wochenende ins Kino <input class="lt-input" id="lt8" data-ans="gehen" placeholder="" oninput="ltCheck(this)" style="width:90px">.</p>
+    <p>5. Meine Oma kommt morgen zu Besuch.<br>
+    → Ich glaube, dass morgen meine Oma zu Besuch <input class="lt-input" id="lt9" data-ans="kommt" placeholder="" oninput="ltCheck(this)" style="width:90px">.</p>
+  </div>
+</section>
+
+<!-- TAB 2: Zuordnung -->
+<section class="section" id="tab-2">
+  <h2>💬 Zuordnung — Hauptsatz oder Nebensatz?</h2>
+  <p style="margin-bottom:14px;color:#555;font-size:.9rem">Ziehe jeden Satz in die richtige Spalte.</p>
+
+  <div class="chip-pool" id="zuord-pool"></div>
+
+  <div class="zuord-container">
+    <div class="zuord-col">
+      <h4>Hauptsatz</h4>
+      <div class="zuord-zone" id="z-hs" data-cat="HS"
+        ondragover="zuordDragOver(event)" ondragleave="zuordDragLeave(event)" ondrop="zuordDrop(event,'HS')"></div>
+    </div>
+    <div class="zuord-col">
+      <h4>Nebensatz mit <em>dass</em></h4>
+      <div class="zuord-zone" id="z-ns" data-cat="NS"
+        ondragover="zuordDragOver(event)" ondragleave="zuordDragLeave(event)" ondrop="zuordDrop(event,'NS')"></div>
+    </div>
+  </div>
+  <button class="btn-small" onclick="zuordReset()">↺ Neustart</button>
+</section>
+
+<!-- TAB 3: Satzbau -->
+<section class="section" id="tab-3">
+  <h2>🧩 Satzbau</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="sb-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(3)">↺ Neustart</button>
+    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+  </div>
+  <div id="satzbauContainer"></div>
+</section>
+
+<!-- TAB 4: Wortschatz -->
+<section class="section" id="tab-4">
+  <h2>🔠 Wortschatz — Redemittel tippen</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="ws-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="ws-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(4)">↺ Neustart</button>
+    <button class="btn-small" onclick="wsShowSolutions()">💡 Lösungen</button>
+  </div>
+  <table class="ws-table">
+    <thead><tr><th>Englisch</th><th>Deutsch (tippen)</th></tr></thead>
+    <tbody id="wsBody"></tbody>
+  </table>
+</section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ===== TAB NAVIGATION ===== */
+var TABS=5;
+function showTab(n){
+  for(var i=0;i<TABS;i++){
+    var s=document.getElementById('tab-'+i);
+    var b=document.querySelectorAll('.nav-btn')[i];
+    if(s){s.classList.toggle('active',i===n);}
+    if(b){b.classList.toggle('active',i===n);}
+  }
+  if(n===3) timerAutoStart(3);
+  if(n===4) timerAutoStart(4);
+}
+
+/* ===== TIMER ===== */
+var TIMER_PREFIX='a2-1042x-';
+var timerStarted=[false,false,false,false,false];
+var timerRunning=[false,false,false,false,false];
+var timerSeconds=[0,0,0,0,0];
+var timerIntervals=[null,null,null,null,null];
+function timerFmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+function timerTick(n){timerSeconds[n]++;var el=document.getElementById(['lt-time','lt-time','','sb-time','ws-time'][n]);if(el)el.textContent=timerFmt(timerSeconds[n]);}
+function timerAutoStart(n){
+  if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;
+  timerIntervals[n]=setInterval(function(){timerTick(n);},1000);
+}
+function timerStop(n){
+  if(!timerRunning[n])return;timerRunning[n]=false;
+  clearInterval(timerIntervals[n]);
+  var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');
+  if(timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);}
+  var b=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n));
+  var el=document.getElementById(['','','','sb-best','ws-best'][n]);
+  if(el)el.textContent=timerFmt(b);
+}
+function timerResetOne(n){
+  clearInterval(timerIntervals[n]);timerStarted[n]=false;timerRunning[n]=false;timerSeconds[n]=0;
+  var el=document.getElementById(['','','','sb-time','ws-time'][n]);
+  if(el)el.textContent='0:00';
+  if(n===3)initSatzbau();
+  if(n===4)initWs();
+}
+// Load best times
+[3,4].forEach(function(n){
+  var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);
+  if(b){var el=document.getElementById(['','','','sb-best','ws-best'][n]);if(el)el.textContent=timerFmt(parseInt(b));}
+});
+
+/* ===== LÜCKENTEXT ===== */
+var ltDone=false;
+var ltStarted=false;
+var ltTimer=null;var ltSec=0;
+function ltCheck(inp){
+  if(!ltStarted){ltStarted=true;ltTimer=setInterval(function(){ltSec++;document.getElementById('lt-time').textContent=timerFmt(ltSec);},1000);}
+  var val=inp.value.trim();
+  var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  // Check all done
+  var all=document.querySelectorAll('.lt-input');
+  if(Array.from(all).every(function(i){return i.classList.contains('ok');})){
+    if(!ltDone){ltDone=true;clearInterval(ltTimer);
+      var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-lt')||'99999');
+      if(ltSec<best)localStorage.setItem(TIMER_PREFIX+'best-lt',ltSec);
+      var b=parseInt(localStorage.getItem(TIMER_PREFIX+'best-lt'));
+      document.getElementById('lt-best').textContent=timerFmt(b);
+    }
+  }
+}
+function ltRestart(){
+  clearInterval(ltTimer);ltStarted=false;ltDone=false;ltSec=0;
+  document.getElementById('lt-time').textContent='0:00';
+  document.querySelectorAll('.lt-input').forEach(function(i){i.value='';i.classList.remove('ok','no');});
+}
+function ltShowSolutions(){
+  document.querySelectorAll('.lt-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});
+}
+
+/* ===== ZUORDNUNG ===== */
+var ZUORD_DATA=[
+  {text:'Meiner Meinung nach ist der Film gut.', cat:'HS'},
+  {text:'Ich denke, dass dir der Film gefallen hat.', cat:'NS'},
+  {text:'Ich glaube, dass das Geschäft schon geschlossen ist.', cat:'NS'},
+  {text:'Ich finde, dass das Museum sehr schön ist.', cat:'NS'},
+  {text:'Ich finde den Film sehr gut.', cat:'HS'},
+  {text:'Das glaube ich nicht.', cat:'HS'},
+  {text:'Ich glaube, dass wir heute ins Museum gehen.', cat:'NS'},
+  {text:'Meiner Meinung nach hat der Service fünf Sterne verdient!', cat:'HS'}
+];
+var draggedZuord=null;
+
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+function initZuord(){
+  var pool=document.getElementById('zuord-pool');
+  pool.innerHTML='';
+  document.getElementById('z-hs').innerHTML='';
+  document.getElementById('z-ns').innerHTML='';
+  shuffle(ZUORD_DATA).forEach(function(d,i){
+    var c=document.createElement('div');
+    c.className='zuord-chip';
+    c.textContent=d.text;
+    c.dataset.cat=d.cat;
+    c.dataset.idx=i;
+    c.draggable=true;
+    c.addEventListener('dragstart',function(e){draggedZuord=c;setTimeout(function(){c.classList.add('placed');},0);});
+    c.addEventListener('dragend',function(){c.classList.remove('placed');draggedZuord=null;});
+    pool.appendChild(c);
+  });
+}
+function zuordDragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over');}
+function zuordDragLeave(e){e.currentTarget.classList.remove('drag-over');}
+function zuordDrop(e,cat){
+  e.preventDefault();e.currentTarget.classList.remove('drag-over');
+  if(!draggedZuord)return;
+  draggedZuord.classList.remove('placed');
+  var correctCat=draggedZuord.dataset.cat;
+  var chip=draggedZuord.cloneNode(true);
+  chip.draggable=false;
+  chip.classList.toggle('ok',correctCat===cat);
+  chip.classList.toggle('no',correctCat!==cat);
+  e.currentTarget.appendChild(chip);
+  draggedZuord.remove();
+  draggedZuord=null;
+  colorZuordChips();
+}
+function colorZuordChips(){/* chips already colored on drop */}
+function zuordReset(){initZuord();}
+
+/* ===== SATZBAU (satzbau-drag-drop Skill) ===== */
+var satzbauData=[
+  {words:['Ich','glaube','dass','du','sehr','nett','bist'],punct:'.'},
+  {words:['Ich','denke','dass','wir','heute','ins','Museum','gehen'],punct:'.'},
+  {words:['Meiner','Meinung','nach','ist','das','Hotel','sehr','gut'],punct:'.'},
+  {words:['Ich','bin','überzeugt','davon','dass','Sport','gut','ist'],punct:'.'},
+  {words:['Ich','bin','dafür','dass','wir','Sie','einstellen'],punct:'.'},
+  {words:['Da','bin','ich','mir','nicht','sicher'],punct:'.'},
+  {words:['Ich','bin','dagegen','dass','wir','das','so','machen'],punct:'.'}
+];
+var sbDragged=null;
+
+function sbMakeChip(word,orig){
+  var c=document.createElement('div');
+  c.className='chip';c.textContent=word;c.dataset.orig=orig;c.draggable=true;
+  c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});
+  c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});
+  return c;
+}
+function sbRegisterZone(zone,rowIdx){
+  zone.addEventListener('dragover',function(e){
+    e.preventDefault();e.dataTransfer.dropEffect='move';
+    var cursor=zone.querySelector('.sb-insert-cursor');
+    if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}
+    var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});
+    for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}
+    if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}
+    zone.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});
+  zone.addEventListener('drop',function(e){
+    e.preventDefault();zone.classList.remove('drag-over');
+    var cursor=zone.querySelector('.sb-insert-cursor');
+    if(sbDragged){
+      if(cursor)zone.insertBefore(sbDragged,cursor);
+      else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}
+    }
+    zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});
+    sbUpdateCapitalization(zone);
+    setTimeout(function(){sbCheckAuto(rowIdx);},500);
+  });
+}
+function sbColorRow(zone,ok){
+  zone.querySelectorAll('.chip').forEach(function(c){
+    c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';
+    c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';
+  });
+}
+function sbUpdateCapitalization(zone){
+  var chips=Array.from(zone.querySelectorAll('.chip'));
+  chips.forEach(function(c,i){
+    var orig=c.dataset.orig;
+    c.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig;
+  });
+}
+function sbCheckAuto(rowIdx){
+  var zone=document.getElementById('sb-row-'+rowIdx);
+  var fb=document.getElementById('sb-fb-'+rowIdx);
+  if(!zone)return;
+  var chips=Array.from(zone.querySelectorAll('.chip'));
+  var words=chips.map(function(c){return c.dataset.orig.toLowerCase();});
+  var expected=satzbauData[rowIdx].words.map(function(w){return w.toLowerCase();});
+  var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});
+  sbColorRow(zone,ok?true:chips.length>0?false:null);
+  if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}
+  if(ok){
+    var allOk=satzbauData.every(function(_,i){
+      var z=document.getElementById('sb-row-'+i);if(!z)return false;
+      var ch=Array.from(z.querySelectorAll('.chip'));
+      var ex=satzbauData[i].words.map(function(w){return w.toLowerCase();});
+      return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig.toLowerCase()===ex[j];});
+    });
+    if(allOk)timerStop(3);
+  }
+}
+function sbShowSolution(){
+  satzbauData.forEach(function(d,i){
+    var bank=document.getElementById('sb-bank-'+i);
+    var zone=document.getElementById('sb-row-'+i);
+    if(!bank||!zone)return;
+    bank.innerHTML='';
+    var pt=zone.querySelector('.sb-punkt');
+    Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});
+    d.words.forEach(function(w,j){
+      var c=sbMakeChip(j===0?w.charAt(0).toUpperCase()+w.slice(1):w,w);
+      if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);
+    });
+    sbColorRow(zone,true);
+    var fb=document.getElementById('sb-fb-'+i);
+    if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}
+  });
+}
+function initSatzbau(){
+  var cont=document.getElementById('satzbauContainer');
+  cont.innerHTML='';
+  satzbauData.forEach(function(d,i){
+    var shuffled=d.words.slice();
+    for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}
+    var wrap=document.createElement('div');wrap.className='sentence-builder';
+    var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;
+    shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});
+    var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;
+    var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;
+    zone.appendChild(pt);
+    sbRegisterZone(zone,i);
+    var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;
+    wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);
+    cont.appendChild(wrap);
+  });
+}
+
+/* ===== WORTSCHATZ ===== */
+var WS_DATA=[
+  {en:'I believe that …', de:'Ich glaube, dass …'},
+  {en:'I think that …', de:'Ich denke, dass …'},
+  {en:'I find that …', de:'Ich finde, dass …'},
+  {en:'In my opinion …', de:'Meiner Meinung nach …'},
+  {en:'I am convinced that …', de:'Ich bin überzeugt davon, dass …'},
+  {en:'I am in favour of …', de:'Ich bin dafür, dass …'},
+  {en:'I am against …', de:'Ich bin dagegen, dass …'},
+  {en:'You are right.', de:'Du hast Recht.'},
+  {en:"I'm not sure about that.", de:'Da bin ich mir nicht sicher.'},
+  {en:"I don't believe that.", de:'Das glaube ich nicht.'},
+  {en:'I have an idea!', de:'Ich habe eine Idee!'}
+];
+var wsDone=false;
+function initWs(){
+  wsDone=false;
+  var tbody=document.getElementById('wsBody');
+  tbody.innerHTML='';
+  WS_DATA.forEach(function(d,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+d.en+'</td><td><input class="ws-input" id="ws'+i+'" data-ans="'+d.de.replace(/"/g,'&quot;')+'" placeholder="" oninput="wsCheck(this)"></td>';
+    tbody.appendChild(tr);
+  });
+}
+function wsCheck(inp){
+  timerAutoStart(4);
+  var val=inp.value.trim();
+  var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  var all=document.querySelectorAll('#wsBody .ws-input');
+  if(Array.from(all).every(function(i){return i.classList.contains('ok');})){
+    if(!wsDone){wsDone=true;timerStop(4);}
+  }
+}
+function wsShowSolutions(){
+  document.querySelectorAll('#wsBody .ws-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});
+}
+
+/* ===== INIT ===== */
+initZuord();
+initSatzbau();
+initWs();
+</script>
+</body>
+</html>

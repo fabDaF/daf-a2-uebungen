@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1057G · Adjektivendungen</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; padding: 20px;
+}
+.container {
+    max-width: 1000px; margin: 0 auto;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 30px; text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p  { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav {
+    display: flex; flex-wrap: nowrap; background: #f8f9fa;
+    border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
+}
+.nav-btn {
+    flex: 1; padding: 14px 10px; text-align: center; cursor: pointer;
+    border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;
+    transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: transparent; border-top: none; border-left: none;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: none; }
+}
+
+/* ===== ENTDECKEN ===== */
+.disc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.disc-card { background: #f8f7ff; border-radius: 10px; padding: 16px 18px; border-left: 4px solid #667eea; }
+.disc-card .disc-label { font-size: 0.78em; font-weight: 700; color: #764ba2; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.disc-card .disc-sent { font-size: 0.95em; color: #333; line-height: 1.5; }
+.disc-card .disc-sent em { color: #4a148c; font-weight: 700; font-style: normal; }
+.rule-box { background: #e8e0ff; border-radius: 10px; padding: 14px 18px; margin-top: 16px; font-size: 0.92em; color: #333; }
+.rule-box strong { color: #4a148c; }
+
+/* ===== REGEL TABLES ===== */
+.adj-table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin-bottom: 20px; }
+.adj-table th { background: #667eea; color: white; padding: 8px 10px; text-align: center; }
+.adj-table th:first-child { text-align: left; }
+.adj-table td { padding: 7px 10px; border-bottom: 1px solid #e0d7ff; text-align: center; }
+.adj-table td:first-child { text-align: left; font-weight: 600; color: #4a148c; background: #f8f7ff; }
+.adj-table .end-e { color: #27ae60; font-weight: 700; }
+.adj-table .end-en { color: #e67e00; font-weight: 700; }
+.adj-table .end-r { color: #c0392b; font-weight: 700; }
+.adj-table .end-s { color: #2980b9; font-weight: 700; }
+.card-box { background: #f8f7ff; border-radius: 12px; padding: 18px 22px; margin-bottom: 18px; }
+.card-box h3 { font-size: 1em; color: #4a148c; margin-bottom: 12px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; font-size: 0.82em; }
+.legend-item { display: flex; align-items: center; gap: 4px; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+/* ===== LÜCKENTEXT ===== */
+.lt-block { margin-bottom: 24px; }
+.lt-block h3 { font-size: 1em; color: #4a148c; margin-bottom: 10px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.lt-text { background: #f8f7ff; border-radius: 10px; padding: 16px 20px; line-height: 2.2; font-size: 0.97em; color: #333; }
+.luecken-inp {
+    border: none; border-bottom: 2px solid #c5cae9; background: transparent;
+    outline: none; font-family: inherit; font-size: inherit;
+    transition: border-color .2s; width: 80px; text-align: center; padding: 2px 4px;
+}
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* ===== SATZBAU ===== */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 50px; border: 1px dashed #bbb; margin-bottom: 8px; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 2px dashed #c5cae9; border-radius: 10px; min-height: 48px; background: #fafbff; transition: background .2s; align-items: center; }
+.sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.sb-chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; cursor: grab; font-size: .88em; user-select: none; white-space: nowrap; }
+.sb-chip.ok { background: #27ae60; }
+.sb-chip.no { background: #e74c3c; }
+.sb-punkt { font-weight: 700; color: #4a148c; font-size: 1.1em; padding: 0 4px; align-self: center; }
+.sb-insert-cursor { width: 3px; height: 30px; background: #ffd600; border-radius: 2px; display: none; pointer-events: none; }
+.satzbau-feedback { font-size: .85em; margin-top: 6px; min-height: 20px; color: #555; }
+
+/* ===== MULTIPLE CHOICE ===== */
+.mc-item { background: #fafbff; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e0e0e0; }
+.mc-item .mc-q { font-size: 0.93em; color: #333; margin-bottom: 10px; font-weight: 600; }
+.mc-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.mc-opt { background: #f0ecff; border: 2px solid transparent; color: #4a148c; border-radius: 20px; padding: 5px 16px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all .2s; }
+.mc-opt:hover { background: #e0d7ff; }
+.mc-opt.selected-ok  { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
+.mc-opt.selected-no  { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+.mc-feedback { font-size: 0.82em; margin-top: 8px; min-height: 18px; }
+
+/* ===== SHARED ===== */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; font-size: .88em; color: #555; }
+.btn { background: #667eea; color: white; border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: .88em; }
+.btn:hover { background: #5a6fd6; }
+.btn.secondary { background: #9e9e9e; }
+.btn.secondary:hover { background: #757575; }
+.timer-val { font-weight: 700; color: #4a148c; min-width: 36px; }
+h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
+
+/* Footer */
+.footer { text-align: center; padding: 16px; font-size: .8em; color: #888; border-top: 1px solid #eee; }
+.footer a { color: #667eea; text-decoration: none; }
+.author-name { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <span class="big-emoji">🎨</span>
+    <h1>Adjektivendungen</h1>
+    <p>A2 · Lektion 1057G · Sport &amp; Freizeit</p>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab(0,this)">
+      <span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(1,this)">
+      <span class="nav-emoji">📋</span><span class="nav-label">Regel</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(2,this)">
+      <span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(3,this)">
+      <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(4,this)">
+      <span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span>
+    </button>
+  </nav>
+
+  <!-- ===== TAB 0: ENTDECKEN ===== -->
+  <section id="sec-0" class="section aktiv">
+    <h2>🔍 Adjektivendungen entdecken</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:16px;">Was fällt dir bei den farbigen Adjektivendungen auf?</p>
+    <div class="disc-grid">
+      <div class="disc-card">
+        <div class="disc-label">Bestimmter Artikel — Maskulinum</div>
+        <div class="disc-sent">Der alt<em>e</em> Mann läuft jeden Tag.<br>Ich sehe den alt<em>en</em> Mann.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-label">Bestimmter Artikel — Femininum</div>
+        <div class="disc-sent">Die jung<em>e</em> Frau trainiert viel.<br>Ich kenne die jung<em>e</em> Frau.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-label">Bestimmter Artikel — Neutrum</div>
+        <div class="disc-sent">Das klein<em>e</em> Kind schläft.<br>Ich sehe das klein<em>e</em> Kind.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-label">Unbestimmter Artikel — Maskulinum</div>
+        <div class="disc-sent">Ein alt<em>er</em> Mann läuft schnell.<br>Ich sehe einen alt<em>en</em> Mann.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-label">Unbestimmter Artikel — Neutrum</div>
+        <div class="disc-sent">Ein klein<em>es</em> Kind lacht laut.<br>Ich kaufe ein neu<em>es</em> Buch.</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-label">Kein Artikel (Nullartikel)</div>
+        <div class="disc-sent">Alt<em>er</em> Wein schmeckt gut.<br>Sie kauft frisch<em>es</em> Gemüse.</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <strong>Beobachtung:</strong> Nach <strong>bestimmten Artikeln</strong> benutzen wir meistens <strong>-e</strong> oder <strong>-en</strong>.
+      Nach <strong>unbestimmten Artikeln</strong> gibt es auch <strong>-er</strong>, <strong>-es</strong>.
+      Ohne Artikel zeigt das Adjektiv selbst den Kasus: es übernimmt die Endung des bestimmten Artikels.
+    </div>
+  </section>
+
+  <!-- ===== TAB 1: REGEL ===== -->
+  <section id="sec-1" class="section">
+    <h2>📋 Adjektivendungen — Übersicht</h2>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#27ae60;"></div><span style="color:#27ae60;font-weight:700;">-e</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e67e00;"></div><span style="color:#e67e00;font-weight:700;">-en</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div><span style="color:#c0392b;font-weight:700;">-er</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2980b9;"></div><span style="color:#2980b9;font-weight:700;">-es</span></div>
+    </div>
+
+    <div class="card-box">
+      <h3>Nach bestimmtem Artikel (der / die / das)</h3>
+      <table class="adj-table">
+        <thead><tr><th>Kasus</th><th>Maskulinum</th><th>Femininum</th><th>Neutrum</th><th>Plural</th></tr></thead>
+        <tbody>
+          <tr><td>Nominativ</td><td>der alt<span class="end-e">e</span> Mann</td><td>die jung<span class="end-e">e</span> Frau</td><td>das klein<span class="end-e">e</span> Kind</td><td>die alt<span class="end-en">en</span> Männer</td></tr>
+          <tr><td>Akkusativ</td><td>den alt<span class="end-en">en</span> Mann</td><td>die jung<span class="end-e">e</span> Frau</td><td>das klein<span class="end-e">e</span> Kind</td><td>die alt<span class="end-en">en</span> Männer</td></tr>
+          <tr><td>Dativ</td><td>dem alt<span class="end-en">en</span> Mann</td><td>der jung<span class="end-en">en</span> Frau</td><td>dem klein<span class="end-en">en</span> Kind</td><td>den alt<span class="end-en">en</span> Männern</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-box">
+      <h3>Nach unbestimmtem Artikel (ein / eine / –)</h3>
+      <table class="adj-table">
+        <thead><tr><th>Kasus</th><th>Maskulinum</th><th>Femininum</th><th>Neutrum</th><th>Plural</th></tr></thead>
+        <tbody>
+          <tr><td>Nominativ</td><td>ein alt<span class="end-r">er</span> Mann</td><td>eine jung<span class="end-e">e</span> Frau</td><td>ein klein<span class="end-s">es</span> Kind</td><td>meine alt<span class="end-en">en</span> Männer</td></tr>
+          <tr><td>Akkusativ</td><td>einen alt<span class="end-en">en</span> Mann</td><td>eine jung<span class="end-e">e</span> Frau</td><td>ein klein<span class="end-s">es</span> Kind</td><td>meine alt<span class="end-en">en</span> Männer</td></tr>
+          <tr><td>Dativ</td><td>einem alt<span class="end-en">en</span> Mann</td><td>einer jung<span class="end-en">en</span> Frau</td><td>einem klein<span class="end-en">en</span> Kind</td><td>meinen alt<span class="end-en">en</span> Männern</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-box">
+      <h3>Ohne Artikel (Nullartikel)</h3>
+      <table class="adj-table">
+        <thead><tr><th>Kasus</th><th>Maskulinum</th><th>Femininum</th><th>Neutrum</th><th>Plural</th></tr></thead>
+        <tbody>
+          <tr><td>Nominativ</td><td>alt<span class="end-r">er</span> Mann</td><td>jung<span class="end-e">e</span> Frau</td><td>klein<span class="end-s">es</span> Kind</td><td>alt<span class="end-e">e</span> Männer</td></tr>
+          <tr><td>Akkusativ</td><td>alt<span class="end-en">en</span> Mann</td><td>jung<span class="end-e">e</span> Frau</td><td>klein<span class="end-s">es</span> Kind</td><td>alt<span class="end-e">e</span> Männer</td></tr>
+          <tr><td>Dativ</td><td>alt<span class="end-en">em</span> Mann</td><td>jung<span class="end-r">er</span> Frau</td><td>klein<span class="end-en">em</span> Kind</td><td>alt<span class="end-en">en</span> Männern</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2: LÜCKENTEXT ===== -->
+  <section id="sec-2" class="section">
+    <h2>✏️ Lückentext — Adjektivendungen ergänzen</h2>
+    <div class="btn-row" style="margin-bottom:14px;">
+      ⏱ <span id="t2">0:00</span>
+      <span class="timer-val">🏆 <span id="b2">–</span></span>
+      <button class="btn" onclick="timerResetOne(2)">↺ Neustart</button>
+      <button class="btn secondary" onclick="showLt()">💡 Lösungen</button>
+    </div>
+
+    <div class="lt-block">
+      <h3>Im Kleidungsgeschäft (bestimmter Artikel)</h3>
+      <div class="lt-text">
+        Die rot<input class="luecken-inp" id="lt0" data-ans="e" placeholder=""> Bluse gefällt mir sehr gut.
+        Ich kaufe auch den blau<input class="luecken-inp" id="lt1" data-ans="en" placeholder=""> Schal.
+        Das neu<input class="luecken-inp" id="lt2" data-ans="e" placeholder=""> Kleid ist sehr schick.
+        Dem alt<input class="luecken-inp" id="lt3" data-ans="en" placeholder=""> Herrn gefällt der schick<input class="luecken-inp" id="lt4" data-ans="e" placeholder=""> Mantel.
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Beim Sport (unbestimmter Artikel)</h3>
+      <div class="lt-text">
+        Ein jung<input class="luecken-inp" id="lt5" data-ans="er" placeholder=""> Mann läuft jeden Tag.
+        Ich kaufe ein neu<input class="luecken-inp" id="lt6" data-ans="es" placeholder=""> Fahrrad.
+        Nina hilft einem klein<input class="luecken-inp" id="lt7" data-ans="en" placeholder=""> Kind.
+        Wir besuchen eine groß<input class="luecken-inp" id="lt8" data-ans="e" placeholder=""> Sporthalle.
+        Felix kauft einen lecker<input class="luecken-inp" id="lt9" data-ans="en" placeholder=""> Apfel.
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Ohne Artikel (Nullartikel)</h3>
+      <div class="lt-text">
+        Frisch<input class="luecken-inp" id="lt10" data-ans="es" placeholder=""> Obst schmeckt sehr gut.
+        Ich trinke gern rot<input class="luecken-inp" id="lt11" data-ans="en" placeholder=""> Wein.
+        Neu<input class="luecken-inp" id="lt12" data-ans="e" placeholder=""> Stifte schreiben viel besser.
+        Mit frisch<input class="luecken-inp" id="lt13" data-ans="er" placeholder=""> Milch kocht die Suppe besser.
+        Alt<input class="luecken-inp" id="lt14" data-ans="em" placeholder=""> Käse mag er am liebsten.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 3: SATZBAU ===== -->
+  <section id="sec-3" class="section">
+    <h2>🧩 Satzbau</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:14px;">Bringe die Wörter in die richtige Reihenfolge!</p>
+    <div class="btn-row" style="margin-bottom:16px;">
+      ⏱ <span id="t3">0:00</span>
+      <span class="timer-val">🏆 <span id="b3">–</span></span>
+      <button class="btn" onclick="timerResetOne(3)">↺ Neustart</button>
+      <button class="btn secondary" onclick="sbShowSolution()">💡 Lösungen</button>
+    </div>
+    <div id="satzbauContainer"></div>
+  </section>
+
+  <!-- ===== TAB 4: MULTIPLE CHOICE ===== -->
+  <section id="sec-4" class="section">
+    <h2>🎯 Multiple Choice</h2>
+    <p style="font-size:.88em;color:#888;margin-bottom:14px;">Wähle die richtige Adjektivendung!</p>
+    <div id="mcContainer"></div>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="resetMc()">↺ Neu</button>
+      <span id="mcScore" style="font-weight:700;color:#4a148c;"></span>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+var satzbauData = [
+  { words: ['Das', 'kleine', 'Kind', 'isst', 'ein', 'Eis'], punct: '.' },
+  { words: ['Ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen'], punct: '.' },
+  { words: ['Paul', 'isst', 'den', 'leckeren', 'Kuchen'], punct: '.' },
+  { words: ['Ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell'], punct: '.' },
+  { words: ['Nina', 'kauft', 'eine', 'blaue', 'Bluse'], punct: '.' },
+  { words: ['Frisches', 'Obst', 'ist', 'sehr', 'gesund'], punct: '.' },
+  { words: ['Ich', 'trinke', 'gern', 'roten', 'Wein'], punct: '.' }
+];
+
+var MC_DATA = [
+  { q: 'Das ___ Kind läuft gern im Park.', opts: ['kleine', 'kleiner', 'kleines'], ans: 'kleine' },
+  { q: 'Ich kaufe einen ___ Schal.', opts: ['blaue', 'blauen', 'blauer'], ans: 'blauen' },
+  { q: 'Ein ___ Mann grüßt uns freundlich.', opts: ['alte', 'alten', 'alter'], ans: 'alter' },
+  { q: 'Nina hilft der ___ Frau.', opts: ['alte', 'alten', 'alter'], ans: 'alten' },
+  { q: 'Ich kaufe ein ___ Fahrrad.', opts: ['neue', 'neuen', 'neues'], ans: 'neues' },
+  { q: '___ Wein schmeckt sehr gut.', opts: ['Rote', 'Roten', 'Roter'], ans: 'Roter' },
+  { q: 'Paul kauft die ___ Bluse.', opts: ['rote', 'roten', 'roter'], ans: 'rote' }
+];
+
+var TIMER_PREFIX = 'a2-1057g-';
+
+// ===== TIMER =====
+var timerStarted   = [false,false,false,false,false];
+var timerRunning   = [false,false,false,false,false];
+var timerSeconds   = [0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null];
+
+function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerAutoStart(n){
+  if(timerStarted[n]) return;
+  timerStarted[n]=true; timerRunning[n]=true;
+  timerIntervals[n]=setInterval(function(){
+    if(!timerRunning[n]) return;
+    timerSeconds[n]++;
+    var el=document.getElementById('t'+n);
+    if(el) el.textContent=timerFmt(timerSeconds[n]);
+  },1000);
+}
+function timerStop(n){
+  if(!timerRunning[n]) return;
+  timerRunning[n]=false;
+  var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');
+  if(timerSeconds[n]<best){
+    best=timerSeconds[n];
+    localStorage.setItem(TIMER_PREFIX+'best-'+n,best);
+    var el=document.getElementById('b'+n);
+    if(el) el.textContent=timerFmt(best);
+  }
+}
+function timerResetOne(n){
+  clearInterval(timerIntervals[n]);
+  timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
+  var el=document.getElementById('t'+n); if(el) el.textContent='0:00';
+  if(n===2) resetLt();
+  if(n===3) initSatzbau();
+}
+function loadBests(){
+  [2,3].forEach(function(n){
+    var v=localStorage.getItem(TIMER_PREFIX+'best-'+n);
+    var el=document.getElementById('b'+n);
+    if(v&&el) el.textContent=timerFmt(parseInt(v));
+  });
+}
+
+// ===== TAB NAVIGATION =====
+function showTab(n, btn){
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('aktiv'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('sec-'+n).classList.add('aktiv');
+  btn.classList.add('active');
+}
+
+// ===== LÜCKENTEXT =====
+var LT_COUNT = 15;
+function resetLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=''; el.classList.remove('ok','no'); }
+  }
+}
+function checkLtInput(el){
+  var ans=el.dataset.ans; var val=el.value.trim();
+  if(val===ans){ el.classList.add('ok'); el.classList.remove('no'); }
+  else if(ans.startsWith(val)&&val.length>0){ el.classList.remove('ok','no'); }
+  else if(val.length>0){ el.classList.add('no'); el.classList.remove('ok'); }
+  else { el.classList.remove('ok','no'); }
+  checkLtAll();
+}
+function checkLtAll(){
+  var all=true;
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el&&!el.classList.contains('ok')) all=false;
+  }
+  if(all) timerStop(2);
+}
+function showLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=el.dataset.ans; el.classList.add('ok'); el.classList.remove('no'); }
+  }
+  timerStop(2);
+}
+
+// ===== SATZBAU =====
+var sbDragged = null;
+function sbFisherYates(arr){
+  for(var i=arr.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=arr[i];arr[i]=arr[j];arr[j]=t; }
+  return arr;
+}
+function sbMakeChip(word, idx, sentIdx){
+  var chip=document.createElement('div');
+  chip.className='sb-chip'; chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
+  chip.addEventListener('dragstart',function(e){ sbDragged=chip; e.dataTransfer.effectAllowed='move'; });
+  chip.addEventListener('dragend',function(){ sbDragged=null; });
+  return chip;
+}
+function sbRegisterZone(zone, sentIdx){
+  var cursor=zone.querySelector('.sb-insert-cursor');
+  zone.addEventListener('dragover',function(e){
+    e.preventDefault(); zone.classList.add('dragover');
+    if(cursor&&sbDragged){
+      var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+      var inserted=false;
+      for(var i=0;i<chips.length;i++){
+        var r=chips[i].getBoundingClientRect();
+        if(e.clientX<r.left+r.width/2){ zone.insertBefore(cursor,chips[i]); cursor.style.display='block'; inserted=true; break; }
+      }
+      if(!inserted){ zone.appendChild(cursor); cursor.style.display='block'; }
+    }
+  });
+  zone.addEventListener('dragleave',function(){ zone.classList.remove('dragover'); if(cursor) cursor.style.display='none'; });
+  zone.addEventListener('drop',function(e){
+    e.preventDefault(); zone.classList.remove('dragover');
+    if(sbDragged){
+      if(cursor&&cursor.parentNode===zone){ zone.insertBefore(sbDragged,cursor); } else { zone.appendChild(sbDragged); }
+      if(cursor) cursor.style.display='none';
+      sbDragged=null;
+      sbUpdateCapitalization(sentIdx);
+      setTimeout(function(){ sbCheckAuto(sentIdx); }, 500);
+    }
+  });
+}
+function sbUpdateCapitalization(idx){
+  var zone=document.getElementById('sb-row-'+idx);
+  if(!zone) return;
+  var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+  chips.forEach(function(chip,pos){
+    var orig=chip.dataset.orig;
+    chip.textContent = pos===0 ? orig.charAt(0).toUpperCase()+orig.slice(1) : orig;
+  });
+}
+function sbColorRow(idx){
+  var zone=document.getElementById('sb-row-'+idx);
+  var fb=document.getElementById('sb-fb-'+idx);
+  if(!zone||!fb) return;
+  var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+  var correct=satzbauData[idx].words;
+  var ok=true;
+  if(chips.length!==correct.length){ ok=false; chips.forEach(function(c){ c.classList.add('no'); c.classList.remove('ok'); }); }
+  else {
+    chips.forEach(function(chip,i){
+      var match=chip.dataset.orig.toLowerCase()===correct[i].toLowerCase();
+      chip.classList.toggle('ok',match); chip.classList.toggle('no',!match);
+      if(!match) ok=false;
+    });
+  }
+  fb.textContent=ok?'✓ Richtig!':'';
+  fb.style.color='#27ae60';
+  return ok;
+}
+function sbCheckAuto(idx){
+  var ok=sbColorRow(idx);
+  if(ok){
+    var allOk=true;
+    for(var i=0;i<satzbauData.length;i++){ if(!sbColorRow(i)) allOk=false; }
+    if(allOk) timerStop(3);
+  }
+}
+function sbShowSolution(){
+  satzbauData.forEach(function(item,idx){
+    var bank=document.getElementById('sb-bank-'+idx);
+    var zone=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    if(!bank||!zone) return;
+    Array.from(zone.querySelectorAll('.sb-chip')).forEach(function(c){ bank.appendChild(c); c.classList.remove('ok','no'); });
+    item.words.forEach(function(w){
+      var chips=Array.from(bank.querySelectorAll('.sb-chip'));
+      var chip=chips.find(function(c){ return c.dataset.orig.toLowerCase()===w.toLowerCase(); });
+      if(chip){ zone.appendChild(chip); }
+    });
+    sbUpdateCapitalization(idx);
+    Array.from(zone.querySelectorAll('.sb-chip')).forEach(function(c){ c.classList.add('ok'); c.classList.remove('no'); });
+    if(fb){ fb.textContent='✓ Lösung'; fb.style.color='#27ae60'; }
+  });
+  timerStop(3);
+}
+function initSatzbau(){
+  var container=document.getElementById('satzbauContainer');
+  container.innerHTML='';
+  satzbauData.forEach(function(item,idx){
+    var builder=document.createElement('div'); builder.className='sentence-builder';
+    var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx;
+    var shuffled=sbFisherYates(item.words.slice());
+    shuffled.forEach(function(w,i){ bank.appendChild(sbMakeChip(w,i,idx)); });
+    var zone=document.createElement('div'); zone.className='sb-zone'; zone.id='sb-row-'+idx;
+    var cursor=document.createElement('div'); cursor.className='sb-insert-cursor'; zone.appendChild(cursor);
+    var punkt=document.createElement('span'); punkt.className='sb-punkt'; punkt.textContent=item.punct;
+    bank.addEventListener('dragover',function(e){ e.preventDefault(); });
+    bank.addEventListener('drop',function(e){
+      e.preventDefault();
+      if(sbDragged){ bank.appendChild(sbDragged); sbDragged=null; sbUpdateCapitalization(idx); setTimeout(function(){ sbCheckAuto(idx); },500); }
+    });
+    sbRegisterZone(zone, idx);
+    var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx;
+    builder.appendChild(bank); builder.appendChild(zone); builder.appendChild(punkt); builder.appendChild(fb);
+    container.appendChild(builder);
+  });
+  timerStarted[3]=false; timerRunning[3]=false; timerSeconds[3]=0;
+  var el=document.getElementById('t3'); if(el) el.textContent='0:00';
+}
+
+// ===== MULTIPLE CHOICE =====
+function initMc(){
+  var container=document.getElementById('mcContainer');
+  container.innerHTML='';
+  document.getElementById('mcScore').textContent='';
+  MC_DATA.forEach(function(item,i){
+    var div=document.createElement('div'); div.className='mc-item';
+    var qDiv=document.createElement('div'); qDiv.className='mc-q'; qDiv.textContent=(i+1)+'. '+item.q;
+    var optsDiv=document.createElement('div'); optsDiv.className='mc-options';
+    var fb=document.createElement('div'); fb.className='mc-feedback';
+    item.opts.forEach(function(opt){
+      var btn=document.createElement('button'); btn.className='mc-opt'; btn.textContent=opt;
+      btn.addEventListener('click',function(){
+        if(div.dataset.answered) return;
+        div.dataset.answered='1';
+        var correct=opt===item.ans;
+        btn.classList.add(correct?'selected-ok':'selected-no');
+        fb.textContent=correct?'✓ Richtig!':'✗ Falsch — Richtig: '+item.ans;
+        fb.style.color=correct?'#27ae60':'#e74c3c';
+        updateMcScore();
+      });
+      optsDiv.appendChild(btn);
+    });
+    div.appendChild(qDiv); div.appendChild(optsDiv); div.appendChild(fb);
+    container.appendChild(div);
+  });
+}
+function updateMcScore(){
+  var answered=document.querySelectorAll('#mcContainer .mc-item[data-answered]').length;
+  var correct=document.querySelectorAll('#mcContainer .mc-opt.selected-ok').length;
+  document.getElementById('mcScore').textContent=answered>0?correct+' / '+MC_DATA.length+' richtig':'';
+}
+function resetMc(){ initMc(); }
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', function(){
+  initSatzbau();
+  initMc();
+  loadBests();
+  for(var i=0;i<LT_COUNT;i++){
+    (function(idx){
+      var el=document.getElementById('lt'+idx);
+      if(el) el.addEventListener('input',function(){ timerAutoStart(2); checkLtInput(el); });
+    })(i);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1072S · Eine Unterhaltung</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; padding: 20px;
+}
+.container {
+    max-width: 1000px; margin: 0 auto;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 30px; text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p  { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav {
+    display: flex; flex-wrap: nowrap; background: #f8f9fa;
+    border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
+}
+.nav-btn {
+    flex: 1; padding: 14px 10px; text-align: center; cursor: pointer;
+    border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;
+    transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: transparent; border-top: none; border-left: none;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+}
+
+/* ===== GEFÜHLE-KARTEN ===== */
+.gefuehl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.gefuehl-card { background: #f8f7ff; border-radius: 12px; padding: 16px 10px; text-align: center; cursor: pointer; border: 2px solid #e0d7ff; transition: all .2s; user-select: none; }
+.gefuehl-card:hover { border-color: #667eea; background: #e8e0ff; }
+.gefuehl-card .emoji { font-size: 2em; display: block; margin-bottom: 6px; }
+.gefuehl-card .wort { font-size: 0.82em; font-weight: 600; color: #4a148c; }
+.beispiel-box { background: #f0ecff; border-radius: 10px; padding: 14px 18px; font-size: 0.9em; color: #333; line-height: 1.8; border-left: 4px solid #764ba2; }
+.beispiel-box em { color: #667eea; font-style: normal; font-weight: 600; }
+
+/* ===== REDEMITTEL ===== */
+.rm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.rm-card { background: #f0ecff; border-radius: 8px; padding: 10px 14px; font-size: 0.88em; color: #4a148c; border-left: 3px solid #764ba2; line-height: 1.5; }
+.rm-card em { font-style: normal; font-weight: 600; color: #667eea; }
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f0f8; border-radius: 10px; min-height: 56px; margin-bottom: 16px; border: 1px dashed #bbb; }
+.qa-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.qa-frage { background: #f0ecff; border-radius: 8px; padding: 10px 14px; font-weight: 600; color: #4a148c; font-size: 0.9em; display: flex; align-items: center; border-left: 3px solid #764ba2; }
+.drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 5px 12px; cursor: grab; font-size: 0.85em; display: inline-block; white-space: normal; user-select: none; transition: all .15s; }
+.chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; cursor: default; }
+.chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+@media (max-width: 600px) { .qa-pair { grid-template-columns: 1fr; } }
+
+/* ===== LÜCKENTEXT ===== */
+.lt-block { margin-bottom: 24px; }
+.lt-block h3 { font-size: 1em; color: #4a148c; margin-bottom: 10px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.lt-text { background: #f8f7ff; border-radius: 10px; padding: 16px 20px; line-height: 2.4; font-size: 0.97em; color: #333; }
+.luecken-inp {
+    border: none; border-bottom: 2px solid #c5cae9; background: transparent;
+    outline: none; font-family: inherit; font-size: inherit;
+    transition: border-color .2s; width: 130px; text-align: center; padding: 2px 4px;
+}
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortkasten { background: #f0ecff; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.88em; color: #4a148c; }
+.wortkasten span { font-style: italic; margin-right: 8px; }
+
+/* ===== SATZBAU ===== */
+.sb-item { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct   { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip-sb { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip-sb.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip-sb.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct   { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* ===== ROLLENSPIEL ===== */
+.rolle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.rolle-card { background: #f8f7ff; border-radius: 12px; padding: 18px 20px; border-top: 4px solid #667eea; }
+.rolle-card h3 { color: #4a148c; font-size: 0.97em; margin-bottom: 10px; }
+.rolle-card p { font-size: 0.88em; color: #555; line-height: 1.5; margin-bottom: 8px; }
+.starter-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.starter { background: #e8e0ff; color: #4a148c; border-radius: 16px; padding: 5px 12px; font-size: 0.82em; font-style: italic; }
+.plan-box { background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; font-size: 0.92em; line-height: 1.7; }
+.plan-box strong { color: #e65100; }
+
+/* ===== SHARED ===== */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; font-size: .88em; color: #555; }
+.btn { background: #667eea; color: white; border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: .88em; }
+.btn:hover { background: #5a6fd6; }
+.btn.reset-btn { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn.reset-btn:hover { background: #fdecea; }
+.timer-val { font-weight: 700; color: #4a148c; min-width: 36px; }
+h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+
+/* ===== FOOTER ===== */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="big-emoji">💬</div>
+    <h1>Eine Unterhaltung</h1>
+    <p style="font-family: Georgia, serif;">A2 · Lektion 1072S · Abschluss-Speaking</p>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showTab(0)">
+      <span class="nav-emoji">😊</span><span class="nav-label">Gefühle</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(1)">
+      <span class="nav-emoji">💬</span><span class="nav-label">Redemittel</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(2)">
+      <span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(3)">
+      <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
+    </div>
+    <div class="nav-btn" onclick="showTab(4)">
+      <span class="nav-emoji">🎭</span><span class="nav-label">Rollenspiel</span>
+    </div>
+  </div>
+
+  <!-- ===== TAB 0: GEFÜHLE ===== -->
+  <div id="sec-0" class="section aktiv">
+    <h2>😊 Gefühle ausdrücken</h2>
+
+    <div class="gefuehl-grid">
+      <div class="gefuehl-card">
+        <span class="emoji">😊</span>
+        <span class="wort">glücklich</span>
+      </div>
+      <div class="gefuehl-card">
+        <span class="emoji">😢</span>
+        <span class="wort">traurig</span>
+      </div>
+      <div class="gefuehl-card">
+        <span class="emoji">😠</span>
+        <span class="wort">wütend</span>
+      </div>
+      <div class="gefuehl-card">
+        <span class="emoji">😰</span>
+        <span class="wort">nervös</span>
+      </div>
+      <div class="gefuehl-card">
+        <span class="emoji">😌</span>
+        <span class="wort">zufrieden</span>
+      </div>
+      <div class="gefuehl-card">
+        <span class="emoji">😞</span>
+        <span class="wort">enttäuscht</span>
+      </div>
+      <div class="gefuehl-card">
+        <span class="emoji">😒</span>
+        <span class="wort">neidisch</span>
+      </div>
+      <div class="gefuehl-card">
+        <span class="emoji">🤷</span>
+        <span class="wort">Das ist mir egal.</span>
+      </div>
+    </div>
+
+    <div class="beispiel-box">
+      <strong>Beispielsätze:</strong><br>
+      Er ist <em>nervös</em>, weil er ein Bewerbungsgespräch hat.<br>
+      Sie ist <em>neidisch</em> auf ihre Freundin.<br>
+      Er ist sehr <em>zufrieden</em> mit dem Auto.<br>
+      Du bist <em>wütend</em> auf deinen Freund.<br>
+      Warum bist du so <em>glücklich</em>?<br>
+      Warum seid ihr <em>enttäuscht</em>?
+    </div>
+
+    <div style="margin-top:20px;" class="hilfe-box">
+      <strong>Sprechübung mit Stimme:</strong> Sage den Satz auf verschiedene Arten — neugierig, traurig, glücklich, nervös, wütend!<br>
+      <em style="color:#667eea;font-size:1.1em;">&ldquo;Ich habe den Job nicht bekommen!&rdquo;</em>
+    </div>
+  </div>
+
+  <!-- ===== TAB 1: REDEMITTEL ===== -->
+  <div id="sec-1" class="section">
+    <h2>💬 Redemittel: Über das Leben reden</h2>
+    <div class="rm-grid">
+      <div class="rm-card">Ich bin <em>glücklich / traurig / nervös</em>, weil …</div>
+      <div class="rm-card">Ich <em>wünsche mir</em>, dass …</div>
+      <div class="rm-card">Mein <em>Lebensziel</em> ist …</div>
+      <div class="rm-card">In <em>Zukunft</em> werde ich …</div>
+      <div class="rm-card">Wir müssen eine <em>Entscheidung</em> treffen.</div>
+      <div class="rm-card">Ich bin <em>optimistisch / pessimistisch</em>.</div>
+    </div>
+
+    <h3 style="color:#4a148c;font-size:1em;margin-bottom:12px;">Frage &amp; Antwort — Drag &amp; Drop</h3>
+    <div class="chip-bank" id="rm-bank"></div>
+    <div id="rm-pairs"></div>
+    <div class="btn-row">
+      <button class="btn reset-btn" onclick="resetRM()">↺ Neu starten</button>
+    </div>
+  </div>
+
+  <!-- ===== TAB 2: LÜCKENTEXT ===== -->
+  <div id="sec-2" class="section">
+    <h2>✏️ Lückentext: Gefühle und Pläne</h2>
+    <div class="btn-row" style="margin-bottom:20px;">
+      ⏱ <span id="timer-lt">0:00</span> &nbsp;·&nbsp;
+      🏆 <span id="best-lt">–</span> &nbsp;·&nbsp;
+      <button class="btn reset-btn" onclick="resetLT()">↺ Neustart</button>
+      &nbsp;·&nbsp;
+      <button class="btn" onclick="showLTSolution()">💡 Lösungen</button>
+    </div>
+
+    <div class="lt-block">
+      <h3>Teil 1 — Wie geht es dir?</h3>
+      <div class="wortkasten">
+        Wortkasten:
+        <span>nervös</span><span>wütend</span><span>zufrieden</span>
+        <span>enttäuscht</span><span>glücklich</span><span>neidisch</span>
+      </div>
+      <div class="lt-text">
+        Er ist
+        <input class="luecken-inp" id="lt0" data-ans="nervös" placeholder="" oninput="liveCheck(this)">,
+        weil er ein Bewerbungsgespräch hat.
+        Sie ist
+        <input class="luecken-inp" id="lt1" data-ans="neidisch" placeholder="" oninput="liveCheck(this)">
+        auf ihre Freundin.
+        Er ist sehr
+        <input class="luecken-inp" id="lt2" data-ans="zufrieden" placeholder="" oninput="liveCheck(this)">
+        mit dem Auto.
+        Du bist
+        <input class="luecken-inp" id="lt3" data-ans="wütend" placeholder="" oninput="liveCheck(this)">
+        auf deinen Freund.
+        Warum bist du so
+        <input class="luecken-inp" id="lt4" data-ans="glücklich" placeholder="" oninput="liveCheck(this)">?
+        Warum seid ihr
+        <input class="luecken-inp" id="lt5" data-ans="enttäuscht" placeholder="" oninput="liveCheck(this)">?
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Teil 2 — Freizeitaktivitäten</h3>
+      <div class="wortkasten">
+        Wortkasten:
+        <span>Konzert</span><span>Museum</span><span>Wettkampf</span>
+        <span>tanzen</span><span>malen</span><span>lesen</span>
+      </div>
+      <div class="lt-text">
+        Ich
+        <input class="luecken-inp" id="lt6" data-ans="lese" placeholder="" oninput="liveCheck(this)">
+        viele Bücher.
+        Er geht mit seiner Freundin oft ins Kino. Heute möchte er aber
+        <input class="luecken-inp" id="lt7" data-ans="tanzen" placeholder="" oninput="liveCheck(this)">
+        gehen.
+        Das
+        <input class="luecken-inp" id="lt8" data-ans="Konzert" placeholder="" oninput="liveCheck(this)">
+        war sehr schön.
+        Wir gehen einmal im Jahr ins
+        <input class="luecken-inp" id="lt9" data-ans="Museum" placeholder="" oninput="liveCheck(this)">.
+        Der
+        <input class="luecken-inp" id="lt10" data-ans="Wettkampf" placeholder="" oninput="liveCheck(this)">
+        hat um 13 Uhr angefangen.
+        Malst du gern oder
+        <input class="luecken-inp" id="lt11" data-ans="malst" placeholder="" oninput="liveCheck(this)">
+        du lieber?
+      </div>
+    </div>
+
+    <div class="lt-block">
+      <h3>Teil 3 — Zukunftspläne</h3>
+      <div class="wortkasten">
+        Wortkasten:
+        <span>Wunsch</span><span>Entscheidung</span><span>Lebensziel</span>
+        <span>optimistisch</span><span>planen</span><span>Überraschung</span>
+      </div>
+      <div class="lt-text">
+        Ich habe einen
+        <input class="luecken-inp" id="lt12" data-ans="Wunsch" placeholder="" oninput="liveCheck(this)">:
+        Ich möchte reich sein.
+        Wir müssen eine
+        <input class="luecken-inp" id="lt13" data-ans="Entscheidung" placeholder="" oninput="liveCheck(this)">
+        treffen.
+        Mein
+        <input class="luecken-inp" id="lt14" data-ans="Lebensziel" placeholder="" oninput="liveCheck(this)">
+        ist ein glückliches Leben.
+        Wir
+        <input class="luecken-inp" id="lt15" data-ans="planen" placeholder="" oninput="liveCheck(this)">
+        einen Urlaub in der Karibik.
+        Bist du
+        <input class="luecken-inp" id="lt16" data-ans="optimistisch" placeholder="" oninput="liveCheck(this)">
+        oder pessimistisch?
+        Das ist eine
+        <input class="luecken-inp" id="lt17" data-ans="Überraschung" placeholder="" oninput="liveCheck(this)">
+        für dich!
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 3: SATZBAU ===== -->
+  <div id="sec-3" class="section">
+    <h2>🧩 Satzbau: Sätze ordnen</h2>
+    <div class="btn-row" style="margin-bottom:20px;">
+      ⏱ <span id="timer-sb">0:00</span> &nbsp;·&nbsp;
+      🏆 <span id="best-sb">–</span> &nbsp;·&nbsp;
+      <button class="btn reset-btn" onclick="resetSB()">↺ Neustart</button>
+      &nbsp;·&nbsp;
+      <button class="btn" onclick="sbShowAllSolutions()">💡 Lösungen</button>
+    </div>
+    <div id="satzbauContainer"></div>
+  </div>
+
+  <!-- ===== TAB 4: ROLLENSPIEL ===== -->
+  <div id="sec-4" class="section">
+    <h2>🎭 Sprechanlässe &amp; Rollenspiel</h2>
+
+    <div class="plan-box">
+      <strong>Tipp:</strong> Benutze Futur I (<em>werden</em>), Modalverben (<em>können, wollen, müssen</em>) und wenn-dann-Sätze für deine Antworten.
+    </div>
+
+    <div class="rolle-grid">
+      <div class="rolle-card">
+        <h3>😊 Rollenspiel: Wie geht es dir?</h3>
+        <p><strong>Person A</strong>: glücklich, im Urlaub, entspannen</p>
+        <p><strong>Person B</strong>: nervös, viel Stress, Treffen mit Chef, Überstunden</p>
+        <div class="starter-chips">
+          <span class="starter">Wie geht es dir?</span>
+          <span class="starter">Ich bin nervös, weil …</span>
+          <span class="starter">Was machst du dagegen?</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>🎬 Verabredung 1: Was machen wir?</h3>
+        <p><strong>Person A</strong> schlägt vor: malen, Kino, tanzen gehen</p>
+        <p><strong>Person B</strong>: malen — nein &nbsp;|&nbsp; Kino — nein &nbsp;|&nbsp; Tanzen — ja!</p>
+        <div class="starter-chips">
+          <span class="starter">Möchtest du … gehen?</span>
+          <span class="starter">Nein, das möchte ich nicht.</span>
+          <span class="starter">Tanzen gehen? Sehr gern!</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>🕐 Verabredung 2: Wann treffen wir uns?</h3>
+        <p><strong>Person A</strong>: Freitag — nein &nbsp;|&nbsp; Samstag — ja, ab 9 Uhr &nbsp;|&nbsp; Sonntag — nein</p>
+        <p><strong>Person B</strong>: Freitag — ja, ab 7 Uhr &nbsp;|&nbsp; Samstag — ja, ab 10 Uhr &nbsp;|&nbsp; Sonntag — ja</p>
+        <div class="starter-chips">
+          <span class="starter">Hast du am Freitag Zeit?</span>
+          <span class="starter">Am Samstag ab 10 Uhr?</span>
+          <span class="starter">Ja, das passt!</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>📅 Pläne erzählen</h3>
+        <p>Erzähle von deinen Plänen!</p>
+        <p>1. Was machst du dieses Wochenende?<br>2. Was machst du nächsten Sommer?<br>3. Was machst du in 5 Jahren?</p>
+        <div class="starter-chips">
+          <span class="starter">Am Wochenende werde ich …</span>
+          <span class="starter">Im Sommer möchte ich …</span>
+          <span class="starter">In 5 Jahren werde ich …</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>🎊 Neujahrs-Vorsätze</h3>
+        <p>Es ist Silvester! Mache mindestens 3 Vorsätze für das neue Jahr.</p>
+        <div class="starter-chips">
+          <span class="starter">Im nächsten Jahr werde ich …</span>
+          <span class="starter">Ich werde mehr Sport machen.</span>
+          <span class="starter">Ich möchte … lernen.</span>
+        </div>
+      </div>
+      <div class="rolle-card">
+        <h3>🌟 Abschluss: Mein Leben in 10 Jahren</h3>
+        <p>Beschreibe dein Leben in 10 Jahren. Nenne: Beruf, Familie, Wohnort, Hobbys, Wünsche.</p>
+        <div class="starter-chips">
+          <span class="starter">Ich hoffe, dass ich …</span>
+          <span class="starter">Mein Lebensziel ist …</span>
+          <span class="starter">Ich wünsche mir …</span>
+          <span class="starter">Ich werde … sein.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ─── Tab-Navigation ────────────────────────────────────────────────────────
+function showTab(idx) {
+    document.querySelectorAll('.section').forEach(function(s,i){
+        s.classList.toggle('aktiv', i===idx);
+    });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){
+        b.classList.toggle('active', i===idx);
+    });
+    if (idx === 3 && !sbInited) { initSatzbau(); sbInited = true; }
+}
+
+// ─── Timer ─────────────────────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1072s-';
+var timers = {
+    lt: { running: false, secs: 0, iv: null, elTime: null, elBest: null, key: null },
+    sb: { running: false, secs: 0, iv: null, elTime: null, elBest: null, key: null }
+};
+function timerInit() {
+    timers.lt.elTime = document.getElementById('timer-lt');
+    timers.lt.elBest = document.getElementById('best-lt');
+    timers.lt.key    = TIMER_PREFIX + 'best-lt';
+    timers.sb.elTime = document.getElementById('timer-sb');
+    timers.sb.elBest = document.getElementById('best-sb');
+    timers.sb.key    = TIMER_PREFIX + 'best-sb';
+    ['lt','sb'].forEach(function(k) {
+        var best = localStorage.getItem(timers[k].key);
+        if (best) timers[k].elBest.textContent = fmtSecs(parseInt(best));
+    });
+}
+function fmtSecs(s) { return Math.floor(s/60) + ':' + (s%60<10?'0':'') + (s%60); }
+function timerStart(k) {
+    if (timers[k].running) return;
+    timers[k].running = true;
+    timers[k].iv = setInterval(function(){
+        timers[k].secs++;
+        timers[k].elTime.textContent = fmtSecs(timers[k].secs);
+    }, 1000);
+}
+function timerStop(k) {
+    if (!timers[k].running) return;
+    timers[k].running = false;
+    clearInterval(timers[k].iv);
+    var best = localStorage.getItem(timers[k].key);
+    if (!best || timers[k].secs < parseInt(best)) {
+        localStorage.setItem(timers[k].key, timers[k].secs);
+        timers[k].elBest.textContent = fmtSecs(timers[k].secs);
+    }
+}
+function timerReset(k) {
+    timerStop(k); timers[k].secs = 0; timers[k].elTime.textContent = '0:00';
+}
+
+// ─── Live-Feedback Lückentext ──────────────────────────────────────────────
+var LT_COUNT = 18;
+var ltStarted = false;
+function liveCheck(inp) {
+    if (!ltStarted) { timerStart('lt'); ltStarted = true; }
+    var val = inp.value.trim();
+    var ans = inp.dataset.ans;
+    if (val === '') {
+        inp.classList.remove('ok','no');
+    } else if (val === ans) {
+        inp.classList.add('ok'); inp.classList.remove('no');
+        checkAllLT();
+    } else if (ans.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
+        inp.classList.remove('ok','no');
+    } else {
+        inp.classList.add('no'); inp.classList.remove('ok');
+    }
+}
+function checkAllLT() {
+    var allOk = true;
+    for (var i=0; i<LT_COUNT; i++) {
+        var el = document.getElementById('lt'+i);
+        if (!el || !el.classList.contains('ok')) { allOk = false; break; }
+    }
+    if (allOk) timerStop('lt');
+}
+function resetLT() {
+    timerReset('lt'); ltStarted = false;
+    for (var i=0; i<LT_COUNT; i++) {
+        var el = document.getElementById('lt'+i);
+        if (el) { el.value = ''; el.classList.remove('ok','no'); }
+    }
+}
+function showLTSolution() {
+    timerStop('lt');
+    for (var i=0; i<LT_COUNT; i++) {
+        var el = document.getElementById('lt'+i);
+        if (el) { el.value = el.dataset.ans; el.classList.add('ok'); el.classList.remove('no'); }
+    }
+}
+
+// ─── Redemittel Drag & Drop ─────────────────────────────────────────────────
+var RM_DATA = [
+    { q: 'Wie geht es dir gerade?',               a: 'Ich bin nervös, weil ich morgen eine Prüfung habe.' },
+    { q: 'Was ist dein Lebensziel?',               a: 'Mein Lebensziel ist ein glückliches Leben.' },
+    { q: 'Was wünschst du dir?',                   a: 'Ich wünsche mir, im Ausland zu arbeiten.' },
+    { q: 'Was machst du in der Zukunft?',          a: 'In Zukunft werde ich mehr Sport machen.' },
+    { q: 'Bist du optimistisch?',                  a: 'Ja, ich bin optimistisch für die Zukunft.' },
+    { q: 'Was plant ihr dieses Wochenende?',       a: 'Wir wollen tanzen gehen. Möchtest du mitkommen?' }
+];
+var rmDragged = null;
+function initRM() {
+    var bank = document.getElementById('rm-bank');
+    var pairs = document.getElementById('rm-pairs');
+    if (!bank || !pairs) return;
+    var answers = RM_DATA.map(function(d){ return d.a; });
+    for (var i=answers.length-1;i>0;i--){
+        var j=Math.floor(Math.random()*(i+1)); var tmp=answers[i]; answers[i]=answers[j]; answers[j]=tmp;
+    }
+    answers.forEach(function(a) {
+        var chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = a;
+        chip.dataset.ans = a;
+        chip.draggable = true;
+        chip.addEventListener('dragstart', function(){ rmDragged = chip; });
+        chip.addEventListener('dragend',   function(){ rmDragged = null; });
+        bank.appendChild(chip);
+    });
+    RM_DATA.forEach(function(d) {
+        var row = document.createElement('div');
+        row.className = 'qa-pair';
+        var frage = document.createElement('div');
+        frage.className = 'qa-frage';
+        frage.textContent = d.q;
+        var zone = document.createElement('div');
+        zone.className = 'drop-zone';
+        zone.dataset.ans = d.a;
+        zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+        zone.addEventListener('dragleave', function(){ zone.classList.remove('dragover'); });
+        zone.addEventListener('drop', function(e){
+            e.preventDefault(); zone.classList.remove('dragover');
+            if (!rmDragged) return;
+            var existing = zone.querySelector('.chip');
+            if (existing) bank.appendChild(existing);
+            zone.appendChild(rmDragged);
+            var correct = (rmDragged.dataset.ans === zone.dataset.ans);
+            rmDragged.classList.remove('ok','no');
+            rmDragged.classList.add(correct ? 'ok' : 'no');
+            rmDragged = null;
+        });
+        row.appendChild(frage);
+        row.appendChild(zone);
+        pairs.appendChild(row);
+    });
+}
+function resetRM() {
+    var bank = document.getElementById('rm-bank');
+    document.querySelectorAll('.drop-zone').forEach(function(zone){
+        Array.from(zone.querySelectorAll('.chip')).forEach(function(c){
+            c.classList.remove('ok','no');
+            bank.appendChild(c);
+        });
+    });
+}
+
+// ─── Satzbau ────────────────────────────────────────────────────────────────
+var satzbauData = [
+    { words: ['er', 'ist', 'nervös', ',', 'weil', 'er', 'ein', 'Bewerbungsgespräch', 'hat'], punct: '.' },
+    { words: ['in', 'Zukunft', 'werde', 'ich', 'mehr', 'Sport', 'machen'], punct: '.' },
+    { words: ['wir', 'müssen', 'eine', 'Entscheidung', 'für', 'unsere', 'Zukunft', 'treffen'], punct: '.' },
+    { words: ['möchtest', 'du', 'mit', 'mir', 'tanzen', 'gehen'], punct: '?' },
+    { words: ['sie', 'wünscht', 'sich', 'ein', 'glückliches', 'Leben'], punct: '.' },
+    { words: ['am', 'Wochenende', 'werde', 'ich', 'in', 'die', 'Berge', 'fahren'], punct: '.' },
+    { words: ['mein', 'Lebensziel', 'ist', 'ein', 'glückliches', 'Leben'], punct: '.' }
+];
+var sbInited = false;
+var sbDragged = null;
+var sbStarted = false;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip-sb'));
+    for (var i=0;i<chips.length;i++){
+        var r=chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width/2) return chips[i];
+    }
+    return null;
+}
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip-sb'));
+    chips.forEach(function(c,i){
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0)===orig.charAt(0).toUpperCase() && orig.charAt(0)!==orig.charAt(0).toLowerCase();
+        if (isProper) { c.textContent = orig; }
+        else { c.textContent = (i===0) ? sbCapitalize(orig) : orig; }
+    });
+}
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip-sb';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e){
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain','');
+        setTimeout(function(){ chip.style.opacity='0.4'; },0);
+    });
+    chip.addEventListener('dragend', function(){
+        chip.style.opacity='';
+        sbDragged = null;
+        var c=document.getElementById('sb-insert-cursor');
+        if(c&&c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e){
+        e.preventDefault();
+        if(!sbDragged) return;
+        var cursor=getSbCursor();
+        var before=getSbInsertPos(zone, e.clientX);
+        if(before) zone.insertBefore(cursor,before); else zone.appendChild(cursor);
+    });
+    zone.addEventListener('dragleave', function(e){
+        if(!zone.contains(e.relatedTarget)){
+            var c=document.getElementById('sb-insert-cursor');
+            if(c&&c.parentNode===zone) zone.removeChild(c);
+        }
+    });
+    zone.addEventListener('drop', function(e){
+        e.preventDefault();
+        if(!sbDragged) return;
+        var cursor=document.getElementById('sb-insert-cursor');
+        if(cursor&&cursor.parentNode===zone){ zone.insertBefore(sbDragged,cursor); zone.removeChild(cursor); }
+        else zone.appendChild(sbDragged);
+        sbDragged=null;
+        var row=document.getElementById('sb-row-'+idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+function sbColorRow(idx) {
+    var row=document.getElementById('sb-row-'+idx);
+    var chips=Array.from(row.querySelectorAll('.chip-sb'));
+    var order=chips.map(function(c){ return c.dataset.orig; });
+    var data=satzbauData[idx];
+    var ok = JSON.stringify(data.words) === JSON.stringify(order);
+    chips.forEach(function(c){
+        c.classList.remove('correct','incorrect');
+        c.classList.add(ok?'correct':'incorrect');
+    });
+    var existing=row.querySelector('.sb-punkt');
+    if(existing) existing.parentNode.removeChild(existing);
+    if(ok){
+        var punkt=document.createElement('span');
+        punkt.className='sb-punkt';
+        punkt.textContent=data.punct||'.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+function sbCheckAuto(idx) {
+    if(!sbStarted){ timerStart('sb'); sbStarted=true; }
+    var bank=document.getElementById('sb-bank-'+idx);
+    var row=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    if(bank.querySelectorAll('.chip-sb').length>0){
+        row.querySelectorAll('.chip-sb').forEach(function(c){ c.classList.remove('correct','incorrect'); });
+        row.classList.remove('correct','incorrect');
+        fb.textContent=''; return;
+    }
+    setTimeout(function(){
+        var ok=sbColorRow(idx);
+        if(ok){
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className='satzbau-feedback correct'; fb.textContent='✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className='satzbau-feedback incorrect'; fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    },500);
+}
+function sbCheckAllDone() {
+    var allOk=satzbauData.every(function(_,i){
+        var row=document.getElementById('sb-row-'+i);
+        return row&&row.classList.contains('correct');
+    });
+    if(allOk) timerStop('sb');
+}
+function sbShowSolution(idx) {
+    var bank=document.getElementById('sb-bank-'+idx);
+    var row=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    var solution=satzbauData[idx].words;
+    var allChips={};
+    Array.from(bank.querySelectorAll('.chip-sb')).forEach(function(c){ allChips[c.dataset.orig]=c; });
+    Array.from(row.querySelectorAll('.chip-sb')).forEach(function(c){ allChips[c.dataset.orig]=c; });
+    while(bank.firstChild) bank.removeChild(bank.firstChild);
+    while(row.firstChild)  row.removeChild(row.firstChild);
+    solution.forEach(function(word,i){
+        var chip=allChips[word];
+        if(chip){
+            var isProper=word.charAt(0)===word.charAt(0).toUpperCase()&&word.charAt(0)!==word.charAt(0).toLowerCase();
+            chip.textContent=(i===0&&!isProper)?sbCapitalize(word):word;
+            chip.classList.remove('correct','incorrect');
+            row.appendChild(chip);
+        }
+    });
+    fb.textContent='';
+    setTimeout(function(){ sbCheckAuto(idx); },100);
+}
+function sbShowAllSolutions() {
+    timerStop('sb');
+    satzbauData.forEach(function(_,i){ sbShowSolution(i); });
+}
+function initSatzbau() {
+    var container=document.getElementById('satzbauContainer');
+    if(!container) return;
+    satzbauData.forEach(function(ex,idx){
+        var wrap=document.createElement('div');
+        wrap.className='sb-item';
+        var bank=document.createElement('div');
+        bank.className='chips-container'; bank.id='sb-bank-'+idx;
+        var row=document.createElement('div');
+        row.className='sentence-builder'; row.id='sb-row-'+idx;
+        var fb=document.createElement('div');
+        fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx;
+        wrap.appendChild(bank); wrap.appendChild(row); wrap.appendChild(fb);
+        container.appendChild(wrap);
+        var parts=ex.words.slice();
+        for(var i=parts.length-1;i>0;i--){
+            var j=Math.floor(Math.random()*(i+1));
+            var tmp=parts[i]; parts[i]=parts[j]; parts[j]=tmp;
+        }
+        parts.forEach(function(word){ bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank,idx);
+        sbRegisterZone(row,idx);
+    });
+}
+function resetSB() {
+    timerReset('sb'); sbStarted=false;
+    satzbauData.forEach(function(ex,idx){
+        var bank=document.getElementById('sb-bank-'+idx);
+        var row=document.getElementById('sb-row-'+idx);
+        var fb=document.getElementById('sb-fb-'+idx);
+        if(!bank||!row) return;
+        var allChips=[];
+        Array.from(bank.querySelectorAll('.chip-sb')).forEach(function(c){ allChips.push(c); });
+        Array.from(row.querySelectorAll('.chip-sb')).forEach(function(c){ allChips.push(c); });
+        var existing=row.querySelector('.sb-punkt');
+        if(existing) row.removeChild(existing);
+        while(bank.firstChild) bank.removeChild(bank.firstChild);
+        while(row.firstChild)  row.removeChild(row.firstChild);
+        row.classList.remove('correct','incorrect');
+        fb.textContent=''; fb.className='satzbau-feedback';
+        for(var i=allChips.length-1;i>0;i--){
+            var j=Math.floor(Math.random()*(i+1));
+            var tmp=allChips[i]; allChips[i]=allChips[j]; allChips[j]=tmp;
+        }
+        allChips.forEach(function(c){
+            c.classList.remove('correct','incorrect');
+            c.textContent=c.dataset.orig;
+            c.style.opacity='';
+            bank.appendChild(c);
+        });
+    });
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+    timerInit();
+    initRM();
+});
+</script>
+</body>
+</html>

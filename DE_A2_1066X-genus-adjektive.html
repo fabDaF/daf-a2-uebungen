@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genus & Adjektivendungen – Interaktive DaF-Übung (A2.1)</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header .subtitle, .header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.active { display: block; }
+
+/* ── Lückentext Inputs ────────────────────────────────────────────────── */
+.lt-inp {
+    border: none;
+    border-bottom: 2px solid #c5cae9;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    padding: 4px 6px;
+    width: 60px;
+}
+.lt-inp:focus { border-bottom-color: #667eea; }
+.lt-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.lt-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.lt-inp-wide {
+    border: none;
+    border-bottom: 2px solid #c5cae9;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    padding: 4px 6px;
+    width: 140px;
+}
+.lt-inp-wide:focus { border-bottom-color: #667eea; }
+.lt-inp-wide.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.lt-inp-wide.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* ── Zuordnung / Drag-Drop ────────────────────────────────────────────── */
+.zuord-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+.zuord-category {
+    background: #f5f5f5;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 300px;
+}
+.zuord-category h3 {
+    margin: 0 0 12px 0;
+    font-size: 0.95em;
+    color: #444;
+    text-align: center;
+}
+.zuord-category.dragover {
+    background: #e8ecff;
+    border-color: #667eea;
+}
+.zuord-chip {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: move;
+    font-weight: 500;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    user-select: none;
+    transition: all 0.2s;
+    draggable: true;
+}
+.zuord-chip:hover { background: #f0f4ff; }
+
+/* ── Satzbau / Satzordnung ────────────────────────────────────────────── */
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    min-height: 56px;
+    margin-bottom: 10px;
+}
+.sentence-builder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px;
+    background: white;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    min-height: 56px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: move;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: all 0.2s;
+    user-select: none;
+    white-space: nowrap;
+}
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #27ae60;
+    margin-left: 2px;
+    align-self: center;
+    user-select: none;
+}
+.satzbau-feedback {
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-top: 6px;
+    min-height: 1.2em;
+}
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* ── Wortschatz Inputs ────────────────────────────────────────────────── */
+.ws-inp {
+    border: none;
+    border-bottom: 2px solid #c5cae9;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    padding: 4px 6px;
+    width: 200px;
+}
+.ws-inp:focus { border-bottom-color: #667eea; }
+.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.art {
+    width: 70px;
+}
+
+/* ── Button Row ───────────────────────────────────────────────────────── */
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
+.btn-reset {
+    background: #fff;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+}
+.btn-reset:hover { background: #ffe8e8; }
+.timer-display {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: 600;
+}
+
+/* ── Übersicht / Referenz-Tabellen ───────────────────────────────────── */
+.ref-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    font-size: 0.95em;
+}
+.ref-table th {
+    background: #f0f4ff;
+    color: #667eea;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-weight: 600;
+}
+.ref-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+.ref-table tr:hover { background: #f9f9f9; }
+
+/* ── Media Query ──────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .section { padding: 18px 14px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+    .zuord-container { grid-template-columns: 1fr; }
+    .lt-inp { width: 50px; }
+    .lt-inp-wide { width: 100px; }
+    .ws-inp { width: 150px; }
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Genus & Adjektivendungen</h1>
+        <p style="font-family: Georgia, serif;">A2.1 – Lektion 1066X &nbsp;|&nbsp; Extra-Übungen</p>
+        <div class="big-emoji">📚</div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">📋</span><span class="nav-label">Übersicht</span></div>
+        <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+        <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">💬</span><span class="nav-label">Zuordnung</span></div>
+        <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+        <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
+    </div>
+
+    <!-- TAB 0: Übersicht -->
+    <div class="section active" id="sec-0">
+        <h2>Genus-Endungen und Adjektivendungen</h2>
+
+        <h3 style="margin-top: 24px; margin-bottom: 12px;">Maskulinum-Endungen</h3>
+        <table class="ref-table">
+            <tr><th>Endung</th><th>Beispiele</th></tr>
+            <tr><td>-or</td><td>der Motor, der Direktor</td></tr>
+            <tr><td>-us</td><td>der Rhythmus, der Optimismus</td></tr>
+            <tr><td>-ling</td><td>der Schmetterling</td></tr>
+            <tr><td>-er</td><td>der Bäcker, der Lehrer</td></tr>
+        </table>
+
+        <h3 style="margin-top: 24px; margin-bottom: 12px;">Femininum-Endungen</h3>
+        <table class="ref-table">
+            <tr><th>Endung</th><th>Beispiele</th></tr>
+            <tr><td>-e</td><td>die Lampe, die Küche</td></tr>
+            <tr><td>-ei</td><td>die Bäckerei, die Bücherei</td></tr>
+            <tr><td>-heit</td><td>die Schönheit, die Freiheit</td></tr>
+            <tr><td>-keit</td><td>die Ehrlichkeit, die Höflichkeit</td></tr>
+            <tr><td>-ung</td><td>die Veränderung, die Übung</td></tr>
+            <tr><td>-schaft</td><td>die Freundschaft, die Meisterschaft</td></tr>
+            <tr><td>-tät</td><td>die Realität, die Universität</td></tr>
+            <tr><td>-ik</td><td>die Musik, die Physik</td></tr>
+            <tr><td>-ur</td><td>die Kultur, die Natur</td></tr>
+            <tr><td>-ion</td><td>die Religion, die Aktion</td></tr>
+        </table>
+
+        <h3 style="margin-top: 24px; margin-bottom: 12px;">Neutrum-Endungen</h3>
+        <table class="ref-table">
+            <tr><th>Endung</th><th>Beispiele</th></tr>
+            <tr><td>-chen</td><td>das Mädchen, das Häuschen</td></tr>
+            <tr><td>-lein</td><td>das Männlein, das Tischchen</td></tr>
+            <tr><td>-ment</td><td>das Dokument, das Instrument</td></tr>
+            <tr><td>-nis</td><td>das Erlebnis, das Verständnis</td></tr>
+            <tr><td>-um</td><td>das Museum, das Zentrum</td></tr>
+            <tr><td>-tum</td><td>das Eigentum, das Christentum</td></tr>
+        </table>
+
+        <h3 style="margin-top: 24px; margin-bottom: 12px;">n-Deklination (maskulin)</h3>
+        <table class="ref-table">
+            <tr><th>Endung</th><th>Beispiele</th></tr>
+            <tr><td>-e</td><td>der Junge, der Kunde, der Kollege</td></tr>
+            <tr><td>-ent</td><td>der Student, der Präsident</td></tr>
+            <tr><td>-ist</td><td>der Polizist, der Pianist</td></tr>
+            <tr><td>-ant</td><td>der Elefant, der Praktikant</td></tr>
+            <tr><td>-at</td><td>der Soldat, der Kandidat</td></tr>
+            <tr><td>Besonderheiten</td><td>der Herr, der Bauer, der Nachbar, der Bär</td></tr>
+        </table>
+    </div>
+
+    <!-- TAB 1: Lückentext -->
+    <div class="section" id="sec-1">
+        <h2>Lückentext: Adjektivendungen</h2>
+
+        <h3 style="margin-top: 16px; margin-bottom: 12px;">Teil 1: Grundlegende Adjektivendungen</h3>
+        <div style="margin-bottom: 20px; line-height: 1.8;">
+            <p>1. Mario kauft ein schnell<input class="lt-inp" id="lt0" data-ans="es" placeholder="" oninput="ltCheck(this)"> Auto.</p>
+            <p>2. Das groß<input class="lt-inp" id="lt1" data-ans="e" placeholder="" oninput="ltCheck(this)"> Haus gehört dem alt<input class="lt-inp" id="lt2" data-ans="en" placeholder="" oninput="ltCheck(this)"> Mann.</p>
+            <p>3. Ich habe heute den neu<input class="lt-inp" id="lt3" data-ans="en" placeholder="" oninput="ltCheck(this)"> Nachbarn kennengelernt.</p>
+            <p>4. Rot<input class="lt-inp" id="lt4" data-ans="er" placeholder="" oninput="ltCheck(this)"> Wein schmeckt mir nicht, aber weiß<input class="lt-inp" id="lt5" data-ans="en" placeholder="" oninput="ltCheck(this)"> Wein trinke ich gern.</p>
+            <p>5. Ich freue mich über jeden neu<input class="lt-inp" id="lt6" data-ans="en" placeholder="" oninput="ltCheck(this)"> Schüler in meinem Kurs.</p>
+        </div>
+
+        <h3 style="margin-bottom: 12px;">Teil 2: Mehr Adjektivendungen</h3>
+        <div style="margin-bottom: 20px; line-height: 1.8;">
+            <p>6. Timo hilft der alt<input class="lt-inp" id="lt7" data-ans="en" placeholder="" oninput="ltCheck(this)"> Frau über die breit<input class="lt-inp" id="lt8" data-ans="e" placeholder="" oninput="ltCheck(this)"> Straße.</p>
+            <p>7. Das kaputt<input class="lt-inp" id="lt9" data-ans="e" placeholder="" oninput="ltCheck(this)"> Auto steht in der dunkl<input class="lt-inp" id="lt10" data-ans="en" placeholder="" oninput="ltCheck(this)"> Garage.</p>
+            <p>8. Klein<input class="lt-inp" id="lt11" data-ans="e" placeholder="" oninput="ltCheck(this)"> Kinder müssen früh schlafen gehen.</p>
+        </div>
+
+        <h3 style="margin-bottom: 12px;">Teil 3: n-Deklination</h3>
+        <div style="margin-bottom: 20px; line-height: 1.8;">
+            <p>9. Ich habe gestern meinen neu<input class="lt-inp" id="lt12" data-ans="en" placeholder="" oninput="ltCheck(this)"> Nachbar<input class="lt-inp-wide" id="lt13" data-ans="n" placeholder="" oninput="ltCheck(this)"> kennengelernt.</p>
+            <p>10. Die jung<input class="lt-inp" id="lt14" data-ans="e" placeholder="" oninput="ltCheck(this)"> Frau fragt den nett<input class="lt-inp" id="lt15" data-ans="en" placeholder="" oninput="ltCheck(this)"> Polizist<input class="lt-inp-wide" id="lt16" data-ans="en" placeholder="" oninput="ltCheck(this)"> nach dem Weg.</p>
+        </div>
+
+        <div class="btn-row">
+            <span class="timer-display">⏱ Zeit: <span id="timer-1">00:00</span></span>
+            <span class="timer-display">🏆 Bestzeit: <span id="best-1">--:--</span></span>
+            <button class="btn btn-reset" onclick="resetLuckentext()">↺ Neustart</button>
+            <button class="btn btn-primary" onclick="showLueckentextSolution()">💡 Lösungen</button>
+        </div>
+    </div>
+
+    <!-- TAB 2: Zuordnung -->
+    <div class="section" id="sec-2">
+        <h2>Zuordnung: Genus erkennen</h2>
+        <p style="margin-bottom: 20px; color: #666;">Ziehe die Nomen in die richtige Kategorie.</p>
+
+        <div class="zuord-container">
+            <div class="zuord-category" id="zuord-0">
+                <h3>🔵 Maskulinum (der)</h3>
+            </div>
+            <div class="zuord-category" id="zuord-1">
+                <h3>🔴 Femininum (die)</h3>
+            </div>
+            <div class="zuord-category" id="zuord-2">
+                <h3>🟢 Neutrum (das)</h3>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 14px; background: #f0f4ff; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 8px;" id="zuord-bank">
+            <!-- Chips werden hier eingefügt -->
+        </div>
+    </div>
+
+    <!-- TAB 3: Satzbau -->
+    <div class="section" id="sec-3">
+        <h2>Satzbau: Sätze ordnen</h2>
+        <p style="margin-bottom: 20px; color: #666;">Ziehe die Wörter in die richtige Reihenfolge.</p>
+
+        <div id="satzbauContainer">
+            <!-- Satzbau-Sätze werden hier eingefügt -->
+        </div>
+
+        <div class="btn-row">
+            <span class="timer-display">⏱ Zeit: <span id="timer-3">00:00</span></span>
+            <span class="timer-display">🏆 Bestzeit: <span id="best-3">--:--</span></span>
+            <button class="btn btn-reset" onclick="resetSatzbau()">↺ Neustart</button>
+            <button class="btn btn-primary" onclick="sbShowAllSolutions()">💡 Lösungen</button>
+        </div>
+    </div>
+
+    <!-- TAB 4: Wortschatz -->
+    <div class="section" id="sec-4">
+        <h2>Wortschatz: Tippen</h2>
+        <p style="margin-bottom: 20px; color: #666;">Tippe die fehlenden Wörter mit Artikel.</p>
+
+        <div id="wortschatz-container">
+            <!-- Vokabeln werden hier eingefügt -->
+        </div>
+
+        <div class="btn-row">
+            <span class="timer-display">⏱ Zeit: <span id="timer-4">00:00</span></span>
+            <span class="timer-display">🏆 Bestzeit: <span id="best-4">--:--</span></span>
+            <button class="btn btn-reset" onclick="resetWortschatz()">↺ Neustart</button>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+        <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+
+</div><!-- /container -->
+
+<script>
+// ────────────────────────────────────────────────────────────────────────
+// GLOBALE VARIABLEN
+// ────────────────────────────────────────────────────────────────────────
+
+var TIMER_PREFIX = 'a2-1066x-';
+var draggedZuord = null;
+
+// ────────────────────────────────────────────────────────────────────────
+// TAB-NAVIGATION
+// ────────────────────────────────────────────────────────────────────────
+
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach(function(s, i) {
+        s.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.nav-btn').forEach(function(b, i) {
+        b.classList.toggle('active', i === idx);
+    });
+    if (idx === 2) initZuordnung();
+    if (idx === 3) initSatzbau();
+    if (idx === 4) initWortschatz();
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// TAB 1: LÜCKENTEXT
+// ────────────────────────────────────────────────────────────────────────
+
+function ltCheck(inp) {
+    var val = inp.value.trim().toLowerCase();
+    var ans = (inp.dataset.ans || '').toLowerCase();
+    inp.classList.remove('ok', 'no');
+    if (!val) return;
+    if (val === ans) {
+        inp.classList.add('ok');
+        timerAutoStart(1);
+        if (allLueckentextCorrect()) timerStop(1);
+        return;
+    }
+    if (ans.startsWith(val)) {
+        timerAutoStart(1);
+        return;
+    }
+    inp.classList.add('no');
+}
+
+function allLueckentextCorrect() {
+    var inputs = document.querySelectorAll('#sec-1 .lt-inp, #sec-1 .lt-inp-wide');
+    return Array.from(inputs).every(function(i) { return i.classList.contains('ok'); });
+}
+
+function resetLuckentext() {
+    document.querySelectorAll('#sec-1 .lt-inp, #sec-1 .lt-inp-wide').forEach(function(i) {
+        i.value = '';
+        i.classList.remove('ok', 'no');
+    });
+    timerReset(1);
+}
+
+function showLueckentextSolution() {
+    var solutions = [
+        { id: 'lt0', ans: 'es' },
+        { id: 'lt1', ans: 'e' },
+        { id: 'lt2', ans: 'en' },
+        { id: 'lt3', ans: 'en' },
+        { id: 'lt4', ans: 'er' },
+        { id: 'lt5', ans: 'en' },
+        { id: 'lt6', ans: 'en' },
+        { id: 'lt7', ans: 'en' },
+        { id: 'lt8', ans: 'e' },
+        { id: 'lt9', ans: 'e' },
+        { id: 'lt10', ans: 'en' },
+        { id: 'lt11', ans: 'e' },
+        { id: 'lt12', ans: 'en' },
+        { id: 'lt13', ans: 'n' },
+        { id: 'lt14', ans: 'e' },
+        { id: 'lt15', ans: 'en' },
+        { id: 'lt16', ans: 'en' }
+    ];
+    solutions.forEach(function(s) {
+        var inp = document.getElementById(s.id);
+        if (inp) {
+            inp.value = s.ans;
+            inp.classList.remove('no');
+            inp.classList.add('ok');
+        }
+    });
+    timerStop(1);
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// TAB 2: ZUORDNUNG
+// ────────────────────────────────────────────────────────────────────────
+
+var zuordData = [
+    { noun: 'der Fernseher', cat: 0 },
+    { noun: 'die Freundschaft', cat: 1 },
+    { noun: 'das Erlebnis', cat: 2 },
+    { noun: 'die Überraschung', cat: 1 },
+    { noun: 'der Motor', cat: 0 },
+    { noun: 'das Männlein', cat: 2 },
+    { noun: 'die Schnelligkeit', cat: 1 },
+    { noun: 'das Zentrum', cat: 2 },
+    { noun: 'der Bauarbeiter', cat: 0 },
+    { noun: 'die Meinung', cat: 1 },
+    { noun: 'der Pessimismus', cat: 0 },
+    { noun: 'das Parlament', cat: 2 }
+];
+
+function initZuordnung() {
+    var bank = document.getElementById('zuord-bank');
+    if (bank.children.length > 0) return;
+
+    // Mischen
+    var shuffled = zuordData.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = shuffled[i];
+        shuffled[i] = shuffled[j];
+        shuffled[j] = tmp;
+    }
+
+    shuffled.forEach(function(item) {
+        var chip = document.createElement('div');
+        chip.className = 'zuord-chip';
+        chip.textContent = item.noun;
+        chip.dataset.cat = item.cat;
+        chip.draggable = true;
+
+        chip.addEventListener('dragstart', function(e) {
+            draggedZuord = chip;
+            e.dataTransfer.setData('text/plain', '');
+            setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+        });
+        chip.addEventListener('dragend', function() {
+            chip.style.opacity = '';
+            draggedZuord = null;
+        });
+
+        bank.appendChild(chip);
+    });
+
+    // Kategorien registrieren
+    for (var c = 0; c < 3; c++) {
+        registerZuordCategory(c);
+    }
+}
+
+function registerZuordCategory(catIdx) {
+    var zone = document.getElementById('zuord-' + catIdx);
+
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        zone.classList.add('dragover');
+    });
+
+    zone.addEventListener('dragleave', function(e) {
+        if (e.target === zone) {
+            zone.classList.remove('dragover');
+        }
+    });
+
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        if (!draggedZuord) return;
+        zone.appendChild(draggedZuord);
+        draggedZuord = null;
+        checkZuordnung();
+    });
+}
+
+function checkZuordnung() {
+    var allCorrect = true;
+    for (var c = 0; c < 3; c++) {
+        var zone = document.getElementById('zuord-' + c);
+        var chips = zone.querySelectorAll('.zuord-chip');
+        chips.forEach(function(chip) {
+            if (parseInt(chip.dataset.cat) !== c) {
+                allCorrect = false;
+            }
+        });
+    }
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// TAB 3: SATZBAU
+// ────────────────────────────────────────────────────────────────────────
+
+var satzbauData = [
+    { words: ['Das', 'große', 'Haus', 'gehört', 'dem', 'alten', 'Mann'], punct: '.' },
+    { words: ['Der', 'neue', 'Nachbar', 'ist', 'ein', 'alter', 'Mann'], punct: '.' },
+    { words: ['Die', 'junge', 'Frau', 'fragt', 'den', 'netten', 'Polizisten'], punct: '.' },
+    { words: ['Kleine', 'Kinder', 'müssen', 'früh', 'schlafen', 'gehen'], punct: '.' },
+    { words: ['Ich', 'habe', 'einen', 'neuen', 'Nachbarn', 'kennengelernt'], punct: '.' },
+    { words: ['Ein', 'schnelles', 'Auto', 'fährt', 'auf', 'der', 'breiten', 'Straße'], punct: '.' },
+    { words: ['Im', 'dunklen', 'Wald', 'habe', 'ich', 'einen', 'gefährlichen', 'Bären', 'gesehen'], punct: '.' }
+];
+
+var sbDragged = null;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
+}
+
+function sbCapitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase() && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        if (isProper) {
+            c.textContent = orig;
+        } else {
+            c.textContent = (i === 0) ? sbCapitalize(orig) : orig;
+        }
+    });
+}
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before);
+        else zone.appendChild(cursor);
+    });
+
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = satzbauData[idx].words.every(function(w, i) { return order[i] === w; });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt';
+        punkt.textContent = satzbauData[idx].punct || '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row = document.getElementById('sb-row-' + idx);
+    var fb = document.getElementById('sb-fb-' + idx);
+
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) {
+            c.classList.remove('correct', 'incorrect');
+        });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+
+    setTimeout(function() {
+        timerAutoStart(3);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct');
+            row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect');
+            row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    }, 500);
+}
+
+function sbCheckAllDone() {
+    var allOk = satzbauData.every(function(_, i) {
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
+    });
+    if (allOk) timerStop(3);
+}
+
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row = document.getElementById('sb-row-' + idx);
+    var fb = document.getElementById('sb-fb-' + idx);
+    var solution = satzbauData[idx].words;
+
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) {
+        allChips[c.dataset.orig] = c;
+    });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c) {
+        allChips[c.dataset.orig] = c;
+    });
+
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild) row.removeChild(row.firstChild);
+
+    solution.forEach(function(word, i) {
+        var chip = allChips[word];
+        if (chip) {
+            chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+            chip.classList.remove('correct', 'incorrect');
+            row.appendChild(chip);
+        }
+    });
+
+    fb.textContent = '';
+    setTimeout(function() { sbCheckAuto(idx); }, 100);
+}
+
+function sbShowAllSolutions() {
+    for (var i = 0; i < satzbauData.length; i++) {
+        sbShowSolution(i);
+    }
+}
+
+function resetSatzbau() {
+    document.getElementById('satzbauContainer').innerHTML = '';
+    initSatzbau();
+    timerReset(3);
+}
+
+function initSatzbau() {
+    var container = document.getElementById('satzbauContainer');
+
+    satzbauData.forEach(function(ex, idx) {
+        var parts = ex.words.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i];
+            parts[i] = parts[j];
+            parts[j] = tmp;
+        }
+
+        var wrapper = document.createElement('div');
+        wrapper.style.marginBottom = '20px';
+
+        var bankDiv = document.createElement('div');
+        bankDiv.className = 'chips-container';
+        bankDiv.id = 'sb-bank-' + idx;
+        parts.forEach(function(word) {
+            bankDiv.appendChild(sbMakeChip(word));
+        });
+
+        var rowDiv = document.createElement('div');
+        rowDiv.className = 'sentence-builder';
+        rowDiv.id = 'sb-row-' + idx;
+
+        var fbDiv = document.createElement('div');
+        fbDiv.className = 'satzbau-feedback';
+        fbDiv.id = 'sb-fb-' + idx;
+
+        wrapper.appendChild(bankDiv);
+        wrapper.appendChild(rowDiv);
+        wrapper.appendChild(fbDiv);
+        container.appendChild(wrapper);
+
+        sbRegisterZone(bankDiv, idx);
+        sbRegisterZone(rowDiv, idx);
+    });
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// TAB 4: WORTSCHATZ
+// ────────────────────────────────────────────────────────────────────────
+
+var WS_DATA = [
+    { en: '(the beauty — fem.)', de: 'die Schönheit' },
+    { en: '(the experience — neut.)', de: 'das Erlebnis' },
+    { en: '(the friendship — fem.)', de: 'die Freundschaft' },
+    { en: '(the change — fem.)', de: 'die Veränderung' },
+    { en: '(the university — fem.)', de: 'die Universität' },
+    { en: '(the document — neut.)', de: 'das Dokument' },
+    { en: '(the museum — neut.)', de: 'das Museum' },
+    { en: '(the student — masc. n-Dekl.)', de: 'der Student' },
+    { en: '(the neighbor — masc. n-Dekl.)', de: 'der Nachbar' },
+    { en: '(the police officer — masc. n-Dekl.)', de: 'der Polizist' }
+];
+
+function wsCheck(inp) {
+    var val = inp.value.trim();
+    var ans = inp.dataset.ans || '';
+    inp.classList.remove('ok', 'no');
+    if (!val) return;
+    if (val === ans) {
+        inp.classList.add('ok');
+        timerAutoStart(4);
+        if (allWortschatzCorrect()) timerStop(4);
+        return;
+    }
+    if (ans.startsWith(val)) {
+        timerAutoStart(4);
+        return;
+    }
+    inp.classList.add('no');
+}
+
+function allWortschatzCorrect() {
+    var inputs = document.querySelectorAll('#sec-4 .ws-inp');
+    return Array.from(inputs).every(function(i) { return i.classList.contains('ok'); });
+}
+
+function resetWortschatz() {
+    document.querySelectorAll('#sec-4 .ws-inp').forEach(function(i) {
+        i.value = '';
+        i.classList.remove('ok', 'no');
+    });
+    timerReset(4);
+}
+
+function initWortschatz() {
+    var container = document.getElementById('wortschatz-container');
+    if (container.children.length > 0) return;
+
+    var shuffled = WS_DATA.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = shuffled[i];
+        shuffled[i] = shuffled[j];
+        shuffled[j] = tmp;
+    }
+
+    shuffled.forEach(function(item, idx) {
+        var row = document.createElement('div');
+        row.style.marginBottom = '12px';
+        row.style.lineHeight = '1.8';
+
+        var label = document.createElement('span');
+        label.textContent = item.en + ' ';
+
+        var inp = document.createElement('input');
+        inp.className = 'ws-inp';
+        inp.id = 'ws' + idx;
+        inp.placeholder = '';
+        inp.dataset.ans = item.de;
+        inp.addEventListener('input', function() { wsCheck(this); });
+
+        row.appendChild(label);
+        row.appendChild(inp);
+        container.appendChild(row);
+    });
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// TIMER-FUNKTIONEN
+// ────────────────────────────────────────────────────────────────────────
+
+var timers = {};
+
+function initTimer(tabIdx) {
+    if (!timers[tabIdx]) {
+        timers[tabIdx] = { elapsed: 0, running: false, interval: null };
+    }
+}
+
+function timerAutoStart(tabIdx) {
+    initTimer(tabIdx);
+    if (!timers[tabIdx].running) {
+        timers[tabIdx].running = true;
+        timers[tabIdx].interval = setInterval(function() {
+            timers[tabIdx].elapsed++;
+            updateTimerDisplay(tabIdx);
+        }, 1000);
+    }
+}
+
+function timerStop(tabIdx) {
+    initTimer(tabIdx);
+    if (timers[tabIdx].running) {
+        timers[tabIdx].running = false;
+        clearInterval(timers[tabIdx].interval);
+        saveBestTime(tabIdx);
+    }
+}
+
+function timerReset(tabIdx) {
+    initTimer(tabIdx);
+    timerStop(tabIdx);
+    timers[tabIdx].elapsed = 0;
+    updateTimerDisplay(tabIdx);
+}
+
+function updateTimerDisplay(tabIdx) {
+    var el = document.getElementById('timer-' + tabIdx);
+    if (!el) return;
+    var secs = timers[tabIdx].elapsed;
+    var mins = Math.floor(secs / 60);
+    var s = secs % 60;
+    el.textContent = (mins < 10 ? '0' : '') + mins + ':' + (s < 10 ? '0' : '') + s;
+}
+
+function saveBestTime(tabIdx) {
+    var key = TIMER_PREFIX + 'best-' + tabIdx;
+    var best = localStorage.getItem(key);
+    var current = timers[tabIdx].elapsed;
+    if (!best || parseInt(best) > current) {
+        localStorage.setItem(key, current);
+    }
+    loadBestTime(tabIdx);
+}
+
+function loadBestTime(tabIdx) {
+    var key = TIMER_PREFIX + 'best-' + tabIdx;
+    var best = localStorage.getItem(key);
+    var el = document.getElementById('best-' + tabIdx);
+    if (!el) return;
+    if (best) {
+        var secs = parseInt(best);
+        var mins = Math.floor(secs / 60);
+        var s = secs % 60;
+        el.textContent = (mins < 10 ? '0' : '') + mins + ':' + (s < 10 ? '0' : '') + s;
+    }
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// INITIALISIERUNG
+// ────────────────────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function() {
+    for (var t = 0; t < 5; t++) {
+        initTimer(t);
+        loadBestTime(t);
+    }
+});
+</script>
+</body>
+</html>

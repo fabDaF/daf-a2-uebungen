@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1037G · Der Superlativ</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; padding: 20px;
+}
+.container {
+    max-width: 1000px; margin: 0 auto;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 30px; text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p  { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav {
+    display: flex; flex-wrap: nowrap; background: #f8f9fa;
+    border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
+}
+.nav-btn {
+    flex: 1; padding: 14px 10px; text-align: center; cursor: pointer;
+    border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;
+    transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: transparent;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.active { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+}
+
+/* ===== ENTDECKEN ===== */
+.discovery-card {
+    background: #f9f7ff; border: 2px solid #e0d7ff;
+    border-radius: 10px; padding: 18px; margin-bottom: 16px;
+}
+.discovery-card .prompt { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+.discovery-card .examples { font-size: 1em; line-height: 2.0; }
+.mc-step { margin-bottom: 16px; }
+.mc-step .step-q { font-weight: 600; color: #4a148c; margin-bottom: 8px; font-size: 0.95em; }
+.mc-choice {
+    display: inline-block; margin: 4px 6px 4px 0;
+    padding: 6px 16px; border-radius: 20px;
+    border: 2px solid #c5cae9; background: white;
+    cursor: pointer; font-size: 0.9em;
+    transition: background .2s, border-color .2s, color .2s;
+}
+.mc-choice:hover { background: #f0ecff; border-color: #764ba2; }
+.mc-choice.ok { background: #eafaf1; border-color: #27ae60; color: #27ae60; font-weight: 700; }
+.mc-choice.no { background: #fdf2f2; border-color: #e74c3c; color: #e74c3c; }
+.mc-fb { font-size: 0.85em; margin-top: 6px; min-height: 18px; font-weight: 600; }
+.mc-fb.ok { color: #27ae60; }
+.mc-fb.no { color: #e74c3c; }
+
+/* ===== REGELKARTE ===== */
+.regel-table {
+    width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9em;
+}
+.regel-table th {
+    background: #4a148c; color: white;
+    padding: 10px 14px; text-align: left;
+}
+.regel-table td {
+    padding: 8px 14px; border-bottom: 1px solid #e8e0ff;
+}
+.regel-table tr:nth-child(even) td { background: #f9f7ff; }
+.hilfe-box {
+    background: #f0f4ff; border-left: 4px solid #667eea;
+    border-radius: 0 8px 8px 0; padding: 14px 18px;
+    margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6;
+}
+
+/* ===== LÜCKENTEXT ===== */
+.lt-block { margin-bottom: 24px; }
+.lt-block h3 { font-size: 1em; color: #4a148c; margin-bottom: 10px; border-bottom: 2px solid #e0d7ff; padding-bottom: 6px; }
+.lt-text { line-height: 2.2; font-size: 1em; }
+.luecken-inp {
+    border: none; border-bottom: 2px solid #c5cae9;
+    background: transparent; outline: none;
+    font-family: inherit; font-size: 1em; transition: border-color 0.2s;
+}
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* ===== SATZBAU ===== */
+.sentence-builder { margin-bottom: 24px; }
+.sb-label { font-size: 0.8em; color: #888; margin-bottom: 4px; }
+.chips-container {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    min-height: 44px; background: #f0f0f8;
+    border-radius: 8px; padding: 8px; margin-bottom: 6px;
+}
+.sb-zone {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    min-height: 44px; border: 2px dashed #c5cae9;
+    border-radius: 8px; padding: 8px; background: #fafbff; align-items: center;
+}
+.sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
+.chip {
+    background: white; border: 2px solid #667eea; color: #667eea;
+    border-radius: 20px; padding: 5px 12px; cursor: pointer;
+    font-size: 0.85em; display: inline-block; white-space: nowrap;
+    user-select: none; transition: background .15s, color .15s;
+}
+.chip.selected { background: #667eea; color: white; }
+.sb-punkt { font-weight: 700; color: #4a148c; align-self: center; margin-left: 2px; }
+.satzbau-feedback { font-size: 0.8em; margin-top: 4px; min-height: 18px; }
+.satzbau-feedback.ok { color: #27ae60; font-weight: 700; }
+.satzbau-feedback.no { color: #e74c3c; }
+.sb-insert-cursor {
+    width: 3px; height: 28px; background: #667eea; border-radius: 2px;
+    animation: sbBlink .8s infinite;
+}
+@keyframes sbBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ===== MC TAB ===== */
+.mc-item { background: #f9f7ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e0d7ff; }
+.mc-item .mc-frage { font-weight: 600; color: #4a148c; margin-bottom: 8px; font-size: 0.95em; }
+.mc-item .mc-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ===== TIMER ===== */
+.btn-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.timer-display { font-weight: 700; color: #4a148c; font-size: 1em; min-width: 100px; }
+.best-display { font-size: 0.85em; color: #888; }
+.btn-sm {
+    padding: 5px 12px; border-radius: 16px;
+    border: 2px solid #764ba2; color: #764ba2;
+    background: white; cursor: pointer; font-size: 0.82em; font-weight: 600;
+    transition: background .2s, color .2s;
+}
+.btn-sm:hover { background: #764ba2; color: white; }
+
+/* ===== FOOTER ===== */
+.author-footer {
+    text-align: center; margin-top: 40px; max-width: 1000px;
+    margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Der Superlativ</h1>
+    <p style="font-family: Georgia, serif;">A2 · 1037G · Wohnen — Grammatik</p>
+    <div class="big-emoji">🏆</div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></div>
+    <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">📋</span><span class="nav-label">Regel</span></div>
+    <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+    <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+    <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
+  </div>
+
+  <!-- TAB 0: ENTDECKEN -->
+  <div class="section active" id="sec-0">
+    <h2 style="color:#4a148c;margin-bottom:12px;">🔍 Entdecken — Was fällt dir auf?</h2>
+    <div class="discovery-card">
+      <div class="prompt">Lies die Sätze. Was passiert mit den Adjektiven?</div>
+      <div class="examples">
+        Timo ist <strong>groß</strong>.<br>
+        Paul ist <strong>größer</strong> als Timo.<br>
+        Aber Maria ist <strong>am größten</strong>.<br><br>
+        Louise ist <strong>alt</strong>.<br>
+        Gabriel ist <strong>älter</strong> als Louise.<br>
+        Aber Selina ist <strong>am ältesten</strong>.
+      </div>
+    </div>
+    <div id="discoveryContainer"></div>
+  </div>
+
+  <!-- TAB 1: REGEL -->
+  <div class="section" id="sec-1">
+    <h2 style="color:#4a148c;margin-bottom:16px;">📋 Der Superlativ — Regelübersicht</h2>
+    <div class="hilfe-box">
+      <strong>Bildung:</strong> am + Adjektivstamm + <strong>-sten</strong><br>
+      Bei Adjektiven auf -d, -t, -s, -ss, -sch, -x, -z: am + Stamm + <strong>-esten</strong><br>
+      Der Umlaut aus dem Komparativ bleibt erhalten.
+    </div>
+    <h3 style="color:#4a148c;margin-bottom:10px;">Regelmäßige Formen</h3>
+    <table class="regel-table">
+      <tr><th>Grundform</th><th>Komparativ</th><th>Superlativ</th></tr>
+      <tr><td>schnell</td><td>schneller</td><td>am schnellsten</td></tr>
+      <tr><td>lustig</td><td>lustiger</td><td>am lustigsten</td></tr>
+      <tr><td>groß</td><td>größer</td><td>am größten</td></tr>
+      <tr><td>arm</td><td>ärmer</td><td>am ärmsten</td></tr>
+      <tr><td>jung</td><td>jünger</td><td>am jüngsten</td></tr>
+      <tr><td>intelligent</td><td>intelligenter</td><td>am intelligentesten</td></tr>
+      <tr><td>nett</td><td>netter</td><td>am nettesten</td></tr>
+      <tr><td>hübsch</td><td>hübscher</td><td>am hübschesten</td></tr>
+    </table>
+    <h3 style="color:#4a148c;margin-bottom:10px;">Unregelmäßige Formen</h3>
+    <table class="regel-table">
+      <tr><th>Grundform</th><th>Komparativ</th><th>Superlativ</th></tr>
+      <tr><td>gut</td><td>besser</td><td>am besten / der beste</td></tr>
+      <tr><td>viel</td><td>mehr</td><td>am meisten / der meiste</td></tr>
+      <tr><td>gern</td><td>lieber</td><td>am liebsten / der liebste</td></tr>
+      <tr><td>hoch</td><td>höher</td><td>am höchsten / der höchste</td></tr>
+      <tr><td>nah</td><td>näher</td><td>am nächsten / der nächste</td></tr>
+    </table>
+    <div class="hilfe-box">
+      <strong>Superlativ vor Nomen:</strong> mit bestimmtem Artikel + -(e)ste + Adjektivdeklination<br>
+      <em>der intelligenteste Mann · das größte Gebäude · die schönste Frau</em><br><br>
+      <strong>Gleich wie …:</strong> genauso + Adjektiv + <strong>wie</strong><br>
+      <em>Ich bin genauso groß wie du.</em>
+    </div>
+  </div>
+
+  <!-- TAB 2: LÜCKENTEXT -->
+  <div class="section" id="sec-2">
+    <div class="btn-row">
+      <span class="timer-display" id="timer-2">⏱ 0:00</span>
+      <span class="best-display" id="best-2">🏆 –</span>
+      <button class="btn-sm" onclick="timerResetOne(2)">↺ Neustart</button>
+      <button class="btn-sm" onclick="showLtSolution()">💡 Lösungen</button>
+    </div>
+    <div class="lt-block">
+      <h3>1 · Superlativ mit „am"</h3>
+      <div class="lt-text" id="lt1-container"></div>
+    </div>
+    <div class="lt-block">
+      <h3>2 · Superlativ und unregelmäßige Formen</h3>
+      <div class="lt-text" id="lt2-container"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: SATZBAU -->
+  <div class="section" id="sec-3">
+    <div class="btn-row">
+      <span class="timer-display" id="timer-3">⏱ 0:00</span>
+      <span class="best-display" id="best-3">🏆 –</span>
+      <button class="btn-sm" onclick="timerResetOne(3)">↺ Neustart</button>
+      <button class="btn-sm" onclick="sbShowSolution()">💡 Lösungen</button>
+    </div>
+    <p style="color:#666;margin-bottom:14px;font-size:0.9em;">Bringe die Wörter in die richtige Reihenfolge.</p>
+    <div id="satzbauContainer"></div>
+  </div>
+
+  <!-- TAB 4: MULTIPLE CHOICE -->
+  <div class="section" id="sec-4">
+    <h2 style="color:#4a148c;margin-bottom:16px;">🎯 Multiple Choice — Wähle die richtige Form</h2>
+    <div id="mcContainer"></div>
+  </div>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+</div>
+
+<script>
+/* ===== DATA ===== */
+var TIMER_PREFIX = 'a2-1037g-';
+
+var MC_STEPS = [
+    {
+        q: 'Wie endet der Superlativ mit „am"?',
+        choices: ['am -er', 'am -sten', 'am -est'],
+        correct: 'am -sten',
+        fb: 'Richtig! Der Superlativ wird mit „am + Adjektiv + -sten" gebildet.'
+    },
+    {
+        q: 'Welche Regel gilt für Adjektive, die auf -t, -d, -s oder -sch enden?',
+        choices: ['am -sten', 'am -esten', 'am -ersten'],
+        correct: 'am -esten',
+        fb: 'Richtig! Bei Adjektiven auf -t, -d, -s, -sch (z.B. nett, hübsch) wird „-esten" angehängt.'
+    },
+    {
+        q: 'Was passiert mit Umlauten im Superlativ?',
+        choices: ['Umlaute verschwinden', 'Umlaute bleiben', 'Neue Umlaute entstehen'],
+        correct: 'Umlaute bleiben',
+        fb: 'Genau! Der Umlaut aus dem Komparativ bleibt: groß → größer → am größten.'
+    },
+    {
+        q: 'Wie bildet man „gut" im Superlativ?',
+        choices: ['am gutsten', 'am besten', 'am gutensten'],
+        correct: 'am besten',
+        fb: 'Richtig! „gut" ist unregelmäßig: gut → besser → am besten.'
+    }
+];
+
+var mcDone = [false, false, false, false];
+
+var LT1 = [
+    { vor:'Georg rennt schnell, aber Mia rennt ', nach:'. (schnell)', ans:'am schnellsten', size:130 },
+    { vor:'Das Haus ist groß, aber das Gebäude ist ', nach:'. (groß)', ans:'am größten', size:115 },
+    { vor:'Dieser Film ist lustig, aber jener ist ', nach:'. (lustig)', ans:'am lustigsten', size:115 },
+    { vor:'Das Mädchen ist jung, aber das Baby ist ', nach:'. (jung)', ans:'am jüngsten', size:110 },
+    { vor:'Diese Aufgabe ist schwer, aber die letzte war ', nach:'. (schwer)', ans:'am schwersten', size:125 },
+    { vor:'Paul ist nett, aber Nina ist ', nach:'. (nett)', ans:'am nettesten', size:115 }
+];
+
+var LT2 = [
+    { vor:'Das ist ', nach:' Auto in der Ausstellung. (teuer)', ans:'das teuerste', size:110 },
+    { vor:'Maria ist ', nach:' Person in der Familie. (alt)', ans:'die älteste', size:100 },
+    { vor:'Das ist ', nach:' Gebäude der Stadt. (hoch)', ans:'das höchste', size:95 },
+    { vor:'Er ist ', nach:'. (gut)', ans:'am besten', size:85 },
+    { vor:'Ich esse Schokolade ', nach:'. (gern)', ans:'am liebsten', size:100 },
+    { vor:'Welche Mannschaft hat ', nach:' Tore geschossen? (viel)', ans:'die meisten', size:105 },
+    { vor:'Er läuft genauso schnell ', nach:' ich.', ans:'wie', size:40 }
+];
+
+var satzbauData = [
+    { parts:['Maria','ist','am','ältesten','in','der','Familie'], valid:[['Maria','ist','am','ältesten','in','der','Familie']], punct:'.' },
+    { parts:['das','ist','das','größte','Gebäude','der','Stadt'], valid:[['das','ist','das','größte','Gebäude','der','Stadt']], punct:'.' },
+    { parts:['er','kann','am','schnellsten','rennen'], valid:[['er','kann','am','schnellsten','rennen']], punct:'.' },
+    { parts:['dieses','Buch','ist','das','beste','im','Regal'], valid:[['dieses','Buch','ist','das','beste','im','Regal']], punct:'.' },
+    { parts:['Paul','isst','am','liebsten','Schokolade'], valid:[['Paul','isst','am','liebsten','Schokolade']], punct:'.' },
+    { parts:['wir','wohnen','am','nächsten','am','Bahnhof'], valid:[['wir','wohnen','am','nächsten','am','Bahnhof']], punct:'.' },
+    { parts:['Anna','ist','genauso','alt','wie','Mia'], valid:[['Anna','ist','genauso','alt','wie','Mia']], punct:'.' }
+];
+
+var MC_DATA = [
+    { frage:'Tom ist ___ in der Klasse. (groß)', choices:['am größten','am großsten','am größesten'], correct:'am größten' },
+    { frage:'Oma Gertrud ist die ___ Person. (alt)', choices:['älteste','am ältesten','ältest'], correct:'älteste' },
+    { frage:'Ich finde dieses Bild ___ schönsten.', choices:['am','der','die'], correct:'am' },
+    { frage:'Anton hat den ___ Fernseher. (groß)', choices:['am größten','größten','am größesten'], correct:'größten' },
+    { frage:'Welches Tier ist ___ schnellsten? (Gepard)', choices:['am','den','das'], correct:'am' },
+    { frage:'Dieser Film ist ___ interessantesten. (interessant)', choices:['am','an dem','ans'], correct:'am' },
+    { frage:'Das war die ___ Reise meines Lebens! (schlimm)', choices:['schlimmste','am schlimmsten','schlimmsten'], correct:'schlimmste' },
+    { frage:'Er singt ___ in der ganzen Klasse. (gut)', choices:['am besten','am gutsten','am gutesten'], correct:'am besten' },
+    { frage:'Mia und Lia sind ___ alt — beide 8 Jahre.', choices:['genauso','am meisten','gleicher'], correct:'genauso' },
+    { frage:'Paul kauft ___ von allen. (viel)', choices:['am meisten','am mehrsten','am vielsten'], correct:'am meisten' }
+];
+
+var mcDoneArr = new Array(MC_DATA.length).fill(false);
+
+/* ===== NAV ===== */
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+}
+
+/* ===== SHUFFLE ===== */
+function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+}
+
+/* ===== ENTDECKEN ===== */
+(function() {
+    var c = document.getElementById('discoveryContainer');
+    MC_STEPS.forEach(function(step, idx) {
+        var div = document.createElement('div'); div.className = 'mc-step';
+        var q = document.createElement('div'); q.className = 'step-q'; q.textContent = (idx+1) + '. ' + step.q;
+        var choicesDiv = document.createElement('div');
+        var fb = document.createElement('div'); fb.className = 'mc-fb';
+        step.choices.forEach(function(ch) {
+            var btn = document.createElement('span'); btn.className = 'mc-choice'; btn.textContent = ch;
+            btn.addEventListener('click', function() {
+                if (mcDone[idx]) return;
+                var correct = ch === step.correct;
+                btn.classList.add(correct ? 'ok' : 'no');
+                fb.className = 'mc-fb ' + (correct ? 'ok' : 'no');
+                fb.textContent = correct ? '✓ ' + step.fb : '✗ Nicht ganz. Versuche es nochmal.';
+                if (correct) mcDone[idx] = true;
+            });
+            choicesDiv.appendChild(btn);
+        });
+        div.appendChild(q); div.appendChild(choicesDiv); div.appendChild(fb);
+        c.appendChild(div);
+    });
+})();
+
+/* ===== LÜCKENTEXT ===== */
+function buildLt(data, containerId, timerN) {
+    var c = document.getElementById(containerId);
+    data.forEach(function(item) {
+        var span = document.createElement('span'); span.innerHTML = item.vor;
+        var inp = document.createElement('input');
+        inp.type = 'text'; inp.className = 'luecken-inp';
+        inp.style.width = item.size + 'px';
+        inp.placeholder = '';
+        inp.dataset.ans = item.ans.toLowerCase();
+        inp.addEventListener('input', function() {
+            timerAutoStart(timerN);
+            var val = inp.value.trim().toLowerCase();
+            var ans = inp.dataset.ans;
+            inp.classList.remove('ok','no');
+            if (!val) return;
+            if (val === ans) {
+                inp.classList.add('ok');
+                var allInps = document.querySelectorAll('#sec-2 .luecken-inp');
+                if (Array.from(allInps).every(function(i){ return i.classList.contains('ok'); })) timerStop(timerN);
+                return;
+            }
+            if (ans.startsWith(val)) return;
+            inp.classList.add('no');
+        });
+        var span2 = document.createElement('span'); span2.innerHTML = item.nach + ' ';
+        c.appendChild(span); c.appendChild(inp); c.appendChild(span2);
+    });
+}
+buildLt(LT1, 'lt1-container', 2);
+buildLt(LT2, 'lt2-container', 2);
+
+function showLtSolution() {
+    document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp) {
+        inp.value = inp.dataset.ans; inp.classList.remove('no'); inp.classList.add('ok');
+    });
+    timerStop(2);
+}
+
+/* ===== SATZBAU ===== */
+var sbDragged = null;
+
+function sbMakeChip(word, orig) {
+    var c = document.createElement('div');
+    c.className = 'chip'; c.textContent = word; c.dataset.orig = orig;
+    c.draggable = true;
+    c.addEventListener('dragstart', function(e){ sbDragged = c; e.dataTransfer.setData('text/plain',''); });
+    c.addEventListener('dragend', function(){ sbDragged = null; });
+    c.addEventListener('click', function(){
+        if (c.classList.contains('selected')){ c.classList.remove('selected'); return; }
+        document.querySelectorAll('.sentence-builder .chip.selected').forEach(function(x){ x.classList.remove('selected'); });
+        c.classList.add('selected');
+    });
+    return c;
+}
+
+function sbRegisterZone(zone, bankEl, n) {
+    zone.addEventListener('dragover', function(e){
+        e.preventDefault(); zone.classList.add('dragover');
+        var cursor = zone.querySelector('.sb-insert-cursor');
+        if (!cursor){ cursor = document.createElement('div'); cursor.className = 'sb-insert-cursor'; }
+        var after = sbGetDragAfter(zone, e.clientX);
+        if (!after) zone.appendChild(cursor); else zone.insertBefore(cursor, after);
+    });
+    zone.addEventListener('dragleave', function(){
+        zone.classList.remove('dragover');
+        var cur = zone.querySelector('.sb-insert-cursor'); if (cur) cur.remove();
+    });
+    zone.addEventListener('drop', function(e){
+        e.preventDefault(); zone.classList.remove('dragover');
+        var cur = zone.querySelector('.sb-insert-cursor'); if (cur) cur.remove();
+        if (!sbDragged) return;
+        var after = sbGetDragAfter(zone, e.clientX);
+        if (!after) zone.appendChild(sbDragged); else zone.insertBefore(sbDragged, after);
+        sbDragged = null;
+        sbUpdateCapitalization(n);
+        setTimeout(function(){ sbColorRow(n); }, 500);
+    });
+    zone.addEventListener('click', function(e){
+        if (e.target === zone || e.target.classList.contains('sb-punkt')){
+            var sel = zone.closest('.sentence-builder').querySelector('.chips-container .chip.selected');
+            if (sel){ zone.appendChild(sel); sel.classList.remove('selected'); sbUpdateCapitalization(n); setTimeout(function(){ sbColorRow(n); }, 500); }
+            return;
+        }
+        if (e.target.classList.contains('chip')){
+            bankEl.appendChild(e.target); e.target.classList.remove('selected');
+            sbUpdateCapitalization(n); setTimeout(function(){ sbColorRow(n); }, 500);
+        }
+    });
+    bankEl.addEventListener('click', function(e){
+        if (e.target.classList.contains('chip')){
+            var sel = zone.querySelector('.chip.selected'); if (sel) return;
+            if (e.target.classList.contains('selected')){ e.target.classList.remove('selected'); return; }
+            document.querySelectorAll('.sentence-builder .chip.selected').forEach(function(x){ x.classList.remove('selected'); });
+            e.target.classList.add('selected');
+        }
+    });
+}
+
+function sbGetDragAfter(container, x) {
+    var chips = Array.from(container.querySelectorAll('.chip:not(.dragging)'));
+    return chips.reduce(function(closest, child){
+        var box = child.getBoundingClientRect();
+        var offset = x - box.left - box.width / 2;
+        if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+        return closest;
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+function sbUpdateCapitalization(n) {
+    var zone = document.getElementById('sb-row-' + n); if (!zone) return;
+    var chips = zone.querySelectorAll('.chip');
+    chips.forEach(function(chip, i){
+        var orig = chip.dataset.orig;
+        chip.textContent = (i === 0) ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig;
+    });
+}
+
+function sbColorRow(n) {
+    var zone = document.getElementById('sb-row-' + n);
+    var fb = document.getElementById('sb-fb-' + n);
+    if (!zone || !fb) return;
+    var chips = zone.querySelectorAll('.chip');
+    if (chips.length === 0){ fb.textContent = ''; fb.className = 'satzbau-feedback'; return; }
+    var sd = satzbauData[n];
+    var placed = Array.from(chips).map(function(c){ return c.dataset.orig.toLowerCase(); });
+    var correct = sd.valid.some(function(v){ return v.length === placed.length && v.every(function(w,i){ return w.toLowerCase() === placed[i]; }); });
+    fb.className = 'satzbau-feedback ' + (correct ? 'ok' : 'no');
+    fb.textContent = correct ? '✓ Richtig!' : '✗ Noch nicht richtig';
+    if (correct){ timerAutoStart(3); sbCheckAuto(); }
+}
+
+function sbCheckAuto() {
+    var allOk = satzbauData.every(function(_, n){
+        var fb = document.getElementById('sb-fb-' + n);
+        return fb && fb.classList.contains('ok');
+    });
+    if (allOk) timerStop(3);
+}
+
+function sbShowSolution() {
+    satzbauData.forEach(function(sd, n){
+        var zone = document.getElementById('sb-row-' + n);
+        var bank = document.getElementById('sb-bank-' + n);
+        if (!zone || !bank) return;
+        while (bank.firstChild) bank.removeChild(bank.firstChild);
+        zone.innerHTML = '';
+        sd.valid[0].forEach(function(w, i){
+            var word = (i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+            zone.appendChild(sbMakeChip(word, w.toLowerCase()));
+        });
+        var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
+        zone.appendChild(punkt);
+        var fb = document.getElementById('sb-fb-' + n);
+        if (fb){ fb.className = 'satzbau-feedback ok'; fb.textContent = '✓ Richtig!'; }
+    });
+    timerStop(3);
+}
+
+function initSatzbau() {
+    var container = document.getElementById('satzbauContainer');
+    satzbauData.forEach(function(sd, n){
+        var sb = document.createElement('div'); sb.className = 'sentence-builder';
+        var lbl = document.createElement('div'); lbl.className = 'sb-label'; lbl.textContent = 'Satz ' + (n+1);
+        var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + n;
+        var zone = document.createElement('div'); zone.className = 'sb-zone'; zone.id = 'sb-row-' + n;
+        var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
+        zone.appendChild(punkt);
+        var fb = document.createElement('div'); fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + n;
+        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip(w, w.toLowerCase())); });
+        sbRegisterZone(zone, bank, n);
+        sb.appendChild(lbl); sb.appendChild(bank); sb.appendChild(zone); sb.appendChild(fb);
+        container.appendChild(sb);
+    });
+}
+initSatzbau();
+
+/* ===== MULTIPLE CHOICE ===== */
+(function() {
+    var c = document.getElementById('mcContainer');
+    MC_DATA.forEach(function(item, idx) {
+        var div = document.createElement('div'); div.className = 'mc-item';
+        var frage = document.createElement('div'); frage.className = 'mc-frage'; frage.textContent = (idx+1) + '. ' + item.frage;
+        var choicesDiv = document.createElement('div'); choicesDiv.className = 'mc-choices';
+        var fb = document.createElement('div'); fb.className = 'mc-fb';
+        item.choices.forEach(function(ch) {
+            var btn = document.createElement('span'); btn.className = 'mc-choice'; btn.textContent = ch;
+            btn.addEventListener('click', function() {
+                if (mcDoneArr[idx]) return;
+                var correct = ch === item.correct;
+                choicesDiv.querySelectorAll('.mc-choice').forEach(function(b){ b.classList.remove('ok','no'); });
+                btn.classList.add(correct ? 'ok' : 'no');
+                fb.className = 'mc-fb ' + (correct ? 'ok' : 'no');
+                fb.textContent = correct ? '✓ Richtig!' : '✗ Nicht ganz — versuche es nochmal.';
+                if (correct) mcDoneArr[idx] = true;
+            });
+            choicesDiv.appendChild(btn);
+        });
+        div.appendChild(frage); div.appendChild(choicesDiv); div.appendChild(fb);
+        c.appendChild(div);
+    });
+})();
+
+/* ===== TIMER ===== */
+var timerStarted  = [false,false,false,false,false];
+var timerRunning  = [false,false,false,false,false];
+var timerSeconds  = [0,0,0,0,0];
+var timerIntervals= [null,null,null,null,null];
+
+function pad(n){ return n < 10 ? '0'+n : ''+n; }
+function timerFmt(s){ return Math.floor(s/60)+':'+pad(s%60); }
+
+function timerAutoStart(n) {
+    if (timerStarted[n]) return;
+    timerStarted[n] = true; timerRunning[n] = true;
+    timerIntervals[n] = setInterval(function(){
+        if (!timerRunning[n]) return;
+        timerSeconds[n]++;
+        var el = document.getElementById('timer-'+n);
+        if (el) el.textContent = '⏱ ' + timerFmt(timerSeconds[n]);
+    }, 1000);
+}
+
+function timerStop(n) {
+    timerRunning[n] = false;
+    var best = localStorage.getItem(TIMER_PREFIX+'best-'+n);
+    var cur = timerSeconds[n];
+    if (!best || cur < parseInt(best)){ localStorage.setItem(TIMER_PREFIX+'best-'+n, cur); best = cur; }
+    var el = document.getElementById('best-'+n);
+    if (el) el.textContent = '🏆 ' + timerFmt(parseInt(best));
+}
+
+function timerResetOne(n) {
+    clearInterval(timerIntervals[n]);
+    timerStarted[n] = false; timerRunning[n] = false; timerSeconds[n] = 0;
+    var el = document.getElementById('timer-'+n); if (el) el.textContent = '⏱ 0:00';
+    if (n === 2){
+        document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){ inp.value = ''; inp.classList.remove('ok','no'); });
+    }
+    if (n === 3){
+        document.getElementById('satzbauContainer').innerHTML = '';
+        initSatzbau();
+    }
+}
+
+[2,3].forEach(function(n){
+    var best = localStorage.getItem(TIMER_PREFIX+'best-'+n);
+    if (best){ var el = document.getElementById('best-'+n); if (el) el.textContent = '🏆 ' + timerFmt(parseInt(best)); }
+});
+</script>
+</body>
+</html>

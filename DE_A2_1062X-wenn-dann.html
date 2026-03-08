@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1062X · Sätze mit wenn, dann</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 24px 30px 18px;
+  }
+  .header h1 { font-size: 1.6rem; margin-bottom: 4px; }
+  .header p { opacity: .85; font-size: .95rem; }
+  /* NAV */
+  .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    background: #f8f9fa;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    transition: all 0.3s;
+    font-size: 0.92em;
+    font-weight: 500;
+    color: #666;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-btn:last-child { border-right: none; }
+  .nav-btn:hover { background: #e8ecff; color: #667eea; }
+  .nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+  .nav-emoji { font-size: 1.3em; line-height: 1.2; }
+  .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+  /* SECTIONS */
+  .section { display: none; padding: 28px 30px; }
+  .section.aktiv { display: block; }
+  .section.active { display: block; }
+  /* CARDS */
+  .info-card {
+    background: #f0edf8;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+  }
+  .info-card h3 { color: #5a3e9e; margin-bottom: 8px; font-size: 1.05rem; }
+  .info-card p { color: #333; line-height: 1.6; font-size: .95rem; }
+  /* GRAMMAR TABLES */
+  .grammar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 20px;
+    font-size: .92rem;
+  }
+  .grammar-table th {
+    background: #667eea;
+    color: white;
+    padding: 9px 14px;
+    text-align: left;
+  }
+  .grammar-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .grammar-table tr:nth-child(even) td { background: #f8f6ff; }
+  .grammar-table .kl { color: #764ba2; font-weight: 700; }
+  /* LÜCKENTEXT */
+  .lt-section { margin-bottom: 28px; }
+  .lt-title {
+    font-weight: 700;
+    color: #5a3e9e;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    border-bottom: 2px solid #e8e0f7;
+    padding-bottom: 6px;
+  }
+  .lt-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    line-height: 1.7;
+  }
+  .lt-num { color: #888; font-size: .85rem; min-width: 22px; }
+  .lt-inp {
+    border: none;
+    border-bottom: 2px solid #aaa;
+    outline: none;
+    font-size: .95rem;
+    padding: 2px 4px;
+    width: 160px;
+    background: transparent;
+    transition: border-color .2s;
+  }
+  .lt-inp:focus { border-color: #667eea; }
+  .lt-inp.ok { border-color: #27ae60; color: #27ae60; }
+  .lt-inp.no { border-color: #e74c3c; color: #e74c3c; }
+  /* SATZBAU */
+  .sentence-builder { margin-bottom: 22px; }
+  .sb-label { font-size: .85rem; color: #888; margin-bottom: 6px; }
+  .chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: #f5f3fc;
+    border: 2px dashed #c0b0e8;
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 44px;
+    margin-bottom: 6px;
+  }
+  .sb-zone {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: #fff;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    min-height: 44px;
+    position: relative;
+  }
+  .sb-zone.drag-over { border-color: #667eea; background: #f0edf8; }
+  .chip {
+    background: #667eea;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: .88rem;
+    cursor: grab;
+    user-select: none;
+    white-space: nowrap;
+    transition: opacity .15s;
+  }
+  .chip:active { cursor: grabbing; opacity: .7; }
+  .chip.sb-placed { background: #764ba2; }
+  .sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; }
+  .satzbau-feedback { font-size: .88rem; margin-top: 4px; min-height: 20px; }
+  .satzbau-feedback.ok { color: #27ae60; }
+  .satzbau-feedback.no { color: #e74c3c; }
+  .sb-insert-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 28px;
+    background: #667eea;
+    animation: blink 1s infinite;
+    align-self: center;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  /* ZUORDNUNG */
+  .zuord-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .zuord-col {
+    border: 2px solid #c0b0e8;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .zuord-col-title {
+    background: #667eea;
+    color: white;
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: .88rem;
+    text-align: center;
+  }
+  .zuord-drop {
+    min-height: 80px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .zuord-drop.drag-over { background: #f0edf8; }
+  .zuord-chip {
+    background: #764ba2;
+    color: white;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: .85rem;
+    cursor: grab;
+    user-select: none;
+  }
+  .zuord-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    background: #f5f3fc;
+    border: 2px dashed #c0b0e8;
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 50px;
+  }
+  /* WORTSCHATZ */
+  .ws-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+  .ws-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f6ff;
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .ws-num { color: #888; font-size: .82rem; min-width: 20px; }
+  .ws-en { font-style: italic; color: #555; min-width: 140px; font-size: .88rem; }
+  .ws-inp {
+    border: none;
+    border-bottom: 2px solid #aaa;
+    outline: none;
+    font-size: .9rem;
+    padding: 2px 4px;
+    flex: 1;
+    background: transparent;
+    transition: border-color .2s;
+  }
+  .ws-inp:focus { border-color: #667eea; }
+  .ws-inp.ok { border-color: #27ae60; color: #27ae60; }
+  .ws-inp.no { border-color: #e74c3c; color: #e74c3c; }
+  /* BTN-ROW */
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    font-size: .9rem;
+    color: #555;
+  }
+  .btn-row button {
+    background: none;
+    border: 1px solid #c0b0e8;
+    border-radius: 16px;
+    padding: 4px 14px;
+    cursor: pointer;
+    font-size: .88rem;
+    color: #5a3e9e;
+    transition: background .2s;
+  }
+  .btn-row button:hover { background: #f0edf8; }
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 18px;
+    color: #888;
+    font-size: .82rem;
+    border-top: 1px solid #eee;
+  }
+  .footer a { color: #667eea; text-decoration: none; }
+  .author-name { font-weight: 600; color: #5a3e9e; }
+  /* HIGHLIGHT */
+  .hl-wenn { color: #764ba2; font-weight: 700; }
+  .hl-dann { color: #667eea; font-weight: 700; }
+  .hl-verb { color: #c0392b; font-weight: 700; }
+  /* EXAMPLE BOX */
+  .example-box {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-style: italic;
+    color: #333;
+    line-height: 1.7;
+  }
+  /* MEDIA */
+  @media (max-width: 600px) {
+    body { padding: 8px; }
+    .section { padding: 18px 14px; }
+    .header { padding: 16px 14px; }
+    .header h1 { font-size: 1.3rem; }
+    .zuord-area { grid-template-columns: 1fr; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>1062X · Sätze mit wenn, dann</h1>
+    <p>A2.1 · Extra-Übungen · Zukunft &amp; Pläne</p>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab(0)">
+      <span class="nav-emoji">📋</span><span class="nav-label">Übersicht</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(1)">
+      <span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(2)">
+      <span class="nav-emoji">💬</span><span class="nav-label">Zuordnung</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(3)">
+      <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
+    </button>
+    <button class="nav-btn" onclick="showTab(4)">
+      <span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span>
+    </button>
+  </nav>
+
+  <!-- TAB 0: ÜBERSICHT -->
+  <section class="section aktiv" id="tab0">
+    <div class="info-card">
+      <h3>🎯 Lernziele</h3>
+      <p>Sätze mit <em>wenn … dann</em> verstehen und bilden · Über Lebensziele und Pläne sprechen</p>
+    </div>
+
+    <div class="info-card">
+      <h3>📐 Regel: <span class="hl-wenn">wenn</span> … <span class="hl-dann">dann</span></h3>
+      <p>Der <strong>wenn-Satz</strong> drückt die Bedingung aus. Der <strong>dann-Satz</strong> drückt die Folge aus. Das Verb im Nebensatz (wenn-Satz) steht am <strong>Ende</strong>.</p>
+    </div>
+
+    <table class="grammar-table">
+      <thead><tr><th>Bedingung (wenn-Satz)</th><th>Folge (dann-Satz)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="hl-wenn">Wenn</span> ich krank <span class="hl-verb">bin</span>,</td><td><span class="hl-dann">dann</span> gehe ich zum Arzt.</td></tr>
+        <tr><td><span class="hl-wenn">Wenn</span> das Wetter gut <span class="hl-verb">ist</span>,</td><td><span class="hl-dann">dann</span> machen wir einen Spaziergang.</td></tr>
+        <tr><td><span class="hl-wenn">Wenn</span> wir genug Geld <span class="hl-verb">haben</span>,</td><td><span class="hl-dann">dann</span> kaufen wir ein neues Auto.</td></tr>
+        <tr><td><span class="hl-wenn">Wenn</span> ich einen guten Job <span class="hl-verb">finde</span>,</td><td><span class="hl-dann">dann</span> verdiene ich sehr viel Geld.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-card">
+      <h3>📝 Wortschatz: Pläne machen</h3>
+      <p>
+        <strong>einen Plan machen</strong> · <strong>einen Plan verwerfen</strong> · <strong>Zeit einteilen</strong> · <strong>eine Frist setzen</strong> · <strong>Ziele verfolgen</strong> · <strong>in Kürze</strong><br><br>
+        <strong>eine Entscheidung treffen</strong> · <strong>vorausschauen</strong> · <strong>ein Risiko eingehen</strong> · <strong>das Lebensziel</strong> · <strong>das Vorbild</strong> · <strong>jemandem nacheifern</strong>
+      </p>
+    </div>
+
+    <div class="example-box">
+      „Die älteren Leute machen einen Plan für ihre Zukunft." · „Matthias muss seinen Plan verwerfen und sich in Kürze etwas Neues überlegen." · „Sarahs Lebensziel ist ein großes Haus und eine gesunde Familie." · „Damit man im Leben erfolgreich ist, muss man manchmal ein Risiko eingehen."
+    </div>
+  </section>
+
+  <!-- TAB 1: LÜCKENTEXT -->
+  <section class="section" id="tab1">
+    <div class="lt-section">
+      <div class="lt-title">Teil 1 · Der Deutschlehrer Matthias</div>
+
+      <div class="lt-row"><span class="lt-num">1.</span>
+        Matthias ist Deutschlehrer. Jeden Abend muss er einen
+        <input class="lt-inp" id="lt0" data-ans="Lernplan" placeholder="" oninput="ltCheck(this)">
+        für den nächsten Tag machen.
+      </div>
+      <div class="lt-row"><span class="lt-num">2.</span>
+        Wenn die Teilnehmer andere Fragen stellen, muss er seinen Plan
+        <input class="lt-inp" id="lt1" data-ans="verwerfen" placeholder="" oninput="ltCheck(this)">
+        und sich schnell etwas Neues überlegen.
+      </div>
+      <div class="lt-row"><span class="lt-num">3.</span>
+        Die Teilnehmer bekommen jeden Tag Hausaufgaben. Matthias setzt ihnen eine
+        <input class="lt-inp" id="lt2" data-ans="Frist" placeholder="" oninput="ltCheck(this)">
+        für die Bearbeitung.
+      </div>
+      <div class="lt-row"><span class="lt-num">4.</span>
+        Manche Teilnehmer haben Stress, weil sie neben dem Kurs auch noch arbeiten. Sie müssen sich ihre Zeit gut
+        <input class="lt-inp" id="lt3" data-ans="einteilen" placeholder="" oninput="ltCheck(this)">.
+      </div>
+    </div>
+
+    <div class="lt-section">
+      <div class="lt-title">Teil 2 · Sätze mit wenn, dann</div>
+
+      <div class="lt-row"><span class="lt-num">5.</span>
+        <input class="lt-inp" id="lt4" data-ans="Wenn" placeholder="" oninput="ltCheck(this)">
+        ich Hunger habe,
+        <input class="lt-inp" id="lt5" data-ans="dann" placeholder="" oninput="ltCheck(this)">
+        esse ich Pizza.
+      </div>
+      <div class="lt-row"><span class="lt-num">6.</span>
+        <input class="lt-inp" id="lt6" data-ans="Wenn" placeholder="" oninput="ltCheck(this)">
+        Nina Langeweile hat,
+        <input class="lt-inp" id="lt7" data-ans="dann" placeholder="" oninput="ltCheck(this)">
+        sieht sie fern.
+      </div>
+      <div class="lt-row"><span class="lt-num">7.</span>
+        <input class="lt-inp" id="lt8" data-ans="Wenn" placeholder="" oninput="ltCheck(this)">
+        Sam eine Grippe hat,
+        <input class="lt-inp" id="lt9" data-ans="dann" placeholder="" oninput="ltCheck(this)">
+        nimmt er Medikamente.
+      </div>
+      <div class="lt-row"><span class="lt-num">8.</span>
+        <input class="lt-inp" id="lt10" data-ans="Wenn" placeholder="" oninput="ltCheck(this)">
+        Ben einen Job findet,
+        <input class="lt-inp" id="lt11" data-ans="dann" placeholder="" oninput="ltCheck(this)">
+        verdient er viel Geld.
+      </div>
+      <div class="lt-row"><span class="lt-num">9.</span>
+        <input class="lt-inp" id="lt12" data-ans="Wenn" placeholder="" oninput="ltCheck(this)">
+        Ina eine gute Bewerbung schreibt,
+        <input class="lt-inp" id="lt13" data-ans="dann" placeholder="" oninput="ltCheck(this)">
+        bekommt sie den Job.
+      </div>
+      <div class="lt-row"><span class="lt-num">10.</span>
+        <input class="lt-inp" id="lt14" data-ans="Wenn" placeholder="" oninput="ltCheck(this)">
+        Paul nicht für den Test lernt,
+        <input class="lt-inp" id="lt15" data-ans="dann" placeholder="" oninput="ltCheck(this)">
+        kann er ihn nicht bestehen.
+      </div>
+    </div>
+
+    <div class="lt-section">
+      <div class="lt-title">Teil 3 · Vokabular: Wähle das richtige Wort</div>
+      <p style="font-size:.85rem;color:#888;margin-bottom:10px;">Wortbank: <em>in Kürze · verwerfen · Ziele · Frist · einteilen</em></p>
+
+      <div class="lt-row"><span class="lt-num">11.</span>
+        Mein Chef hat mir eine <input class="lt-inp" id="lt16" data-ans="Frist" placeholder="" oninput="ltCheck(this)"> gesetzt. Bis Freitag muss ich alle Aufgaben erledigen.
+      </div>
+      <div class="lt-row"><span class="lt-num">12.</span>
+        Mein Plan für das nächste Jahr ist, alle meine <input class="lt-inp" id="lt17" data-ans="Ziele" placeholder="" oninput="ltCheck(this)"> zu verfolgen.
+      </div>
+      <div class="lt-row"><span class="lt-num">13.</span>
+        Matt muss seinen Plan <input class="lt-inp" id="lt18" data-ans="verwerfen" placeholder="" oninput="ltCheck(this)">, er hat nicht funktioniert.
+      </div>
+      <div class="lt-row"><span class="lt-num">14.</span>
+        Mein Studium fängt <input class="lt-inp" id="lt19" data-ans="in Kürze" placeholder="" oninput="ltCheck(this)"> an, es sind nur noch drei Wochen.
+      </div>
+      <div class="lt-row"><span class="lt-num">15.</span>
+        Manuel hat viele Aufgaben und muss sich seine Zeit gut <input class="lt-inp" id="lt20" data-ans="einteilen" placeholder="" oninput="ltCheck(this)">.
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <span>⏱ <span id="lt-timer">0:00</span></span>
+      <span>🏆 <span id="lt-best">–</span></span>
+      <button onclick="ltResetAll()">↺ Neustart</button>
+      <button onclick="ltShowAll()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 2: ZUORDNUNG -->
+  <section class="section" id="tab2">
+    <p style="color:#555;margin-bottom:14px;">Ziehe jeden Satz in die richtige Kategorie: Bedingung (wenn-Satz) oder Folge (dann-Satz)?</p>
+
+    <div class="zuord-bank" id="zuord-bank">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="zuord-area">
+      <div class="zuord-col">
+        <div class="zuord-col-title">📌 Bedingung (wenn-Satz)</div>
+        <div class="zuord-drop" id="zuord-drop-0"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="zuordDrop(event,0)"></div>
+      </div>
+      <div class="zuord-col">
+        <div class="zuord-col-title">➡️ Folge (dann-Satz)</div>
+        <div class="zuord-drop" id="zuord-drop-1"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="zuordDrop(event,1)"></div>
+      </div>
+    </div>
+
+    <div id="zuord-feedback" style="margin-top:10px;font-size:.9rem;"></div>
+
+    <div class="btn-row">
+      <button onclick="zuordReset()">↺ Neustart</button>
+      <button onclick="zuordSolve()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 3: SATZBAU -->
+  <section class="section" id="tab3">
+    <p style="color:#555;margin-bottom:16px;">Bringe die Wörter in die richtige Reihenfolge. Bilde Sätze mit <em>wenn … dann</em>.</p>
+    <div id="satzbauContainer"></div>
+    <div class="btn-row">
+      <span>⏱ <span id="sb-timer">0:00</span></span>
+      <span>🏆 <span id="sb-best">–</span></span>
+      <button onclick="sbTimerReset()">↺ Neustart</button>
+      <button onclick="sbShowSolution()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 4: WORTSCHATZ -->
+  <section class="section" id="tab4">
+    <p style="color:#555;margin-bottom:14px;">Tippe die deutsche Übersetzung (mit Artikel und Plural, wo nötig).</p>
+    <div class="ws-grid" id="wsGrid"></div>
+    <div class="btn-row">
+      <span>⏱ <span id="ws-timer">0:00</span></span>
+      <span>🏆 <span id="ws-best">–</span></span>
+      <button onclick="wsReset()">↺ Neustart</button>
+      <button onclick="wsShowAll()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+</div>
+
+<script>
+// ── TAB NAVIGATION ──────────────────────────────────────────
+function showTab(n) {
+  document.querySelectorAll('.section').forEach((s,i) => {
+    s.classList.toggle('aktiv', i === n);
+  });
+  document.querySelectorAll('.nav-btn').forEach((b,i) => {
+    b.classList.toggle('active', i === n);
+  });
+  if (n === 1) ltTimerStart();
+  if (n === 3) sbTimerStart();
+  if (n === 4) wsTimerStart();
+}
+
+// ── TIMER ────────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1062x-';
+var timers = {
+  lt: { started: false, running: false, secs: 0, interval: null, elId: 'lt-timer', bestId: 'lt-best', key: TIMER_PREFIX+'best-lt' },
+  sb: { started: false, running: false, secs: 0, interval: null, elId: 'sb-timer', bestId: 'sb-best', key: TIMER_PREFIX+'best-sb' },
+  ws: { started: false, running: false, secs: 0, interval: null, elId: 'ws-timer', bestId: 'ws-best', key: TIMER_PREFIX+'best-ws' }
+};
+function timerFmt(s) { return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerLoad(t) {
+  var b = localStorage.getItem(t.key);
+  document.getElementById(t.bestId).textContent = b ? timerFmt(parseInt(b)) : '–';
+}
+function timerStart(t) {
+  if (t.running) return;
+  t.running = true;
+  t.interval = setInterval(function(){
+    t.secs++;
+    document.getElementById(t.elId).textContent = timerFmt(t.secs);
+  }, 1000);
+}
+function timerStop(t) {
+  if (!t.running) return;
+  t.running = false;
+  clearInterval(t.interval);
+  var b = localStorage.getItem(t.key);
+  if (!b || t.secs < parseInt(b)) {
+    localStorage.setItem(t.key, t.secs);
+    document.getElementById(t.bestId).textContent = timerFmt(t.secs);
+  }
+}
+function timerReset(t) {
+  t.running = false; t.started = false; t.secs = 0;
+  clearInterval(t.interval);
+  document.getElementById(t.elId).textContent = '0:00';
+}
+function ltTimerStart() { if (!timers.lt.started) { timers.lt.started = true; timerStart(timers.lt); } }
+function sbTimerStart() { if (!timers.sb.started) { timers.sb.started = true; timerStart(timers.sb); } }
+function wsTimerStart() { if (!timers.ws.started) { timers.ws.started = true; timerStart(timers.ws); } }
+
+// ── LÜCKENTEXT ───────────────────────────────────────────────
+var LT_COUNT = 21;
+function ltCheck(inp) {
+  ltTimerStart();
+  var val = inp.value.trim();
+  var ans = inp.dataset.ans;
+  if (val === ans) { inp.className = 'lt-inp ok'; }
+  else if (ans.startsWith(val) && val.length > 0) { inp.className = 'lt-inp'; }
+  else if (val.length > 0) { inp.className = 'lt-inp no'; }
+  else { inp.className = 'lt-inp'; }
+  // check all done
+  var all = true;
+  for (var i = 0; i < LT_COUNT; i++) {
+    var el = document.getElementById('lt'+i);
+    if (el && el.className.indexOf('ok') === -1) { all = false; break; }
+  }
+  if (all) timerStop(timers.lt);
+}
+function ltResetAll() {
+  for (var i = 0; i < LT_COUNT; i++) {
+    var el = document.getElementById('lt'+i);
+    if (el) { el.value = ''; el.className = 'lt-inp'; }
+  }
+  timerReset(timers.lt);
+}
+function ltShowAll() {
+  for (var i = 0; i < LT_COUNT; i++) {
+    var el = document.getElementById('lt'+i);
+    if (el) { el.value = el.dataset.ans; el.className = 'lt-inp ok'; }
+  }
+  timerStop(timers.lt);
+}
+
+// ── ZUORDNUNG ────────────────────────────────────────────────
+var ZUORD_DATA = [
+  { text: 'Wenn ich krank bin', cat: 0 },
+  { text: 'dann gehe ich zum Arzt', cat: 1 },
+  { text: 'Wenn das Wetter gut ist', cat: 0 },
+  { text: 'dann machen wir einen Spaziergang', cat: 1 },
+  { text: 'Wenn ich meinen Job verliere', cat: 0 },
+  { text: 'dann suche ich einen neuen', cat: 1 },
+  { text: 'Wenn ich gut Deutsch spreche', cat: 0 },
+  { text: 'dann bekomme ich den Job', cat: 1 },
+  { text: 'Wenn ich hart arbeite', cat: 0 },
+  { text: 'dann bin ich erfolgreich', cat: 1 }
+];
+var draggedZuord = null;
+function zuordInit() {
+  var bank = document.getElementById('zuord-bank');
+  bank.innerHTML = '';
+  var shuffled = ZUORD_DATA.slice().sort(function(){ return Math.random()-.5; });
+  shuffled.forEach(function(item, idx) {
+    var ch = document.createElement('div');
+    ch.className = 'zuord-chip';
+    ch.textContent = item.text;
+    ch.dataset.cat = item.cat;
+    ch.dataset.orig = item.text;
+    ch.draggable = true;
+    ch.addEventListener('dragstart', function(e){ draggedZuord = ch; });
+    bank.appendChild(ch);
+  });
+  document.getElementById('zuord-drop-0').innerHTML = '';
+  document.getElementById('zuord-drop-1').innerHTML = '';
+  document.getElementById('zuord-feedback').textContent = '';
+}
+function zuordDrop(e, catIdx) {
+  e.preventDefault();
+  document.getElementById('zuord-drop-'+catIdx).classList.remove('drag-over');
+  if (!draggedZuord) return;
+  document.getElementById('zuord-drop-'+catIdx).appendChild(draggedZuord);
+  draggedZuord = null;
+  zuordCheck();
+}
+function zuordCheck() {
+  var total = ZUORD_DATA.length;
+  var placed = 0;
+  var correct = 0;
+  for (var c = 0; c < 2; c++) {
+    var drop = document.getElementById('zuord-drop-'+c);
+    var chips = drop.querySelectorAll('.zuord-chip');
+    chips.forEach(function(ch) {
+      placed++;
+      if (parseInt(ch.dataset.cat) === c) {
+        correct++;
+        ch.style.background = '#27ae60';
+      } else {
+        ch.style.background = '#e74c3c';
+      }
+    });
+  }
+  var fb = document.getElementById('zuord-feedback');
+  if (placed === total) {
+    fb.textContent = correct === total ? '✅ Alle richtig!' : correct + ' von ' + total + ' richtig.';
+    fb.style.color = correct === total ? '#27ae60' : '#e74c3c';
+  }
+}
+function zuordReset() { zuordInit(); }
+function zuordSolve() {
+  ZUORD_DATA.forEach(function(item) {
+    var drop = document.getElementById('zuord-drop-'+item.cat);
+    var existing = document.querySelector('[data-orig="'+item.text+'"]');
+    if (existing) {
+      existing.style.background = '#27ae60';
+      drop.appendChild(existing);
+    }
+  });
+  var bank = document.getElementById('zuord-bank');
+  bank.innerHTML = '';
+  document.getElementById('zuord-feedback').textContent = '✅ Lösungen angezeigt.';
+  document.getElementById('zuord-feedback').style.color = '#667eea';
+}
+
+// ── SATZBAU ──────────────────────────────────────────────────
+var satzbauData = [
+  { words: ['Wenn', 'ich', 'müde', 'bin', ',', 'dann', 'gehe', 'ich', 'ins', 'Bett'], punct: '.' },
+  { words: ['Wenn', 'das', 'Wetter', 'schön', 'ist', ',', 'dann', 'gehen', 'wir', 'spazieren'], punct: '.' },
+  { words: ['Wenn', 'Sam', 'eine', 'Grippe', 'hat', ',', 'dann', 'nimmt', 'er', 'Medikamente'], punct: '.' },
+  { words: ['Wenn', 'Paul', 'nicht', 'lernt', ',', 'dann', 'besteht', 'er', 'den', 'Test', 'nicht'], punct: '.' },
+  { words: ['Wenn', 'Nina', 'Langeweile', 'hat', ',', 'dann', 'liest', 'sie', 'ein', 'Buch'], punct: '.' },
+  { words: ['Wenn', 'ich', 'meine', 'Ziele', 'verfolge', ',', 'dann', 'bin', 'ich', 'erfolgreich'], punct: '.' },
+  { words: ['Wenn', 'Ina', 'gut', 'Deutsch', 'spricht', ',', 'dann', 'bekommt', 'sie', 'den', 'Job'], punct: '.' }
+];
+var sbDragged = null;
+var sbCorrect = [];
+
+function sbMakeChip(word, orig) {
+  var ch = document.createElement('span');
+  ch.className = 'chip';
+  ch.textContent = word;
+  ch.dataset.orig = orig !== undefined ? orig : word;
+  ch.draggable = true;
+  ch.addEventListener('dragstart', function(){ sbDragged = ch; });
+  return ch;
+}
+
+function sbRegisterZone(zone, rowIdx) {
+  zone.addEventListener('dragover', function(e){
+    e.preventDefault();
+    zone.classList.add('drag-over');
+    var cursor = zone.querySelector('.sb-insert-cursor');
+    if (!cursor) { cursor = document.createElement('span'); cursor.className = 'sb-insert-cursor'; }
+    var afterEl = sbGetDragAfter(zone, e.clientX);
+    if (afterEl) zone.insertBefore(cursor, afterEl);
+    else zone.appendChild(cursor);
+  });
+  zone.addEventListener('dragleave', function(){
+    zone.classList.remove('drag-over');
+    var cursor = zone.querySelector('.sb-insert-cursor');
+    if (cursor) cursor.remove();
+  });
+  zone.addEventListener('drop', function(e){
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    var cursor = zone.querySelector('.sb-insert-cursor');
+    if (!sbDragged) { if(cursor) cursor.remove(); return; }
+    if (cursor) zone.insertBefore(sbDragged, cursor);
+    else zone.appendChild(sbDragged);
+    if (cursor) cursor.remove();
+    sbDragged.classList.add('sb-placed');
+    sbDragged = null;
+    sbUpdateCapitalization(rowIdx);
+    setTimeout(function(){ sbCheckAuto(rowIdx); }, 500);
+  });
+  // also allow return to bank
+  var bank = document.getElementById('sb-bank-'+rowIdx);
+  bank.addEventListener('dragover', function(e){ e.preventDefault(); });
+  bank.addEventListener('drop', function(e){
+    e.preventDefault();
+    if (!sbDragged) return;
+    sbDragged.classList.remove('sb-placed');
+    bank.appendChild(sbDragged);
+    sbDragged = null;
+    sbUpdateCapitalization(rowIdx);
+    setTimeout(function(){ sbCheckAuto(rowIdx); }, 500);
+  });
+}
+
+function sbGetDragAfter(container, x) {
+  var chips = Array.from(container.querySelectorAll('.chip:not(.dragging)'));
+  return chips.reduce(function(closest, child){
+    var box = child.getBoundingClientRect();
+    var offset = x - box.left - box.width/2;
+    if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+    return closest;
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+function sbUpdateCapitalization(rowIdx) {
+  var row = document.getElementById('sb-row-'+rowIdx);
+  if (!row) return;
+  var chips = row.querySelectorAll('.chip');
+  chips.forEach(function(ch, i) {
+    var orig = ch.dataset.orig;
+    if (i === 0) ch.textContent = orig.charAt(0).toUpperCase() + orig.slice(1);
+    else ch.textContent = orig;
+  });
+}
+
+function sbColorRow(rowIdx, correct) {
+  var fb = document.getElementById('sb-fb-'+rowIdx);
+  if (fb) {
+    fb.textContent = correct ? '✅' : '❌';
+    fb.className = 'satzbau-feedback ' + (correct ? 'ok' : 'no');
+  }
+}
+
+function sbCheckAuto(rowIdx) {
+  var row = document.getElementById('sb-row-'+rowIdx);
+  if (!row) return;
+  var chips = row.querySelectorAll('.chip');
+  var placed = Array.from(chips).map(function(ch){ return ch.dataset.orig; });
+  var data = satzbauData[rowIdx];
+  // remove trailing punct if placed:
+  var expected = data.words.filter(function(w){ return w !== ','; });
+  // strip commas from placed too
+  var placedClean = placed.filter(function(w){ return w !== ','; });
+  if (placed.length === 0) { sbColorRow(rowIdx, false); return; }
+  // compare orig words (lowercase first word for comparison)
+  var expLower = expected.map(function(w,i){ return i===0 ? w.charAt(0).toUpperCase()+w.slice(1) : w; });
+  var ok = placed.length === expected.length;
+  if (ok) {
+    for (var i = 0; i < placed.length; i++) {
+      var p = placed[i].charAt(0).toUpperCase() + placed[i].slice(1);
+      var ex = expected[i].charAt(0).toUpperCase() + expected[i].slice(1);
+      if (p !== ex) { ok = false; break; }
+    }
+  }
+  sbColorRow(rowIdx, ok);
+  if (ok) sbCorrect[rowIdx] = true;
+  if (sbCorrect.filter(Boolean).length === satzbauData.length) timerStop(timers.sb);
+}
+
+function sbShowSolution() {
+  satzbauData.forEach(function(data, rowIdx) {
+    var bank = document.getElementById('sb-bank-'+rowIdx);
+    var row = document.getElementById('sb-row-'+rowIdx);
+    if (!bank || !row) return;
+    bank.innerHTML = '';
+    row.innerHTML = '';
+    var words = data.words.filter(function(w){ return w !== ','; });
+    words.forEach(function(word, i) {
+      var ch = sbMakeChip(i === 0 ? word.charAt(0).toUpperCase()+word.slice(1) : word, word);
+      ch.classList.add('sb-placed');
+      row.appendChild(ch);
+    });
+    var pt = document.createElement('span');
+    pt.className = 'sb-punkt';
+    pt.textContent = data.punct;
+    row.appendChild(pt);
+    sbColorRow(rowIdx, true);
+    sbCorrect[rowIdx] = true;
+  });
+  timerStop(timers.sb);
+}
+
+function sbTimerReset() {
+  sbCorrect = [];
+  timerReset(timers.sb);
+  sbBuild();
+}
+
+function sbBuild() {
+  var container = document.getElementById('satzbauContainer');
+  container.innerHTML = '';
+  sbCorrect = new Array(satzbauData.length).fill(false);
+  satzbauData.forEach(function(data, rowIdx) {
+    var words = data.words.filter(function(w){ return w !== ','; });
+    // Fisher-Yates shuffle
+    var shuffled = words.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+    }
+    var wrap = document.createElement('div');
+    wrap.className = 'sentence-builder';
+    wrap.innerHTML = '<div class="sb-label">Satz ' + (rowIdx+1) + '</div>';
+    var bank = document.createElement('div');
+    bank.className = 'chips-container';
+    bank.id = 'sb-bank-'+rowIdx;
+    shuffled.forEach(function(word) {
+      bank.appendChild(sbMakeChip(word, word));
+    });
+    wrap.appendChild(bank);
+    var row = document.createElement('div');
+    row.className = 'sb-zone';
+    row.id = 'sb-row-'+rowIdx;
+    var pt = document.createElement('span');
+    pt.className = 'sb-punkt';
+    pt.textContent = data.punct;
+    row.appendChild(pt);
+    wrap.appendChild(row);
+    var fb = document.createElement('div');
+    fb.className = 'satzbau-feedback';
+    fb.id = 'sb-fb-'+rowIdx;
+    wrap.appendChild(fb);
+    container.appendChild(wrap);
+    sbRegisterZone(row, rowIdx);
+  });
+}
+
+// ── WORTSCHATZ ───────────────────────────────────────────────
+var WS_DATA = [
+  { en: '(to make a plan)', de: 'einen Plan machen' },
+  { en: '(to discard a plan)', de: 'einen Plan verwerfen' },
+  { en: '(to divide time)', de: 'Zeit einteilen' },
+  { en: '(to set a deadline)', de: 'eine Frist setzen' },
+  { en: '(to pursue goals)', de: 'Ziele verfolgen' },
+  { en: '(shortly / soon)', de: 'in Kürze' },
+  { en: '(to make a decision)', de: 'eine Entscheidung treffen' },
+  { en: '(to look ahead)', de: 'vorausschauen' },
+  { en: '(to take a risk)', de: 'ein Risiko eingehen' },
+  { en: '(the life goal)', de: 'das Lebensziel' },
+  { en: '(the role model)', de: 'das Vorbild' },
+  { en: '(to emulate someone)', de: 'jemandem nacheifern' }
+];
+var wsTimerStarted = false;
+function wsTimerStart() {
+  if (!wsTimerStarted) { wsTimerStarted = true; timerStart(timers.ws); }
+}
+function wsCheck(inp) {
+  wsTimerStart();
+  var val = inp.value.trim();
+  var ans = inp.dataset.ans;
+  if (val === ans) { inp.className = 'ws-inp ok'; }
+  else if (ans.startsWith(val) && val.length > 0) { inp.className = 'ws-inp'; }
+  else if (val.length > 0) { inp.className = 'ws-inp no'; }
+  else { inp.className = 'ws-inp'; }
+  var all = document.querySelectorAll('.ws-inp');
+  var done = Array.from(all).every(function(el){ return el.className.indexOf('ok') !== -1; });
+  if (done) timerStop(timers.ws);
+}
+function wsReset() {
+  document.querySelectorAll('.ws-inp').forEach(function(el){ el.value=''; el.className='ws-inp'; });
+  wsTimerStarted = false;
+  timerReset(timers.ws);
+}
+function wsShowAll() {
+  document.querySelectorAll('.ws-inp').forEach(function(el){ el.value=el.dataset.ans; el.className='ws-inp ok'; });
+  timerStop(timers.ws);
+}
+function wsBuild() {
+  var grid = document.getElementById('wsGrid');
+  grid.innerHTML = '';
+  WS_DATA.forEach(function(item, i) {
+    var div = document.createElement('div');
+    div.className = 'ws-item';
+    var num = document.createElement('span');
+    num.className = 'ws-num';
+    num.textContent = (i+1)+'.';
+    var en = document.createElement('span');
+    en.className = 'ws-en';
+    en.textContent = item.en;
+    var inp = document.createElement('input');
+    inp.className = 'ws-inp';
+    inp.dataset.ans = item.de;
+    inp.placeholder = '';
+    inp.addEventListener('input', function(){ wsCheck(this); });
+    div.appendChild(num); div.appendChild(en); div.appendChild(inp);
+    grid.appendChild(div);
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+(function init() {
+  ['lt','sb','ws'].forEach(function(k){ timerLoad(timers[k]); });
+  zuordInit();
+  sbBuild();
+  wsBuild();
+})();
+</script>
+</body>
+</html>

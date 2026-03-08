@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1044R · Das erste Date</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+h1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 22px 28px; font-size: 1.5rem; letter-spacing: .5px; }
+h1 span { font-size: .9rem; opacity: .85; margin-left: 10px; }
+
+/* Nav */
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+@media (max-width: 600px) { body { padding: 8px; } .nav { flex-wrap: wrap; } .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; } .nav-btn:last-child { border-right: 1px solid #ddd; } }
+
+.section { display: none; }
+.section.active { display: block; }
+.section > div { padding: 28px 28px; }
+h2 { color: #667eea; margin-bottom: 16px; font-size: 1.15rem; }
+h3 { color: #764ba2; margin: 18px 0 8px; font-size: 1rem; }
+p { line-height: 1.7; color: #333; margin-bottom: 10px; }
+
+/* Vorentlastung */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.vocab-card { border: 2px solid #e8e0f0; border-radius: 10px; padding: 12px; background: #faf8ff; }
+.vocab-card .de { font-weight: 700; color: #667eea; font-size: 1rem; }
+.vocab-card .en { color: #888; font-size: .85rem; margin-top: 4px; }
+
+/* Geschichte */
+.story-block { background: #f8f8ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 18px 20px; margin-bottom: 18px; line-height: 1.8; color: #333; font-size: .97rem; }
+.story-block h4 { color: #667eea; margin-bottom: 10px; font-size: 1rem; }
+
+/* Richtig/Falsch */
+.rf-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 10px; background: #f8f8ff; border-radius: 8px; font-size: .95rem; }
+.rf-item span { flex: 1; }
+.rf-btn { padding: 5px 14px; border-radius: 16px; border: 2px solid; cursor: pointer; font-size: .85rem; font-weight: 600; transition: all .2s; }
+.rf-r { border-color: #4caf50; color: #4caf50; background: white; }
+.rf-r:hover, .rf-r.selected { background: #e8f5e9; }
+.rf-r.correct { background: #4caf50; color: white; }
+.rf-r.wrong { background: #ffebee; border-color: #e53935; color: #e53935; }
+.rf-f { border-color: #e53935; color: #e53935; background: white; }
+.rf-f:hover, .rf-f.selected { background: #ffebee; }
+.rf-f.correct { background: #e53935; color: white; }
+.rf-f.wrong { background: #e8f5e9; border-color: #4caf50; color: #4caf50; }
+.rf-fb { font-size: .8rem; width: 70px; text-align: center; min-height: 1em; }
+
+/* Lückentext */
+.lt-block { background: #f8f8ff; border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+.lt-input { border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: 1rem; color: #333; width: 130px; outline: none; padding: 2px 4px; transition: border-color .2s; }
+.lt-input:focus { border-color: #667eea; }
+.lt-input.ok { border-color: #4caf50; color: #2e7d32; }
+.lt-input.no { border-color: #e53935; color: #c62828; }
+
+/* Satzbau */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
+.chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
+.chip:active { cursor: grabbing; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
+.sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
+.sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
+.satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
+.satzbau-feedback.ok { color: #4caf50; }
+.satzbau-feedback.no { color: #e53935; }
+
+/* Wortschatz */
+.ws-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.ws-table th { background: #667eea; color: white; padding: 8px 10px; text-align: left; font-size: .85rem; }
+.ws-table td { padding: 8px 10px; border-bottom: 1px solid #eee; font-size: .9rem; }
+.ws-table tr:nth-child(even) td { background: #f8f8ff; }
+.ws-input { border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: .95rem; color: #333; width: 100%; outline: none; padding: 2px 4px; }
+.ws-input:focus { border-color: #667eea; }
+.ws-input.ok { border-color: #4caf50; color: #2e7d32; }
+.ws-input.no { border-color: #e53935; color: #c62828; }
+
+/* Timer */
+.btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.btn-small { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 20px; padding: 6px 16px; font-size: .82rem; cursor: pointer; }
+.btn-small:hover { opacity: .88; }
+.timer-display { font-size: .88rem; color: #555; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>1044R · Das erste Date <span>Lesetext · A2.1</span></h1>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🌅</span><span class="nav-label">Vorentlastung</span></button>
+  <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">📖</span><span class="nav-label">Geschichte</span></button>
+  <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">❓</span><span class="nav-label">Verständnis</span></button>
+  <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+  <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+  <button class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></button>
+</nav>
+
+<!-- TAB 0: Vorentlastung -->
+<section class="section active" id="tab-0">
+<div>
+  <h2>🌅 Vorentlastung — Wichtige Wörter</h2>
+  <p style="color:#555;font-size:.9rem;margin-bottom:16px">Before you read: learn these key words from the story.</p>
+  <div class="vocab-grid">
+    <div class="vocab-card"><div class="de">besichtigen</div><div class="en">to visit / to tour (a place)</div></div>
+    <div class="vocab-card"><div class="de">das Museum, -een</div><div class="en">museum</div></div>
+    <div class="vocab-card"><div class="de">die Ausstellung, -en</div><div class="en">exhibition</div></div>
+    <div class="vocab-card"><div class="de">begeistert (von)</div><div class="en">enthusiastic (about) / thrilled</div></div>
+    <div class="vocab-card"><div class="de">das Publikum</div><div class="en">audience</div></div>
+    <div class="vocab-card"><div class="de">die Eintrittskarte, -n</div><div class="en">ticket (entry)</div></div>
+    <div class="vocab-card"><div class="de">vorschlagen</div><div class="en">to suggest</div></div>
+    <div class="vocab-card"><div class="de">sich an der Hand halten</div><div class="en">to hold hands</div></div>
+    <div class="vocab-card"><div class="de">beeindrucken</div><div class="en">to impress</div></div>
+    <div class="vocab-card"><div class="de">die Oper, -n</div><div class="en">opera / opera house</div></div>
+  </div>
+  <div style="background:#f0f4ff;border-left:4px solid #667eea;border-radius:0 10px 10px 0;padding:14px 18px;">
+    <strong>Die Geschichte:</strong> Alex has a first date with Louise in Berlin. They visit the Berliner Dom, have a picnic in the park, go to a museum, eat at a restaurant, and finally enjoy an opera. Will the evening be perfect?
+  </div>
+</div>
+</section>
+
+<!-- TAB 1: Geschichte -->
+<section class="section" id="tab-1">
+<div>
+  <h2>📖 Das erste Date</h2>
+  <div class="story-block">
+    <h4>Teil 1 — Das Picknick</h4>
+    Es ist Freitag, 14 Uhr. Alex ist nervös, weil er heute das erste richtige Date mit Louise hat. Er möchte, dass es perfekt wird, weil er Louise beeindrucken möchte. Zuerst besichtigen Alex und Louise den Berliner Dom, weil Louise ihn noch nie von innen gesehen hat. Danach kaufen sie im Supermarkt Lebensmittel und Getränke, weil sie ein Picknick im Park machen wollen. Sie kaufen Erdbeeren, Kuchen und sogar Champagner. Alex und Louise unterhalten sich gut und haben viel Spaß. Alex glaubt, dass Louise das Date gefällt.
+  </div>
+  <div class="story-block">
+    <h4>Teil 2 — Das Museum und das Restaurant</h4>
+    Danach gehen sie in ein Museum auf der Museumsinsel. Sie laufen durch das Museum und schauen sich die Ausstellungen an. Alex findet das Museum ein bisschen langweilig, weil er sich nicht für Geschichte interessiert. Er hofft, dass es Louise trotzdem gefällt. „Wie findest du das Museum, Louise?", fragt Alex. „Ich muss ehrlich sagen, dass ich es ein bisschen langweilig finde", antwortet Louise. „Zum Glück! Das ist das langweiligste Museum!", ruft Alex laut. Louise lacht. „Lass uns lieber spazieren gehen", schlägt Alex vor. „Das ist eine großartige Idee!", meint auch Louise. Alex ist glücklich, weil Louise beim Spaziergang seine Hand hält. Am Abend lädt Alex Louise ins beste und teuerste Restaurant in Berlin ein. Er hofft, dass ihr das Essen gut schmeckt. „Das ist das leckerste Steak, das ich je gegessen habe!", sagt Louise. „Vielen Dank, dass du mir dieses Restaurant gezeigt hast, Alex!"
+  </div>
+  <div class="story-block">
+    <h4>Teil 3 — Die Oper</h4>
+    Danach gehen Alex und Louise in die Oper. Alex kauft die Eintrittskarten. Im Publikum sitzen noch nicht viele Leute, weil Alex und Louise früh da sind. Louise ist begeistert von der Oper, weil sie die Musik sehr mag. In der Pause trinken Alex und Louise ein Glas Wein. Alex freut sich, dass Louise die Oper gefällt. „Das ist die spannendste und schönste Oper, Alex! Ich habe noch nie eine bessere gesehen", sagt Louise und gibt Alex einen Kuss auf die Wange. Nach der Oper bringt Alex Louise zu ihrer neuen Wohnung. „Vielen Dank für das tolle erste Date, Alex! Ich bin so glücklich, dass du mich endlich nach einem Date gefragt hast. Ich hatte einen wunderschönen Tag mit dir", sagt Louise und küsst Alex zum Abschied. Alex ist begeistert, weil das Date so gut gelaufen ist. Er hofft, dass es bald ein zweites Date gibt.
+  </div>
+</div>
+</section>
+
+<!-- TAB 2: Verständnis -->
+<section class="section" id="tab-2">
+<div>
+  <h2>❓ Richtig oder Falsch?</h2>
+  <div id="rfContainer"></div>
+  <button class="btn-small" onclick="rfReset()">↺ Neustart</button>
+</div>
+</section>
+
+<!-- TAB 3: Lückentext -->
+<section class="section" id="tab-3">
+<div>
+  <h2>✏️ Lückentext</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="lt-best">—</span></span>
+    <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
+    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
+  </div>
+  <div class="lt-block">
+    <h3>Teil 1 — Lücken füllen</h3>
+    <p>1. Alex ist nervös, weil er heute das erste Date mit <input class="lt-input" id="lt0" data-ans="Louise" placeholder="" oninput="ltCheck(this)"> hat.</p>
+    <p>2. Er möchte, dass es perfekt <input class="lt-input" id="lt1" data-ans="wird" placeholder="" oninput="ltCheck(this)" style="width:70px">.</p>
+    <p>3. Zuerst besichtigen sie den Berliner <input class="lt-input" id="lt2" data-ans="Dom" placeholder="" oninput="ltCheck(this)" style="width:70px">.</p>
+    <p>4. Sie kaufen Erdbeeren, Kuchen und sogar <input class="lt-input" id="lt3" data-ans="Champagner" placeholder="" oninput="ltCheck(this)" style="width:120px">.</p>
+    <p>5. Alex findet das Museum langweilig, weil er sich nicht für <input class="lt-input" id="lt4" data-ans="Geschichte" placeholder="" oninput="ltCheck(this)" style="width:110px"> interessiert.</p>
+    <p>6. Alex ist glücklich, weil Louise beim Spaziergang seine <input class="lt-input" id="lt5" data-ans="Hand" placeholder="" oninput="ltCheck(this)" style="width:70px"> hält.</p>
+  </div>
+  <div class="lt-block">
+    <h3>Teil 2 — <em>weil</em> oder <em>dass</em>?</h3>
+    <p>1. Alex hofft, <input class="lt-input" id="lt6" data-ans="dass" placeholder="" oninput="ltCheck(this)" style="width:70px"> ihr das Essen gut schmeckt.</p>
+    <p>2. Louise ist begeistert von der Oper, <input class="lt-input" id="lt7" data-ans="weil" placeholder="" oninput="ltCheck(this)" style="width:70px"> sie die Musik sehr mag.</p>
+    <p>3. Alex freut sich, <input class="lt-input" id="lt8" data-ans="dass" placeholder="" oninput="ltCheck(this)" style="width:70px"> Louise die Oper gefällt.</p>
+    <p>4. Alex ist begeistert, <input class="lt-input" id="lt9" data-ans="weil" placeholder="" oninput="ltCheck(this)" style="width:70px"> das Date so gut gelaufen ist.</p>
+    <p>5. Er hofft, <input class="lt-input" id="lt10" data-ans="dass" placeholder="" oninput="ltCheck(this)" style="width:70px"> es bald ein zweites Date gibt.</p>
+  </div>
+</div>
+</section>
+
+<!-- TAB 4: Satzbau -->
+<section class="section" id="tab-4">
+<div>
+  <h2>🧩 Satzbau</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="sb-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(4)">↺ Neustart</button>
+    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+  </div>
+  <div id="satzbauContainer"></div>
+</div>
+</section>
+
+<!-- TAB 5: Wortschatz -->
+<section class="section" id="tab-5">
+<div>
+  <h2>🔠 Wortschatz</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="ws-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="ws-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(5)">↺ Neustart</button>
+    <button class="btn-small" onclick="wsShowSolutions()">💡 Lösungen</button>
+  </div>
+  <table class="ws-table">
+    <thead><tr><th>Englisch</th><th>Deutsch (tippen)</th></tr></thead>
+    <tbody id="wsBody"></tbody>
+  </table>
+</div>
+</section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ===== TAB NAVIGATION ===== */
+var TABS = 6;
+function showTab(n) {
+  for (var i = 0; i < TABS; i++) {
+    var s = document.getElementById('tab-' + i);
+    var b = document.querySelectorAll('.nav-btn')[i];
+    if (s) s.classList.toggle('active', i === n);
+    if (b) b.classList.toggle('active', i === n);
+  }
+  if (n === 4) timerAutoStart(4);
+  if (n === 5) timerAutoStart(5);
+}
+
+/* ===== TIMER ===== */
+var TIMER_PREFIX = 'a2-1044r-';
+var timerStarted = [false,false,false,false,false,false];
+var timerRunning = [false,false,false,false,false,false];
+var timerSeconds = [0,0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null,null];
+function timerFmt(s) { return Math.floor(s/60) + ':' + (s%60 < 10 ? '0' : '') + s%60; }
+function timerTick(n) { timerSeconds[n]++; var els = ['','','','lt-time','sb-time','ws-time']; var el = document.getElementById(els[n]); if(el) el.textContent = timerFmt(timerSeconds[n]); }
+function timerAutoStart(n) {
+  if(timerStarted[n]) return; timerStarted[n]=true; timerRunning[n]=true;
+  timerIntervals[n] = setInterval(function(){timerTick(n);},1000);
+}
+function timerStop(n) {
+  if(!timerRunning[n]) return; timerRunning[n]=false; clearInterval(timerIntervals[n]);
+  var best = parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');
+  if(timerSeconds[n]<best) localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);
+  var b = parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n));
+  var els = ['','','','lt-best','sb-best','ws-best']; var el = document.getElementById(els[n]); if(el) el.textContent=timerFmt(b);
+}
+function timerResetOne(n) {
+  clearInterval(timerIntervals[n]); timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
+  var els=['','','','lt-time','sb-time','ws-time']; var el=document.getElementById(els[n]); if(el) el.textContent='0:00';
+  if(n===4) initSatzbau();
+  if(n===5) initWs();
+}
+[3,4,5].forEach(function(n){
+  var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);
+  if(b){var els=['','','','lt-best','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(parseInt(b));}
+});
+
+/* ===== RICHTIG/FALSCH ===== */
+var RF_DATA = [
+  { text: 'Alex ist nervös, weil er ein Date mit Louise hat.', ans: true },
+  { text: 'Sie besichtigen zuerst einen Supermarkt.', ans: false },
+  { text: 'Sie machen ein Picknick im Park.', ans: true },
+  { text: 'Alex findet das Museum interessant.', ans: false },
+  { text: 'Louise findet das Museum langweilig.', ans: true },
+  { text: 'Alex lädt Louise in ein Restaurant ein.', ans: true },
+  { text: 'Louise findet das Steak nicht lecker.', ans: false },
+  { text: 'Alex und Louise sind früh in der Oper.', ans: true },
+  { text: 'Louise gibt Alex einen Kuss auf den Mund.', ans: false },
+  { text: 'Alex hofft auf ein zweites Date.', ans: true }
+];
+function initRf() {
+  var cont = document.getElementById('rfContainer'); cont.innerHTML = '';
+  RF_DATA.forEach(function(d, i) {
+    var div = document.createElement('div'); div.className = 'rf-item';
+    var sp = document.createElement('span'); sp.textContent = (i+1)+'. '+d.text;
+    var btnR = document.createElement('button'); btnR.className = 'rf-btn rf-r'; btnR.textContent = 'Richtig';
+    var btnF = document.createElement('button'); btnF.className = 'rf-btn rf-f'; btnF.textContent = 'Falsch';
+    var fb = document.createElement('div'); fb.className = 'rf-fb';
+    function check(chosen) {
+      var ok = chosen === d.ans;
+      btnR.className = 'rf-btn rf-r' + (chosen===true ? (ok?' correct':' wrong') : '');
+      btnF.className = 'rf-btn rf-f' + (chosen===false ? (ok?' correct':' wrong') : '');
+      fb.textContent = ok ? '✓' : '✗';
+      fb.style.color = ok ? '#4caf50' : '#e53935';
+    }
+    btnR.onclick = function(){check(true);};
+    btnF.onclick = function(){check(false);};
+    div.appendChild(sp); div.appendChild(btnR); div.appendChild(btnF); div.appendChild(fb);
+    cont.appendChild(div);
+  });
+}
+function rfReset() { initRf(); }
+
+/* ===== LÜCKENTEXT ===== */
+var ltDone=false; var ltStarted=false;
+function ltCheck(inp) {
+  if(!ltStarted){ltStarted=true; timerAutoStart(3);}
+  var val=inp.value.trim(); var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  if(Array.from(document.querySelectorAll('.lt-input')).every(function(i){return i.classList.contains('ok');})){
+    if(!ltDone){ltDone=true;timerStop(3);}
+  }
+}
+function ltRestart() {
+  timerResetOne(3); ltStarted=false; ltDone=false;
+  document.querySelectorAll('.lt-input').forEach(function(i){i.value='';i.classList.remove('ok','no');});
+}
+function ltShowSolutions() {
+  document.querySelectorAll('.lt-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});
+}
+
+/* ===== SATZBAU ===== */
+var satzbauData = [
+  { words: ['Alex', 'ist', 'nervös', 'weil', 'er', 'heute', 'ein', 'Date', 'hat'], punct: '.' },
+  { words: ['Zuerst', 'besichtigen', 'sie', 'den', 'Berliner', 'Dom'], punct: '.' },
+  { words: ['Sie', 'kaufen', 'Erdbeeren', 'Kuchen', 'und', 'Champagner'], punct: '.' },
+  { words: ['Alex', 'glaubt', 'dass', 'Louise', 'das', 'Date', 'gefällt'], punct: '.' },
+  { words: ['Alex', 'ist', 'glücklich', 'weil', 'Louise', 'seine', 'Hand', 'hält'], punct: '.' },
+  { words: ['Louise', 'ist', 'begeistert', 'weil', 'sie', 'die', 'Musik', 'mag'], punct: '.' },
+  { words: ['Er', 'hofft', 'dass', 'es', 'bald', 'ein', 'zweites', 'Date', 'gibt'], punct: '.' }
+];
+var sbDragged = null;
+function sbMakeChip(word, orig) {
+  var c=document.createElement('div'); c.className='chip'; c.textContent=word; c.dataset.orig=orig; c.draggable=true;
+  c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});
+  c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});
+  return c;
+}
+function sbRegisterZone(zone, rowIdx) {
+  zone.addEventListener('dragover',function(e){
+    e.preventDefault();e.dataTransfer.dropEffect='move';
+    var cursor=zone.querySelector('.sb-insert-cursor');
+    if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}
+    var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});
+    for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}
+    if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}
+    zone.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});
+  zone.addEventListener('drop',function(e){
+    e.preventDefault();zone.classList.remove('drag-over');
+    var cursor=zone.querySelector('.sb-insert-cursor');
+    if(sbDragged){if(cursor)zone.insertBefore(sbDragged,cursor);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}}
+    zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});
+    sbUpdateCapitalization(zone);
+    setTimeout(function(){sbCheckAuto(rowIdx);},500);
+  });
+}
+function sbColorRow(zone,ok){zone.querySelectorAll('.chip').forEach(function(c){c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';});}
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;c.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig;});}
+function sbCheckAuto(rowIdx){
+  var zone=document.getElementById('sb-row-'+rowIdx);var fb=document.getElementById('sb-fb-'+rowIdx);if(!zone)return;
+  var chips=Array.from(zone.querySelectorAll('.chip'));
+  var words=chips.map(function(c){return c.dataset.orig.toLowerCase();});
+  var expected=satzbauData[rowIdx].words.map(function(w){return w.toLowerCase();});
+  var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});
+  sbColorRow(zone,ok?true:chips.length>0?false:null);
+  if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}
+  if(ok){var allOk=satzbauData.every(function(_,i){var z=document.getElementById('sb-row-'+i);if(!z)return false;var ch=Array.from(z.querySelectorAll('.chip'));var ex=satzbauData[i].words.map(function(w){return w.toLowerCase();});return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig.toLowerCase()===ex[j];});});if(allOk)timerStop(4);}
+}
+function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.getElementById('sb-bank-'+i);var zone=document.getElementById('sb-row-'+i);if(!bank||!zone)return;bank.innerHTML='';var pt=zone.querySelector('.sb-punkt');Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});d.words.forEach(function(w,j){var c=sbMakeChip(j===0?w.charAt(0).toUpperCase()+w.slice(1):w,w);if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);});sbColorRow(zone,true);var fb=document.getElementById('sb-fb-'+i);if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}});}
+function initSatzbau(){
+  var cont=document.getElementById('satzbauContainer');cont.innerHTML='';
+  satzbauData.forEach(function(d,i){
+    var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}
+    var wrap=document.createElement('div');wrap.className='sentence-builder';
+    var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;
+    shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});
+    var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;
+    var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);
+    sbRegisterZone(zone,i);
+    var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;
+    wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);
+  });
+}
+
+/* ===== WORTSCHATZ ===== */
+var WS_DATA=[
+  {en:'to visit / to tour',de:'besichtigen'},
+  {en:'exhibition',de:'die Ausstellung'},
+  {en:'enthusiastic / thrilled',de:'begeistert'},
+  {en:'audience',de:'das Publikum'},
+  {en:'ticket (entry)',de:'die Eintrittskarte'},
+  {en:'to suggest',de:'vorschlagen'},
+  {en:'to hold hands',de:'sich an der Hand halten'},
+  {en:'to impress',de:'beeindrucken'},
+  {en:'opera / opera house',de:'die Oper'},
+  {en:'picnic',de:'das Picknick'},
+  {en:'strawberries',de:'die Erdbeeren'},
+  {en:'champagne',de:'der Champagner'}
+];
+var wsDone=false;
+function initWs(){
+  wsDone=false;
+  var tbody=document.getElementById('wsBody');tbody.innerHTML='';
+  WS_DATA.forEach(function(d,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+d.en+'</td><td><input class="ws-input" id="ws'+i+'" data-ans="'+d.de.replace(/"/g,'&quot;')+'" placeholder="" oninput="wsCheck(this)"></td>';
+    tbody.appendChild(tr);
+  });
+}
+function wsCheck(inp){
+  timerAutoStart(5);
+  var val=inp.value.trim();var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  if(Array.from(document.querySelectorAll('#wsBody .ws-input')).every(function(i){return i.classList.contains('ok');})){if(!wsDone){wsDone=true;timerStop(5);}}
+}
+function wsShowSolutions(){document.querySelectorAll('#wsBody .ws-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}
+
+/* ===== INIT ===== */
+initRf();
+initSatzbau();
+initWs();
+</script>
+</body>
+</html>

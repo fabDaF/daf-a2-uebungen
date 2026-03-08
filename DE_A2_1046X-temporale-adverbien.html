@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1046X · Temporale Adverbien</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+h1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 22px 28px; font-size: 1.5rem; letter-spacing: .5px; }
+h1 span { font-size: .9rem; opacity: .85; margin-left: 10px; }
+
+/* Nav */
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+@media (max-width: 600px) { body { padding: 8px; } .nav { flex-wrap: wrap; } .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; } .nav-btn:last-child { border-right: 1px solid #ddd; } }
+
+.section { display: none; }
+.section.active { display: block; }
+.section > div { padding: 28px 24px; }
+h2 { color: #667eea; margin-bottom: 16px; font-size: 1.15rem; }
+h3 { color: #764ba2; margin: 18px 0 8px; font-size: 1rem; }
+p { line-height: 1.7; color: #333; margin-bottom: 10px; }
+
+/* Überblick */
+.adv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.adv-card { border: 2px solid #e8e0f0; border-radius: 10px; padding: 12px 14px; background: #faf8ff; }
+.adv-card .adv-de { font-weight: 700; color: #667eea; font-size: 1rem; margin-bottom: 4px; }
+.adv-card .adv-en { color: #888; font-size: .82rem; margin-bottom: 6px; }
+.adv-card .adv-ex { font-style: italic; color: #555; font-size: .85rem; border-left: 3px solid #667eea; padding-left: 8px; line-height: 1.5; }
+.regel-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 16px; }
+.regel-box h4 { color: #667eea; margin-bottom: 8px; font-size: .95rem; }
+.gram-table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; }
+.gram-table th { background: #667eea; color: white; padding: 8px 12px; text-align: left; font-size: .88rem; }
+.gram-table td { padding: 8px 12px; border-bottom: 1px solid #eee; font-size: .9rem; }
+.gram-table tr:nth-child(even) td { background: #f8f8ff; }
+
+/* Lückentext */
+.lt-block { background: #f8f8ff; border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+.lt-input { border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: 1rem; color: #333; width: 100px; outline: none; padding: 2px 4px; transition: border-color .2s; }
+.lt-input:focus { border-color: #667eea; }
+.lt-input.ok { border-color: #4caf50; color: #2e7d32; }
+.lt-input.no { border-color: #e53935; color: #c62828; }
+
+/* Zuordnung */
+.chip-pool { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f0; border-radius: 10px; margin-bottom: 18px; min-height: 48px; }
+.zuord-chip { background: white; border: 2px solid #667eea; border-radius: 20px; padding: 6px 14px; font-size: .9rem; cursor: grab; user-select: none; transition: background .2s; }
+.zuord-chip:active { cursor: grabbing; }
+.zuord-chip.placed { opacity: .35; }
+.zuord-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+@media (max-width: 600px) { .zuord-cols { grid-template-columns: 1fr; } }
+.zuord-col { background: #f8f8ff; border-radius: 10px; padding: 14px; }
+.zuord-col h4 { color: #764ba2; font-size: .9rem; font-weight: 700; margin-bottom: 10px; text-align: center; }
+.zuord-zone { min-height: 44px; border: 2px dashed #ccc; border-radius: 8px; padding: 6px; display: flex; flex-wrap: wrap; gap: 6px; transition: background .2s; margin-bottom: 6px; }
+.zuord-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.zuord-zone .zuord-chip { cursor: default; }
+.zuord-zone .zuord-chip.ok { background: #e8f5e9; border-color: #4caf50; }
+.zuord-zone .zuord-chip.no { background: #ffebee; border-color: #e53935; }
+
+/* Satzbau */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
+.chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
+.chip:active { cursor: grabbing; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
+.sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
+.sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
+.satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
+.satzbau-feedback.ok { color: #4caf50; }
+.satzbau-feedback.no { color: #e53935; }
+
+/* Wortschatz */
+.ws-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.ws-table th { background: #667eea; color: white; padding: 8px 10px; text-align: left; font-size: .85rem; }
+.ws-table td { padding: 8px 10px; border-bottom: 1px solid #eee; font-size: .9rem; }
+.ws-table tr:nth-child(even) td { background: #f8f8ff; }
+.ws-input { border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: .95rem; color: #333; width: 100%; outline: none; padding: 2px 4px; }
+.ws-input:focus { border-color: #667eea; }
+.ws-input.ok { border-color: #4caf50; color: #2e7d32; }
+.ws-input.no { border-color: #e53935; color: #c62828; }
+
+/* Timer */
+.btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.btn-small { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 20px; padding: 6px 16px; font-size: .82rem; cursor: pointer; }
+.btn-small:hover { opacity: .88; }
+.timer-display { font-size: .88rem; color: #555; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>1046X · Temporale Adverbien <span>Zeitangaben · Tagesroutine</span></h1>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">📋</span><span class="nav-label">Überblick</span></button>
+  <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+  <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">💬</span><span class="nav-label">Zuordnung</span></button>
+  <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+  <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></button>
+</nav>
+
+<!-- TAB 0: Überblick -->
+<section class="section active" id="tab-0">
+<div>
+  <h2>📋 Temporale Adverbien — Überblick</h2>
+
+  <h3>Zeitpunkt des Tages</h3>
+  <div class="adv-grid">
+    <div class="adv-card"><div class="adv-de">morgens</div><div class="adv-en">(in the morning)</div><div class="adv-ex">Morgens stehe ich um 7 Uhr auf.</div></div>
+    <div class="adv-card"><div class="adv-de">mittags</div><div class="adv-en">(at midday / at noon)</div><div class="adv-ex">Mittags machen wir eine Pause.</div></div>
+    <div class="adv-card"><div class="adv-de">abends</div><div class="adv-en">(in the evening)</div><div class="adv-ex">Abends gehe ich zum Sport.</div></div>
+    <div class="adv-card"><div class="adv-de">früher</div><div class="adv-en">(earlier / in the past)</div><div class="adv-ex">Früher habe ich morgens geduscht, jetzt dusche ich abends.</div></div>
+    <div class="adv-card"><div class="adv-de">später</div><div class="adv-en">(later)</div><div class="adv-ex">Später muss ich zur Bank gehen.</div></div>
+  </div>
+
+  <h3>Reihenfolge / Sequenz</h3>
+  <div class="adv-grid">
+    <div class="adv-card"><div class="adv-de">zuerst</div><div class="adv-en">(first)</div><div class="adv-ex">Zuerst musst du deine Hausaufgaben machen. Dann kannst du spielen.</div></div>
+    <div class="adv-card"><div class="adv-de">danach</div><div class="adv-en">(afterwards)</div><div class="adv-ex">Zuerst gehe ich duschen. Danach putze ich mir die Zähne.</div></div>
+    <div class="adv-card"><div class="adv-de">dann</div><div class="adv-en">(then)</div><div class="adv-ex">Zuerst putze ich mir die Zähne. Dann frühstücke ich.</div></div>
+    <div class="adv-card"><div class="adv-de">daraufhin</div><div class="adv-en">(thereupon / after that)</div><div class="adv-ex">Zuerst gehe ich einkaufen. Daraufhin koche ich.</div></div>
+  </div>
+
+  <div class="regel-box">
+    <h4>💡 Grammatik — Position im Satz</h4>
+    <p>Temporaladverbien stehen <strong>vor</strong> oder <strong>nach</strong> dem konjugierten Verb:</p>
+  </div>
+  <table class="gram-table">
+    <tr><th>Adverb am Anfang</th><th>Adverb in der Mitte</th></tr>
+    <tr><td><strong>Zuerst</strong> gehe ich zur Bank.</td><td>Ich gehe <strong>zuerst</strong> zur Bank.</td></tr>
+    <tr><td><strong>Danach</strong> muss ich einkaufen.</td><td>Ich muss <strong>danach</strong> einkaufen.</td></tr>
+    <tr><td><strong>Morgens</strong> frühstücke ich.</td><td>Ich frühstücke <strong>morgens</strong>.</td></tr>
+  </table>
+</div>
+</section>
+
+<!-- TAB 1: Lückentext -->
+<section class="section" id="tab-1">
+<div>
+  <h2>✏️ Lückentext</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="lt-best">—</span></span>
+    <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
+    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 1 — Das richtige Adverb</h3>
+    <p>1. <input class="lt-input" id="lt0" data-ans="Morgens" placeholder="" oninput="ltCheck(this)"> stehe ich auf, wenn der Wecker klingelt.</p>
+    <p>2. <input class="lt-input" id="lt1" data-ans="Zuerst" placeholder="" oninput="ltCheck(this)"> frühstücke ich in Ruhe.</p>
+    <p>3. <input class="lt-input" id="lt2" data-ans="Danach" placeholder="" oninput="ltCheck(this)"> putze ich meine Zähne und dusche.</p>
+    <p>4. <input class="lt-input" id="lt3" data-ans="Früher" placeholder="" oninput="ltCheck(this)"> musste ich nicht arbeiten. Als Kind bin ich nur in die Schule gegangen.</p>
+    <p>5. <input class="lt-input" id="lt4" data-ans="Später" placeholder="" oninput="ltCheck(this)">, wenn ich 60 bin, muss ich nicht mehr arbeiten.</p>
+    <p>6. <input class="lt-input" id="lt5" data-ans="Samstags" placeholder="" oninput="ltCheck(this)"> und sonntags muss ich auch jetzt nicht arbeiten.</p>
+    <p>7. Heute ist Montag. <input class="lt-input" id="lt6" data-ans="Montags" placeholder="" oninput="ltCheck(this)"> gehe ich immer zum Fußball-Training.</p>
+    <p>8. Ich gehe erst <input class="lt-input" id="lt7" data-ans="abends" placeholder="" oninput="ltCheck(this)"> zum Training.</p>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 2 — Linas Tag</h3>
+    <p>Lina steht <input class="lt-input" id="lt8" data-ans="morgens" placeholder="" oninput="ltCheck(this)"> um 8 Uhr auf. Sie putzt sich die Zähne, geht duschen, zieht sich an und geht zur Arbeit. <input class="lt-input" id="lt9" data-ans="Mittags" placeholder="" oninput="ltCheck(this)"> macht sie Pause und geht mit ihren Kollegen ins Restaurant. <input class="lt-input" id="lt10" data-ans="Abends" placeholder="" oninput="ltCheck(this)"> entspannt sie zuhause.</p>
+  </div>
+</div>
+</section>
+
+<!-- TAB 2: Zuordnung -->
+<section class="section" id="tab-2">
+<div>
+  <h2>💬 Zuordnung — Tageszeit oder Reihenfolge?</h2>
+  <p style="margin-bottom:14px;color:#555;font-size:.9rem">Ziehe jedes Adverb in die richtige Gruppe.</p>
+  <div class="chip-pool" id="zuordPool"></div>
+  <div class="zuord-cols">
+    <div class="zuord-col">
+      <h4>🕐 Tageszeit</h4>
+      <div class="zuord-zone" id="z-tageszeit" ondragover="zuordOver(event)" ondragleave="zuordLeave(event)" ondrop="zuordDrop(event,'tageszeit')"></div>
+    </div>
+    <div class="zuord-col">
+      <h4>🔢 Reihenfolge</h4>
+      <div class="zuord-zone" id="z-reihenfolge" ondragover="zuordOver(event)" ondragleave="zuordLeave(event)" ondrop="zuordDrop(event,'reihenfolge')"></div>
+    </div>
+  </div>
+  <button class="btn-small" onclick="zuordReset()">↺ Neustart</button>
+</div>
+</section>
+
+<!-- TAB 3: Satzbau -->
+<section class="section" id="tab-3">
+<div>
+  <h2>🧩 Satzbau</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="sb-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(3)">↺ Neustart</button>
+    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+  </div>
+  <div id="satzbauContainer"></div>
+</div>
+</section>
+
+<!-- TAB 4: Wortschatz -->
+<section class="section" id="tab-4">
+<div>
+  <h2>🔠 Wortschatz — Adverbien tippen</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="ws-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="ws-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(4)">↺ Neustart</button>
+    <button class="btn-small" onclick="wsShowSolutions()">💡 Lösungen</button>
+  </div>
+  <table class="ws-table">
+    <thead><tr><th>Englisch</th><th>Deutsch (tippen)</th></tr></thead>
+    <tbody id="wsBody"></tbody>
+  </table>
+</div>
+</section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ===== TAB NAVIGATION ===== */
+var TABS = 5;
+function showTab(n) {
+  for(var i=0;i<TABS;i++){var s=document.getElementById('tab-'+i);var b=document.querySelectorAll('.nav-btn')[i];if(s)s.classList.toggle('active',i===n);if(b)b.classList.toggle('active',i===n);}
+  if(n===3) timerAutoStart(3);
+  if(n===4) timerAutoStart(4);
+}
+
+/* ===== TIMER ===== */
+var TIMER_PREFIX='a2-1046x-';
+var timerStarted=[false,false,false,false,false];
+var timerRunning=[false,false,false,false,false];
+var timerSeconds=[0,0,0,0,0];
+var timerIntervals=[null,null,null,null,null];
+function timerFmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+function timerTick(n){timerSeconds[n]++;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(timerSeconds[n]);}
+function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerTick(n);},1000);}
+function timerStop(n){if(!timerRunning[n])return;timerRunning[n]=false;clearInterval(timerIntervals[n]);var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');if(timerSeconds[n]<best)localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);var b=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n));var els=['','lt-best','','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(b);}
+function timerResetOne(n){clearInterval(timerIntervals[n]);timerStarted[n]=false;timerRunning[n]=false;timerSeconds[n]=0;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent='0:00';if(n===3)initSatzbau();if(n===4)initWs();}
+[1,3,4].forEach(function(n){var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);if(b){var els=['','lt-best','','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(parseInt(b));}});
+
+/* ===== LÜCKENTEXT ===== */
+var ltDone=false;var ltStarted=false;
+function ltCheck(inp){
+  if(!ltStarted){ltStarted=true;timerAutoStart(1);}
+  var val=inp.value.trim();var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  if(Array.from(document.querySelectorAll('.lt-input')).every(function(i){return i.classList.contains('ok');})){if(!ltDone){ltDone=true;timerStop(1);}}
+}
+function ltRestart(){timerResetOne(1);ltStarted=false;ltDone=false;document.querySelectorAll('.lt-input').forEach(function(i){i.value='';i.classList.remove('ok','no');});}
+function ltShowSolutions(){document.querySelectorAll('.lt-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}
+
+/* ===== ZUORDNUNG ===== */
+var ZUORD_DATA=[
+  {text:'morgens',cat:'tageszeit'},
+  {text:'mittags',cat:'tageszeit'},
+  {text:'abends',cat:'tageszeit'},
+  {text:'früher',cat:'tageszeit'},
+  {text:'später',cat:'tageszeit'},
+  {text:'zuerst',cat:'reihenfolge'},
+  {text:'danach',cat:'reihenfolge'},
+  {text:'dann',cat:'reihenfolge'},
+  {text:'daraufhin',cat:'reihenfolge'},
+  {text:'montags',cat:'tageszeit'}
+];
+var draggedZuord=null;
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function initZuord(){
+  var pool=document.getElementById('zuordPool');pool.innerHTML='';
+  document.getElementById('z-tageszeit').innerHTML='';
+  document.getElementById('z-reihenfolge').innerHTML='';
+  shuffle(ZUORD_DATA.slice()).forEach(function(d){
+    var c=document.createElement('div');c.className='zuord-chip';c.textContent=d.text;c.dataset.cat=d.cat;c.draggable=true;
+    c.addEventListener('dragstart',function(){draggedZuord=c;setTimeout(function(){c.classList.add('placed');},0);});
+    c.addEventListener('dragend',function(){c.classList.remove('placed');draggedZuord=null;});
+    pool.appendChild(c);
+  });
+}
+function zuordOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over');}
+function zuordLeave(e){e.currentTarget.classList.remove('drag-over');}
+function zuordDrop(e,cat){
+  e.preventDefault();e.currentTarget.classList.remove('drag-over');
+  if(!draggedZuord)return;draggedZuord.classList.remove('placed');
+  var chip=draggedZuord.cloneNode(true);chip.draggable=false;
+  var correct=draggedZuord.dataset.cat===cat;
+  chip.classList.toggle('ok',correct);chip.classList.toggle('no',!correct);
+  e.currentTarget.appendChild(chip);draggedZuord.remove();draggedZuord=null;
+}
+function zuordReset(){initZuord();}
+
+/* ===== SATZBAU ===== */
+var satzbauData=[
+  {words:['Morgens','stehe','ich','um','8','Uhr','auf'],punct:'.'},
+  {words:['Mittags','macht','sie','eine','Pause'],punct:'.'},
+  {words:['Zuerst','gehe','ich','duschen'],punct:'.'},
+  {words:['Danach','putze','ich','mir','die','Zähne'],punct:'.'},
+  {words:['Früher','habe','ich','morgens','geduscht'],punct:'.'},
+  {words:['Später','muss','ich','zur','Bank','gehen'],punct:'.'},
+  {words:['Abends','entspannt','sie','zuhause'],punct:'.'}
+];
+var sbDragged=null;
+function sbMakeChip(word,orig){var c=document.createElement('div');c.className='chip';c.textContent=word;c.dataset.orig=orig;c.draggable=true;c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});return c;}
+function sbRegisterZone(zone,rowIdx){zone.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';var cursor=zone.querySelector('.sb-insert-cursor');if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}zone.classList.add('drag-over');});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('drag-over');var cursor=zone.querySelector('.sb-insert-cursor');if(sbDragged){if(cursor)zone.insertBefore(sbDragged,cursor);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}}zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});sbUpdateCapitalization(zone);setTimeout(function(){sbCheckAuto(rowIdx);},500);});}
+function sbColorRow(zone,ok){zone.querySelectorAll('.chip').forEach(function(c){c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';});}
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;c.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig;});}
+function sbCheckAuto(rowIdx){var zone=document.getElementById('sb-row-'+rowIdx);var fb=document.getElementById('sb-fb-'+rowIdx);if(!zone)return;var chips=Array.from(zone.querySelectorAll('.chip'));var words=chips.map(function(c){return c.dataset.orig.toLowerCase();});var expected=satzbauData[rowIdx].words.map(function(w){return w.toLowerCase();});var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});sbColorRow(zone,ok?true:chips.length>0?false:null);if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}if(ok){var allOk=satzbauData.every(function(_,i){var z=document.getElementById('sb-row-'+i);if(!z)return false;var ch=Array.from(z.querySelectorAll('.chip'));var ex=satzbauData[i].words.map(function(w){return w.toLowerCase();});return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig.toLowerCase()===ex[j];});});if(allOk)timerStop(3);}}
+function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.getElementById('sb-bank-'+i);var zone=document.getElementById('sb-row-'+i);if(!bank||!zone)return;bank.innerHTML='';var pt=zone.querySelector('.sb-punkt');Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});d.words.forEach(function(w,j){var c=sbMakeChip(j===0?w.charAt(0).toUpperCase()+w.slice(1):w,w);if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);});sbColorRow(zone,true);var fb=document.getElementById('sb-fb-'+i);if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}});}
+function initSatzbau(){var cont=document.getElementById('satzbauContainer');cont.innerHTML='';satzbauData.forEach(function(d,i){var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}var wrap=document.createElement('div');wrap.className='sentence-builder';var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);sbRegisterZone(zone,i);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);});}
+
+/* ===== WORTSCHATZ ===== */
+var WS_DATA=[
+  {en:'in the morning',de:'morgens'},
+  {en:'at midday / at noon',de:'mittags'},
+  {en:'in the evening',de:'abends'},
+  {en:'earlier / in the past',de:'früher'},
+  {en:'later',de:'später'},
+  {en:'first',de:'zuerst'},
+  {en:'afterwards',de:'danach'},
+  {en:'then',de:'dann'},
+  {en:'thereupon / after that',de:'daraufhin'},
+  {en:'on Mondays',de:'montags'},
+  {en:'on Saturdays',de:'samstags'}
+];
+var wsDone=false;
+function initWs(){
+  wsDone=false;var tbody=document.getElementById('wsBody');tbody.innerHTML='';
+  WS_DATA.forEach(function(d,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+d.en+'</td><td><input class="ws-input" id="ws'+i+'" data-ans="'+d.de+'" placeholder="" oninput="wsCheck(this)"></td>';
+    tbody.appendChild(tr);
+  });
+}
+function wsCheck(inp){
+  timerAutoStart(4);
+  var val=inp.value.trim();var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  if(Array.from(document.querySelectorAll('#wsBody .ws-input')).every(function(i){return i.classList.contains('ok');})){if(!wsDone){wsDone=true;timerStop(4);}}
+}
+function wsShowSolutions(){document.querySelectorAll('#wsBody .ws-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}
+
+/* ===== INIT ===== */
+initZuord();
+initSatzbau();
+initWs();
+</script>
+</body>
+</html>

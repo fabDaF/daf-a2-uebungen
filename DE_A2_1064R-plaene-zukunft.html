@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2.1 · 1064R · Pläne für die Zukunft</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header .subtitle, .header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.active { display: block; }
+
+/* Vorentlastung - Vokabel-Karten */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+.vocab-card { background: #f8f9ff; border: 1px solid #dde3ff; border-radius: 10px; overflow: hidden; }
+.vocab-img { width: 100%; height: 160px; object-fit: cover; }
+.vocab-body { padding: 12px; }
+.vocab-term { font-weight: 700; color: #667eea; font-size: 1.05em; margin-bottom: 2px; }
+.vocab-en { color: #999; font-size: 0.85em; margin-bottom: 5px; font-style: italic; }
+.vocab-def { color: #555; font-size: 0.92em; line-height: 1.5; }
+
+/* Geschichte */
+.story-text { max-width: 700px; margin: 0 auto; font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 1.8; color: #1a1a1a; }
+.story-text p { margin-bottom: 1em; }
+.story-text .part-header { font-weight: 700; font-size: 1.1em; color: #667eea; margin-top: 20px; margin-bottom: 12px; }
+.story-text .dialog { font-style: normal; padding-left: 1.1em; border-left: 3px solid #667eea; color: #2a2a6e; }
+
+/* Richtig/Falsch Tab */
+.rf-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 16px; }
+.rf-item { background: #f8f9ff; padding: 14px 16px; border-radius: 8px; border-left: 4px solid #dde3ff; }
+.rf-statement { margin-bottom: 10px; font-size: 0.95em; line-height: 1.5; }
+.rf-buttons { display: flex; gap: 8px; }
+.rf-btn { padding: 6px 14px; border: 2px solid #ddd; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.2s; background: white; }
+.rf-btn.richtig { border-color: #27ae60; color: #27ae60; }
+.rf-btn.falsch { border-color: #e74c3c; color: #e74c3c; }
+.rf-feedback { display: none; margin-top: 8px; font-weight: 600; font-size: 0.9em; }
+.rf-feedback.show { display: block; }
+.rf-feedback.correct { color: #27ae60; }
+.rf-feedback.incorrect { color: #e74c3c; }
+
+/* Lückentext */
+.lueckentext-item { background: #f8f9ff; padding: 14px 16px; border-radius: 8px; margin-bottom: 12px; }
+.lueckentext-item p { line-height: 1.8; }
+.lueckentext-item input { padding: 6px 10px; border: 2px solid #ddd; border-radius: 4px; font-size: 0.9em; transition: all 0.2s; }
+.lueckentext-item input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 5px rgba(102, 126, 234, 0.3); }
+.lueckentext-item input.ok { background: #f0fff4; border-color: #27ae60; }
+.lueckentext-item input.no { background: #fff5f5; border-color: #e74c3c; }
+
+/* Satzbau */
+.satzbau-item { background: #f8f9ff; padding: 16px 20px; margin-bottom: 20px; border-radius: 10px; border-left: 4px solid #667eea; }
+.sb-label { font-size: 0.8em; color: #888; margin-bottom: 6px; font-weight: 600; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+
+/* Wortschatz - Typen Üben */
+.ws-item { background: #f8f9ff; padding: 14px 16px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #dde3ff; }
+.ws-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.ws-en { color: #888; font-size: 0.92em; min-width: 140px; }
+.art { width: 70px; padding: 6px 8px; border: 2px solid #ddd; border-radius: 4px; font-size: 0.9em; transition: all 0.2s; }
+.wort { flex: 1; min-width: 120px; padding: 6px 8px; border: 2px solid #ddd; border-radius: 4px; font-size: 0.9em; transition: all 0.2s; }
+.plural { flex: 1; min-width: 120px; padding: 6px 8px; border: 2px solid #ddd; border-radius: 4px; font-size: 0.9em; transition: all 0.2s; }
+.art:focus, .wort:focus, .plural:focus { outline: none; border-color: #667eea; box-shadow: 0 0 5px rgba(102, 126, 234, 0.3); }
+.art.ok, .wort.ok, .plural.ok { background: #f0fff4; border-color: #27ae60; }
+.art.no, .wort.no, .plural.no { background: #fff5f5; border-color: #e74c3c; }
+
+/* Timer und Buttons */
+.btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.btn { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.2s; background: #f0f0f0; color: #666; }
+.btn:hover { background: #e0e0e0; }
+.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+.btn-primary:hover { opacity: 0.9; }
+.btn-reset { background: white; color: #e74c3c; border: 2px solid #e74c3c; }
+.timer-display { display: flex; gap: 14px; font-size: 0.85em; color: #888; font-variant-numeric: tabular-nums; }
+.timer-item { display: flex; gap: 4px; }
+
+/* Hilfe-Box */
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .ws-row { flex-direction: column; align-items: flex-start; }
+    .ws-en { min-width: 0; }
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Pläne für die Zukunft</h1>
+        <p style="font-family: Georgia, serif;">A2.1 · Lektion 1064R · Reading / Geschichte</p>
+        <div class="big-emoji">🌅</div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">🌅</span><span class="nav-label">Vorentlastung</span></div>
+        <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">📖</span><span class="nav-label">Geschichte</span></div>
+        <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">❓</span><span class="nav-label">Verständnis</span></div>
+        <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+        <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+        <div class="nav-btn" onclick="showSection(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
+    </div>
+
+    <!-- TAB 0: VORENTLASTUNG -->
+    <div class="section active" id="sec-0">
+        <h2 style="font-size: 1.4em; color: #667eea; margin-bottom: 8px;">Wichtige Wörter</h2>
+        <p style="color: #666; font-size: 0.95em; margin-bottom: 20px;">Frage: <strong>Was möchtest du mal werden?</strong> (What do you want to be one day?)</p>
+
+        <div class="vocab-grid">
+            <div class="vocab-card">
+                <img src="https://images.pexels.com/photos/3183186/pexels-photo-3183186.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="die Zukunft" class="vocab-img">
+                <div class="vocab-body">
+                    <div class="vocab-term">die Zukunft</div>
+                    <div class="vocab-en">(the future)</div>
+                    <div class="vocab-def">Die Zeit, die noch kommt.</div>
+                </div>
+            </div>
+            <div class="vocab-card">
+                <img src="https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="das Praktikum" class="vocab-img">
+                <div class="vocab-body">
+                    <div class="vocab-term">das Praktikum, -a</div>
+                    <div class="vocab-en">(the internship)</div>
+                    <div class="vocab-def">Praktische Arbeit zum Lernen.</div>
+                </div>
+            </div>
+            <div class="vocab-card">
+                <img src="https://images.pexels.com/photos/1205651/pexels-photo-1205651.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="studieren" class="vocab-img">
+                <div class="vocab-body">
+                    <div class="vocab-term">studieren</div>
+                    <div class="vocab-en">(to study at university)</div>
+                    <div class="vocab-def">An einer Universität lernen.</div>
+                </div>
+            </div>
+            <div class="vocab-card">
+                <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="die Hoffnung" class="vocab-img">
+                <div class="vocab-body">
+                    <div class="vocab-term">die Hoffnung, -en</div>
+                    <div class="vocab-en">(the hope)</div>
+                    <div class="vocab-def">Das Vertrauen auf etwas Gutes.</div>
+                </div>
+            </div>
+            <div class="vocab-card">
+                <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="der Beruf" class="vocab-img">
+                <div class="vocab-body">
+                    <div class="vocab-term">das Gehalt, -¨er</div>
+                    <div class="vocab-en">(the salary)</div>
+                    <div class="vocab-def">Geld, das man für die Arbeit bekommt.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 1: GESCHICHTE -->
+    <div class="section" id="sec-1">
+        <h2 style="font-size: 1.4em; color: #667eea; margin-bottom: 20px;">Die Geschichte</h2>
+
+        <div class="story-text">
+            <div class="part-header">Teil 1</div>
+            <p>Es ist Freitag, 19 Uhr. Alex' Nichte Hermine ist zu Besuch in Berlin. Alex und Hermine sitzen in einer Pizzeria. Sie essen eine leckere Pizza. Hermine trinkt eine kalte Cola und Alex trinkt ein kaltes Bier. Hermine hat im Moment Sommerferien. Sie hat jetzt die 9. Klasse beendet. Nächstes Jahr wird Hermine die Schule beenden. Sie hat dann einen Realschulabschluss. Hermine muss bald ihre Zukunft nach der Schule planen.</p>
+
+            <div class="dialog">
+                <strong>Alex:</strong> „Hermine, was wirst du in den Sommerferien noch machen?"
+            </div>
+
+            <div class="dialog">
+                <strong>Hermine:</strong> „Mama, Papa und ich werden im August für zwei Wochen nach Mallorca fliegen. Ich freue mich schon! Mallorca ist eine schöne Insel. Mama sagt, ich soll ein Praktikum machen. Ich muss meine Zukunft nach der Schule planen. Also werde ich ein Praktikum im Krankenhaus machen."
+            </div>
+
+            <div class="dialog">
+                <strong>Alex:</strong> „Das ist aber eine gute Idee."
+            </div>
+
+            <div class="part-header">Teil 2</div>
+            <div class="dialog">
+                <strong>Hermine:</strong> „Hoffentlich gefällt mir die Arbeit im Krankenhaus."
+            </div>
+
+            <div class="dialog">
+                <strong>Alex:</strong> „Das ist bestimmt eine sehr interessante Arbeit. Was möchtest du mal werden? Weißt du das schon?"
+            </div>
+
+            <div class="dialog">
+                <strong>Hermine:</strong> „Ich bin mir noch nicht sicher. Ich möchte vielleicht Krankenschwester werden. Deswegen werde ich das Praktikum im Krankenhaus machen. Aber ich weiß es noch nicht sicher. Meine beste Freundin Annika möchte Ärztin werden. Das finde ich auch interessant."
+            </div>
+
+            <div class="dialog">
+                <strong>Alex:</strong> „Möchtest du auch Ärztin werden, Hermine?"
+            </div>
+
+            <div class="dialog">
+                <strong>Hermine:</strong> „Ja, gern. Aber ich habe nicht so gute Noten in der Schule wie Annika. Annika ist eine sehr intelligente Schülerin. Meine Noten sind nicht so gut. Als Ärztin muss ich an der Universität studieren. Das ist ein sehr langes und kompliziertes Studium. Ich glaube, ich kann das nicht."
+            </div>
+
+            <div class="dialog">
+                <strong>Alex:</strong> „Du darfst die Hoffnung nicht aufgeben, Hermine. Wenn du wirklich Ärztin werden möchtest, dann wirst du das Studium auch schaffen. Ich glaube an dich! Du bist ein schlaues Mädchen!"
+            </div>
+
+            <div class="part-header">Teil 3</div>
+            <div class="dialog">
+                <strong>Hermine:</strong> „Danke, Alex! Aber für ein Studium brauche ich auch das Abitur. Dann muss ich noch länger zur Schule gehen. Wenn mir das Praktikum im Krankenhaus gefällt, werde ich erstmal Krankenschwester. Als Krankenschwester bekommt man nicht so ein gutes Gehalt wie als Ärztin. Aber ich muss dann nicht noch das Abitur machen und studieren. Ich werde sofort arbeiten und Geld verdienen."
+            </div>
+
+            <div class="dialog">
+                <strong>Alex:</strong> „Du hast schon einen guten Plan, Hermine! Ich hoffe, dass du dein Ziel erreichst! Vielleicht kannst du in ein paar Jahren noch studieren und Ärztin werden. Krankenschwester ist ein guter Start. Komm, wir machen uns noch einen schönen Abend. Sollen wir ins Kino gehen und einen lustigen Film schauen?"
+            </div>
+
+            <div class="dialog">
+                <strong>Hermine:</strong> „Das ist eine sehr gute Idee, Alex!"
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: VERSTÄNDNIS (Richtig/Falsch) -->
+    <div class="section" id="sec-2">
+        <h2 style="font-size: 1.4em; color: #667eea; margin-bottom: 20px;">Verständnis — Richtig oder Falsch?</h2>
+
+        <div class="rf-grid">
+            <div class="rf-item">
+                <div class="rf-statement">1. Hermine ist Alex' Nichte.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(0, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(0, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-0"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">2. Sie sitzen in einem Café.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(1, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(1, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-1"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">3. Hermine hat gerade die 10. Klasse beendet.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(2, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(2, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-2"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">4. Hermine wird im August nach Mallorca fliegen.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(3, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(3, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-3"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">5. Hermine wird ein Praktikum im Krankenhaus machen.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(4, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(4, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-4"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">6. Hermines Freundin Annika möchte Krankenschwester werden.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(5, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(5, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-5"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">7. Hermine hat sehr gute Noten in der Schule.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(6, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(6, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-6"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">8. Als Ärztin muss Hermine an der Universität studieren.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(7, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(7, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-7"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">9. Hermine entscheidet sich, zuerst Krankenschwester zu werden.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(8, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(8, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-8"></div>
+            </div>
+
+            <div class="rf-item">
+                <div class="rf-statement">10. Am Ende gehen Alex und Hermine ins Restaurant.</div>
+                <div class="rf-buttons">
+                    <button class="rf-btn richtig" onclick="checkRF(9, true)">Richtig</button>
+                    <button class="rf-btn falsch" onclick="checkRF(9, false)">Falsch</button>
+                </div>
+                <div class="rf-feedback" id="rf-fb-9"></div>
+            </div>
+        </div>
+
+        <button class="btn btn-reset" onclick="resetRF()" style="margin-top: 20px;">Alle zurücksetzen</button>
+    </div>
+
+    <!-- TAB 3: LÜCKENTEXT -->
+    <div class="section" id="sec-3">
+        <h2 style="font-size: 1.4em; color: #667eea; margin-bottom: 20px;">Lückentext</h2>
+
+        <div style="display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+            <span style="color: #888; font-size: 0.9em;">⏱ <span id="timer-lt">0:00</span></span>
+            <span style="color: #888; font-size: 0.9em;">🏆 <span id="best-lt">—</span></span>
+            <button class="btn" onclick="ltTimerResetOne()">↺ Neustart</button>
+            <button class="btn" onclick="ltShowAll()">💡 Lösungen</button>
+        </div>
+
+        <div id="lueckentextContainer"></div>
+    </div>
+
+    <!-- TAB 4: SATZBAU -->
+    <div class="section" id="sec-4">
+        <h2 style="font-size: 1.4em; color: #667eea; margin-bottom: 20px;">Satzbau</h2>
+
+        <div style="display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+            <span style="color: #888; font-size: 0.9em;">⏱ <span id="timer-4">0:00</span></span>
+            <span style="color: #888; font-size: 0.9em;">🏆 <span id="best-4">—</span></span>
+            <button class="btn" onclick="sbTimerResetOne()">↺ Neustart</button>
+            <button class="btn" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);}); sbTimerStop(4);">💡 Lösungen</button>
+        </div>
+
+        <div id="satzbauContainer"></div>
+    </div>
+
+    <!-- TAB 5: WORTSCHATZ -->
+    <div class="section" id="sec-5">
+        <h2 style="font-size: 1.4em; color: #667eea; margin-bottom: 20px;">Wortschatz</h2>
+
+        <div style="display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+            <span style="color: #888; font-size: 0.9em;">⏱ <span id="timer-ws">0:00</span></span>
+            <span style="color: #888; font-size: 0.9em;">🏆 <span id="best-ws">—</span></span>
+            <button class="btn" onclick="wsTimerResetOne()">↺ Neustart</button>
+            <button class="btn" onclick="wsShowAll()">💡 Lösungen</button>
+        </div>
+
+        <div id="wortschatzContainer"></div>
+    </div>
+
+    <div class="author-footer">
+        <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+        <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+
+</div><!-- /container -->
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────
+// TAB NAVIGATION
+// ─────────────────────────────────────────────────────────────────────────
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach(function(s, i) {
+        s.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.nav-btn').forEach(function(b, i) {
+        b.classList.toggle('active', i === idx);
+    });
+    if (idx === 3) initLueckentext();
+    if (idx === 4) initSatzbau();
+    if (idx === 5) initWortschatz();
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// TAB 2: RICHTIG/FALSCH
+// ─────────────────────────────────────────────────────────────────────────
+var rfAnswers = [true, false, false, true, true, false, false, true, true, false];
+
+function checkRF(idx, answer) {
+    var fb = document.getElementById('rf-fb-' + idx);
+    var correct = (answer === rfAnswers[idx]);
+    fb.classList.add('show');
+    if (correct) {
+        fb.classList.add('correct');
+        fb.classList.remove('incorrect');
+        fb.textContent = '✅ Richtig!';
+    } else {
+        fb.classList.add('incorrect');
+        fb.classList.remove('correct');
+        fb.textContent = '❌ Falsch – versuche es nochmal!';
+    }
+}
+
+function resetRF() {
+    for (var i = 0; i < 10; i++) {
+        var fb = document.getElementById('rf-fb-' + i);
+        fb.classList.remove('show', 'correct', 'incorrect');
+        fb.textContent = '';
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// TAB 3: LÜCKENTEXT
+// ─────────────────────────────────────────────────────────────────────────
+var ltAnswers = ['Nichte', 'Pizzeria', 'beendet', 'beenden', 'fliegen', 'Praktikum', 'Krankenschwester', 'Ärztin', 'studieren', 'Hoffnung', 'Gehalt', 'Kino'];
+
+var ltTimerAutoStart = false;
+
+function initLueckentext() {
+    var container = document.getElementById('lueckentextContainer');
+    if (container.innerHTML !== '') return;
+
+    var sentences = [
+        'Hermine ist Alex\' ___.',
+        'Sie sitzen in einer ___.',
+        'Hermine hat die 9. Klasse ___.',
+        'Nächstes Jahr wird Hermine die Schule ___.',
+        'Im August wird Hermine nach Mallorca ___.',
+        'Hermine wird ein ___ im Krankenhaus machen.',
+        'Hermine möchte vielleicht ___ werden.',
+        'Hermines Freundin Annika möchte ___ werden.',
+        'Als Ärztin muss Hermine an der Universität ___.',
+        'Hermine darf die ___ nicht aufgeben.',
+        'Als Krankenschwester bekommt man nicht so ein gutes ___ wie als Ärztin.',
+        'Am Ende wollen sie ins ___ gehen.'
+    ];
+
+    for (var i = 0; i < sentences.length; i++) {
+        var item = document.createElement('div');
+        item.className = 'lueckentext-item';
+        var p = document.createElement('p');
+        p.innerHTML = (i + 1) + '. ' + sentences[i];
+        var inp = document.createElement('input');
+        inp.type = 'text';
+        inp.placeholder = '';
+        inp.id = 'lt-inp-' + i;
+        inp.addEventListener('input', function(e) {
+            ltTimerAutoStart = true;
+            initTimer(0);
+            ltCheckLive(parseInt(this.id.split('-')[2]));
+        });
+        item.appendChild(p);
+        item.appendChild(inp);
+        container.appendChild(item);
+    }
+}
+
+function ltCheckLive(idx) {
+    var inp = document.getElementById('lt-inp-' + idx);
+    var val = inp.value.trim();
+    var ans = ltAnswers[idx];
+    inp.classList.remove('ok', 'no');
+    if (val === ans) {
+        inp.classList.add('ok');
+        ltCheckAllLt();
+    } else if (ans.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
+        // neutral
+    } else if (val.length > 0) {
+        inp.classList.add('no');
+    }
+}
+
+function ltCheckAllLt() {
+    var allOk = true;
+    for (var i = 0; i < ltAnswers.length; i++) {
+        var inp = document.getElementById('lt-inp-' + i);
+        if (!inp || inp.value.trim() !== ltAnswers[i]) {
+            allOk = false;
+            break;
+        }
+    }
+    if (allOk) timerStop(3);
+}
+
+function ltShowAll() {
+    for (var i = 0; i < ltAnswers.length; i++) {
+        var inp = document.getElementById('lt-inp-' + i);
+        if (inp) inp.value = ltAnswers[i];
+        ltCheckLive(i);
+    }
+}
+
+function ltTimerResetOne() {
+    timerResetOne(3);
+    for (var i = 0; i < ltAnswers.length; i++) {
+        var inp = document.getElementById('lt-inp-' + i);
+        if (inp) {
+            inp.value = '';
+            inp.classList.remove('ok', 'no');
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// TAB 4: SATZBAU (satzbau-drag-drop Skill)
+// ─────────────────────────────────────────────────────────────────────────
+var satzbauData = [
+    { parts: ['Hermine', 'ist', 'zu', 'Besuch', 'in', 'Berlin'], valid: [['Hermine', 'ist', 'zu', 'Besuch', 'in', 'Berlin']], punct: '.' },
+    { parts: ['Nächstes', 'Jahr', 'wird', 'Hermine', 'die', 'Schule', 'beenden'], valid: [['Nächstes', 'Jahr', 'wird', 'Hermine', 'die', 'Schule', 'beenden']], punct: '.' },
+    { parts: ['Ich', 'werde', 'ein', 'Praktikum', 'im', 'Krankenhaus', 'machen'], valid: [['Ich', 'werde', 'ein', 'Praktikum', 'im', 'Krankenhaus', 'machen']], punct: '.' },
+    { parts: ['Ich', 'bin', 'mir', 'noch', 'nicht', 'sicher'], valid: [['Ich', 'bin', 'mir', 'noch', 'nicht', 'sicher']], punct: '.' },
+    { parts: ['Du', 'darfst', 'die', 'Hoffnung', 'nicht', 'aufgeben'], valid: [['Du', 'darfst', 'die', 'Hoffnung', 'nicht', 'aufgeben']], punct: '.' },
+    { parts: ['Als', 'Krankenschwester', 'werde', 'ich', 'sofort', 'arbeiten'], valid: [['Als', 'Krankenschwester', 'werde', 'ich', 'sofort', 'arbeiten']], punct: '.' },
+    { parts: ['Ich', 'hoffe', ',', 'dass', 'du', 'dein', 'Ziel', 'erreichst'], valid: [['Ich', 'hoffe', ',', 'dass', 'du', 'dein', 'Ziel', 'erreichst']], punct: '!' }
+];
+
+var sbDragged = null;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
+}
+
+function sbCapitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        if (isProper) {
+            c.textContent = orig;
+        } else {
+            c.textContent = (i === 0) ? sbCapitalize(orig) : orig;
+        }
+    });
+}
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before);
+        else zone.appendChild(cursor);
+    });
+
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = satzbauData[idx].valid.some(function(v) {
+        return JSON.stringify(v) === JSON.stringify(order);
+    });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt';
+        punkt.textContent = satzbauData[idx].punct || '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) {
+            c.classList.remove('correct', 'incorrect');
+        });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+
+    setTimeout(function() {
+        timerAutoStart(4);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    }, 500);
+}
+
+function sbCheckAllDone() {
+    var allOk = satzbauData.every(function(_, i) {
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
+    });
+    if (allOk) timerStop(4);
+}
+
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    var solution = satzbauData[idx].valid[0];
+
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild)  row.removeChild(row.firstChild);
+
+    solution.forEach(function(word, i) {
+        var chip = allChips[word];
+        if (chip) {
+            chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+            chip.classList.remove('correct', 'incorrect');
+            row.appendChild(chip);
+        }
+    });
+
+    fb.textContent = '';
+    setTimeout(function() { sbCheckAuto(idx); }, 100);
+}
+
+function initSatzbau() {
+    var container = document.getElementById('satzbauContainer');
+    if (container.innerHTML !== '') return;
+
+    satzbauData.forEach(function(ex, idx) {
+        var item = document.createElement('div');
+        item.className = 'satzbau-item';
+
+        var bank = document.createElement('div');
+        bank.className = 'chips-container';
+        bank.id = 'sb-bank-' + idx;
+
+        var row = document.createElement('div');
+        row.className = 'sentence-builder';
+        row.id = 'sb-row-' + idx;
+
+        var fb = document.createElement('div');
+        fb.className = 'satzbau-feedback';
+        fb.id = 'sb-fb-' + idx;
+
+        item.appendChild(bank);
+        item.appendChild(row);
+        item.appendChild(fb);
+        container.appendChild(item);
+
+        // Shuffle
+        var parts = ex.parts.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+        }
+
+        // Create chips
+        parts.forEach(function(word) {
+            bank.appendChild(sbMakeChip(word));
+        });
+
+        // Register zones
+        sbRegisterZone(bank, idx);
+        sbRegisterZone(row, idx);
+    });
+}
+
+function resetSatzbau() { initSatzbau(); }
+
+function sbTimerResetOne() {
+    timerResetOne(4);
+    var container = document.getElementById('satzbauContainer');
+    container.innerHTML = '';
+    initSatzbau();
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// TAB 5: WORTSCHATZ
+// ─────────────────────────────────────────────────────────────────────────
+var WS_DATA = [
+    { en: '(to finish / complete)', de: 'beenden' },
+    { en: '(the future)', de: 'die Zukunft' },
+    { en: '(the internship)', de: 'das Praktikum' },
+    { en: '(to study at university)', de: 'studieren' },
+    { en: '(complicated)', de: 'kompliziert' },
+    { en: '(the hope)', de: 'die Hoffnung' },
+    { en: '(smart / clever)', de: 'schlau' },
+    { en: '(the salary)', de: 'das Gehalt' },
+    { en: '(the A-levels)', de: 'das Abitur' },
+    { en: '(the nurse)', de: 'die Krankenschwester' }
+];
+
+var wsTimerAutoStart = false;
+
+function initWortschatz() {
+    var container = document.getElementById('wortschatzContainer');
+    if (container.innerHTML !== '') return;
+
+    WS_DATA.forEach(function(item, idx) {
+        var wsItem = document.createElement('div');
+        wsItem.className = 'ws-item';
+        wsItem.id = 'ws-item-' + idx;
+
+        var row = document.createElement('div');
+        row.className = 'ws-row';
+
+        var en = document.createElement('div');
+        en.className = 'ws-en';
+        en.textContent = item.en;
+
+        var parts = item.de.match(/(\w+|\s+)/g);
+        var artInp = null, wortInp = null, pluralInp = null;
+
+        // Parse de: "der Hund" or "Hunde" or "der Hund – die Hunde"
+        if (item.de.indexOf('–') > -1) {
+            var [sing, plur] = item.de.split('–').map(s => s.trim());
+            var singParts = sing.split(/\s+/);
+            var art = singParts[0];
+            var wort = singParts.slice(1).join(' ');
+
+            artInp = document.createElement('input');
+            artInp.className = 'art';
+            artInp.type = 'text';
+            artInp.placeholder = 'Artikel';
+            artInp.id = 'ws-art-' + idx;
+            artInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
+
+            wortInp = document.createElement('input');
+            wortInp.className = 'wort';
+            wortInp.type = 'text';
+            wortInp.placeholder = 'Wort';
+            wortInp.id = 'ws-wort-' + idx;
+            wortInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
+
+            pluralInp = document.createElement('input');
+            pluralInp.className = 'plural';
+            pluralInp.type = 'text';
+            pluralInp.placeholder = 'Plural';
+            pluralInp.id = 'ws-plur-' + idx;
+            pluralInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
+
+            row.appendChild(en);
+            row.appendChild(artInp);
+            row.appendChild(wortInp);
+            row.appendChild(pluralInp);
+        } else {
+            var singParts = item.de.split(/\s+/);
+            var art = singParts[0];
+            var wort = singParts.slice(1).join(' ');
+
+            artInp = document.createElement('input');
+            artInp.className = 'art';
+            artInp.type = 'text';
+            artInp.placeholder = 'Artikel';
+            artInp.id = 'ws-art-' + idx;
+            artInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
+
+            wortInp = document.createElement('input');
+            wortInp.className = 'wort';
+            wortInp.type = 'text';
+            wortInp.placeholder = 'Wort';
+            wortInp.id = 'ws-wort-' + idx;
+            wortInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
+
+            row.appendChild(en);
+            row.appendChild(artInp);
+            row.appendChild(wortInp);
+        }
+
+        wsItem.appendChild(row);
+        container.appendChild(wsItem);
+    });
+}
+
+function wsCheckItem(idx) {
+    var artInp = document.getElementById('ws-art-' + idx);
+    var wortInp = document.getElementById('ws-wort-' + idx);
+    var pluralInp = document.getElementById('ws-plur-' + idx);
+
+    var expected = WS_DATA[idx].de.split(/\s+/);
+    var art = expected[0];
+    var wort = expected.slice(1).join(' ');
+    var plur = '';
+
+    if (WS_DATA[idx].de.indexOf('–') > -1) {
+        var [sing, p] = WS_DATA[idx].de.split('–').map(s => s.trim());
+        var singParts = sing.split(/\s+/);
+        art = singParts[0];
+        wort = singParts.slice(1).join(' ');
+        plur = p;
+    }
+
+    wsCheckField(artInp, art);
+    wsCheckField(wortInp, wort);
+    if (pluralInp) wsCheckField(pluralInp, plur);
+
+    wsCheckAllWs();
+}
+
+function wsCheckField(inp, expected) {
+    var val = inp.value.trim();
+    inp.classList.remove('ok', 'no');
+    if (val === expected) {
+        inp.classList.add('ok');
+    } else if (expected.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
+        // neutral
+    } else if (val.length > 0) {
+        inp.classList.add('no');
+    }
+}
+
+function wsCheckAllWs() {
+    var allOk = true;
+    for (var i = 0; i < WS_DATA.length; i++) {
+        var expected = WS_DATA[i].de.split(/\s+/);
+        var art = expected[0];
+        var wort = expected.slice(1).join(' ');
+        var plur = '';
+
+        if (WS_DATA[i].de.indexOf('–') > -1) {
+            var [sing, p] = WS_DATA[i].de.split('–').map(s => s.trim());
+            var singParts = sing.split(/\s+/);
+            art = singParts[0];
+            wort = singParts.slice(1).join(' ');
+            plur = p;
+        }
+
+        var artInp = document.getElementById('ws-art-' + i);
+        var wortInp = document.getElementById('ws-wort-' + i);
+        var pluralInp = document.getElementById('ws-plur-' + i);
+
+        if (!artInp || artInp.value.trim() !== art) {
+            allOk = false;
+            break;
+        }
+        if (!wortInp || wortInp.value.trim() !== wort) {
+            allOk = false;
+            break;
+        }
+        if (pluralInp && pluralInp.value.trim() !== plur) {
+            allOk = false;
+            break;
+        }
+    }
+    if (allOk) timerStop(5);
+}
+
+function wsShowAll() {
+    WS_DATA.forEach(function(item, idx) {
+        var expected = item.de.split(/\s+/);
+        var art = expected[0];
+        var wort = expected.slice(1).join(' ');
+        var plur = '';
+
+        if (item.de.indexOf('–') > -1) {
+            var [sing, p] = item.de.split('–').map(s => s.trim());
+            var singParts = sing.split(/\s+/);
+            art = singParts[0];
+            wort = singParts.slice(1).join(' ');
+            plur = p;
+        }
+
+        var artInp = document.getElementById('ws-art-' + idx);
+        var wortInp = document.getElementById('ws-wort-' + idx);
+        var pluralInp = document.getElementById('ws-plur-' + idx);
+
+        if (artInp) artInp.value = art;
+        if (wortInp) wortInp.value = wort;
+        if (pluralInp) pluralInp.value = plur;
+
+        wsCheckItem(idx);
+    });
+}
+
+function wsTimerResetOne() {
+    timerResetOne(5);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    initWortschatz();
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// TIMER FUNCTIONS
+// ─────────────────────────────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1064r-';
+var timers = {};
+
+function initTimer(tabIdx) {
+    if (timers[tabIdx]) return;
+    timers[tabIdx] = {
+        startTime: Date.now(),
+        intervalId: null
+    };
+    updateTimer(tabIdx);
+    timers[tabIdx].intervalId = setInterval(function() { updateTimer(tabIdx); }, 100);
+}
+
+function updateTimer(tabIdx) {
+    var elapsed = Math.floor((Date.now() - timers[tabIdx].startTime) / 1000);
+    var min = Math.floor(elapsed / 60);
+    var sec = elapsed % 60;
+    var display = min + ':' + (sec < 10 ? '0' : '') + sec;
+
+    var displayId = ['timer-lt', 'timer-2', 'timer-3', 'timer-lt', 'timer-4', 'timer-ws'][tabIdx];
+    var elem = document.getElementById(displayId);
+    if (elem) elem.textContent = display;
+}
+
+function timerAutoStart(tabIdx) {
+    if (!timers[tabIdx]) initTimer(tabIdx);
+}
+
+function timerStop(tabIdx) {
+    if (timers[tabIdx]) {
+        clearInterval(timers[tabIdx].intervalId);
+        var elapsed = Math.floor((Date.now() - timers[tabIdx].startTime) / 1000);
+        saveBestTime(tabIdx, elapsed);
+        timers[tabIdx] = null;
+    }
+}
+
+function timerResetOne(tabIdx) {
+    if (timers[tabIdx]) {
+        clearInterval(timers[tabIdx].intervalId);
+        timers[tabIdx] = null;
+    }
+    var displayId = ['timer-lt', 'timer-2', 'timer-3', 'timer-lt', 'timer-4', 'timer-ws'][tabIdx];
+    var elem = document.getElementById(displayId);
+    if (elem) elem.textContent = '0:00';
+}
+
+function saveBestTime(tabIdx, elapsed) {
+    var key = TIMER_PREFIX + 'best-' + tabIdx;
+    var best = localStorage.getItem(key);
+    if (!best || parseInt(best) > elapsed) {
+        localStorage.setItem(key, elapsed);
+        updateBestDisplay(tabIdx, elapsed);
+    } else {
+        updateBestDisplay(tabIdx, parseInt(best));
+    }
+}
+
+function updateBestDisplay(tabIdx, seconds) {
+    var min = Math.floor(seconds / 60);
+    var sec = seconds % 60;
+    var display = min + ':' + (sec < 10 ? '0' : '') + sec;
+    var bestId = ['best-lt', 'best-2', 'best-3', 'best-lt', 'best-4', 'best-ws'][tabIdx];
+    var elem = document.getElementById(bestId);
+    if (elem) elem.textContent = display;
+}
+
+// Load best times on page load
+window.addEventListener('DOMContentLoaded', function() {
+    for (var i = 0; i < 6; i++) {
+        var key = TIMER_PREFIX + 'best-' + i;
+        var best = localStorage.getItem(key);
+        if (best) {
+            updateBestDisplay(i, parseInt(best));
+        }
+    }
+});
+</script>
+
+</body>
+</html>

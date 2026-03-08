@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wo und Wohin? – DaF A2 Extra-Übungen</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header .subtitle, .header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; }
+.section.active { display: block; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .nav { flex-wrap: wrap; }
+    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+    .nav-btn:last-child { border-right: 1px solid #ddd; }
+}
+
+/* Inhalts-Padding */
+.tab-content { padding: 28px 30px; }
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+h2 { color: #4a148c; font-size: 1.25em; margin-bottom: 14px; }
+h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
+
+/* Grammatik-Tabelle */
+.gram-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.95em; }
+.gram-table th { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 16px; text-align: left; }
+.gram-table td { padding: 10px 16px; border-bottom: 1px solid #eee; }
+.gram-table tr:nth-child(even) td { background: #f8f8ff; }
+.gram-table td strong { color: #e53935; }
+.gram-badge { display: inline-block; background: #f0ecff; color: #4a148c; border-radius: 12px; padding: 3px 10px; font-size: 0.8em; font-weight: 700; margin-right: 4px; }
+.gram-badge.dat { background: #e8f4fd; color: #1565c0; }
+.gram-badge.akk { background: #fce4ec; color: #880e4f; }
+
+/* Verben-Kacheln */
+.verb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.verb-pair { border-radius: 10px; overflow: hidden; border: 1px solid #e8eaff; }
+.verb-pair .vp-header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 14px; font-weight: 700; font-size: 0.9em; display: flex; justify-content: space-between; }
+.verb-pair .vp-row { display: grid; grid-template-columns: 1fr 1fr; }
+.verb-pair .vp-cell { padding: 12px 14px; font-size: 0.88em; border-right: 1px solid #eee; border-bottom: 1px solid #eee; }
+.verb-pair .vp-cell:last-child { border-right: none; }
+.verb-pair .vp-label { font-size: 0.75em; color: #888; display: block; margin-bottom: 3px; }
+.verb-pair .vp-ex { color: #333; line-height: 1.4; }
+@media (max-width: 600px) { .verb-grid { grid-template-columns: 1fr; } }
+
+/* Wörter-Kacheln für Tab 0 */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.vocab-card { background: #f7f0ff; border: 2px solid #764ba2; border-radius: 10px; padding: 14px 16px; }
+.vocab-card .vc-term { font-size: 1.05em; font-weight: 700; color: #4a148c; }
+.vocab-card .vc-badge { margin-top: 6px; }
+.vocab-card .vc-ex { font-size: 0.82em; color: #555; margin-top: 6px; line-height: 1.4; font-style: italic; }
+
+/* Lückentext */
+.luecken-block { background: #f9f9ff; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+.luecken-block h3 { margin-top: 0; }
+.luecken-satz { margin-bottom: 12px; font-size: 0.95em; line-height: 2; color: #333; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: inherit; transition: border-color 0.2s; padding: 0 4px; }
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+
+/* Zuordnung */
+.zuord-section { margin-bottom: 28px; }
+.zuord-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f0f8; border-radius: 10px; min-height: 56px; margin-bottom: 16px; align-items: flex-start; border: 1px dashed #bbb; }
+.zuord-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.zuord-col { border-radius: 10px; overflow: hidden; border: 2px solid #c5cae9; }
+.zuord-col-header { background: #667eea; color: white; padding: 10px 14px; font-weight: 700; font-size: 0.9em; text-align: center; }
+.zuord-col-header.dat { background: #1565c0; }
+.zuord-col-header.akk { background: #880e4f; }
+.zuord-drop { min-height: 140px; padding: 10px; display: flex; flex-direction: column; gap: 6px; background: #fafbff; transition: background .2s; }
+.zuord-drop.dragover { background: #e8eaff; }
+.chip { white-space: normal; display: inline-block; background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; }
+.chip.selected { background: #667eea; color: white; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; cursor: default; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; cursor: default; }
+@media (max-width: 600px) { .zuord-grid { grid-template-columns: 1fr; } }
+
+/* Satzbau */
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+.sb-nr { font-size: 0.8em; color: #999; margin-bottom: 4px; margin-top: 14px; font-weight: 600; }
+
+/* Wortschatz */
+.ws-row { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #f0f0f8; padding-bottom: 12px; }
+.ws-row:last-child { border-bottom: none; }
+.ws-en { font-size: 0.85em; color: #888; font-style: italic; }
+.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.95em; transition: border-color 0.2s; padding: 2px 4px; width: 100%; }
+.ws-inp:focus { border-bottom-color: #667eea; }
+.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.art { width: 70px; }
+
+/* Timer / Buttons */
+.btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.btn { padding: 10px 22px; border: none; border-radius: 25px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.2s; }
+.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+.btn-reset { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.timer-box { display: inline-flex; align-items: center; gap: 8px; background: #f0f4ff; border-radius: 20px; padding: 8px 16px; font-size: 0.9em; color: #555; font-weight: 500; }
+.timer-display { font-family: monospace; font-weight: 700; color: #667eea; min-width: 52px; text-align: center; }
+.best-display { font-size: 0.85em; color: #999; }
+.solution-btn { background: #f0f4ff; border: 1px solid #667eea; color: #667eea; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.2s; }
+.solution-btn:hover { background: #667eea; color: white; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Wo und Wohin?</h1>
+        <p style="font-family: Georgia, serif;">A2 – Lektion 1032X &nbsp;|&nbsp; Wechselpräpositionen &amp; Wegbeschreibungen</p>
+        <div class="big-emoji">🗺️</div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">📸</span><span class="nav-label">Wörter</span></div>
+        <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+        <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">💬</span><span class="nav-label">Zuordnung</span></div>
+        <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+        <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
+    </div>
+
+    <!-- ===== TAB 0: WÖRTER ===== -->
+    <div class="section active" id="sec-0">
+        <div class="tab-content">
+            <h2>Wechselpräpositionen — Wo? vs. Wohin?</h2>
+            <div class="hilfe-box">
+                Die Präpositionen <strong>in · an · auf · unter · über · hinter · vor · zwischen · neben</strong> sind Wechselpräpositionen.<br>
+                <strong style="color:#1565c0;">Wo?</strong> → Ort → Dativ &nbsp;&nbsp;&nbsp; <strong style="color:#880e4f;">Wohin?</strong> → Richtung → Akkusativ
+            </div>
+
+            <table class="gram-table">
+                <tr><th><span class="gram-badge dat">Dativ — Wo?</span></th><th><span class="gram-badge akk">Akkusativ — Wohin?</span></th></tr>
+                <tr><td>Anja ist <strong>im</strong> Haus. (= in dem)</td><td>Anja geht <strong>in das</strong> Haus.</td></tr>
+                <tr><td>Ich sitze <strong>auf dem</strong> Stuhl.</td><td>Ich setze mich <strong>auf den</strong> Stuhl.</td></tr>
+                <tr><td>Max steht <strong>hinter dem</strong> Auto.</td><td>Max geht <strong>hinter das</strong> Auto.</td></tr>
+                <tr><td>Lotta steht <strong>auf der</strong> Brücke.</td><td>Lotta fährt <strong>über die</strong> Brücke.</td></tr>
+                <tr><td>Das Buch liegt <strong>auf dem</strong> Schreibtisch.</td><td>Ich lege das Buch <strong>auf den</strong> Schreibtisch.</td></tr>
+            </table>
+
+            <h3>Ort-Verben (Dativ) vs. Richtungs-Verben (Akkusativ)</h3>
+            <div class="verb-grid">
+                <div class="verb-pair">
+                    <div class="vp-header"><span>liegen</span><span>legen</span></div>
+                    <div class="vp-row">
+                        <div class="vp-cell"><span class="vp-label">Wo? (Dativ)</span><span class="vp-ex">Das Buch <strong>liegt</strong> auf dem Tisch.</span></div>
+                        <div class="vp-cell"><span class="vp-label">Wohin? (Akkusativ)</span><span class="vp-ex">Ich <strong>lege</strong> das Buch auf den Tisch.</span></div>
+                    </div>
+                </div>
+                <div class="verb-pair">
+                    <div class="vp-header"><span>stehen</span><span>stellen</span></div>
+                    <div class="vp-row">
+                        <div class="vp-cell"><span class="vp-label">Wo? (Dativ)</span><span class="vp-ex">Die Milch <strong>steht</strong> im Kühlschrank.</span></div>
+                        <div class="vp-cell"><span class="vp-label">Wohin? (Akkusativ)</span><span class="vp-ex">Ich <strong>stelle</strong> die Milch in den Kühlschrank.</span></div>
+                    </div>
+                </div>
+                <div class="verb-pair">
+                    <div class="vp-header"><span>sitzen</span><span>setzen</span></div>
+                    <div class="vp-row">
+                        <div class="vp-cell"><span class="vp-label">Wo? (Dativ)</span><span class="vp-ex">Max <strong>sitzt</strong> auf dem Stuhl.</span></div>
+                        <div class="vp-cell"><span class="vp-label">Wohin? (Akkusativ)</span><span class="vp-ex">Max <strong>setzt</strong> sich auf den Stuhl.</span></div>
+                    </div>
+                </div>
+                <div class="verb-pair">
+                    <div class="vp-header"><span>hängen</span><span>hängen</span></div>
+                    <div class="vp-row">
+                        <div class="vp-cell"><span class="vp-label">Wo? (Dativ)</span><span class="vp-ex">Das Bild <strong>hängt</strong> an der Wand.</span></div>
+                        <div class="vp-cell"><span class="vp-label">Wohin? (Akkusativ)</span><span class="vp-ex">Du <strong>hängst</strong> das Bild an die Wand.</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Wegbeschreibung</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card"><div class="vc-term">geradeaus</div><div class="vc-ex">Gehen Sie <em>geradeaus</em>!</div></div>
+                <div class="vocab-card"><div class="vc-term">links abbiegen</div><div class="vc-ex">Biegen Sie <em>links</em> ab!</div></div>
+                <div class="vocab-card"><div class="vc-term">rechts abbiegen</div><div class="vc-ex">Biegen Sie <em>rechts</em> ab!</div></div>
+                <div class="vocab-card"><div class="vc-term">an der Ecke</div><div class="vc-ex">Das Café ist <em>an der Ecke</em>.</div></div>
+                <div class="vocab-card"><div class="vc-term">am Ende der Straße</div><div class="vc-ex">Der Bahnhof ist <em>am Ende der Straße</em>.</div></div>
+                <div class="vocab-card"><div class="vc-term">gegenüber</div><div class="vc-ex">Die Post ist <em>gegenüber</em> dem Park.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 1: LÜCKENTEXT ===== -->
+    <div class="section" id="sec-1">
+        <div class="tab-content">
+            <h2>Lückentext</h2>
+            <div class="hilfe-box">Tippe den richtigen Artikel oder das richtige Verb in die Lücke.</div>
+            <div class="luecken-block">
+                <h3>Teil 1 — Wo oder Wohin?</h3>
+                <div id="luecken1"></div>
+            </div>
+            <div class="luecken-block">
+                <h3>Teil 2 — Wegbeschreibung zum Bahnhof</h3>
+                <div id="luecken2"></div>
+            </div>
+            <div class="btn-row">
+                <div class="timer-box">⏱ <span class="timer-display" id="timer-1">0:00</span> &nbsp;🏆 <span class="best-display" id="best-1">–</span></div>
+                <button class="btn btn-reset" onclick="lueckenReset()">↺ Neustart</button>
+                <button class="solution-btn" onclick="lueckenLoesungen()">💡 Lösungen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 2: ZUORDNUNG ===== -->
+    <div class="section" id="sec-2">
+        <div class="tab-content">
+            <h2>Zuordnung — Wo? (Dativ) oder Wohin? (Akkusativ)?</h2>
+            <div class="hilfe-box">
+                Ordne die Sätze zu: <strong style="color:#1565c0;">Wo? → Dativ</strong> oder <strong style="color:#880e4f;">Wohin? → Akkusativ</strong>. Ziehe die Chips oder klicke auf Chip und dann auf die Spalte.
+            </div>
+            <div class="zuord-section">
+                <div class="zuord-bank" id="zuordBank"></div>
+                <div class="zuord-grid">
+                    <div class="zuord-col">
+                        <div class="zuord-col-header dat">Wo? (Dativ)</div>
+                        <div class="zuord-drop" id="zuord-dativ" data-cat="dativ"></div>
+                    </div>
+                    <div class="zuord-col">
+                        <div class="zuord-col-header akk">Wohin? (Akkusativ)</div>
+                        <div class="zuord-drop" id="zuord-akk" data-cat="akk"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="initZuordnung()">↺ Neu mischen</button>
+                <button class="btn btn-reset" onclick="zuordLoesungen()">💡 Lösungen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 3: SATZBAU ===== -->
+    <div class="section" id="sec-3">
+        <div class="tab-content">
+            <h2>Satzbau</h2>
+            <div class="hilfe-box">Bringe die Wort-Chips in die richtige Reihenfolge.</div>
+            <div id="satzbauContainer"></div>
+            <div class="btn-row">
+                <div class="timer-box">⏱ <span class="timer-display" id="timer-3">0:00</span> &nbsp;🏆 <span class="best-display" id="best-3">–</span></div>
+                <button class="btn btn-reset" onclick="sbResetAll()">↺ Neustart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 4: WORTSCHATZ ===== -->
+    <div class="section" id="sec-4">
+        <div class="tab-content">
+            <h2>Wortschatz-Training</h2>
+            <div class="hilfe-box">Tippe das deutsche Wort oder die Phrase.</div>
+            <div id="wsContainer"></div>
+            <div class="btn-row">
+                <div class="timer-box">⏱ <span class="timer-display" id="timer-4">0:00</span> &nbsp;🏆 <span class="best-display" id="best-4">–</span></div>
+                <button class="btn btn-reset" onclick="wsReset()">↺ Neustart</button>
+                <button class="solution-btn" onclick="wsLoesungen()">💡 Lösungen</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+        <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+
+</div><!-- /container -->
+
+<script>
+// ─── Tab-Navigation ──────────────────────────────────────────────────────────
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+}
+
+// ─── Timer ───────────────────────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1032x-';
+var timerStarted = [false,false,false,false,false];
+var timerRunning = [false,false,false,false,false];
+var timerSeconds = [0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null];
+function fmtTime(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+function timerAutoStart(n){
+    if(timerStarted[n])return; timerStarted[n]=true; timerRunning[n]=true; timerSeconds[n]=0;
+    timerIntervals[n]=setInterval(function(){if(!timerRunning[n])return;timerSeconds[n]++;var el=document.getElementById('timer-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);},1000);
+}
+function timerStop(n){
+    if(!timerRunning[n])return; timerRunning[n]=false; clearInterval(timerIntervals[n]);
+    var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'999999');
+    if(timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);best=timerSeconds[n];}
+    var el=document.getElementById('best-'+n); if(el)el.textContent=fmtTime(best);
+}
+function timerResetOne(n){timerRunning[n]=false;timerStarted[n]=false;clearInterval(timerIntervals[n]);timerSeconds[n]=0;var el=document.getElementById('timer-'+n);if(el)el.textContent='0:00';}
+(function(){[1,3,4].forEach(function(n){var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);if(b){var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(parseInt(b));}});})();
+
+// ─── Daten: Lückentext ───────────────────────────────────────────────────────
+var LT1 = [
+    { vor:'Paul ist ', nach:' Schule. (Wo?)', ans:'in der', size:60 },
+    { vor:'Paul geht ', nach:' Schule. (Wohin?)', ans:'in die', size:55 },
+    { vor:'Ich stelle die Milch ', nach:' Kühlschrank. (Wohin?)', ans:'in den', size:55 },
+    { vor:'Die Milch steht ', nach:' Kühlschrank. (Wo?)', ans:'im', size:35 },
+    { vor:'Das Bild hängt ', nach:' Wand. (Wo?)', ans:'an der', size:55 },
+    { vor:'Ich hänge das Bild ', nach:' Wand. (Wohin?)', ans:'an die', size:55 },
+    { vor:'Lisa hängt die Lampe ', nach:' Bild. (Wohin?)', ans:'über das', size:70 },
+    { vor:'Ich setze mich ', nach:' Stuhl. (Wohin?)', ans:'auf den', size:60 }
+];
+var LT2 = [
+    { vor:'Entschuldigen Sie bitte, wie komme ich ', nach:' Bahnhof?', ans:'zum', size:40 },
+    { vor:'Sie müssen die Straße ', nach:' und dann über die Brücke gehen.', ans:'geradeaus', size:90 },
+    { vor:'Die Brücke ist auf der ', nach:' Seite.', ans:'rechten', size:75 },
+    { vor:'Hinter der Brücke müssen Sie ', nach:'.', ans:'links abbiegen', size:130 },
+    { vor:'Der Straße folgen und am ', nach:' der Straße befindet sich der Bahnhof.', ans:'Ende', size:50 }
+];
+
+function buildLuecken(data, containerId) {
+    var container=document.getElementById(containerId); container.innerHTML='';
+    data.forEach(function(item,idx){
+        var div=document.createElement('div'); div.className='luecken-satz';
+        div.innerHTML=(idx+1)+'. '+item.vor;
+        var inp=document.createElement('input'); inp.type='text'; inp.className='luecken-inp'; inp.placeholder=''; inp.style.width=item.size+'px';
+        inp.dataset.ans=item.ans.toLowerCase(); inp.dataset.orig=item.ans;
+        inp.addEventListener('input',function(){
+            var val=inp.value.trim().toLowerCase(),ans=inp.dataset.ans;
+            inp.classList.remove('ok','no');
+            if(!val)return;
+            if(val===ans){inp.classList.add('ok');timerAutoStart(1);checkAllLuecken();}
+            else if(ans.startsWith(val)){timerAutoStart(1);}
+            else{inp.classList.add('no');}
+        });
+        div.appendChild(inp);
+        div.innerHTML+=item.nach;
+        container.appendChild(div);
+    });
+}
+function checkAllLuecken(){var all=Array.from(document.querySelectorAll('#sec-1 .luecken-inp'));if(all.every(function(i){return i.classList.contains('ok');}))timerStop(1);}
+function lueckenReset(){timerResetOne(1);buildLuecken(LT1,'luecken1');buildLuecken(LT2,'luecken2');}
+function lueckenLoesungen(){document.querySelectorAll('#sec-1 .luecken-inp').forEach(function(inp){inp.value=inp.dataset.orig;inp.classList.remove('no');inp.classList.add('ok');});}
+
+// ─── Daten: Zuordnung ────────────────────────────────────────────────────────
+var ZUORD_DATA = [
+    { text:'Anja ist im Haus.', cat:'dativ' },
+    { text:'Anja geht in das Haus.', cat:'akk' },
+    { text:'Das Buch liegt auf dem Schreibtisch.', cat:'dativ' },
+    { text:'Ich lege das Buch auf den Schreibtisch.', cat:'akk' },
+    { text:'Max steht hinter dem Auto.', cat:'dativ' },
+    { text:'Max geht hinter das Auto.', cat:'akk' },
+    { text:'Die Flasche steht im Kühlschrank.', cat:'dativ' },
+    { text:'Ich stelle die Flasche in den Kühlschrank.', cat:'akk' },
+    { text:'Das Bild hängt an der Wand.', cat:'dativ' },
+    { text:'Du hängst das Bild an die Wand.', cat:'akk' }
+];
+
+var draggedZuord = null;
+function allowDrop(e){e.preventDefault();}
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp;}return a;}
+
+function colorZuordChips(){
+    ['zuord-dativ','zuord-akk'].forEach(function(id){
+        var zone=document.getElementById(id);
+        var cat=zone.dataset.cat;
+        zone.querySelectorAll('.chip').forEach(function(chip){
+            chip.classList.remove('correct','incorrect');
+            if(chip.dataset.cat===cat)chip.classList.add('correct');
+            else chip.classList.add('incorrect');
+        });
+    });
+}
+
+function initZuordnung(){
+    var bank=document.getElementById('zuordBank'); bank.innerHTML='';
+    document.getElementById('zuord-dativ').innerHTML='';
+    document.getElementById('zuord-akk').innerHTML='';
+    draggedZuord=null;
+
+    bank.addEventListener('dragover',allowDrop);
+    bank.addEventListener('drop',function(e){e.preventDefault();if(!draggedZuord)return;bank.appendChild(draggedZuord);draggedZuord=null;colorZuordChips();});
+    bank.addEventListener('click',function(e){if(e.target===bank){var sel=document.querySelector('#sec-2 .chip.selected');if(sel){bank.appendChild(sel);sel.classList.remove('selected');colorZuordChips();}}});
+
+    shuffle(ZUORD_DATA).forEach(function(item){
+        var chip=document.createElement('div'); chip.className='chip'; chip.textContent=item.text; chip.dataset.cat=item.cat; chip.draggable=true;
+        chip.addEventListener('dragstart',function(e){draggedZuord=chip;e.dataTransfer.setData('text/plain','');});
+        chip.addEventListener('dragend',function(){draggedZuord=null;colorZuordChips();});
+        chip.addEventListener('click',function(){
+            if(chip.classList.contains('selected')){chip.classList.remove('selected');return;}
+            document.querySelectorAll('#sec-2 .chip.selected').forEach(function(c){c.classList.remove('selected');});
+            chip.classList.add('selected');
+        });
+        bank.appendChild(chip);
+    });
+
+    ['zuord-dativ','zuord-akk'].forEach(function(id){
+        var zone=document.getElementById(id);
+        zone.addEventListener('dragover',function(e){e.preventDefault();zone.classList.add('dragover');});
+        zone.addEventListener('dragleave',function(){zone.classList.remove('dragover');});
+        zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('dragover');if(!draggedZuord)return;zone.appendChild(draggedZuord);draggedZuord=null;colorZuordChips();});
+        zone.addEventListener('click',function(){var sel=document.querySelector('#sec-2 .chip.selected');if(sel){zone.appendChild(sel);sel.classList.remove('selected');colorZuordChips();}});
+    });
+}
+
+function zuordLoesungen(){
+    ZUORD_DATA.forEach(function(item){
+        var zone=document.getElementById('zuord-'+item.cat);
+        var chip=Array.from(document.querySelectorAll('#sec-2 .chip')).find(function(c){return c.textContent===item.text;});
+        if(zone&&chip){zone.appendChild(chip);chip.classList.remove('selected','incorrect');chip.classList.add('correct');}
+    });
+}
+
+// ─── Satzbau ─────────────────────────────────────────────────────────────────
+var sbDragged = null;
+var satzbauData = [
+    { parts:['das','Buch','liegt','auf','dem','Tisch'], valid:[['das','Buch','liegt','auf','dem','Tisch']], punct:'.' },
+    { parts:['ich','lege','das','Buch','auf','den','Tisch'], valid:[['ich','lege','das','Buch','auf','den','Tisch']], punct:'.' },
+    { parts:['Max','sitzt','auf','dem','Stuhl'], valid:[['Max','sitzt','auf','dem','Stuhl']], punct:'.' },
+    { parts:['Max','setzt','sich','auf','den','Stuhl'], valid:[['Max','setzt','sich','auf','den','Stuhl']], punct:'.' },
+    { parts:['gehen','Sie','geradeaus','und','biegen','Sie','dann','links','ab'], valid:[['gehen','Sie','geradeaus','und','biegen','Sie','dann','links','ab']], punct:'!' },
+    { parts:['der','Bahnhof','ist','am','Ende','der','Straße'], valid:[['der','Bahnhof','ist','am','Ende','der','Straße']], punct:'.' },
+    { parts:['das','Krankenhaus','ist','gegenüber','der','Apotheke'], valid:[['das','Krankenhaus','ist','gegenüber','der','Apotheke']], punct:'.' }
+];
+
+function getSbCursor(){var c=document.getElementById('sb-insert-cursor');if(!c){c=document.createElement('div');c.id='sb-insert-cursor';c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';}return c;}
+function getSbInsertPos(zone,clientX){var chips=Array.from(zone.querySelectorAll('.chip'));for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}return null;}
+function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}
+function sbUpdateCapitalization(row){Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);});}
+function sbMakeChip(word){var chip=document.createElement('div');chip.className='chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;chip.addEventListener('dragstart',function(e){sbDragged=chip;e.dataTransfer.setData('text/plain','');setTimeout(function(){chip.style.opacity='0.4';},0);});chip.addEventListener('dragend',function(){chip.style.opacity='';sbDragged=null;var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode)c.parentNode.removeChild(c);});return chip;}
+function sbRegisterZone(zone,idx){zone.addEventListener('dragover',function(e){e.preventDefault();if(!sbDragged)return;var cursor=getSbCursor();var before=getSbInsertPos(zone,e.clientX);if(before)zone.insertBefore(cursor,before);else zone.appendChild(cursor);});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode===zone)zone.removeChild(c);}});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged)return;var cursor=document.getElementById('sb-insert-cursor');if(cursor&&cursor.parentNode===zone){zone.insertBefore(sbDragged,cursor);zone.removeChild(cursor);}else zone.appendChild(sbDragged);sbDragged=null;sbUpdateCapitalization(document.getElementById('sb-row-'+idx));sbCheckAuto(idx);});}
+function sbColorRow(idx){var row=document.getElementById('sb-row-'+idx);var chips=Array.from(row.querySelectorAll('.chip'));var order=chips.map(function(c){return c.dataset.orig;});var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});var ex=row.querySelector('.sb-punkt');if(ex)ex.parentNode.removeChild(ex);if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}return ok;}
+function sbCheckAuto(idx){var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx);if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}setTimeout(function(){timerAutoStart(3);var ok=sbColorRow(idx);if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='✓ Korrekt!';sbCheckAllDone();}else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!';}},500);}
+function sbCheckAllDone(){var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});if(allOk)timerStop(3);}
+function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx),solution=satzbauData[idx].valid[0];var allChips={};Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCapitalize(word):word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});fb.textContent='';setTimeout(function(){sbCheckAuto(idx);},100);}
+
+function initSatzbau(){
+    var container=document.getElementById('satzbauContainer');container.innerHTML='';
+    satzbauData.forEach(function(ex,idx){
+        var nr=document.createElement('div');nr.className='sb-nr';nr.textContent='Satz '+(idx+1);container.appendChild(nr);
+        var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;container.appendChild(bank);
+        var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;container.appendChild(row);
+        var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;container.appendChild(fb);
+        var solBtn=document.createElement('button');solBtn.className='solution-btn';solBtn.textContent='Lösung anzeigen';solBtn.style.marginBottom='18px';
+        (function(i){solBtn.addEventListener('click',function(){sbShowSolution(i);});})(idx);
+        container.appendChild(solBtn);
+        var parts=ex.parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}
+        parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});
+        sbRegisterZone(bank,idx);sbRegisterZone(row,idx);
+    });
+}
+function sbResetAll(){timerResetOne(3);initSatzbau();}
+
+// ─── Wortschatz ──────────────────────────────────────────────────────────────
+var WS_VOCAB = [
+    { en:'straight ahead', term:'geradeaus' },
+    { en:'to turn left', term:'links abbiegen' },
+    { en:'to turn right', term:'rechts abbiegen' },
+    { en:'at the corner', term:'an der Ecke' },
+    { en:'at the end of the street', term:'am Ende der Straße' },
+    { en:'opposite', term:'gegenüber' },
+    { en:'on the left side', term:'auf der linken Seite' },
+    { en:'on the right side', term:'auf der rechten Seite' },
+    { en:'the floor plan', term:'der Grundriss' },
+    { en:'to move in', term:'einziehen' },
+    { en:'to move out', term:'ausziehen' },
+    { en:'to relocate', term:'umziehen' }
+];
+
+function buildWortschatz(){
+    var container=document.getElementById('wsContainer');container.innerHTML='';
+    WS_VOCAB.forEach(function(w){
+        var row=document.createElement('div');row.className='ws-row';
+        var enDiv=document.createElement('div');enDiv.className='ws-en';enDiv.textContent=w.en;
+        row.appendChild(enDiv);
+        var inputsDiv=document.createElement('div');inputsDiv.style.cssText='display:flex;gap:8px;flex-wrap:wrap;align-items:center;';
+        var inp=document.createElement('input');inp.type='text';inp.placeholder='';inp.style.width=Math.max(w.term.length*9+30,120)+'px';
+        inp.className='ws-inp';inp.dataset.ans=w.term.toLowerCase();inp.dataset.orig=w.term;
+        inp.addEventListener('input',function(){
+            var val=inp.value.trim().toLowerCase(),a=inp.dataset.ans;
+            inp.classList.remove('ok','no');
+            if(!val)return;
+            if(val===a){inp.classList.add('ok');timerAutoStart(4);checkAllWs();}
+            else if(a.startsWith(val)){timerAutoStart(4);}
+            else{inp.classList.add('no');}
+        });
+        inputsDiv.appendChild(inp);
+        row.appendChild(inputsDiv);
+        container.appendChild(row);
+    });
+}
+function checkAllWs(){var all=Array.from(document.querySelectorAll('#sec-4 .ws-inp'));if(all.every(function(i){return i.classList.contains('ok');}))timerStop(4);}
+function wsReset(){timerResetOne(4);buildWortschatz();}
+function wsLoesungen(){document.querySelectorAll('#sec-4 .ws-inp').forEach(function(inp){inp.value=inp.dataset.orig;inp.classList.remove('no');inp.classList.add('ok');});}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function(){
+    buildLuecken(LT1,'luecken1');
+    buildLuecken(LT2,'luecken2');
+    initZuordnung();
+    initSatzbau();
+    buildWortschatz();
+});
+</script>
+</body>
+</html>

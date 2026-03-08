@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1047G · Reflexive Verben</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+h1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 22px 28px; font-size: 1.5rem; letter-spacing: .5px; }
+h1 span { font-size: .9rem; opacity: .85; margin-left: 10px; }
+
+/* Nav */
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+@media (max-width: 600px) { body { padding: 8px; } .nav { flex-wrap: wrap; } .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; } .nav-btn:last-child { border-right: 1px solid #ddd; } }
+
+.section { display: none; }
+.section.active { display: block; }
+.section > div { padding: 28px 24px; }
+h2 { color: #667eea; margin-bottom: 16px; font-size: 1.15rem; }
+h3 { color: #764ba2; margin: 18px 0 8px; font-size: 1rem; }
+p { line-height: 1.7; color: #333; margin-bottom: 10px; }
+
+/* Entdecken */
+.disc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+@media (max-width: 600px) { .disc-grid { grid-template-columns: 1fr; } }
+.disc-card { background: #f8f8ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: .95rem; }
+.disc-card .label { font-size: .75rem; color: #764ba2; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
+.refl { color: #e53935; font-weight: 700; }
+.regel-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 18px; }
+.regel-box h4 { color: #667eea; margin-bottom: 8px; font-size: .95rem; }
+
+/* Tabellen */
+.gram-table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; }
+.gram-table th { background: #667eea; color: white; padding: 9px 14px; text-align: left; font-size: .88rem; }
+.gram-table td { padding: 9px 14px; border-bottom: 1px solid #eee; font-size: .9rem; }
+.gram-table tr:nth-child(even) td { background: #f8f8ff; }
+.gram-table .refl { color: #e53935; font-weight: 700; }
+
+/* Lückentext */
+.lt-block { background: #f8f8ff; border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+.lt-input { border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: 1rem; color: #333; width: 80px; outline: none; padding: 2px 4px; transition: border-color .2s; }
+.lt-input:focus { border-color: #667eea; }
+.lt-input.ok { border-color: #4caf50; color: #2e7d32; }
+.lt-input.no { border-color: #e53935; color: #c62828; }
+
+/* Satzbau */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
+.chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
+.chip:active { cursor: grabbing; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
+.sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
+.sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
+.satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
+.satzbau-feedback.ok { color: #4caf50; }
+.satzbau-feedback.no { color: #e53935; }
+
+/* Multiple Choice */
+.mc-item { background: #f8f8ff; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+.mc-item p { margin-bottom: 10px; font-weight: 600; color: #333; }
+.mc-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.mc-btn { padding: 7px 18px; border: 2px solid #667eea; border-radius: 20px; background: white; cursor: pointer; font-size: .9rem; transition: all .2s; }
+.mc-btn:hover { background: #ede7f6; }
+.mc-btn.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+.mc-btn.wrong { background: #ffebee; border-color: #e53935; color: #c62828; }
+.mc-fb { font-size: .82rem; margin-top: 8px; min-height: 1.1em; }
+.mc-fb.ok { color: #4caf50; }
+.mc-fb.no { color: #e53935; }
+
+/* Timer */
+.btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.btn-small { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 20px; padding: 6px 16px; font-size: .82rem; cursor: pointer; }
+.btn-small:hover { opacity: .88; }
+.timer-display { font-size: .88rem; color: #555; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>1047G · Reflexive Verben <span>Grammatik · A2.1</span></h1>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></button>
+  <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">📋</span><span class="nav-label">Regel</span></button>
+  <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+  <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+  <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></button>
+</nav>
+
+<!-- TAB 0: Entdecken -->
+<section class="section active" id="tab-0">
+<div>
+  <h2>🔍 Entdecken — Das Reflexivpronomen</h2>
+  <p>Lies die Sätze. Was fällt dir auf? Wo steht das hervorgehobene Wort?</p>
+  <div class="disc-grid">
+    <div class="disc-card">
+      <div class="label">sich freuen über</div>
+      Ich freue <span class="refl">mich</span> über den Kuchen.
+    </div>
+    <div class="disc-card">
+      <div class="label">sich interessieren für</div>
+      Ich interessiere <span class="refl">mich</span> für Tiere.
+    </div>
+    <div class="disc-card">
+      <div class="label">sich verirren</div>
+      Wir haben <span class="refl">uns</span> im Wald verirrt.
+    </div>
+    <div class="disc-card">
+      <div class="label">sich bewerben (bei/um)</div>
+      Sie hat <span class="refl">sich</span> bei der Firma beworben.
+    </div>
+    <div class="disc-card">
+      <div class="label">sich ärgern (über)</div>
+      Du ärgerst <span class="refl">dich</span> über dein Verhalten, oder?
+    </div>
+    <div class="disc-card">
+      <div class="label">sich bedanken</div>
+      Er hat <span class="refl">sich</span> bei mir für das Geschenk bedankt.
+    </div>
+  </div>
+  <div class="regel-box">
+    <h4>💡 Was hast du bemerkt?</h4>
+    <p>Das rote Wort (<em>mich, dich, sich, uns, euch</em>) ist das <strong>Reflexivpronomen</strong>. Es richtet sich nach dem Subjekt (der Person, die handelt).</p>
+  </div>
+</div>
+</section>
+
+<!-- TAB 1: Regel -->
+<section class="section" id="tab-1">
+<div>
+  <h2>📋 Grammatikregel — Reflexive Verben</h2>
+
+  <div class="regel-box">
+    <h4>Was ist ein reflexives Verb?</h4>
+    <p>Reflexive Verben stehen mit einem <strong>Reflexivpronomen</strong>. Das Pronomen bezieht sich auf das Subjekt.</p>
+  </div>
+
+  <h3>Reflexivpronomen — Tabelle</h3>
+  <table class="gram-table">
+    <tr><th>Person</th><th>Reflexivpronomen (Akkusativ)</th><th>Beispiel</th></tr>
+    <tr><td>ich</td><td><span class="refl">mich</span></td><td>Ich freue <span class="refl">mich</span>.</td></tr>
+    <tr><td>du</td><td><span class="refl">dich</span></td><td>Du ärgerst <span class="refl">dich</span>.</td></tr>
+    <tr><td>er / sie / es</td><td><span class="refl">sich</span></td><td>Er bewirbt <span class="refl">sich</span>.</td></tr>
+    <tr><td>wir</td><td><span class="refl">uns</span></td><td>Wir verirren <span class="refl">uns</span>.</td></tr>
+    <tr><td>ihr</td><td><span class="refl">euch</span></td><td>Ihr ärgert <span class="refl">euch</span>.</td></tr>
+    <tr><td>sie / Sie</td><td><span class="refl">sich</span></td><td>Sie bedanken <span class="refl">sich</span>.</td></tr>
+  </table>
+
+  <h3>Häufige reflexive Verben (Akkusativ)</h3>
+  <table class="gram-table">
+    <tr><th>Verb</th><th>Bedeutung</th><th>Beispiel</th></tr>
+    <tr><td>sich freuen (über/auf)</td><td>to be happy / look forward to</td><td>Ich freue mich über das Geschenk.</td></tr>
+    <tr><td>sich interessieren (für)</td><td>to be interested in</td><td>Sie interessiert sich für Kunst.</td></tr>
+    <tr><td>sich ärgern (über)</td><td>to be annoyed about</td><td>Er ärgert sich über das Wetter.</td></tr>
+    <tr><td>sich bewerben (bei/um)</td><td>to apply (for a job)</td><td>Ich bewerbe mich um die Stelle.</td></tr>
+    <tr><td>sich bedanken (bei/für)</td><td>to thank (s.o. for s.th.)</td><td>Sie bedankt sich bei ihm.</td></tr>
+    <tr><td>sich erkälten</td><td>to catch a cold</td><td>Lisa hat sich erkältet.</td></tr>
+    <tr><td>sich verspäten</td><td>to be late</td><td>Er hat sich verspätet.</td></tr>
+    <tr><td>sich verirren / verlaufen</td><td>to get lost</td><td>Wir haben uns verlaufen.</td></tr>
+    <tr><td>sich ausruhen</td><td>to rest / relax</td><td>Ich möchte mich ausruhen.</td></tr>
+    <tr><td>sich aufregen (über)</td><td>to get upset about</td><td>Ich rege mich über das Wetter auf.</td></tr>
+  </table>
+
+  <h3>Im Fragesatz</h3>
+  <div class="regel-box">
+    <h4>Position des Reflexivpronomens</h4>
+    <p>Im Fragesatz steht das Reflexivpronomen nach Verb und Subjekt:</p>
+  </div>
+  <table class="gram-table">
+    <tr><th>Aussagesatz</th><th>Fragesatz</th></tr>
+    <tr><td>Du hast dich verirrt.</td><td>Hast <strong>du dich</strong> verirrt?</td></tr>
+    <tr><td>Sie interessiert sich für Autos.</td><td>Interessiert <strong>sie sich</strong> für Autos?</td></tr>
+  </table>
+</div>
+</section>
+
+<!-- TAB 2: Lückentext -->
+<section class="section" id="tab-2">
+<div>
+  <h2>✏️ Lückentext</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="lt-best">—</span></span>
+    <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
+    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 1 — Das richtige Reflexivpronomen</h3>
+    <p>1. Sie hat <input class="lt-input" id="lt0" data-ans="sich" placeholder="" oninput="ltCheck(this)"> bei der Firma beworben.</p>
+    <p>2. Wir haben <input class="lt-input" id="lt1" data-ans="uns" placeholder="" oninput="ltCheck(this)"> verirrt.</p>
+    <p>3. Ich möchte <input class="lt-input" id="lt2" data-ans="mich" placeholder="" oninput="ltCheck(this)"> bei dir bedanken.</p>
+    <p>4. Er interessiert <input class="lt-input" id="lt3" data-ans="sich" placeholder="" oninput="ltCheck(this)"> nicht für Museen.</p>
+    <p>5. Ihr ärgert <input class="lt-input" id="lt4" data-ans="euch" placeholder="" oninput="ltCheck(this)"> über die Hunde.</p>
+    <p>6. Du hast <input class="lt-input" id="lt5" data-ans="dich" placeholder="" oninput="ltCheck(this)"> erkältet.</p>
+  </div>
+
+  <div class="lt-block">
+    <h3>Teil 2 — Sätze ergänzen</h3>
+    <p>1. Ich freue <input class="lt-input" id="lt6" data-ans="mich" placeholder="" oninput="ltCheck(this)"> über das Geschenk.</p>
+    <p>2. Er regt <input class="lt-input" id="lt7" data-ans="sich" placeholder="" oninput="ltCheck(this)"> über das Wetter auf.</p>
+    <p>3. Wir müssen <input class="lt-input" id="lt8" data-ans="uns" placeholder="" oninput="ltCheck(this)"> nach einem langen Tag ausruhen.</p>
+    <p>4. Er hat <input class="lt-input" id="lt9" data-ans="sich" placeholder="" oninput="ltCheck(this)"> verspätet.</p>
+    <p>5. Ich bewerbe <input class="lt-input" id="lt10" data-ans="mich" placeholder="" oninput="ltCheck(this)"> um die Stelle als Koch.</p>
+  </div>
+</div>
+</section>
+
+<!-- TAB 3: Satzbau -->
+<section class="section" id="tab-3">
+<div>
+  <h2>🧩 Satzbau</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="sb-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(3)">↺ Neustart</button>
+    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+  </div>
+  <div id="satzbauContainer"></div>
+</div>
+</section>
+
+<!-- TAB 4: Multiple Choice -->
+<section class="section" id="tab-4">
+<div>
+  <h2>🎯 Multiple Choice</h2>
+  <div id="mcContainer"></div>
+  <button class="btn-small" onclick="mcReset()">↺ Neustart</button>
+</div>
+</section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ===== TAB NAVIGATION ===== */
+var TABS = 5;
+function showTab(n) {
+  for(var i=0;i<TABS;i++){var s=document.getElementById('tab-'+i);var b=document.querySelectorAll('.nav-btn')[i];if(s)s.classList.toggle('active',i===n);if(b)b.classList.toggle('active',i===n);}
+  if(n===3) timerAutoStart(3);
+}
+
+/* ===== TIMER ===== */
+var TIMER_PREFIX='a2-1047g-';
+var timerStarted=[false,false,false,false,false];
+var timerRunning=[false,false,false,false,false];
+var timerSeconds=[0,0,0,0,0];
+var timerIntervals=[null,null,null,null,null];
+function timerFmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+function timerTick(n){timerSeconds[n]++;var els=['','','lt-time','sb-time',''];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(timerSeconds[n]);}
+function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerTick(n);},1000);}
+function timerStop(n){if(!timerRunning[n])return;timerRunning[n]=false;clearInterval(timerIntervals[n]);var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');if(timerSeconds[n]<best)localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);var b=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n));var els=['','','lt-best','sb-best',''];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(b);}
+function timerResetOne(n){clearInterval(timerIntervals[n]);timerStarted[n]=false;timerRunning[n]=false;timerSeconds[n]=0;var els=['','','lt-time','sb-time',''];var el=document.getElementById(els[n]);if(el)el.textContent='0:00';if(n===3)initSatzbau();}
+[2,3].forEach(function(n){var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);if(b){var els=['','','lt-best','sb-best',''];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(parseInt(b));}});
+
+/* ===== LÜCKENTEXT ===== */
+var ltDone=false;var ltStarted=false;
+function ltCheck(inp){
+  if(!ltStarted){ltStarted=true;timerAutoStart(2);}
+  var val=inp.value.trim();var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  if(Array.from(document.querySelectorAll('.lt-input')).every(function(i){return i.classList.contains('ok');})){if(!ltDone){ltDone=true;timerStop(2);}}
+}
+function ltRestart(){timerResetOne(2);ltStarted=false;ltDone=false;document.querySelectorAll('.lt-input').forEach(function(i){i.value='';i.classList.remove('ok','no');});}
+function ltShowSolutions(){document.querySelectorAll('.lt-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}
+
+/* ===== SATZBAU ===== */
+var satzbauData=[
+  {words:['Ich','freue','mich','über','das','Geschenk'],punct:'.'},
+  {words:['Er','ärgert','sich','über','das','Wetter'],punct:'.'},
+  {words:['Sie','hat','sich','bei','der','Firma','beworben'],punct:'.'},
+  {words:['Wir','haben','uns','im','Wald','verlaufen'],punct:'.'},
+  {words:['Du','hast','dich','verspätet'],punct:'.'},
+  {words:['Lisa','hat','sich','erkältet'],punct:'.'},
+  {words:['Interessierst','du','dich','für','Kunst'],punct:'?'}
+];
+var sbDragged=null;
+function sbMakeChip(word,orig){var c=document.createElement('div');c.className='chip';c.textContent=word;c.dataset.orig=orig;c.draggable=true;c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});return c;}
+function sbRegisterZone(zone,rowIdx){zone.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';var cursor=zone.querySelector('.sb-insert-cursor');if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}zone.classList.add('drag-over');});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('drag-over');var cursor=zone.querySelector('.sb-insert-cursor');if(sbDragged){if(cursor)zone.insertBefore(sbDragged,cursor);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}}zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});sbUpdateCapitalization(zone);setTimeout(function(){sbCheckAuto(rowIdx);},500);});}
+function sbColorRow(zone,ok){zone.querySelectorAll('.chip').forEach(function(c){c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';});}
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;c.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig;});}
+function sbCheckAuto(rowIdx){var zone=document.getElementById('sb-row-'+rowIdx);var fb=document.getElementById('sb-fb-'+rowIdx);if(!zone)return;var chips=Array.from(zone.querySelectorAll('.chip'));var words=chips.map(function(c){return c.dataset.orig.toLowerCase();});var expected=satzbauData[rowIdx].words.map(function(w){return w.toLowerCase();});var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});sbColorRow(zone,ok?true:chips.length>0?false:null);if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}if(ok){var allOk=satzbauData.every(function(_,i){var z=document.getElementById('sb-row-'+i);if(!z)return false;var ch=Array.from(z.querySelectorAll('.chip'));var ex=satzbauData[i].words.map(function(w){return w.toLowerCase();});return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig.toLowerCase()===ex[j];});});if(allOk)timerStop(3);}}
+function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.getElementById('sb-bank-'+i);var zone=document.getElementById('sb-row-'+i);if(!bank||!zone)return;bank.innerHTML='';var pt=zone.querySelector('.sb-punkt');Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});d.words.forEach(function(w,j){var c=sbMakeChip(j===0?w.charAt(0).toUpperCase()+w.slice(1):w,w);if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);});sbColorRow(zone,true);var fb=document.getElementById('sb-fb-'+i);if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}});}
+function initSatzbau(){var cont=document.getElementById('satzbauContainer');cont.innerHTML='';satzbauData.forEach(function(d,i){var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}var wrap=document.createElement('div');wrap.className='sentence-builder';var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);sbRegisterZone(zone,i);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);});}
+
+/* ===== MULTIPLE CHOICE ===== */
+var MC_DATA=[
+  {q:'Welches Reflexivpronomen passt? Ich freue ___ über den Kuchen.',opts:['mich','dich','sich','uns'],ans:'mich'},
+  {q:'Welches Reflexivpronomen passt? Er ärgert ___ über das Wetter.',opts:['mich','sich','dich','euch'],ans:'sich'},
+  {q:'Welches Reflexivpronomen passt? Wir haben ___ im Wald verirrt.',opts:['sich','uns','euch','mich'],ans:'uns'},
+  {q:'Welches Reflexivpronomen passt? Ihr ärgert ___ über die Hunde.',opts:['sich','uns','euch','mich'],ans:'euch'},
+  {q:'Was bedeutet "sich bewerben"?',opts:['to be late','to apply for a job','to get lost','to rest'],ans:'to apply for a job'},
+  {q:'Was bedeutet "sich erkälten"?',opts:['to get annoyed','to catch a cold','to get lost','to rest'],ans:'to catch a cold'},
+  {q:'Was ist korrekt?',opts:['Er bewerbt sich.','Er bewirbt sich.','Er bewerben sich.'],ans:'Er bewirbt sich.'}
+];
+function initMc(){
+  var cont=document.getElementById('mcContainer');cont.innerHTML='';
+  MC_DATA.forEach(function(d,i){
+    var div=document.createElement('div');div.className='mc-item';
+    var pq=document.createElement('p');pq.innerHTML=(i+1)+'. '+d.q;
+    var opts=document.createElement('div');opts.className='mc-opts';
+    var fb=document.createElement('div');fb.className='mc-fb';fb.id='mc-fb-'+i;
+    d.opts.forEach(function(o){
+      var btn=document.createElement('button');btn.className='mc-btn';btn.textContent=o;
+      btn.onclick=function(){
+        opts.querySelectorAll('.mc-btn').forEach(function(b){b.classList.remove('correct','wrong');});
+        var correct=o===d.ans;btn.classList.add(correct?'correct':'wrong');
+        fb.textContent=correct?'✓ Richtig!':'✗ Nicht ganz — richtig ist: '+d.ans;
+        fb.className='mc-fb '+(correct?'ok':'no');
+      };
+      opts.appendChild(btn);
+    });
+    div.appendChild(pq);div.appendChild(opts);div.appendChild(fb);
+    cont.appendChild(div);
+  });
+}
+function mcReset(){initMc();}
+
+/* ===== INIT ===== */
+initSatzbau();
+initMc();
+</script>
+</body>
+</html>

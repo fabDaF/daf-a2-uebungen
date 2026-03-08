@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1063G · Futur I mit werden</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border-top: none; border-left: none; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+@media (max-width: 600px) {
+  body { padding: 8px; }
+  .section { padding: 18px 14px; }
+  .nav { flex-wrap: wrap; }
+  .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+  .nav-btn:last-child { border-right: 1px solid #ddd; }
+}
+/* DISCOVERY CARDS */
+.discovery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.disc-card { background: #f8f6ff; border: 2px solid #c0b0e8; border-radius: 10px; padding: 14px 16px; }
+.disc-sentence { font-size: 1rem; color: #222; line-height: 1.6; margin-bottom: 6px; }
+.disc-note { font-size: .82rem; color: #764ba2; font-style: italic; }
+.hl-werden { color: #c0392b; font-weight: 700; }
+.hl-inf { color: #2980b9; font-weight: 700; }
+.hl-pos2 { background: #fff3cd; padding: 1px 3px; border-radius: 3px; }
+/* REGEL TABLES */
+.regel-table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: .92rem; }
+.regel-table th { background: #667eea; color: white; padding: 9px 14px; text-align: left; }
+.regel-table td { padding: 9px 14px; border-bottom: 1px solid #e0e0e0; }
+.regel-table tr:nth-child(even) td { background: #f8f6ff; }
+.konjug-table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: .92rem; }
+.konjug-table th { background: #764ba2; color: white; padding: 9px 14px; text-align: center; }
+.konjug-table td { padding: 9px 14px; border-bottom: 1px solid #e0e0e0; text-align: center; }
+.konjug-table td:first-child { text-align: left; color: #555; }
+.konjug-table td:last-child { color: #c0392b; font-weight: 700; }
+.konjug-table tr:nth-child(even) td { background: #f8f6ff; }
+.use-card { background: #fff; border: 2px solid #c0b0e8; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+.use-card-title { background: #764ba2; color: white; padding: 8px 14px; font-weight: 700; font-size: .9rem; }
+.use-card-body { padding: 10px 14px; font-size: .9rem; color: #333; line-height: 1.7; }
+/* LÜCKENTEXT */
+.lt-section { margin-bottom: 24px; }
+.lt-title { font-weight: 700; color: #5a3e9e; margin-bottom: 12px; font-size: 1rem; border-bottom: 2px solid #e8e0f7; padding-bottom: 6px; }
+.lt-row { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; line-height: 1.7; }
+.lt-num { color: #888; font-size: .85rem; min-width: 22px; }
+.lt-inp { border: none; border-bottom: 2px solid #aaa; outline: none; font-size: .95rem; padding: 2px 4px; width: 140px; background: transparent; transition: border-color .2s; }
+.lt-inp:focus { border-color: #667eea; }
+.lt-inp.ok { border-color: #27ae60; color: #27ae60; }
+.lt-inp.no { border-color: #e74c3c; color: #e74c3c; }
+.lt-inp-sm { width: 90px; }
+/* SATZBAU */
+.sentence-builder { margin-bottom: 22px; }
+.sb-label { font-size: .85rem; color: #888; margin-bottom: 6px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 6px; background: #f5f3fc; border: 2px dashed #c0b0e8; border-radius: 8px; padding: 10px; min-height: 44px; margin-bottom: 6px; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 6px; background: #fff; border: 2px dashed #ccc; border-radius: 8px; padding: 8px; min-height: 44px; position: relative; }
+.sb-zone.drag-over { border-color: #667eea; background: #f0edf8; }
+.chip { background: #667eea; color: white; border-radius: 20px; padding: 5px 12px; font-size: .88rem; cursor: grab; user-select: none; white-space: nowrap; transition: opacity .15s; }
+.chip:active { cursor: grabbing; opacity: .7; }
+.chip.sb-placed { background: #764ba2; }
+.sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; }
+.satzbau-feedback { font-size: .88rem; margin-top: 4px; min-height: 20px; }
+.satzbau-feedback.ok { color: #27ae60; }
+.satzbau-feedback.no { color: #e74c3c; }
+.sb-insert-cursor { display: inline-block; width: 2px; height: 28px; background: #667eea; animation: blink 1s infinite; align-self: center; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+/* MC */
+.mc-item { margin-bottom: 18px; }
+.mc-question { font-size: .95rem; color: #222; font-weight: 600; margin-bottom: 8px; }
+.mc-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.mc-opt { padding: 6px 16px; border: 2px solid #c0b0e8; border-radius: 20px; cursor: pointer; font-size: .88rem; color: #5a3e9e; transition: all .2s; background: #f8f6ff; }
+.mc-opt:hover { background: #e8e0f7; }
+.mc-opt.correct { background: #27ae60; color: white; border-color: #27ae60; }
+.mc-opt.wrong { background: #e74c3c; color: white; border-color: #e74c3c; }
+.mc-opt.reveal { background: #27ae60; color: white; border-color: #27ae60; }
+/* BTN-ROW */
+.btn-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid #eee; font-size: .9rem; color: #555; }
+.btn-row button { background: none; border: 1px solid #c0b0e8; border-radius: 16px; padding: 4px 14px; cursor: pointer; font-size: .88rem; color: #5a3e9e; transition: background .2s; }
+.btn-row button:hover { background: #f0edf8; }
+/* INFO CARD */
+.info-card { background: #f0edf8; border-left: 4px solid #667eea; border-radius: 8px; padding: 14px 20px; margin-bottom: 18px; }
+.info-card h3 { color: #5a3e9e; margin-bottom: 8px; font-size: 1.05rem; }
+.info-card p { color: #333; line-height: 1.6; font-size: .95rem; }
+/* FOOTER */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>1063G · Futur I mit <em>werden</em></h1>
+    <p style="font-family: Georgia, serif;">A2.1 · Grammatik · Zukunft &amp; Pläne</p>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></div>
+    <div class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">📋</span><span class="nav-label">Regel</span></div>
+    <div class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+    <div class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+    <div class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
+  </div>
+
+  <!-- TAB 0: ENTDECKEN -->
+  <section class="section aktiv" id="tab0">
+    <div class="info-card">
+      <h3>🔍 Entdecke das Muster</h3>
+      <p>Lies die Sätze unten. Was fällt dir auf? Welches Verb kommt immer vor? Wo steht der Infinitiv?</p>
+    </div>
+
+    <div class="discovery-grid">
+      <div class="disc-card">
+        <div class="disc-sentence">Ich <span class="hl-werden">werde</span> morgen früh <span class="hl-inf">aufstehen</span>.</div>
+        <div class="disc-note">Zukunft: Ich (jetzt) → aufstehen (morgen)</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-sentence">Max <span class="hl-werden">wird</span> bald in den Urlaub <span class="hl-inf">fahren</span>.</div>
+        <div class="disc-note">Plan für die nahe Zukunft</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-sentence">Wir <span class="hl-werden">werden</span> im Juli <span class="hl-inf">heiraten</span>.</div>
+        <div class="disc-note">Versprechen / Plan</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-sentence">Ihr <span class="hl-werden">werdet</span> nächste Woche <span class="hl-inf">arbeiten</span>.</div>
+        <div class="disc-note">Prognose</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-sentence">Es <span class="hl-werden">wird</span> heute noch <span class="hl-inf">regnen</span>.</div>
+        <div class="disc-note">Prognose basierend auf Zeichen</div>
+      </div>
+      <div class="disc-card">
+        <div class="disc-sentence">Ich <span class="hl-werden">werde</span> ab jetzt immer lieb sein. (Ich <span class="hl-werden">verspreche</span> es!)</div>
+        <div class="disc-note">Versprechen für die Zukunft</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>💡 Was hast du entdeckt?</h3>
+      <p>
+        Das Futur I besteht aus zwei Teilen:<br>
+        <strong>konjugiertes <span class="hl-werden">werden</span></strong> an Position 2 + <strong><span class="hl-inf">Infinitiv</span></strong> am Ende des Satzes.<br><br>
+        Wir benutzen Futur I für: <strong>Pläne</strong> · <strong>Prognosen</strong> · <strong>Versprechen</strong> · <strong>Vermutungen</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- TAB 1: REGEL -->
+  <section class="section" id="tab1">
+    <div class="info-card">
+      <h3>📐 Bildung: <em>werden</em> + Infinitiv</h3>
+      <p><strong>werden</strong> steht konjugiert an Position 2 (linke Klammer). Der <strong>Infinitiv</strong> steht am Ende (rechte Klammer).</p>
+    </div>
+
+    <h3 style="color:#5a3e9e;margin-bottom:10px;">Konjugation von <em>werden</em></h3>
+    <table class="konjug-table">
+      <thead><tr><th>Person</th><th>Form</th><th>Beispiel</th></tr></thead>
+      <tbody>
+        <tr><td>ich</td><td>werde</td><td>Ich <span class="hl-werden">werde</span> schlafen.</td></tr>
+        <tr><td>du</td><td>wirst</td><td>Du <span class="hl-werden">wirst</span> lernen.</td></tr>
+        <tr><td>er / sie / es</td><td>wird</td><td>Er <span class="hl-werden">wird</span> kommen.</td></tr>
+        <tr><td>wir</td><td>werden</td><td>Wir <span class="hl-werden">werden</span> reisen.</td></tr>
+        <tr><td>ihr</td><td>werdet</td><td>Ihr <span class="hl-werden">werdet</span> arbeiten.</td></tr>
+        <tr><td>sie / Sie</td><td>werden</td><td>Sie <span class="hl-werden">werden</span> fliegen.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color:#5a3e9e;margin-bottom:10px;margin-top:20px;">Wortstellung</h3>
+    <table class="regel-table">
+      <thead><tr><th>Vorfeld</th><th>Position 2 (werden)</th><th>Mittelfeld</th><th>Satzende (Infinitiv)</th></tr></thead>
+      <tbody>
+        <tr><td>Ich</td><td class="hl-werden">werde</td><td>heute Abend früh</td><td class="hl-inf">schlafen.</td></tr>
+        <tr><td>Max</td><td class="hl-werden">wird</td><td>morgen sehr früh</td><td class="hl-inf">aufstehen.</td></tr>
+        <tr><td>Nina und ich</td><td class="hl-werden">werden</td><td>im Juli</td><td class="hl-inf">heiraten.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color:#5a3e9e;margin-bottom:10px;margin-top:20px;">Mit Modalverben</h3>
+    <div class="info-card" style="margin-bottom:10px;">
+      <h3>📌 Reihenfolge: Vollverb + Modalverb</h3>
+      <p>Bei Modalverben stehen <strong>Vollverb</strong> und <strong>Modalverb</strong> beide im Infinitiv am Satzende. Das Vollverb kommt zuerst, dann das Modalverb.</p>
+    </div>
+    <table class="regel-table">
+      <thead><tr><th>Vorfeld</th><th>werden</th><th>Mittelfeld</th><th>Vollverb + Modalverb</th></tr></thead>
+      <tbody>
+        <tr><td>Ich</td><td class="hl-werden">werde</td><td>morgen lange</td><td><span class="hl-inf">arbeiten müssen.</span></td></tr>
+        <tr><td>Max</td><td class="hl-werden">wird</td><td>bald in den Urlaub</td><td><span class="hl-inf">fahren können.</span></td></tr>
+        <tr><td>Die Gäste</td><td class="hl-werden">werden</td><td>nicht</td><td><span class="hl-inf">rauchen dürfen.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color:#5a3e9e;margin-bottom:10px;margin-top:20px;">Verwendung</h3>
+    <div class="use-card">
+      <div class="use-card-title">📅 Plan</div>
+      <div class="use-card-body">Gerd <span class="hl-werden">wird</span> im Sommer nach Kanada <span class="hl-inf">fliegen</span>. → Ich habe das geplant.</div>
+    </div>
+    <div class="use-card">
+      <div class="use-card-title">🌤 Prognose</div>
+      <div class="use-card-body">Der Himmel ist sehr grau. Es <span class="hl-werden">wird</span> heute noch <span class="hl-inf">regnen</span>. → Ich schätze, es passiert so.</div>
+    </div>
+    <div class="use-card">
+      <div class="use-card-title">🤝 Versprechen</div>
+      <div class="use-card-body">Ich <span class="hl-werden">werde</span> ab jetzt immer lieb zu meiner Mutter <span class="hl-inf">sein</span>. → Ich verspreche es.</div>
+    </div>
+    <div class="use-card">
+      <div class="use-card-title">🤔 Vermutung (mit <em>wohl / sicher / bestimmt</em>)</div>
+      <div class="use-card-body">Nina sieht so glücklich aus. Sie <span class="hl-werden">wird</span> wohl frisch verliebt <span class="hl-inf">sein</span>. → Ich vermute das.</div>
+    </div>
+  </section>
+
+  <!-- TAB 2: LÜCKENTEXT -->
+  <section class="section" id="tab2">
+    <div class="lt-section">
+      <div class="lt-title">Teil 1 · Konjugation von <em>werden</em></div>
+
+      <div class="lt-row"><span class="lt-num">1.</span>
+        Ich <input class="lt-inp lt-inp-sm" id="lt0" data-ans="werde" placeholder="" oninput="ltCheck(this)"> morgen früh aufstehen.
+      </div>
+      <div class="lt-row"><span class="lt-num">2.</span>
+        Du <input class="lt-inp lt-inp-sm" id="lt1" data-ans="wirst" placeholder="" oninput="ltCheck(this)"> nächste Woche viel lernen.
+      </div>
+      <div class="lt-row"><span class="lt-num">3.</span>
+        Max <input class="lt-inp lt-inp-sm" id="lt2" data-ans="wird" placeholder="" oninput="ltCheck(this)"> bald in den Urlaub fahren.
+      </div>
+      <div class="lt-row"><span class="lt-num">4.</span>
+        Wir <input class="lt-inp lt-inp-sm" id="lt3" data-ans="werden" placeholder="" oninput="ltCheck(this)"> im Juli heiraten.
+      </div>
+      <div class="lt-row"><span class="lt-num">5.</span>
+        Ihr <input class="lt-inp lt-inp-sm" id="lt4" data-ans="werdet" placeholder="" oninput="ltCheck(this)"> nächste Woche arbeiten.
+      </div>
+      <div class="lt-row"><span class="lt-num">6.</span>
+        Die Kinder <input class="lt-inp lt-inp-sm" id="lt5" data-ans="werden" placeholder="" oninput="ltCheck(this)"> bestimmt schon im Bett sein.
+      </div>
+    </div>
+
+    <div class="lt-section">
+      <div class="lt-title">Teil 2 · Präsens → Futur I (Infinitiv ergänzen)</div>
+
+      <div class="lt-row"><span class="lt-num">7.</span>
+        Juan geht morgen einkaufen. → Juan wird morgen einkaufen <input class="lt-inp lt-inp-sm" id="lt6" data-ans="gehen" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">8.</span>
+        Melina trinkt ein Glas Wasser. → Melina wird ein Glas Wasser <input class="lt-inp lt-inp-sm" id="lt7" data-ans="trinken" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">9.</span>
+        Niko ruft seine Freundin an. → Niko wird seine Freundin <input class="lt-inp lt-inp-sm" id="lt8" data-ans="anrufen" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">10.</span>
+        Ihr dürft hier nicht rauchen. → Ihr werdet hier nicht rauchen <input class="lt-inp lt-inp-sm" id="lt9" data-ans="dürfen" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">11.</span>
+        Ben muss morgen früh aufstehen. → Ben wird morgen früh aufstehen <input class="lt-inp lt-inp-sm" id="lt10" data-ans="müssen" placeholder="" oninput="ltCheck(this)">.
+      </div>
+    </div>
+
+    <div class="lt-section">
+      <div class="lt-title">Teil 3 · Plan, Prognose oder Versprechen?</div>
+      <p style="font-size:.85rem;color:#888;margin-bottom:10px;">Ergänze: <em>Plan · Prognose · Versprechen</em></p>
+
+      <div class="lt-row"><span class="lt-num">12.</span>
+        „Bea wird nach der Schule studieren." → Das ist ein <input class="lt-inp" id="lt11" data-ans="Plan" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">13.</span>
+        „Morgen wird die Sonne scheinen." → Das ist eine <input class="lt-inp" id="lt12" data-ans="Prognose" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">14.</span>
+        „Mila wird immer lieb zu ihren Eltern sein." → Das ist ein <input class="lt-inp" id="lt13" data-ans="Versprechen" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">15.</span>
+        „Der schwerkranke Patient wird die Nacht nicht überleben." → Das ist eine <input class="lt-inp" id="lt14" data-ans="Prognose" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">16.</span>
+        „Sam wird nicht mehr rauchen." → Das ist ein <input class="lt-inp" id="lt15" data-ans="Versprechen" placeholder="" oninput="ltCheck(this)"> (oder Plan).
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <span>⏱ <span id="lt-timer">0:00</span></span>
+      <span>🏆 <span id="lt-best">–</span></span>
+      <button onclick="ltResetAll()">↺ Neustart</button>
+      <button onclick="ltShowAll()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 3: SATZBAU -->
+  <section class="section" id="tab3">
+    <p style="color:#555;margin-bottom:16px;">Bilde Sätze im Futur I. Stelle <em>werden</em> auf Position 2, den Infinitiv ans Ende.</p>
+    <div id="satzbauContainer"></div>
+    <div class="btn-row">
+      <span>⏱ <span id="sb-timer">0:00</span></span>
+      <span>🏆 <span id="sb-best">–</span></span>
+      <button onclick="sbTimerReset()">↺ Neustart</button>
+      <button onclick="sbShowSolution()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 4: MULTIPLE CHOICE -->
+  <section class="section" id="tab4">
+    <p style="color:#555;margin-bottom:16px;">Wähle die richtige Form von <em>werden</em> oder den richtigen Infinitiv.</p>
+    <div id="mcContainer"></div>
+    <div class="btn-row">
+      <button onclick="mcReset()">↺ Neustart</button>
+      <button onclick="mcSolve()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ── TAB NAVIGATION ─────────────────────────────────────────
+function showTab(n) {
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('aktiv', i===n); });
+  document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
+  if (n === 2) ltTimerAutoStart();
+  if (n === 3) sbTimerAutoStart();
+}
+
+// ── TIMER ───────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1063g-';
+var ltStarted = false, ltRunning = false, ltSecs = 0, ltInterval = null;
+var sbStarted = false, sbRunning = false, sbSecs = 0, sbInterval = null;
+function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerLoadBest(key, elId){
+  var b = localStorage.getItem(key);
+  document.getElementById(elId).textContent = b ? timerFmt(parseInt(b)) : '–';
+}
+function ltTimerAutoStart(){
+  if (ltStarted) return; ltStarted = true; ltRunning = true;
+  ltInterval = setInterval(function(){ ltSecs++; document.getElementById('lt-timer').textContent = timerFmt(ltSecs); }, 1000);
+}
+function ltTimerStop(){
+  if (!ltRunning) return; ltRunning = false; clearInterval(ltInterval);
+  var b = localStorage.getItem(TIMER_PREFIX+'best-lt');
+  if (!b || ltSecs < parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-lt', ltSecs); document.getElementById('lt-best').textContent = timerFmt(ltSecs); }
+}
+function ltTimerReset(){ ltRunning=false; ltStarted=false; ltSecs=0; clearInterval(ltInterval); document.getElementById('lt-timer').textContent='0:00'; }
+function sbTimerAutoStart(){
+  if (sbStarted) return; sbStarted = true; sbRunning = true;
+  sbInterval = setInterval(function(){ sbSecs++; document.getElementById('sb-timer').textContent = timerFmt(sbSecs); }, 1000);
+}
+function sbTimerStop(){
+  if (!sbRunning) return; sbRunning = false; clearInterval(sbInterval);
+  var b = localStorage.getItem(TIMER_PREFIX+'best-sb');
+  if (!b || sbSecs < parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-sb', sbSecs); document.getElementById('sb-best').textContent = timerFmt(sbSecs); }
+}
+function sbTimerReset(){ sbRunning=false; sbStarted=false; sbSecs=0; clearInterval(sbInterval); document.getElementById('sb-timer').textContent='0:00'; sbCorrect=[]; sbBuild(); }
+
+// ── LÜCKENTEXT ──────────────────────────────────────────────
+var LT_COUNT = 16;
+function ltCheck(inp){
+  ltTimerAutoStart();
+  var val = inp.value.trim();
+  var ans = inp.dataset.ans;
+  if (val === ans){ inp.className = inp.className.replace(/lt-inp-sm/g,'').trim() + (inp.id.indexOf('lt')+' lt-inp-sm '.indexOf(inp.className) !== -1 && inp.classList.contains('lt-inp-sm') ? ' lt-inp-sm' : '');
+    inp.classList.remove('no'); inp.classList.add('ok');
+  } else if (ans.startsWith(val) && val.length > 0){ inp.classList.remove('ok','no'); }
+  else if (val.length > 0){ inp.classList.remove('ok'); inp.classList.add('no'); }
+  else { inp.classList.remove('ok','no'); }
+  var all = true;
+  for (var i=0; i<LT_COUNT; i++){ var el=document.getElementById('lt'+i); if(el && !el.classList.contains('ok')){ all=false; break; } }
+  if (all) ltTimerStop();
+}
+function ltResetAll(){
+  for (var i=0; i<LT_COUNT; i++){ var el=document.getElementById('lt'+i); if(el){ el.value=''; el.classList.remove('ok','no'); } }
+  ltTimerReset();
+}
+function ltShowAll(){
+  for (var i=0; i<LT_COUNT; i++){ var el=document.getElementById('lt'+i); if(el){ el.value=el.dataset.ans; el.classList.remove('no'); el.classList.add('ok'); } }
+  ltTimerStop();
+}
+
+// ── SATZBAU ─────────────────────────────────────────────────
+var satzbauData = [
+  { words: ['Ich', 'werde', 'morgen', 'früh', 'aufstehen'], punct: '.' },
+  { words: ['Nina', 'wird', 'nächstes', 'Jahr', 'nach', 'Australien', 'fliegen'], punct: '.' },
+  { words: ['Wir', 'werden', 'im', 'Sommer', 'ein', 'Haus', 'kaufen'], punct: '.' },
+  { words: ['Du', 'wirst', 'bestimmt', 'den', 'Test', 'bestehen'], punct: '.' },
+  { words: ['Er', 'wird', 'morgen', 'lange', 'arbeiten', 'müssen'], punct: '.' },
+  { words: ['Ihr', 'werdet', 'hier', 'nicht', 'rauchen', 'dürfen'], punct: '.' },
+  { words: ['Es', 'wird', 'heute', 'noch', 'regnen'], punct: '.' }
+];
+var sbDragged = null;
+var sbCorrect = [];
+
+function sbMakeChip(word, orig){
+  var ch = document.createElement('span');
+  ch.className = 'chip';
+  ch.textContent = word;
+  ch.dataset.orig = orig !== undefined ? orig : word;
+  ch.draggable = true;
+  ch.addEventListener('dragstart', function(){ sbDragged = ch; });
+  return ch;
+}
+function sbGetDragAfter(container, x){
+  var chips = Array.from(container.querySelectorAll('.chip:not(.dragging)'));
+  return chips.reduce(function(closest, child){
+    var box = child.getBoundingClientRect();
+    var offset = x - box.left - box.width/2;
+    if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+    return closest;
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+function sbUpdateCapitalization(rowIdx){
+  var row = document.getElementById('sb-row-'+rowIdx);
+  if (!row) return;
+  var chips = row.querySelectorAll('.chip');
+  chips.forEach(function(ch, i){
+    var orig = ch.dataset.orig;
+    if (i===0) ch.textContent = orig.charAt(0).toUpperCase()+orig.slice(1);
+    else ch.textContent = orig;
+  });
+}
+function sbColorRow(rowIdx, correct){
+  var fb = document.getElementById('sb-fb-'+rowIdx);
+  if (fb){ fb.textContent = correct ? '✅' : '❌'; fb.className = 'satzbau-feedback '+(correct?'ok':'no'); }
+}
+function sbCheckAuto(rowIdx){
+  var row = document.getElementById('sb-row-'+rowIdx);
+  if (!row) return;
+  var chips = row.querySelectorAll('.chip');
+  var placed = Array.from(chips).map(function(ch){ return ch.dataset.orig; });
+  var data = satzbauData[rowIdx];
+  var expected = data.words;
+  if (placed.length === 0){ sbColorRow(rowIdx, false); return; }
+  var ok = placed.length === expected.length;
+  if (ok){
+    for (var i=0; i<placed.length; i++){
+      var p = placed[i].charAt(0).toUpperCase()+placed[i].slice(1);
+      var ex = expected[i].charAt(0).toUpperCase()+expected[i].slice(1);
+      if (p !== ex){ ok=false; break; }
+    }
+  }
+  sbColorRow(rowIdx, ok);
+  if (ok) sbCorrect[rowIdx] = true;
+  if (sbCorrect.filter(Boolean).length === satzbauData.length) sbTimerStop();
+}
+function sbRegisterZone(zone, rowIdx){
+  zone.addEventListener('dragover', function(e){
+    e.preventDefault(); zone.classList.add('drag-over');
+    var cursor = zone.querySelector('.sb-insert-cursor');
+    if (!cursor){ cursor=document.createElement('span'); cursor.className='sb-insert-cursor'; }
+    var afterEl = sbGetDragAfter(zone, e.clientX);
+    if (afterEl) zone.insertBefore(cursor, afterEl); else zone.appendChild(cursor);
+  });
+  zone.addEventListener('dragleave', function(){ zone.classList.remove('drag-over'); var c=zone.querySelector('.sb-insert-cursor'); if(c) c.remove(); });
+  zone.addEventListener('drop', function(e){
+    e.preventDefault(); zone.classList.remove('drag-over');
+    var cursor = zone.querySelector('.sb-insert-cursor');
+    if (!sbDragged){ if(cursor) cursor.remove(); return; }
+    if (cursor) zone.insertBefore(sbDragged, cursor); else zone.appendChild(sbDragged);
+    if (cursor) cursor.remove();
+    sbDragged.classList.add('sb-placed'); sbDragged=null;
+    sbUpdateCapitalization(rowIdx);
+    setTimeout(function(){ sbCheckAuto(rowIdx); }, 500);
+  });
+  var bank = document.getElementById('sb-bank-'+rowIdx);
+  bank.addEventListener('dragover', function(e){ e.preventDefault(); });
+  bank.addEventListener('drop', function(e){
+    e.preventDefault(); if (!sbDragged) return;
+    sbDragged.classList.remove('sb-placed'); bank.appendChild(sbDragged); sbDragged=null;
+    sbUpdateCapitalization(rowIdx);
+    setTimeout(function(){ sbCheckAuto(rowIdx); }, 500);
+  });
+}
+function sbShowSolution(){
+  satzbauData.forEach(function(data, rowIdx){
+    var bank = document.getElementById('sb-bank-'+rowIdx);
+    var row = document.getElementById('sb-row-'+rowIdx);
+    if (!bank || !row) return;
+    bank.innerHTML=''; row.innerHTML='';
+    data.words.forEach(function(word, i){
+      var ch = sbMakeChip(i===0 ? word.charAt(0).toUpperCase()+word.slice(1) : word, word);
+      ch.classList.add('sb-placed'); row.appendChild(ch);
+    });
+    var pt = document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
+    sbColorRow(rowIdx, true); sbCorrect[rowIdx]=true;
+  });
+  sbTimerStop();
+}
+function sbBuild(){
+  var container = document.getElementById('satzbauContainer');
+  container.innerHTML='';
+  sbCorrect = new Array(satzbauData.length).fill(false);
+  satzbauData.forEach(function(data, rowIdx){
+    var shuffled = data.words.slice();
+    for (var i=shuffled.length-1; i>0; i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=shuffled[i]; shuffled[i]=shuffled[j]; shuffled[j]=tmp; }
+    var wrap = document.createElement('div'); wrap.className='sentence-builder';
+    wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
+    var bank = document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
+    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word, word)); });
+    wrap.appendChild(bank);
+    var row = document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx;
+    var pt = document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
+    wrap.appendChild(row);
+    var fb = document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+rowIdx;
+    wrap.appendChild(fb);
+    container.appendChild(wrap);
+    sbRegisterZone(row, rowIdx);
+  });
+}
+
+// ── MULTIPLE CHOICE ─────────────────────────────────────────
+var MC_DATA = [
+  { q: 'Kim ___ morgen früh aufstehen.', opts: ['wirt', 'wird', 'werdet', 'werd'], ans: 1 },
+  { q: 'Ihr werdet nächstes Jahr nicht in den Urlaub ___.', opts: ['fahren können', 'können fahren', 'könnt fahren', 'fahren könnt'], ans: 0 },
+  { q: 'Du wirst ab Juli wieder ___.', opts: ['arbeitest', 'arbeitst', 'arbeiten', 'arbeiten wirst'], ans: 2 },
+  { q: 'Ich ___ morgen lange arbeiten müssen.', opts: ['werden', 'wirden', 'wirde', 'werde'], ans: 3 },
+  { q: 'Es ist schon spät. Die Kinder ___ bestimmt schon im Bett sein.', opts: ['wirt', 'wird', 'werden', 'werdet'], ans: 2 },
+  { q: 'Nina sieht so glücklich aus. Sie ___ wohl frisch verliebt sein.', opts: ['werde', 'wirst', 'wird', 'werden'], ans: 2 },
+  { q: 'Ich werde ab jetzt immer pünktlich ___. (Ich verspreche es!)', opts: ['kommen', 'komme', 'kommt', 'kommst'], ans: 0 }
+];
+var mcAnswered = [];
+function mcBuild(){
+  var container = document.getElementById('mcContainer');
+  container.innerHTML = '';
+  mcAnswered = new Array(MC_DATA.length).fill(false);
+  MC_DATA.forEach(function(item, idx){
+    var div = document.createElement('div'); div.className='mc-item';
+    var q = document.createElement('div'); q.className='mc-question'; q.textContent=(idx+1)+'. '+item.q;
+    div.appendChild(q);
+    var opts = document.createElement('div'); opts.className='mc-options';
+    item.opts.forEach(function(opt, oi){
+      var btn = document.createElement('button'); btn.className='mc-opt'; btn.textContent=opt;
+      btn.addEventListener('click', function(){
+        if (mcAnswered[idx]) return;
+        mcAnswered[idx] = true;
+        opts.querySelectorAll('.mc-opt').forEach(function(b,bi){
+          if (bi === item.ans) b.classList.add('correct');
+          else b.classList.add('wrong');
+        });
+        if (oi === item.ans) btn.classList.remove('wrong');
+      });
+      opts.appendChild(btn);
+    });
+    div.appendChild(opts);
+    container.appendChild(div);
+  });
+}
+function mcReset(){ mcBuild(); }
+function mcSolve(){
+  MC_DATA.forEach(function(item, idx){
+    var container = document.getElementById('mcContainer');
+    var items = container.querySelectorAll('.mc-item');
+    if (!items[idx]) return;
+    var opts = items[idx].querySelectorAll('.mc-opt');
+    opts.forEach(function(btn, oi){
+      if (oi === item.ans) btn.classList.add('reveal');
+    });
+    mcAnswered[idx] = true;
+  });
+}
+
+// ── INIT ────────────────────────────────────────────────────
+(function init(){
+  timerLoadBest(TIMER_PREFIX+'best-lt', 'lt-best');
+  timerLoadBest(TIMER_PREFIX+'best-sb', 'sb-best');
+  sbBuild();
+  mcBuild();
+})();
+</script>
+</body>
+</html>
