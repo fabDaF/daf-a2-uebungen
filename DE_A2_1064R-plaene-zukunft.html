@@ -85,6 +85,10 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .art:focus, .wort:focus, .plural:focus { outline: none; border-color: #667eea; box-shadow: 0 0 5px rgba(102, 126, 234, 0.3); }
 .art.ok, .wort.ok, .plural.ok { background: #f0fff4; border-color: #27ae60; }
 .art.no, .wort.no, .plural.no { background: #fff5f5; border-color: #e74c3c; }
+.ws-inp { padding: 6px 8px; border: 2px solid #ddd; border-radius: 4px; font-size: 0.9em; transition: all 0.2s; font-family: inherit; background: transparent; outline: none; box-sizing: border-box; }
+.ws-inp:focus { outline: none; border-color: #667eea; box-shadow: 0 0 5px rgba(102, 126, 234, 0.3); }
+.ws-inp.ok { background: #f0fff4; border-color: #27ae60; }
+.ws-inp.no { background: #fff5f5; border-color: #e74c3c; }
 
 /* Timer und Buttons */
 .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
@@ -779,19 +783,39 @@ function sbTimerResetOne() {
 // TAB 5: WORTSCHATZ
 // ─────────────────────────────────────────────────────────────────────────
 var WS_DATA = [
-    { en: '(to finish / complete)', de: 'beenden' },
-    { en: '(the future)', de: 'die Zukunft' },
-    { en: '(the internship)', de: 'das Praktikum' },
-    { en: '(to study at university)', de: 'studieren' },
-    { en: '(complicated)', de: 'kompliziert' },
-    { en: '(the hope)', de: 'die Hoffnung' },
-    { en: '(smart / clever)', de: 'schlau' },
-    { en: '(the salary)', de: 'das Gehalt' },
-    { en: '(the A-levels)', de: 'das Abitur' },
-    { en: '(the nurse)', de: 'die Krankenschwester' }
+    { en: '(to finish / complete)', art: '',    de: 'beenden',          plural: '' },
+    { en: '(the future)',           art: 'die', de: 'Zukunft',          plural: '' },
+    { en: '(the internship)',       art: 'das', de: 'Praktikum',        plural: '-ka' },
+    { en: '(to study at university)', art: '', de: 'studieren',         plural: '' },
+    { en: '(complicated)',          art: '',    de: 'kompliziert',       plural: '' },
+    { en: '(the hope)',             art: 'die', de: 'Hoffnung',         plural: '-en' },
+    { en: '(smart / clever)',       art: '',    de: 'schlau',            plural: '' },
+    { en: '(the salary)',           art: 'das', de: 'Gehalt',           plural: '-̈er' },
+    { en: '(the A-levels)',         art: 'das', de: 'Abitur',           plural: '' },
+    { en: '(the nurse)',            art: 'die', de: 'Krankenschwester', plural: '-n' }
 ];
 
 var wsTimerAutoStart = false;
+
+function makeWsInp(ans, placeholder, width) {
+    var inp = document.createElement('input');
+    inp.type = 'text'; inp.className = 'ws-inp';
+    inp.placeholder = placeholder;
+    inp.style.width = width + 'px';
+    inp.dataset.ans = ans.toLowerCase();
+    inp.setAttribute('autocomplete', 'off');
+    inp.addEventListener('input', function() {
+        wsTimerAutoStart = true; initTimer(5);
+        var val = inp.value.trim().toLowerCase();
+        var a = inp.dataset.ans;
+        inp.classList.remove('ok', 'no');
+        if (!val) return;
+        if (val === a) { inp.classList.add('ok'); wsCheckAllWs(); return; }
+        if (a.startsWith(val)) return;
+        inp.classList.add('no');
+    });
+    return inp;
+}
 
 function initWortschatz() {
     var container = document.getElementById('wortschatzContainer');
@@ -800,7 +824,6 @@ function initWortschatz() {
     WS_DATA.forEach(function(item, idx) {
         var wsItem = document.createElement('div');
         wsItem.className = 'ws-item';
-        wsItem.id = 'ws-item-' + idx;
 
         var row = document.createElement('div');
         row.className = 'ws-row';
@@ -809,175 +832,68 @@ function initWortschatz() {
         en.className = 'ws-en';
         en.textContent = item.en;
 
-        var parts = item.de.match(/(\w+|\s+)/g);
-        var artInp = null, wortInp = null, pluralInp = null;
+        var inputs = document.createElement('div');
+        inputs.style.display = 'flex';
+        inputs.style.gap = '8px';
+        inputs.style.flexWrap = 'wrap';
+        inputs.style.alignItems = 'center';
 
-        // Parse de: "der Hund" or "Hunde" or "der Hund – die Hunde"
-        if (item.de.indexOf('–') > -1) {
-            var [sing, plur] = item.de.split('–').map(s => s.trim());
-            var singParts = sing.split(/\s+/);
-            var art = singParts[0];
-            var wort = singParts.slice(1).join(' ');
-
-            artInp = document.createElement('input');
-            artInp.className = 'art';
-            artInp.type = 'text';
-            artInp.placeholder = 'Artikel';
-            artInp.id = 'ws-art-' + idx;
-            artInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
-
-            wortInp = document.createElement('input');
-            wortInp.className = 'wort';
-            wortInp.type = 'text';
-            wortInp.placeholder = 'Wort';
-            wortInp.id = 'ws-wort-' + idx;
-            wortInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
-
-            pluralInp = document.createElement('input');
-            pluralInp.className = 'plural';
-            pluralInp.type = 'text';
-            pluralInp.placeholder = 'Plural';
-            pluralInp.id = 'ws-plur-' + idx;
-            pluralInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
-
-            row.appendChild(en);
-            row.appendChild(artInp);
-            row.appendChild(wortInp);
-            row.appendChild(pluralInp);
-        } else {
-            var singParts = item.de.split(/\s+/);
-            var art = singParts[0];
-            var wort = singParts.slice(1).join(' ');
-
-            artInp = document.createElement('input');
-            artInp.className = 'art';
-            artInp.type = 'text';
-            artInp.placeholder = 'Artikel';
-            artInp.id = 'ws-art-' + idx;
-            artInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
-
-            wortInp = document.createElement('input');
-            wortInp.className = 'wort';
-            wortInp.type = 'text';
-            wortInp.placeholder = 'Wort';
-            wortInp.id = 'ws-wort-' + idx;
-            wortInp.addEventListener('input', function() { wsTimerAutoStart = true; initTimer(5); wsCheckItem(idx); });
-
-            row.appendChild(en);
-            row.appendChild(artInp);
-            row.appendChild(wortInp);
+        if (item.art) {
+            inputs.appendChild(makeWsInp(item.art, 'Artikel', 70));
+        }
+        inputs.appendChild(makeWsInp(item.de, item.art ? 'Wort' : 'Verb/Adj.', Math.max(100, item.de.length * 9 + 20)));
+        if (item.plural) {
+            var sep = document.createElement('span'); sep.textContent = ','; sep.style.color = '#888';
+            inputs.appendChild(sep);
+            inputs.appendChild(makeWsInp(item.plural, 'Plural', Math.max(80, item.plural.length * 9 + 20)));
         }
 
+        row.appendChild(en);
+        row.appendChild(inputs);
         wsItem.appendChild(row);
         container.appendChild(wsItem);
     });
 }
 
-function wsCheckItem(idx) {
-    var artInp = document.getElementById('ws-art-' + idx);
-    var wortInp = document.getElementById('ws-wort-' + idx);
-    var pluralInp = document.getElementById('ws-plur-' + idx);
-
-    var expected = WS_DATA[idx].de.split(/\s+/);
-    var art = expected[0];
-    var wort = expected.slice(1).join(' ');
-    var plur = '';
-
-    if (WS_DATA[idx].de.indexOf('–') > -1) {
-        var [sing, p] = WS_DATA[idx].de.split('–').map(s => s.trim());
-        var singParts = sing.split(/\s+/);
-        art = singParts[0];
-        wort = singParts.slice(1).join(' ');
-        plur = p;
+function wsCheckAllWs() {
+    var all = document.querySelectorAll('#wortschatzContainer .ws-inp');
+    if (Array.from(all).every(function(i){ return i.classList.contains('ok'); })) {
+        stopTimer(5);
     }
-
-    wsCheckField(artInp, art);
-    wsCheckField(wortInp, wort);
-    if (pluralInp) wsCheckField(pluralInp, plur);
-
-    wsCheckAllWs();
 }
 
 function wsCheckField(inp, expected) {
-    var val = inp.value.trim();
+    var val = inp ? inp.value.trim().toLowerCase() : '';
+    if (!inp) return;
     inp.classList.remove('ok', 'no');
-    if (val === expected) {
-        inp.classList.add('ok');
-    } else if (expected.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
-        // neutral
-    } else if (val.length > 0) {
-        inp.classList.add('no');
-    }
+    if (!val) return;
+    if (val === expected.toLowerCase()) { inp.classList.add('ok'); return; }
+    if (expected.toLowerCase().startsWith(val)) return;
+    inp.classList.add('no');
 }
 
-function wsCheckAllWs() {
-    var allOk = true;
-    for (var i = 0; i < WS_DATA.length; i++) {
-        var expected = WS_DATA[i].de.split(/\s+/);
-        var art = expected[0];
-        var wort = expected.slice(1).join(' ');
-        var plur = '';
-
-        if (WS_DATA[i].de.indexOf('–') > -1) {
-            var [sing, p] = WS_DATA[i].de.split('–').map(s => s.trim());
-            var singParts = sing.split(/\s+/);
-            art = singParts[0];
-            wort = singParts.slice(1).join(' ');
-            plur = p;
-        }
-
-        var artInp = document.getElementById('ws-art-' + i);
-        var wortInp = document.getElementById('ws-wort-' + i);
-        var pluralInp = document.getElementById('ws-plur-' + i);
-
-        if (!artInp || artInp.value.trim() !== art) {
-            allOk = false;
-            break;
-        }
-        if (!wortInp || wortInp.value.trim() !== wort) {
-            allOk = false;
-            break;
-        }
-        if (pluralInp && pluralInp.value.trim() !== plur) {
-            allOk = false;
-            break;
-        }
-    }
-    if (allOk) timerStop(5);
-}
-
-function wsShowAll() {
-    WS_DATA.forEach(function(item, idx) {
-        var expected = item.de.split(/\s+/);
-        var art = expected[0];
-        var wort = expected.slice(1).join(' ');
-        var plur = '';
-
-        if (item.de.indexOf('–') > -1) {
-            var [sing, p] = item.de.split('–').map(s => s.trim());
-            var singParts = sing.split(/\s+/);
-            art = singParts[0];
-            wort = singParts.slice(1).join(' ');
-            plur = p;
-        }
-
-        var artInp = document.getElementById('ws-art-' + idx);
-        var wortInp = document.getElementById('ws-wort-' + idx);
-        var pluralInp = document.getElementById('ws-plur-' + idx);
-
-        if (artInp) artInp.value = art;
-        if (wortInp) wortInp.value = wort;
-        if (pluralInp) pluralInp.value = plur;
-
-        wsCheckItem(idx);
+function showWsSolution() {
+    document.querySelectorAll('#wortschatzContainer .ws-inp').forEach(function(inp) {
+        inp.value = inp.dataset.ans;
+        inp.classList.remove('no'); inp.classList.add('ok');
     });
+    stopTimer(5);
+}
+
+function wsReset() {
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    initWortschatz();
 }
 
 function wsTimerResetOne() {
     timerResetOne(5);
-    var container = document.getElementById('wortschatzContainer');
-    container.innerHTML = '';
-    initWortschatz();
+    wsTimerAutoStart = false;
+    wsReset();
+}
+
+function wsShowAll() {
+    showWsSolution();
 }
 
 // ─────────────────────────────────────────────────────────────────────────
