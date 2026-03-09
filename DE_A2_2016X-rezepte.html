@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezepte – Interaktive DaF-Übung (A2.2)</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; }
+.section.active { display: block; }
+.sec-inner { padding: 28px 30px; }
+.section-title { font-size: 1.1em; font-weight: 700; color: #667eea; margin-bottom: 16px; }
+
+/* ── CHIP / DROP ────────────────────────────────────────────── */
+.chip-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f4ff; border-radius: 10px; min-height: 56px; margin-bottom: 18px; border: 2px dashed #c5cae9; }
+.qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.qa-frage-cell { background: #f8f9fa; border-radius: 8px; padding: 10px 14px; font-size: 0.9em; color: #444; display: flex; align-items: center; border-left: 3px solid #667eea; }
+.drop-zone { background: #fafafa; border: 2px dashed #ccc; border-radius: 8px; min-height: 44px; padding: 6px 10px; display: flex; align-items: center; transition: background 0.2s; }
+.drop-zone.drag-over { background: #e8ecff; border-color: #667eea; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip.selected { background: #667eea; color: white; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; cursor: default; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+
+/* ── LÜCKENTEXT ─────────────────────────────────────────────── */
+.luecken-block { padding: 28px 30px; }
+.luecken-block h2 { font-size: 1.05em; color: #667eea; margin: 22px 0 10px; }
+.luecken-block h2:first-child { margin-top: 0; }
+.luecken-text { line-height: 2.4; font-size: 0.95em; color: #444; }
+.recipe-box { background: #f8f9fa; border-radius: 10px; padding: 18px 22px; border-left: 4px solid #764ba2; margin-bottom: 16px; }
+.recipe-box h3 { color: #764ba2; font-size: 1em; margin-bottom: 12px; }
+.recipe-steps { list-style: decimal; padding-left: 20px; }
+.recipe-steps li { margin-bottom: 10px; font-size: 0.92em; color: #444; line-height: 1.7; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortkasten { background: #f0f4ff; border-radius: 10px; padding: 12px 18px; margin-bottom: 18px; font-size: 0.9em; color: #444; line-height: 1.7; }
+.wortkasten strong { color: #667eea; }
+
+/* ── SATZBAU ────────────────────────────────────────────────── */
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+.sb-block { margin-bottom: 22px; }
+.sb-num { font-size: 0.82em; font-weight: 700; color: #764ba2; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+.solution-btn { margin-top: 6px; padding: 5px 14px; border: 2px solid #c5cae9; border-radius: 20px; background: white; color: #667eea; font-size: 0.8em; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.solution-btn:hover { background: #667eea; color: white; border-color: #667eea; }
+
+/* ── WORTSCHATZ ─────────────────────────────────────────────── */
+.ws-table { width: 100%; border-collapse: collapse; }
+.ws-table th { background: #f0f4ff; color: #667eea; font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 10px; text-align: left; }
+.ws-table td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+.ws-table tr:last-child td { border-bottom: none; }
+.ws-en { font-style: italic; color: #667eea; font-size: 0.88em; }
+.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.92em; padding: 2px 4px; transition: border-color 0.2s; }
+.ws-inp:focus { border-bottom-color: #667eea; }
+.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.art { width: 70px; }
+.wort { width: 160px; }
+
+/* ── TIMER ──────────────────────────────────────────────────── */
+.timer-bar { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #f8f9fa; border-bottom: 1px solid #eee; font-size: 0.9em; }
+.timer-display { font-weight: 700; color: #667eea; font-size: 1.05em; min-width: 60px; }
+.best-display { color: #27ae60; font-size: 0.85em; }
+.score-display { margin-left: auto; color: #764ba2; font-weight: 700; }
+.author-footer { text-align: center; padding: 18px; background: #f8f9fa; border-top: 1px solid #eee; font-size: 0.82em; color: #999; }
+.author-footer a { color: #667eea; text-decoration: none; }
+.author-name { font-weight: 600; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Rezepte</h1>
+        <p>Kommunikation: Kochen &amp; Küchenutensilien — A2.2 · Einheit 1</p>
+        <span class="big-emoji">👨‍🍳</span>
+    </div>
+    <nav class="nav">
+        <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">💬</span><span class="nav-label">Redemittel</span></button>
+        <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+        <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+        <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></button>
+    </nav>
+
+    <!-- TAB 0: REDEMITTEL -->
+    <div class="section active" id="sec0">
+        <div class="sec-inner">
+            <div class="section-title">💬 Kochverben — Fragen &amp; Antworten</div>
+            <div class="chip-bank" id="qa-bank0"></div>
+            <div class="qa-grid" id="qa-grid0"></div>
+        </div>
+    </div>
+
+    <!-- TAB 1: LÜCKENTEXT (Spaghetti Bolognese Rezept) -->
+    <div class="section" id="sec1">
+        <div class="timer-bar"><span>⏱</span><span class="timer-display" id="timer1">0:00</span><span class="best-display" id="best1"></span><span class="score-display" id="score1">0 / 8</span></div>
+        <div class="luecken-block">
+            <div class="wortkasten"><strong>Wortkasten:</strong> Zwiebeln · Hackfleisch · Salz · Pfeffer · Schneiden · hinzugegeben · Kochen · reiben</div>
+            <h2>Spaghetti Bolognese — Fülle die Lücken</h2>
+            <div class="recipe-box">
+                <h3>🍝 Rezept: Spaghetti Bolognese</h3>
+                <ol class="recipe-steps">
+                    <li>Schneiden Sie zwei <input class="luecken-inp" data-ans="Zwiebeln" data-idx="0" style="width:90px" placeholder=""> klein.</li>
+                    <li>Braten Sie das <input class="luecken-inp" data-ans="Hackfleisch" data-idx="1" style="width:105px" placeholder=""> zusammen mit den Zwiebeln an.</li>
+                    <li>Würzen Sie das Fleisch gut mit <input class="luecken-inp" data-ans="Salz" data-idx="2" style="width:60px" placeholder=""> und <input class="luecken-inp" data-ans="Pfeffer" data-idx="3" style="width:70px" placeholder="">.</li>
+                    <li><input class="luecken-inp" data-ans="Schneiden" data-idx="4" style="width:90px" placeholder=""> Sie währenddessen die Tomaten in kleine Stücke.</li>
+                    <li>Wenn das Hackfleisch gut durchgebraten ist, werden die Tomatenstücke und Tomatensoße <input class="luecken-inp" data-ans="hinzugegeben" data-idx="5" style="width:120px" placeholder="">.</li>
+                    <li>Lassen Sie die Soße 30 Minuten lang köcheln.</li>
+                    <li><input class="luecken-inp" data-ans="Kochen" data-idx="6" style="width:75px" placeholder=""> Sie die Spaghetti, bis sie al dente sind.</li>
+                    <li>Servieren Sie die Spaghetti mit der Soße und <input class="luecken-inp" data-ans="reiben" data-idx="7" style="width:75px" placeholder=""> Sie etwas Parmesan drüber.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: SATZBAU -->
+    <div class="section" id="sec2">
+        <div class="timer-bar"><span>⏱</span><span class="timer-display" id="timer2">0:00</span><span class="best-display" id="best2"></span><span class="score-display" id="score2">0 / 7</span></div>
+        <div class="sec-inner">
+            <div class="section-title">🧩 Sätze über Kochen bauen</div>
+            <div id="sb-wrap"></div>
+        </div>
+    </div>
+
+    <!-- TAB 3: WORTSCHATZ -->
+    <div class="section" id="sec3">
+        <div class="timer-bar"><span>⏱</span><span class="timer-display" id="timer3">0:00</span><span class="best-display" id="best3"></span><span class="score-display" id="score3">0 / 0</span></div>
+        <div class="sec-inner">
+            <div class="section-title">🔠 Wortschatz: Englisch → Deutsch</div>
+            <table class="ws-table">
+                <thead><tr><th>Englisch</th><th class="art">Artikel</th><th class="wort">Wort</th><th>Plural</th></tr></thead>
+                <tbody id="ws-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+        <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+</div>
+
+<script>
+function showTab(n){document.querySelectorAll('.section').forEach(function(s,i){s.classList.toggle('active',i===n);});document.querySelectorAll('.nav-btn').forEach(function(b,i){b.classList.toggle('active',i===n);});}
+
+var timers={};
+function timerKey(t){return'daf-2016x-best-'+t;}
+function timerFmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);}
+function timerAutoStart(t){if(timers[t]&&timers[t].running)return;if(!timers[t])timers[t]={s:0,running:false,iv:null};timers[t].running=true;timers[t].iv=setInterval(function(){timers[t].s++;var e=document.getElementById('timer'+t);if(e)e.textContent=timerFmt(timers[t].s);},1000);}
+function timerStop(t){if(!timers[t]||!timers[t].running)return;clearInterval(timers[t].iv);timers[t].running=false;var best=localStorage.getItem(timerKey(t));var cur=timers[t].s;if(!best||cur<parseInt(best)){localStorage.setItem(timerKey(t),cur);best=cur;}var e=document.getElementById('best'+t);if(e)e.textContent='🏆 '+timerFmt(parseInt(best));}
+function timerLoadBest(t){var b=localStorage.getItem(timerKey(t));if(b){var e=document.getElementById('best'+t);if(e)e.textContent='🏆 '+timerFmt(parseInt(b));}}
+[1,2,3].forEach(function(t){timerLoadBest(t);});
+
+/* QA */
+var QA_DATA=[
+    {q:'Was machst du, wenn du kein Rezept hast?',a:'Ich improvisiere einfach.'},
+    {q:'Wie viel Mehl braucht man für den Kuchen?',a:'Bitte miss zwei Esslöffel Mehl ab.'},
+    {q:'Was machst du mit den Eiern?',a:'Ich schlage sie und rühre sie unter.'},
+    {q:'Wann ist der Kuchen fertig?',a:'Wenn er im Backofen goldbraun ist.'},
+    {q:'Was machst du mit dem Käse?',a:'Ich reibe ihn mit der Reibe.'},
+    {q:'Wie lange muss die Soße köcheln?',a:'Ungefähr 30 Minuten lang.'},
+    {q:'Wo sind die Zutaten?',a:'Sie sind noch im Kühlschrank.'},
+    {q:'Wie mischt man die Zutaten?',a:'Man rührt sie gut zusammen.'}
+];
+var qaSelected=null;
+function buildQA(){
+    var bank=document.getElementById('qa-bank0'),grid=document.getElementById('qa-grid0');
+    var ansOrder=QA_DATA.map(function(d){return d.a;}).sort(function(){return Math.random()-0.5;});
+    bank.innerHTML='';grid.innerHTML='';
+    ansOrder.forEach(function(ans,i){var c=document.createElement('div');c.className='chip';c.textContent=ans;c.dataset.ans=ans;c.id='qac-'+i;c.draggable=true;c.addEventListener('dragstart',function(e){e.dataTransfer.setData('text',c.id);});c.addEventListener('click',function(){qaClickChip(c);});bank.appendChild(c);});
+    QA_DATA.slice().sort(function(){return Math.random()-0.5;}).forEach(function(item,i){
+        var frage=document.createElement('div');frage.className='qa-frage-cell';frage.textContent=item.q;
+        var drop=document.createElement('div');drop.className='drop-zone';drop.dataset.ans=item.a;drop.id='qad-'+i;
+        drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('drag-over');});drop.addEventListener('dragleave',function(){drop.classList.remove('drag-over');});
+        drop.addEventListener('drop',function(e){e.preventDefault();drop.classList.remove('drag-over');var cid=e.dataTransfer.getData('text');var chip=document.getElementById(cid);qaPlace(chip,drop);});
+        drop.addEventListener('click',function(){qaClickZone(drop);});
+        grid.appendChild(frage);grid.appendChild(drop);
+    });
+}
+function qaClickChip(chip){if(chip.classList.contains('correct'))return;document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('selected');});if(qaSelected===chip){qaSelected=null;return;}chip.classList.add('selected');qaSelected=chip;}
+function qaClickZone(drop){if(!qaSelected)return;qaPlace(qaSelected,drop);}
+function qaPlace(chip,drop){if(!chip||chip.classList.contains('correct'))return;var prev=drop.querySelector('.chip');if(prev&&prev!==chip){document.getElementById('qa-bank0').appendChild(prev);prev.classList.remove('correct','incorrect','selected');}drop.appendChild(chip);chip.classList.remove('selected');qaSelected=null;var correct=chip.dataset.ans===drop.dataset.ans;chip.classList.toggle('correct',correct);chip.classList.toggle('incorrect',!correct);if(!correct){setTimeout(function(){chip.classList.remove('incorrect');document.getElementById('qa-bank0').appendChild(chip);},700);}}
+buildQA();
+
+/* LÜCKENTEXT */
+var lt1Total=8,lt1Correct=0;
+function liveCheck(inp){timerAutoStart(1);var val=inp.value.trim(),ans=inp.dataset.ans;if(val===ans){inp.classList.add('ok');inp.classList.remove('no');inp.disabled=true;lt1Correct++;document.getElementById('score1').textContent=lt1Correct+' / '+lt1Total;if(lt1Correct===lt1Total)timerStop(1);return;}if(ans.startsWith(val)&&val.length>0){inp.classList.remove('ok','no');return;}if(val.length>0)inp.classList.add('no');else inp.classList.remove('ok','no');}
+document.querySelectorAll('.luecken-inp').forEach(function(inp){inp.addEventListener('input',function(){liveCheck(inp);});});
+
+/* SATZBAU */
+var satzbauData=[
+    {id:1,words:['Hast','du','den','Zucker','schon','abgemessen','?'],solution:['Hast','du','den','Zucker','schon','abgemessen']},
+    {id:2,words:['Geben','Sie','einen','Teelöffel','Zucker','hinzu','.'],solution:['Geben','Sie','einen','Teelöffel','Zucker','hinzu']},
+    {id:3,words:['Sie','mischt','alle','Zutaten','zusammen','.'],solution:['Sie','mischt','alle','Zutaten','zusammen']},
+    {id:4,words:['Der','Koch','rührt','langsam','die','Soße','um','.'],solution:['Der','Koch','rührt','langsam','die','Soße','um']},
+    {id:5,words:['Lass','den','Kaffee','erst','abkühlen','!'],solution:['Lass','den','Kaffee','erst','abkühlen']},
+    {id:6,words:['Mit','einer','Reibe','kann','man','Käse','reiben','.'],solution:['Mit','einer','Reibe','kann','man','Käse','reiben']},
+    {id:7,words:['Es','hilft',',','wenn','man','einem','Rezept','folgt','.'],solution:['Es','hilft',',','wenn','man','einem','Rezept','folgt']}
+];
+var sbDragged=null,sbCorrectCount=0,sbTotal=satzbauData.length;
+function sbShuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+function sbMakeChip(w,sid){var c=document.createElement('span');c.className='chip';c.textContent=w;c.draggable=true;c.dataset.word=w;c.dataset.sent=sid;c.addEventListener('dragstart',function(){sbDragged=c;});c.addEventListener('click',function(){if(c.classList.contains('correct'))return;document.querySelectorAll('.chip[data-sent="'+sid+'"]').forEach(function(x){x.classList.remove('selected');});if(sbDragged===c){sbDragged=null;return;}sbDragged=c;c.classList.add('selected');});return c;}
+function sbRegisterZone(zone,sid){zone.addEventListener('dragover',function(e){e.preventDefault();});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged||sbDragged.dataset.sent!==String(sid))return;var after=sbGetDragAfter(zone,e.clientY);if(after==null)zone.appendChild(sbDragged);else zone.insertBefore(sbDragged,after);sbDragged.classList.remove('selected');sbDragged=null;setTimeout(function(){sbCheckAuto(zone,sid);},500);});zone.addEventListener('click',function(){if(!sbDragged)return;if(sbDragged.dataset.sent!==String(sid))return;zone.appendChild(sbDragged);sbDragged.classList.remove('selected');sbDragged=null;setTimeout(function(){sbCheckAuto(zone,sid);},500);});}
+function sbGetDragAfter(container,y){var els=Array.from(container.querySelectorAll('.chip:not(.dragging)'));return els.reduce(function(closest,child){var box=child.getBoundingClientRect();var offset=y-box.top-box.height/2;if(offset<0&&offset>closest.offset)return{offset:offset,element:child};return closest;},{offset:Number.NEGATIVE_INFINITY}).element;}
+function sbCheckAuto(zone,sid){var ex=satzbauData.find(function(d){return d.id===sid;});var chips=zone.querySelectorAll('.chip');if(chips.length<ex.solution.length)return;var placed=Array.from(chips).map(function(c){return c.dataset.word;});var correct=ex.solution.every(function(w,i){return placed[i]===w;});var fb=document.getElementById('sb-fb-'+sid);if(correct){zone.classList.add('correct');zone.classList.remove('incorrect');chips.forEach(function(c){c.classList.add('correct');c.draggable=false;});fb.textContent='✓ Richtig!';fb.className='satzbau-feedback correct';timerAutoStart(2);sbCorrectCount++;document.getElementById('score2').textContent=sbCorrectCount+' / '+sbTotal;if(sbCorrectCount===sbTotal)timerStop(2);}else{zone.classList.add('incorrect');zone.classList.remove('correct');fb.textContent='✗ Nicht ganz — versuche es noch einmal.';fb.className='satzbau-feedback incorrect';setTimeout(function(){zone.classList.remove('incorrect');fb.textContent='';fb.className='satzbau-feedback';},1000);}}
+function buildSatzbau(){var wrap=document.getElementById('sb-wrap');wrap.innerHTML='';satzbauData.forEach(function(ex){var block=document.createElement('div');block.className='sb-block';var num=document.createElement('div');num.className='sb-num';num.textContent='Satz '+ex.id;var chips=document.createElement('div');chips.className='chips-container';chips.id='sb-chips-'+ex.id;var endPunct=ex.words[ex.words.length-1];sbShuffle(ex.solution).forEach(function(w){chips.appendChild(sbMakeChip(w,ex.id));});var zone=document.createElement('div');zone.className='sentence-builder';zone.id='sb-zone-'+ex.id;var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=endPunct;zone.appendChild(punkt);sbRegisterZone(zone,ex.id);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+ex.id;var solBtn=document.createElement('button');solBtn.className='solution-btn';solBtn.textContent='Lösung anzeigen';(function(e,z,c){solBtn.addEventListener('click',function(){z.querySelectorAll('.chip').forEach(function(ch){c.appendChild(ch);ch.classList.remove('correct','incorrect','selected');});z.classList.remove('correct','incorrect');fb.textContent='';e.solution.forEach(function(w){z.insertBefore(sbMakeChip(w,e.id),z.querySelector('.sb-punkt'));});});})(ex,zone,chips);block.appendChild(num);block.appendChild(chips);block.appendChild(zone);block.appendChild(fb);block.appendChild(solBtn);wrap.appendChild(block);});}
+buildSatzbau();
+
+/* WORTSCHATZ */
+var WS_DATA=[
+    {en:'to measure (out)',art:'',de:'abmessen',plural:''},
+    {en:'to add (a teaspoon of)',art:'',de:'hinzugeben',plural:''},
+    {en:'to follow a recipe',art:'',de:'einem Rezept folgen',plural:''},
+    {en:'to improvise',art:'',de:'improvisieren',plural:''},
+    {en:'to mix (together)',art:'',de:'zusammenmischen',plural:''},
+    {en:'to stir',art:'',de:'umrühren',plural:''},
+    {en:'to get (from fridge)',art:'',de:'aus dem Kühlschrank holen',plural:''},
+    {en:'to put in the oven',art:'',de:'in den Backofen schieben',plural:''},
+    {en:'to let cool down',art:'',de:'abkühlen lassen',plural:''},
+    {en:'to beat (eggs)',art:'',de:'schlagen',plural:''},
+    {en:'wooden spoon',art:'der',de:'Kochlöffel',plural:'Kochlöffel'},
+    {en:'bowl',art:'die',de:'Schüssel',plural:'Schüsseln'},
+    {en:'pot, saucepan',art:'der',de:'Kochtopf',plural:'Kochtöpfe'},
+    {en:'spatula',art:'der',de:'Pfannenwender',plural:'Pfannenwender'},
+    {en:'baking dish',art:'die',de:'Auflaufform',plural:'Auflaufformen'},
+    {en:'measuring cup',art:'der',de:'Messbecher',plural:'Messbecher'},
+    {en:'teaspoon',art:'der',de:'Teelöffel',plural:'Teelöffel'},
+    {en:'tablespoon',art:'der',de:'Esslöffel',plural:'Esslöffel'},
+    {en:'kitchen scale',art:'die',de:'Küchenwaage',plural:'Küchenwaagen'},
+    {en:'grater',art:'die',de:'Reibe',plural:'Reiben'},
+    {en:'dough, batter',art:'der',de:'Teig',plural:'Teige'}
+];
+function normalise(s){return s.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');}
+var ws3Total=0,ws3Correct=0;
+function makeWsInp(item,colClass,ans,tab){var cell=document.createElement('td');var inp=document.createElement('input');inp.type='text';inp.className='ws-inp '+(colClass||'');inp.placeholder=colClass==='art'?'Artikel':'';inp.autocomplete='off';ws3Total++;inp.addEventListener('input',function(){timerAutoStart(tab);var val=inp.value.trim();var normVal=normalise(val);var normAns=normalise(ans);if(normVal===normAns){inp.classList.add('ok');inp.classList.remove('no');inp.disabled=true;ws3Correct++;document.getElementById('score'+tab).textContent=ws3Correct+' / '+ws3Total;if(ws3Correct===ws3Total)timerStop(tab);return;}if(normAns.startsWith(normVal)&&val.length>0){inp.classList.remove('ok','no');return;}if(val.length>0)inp.classList.add('no');else inp.classList.remove('ok','no');});cell.appendChild(inp);return cell;}
+function buildWortschatz(){var tbody=document.getElementById('ws-tbody');WS_DATA.forEach(function(item){var tr=document.createElement('tr');var tdEn=document.createElement('td');tdEn.className='ws-en';tdEn.textContent=item.en;tr.appendChild(tdEn);if(item.art!==''){tr.appendChild(makeWsInp(item,'art',item.art,3));}else{var b=document.createElement('td');b.innerHTML='<span style="color:#bbb;font-size:0.85em;">—</span>';tr.appendChild(b);}tr.appendChild(makeWsInp(item,'wort',item.de,3));if(item.plural!==''&&item.plural!=='-'){tr.appendChild(makeWsInp(item,'',item.plural,3));}else{var b2=document.createElement('td');b2.innerHTML=item.plural==='-'?'<span style="color:#bbb;font-size:0.85em;">—</span>':'';tr.appendChild(b2);}tbody.appendChild(tr);});document.getElementById('score3').textContent='0 / '+ws3Total;}
+buildWortschatz();
+</script>
+</body>
+</html>
