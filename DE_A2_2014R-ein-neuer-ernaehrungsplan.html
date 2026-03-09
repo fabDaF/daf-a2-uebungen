@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ein neuer Ernährungsplan – Interaktive DaF-Übung (A2.2)</title>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; }
+.section.active { display: block; }
+.sec-inner { padding: 28px 30px; }
+
+/* ── TEXT ───────────────────────────────────────────────────── */
+.lese-text { background: #f8f9fa; border-radius: 10px; padding: 22px 26px; margin-bottom: 24px; line-height: 1.9; font-size: 0.95em; color: #444; }
+.lese-text p { margin-bottom: 12px; }
+.lese-text p:last-child { margin-bottom: 0; }
+.lese-text h3 { color: #667eea; font-size: 1.02em; margin: 18px 0 8px; }
+.hl { background: #ffe0b2; border-radius: 3px; padding: 0 3px; font-weight: 600; color: #e65100; }
+
+/* ── RICHTIG / FALSCH ───────────────────────────────────────── */
+.rf-list { list-style: none; }
+.rf-item { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.92em; color: #444; }
+.rf-item:last-child { border-bottom: none; }
+.rf-stmt { flex: 1; line-height: 1.5; }
+.rf-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.rf-btn { padding: 5px 14px; border: 2px solid #ccc; border-radius: 20px; cursor: pointer; font-size: 0.82em; font-weight: 600; background: white; transition: all 0.2s; }
+.rf-btn:hover { border-color: #667eea; color: #667eea; }
+.rf-btn.ok { background: #27ae60; border-color: #27ae60; color: white; }
+.rf-btn.no { background: #e74c3c; border-color: #e74c3c; color: white; }
+
+/* ── LÜCKENTEXT ─────────────────────────────────────────────── */
+.luecken-block { padding: 28px 30px; }
+.luecken-block h2 { font-size: 1.05em; color: #667eea; margin: 22px 0 10px; }
+.luecken-block h2:first-child { margin-top: 0; }
+.luecken-text { line-height: 2.4; font-size: 0.95em; color: #444; background: #f8f9fa; border-radius: 10px; padding: 18px 22px; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
+.luecken-inp:focus { border-bottom-color: #667eea; }
+.luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortkasten { background: #f0f4ff; border-radius: 10px; padding: 12px 18px; margin-bottom: 18px; font-size: 0.9em; color: #444; line-height: 1.7; }
+.wortkasten strong { color: #667eea; }
+
+/* ── SATZBAU ────────────────────────────────────────────────── */
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
+.sb-block { margin-bottom: 22px; }
+.sb-num { font-size: 0.82em; font-weight: 700; color: #764ba2; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip.selected { background: #667eea; color: white; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; cursor: default; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.solution-btn { margin-top: 6px; padding: 5px 14px; border: 2px solid #c5cae9; border-radius: 20px; background: white; color: #667eea; font-size: 0.8em; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.solution-btn:hover { background: #667eea; color: white; border-color: #667eea; }
+
+/* ── TIMER ──────────────────────────────────────────────────── */
+.timer-bar { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #f8f9fa; border-bottom: 1px solid #eee; font-size: 0.9em; }
+.timer-display { font-weight: 700; color: #667eea; font-size: 1.05em; min-width: 60px; }
+.best-display { color: #27ae60; font-size: 0.85em; }
+.score-display { margin-left: auto; color: #764ba2; font-weight: 700; }
+.section-title { font-size: 1.1em; font-weight: 700; color: #667eea; margin-bottom: 16px; }
+.author-footer { text-align: center; padding: 18px; background: #f8f9fa; border-top: 1px solid #eee; font-size: 0.82em; color: #999; }
+.author-footer a { color: #667eea; text-decoration: none; }
+.author-name { font-weight: 600; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Ein neuer Ernährungsplan</h1>
+        <p>Leseverstehen &amp; Übungen — A2.2 · Einheit 1</p>
+        <span class="big-emoji">🥗</span>
+    </div>
+    <nav class="nav">
+        <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">📖</span><span class="nav-label">Text</span></button>
+        <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">✅</span><span class="nav-label">Richtig/Falsch</span></button>
+        <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+        <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TAB 0 — TEXT
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section active" id="sec0">
+        <div class="sec-inner">
+            <div class="section-title">📖 Lies den Text</div>
+            <div class="lese-text">
+                <h3>Samstagabend</h3>
+                <p>Es ist Samstagabend, 20 Uhr. Alex und Louise kochen heute gemeinsam Abendessen. Alex hat vor, abzunehmen und sich ab jetzt gesünder zu ernähren. Louise, <span class="hl">die sich bereits sehr gesund ernährt</span>, soll ihm bei diesem Plan helfen. Alex muss seine Essgewohnheiten umstellen, sagt Louise. Er muss weniger Fast Food essen und am besten einem Ernährungsplan folgen.</p>
+                <h3>Louises Tipps und Tricks</h3>
+                <p>Er soll heimische Produkte und Bioprodukte kaufen, rät Louise ihm. Und er soll die Zutaten, <span class="hl">die er essen möchte</span>, gesünder zubereiten. Er kann sie zum Beispiel dämpfen statt frittieren, schlägt Louise vor. Louise fragt Alex, was sein Lieblingsessen ist. „Am liebsten esse ich Döner Kebab", antwortet Alex, „aber ich esse auch gern Kartoffelsalat und Hamburger. Und mein Lieblingsnachtisch ist Schwarzwälder Kirschtorte."</p>
+                <h3>Die Schwarzwälder Kirschtorte</h3>
+                <p>Louise kennt Schwarzwälder Kirschtorte noch nicht und fragt Alex, was das ist. „Schwarzwälder Kirschtorte ist ein Kuchen, <span class="hl">der mit Sahne, Kirschen und Schokolade zubereitet wird</span>", erklärt Alex. „Das klingt wirklich lecker!", meint Louise, „Aber gesund sind deine Lieblingsspeisen nicht wirklich, Alex!" Louise und Alex lachen.</p>
+                <h3>Fleischesser</h3>
+                <p>Alex fragt Louise, was sie heute gemeinsam kochen. „Du bist doch nicht etwa Vegetarierin?", fragt Alex entsetzt. Als Louise antwortet, dass sie Fleisch liebt, ist Alex erleichtert. „Sollen wir eine Gemüsepfanne mit Reis und Hähnchen machen?", fragt Louise. Sie sagt, dass sie noch genug Zutaten dafür im Kühlschrank hat.</p>
+                <h3>Die Zutaten</h3>
+                <p>Alex findet die Idee gut. „Ich glaube, ich habe noch Zucchini, Aubergine, Paprika, Karotten und Tomaten im Kühlschrank", sagt Louise und fragt Alex, ob er Allergien hat. „Nein, ich habe keine Allergien", antwortet er. Louise schaut in den Kühlschrank, in dem das Gemüse liegt. Die Aubergine ist leider schon schlecht, sie ist verfault. Aber alle anderen Zutaten, die Louise hat, sehen noch gut aus.</p>
+                <h3>Versalzen!</h3>
+                <p>Louise schneidet das Gemüse und Alex beginnt, das Fleisch anzubraten. Louise gibt das Gemüse in die Pfanne, in der das Fleisch ist. Sie fügt Salz und Pfeffer hinzu. Aber Louise hat nicht aufgepasst und nicht gesehen, dass Alex schon Salz hinzugefügt hat. Als Louise das Essen probiert, schaut sie angewidert. „Oh nein, Alex! Ich habe das Essen total versalzen. Es ist verdorben! Es schmeckt schrecklich!" Alex probiert einen Bissen, rümpft die Nase und lacht. Er schlägt vor, heute Abend doch essen zu gehen.</p>
+                <h3>Currywurst und Pommes</h3>
+                <p>„Currywurst und Pommes", antwortet Louise. „Das hat doch viel zu wenig Vitamine!", neckt Alex sie und lacht. „Das ist mir heute Abend egal! Dann fangen wir halt morgen mit dem Ernährungsplan an, den ich für dich gemacht habe", sagt Louise. Beide lachen und Alex freut sich schon auf die Currywurst.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TAB 1 — RICHTIG / FALSCH
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section" id="sec1">
+        <div class="timer-bar">
+            <span>⏱</span>
+            <span class="timer-display" id="timer1">0:00</span>
+            <span class="best-display" id="best1"></span>
+            <span class="score-display" id="score1">0 / 8</span>
+        </div>
+        <div class="sec-inner">
+            <div class="section-title">✅ Richtig oder Falsch?</div>
+            <ul class="rf-list" id="rf-list"></ul>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TAB 2 — LÜCKENTEXT
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section" id="sec2">
+        <div class="timer-bar">
+            <span>⏱</span>
+            <span class="timer-display" id="timer2">0:00</span>
+            <span class="best-display" id="best2"></span>
+            <span class="score-display" id="score2">0 / 10</span>
+        </div>
+        <div class="luecken-block">
+            <div class="wortkasten">
+                <strong>Wortkasten:</strong> Vegetarier · erleichtert · Gemüsepfanne · Zutaten · Idee · Karotten · Kühlschrank · Allergien · Gemüse · verfault
+            </div>
+            <h2>Textauszug: Fülle die Lücken</h2>
+            <div class="luecken-text">
+                <p>„Du bist doch nicht etwa <input class="luecken-inp" data-ans="Vegetarier" data-idx="0" style="width:110px" placeholder="">?", fragt Alex entsetzt. Als Louise antwortet, dass sie Fleisch liebt, ist Alex <input class="luecken-inp" data-ans="erleichtert" data-idx="1" style="width:105px" placeholder="">. „Sollen wir eine <input class="luecken-inp" data-ans="Gemüsepfanne" data-idx="2" style="width:130px" placeholder=""> mit Reis und Hähnchen machen?", fragt Louise. Sie sagt, sie hat noch genug <input class="luecken-inp" data-ans="Zutaten" data-idx="3" style="width:90px" placeholder=""> dafür im Kühlschrank. Alex findet die <input class="luecken-inp" data-ans="Idee" data-idx="4" style="width:60px" placeholder=""> gut. „Ich glaube, ich habe noch Zucchini, Aubergine, Paprika, <input class="luecken-inp" data-ans="Karotten" data-idx="5" style="width:90px" placeholder=""> und Tomaten im <input class="luecken-inp" data-ans="Kühlschrank" data-idx="6" style="width:105px" placeholder="">", sagt Louise und fragt Alex, ob er <input class="luecken-inp" data-ans="Allergien" data-idx="7" style="width:90px" placeholder=""> hat. „Nein, ich habe keine Allergien", antwortet er. Louise schaut in den Kühlschrank, in dem das <input class="luecken-inp" data-ans="Gemüse" data-idx="8" style="width:80px" placeholder=""> liegt. Die Aubergine ist leider schon schlecht, sie ist <input class="luecken-inp" data-ans="verfault" data-idx="9" style="width:85px" placeholder="">.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TAB 3 — SATZBAU
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section" id="sec3">
+        <div class="timer-bar">
+            <span>⏱</span>
+            <span class="timer-display" id="timer3">0:00</span>
+            <span class="best-display" id="best3"></span>
+            <span class="score-display" id="score3">0 / 7</span>
+        </div>
+        <div class="sec-inner">
+            <div class="section-title">🧩 Sätze aus dem Text bauen</div>
+            <div id="sb-wrap"></div>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+        <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+    </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   NAVIGATION
+   ════════════════════════════════════════════════════════════ */
+function showTab(n) {
+    document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active',i===n); });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+}
+
+/* ════════════════════════════════════════════════════════════
+   TIMER
+   ════════════════════════════════════════════════════════════ */
+var timers={};
+function timerKey(t){return'daf-2014r-best-'+t;}
+function timerFmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);}
+function timerAutoStart(t){ if(timers[t]&&timers[t].running) return; if(!timers[t]) timers[t]={s:0,running:false,iv:null}; timers[t].running=true; timers[t].iv=setInterval(function(){ timers[t].s++; var e=document.getElementById('timer'+t); if(e)e.textContent=timerFmt(timers[t].s); },1000); }
+function timerStop(t){ if(!timers[t]||!timers[t].running) return; clearInterval(timers[t].iv); timers[t].running=false; var best=localStorage.getItem(timerKey(t)); var cur=timers[t].s; if(!best||cur<parseInt(best)){localStorage.setItem(timerKey(t),cur);best=cur;} var e=document.getElementById('best'+t); if(e)e.textContent='🏆 '+timerFmt(parseInt(best)); }
+function timerLoadBest(t){ var b=localStorage.getItem(timerKey(t)); if(b){var e=document.getElementById('best'+t);if(e)e.textContent='🏆 '+timerFmt(parseInt(b));} }
+[1,2,3].forEach(function(t){timerLoadBest(t);});
+
+/* ════════════════════════════════════════════════════════════
+   TAB 1 — RICHTIG / FALSCH
+   ════════════════════════════════════════════════════════════ */
+var RF_DATA = [
+    { stmt: 'Alex ernährt sich gesund.', correct: false },
+    { stmt: 'Alex und Louise wollen zusammen backen.', correct: false },
+    { stmt: 'Alex liebt Schwarzwälder Kirschtorte.', correct: true },
+    { stmt: 'Louise hat bereits Schwarzwälder Kirschtorte probiert.', correct: false },
+    { stmt: 'Alex isst auch gern Kartoffelsalat und Hamburger.', correct: true },
+    { stmt: 'Die Aubergine im Kühlschrank ist noch frisch.', correct: false },
+    { stmt: 'Das Essen ist versalzen, weil beide Salz hinzugefügt haben.', correct: true },
+    { stmt: 'Am Ende essen Alex und Louise Currywurst und Pommes.', correct: true }
+];
+var rf1Total=RF_DATA.length, rf1Correct=0;
+function buildRF(){
+    var ul=document.getElementById('rf-list');
+    RF_DATA.forEach(function(item,i){
+        var li=document.createElement('li'); li.className='rf-item';
+        var stmt=document.createElement('div'); stmt.className='rf-stmt'; stmt.textContent=item.stmt;
+        var btns=document.createElement('div'); btns.className='rf-btns';
+        ['Richtig','Falsch'].forEach(function(lbl){
+            var btn=document.createElement('button'); btn.className='rf-btn'; btn.textContent=lbl;
+            btn.addEventListener('click',function(){
+                timerAutoStart(1);
+                var chosen=(lbl==='Richtig');
+                var correct=(chosen===item.correct);
+                li.querySelectorAll('.rf-btn').forEach(function(b){ b.classList.remove('ok','no'); });
+                btn.classList.add(correct?'ok':'no');
+                if(correct){ rf1Correct++; document.getElementById('score1').textContent=rf1Correct+' / '+rf1Total; li.querySelectorAll('.rf-btn').forEach(function(b){ b.disabled=true; }); if(rf1Correct===rf1Total) timerStop(1); }
+                else{ setTimeout(function(){ btn.classList.remove('no'); },700); }
+            });
+            btns.appendChild(btn);
+        });
+        li.appendChild(stmt); li.appendChild(btns); ul.appendChild(li);
+    });
+}
+buildRF();
+
+/* ════════════════════════════════════════════════════════════
+   TAB 2 — LÜCKENTEXT
+   ════════════════════════════════════════════════════════════ */
+var lt2Total=10, lt2Correct=0;
+function liveCheck(inp){
+    timerAutoStart(2);
+    var val=inp.value.trim(), ans=inp.dataset.ans;
+    if(val===ans){ inp.classList.add('ok'); inp.classList.remove('no'); inp.disabled=true; lt2Correct++; document.getElementById('score2').textContent=lt2Correct+' / '+lt2Total; if(lt2Correct===lt2Total) timerStop(2); return; }
+    if(ans.startsWith(val)&&val.length>0){ inp.classList.remove('ok','no'); return; }
+    if(val.length>0) inp.classList.add('no'); else inp.classList.remove('ok','no');
+}
+document.querySelectorAll('.luecken-inp').forEach(function(inp){ inp.addEventListener('input',function(){ liveCheck(inp); }); });
+
+/* ════════════════════════════════════════════════════════════
+   TAB 3 — SATZBAU
+   ════════════════════════════════════════════════════════════ */
+var satzbauData = [
+    { id:1, words:['Alex','hat','vor',',','abzunehmen','und','sich','gesünder','zu','ernähren','.'], solution:['Alex','hat','vor',',','abzunehmen','und','sich','gesünder','zu','ernähren'] },
+    { id:2, words:['Er','muss','weniger','Fast','Food','essen','und','einem','Ernährungsplan','folgen','.'], solution:['Er','muss','weniger','Fast','Food','essen','und','einem','Ernährungsplan','folgen'] },
+    { id:3, words:['Er','soll','heimische','Produkte','und','Bioprodukte','kaufen','.'], solution:['Er','soll','heimische','Produkte','und','Bioprodukte','kaufen'] },
+    { id:4, words:['Louise','fragt','Alex',',','ob','er','Allergien','hat','.'], solution:['Louise','fragt','Alex',',','ob','er','Allergien','hat'] },
+    { id:5, words:['Die','Aubergine','ist','leider','schon','schlecht',',','sie','ist','verfault','.'], solution:['Die','Aubergine','ist','leider','schon','schlecht',',','sie','ist','verfault'] },
+    { id:6, words:['Das','hat','doch','viel','zu','wenig','Vitamine','!'], solution:['Das','hat','doch','viel','zu','wenig','Vitamine'] },
+    { id:7, words:['Dann','fangen','wir','halt','morgen','mit','dem','Ernährungsplan','an','.'], solution:['Dann','fangen','wir','halt','morgen','mit','dem','Ernährungsplan','an'] }
+];
+var sbDragged=null, sbCorrectCount=0, sbTotal=satzbauData.length;
+function sbShuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+function sbMakeChip(word,sid){
+    var c=document.createElement('span');c.className='chip';c.textContent=word;c.draggable=true;c.dataset.word=word;c.dataset.sent=sid;
+    c.addEventListener('dragstart',function(){sbDragged=c;});
+    c.addEventListener('click',function(){if(c.classList.contains('correct'))return;document.querySelectorAll('.chip[data-sent="'+sid+'"]').forEach(function(x){x.classList.remove('selected');});if(sbDragged===c){sbDragged=null;return;}sbDragged=c;c.classList.add('selected');});
+    return c;
+}
+function sbRegisterZone(zone,sid){
+    zone.addEventListener('dragover',function(e){e.preventDefault();});
+    zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged||sbDragged.dataset.sent!==String(sid))return;var after=sbGetDragAfter(zone,e.clientY);if(after==null)zone.appendChild(sbDragged);else zone.insertBefore(sbDragged,after);sbDragged.classList.remove('selected');sbDragged=null;setTimeout(function(){sbCheckAuto(zone,sid);},500);});
+    zone.addEventListener('click',function(){if(!sbDragged)return;if(sbDragged.dataset.sent!==String(sid))return;zone.appendChild(sbDragged);sbDragged.classList.remove('selected');sbDragged=null;setTimeout(function(){sbCheckAuto(zone,sid);},500);});
+}
+function sbGetDragAfter(container,y){var els=Array.from(container.querySelectorAll('.chip:not(.dragging)'));return els.reduce(function(closest,child){var box=child.getBoundingClientRect();var offset=y-box.top-box.height/2;if(offset<0&&offset>closest.offset)return{offset:offset,element:child};return closest;},{offset:Number.NEGATIVE_INFINITY}).element;}
+function sbCheckAuto(zone,sid){
+    var ex=satzbauData.find(function(d){return d.id===sid;});
+    var chips=zone.querySelectorAll('.chip');if(chips.length<ex.solution.length)return;
+    var placed=Array.from(chips).map(function(c){return c.dataset.word;});
+    var correct=ex.solution.every(function(w,i){return placed[i]===w;});
+    var fb=document.getElementById('sb-fb-'+sid);
+    if(correct){zone.classList.add('correct');zone.classList.remove('incorrect');chips.forEach(function(c){c.classList.add('correct');c.draggable=false;});fb.textContent='✓ Richtig!';fb.className='satzbau-feedback correct';timerAutoStart(3);sbCorrectCount++;document.getElementById('score3').textContent=sbCorrectCount+' / '+sbTotal;if(sbCorrectCount===sbTotal)timerStop(3);}
+    else{zone.classList.add('incorrect');zone.classList.remove('correct');fb.textContent='✗ Nicht ganz — versuche es noch einmal.';fb.className='satzbau-feedback incorrect';setTimeout(function(){zone.classList.remove('incorrect');fb.textContent='';fb.className='satzbau-feedback';},1000);}
+}
+function buildSatzbau(){
+    var wrap=document.getElementById('sb-wrap');wrap.innerHTML='';
+    satzbauData.forEach(function(ex){
+        var block=document.createElement('div');block.className='sb-block';
+        var num=document.createElement('div');num.className='sb-num';num.textContent='Satz '+ex.id;
+        var chips=document.createElement('div');chips.className='chips-container';chips.id='sb-chips-'+ex.id;
+        var endPunct=ex.words[ex.words.length-1];
+        sbShuffle(ex.solution).forEach(function(w){chips.appendChild(sbMakeChip(w,ex.id));});
+        var zone=document.createElement('div');zone.className='sentence-builder';zone.id='sb-zone-'+ex.id;
+        var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=endPunct;zone.appendChild(punkt);
+        sbRegisterZone(zone,ex.id);
+        var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+ex.id;
+        var solBtn=document.createElement('button');solBtn.className='solution-btn';solBtn.textContent='Lösung anzeigen';
+        (function(e,z,c){solBtn.addEventListener('click',function(){z.querySelectorAll('.chip').forEach(function(ch){c.appendChild(ch);ch.classList.remove('correct','incorrect','selected');});z.classList.remove('correct','incorrect');fb.textContent='';e.solution.forEach(function(w){z.insertBefore(sbMakeChip(w,e.id),z.querySelector('.sb-punkt'));});});})(ex,zone,chips);
+        block.appendChild(num);block.appendChild(chips);block.appendChild(zone);block.appendChild(fb);block.appendChild(solBtn);
+        wrap.appendChild(block);
+    });
+}
+buildSatzbau();
+</script>
+</body>
+</html>
