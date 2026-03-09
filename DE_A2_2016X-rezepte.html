@@ -66,15 +66,20 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .solution-btn:hover { background: #667eea; color: white; border-color: #667eea; }
 
 /* ── WORTSCHATZ ─────────────────────────────────────────────── */
-.ws-table { width: 100%; border-collapse: collapse; }
-.ws-table th { background: #f0f4ff; color: #667eea; font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 10px; text-align: left; }
-.ws-table td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-.ws-table tr:last-child td { border-bottom: none; }
-.ws-en { font-style: italic; color: #667eea; font-size: 0.88em; }
-.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.92em; padding: 2px 4px; transition: border-color 0.2s; }
-.ws-inp:focus { border-bottom-color: #667eea; }
-.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
-.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+/* WORTSCHATZ */
+.vocab-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.vocab-en { font-weight: 600; color: #764ba2; min-width: 140px; font-size: 0.95em; }
+.vocab-arrow { color: #ccc; font-size: 1.2em; }
+.vocab-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.vocab-inputs input { border: none; border-bottom: 2px solid #667eea; background: #fff; padding: 4px 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; }
+.vocab-inputs input:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+.vocab-inputs input.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+.vocab-inputs input.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+.vocab-inputs input.art { width: 70px; }
+.vocab-inputs input.wort { width: 130px; }
+.vocab-inputs input.plural { width: 140px; }
+.vocab-hint { color: #27ae60; font-weight: 600; font-size: 0.8em; margin-left: 6px; }
+@media (max-width: 600px) { .vocab-item { flex-direction: column; align-items: flex-start; } }
 .art { width: 70px; }
 .wort { width: 160px; }
 
@@ -144,13 +149,16 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
     <!-- TAB 3: WORTSCHATZ -->
     <div class="section" id="sec3">
-        <div class="timer-bar"><span>⏱</span><span class="timer-display" id="timer3">0:00</span><span class="best-display" id="best3"></span><span class="score-display" id="score3">0 / 0</span></div>
+        <div class="timer-bar"><span>⏱</span><span class="timer-display" id="timer3">0:00</span><span class="best-display" id="best3"></span></div>
         <div class="sec-inner">
-            <div class="section-title">🔠 Wortschatz: Englisch → Deutsch</div>
-            <table class="ws-table">
-                <thead><tr><th>Englisch</th><th class="art">Artikel</th><th class="wort">Wort</th><th>Plural</th></tr></thead>
-                <tbody id="ws-tbody"></tbody>
-            </table>
+            <div class="btn-row" style="margin-bottom:10px;">
+                <button class="btn btn-show" onclick="showVocabLoesung()">Lösungen</button>
+                <button class="btn btn-reset" onclick="resetVocab(); resetTimer(3);">Neu starten</button>
+            </div>
+            <div class="help-box">
+                <strong>Aufgabe:</strong> Übersetze die Wörter ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
+            </div>
+            <div id="vocabContainer"></div>
         </div>
     </div>
 
@@ -317,34 +325,145 @@ function initSatzbau() {
 initSatzbau();
 
 /* WORTSCHATZ */
-var WS_DATA=[
-    {en:'to measure (out)',art:'',de:'abmessen',plural:''},
-    {en:'to add (a teaspoon of)',art:'',de:'hinzugeben',plural:''},
-    {en:'to follow a recipe',art:'',de:'einem Rezept folgen',plural:''},
-    {en:'to improvise',art:'',de:'improvisieren',plural:''},
-    {en:'to mix (together)',art:'',de:'zusammenmischen',plural:''},
-    {en:'to stir',art:'',de:'umrühren',plural:''},
-    {en:'to get (from fridge)',art:'',de:'aus dem Kühlschrank holen',plural:''},
-    {en:'to put in the oven',art:'',de:'in den Backofen schieben',plural:''},
-    {en:'to let cool down',art:'',de:'abkühlen lassen',plural:''},
-    {en:'to beat (eggs)',art:'',de:'schlagen',plural:''},
-    {en:'wooden spoon',art:'der',de:'Kochlöffel',plural:'Kochlöffel'},
-    {en:'bowl',art:'die',de:'Schüssel',plural:'Schüsseln'},
-    {en:'pot, saucepan',art:'der',de:'Kochtopf',plural:'Kochtöpfe'},
-    {en:'spatula',art:'der',de:'Pfannenwender',plural:'Pfannenwender'},
-    {en:'baking dish',art:'die',de:'Auflaufform',plural:'Auflaufformen'},
-    {en:'measuring cup',art:'der',de:'Messbecher',plural:'Messbecher'},
-    {en:'teaspoon',art:'der',de:'Teelöffel',plural:'Teelöffel'},
-    {en:'tablespoon',art:'der',de:'Esslöffel',plural:'Esslöffel'},
-    {en:'kitchen scale',art:'die',de:'Küchenwaage',plural:'Küchenwaagen'},
-    {en:'grater',art:'die',de:'Reibe',plural:'Reiben'},
-    {en:'dough, batter',art:'der',de:'Teig',plural:'Teige'}
+/* ════════════════════════════════════════════════════════════
+   WORTSCHATZ — vocabContainer
+   ════════════════════════════════════════════════════════════ */
+var WORTSCHATZ = [
+    { id: 1, type:"v", en:"to measure (out)", de:"abmessen" },
+    { id: 2, type:"v", en:"to add (a teaspoon of)", de:"hinzugeben" },
+    { id: 3, type:"v", en:"to follow a recipe", de:"einem Rezept folgen" },
+    { id: 4, type:"v", en:"to improvise", de:"improvisieren" },
+    { id: 5, type:"v", en:"to mix (together)", de:"zusammenmischen" },
+    { id: 6, type:"v", en:"to stir", de:"umrühren" },
+    { id: 7, type:"v", en:"to get (from fridge)", de:"aus dem Kühlschrank holen" },
+    { id: 8, type:"v", en:"to put in the oven", de:"in den Backofen schieben" },
+    { id: 9, type:"v", en:"to let cool down", de:"abkühlen lassen" },
+    { id:10, type:"v", en:"to beat (eggs)", de:"schlagen" },
+    { id:11, type:"n", en:"wooden spoon", artikel:"der", de:"Kochlöffel", plural:"Kochlöffel" },
+    { id:12, type:"n", en:"bowl", artikel:"die", de:"Schüssel", plural:"Schüsseln" },
+    { id:13, type:"n", en:"pot, saucepan", artikel:"der", de:"Kochtopf", plural:"Kochtöpfe" },
+    { id:14, type:"n", en:"spatula", artikel:"der", de:"Pfannenwender", plural:"Pfannenwender" },
+    { id:15, type:"n", en:"baking dish", artikel:"die", de:"Auflaufform", plural:"Auflaufformen" },
+    { id:16, type:"n", en:"measuring cup", artikel:"der", de:"Messbecher", plural:"Messbecher" },
+    { id:17, type:"n", en:"teaspoon", artikel:"der", de:"Teelöffel", plural:"Teelöffel" },
+    { id:18, type:"n", en:"tablespoon", artikel:"der", de:"Esslöffel", plural:"Esslöffel" },
+    { id:19, type:"n", en:"kitchen scale", artikel:"die", de:"Küchenwaage", plural:"Küchenwaagen" },
+    { id:20, type:"n", en:"grater", artikel:"die", de:"Reibe", plural:"Reiben" },
+    { id:21, type:"n", en:"dough, batter", artikel:"der", de:"Teig", plural:"Teige" },
 ];
-function normalise(s){return s.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');}
-var ws3Total=0,ws3Correct=0;
-function makeWsInp(item,colClass,ans,tab){var cell=document.createElement('td');var inp=document.createElement('input');inp.type='text';inp.className='ws-inp '+(colClass||'');inp.placeholder=colClass==='art'?'Artikel':'';inp.autocomplete='off';ws3Total++;inp.addEventListener('input',function(){timerAutoStart(tab);var val=inp.value.trim();var normVal=normalise(val);var normAns=normalise(ans);if(normVal===normAns){inp.classList.add('ok');inp.classList.remove('no');inp.disabled=true;ws3Correct++;document.getElementById('score'+tab).textContent=ws3Correct+' / '+ws3Total;if(ws3Correct===ws3Total)timerStop(tab);return;}if(normAns.startsWith(normVal)&&val.length>0){inp.classList.remove('ok','no');return;}if(val.length>0)inp.classList.add('no');else inp.classList.remove('ok','no');});cell.appendChild(inp);return cell;}
-function buildWortschatz(){var tbody=document.getElementById('ws-tbody');WS_DATA.forEach(function(item){var tr=document.createElement('tr');var tdEn=document.createElement('td');tdEn.className='ws-en';tdEn.textContent=item.en;tr.appendChild(tdEn);if(item.art!==''){tr.appendChild(makeWsInp(item,'art',item.art,3));}else{var b=document.createElement('td');b.innerHTML='<span style="color:#bbb;font-size:0.85em;">—</span>';tr.appendChild(b);}tr.appendChild(makeWsInp(item,'wort',item.de,3));if(item.plural!==''&&item.plural!=='-'){tr.appendChild(makeWsInp(item,'',item.plural,3));}else{var b2=document.createElement('td');b2.innerHTML=item.plural==='-'?'<span style="color:#bbb;font-size:0.85em;">—</span>':'';tr.appendChild(b2);}tbody.appendChild(tr);});document.getElementById('score3').textContent='0 / '+ws3Total;}
-buildWortschatz();
+
+function initVocab() {
+    var container = document.getElementById('vocabContainer');
+    container.innerHTML = '';
+    var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
+    shuffled.forEach(function(item) {
+        var div = document.createElement('div');
+        div.className = 'vocab-item';
+        var en = document.createElement('span');
+        en.className = 'vocab-en';
+        en.textContent = item.en;
+        div.appendChild(en);
+        var arrow = document.createElement('span');
+        arrow.className = 'vocab-arrow';
+        arrow.textContent = '→';
+        div.appendChild(arrow);
+        var inputs = document.createElement('div');
+        inputs.className = 'vocab-inputs';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'art';
+            artInp.placeholder = 'Artikel';
+            artInp.dataset.answer = item.artikel;
+            artInp.dataset.field = 'art';
+            artInp.onfocus = function() { timerAutoStart(3); };
+            artInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'wort';
+            wordInp.placeholder = 'Deutsch';
+            wordInp.dataset.answer = item.de;
+            wordInp.dataset.field = 'wort';
+            wordInp.onfocus = function() { timerAutoStart(3); };
+            wordInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(wordInp);
+            if (item.plural !== '—') {
+                var pluralInp = document.createElement('input');
+                pluralInp.className = 'plural';
+                pluralInp.placeholder = 'Plural';
+                pluralInp.dataset.answer = item.plural;
+                pluralInp.dataset.field = 'plural';
+                pluralInp.onfocus = function() { timerAutoStart(3); };
+                pluralInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+                inputs.appendChild(pluralInp);
+            }
+        } else {
+            var deInp = document.createElement('input');
+            deInp.className = 'wort';
+            deInp.style.width = '180px';
+            deInp.placeholder = 'Deutsch';
+            deInp.dataset.answer = item.de;
+            deInp.dataset.field = 'wort';
+            deInp.onfocus = function() { timerAutoStart(3); };
+            deInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(deInp);
+        }
+        div.appendChild(inputs);
+        container.appendChild(div);
+    });
+}
+
+function vocabLiveCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer;
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (user.length === 0) return;
+    var cmpUser = (field === 'art') ? user.toLowerCase() : user;
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Prefix — weiter tippen */ }
+    else { inp.classList.add('wrong'); }
+}
+
+function checkVocabAllDone() {
+    var inputs = document.querySelectorAll('#sec3 .vocab-inputs input');
+    if (inputs.length === 0) return;
+    var allCorrect = true;
+    inputs.forEach(function(inp) { if (!inp.classList.contains('correct')) allCorrect = false; });
+    if (allCorrect) timerStop(3);
+}
+
+function showVocabLoesung() {
+    document.querySelectorAll('#sec3 .vocab-inputs input').forEach(function(inp) {
+        var field = inp.dataset.field;
+        var user = inp.value.trim();
+        var answer = inp.dataset.answer;
+        var cmpUser = (field === 'art') ? user.toLowerCase() : user;
+        var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+        var existing = inp.nextElementSibling;
+        if (existing && existing.classList.contains('vocab-hint')) existing.remove();
+        if (cmpUser === cmpAnswer) {
+            inp.classList.remove('wrong'); inp.classList.add('correct');
+        } else {
+            inp.classList.add('wrong');
+            var hint = document.createElement('span');
+            hint.className = 'vocab-hint';
+            hint.textContent = inp.dataset.answer;
+            inp.insertAdjacentElement('afterend', hint);
+        }
+    });
+}
+
+function resetVocab() {
+    document.querySelectorAll('#sec3 .vocab-inputs input').forEach(function(inp) {
+        inp.value = '';
+        inp.classList.remove('correct', 'wrong');
+        var next = inp.nextElementSibling;
+        if (next && next.classList.contains('vocab-hint')) next.remove();
+    });
+}
+
+initVocab();
 </script>
 </body>
 </html>

@@ -72,15 +72,20 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .solution-btn:hover { background: #667eea; color: white; border-color: #667eea; }
 
 /* ── WORTSCHATZ ─────────────────────────────────────────────────── */
-.ws-table { width: 100%; border-collapse: collapse; }
-.ws-table th { background: #f0f4ff; color: #667eea; font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 10px; text-align: left; }
-.ws-table td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-.ws-table tr:last-child td { border-bottom: none; }
-.ws-en { font-style: italic; color: #667eea; font-size: 0.88em; }
-.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.92em; padding: 2px 4px; transition: border-color 0.2s; }
-.ws-inp:focus { border-bottom-color: #667eea; }
-.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
-.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+/* WORTSCHATZ */
+.vocab-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.vocab-en { font-weight: 600; color: #764ba2; min-width: 140px; font-size: 0.95em; }
+.vocab-arrow { color: #ccc; font-size: 1.2em; }
+.vocab-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.vocab-inputs input { border: none; border-bottom: 2px solid #667eea; background: #fff; padding: 4px 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; }
+.vocab-inputs input:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+.vocab-inputs input.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+.vocab-inputs input.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+.vocab-inputs input.art { width: 70px; }
+.vocab-inputs input.wort { width: 130px; }
+.vocab-inputs input.plural { width: 140px; }
+.vocab-hint { color: #27ae60; font-weight: 600; font-size: 0.8em; margin-left: 6px; }
+@media (max-width: 600px) { .vocab-item { flex-direction: column; align-items: flex-start; } }
 .art { width: 70px; }
 .wort { width: 150px; }
 
@@ -220,14 +225,16 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <span>⏱</span>
             <span class="timer-display" id="timer4">0:00</span>
             <span class="best-display" id="best4"></span>
-            <span class="score-display" id="score4">0 / 30</span>
         </div>
         <div class="sec-inner">
-            <div class="section-title">🔠 Wortschatz: Englisch → Deutsch</div>
-            <table class="ws-table">
-                <thead><tr><th>Englisch</th><th class="art">Artikel</th><th class="wort">Wort</th><th>Plural</th></tr></thead>
-                <tbody id="ws-tbody"></tbody>
-            </table>
+            <div class="btn-row" style="margin-bottom:10px;">
+                <button class="btn btn-show" onclick="showVocabLoesung()">Lösungen</button>
+                <button class="btn btn-reset" onclick="resetVocab(); resetTimer(4);">Neu starten</button>
+            </div>
+            <div class="help-box">
+                <strong>Aufgabe:</strong> Übersetze die Wörter ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
+            </div>
+            <div id="vocabContainer"></div>
         </div>
     </div>
 
@@ -704,98 +711,149 @@ initSatzbau();
 /* ════════════════════════════════════════════════════════════
    TAB 4 — WORTSCHATZ
    ════════════════════════════════════════════════════════════ */
-var WS_DATA = [
-    { en: 'to eat healthily', art: '', de: 'sich gesund ernähren', plural: '' },
-    { en: 'to eat unhealthily', art: '', de: 'sich ungesund ernähren', plural: '' },
-    { en: 'organic products', art: 'die', de: 'Bio-Produkte', plural: '-' },
-    { en: 'vegetarian', art: '', de: 'vegetarisch', plural: '' },
-    { en: 'vegan', art: '', de: 'vegan', plural: '' },
-    { en: 'eating habit', art: 'die', de: 'Essgewohnheit', plural: 'Essgewohnheiten' },
-    { en: 'nutrition plan', art: 'der', de: 'Ernaehrungsplan', plural: 'Ernaehrungsplaene' },
-    { en: 'to follow (a plan)', art: '', de: 'folgen', plural: '' },
-    { en: 'to prepare (food)', art: '', de: 'zubereiten', plural: '' },
-    { en: 'to steam', art: '', de: 'daempfen', plural: '' },
-    { en: 'to deep-fry', art: '', de: 'frittieren', plural: '' },
-    { en: 'to bake', art: '', de: 'backen', plural: '' },
-    { en: 'to warm up (in oven)', art: '', de: 'aufbacken', plural: '' },
-    { en: 'to warm up (microwave)', art: '', de: 'aufwaermen', plural: '' },
-    { en: 'to store, preserve', art: '', de: 'aufbewahren', plural: '' },
-    { en: 'additives', art: 'die', de: 'Zusatzstoffe', plural: '-' },
-    { en: 'shelf life; fresh until', art: '', de: 'haltbar', plural: '' },
-    { en: 'sugar', art: 'der', de: 'Zucker', plural: '-' },
-    { en: 'vitamins', art: 'die', de: 'Vitamine', plural: '-' },
-    { en: 'lactose-free', art: '', de: 'laktosefrei', plural: '' },
-    { en: 'gluten-free', art: '', de: 'glutenfrei', plural: '' },
-    { en: 'regional products', art: 'die', de: 'regionalen Produkte', plural: '-' },
-    { en: 'too much', art: '', de: 'zu viel', plural: '' },
-    { en: 'too little / too few', art: '', de: 'zu wenig', plural: '' },
-    { en: 'nutrition', art: 'die', de: 'Ernaehrung', plural: '-' }
+/* ════════════════════════════════════════════════════════════
+   WORTSCHATZ — vocabContainer
+   ════════════════════════════════════════════════════════════ */
+var WORTSCHATZ = [
+    { id: 1, type:"v", en:"to eat healthily", de:"sich gesund ernähren" },
+    { id: 2, type:"v", en:"to eat unhealthily", de:"sich ungesund ernähren" },
+    { id: 3, type:"n", en:"organic products", artikel:"die", de:"Bio-Produkte", plural:"—" },
+    { id: 4, type:"v", en:"vegetarian", de:"vegetarisch" },
+    { id: 5, type:"v", en:"vegan", de:"vegan" },
+    { id: 6, type:"n", en:"eating habit", artikel:"die", de:"Essgewohnheit", plural:"Essgewohnheiten" },
+    { id: 7, type:"n", en:"nutrition plan", artikel:"der", de:"Ernährungsplan", plural:"Ernährungspläne" },
+    { id: 8, type:"v", en:"to follow (a plan)", de:"folgen" },
+    { id: 9, type:"v", en:"to prepare (food)", de:"zubereiten" },
+    { id:10, type:"v", en:"to steam", de:"dämpfen" },
+    { id:11, type:"v", en:"to deep-fry", de:"frittieren" },
+    { id:12, type:"v", en:"to bake", de:"backen" },
+    { id:13, type:"v", en:"to warm up (in oven)", de:"aufbacken" },
+    { id:14, type:"v", en:"to warm up (microwave)", de:"aufwärmen" },
+    { id:15, type:"v", en:"to store, preserve", de:"aufbewahren" },
+    { id:16, type:"n", en:"additives", artikel:"die", de:"Zusatzstoffe", plural:"—" },
+    { id:17, type:"v", en:"shelf life; fresh until", de:"haltbar" },
+    { id:18, type:"n", en:"sugar", artikel:"der", de:"Zucker", plural:"—" },
+    { id:19, type:"n", en:"vitamins", artikel:"die", de:"Vitamine", plural:"—" },
+    { id:20, type:"v", en:"lactose-free", de:"laktosefrei" },
+    { id:21, type:"v", en:"gluten-free", de:"glutenfrei" },
+    { id:22, type:"n", en:"regional products", artikel:"die", de:"regionalen Produkte", plural:"—" },
+    { id:23, type:"v", en:"too much", de:"zu viel" },
+    { id:24, type:"v", en:"too little / too few", de:"zu wenig" },
+    { id:25, type:"n", en:"nutrition", artikel:"die", de:"Ernährung", plural:"—" },
 ];
 
-// Normalise for accent-insensitive checking
-function normalise(s) {
-    return s.toLowerCase()
-        .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue')
-        .replace(/ß/g,'ss').replace(/é/g,'e').replace(/è/g,'e').replace(/á/g,'a').replace(/à/g,'a');
-}
-
-var ws4Total = 0;
-var ws4Correct = 0;
-
-function makeWsInp(item, colClass, ans, tab) {
-    var cell = document.createElement('td');
-    var inp = document.createElement('input');
-    inp.type = 'text';
-    inp.className = 'ws-inp ' + (colClass||'');
-    inp.placeholder = colClass === 'art' ? 'Artikel' : '';
-    inp.autocomplete = 'off';
-    ws4Total++;
-    inp.addEventListener('input', function(){
-        timerAutoStart(tab);
-        var val = inp.value.trim();
-        var normVal = normalise(val);
-        var normAns = normalise(ans);
-        if (normVal === normAns) {
-            inp.classList.add('ok'); inp.classList.remove('no');
-            inp.disabled = true;
-            ws4Correct++;
-            document.getElementById('score'+tab).textContent = ws4Correct + ' / ' + ws4Total;
-            if (ws4Correct === ws4Total) timerStop(tab);
-            return;
-        }
-        if (normAns.startsWith(normVal) && val.length > 0) { inp.classList.remove('ok','no'); return; }
-        if (val.length > 0) inp.classList.add('no'); else inp.classList.remove('ok','no');
-    });
-    cell.appendChild(inp);
-    return cell;
-}
-
-function buildWortschatz() {
-    var tbody = document.getElementById('ws-tbody');
-    WS_DATA.forEach(function(item){
-        var tr = document.createElement('tr');
-        var tdEn = document.createElement('td');
-        tdEn.className = 'ws-en';
-        tdEn.textContent = item.en;
-        tr.appendChild(tdEn);
-        if (item.art !== '') {
-            tr.appendChild(makeWsInp(item, 'art', item.art, 4));
+function initVocab() {
+    var container = document.getElementById('vocabContainer');
+    container.innerHTML = '';
+    var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
+    shuffled.forEach(function(item) {
+        var div = document.createElement('div');
+        div.className = 'vocab-item';
+        var en = document.createElement('span');
+        en.className = 'vocab-en';
+        en.textContent = item.en;
+        div.appendChild(en);
+        var arrow = document.createElement('span');
+        arrow.className = 'vocab-arrow';
+        arrow.textContent = '→';
+        div.appendChild(arrow);
+        var inputs = document.createElement('div');
+        inputs.className = 'vocab-inputs';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'art';
+            artInp.placeholder = 'Artikel';
+            artInp.dataset.answer = item.artikel;
+            artInp.dataset.field = 'art';
+            artInp.onfocus = function() { timerAutoStart(4); };
+            artInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'wort';
+            wordInp.placeholder = 'Deutsch';
+            wordInp.dataset.answer = item.de;
+            wordInp.dataset.field = 'wort';
+            wordInp.onfocus = function() { timerAutoStart(4); };
+            wordInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(wordInp);
+            if (item.plural !== '—') {
+                var pluralInp = document.createElement('input');
+                pluralInp.className = 'plural';
+                pluralInp.placeholder = 'Plural';
+                pluralInp.dataset.answer = item.plural;
+                pluralInp.dataset.field = 'plural';
+                pluralInp.onfocus = function() { timerAutoStart(4); };
+                pluralInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+                inputs.appendChild(pluralInp);
+            }
         } else {
-            var blank = document.createElement('td'); blank.innerHTML = '<span style="color:#bbb;font-size:0.85em;">—</span>'; tr.appendChild(blank);
+            var deInp = document.createElement('input');
+            deInp.className = 'wort';
+            deInp.style.width = '180px';
+            deInp.placeholder = 'Deutsch';
+            deInp.dataset.answer = item.de;
+            deInp.dataset.field = 'wort';
+            deInp.onfocus = function() { timerAutoStart(4); };
+            deInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(deInp);
         }
-        tr.appendChild(makeWsInp(item, 'wort', item.de, 4));
-        if (item.plural !== '' && item.plural !== '-') {
-            tr.appendChild(makeWsInp(item, '', item.plural, 4));
-        } else {
-            var blank2 = document.createElement('td');
-            blank2.innerHTML = item.plural === '-' ? '<span style="color:#bbb;font-size:0.85em;">—</span>' : '';
-            tr.appendChild(blank2);
-        }
-        tbody.appendChild(tr);
+        div.appendChild(inputs);
+        container.appendChild(div);
     });
-    document.getElementById('score4').textContent = '0 / ' + ws4Total;
 }
-buildWortschatz();
+
+function vocabLiveCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer;
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (user.length === 0) return;
+    var cmpUser = (field === 'art') ? user.toLowerCase() : user;
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Prefix — weiter tippen */ }
+    else { inp.classList.add('wrong'); }
+}
+
+function checkVocabAllDone() {
+    var inputs = document.querySelectorAll('#sec4 .vocab-inputs input');
+    if (inputs.length === 0) return;
+    var allCorrect = true;
+    inputs.forEach(function(inp) { if (!inp.classList.contains('correct')) allCorrect = false; });
+    if (allCorrect) timerStop(4);
+}
+
+function showVocabLoesung() {
+    document.querySelectorAll('#sec4 .vocab-inputs input').forEach(function(inp) {
+        var field = inp.dataset.field;
+        var user = inp.value.trim();
+        var answer = inp.dataset.answer;
+        var cmpUser = (field === 'art') ? user.toLowerCase() : user;
+        var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+        var existing = inp.nextElementSibling;
+        if (existing && existing.classList.contains('vocab-hint')) existing.remove();
+        if (cmpUser === cmpAnswer) {
+            inp.classList.remove('wrong'); inp.classList.add('correct');
+        } else {
+            inp.classList.add('wrong');
+            var hint = document.createElement('span');
+            hint.className = 'vocab-hint';
+            hint.textContent = inp.dataset.answer;
+            inp.insertAdjacentElement('afterend', hint);
+        }
+    });
+}
+
+function resetVocab() {
+    document.querySelectorAll('#sec4 .vocab-inputs input').forEach(function(inp) {
+        inp.value = '';
+        inp.classList.remove('correct', 'wrong');
+        var next = inp.nextElementSibling;
+        if (next && next.classList.contains('vocab-hint')) next.remove();
+    });
+}
+
+initVocab();
 </script>
 </body>
 </html>
