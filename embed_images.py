@@ -90,10 +90,15 @@ def process_file(filepath: str):
         print(f"  → {url[-70:]}")
         try:
             data_url = get_image_b64(url)
+            before = html.count(url)
             html = html.replace(url, data_url)
-            changed += 1
+            after = html.count(url)
+            if before > 0 and after == 0:
+                changed += 1
+            elif before == 0:
+                print(f"    ⚠️  URL nicht im HTML gefunden (evtl. andere Anführungszeichen)")
         except Exception as e:
-            print(f"    ✗ Fehler: {e}")
+            print(f"    ✗ Fehler: {e} (URL: {url[:80]})")
 
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(html)
