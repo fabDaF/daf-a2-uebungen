@@ -88,15 +88,18 @@ nav button:hover:not(.active) { background: #e8d5f5; }
 .chip.incorrect { background: #ffcdd2; border-color: #e74c3c; color: #b71c1c; }
 
 /* WORTSCHATZ */
-.ws-table { width: 100%; border-collapse: collapse; }
-.ws-table th { background: #f0f4ff; color: #667eea; font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 10px; text-align: left; }
-.ws-table td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-.ws-table tr:last-child td { border-bottom: none; }
-.ws-en { font-size: 0.85rem; color: #555; }
-.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.92em; padding: 2px 4px; transition: border-color 0.2s; }
-.ws-inp:focus { border-bottom-color: #667eea; }
-.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
-.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.vocab-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.vocab-en { font-weight: 600; color: #764ba2; min-width: 140px; font-size: 0.95em; }
+.vocab-arrow { color: #ccc; font-size: 1.2em; }
+.vocab-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.vocab-inputs input { border: none; border-bottom: 2px solid #667eea; background: #fff; padding: 4px 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; }
+.vocab-inputs input:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+.vocab-inputs input.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+.vocab-inputs input.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+.vocab-inputs input.art { width: 70px; }
+.vocab-inputs input.wort { width: 130px; }
+.vocab-inputs input.plural { width: 140px; }
+.vocab-hint { color: #27ae60; font-weight: 600; font-size: 0.8em; margin-left: 6px; }
 
 footer { text-align: center; font-size: 0.75rem; color: #aaa; padding: 14px; border-top: 1px solid #eee; margin-top: 8px; }
 </style>
@@ -360,13 +363,15 @@ footer { text-align: center; font-size: 0.75rem; color: #aaa; padding: 14px; bor
   <div class="timer-row">
     ⏱ <span class="timer-display" id="timer5">0:00</span>
     <span class="best-time" id="best5"></span>
-    <span style="font-size:0.78rem;color:#667eea;margin-left:8px;" id="score5">0 / 0</span>
   </div>
-  <p style="font-size:0.82rem;color:#888;margin-bottom:14px;">Tippe Artikel, Wort und Plural auf Deutsch. 💡 ä=ae, ö=oe, ü=ue, ß=ss</p>
-  <table class="ws-table">
-    <thead><tr><th>Englisch</th><th class="art">Artikel</th><th class="wort">Wort</th><th>Plural</th></tr></thead>
-    <tbody id="ws-tbody"></tbody>
-  </table>
+  <div class="btn-row" style="margin-bottom:10px;">
+    <button class="btn btn-show" onclick="showVocabLoesung()">Lösungen</button>
+    <button class="btn btn-reset" onclick="resetVocab(); resetTimer(5);">Neu starten</button>
+  </div>
+  <div class="help-box">
+    <strong>Aufgabe:</strong> Übersetze die Wörter ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
+  </div>
+  <div id="vocabContainer"></div>
 </div>
 
 <footer>© Frank Burkert · DaF-Materialien · FrankBurkert@fabdaf.onmicrosoft.com</footer>
@@ -619,88 +624,143 @@ function initSatzbau() {
 }
 initSatzbau();
 
-// WORTSCHATZ
 /* ════════════════════════════════════════════════════════════
    TAB 5 — WORTSCHATZ
    ════════════════════════════════════════════════════════════ */
-var WS_DATA = [
-    { en: 'tourist attraction', art: 'die', de: 'Sehenswürdigkeit', plural: 'Sehenswürdigkeiten' },
-    { en: 'view / outlook', art: 'die', de: 'Aussicht', plural: 'Aussichten' },
-    { en: 'old town', art: 'die', de: 'Altstadt', plural: 'Altstädte' },
-    { en: 'city tour', art: 'die', de: 'Stadtführung', plural: 'Stadtführungen' },
-    { en: 'tour guide', art: 'der', de: 'Reiseleiter', plural: 'Reiseleiter' },
-    { en: 'tourist info office', art: 'die', de: 'Touristeninformation', plural: 'Touristeninformationen' },
-    { en: 'admission price', art: 'der', de: 'Eintrittspreis', plural: 'Eintrittspreise' },
-    { en: 'discount / concession', art: 'die', de: 'Ermäßigung', plural: 'Ermäßigungen' },
-    { en: 'complaint', art: 'die', de: 'Beschwerde', plural: 'Beschwerden' },
-    { en: 'visa', art: 'das', de: 'Visum', plural: 'Visa' },
-    { en: 'entry (into a country)', art: 'die', de: 'Einreise', plural: 'Einreisen' },
-    { en: 'mass tourism', art: 'der', de: 'Massentourismus', plural: '-' },
-    { en: 'information board', art: 'die', de: 'Informationstafel', plural: 'Informationstafeln' },
-    { en: 'luggage', art: 'das', de: 'Gepäck', plural: '-' },
-    { en: 'travel destination', art: 'das', de: 'Reiseziel', plural: 'Reiseziele' },
-    { en: 'accommodation', art: 'die', de: 'Unterkunft', plural: 'Unterkünfte' },
-    { en: 'to be cancelled', art: '', de: 'ausfallen', plural: '' },
-    { en: 'to miss (transport)', art: '', de: 'verpassen', plural: '' }
+var WORTSCHATZ = [
+    { id:1,  type:"n", en:"tourist attraction",    artikel:"die", de:"Sehenswürdigkeit",      plural:"Sehenswürdigkeiten" },
+    { id:2,  type:"n", en:"view / outlook",         artikel:"die", de:"Aussicht",               plural:"Aussichten" },
+    { id:3,  type:"n", en:"old town",               artikel:"die", de:"Altstadt",               plural:"Altstädte" },
+    { id:4,  type:"n", en:"city tour",              artikel:"die", de:"Stadtführung",            plural:"Stadtführungen" },
+    { id:5,  type:"n", en:"tour guide",             artikel:"der", de:"Reiseleiter",             plural:"Reiseleiter" },
+    { id:6,  type:"n", en:"tourist info office",    artikel:"die", de:"Touristeninformation",    plural:"Touristeninformationen" },
+    { id:7,  type:"n", en:"admission price",        artikel:"der", de:"Eintrittspreis",          plural:"Eintrittspreise" },
+    { id:8,  type:"n", en:"discount / concession",  artikel:"die", de:"Ermäßigung",              plural:"Ermäßigungen" },
+    { id:9,  type:"n", en:"complaint",              artikel:"die", de:"Beschwerde",              plural:"Beschwerden" },
+    { id:10, type:"n", en:"visa",                   artikel:"das", de:"Visum",                   plural:"Visa" },
+    { id:11, type:"n", en:"entry (into a country)", artikel:"die", de:"Einreise",                plural:"Einreisen" },
+    { id:12, type:"n", en:"mass tourism",           artikel:"der", de:"Massentourismus",          plural:"—" },
+    { id:13, type:"n", en:"information board",      artikel:"die", de:"Informationstafel",        plural:"Informationstafeln" },
+    { id:14, type:"n", en:"luggage",                artikel:"das", de:"Gepäck",                  plural:"—" },
+    { id:15, type:"n", en:"travel destination",     artikel:"das", de:"Reiseziel",               plural:"Reiseziele" },
+    { id:16, type:"n", en:"accommodation",          artikel:"die", de:"Unterkunft",              plural:"Unterkünfte" },
+    { id:17, type:"v", en:"to be cancelled",        de:"ausfallen" },
+    { id:18, type:"v", en:"to miss (transport)",    de:"verpassen" }
 ];
 
-var ws5Total = 0;
-var ws5Correct = 0;
-
-function makeWsInp(item, colClass, ans, tab) {
-    var cell = document.createElement('td');
-    var inp = document.createElement('input');
-    inp.type = 'text';
-    inp.className = 'ws-inp ' + (colClass||'');
-    inp.placeholder = colClass === 'art' ? 'Artikel' : '';
-    inp.autocomplete = 'off';
-    ws5Total++;
-    inp.addEventListener('input', function(){
-        timerAutoStart(tab);
-        var val = inp.value.trim();
-        var normVal = normalise(val);
-        var normAns = normalise(ans);
-        if (normVal === normAns) {
-            inp.classList.add('ok'); inp.classList.remove('no');
-            inp.disabled = true;
-            ws5Correct++;
-            document.getElementById('score'+tab).textContent = ws5Correct + ' / ' + ws5Total;
-            if (ws5Correct === ws5Total) timerStop(tab);
-            return;
+function initVocab() {
+    var container = document.getElementById('vocabContainer');
+    container.innerHTML = '';
+    var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
+    shuffled.forEach(function(item) {
+        var div = document.createElement('div');
+        div.className = 'vocab-item';
+        div.dataset.id = item.id;
+        var en = document.createElement('span');
+        en.className = 'vocab-en';
+        en.textContent = item.en;
+        div.appendChild(en);
+        var arrow = document.createElement('span');
+        arrow.className = 'vocab-arrow';
+        arrow.textContent = '→';
+        div.appendChild(arrow);
+        var inputs = document.createElement('div');
+        inputs.className = 'vocab-inputs';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'art';
+            artInp.placeholder = 'Artikel';
+            artInp.dataset.answer = item.artikel;
+            artInp.dataset.field = 'art';
+            artInp.onfocus = function() { timerAutoStart(5); };
+            artInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'wort';
+            wordInp.placeholder = 'Deutsch';
+            wordInp.dataset.answer = item.de;
+            wordInp.dataset.field = 'wort';
+            wordInp.onfocus = function() { timerAutoStart(5); };
+            wordInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(wordInp);
+            if (item.plural !== '—') {
+                var pluralInp = document.createElement('input');
+                pluralInp.className = 'plural';
+                pluralInp.placeholder = 'Plural';
+                pluralInp.dataset.answer = item.plural;
+                pluralInp.dataset.field = 'plural';
+                pluralInp.onfocus = function() { timerAutoStart(5); };
+                pluralInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+                inputs.appendChild(pluralInp);
+            }
+        } else {
+            var deInp = document.createElement('input');
+            deInp.className = 'wort';
+            deInp.style.width = '180px';
+            deInp.placeholder = 'Deutsch';
+            deInp.dataset.answer = item.de;
+            deInp.dataset.field = 'wort';
+            deInp.onfocus = function() { timerAutoStart(5); };
+            deInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            inputs.appendChild(deInp);
         }
-        if (normAns.startsWith(normVal) && val.length > 0) { inp.classList.remove('ok','no'); return; }
-        if (val.length > 0) inp.classList.add('no'); else inp.classList.remove('ok','no');
+        div.appendChild(inputs);
+        container.appendChild(div);
     });
-    cell.appendChild(inp);
-    return cell;
 }
 
-function buildWortschatz() {
-    var tbody = document.getElementById('ws-tbody');
-    WS_DATA.forEach(function(item){
-        var tr = document.createElement('tr');
-        var tdEn = document.createElement('td');
-        tdEn.className = 'ws-en';
-        tdEn.textContent = item.en;
-        tr.appendChild(tdEn);
-        if (item.art !== '') {
-            tr.appendChild(makeWsInp(item, 'art', item.art, 5));
-        } else {
-            var blank = document.createElement('td'); blank.innerHTML = '<span style="color:#bbb;font-size:0.85em;">—</span>'; tr.appendChild(blank);
-        }
-        tr.appendChild(makeWsInp(item, 'wort', item.de, 5));
-        if (item.plural !== '' && item.plural !== '-') {
-            tr.appendChild(makeWsInp(item, '', item.plural, 5));
-        } else {
-            var blank2 = document.createElement('td');
-            blank2.innerHTML = item.plural === '-' ? '<span style="color:#bbb;font-size:0.85em;">—</span>' : '';
-            tr.appendChild(blank2);
-        }
-        tbody.appendChild(tr);
-    });
-    document.getElementById('score5').textContent = '0 / ' + ws5Total;
+function vocabLiveCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer;
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (user.length === 0) return;
+    var cmpUser = (field === 'art') ? user.toLowerCase() : user;
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* prefix – weiter tippen */ }
+    else { inp.classList.add('wrong'); }
 }
-buildWortschatz();
+
+function checkVocabAllDone() {
+    var inputs = document.querySelectorAll('#tab5 .vocab-inputs input');
+    if (inputs.length === 0) return;
+    var allCorrect = true;
+    inputs.forEach(function(inp) { if (!inp.classList.contains('correct')) allCorrect = false; });
+    if (allCorrect) timerStop(5);
+}
+
+function showVocabLoesung() {
+    document.querySelectorAll('#tab5 .vocab-inputs input').forEach(function(inp) {
+        var field = inp.dataset.field;
+        var user = inp.value.trim();
+        var answer = inp.dataset.answer;
+        var cmpUser = (field === 'art') ? user.toLowerCase() : user;
+        var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+        var existing = inp.nextElementSibling;
+        if (existing && existing.classList.contains('vocab-hint')) existing.remove();
+        if (cmpUser === cmpAnswer) {
+            inp.classList.remove('wrong'); inp.classList.add('correct');
+        } else {
+            inp.classList.add('wrong');
+            var hint = document.createElement('span');
+            hint.className = 'vocab-hint';
+            hint.textContent = inp.dataset.answer;
+            inp.insertAdjacentElement('afterend', hint);
+        }
+    });
+}
+
+function resetVocab() {
+    document.querySelectorAll('#tab5 .vocab-inputs input').forEach(function(inp) {
+        inp.value = '';
+        inp.classList.remove('correct', 'wrong');
+        var next = inp.nextElementSibling;
+        if (next && next.classList.contains('vocab-hint')) next.remove();
+    });
+}
+
+initVocab();
 timerAutoStart(0);
 </script>
 </body>
