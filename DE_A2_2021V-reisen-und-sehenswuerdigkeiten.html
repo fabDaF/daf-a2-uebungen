@@ -369,12 +369,22 @@ footer { text-align: center; font-size: 0.75rem; color: #aaa; padding: 14px; bor
 <script>
 function showTab(i,btn){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));document.querySelectorAll('nav button').forEach((b,j)=>b.classList.toggle('active',j===i));timerAutoStart(i);}
 const timers=[null,null,null,null,null,null],elapsed=[0,0,0,0,0,0],running=[false,false,false,false,false,false];
-function timerAutoStart(i){if(!running[i]){running[i]=true;timers[i]=setInterval(()=>tickTimer(i),1000);document.querySelectorAll('.timer-btn')[i].textContent='Stop';}}
-function timerToggle(i){if(running[i]){timerStop(i);}else{running[i]=true;timers[i]=setInterval(()=>tickTimer(i),1000);document.querySelectorAll('.timer-btn')[i].textContent='Stop';}}
-function timerStop(i){clearInterval(timers[i]);running[i]=false;document.querySelectorAll('.timer-btn')[i].textContent='Start';const k=`daf-2021v-best-${i}`;const b=localStorage.getItem(k);if(!b||elapsed[i]<parseInt(b)){localStorage.setItem(k,elapsed[i]);}showBest(i);}
-function tickTimer(i){elapsed[i]++;const m=Math.floor(elapsed[i]/60);const s=elapsed[i]%60;document.getElementById(`td${i}`).textContent=`${m}:${s<10?'0':''}${s}`;}
-function showBest(i){const k=`daf-2021v-best-${i}`;const b=localStorage.getItem(k);if(b){const m=Math.floor(parseInt(b)/60),s=parseInt(b)%60;document.getElementById(`tb${i}`).textContent=`Bestzeit: ${m}:${s<10?'0':''}${s}`;}}
-[0,1,2,3,4,5].forEach(showBest);
+function timerKey(t){return 'daf-2021v-best-'+t;}
+function timerFmt(sec){const m=Math.floor(sec/60),s=sec%60;return m+':'+(s<10?'0':'')+s;}
+function timerAutoStart(i){
+  if(running[i])return;
+  running[i]=true;
+  timers[i]=setInterval(function(){elapsed[i]++;document.getElementById('timer'+i).textContent=timerFmt(elapsed[i]);},1000);
+}
+function timerStop(i){
+  if(!running[i])return;
+  clearInterval(timers[i]);running[i]=false;
+  var k=timerKey(i);var prev=localStorage.getItem(k);
+  if(!prev||elapsed[i]<parseInt(prev))localStorage.setItem(k,elapsed[i]);
+  timerLoadBest(i);
+}
+function timerLoadBest(i){var b=localStorage.getItem(timerKey(i));if(b)document.getElementById('best'+i).textContent='Bestzeit: '+timerFmt(parseInt(b));}
+[0,1,2,3,4,5].forEach(timerLoadBest);
 function normalise(s){return s.trim().toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');}
 function liveCheck(inp){const val=normalise(inp.value);const ans=normalise(inp.dataset.ans);if(val===ans){inp.classList.add('correct');inp.classList.remove('partial','wrong');return;}if(ans.startsWith(val)&&val.length>0){inp.classList.add('partial');inp.classList.remove('correct','wrong');return;}inp.classList.remove('correct','partial');if(val.length>0)inp.classList.add('wrong');else inp.classList.remove('wrong');}
 function rfCheck(btn,chosen,correct){const row=btn.closest('.rf-item');row.querySelectorAll('.rf-btn').forEach(b=>{b.classList.remove('sel-r','sel-f');});btn.classList.add(chosen==='R'?'sel-r':'sel-f');const res=row.querySelector('.rf-result');if(chosen===correct){res.textContent='✅';res.className='rf-result ok';}else{res.textContent='❌';res.className='rf-result err';}}
@@ -389,7 +399,7 @@ var satzbauData = [
     { parts: ['Ich', 'muss', 'mich', 'beim', 'Hotel', 'beschweren'], valid: [['Ich', 'muss', 'mich', 'beim', 'Hotel', 'beschweren']], punct: '.' },
     { parts: ['Der', 'Flug', 'ist', 'wegen', 'des', 'Sturms', 'ausgefallen'], valid: [['Der', 'Flug', 'ist', 'wegen', 'des', 'Sturms', 'ausgefallen']], punct: '.' },
     { parts: ['Kinder', 'und', 'Senioren', 'bekommen', 'eine', 'Ermäßigung'], valid: [['Kinder', 'und', 'Senioren', 'bekommen', 'eine', 'Ermäßigung']], punct: '.' },
-    { parts: ['Ich', 'weiß', 'nicht', 'ob', 'ich', 'ein', 'Visum', 'brauche'], valid: [['Ich', 'weiß', 'nicht', 'ob', 'ich', 'ein', 'Visum', 'brauche']], punct: '.' }
+    { parts: ['Ich', 'weiß', 'nicht,', 'ob', 'ich', 'ein', 'Visum', 'brauche'], valid: [['Ich', 'weiß', 'nicht,', 'ob', 'ich', 'ein', 'Visum', 'brauche']], punct: '.' }
 ];
 
 var sbDragged = null;
