@@ -216,8 +216,8 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
   <div class="btn-row">
     <span class="timer-display">⏱ <span id="ws-time">0:00</span></span>
     <span class="timer-display">🏆 <span id="ws-best">—</span></span>
-    <button class="btn-small" onclick="timerResetOne(4)">↺ Neustart</button>
-    <button class="btn-small" onclick="wsShowSolutions()">💡 Lösungen</button>
+    <button class="btn-small" onclick="resetWortschatz()">↺ Neustart</button>
+    <button class="btn-small" onclick="showWortschatzLoesung()">💡 Lösungen</button>
   </div>
   <table class="ws-table">
     <thead><tr><th>Englisch</th><th>Deutsch (tippen)</th></tr></thead>
@@ -252,7 +252,7 @@ function timerFmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
 function timerTick(n){timerSeconds[n]++;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(timerSeconds[n]);}
 function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerTick(n);},1000);}
 function timerStop(n){if(!timerRunning[n])return;timerRunning[n]=false;clearInterval(timerIntervals[n]);var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');if(timerSeconds[n]<best)localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);var b=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n));var els=['','lt-best','','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(b);}
-function timerResetOne(n){clearInterval(timerIntervals[n]);timerStarted[n]=false;timerRunning[n]=false;timerSeconds[n]=0;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent='0:00';if(n===3)initSatzbau();if(n===4)initWs();}
+function timerResetOne(n){clearInterval(timerIntervals[n]);timerStarted[n]=false;timerRunning[n]=false;timerSeconds[n]=0;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent='0:00';if(n===3)initSatzbau();if(n===4)initWortschatz();}
 [1,3,4].forEach(function(n){var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);if(b){var els=['','lt-best','','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(parseInt(b));}});
 
 /* ===== LÜCKENTEXT ===== */
@@ -327,43 +327,111 @@ function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.ge
 function initSatzbau(){var cont=document.getElementById('satzbauContainer');cont.innerHTML='';satzbauData.forEach(function(d,i){var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}var wrap=document.createElement('div');wrap.className='sentence-builder';var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);sbRegisterZone(zone,i);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);});}
 
 /* ===== WORTSCHATZ ===== */
-var WS_DATA=[
-  {en:'in the morning',de:'morgens'},
-  {en:'at midday / at noon',de:'mittags'},
-  {en:'in the evening',de:'abends'},
-  {en:'earlier / in the past',de:'früher'},
-  {en:'later',de:'später'},
-  {en:'first',de:'zuerst'},
-  {en:'afterwards',de:'danach'},
-  {en:'then',de:'dann'},
-  {en:'thereupon / after that',de:'daraufhin'},
-  {en:'on Mondays',de:'montags'},
-  {en:'on Saturdays',de:'samstags'}
+// ─── WORTSCHATZ-TRAINING ──────────────────────────────────────────────────────
+var WORTSCHATZ = [
+    { id:1, type:'p', en:'✨ in the morning', artikel:'', de:'morgens', plural:'' },
+    { id:2, type:'p', en:'🌈 at midday / at noon', artikel:'', de:'mittags', plural:'' },
+    { id:3, type:'p', en:'💡 in the evening', artikel:'', de:'abends', plural:'' },
+    { id:4, type:'p', en:'🎨 earlier / in the past', artikel:'', de:'früher', plural:'' },
+    { id:5, type:'p', en:'🔆 later', artikel:'', de:'später', plural:'' },
+    { id:6, type:'p', en:'🌀 first', artikel:'', de:'zuerst', plural:'' },
+    { id:7, type:'p', en:'🔮 afterwards', artikel:'', de:'danach', plural:'' },
+    { id:8, type:'p', en:'🪄 then', artikel:'', de:'dann', plural:'' },
+    { id:9, type:'p', en:'🌸 thereupon / after that', artikel:'', de:'daraufhin', plural:'' },
+    { id:10, type:'p', en:'🍀 on Mondays', artikel:'', de:'montags', plural:'' },
+    { id:11, type:'p', en:'🔄 on Saturdays', artikel:'', de:'samstags', plural:'' }
 ];
-var wsDone=false;
-function initWs(){
-  wsDone=false;var tbody=document.getElementById('wsBody');tbody.innerHTML='';
-  WS_DATA.forEach(function(d,i){
-    var tr=document.createElement('tr');
-    tr.innerHTML='<td>'+d.en+'</td><td><input class="ws-input" id="ws'+i+'" data-ans="'+d.de+'" placeholder="" oninput="wsCheck(this)"></td>';
-    tbody.appendChild(tr);
-  });
+
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerReset(4);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
+        }
+        row.appendChild(fields);
+        container.appendChild(row);
+    });
 }
-function wsCheck(inp){
-  timerAutoStart(4);
-  var val=inp.value.trim();var ans=inp.dataset.ans;
-  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
-  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
-  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
-  else{inp.classList.remove('ok','no');}
-  if(Array.from(document.querySelectorAll('#wsBody .ws-input')).every(function(i){return i.classList.contains('ok');})){if(!wsDone){wsDone=true;timerStop(4);}}
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
 }
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#tab-4 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(4);
+}
+function showWortschatzLoesung(){
+    timerStop(4);
+    document.querySelectorAll('#tab-4 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz(){
+    document.querySelectorAll('#tab-4 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerReset(4);
+}
+
 function wsShowSolutions(){document.querySelectorAll('#wsBody .ws-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}
 
 /* ===== INIT ===== */
 initZuord();
 initSatzbau();
-initWs();
+initWortschatz();
 </script>
 </body>
 </html>

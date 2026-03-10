@@ -99,13 +99,8 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 .sb-nr { font-size: 0.8em; color: #999; margin-bottom: 4px; margin-top: 14px; font-weight: 600; }
 
 /* Wortschatz */
-.ws-row { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #f0f0f8; padding-bottom: 12px; }
 .ws-row:last-child { border-bottom: none; }
-.ws-en { font-size: 0.85em; color: #888; font-style: italic; }
-.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.95em; transition: border-color 0.2s; padding: 2px 4px; width: 100%; }
 .ws-inp:focus { border-bottom-color: #667eea; }
-.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
-.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
 .art { width: 70px; }
 
 /* Timer / Buttons */
@@ -270,11 +265,11 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
         <div class="tab-content">
             <h2>Wortschatz-Training</h2>
             <div class="hilfe-box">Tippe das deutsche Wort oder die Phrase.</div>
-            <div id="wsContainer"></div>
+            <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
             <div class="btn-row">
                 <div class="timer-box">⏱ <span class="timer-display" id="timer-4">0:00</span> &nbsp;🏆 <span class="best-display" id="best-4">–</span></div>
-                <button class="btn btn-reset" onclick="wsReset()">↺ Neustart</button>
-                <button class="solution-btn" onclick="wsLoesungen()">💡 Lösungen</button>
+                <button class="btn btn-reset" onclick="resetWortschatz()">↺ Neustart</button>
+                <button class="solution-btn" onclick="showWortschatzLoesung()">💡 Lösungen</button>
             </div>
         </div>
     </div>
@@ -466,55 +461,105 @@ function initSatzbau(){
 function sbResetAll(){timerResetOne(3);initSatzbau();}
 
 // ─── Wortschatz ──────────────────────────────────────────────────────────────
-var WS_VOCAB = [
-    { en:'straight ahead', term:'geradeaus' },
-    { en:'to turn left', term:'links abbiegen' },
-    { en:'to turn right', term:'rechts abbiegen' },
-    { en:'at the corner', term:'an der Ecke' },
-    { en:'at the end of the street', term:'am Ende der Straße' },
-    { en:'opposite', term:'gegenüber' },
-    { en:'on the left side', term:'auf der linken Seite' },
-    { en:'on the right side', term:'auf der rechten Seite' },
-    { en:'the floor plan', term:'der Grundriss' },
-    { en:'to move in', term:'einziehen' },
-    { en:'to move out', term:'ausziehen' },
-    { en:'to relocate', term:'umziehen' }
+// ─── WORTSCHATZ-TRAINING ──────────────────────────────────────────────────────
+var WORTSCHATZ = [
+    { id:1, type:'p', en:'✨ straight ahead', artikel:'', de:'', plural:'' },
+    { id:2, type:'p', en:'🌈 to turn left', artikel:'', de:'', plural:'' },
+    { id:3, type:'p', en:'💡 to turn right', artikel:'', de:'', plural:'' },
+    { id:4, type:'p', en:'🎨 at the corner', artikel:'', de:'', plural:'' },
+    { id:5, type:'p', en:'🔆 at the end of the street', artikel:'', de:'', plural:'' },
+    { id:6, type:'p', en:'🌀 opposite', artikel:'', de:'', plural:'' },
+    { id:7, type:'p', en:'🔮 on the left side', artikel:'', de:'', plural:'' },
+    { id:8, type:'p', en:'🪄 on the right side', artikel:'', de:'', plural:'' },
+    { id:9, type:'p', en:'🌸 the floor plan', artikel:'', de:'', plural:'' },
+    { id:10, type:'p', en:'🍀 to move in', artikel:'', de:'', plural:'' },
+    { id:11, type:'p', en:'🔄 to move out', artikel:'', de:'', plural:'' },
+    { id:12, type:'p', en:'▶️ to relocate', artikel:'', de:'', plural:'' }
 ];
 
-function buildWortschatz(){
-    var container=document.getElementById('wsContainer');container.innerHTML='';
-    WS_VOCAB.forEach(function(w){
-        var row=document.createElement('div');row.className='ws-row';
-        var enDiv=document.createElement('div');enDiv.className='ws-en';enDiv.textContent=w.en;
-        row.appendChild(enDiv);
-        var inputsDiv=document.createElement('div');inputsDiv.style.cssText='display:flex;gap:8px;flex-wrap:wrap;align-items:center;';
-        var inp=document.createElement('input');inp.type='text';inp.placeholder='';inp.style.width=Math.max(w.term.length*9+30,120)+'px';
-        inp.className='ws-inp';inp.dataset.ans=w.term.toLowerCase();inp.dataset.orig=w.term;
-        inp.addEventListener('input',function(){
-            var val=inp.value.trim().toLowerCase(),a=inp.dataset.ans;
-            inp.classList.remove('ok','no');
-            if(!val)return;
-            if(val===a){inp.classList.add('ok');timerAutoStart(4);checkAllWs();}
-            else if(a.startsWith(val)){timerAutoStart(4);}
-            else{inp.classList.add('no');}
-        });
-        inputsDiv.appendChild(inp);
-        row.appendChild(inputsDiv);
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerReset(4);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
+        }
+        row.appendChild(fields);
         container.appendChild(row);
     });
 }
-function checkAllWs(){var all=Array.from(document.querySelectorAll('#sec-4 .ws-inp'));if(all.every(function(i){return i.classList.contains('ok');}))timerStop(4);}
-function wsReset(){timerResetOne(4);buildWortschatz();}
-function wsLoesungen(){document.querySelectorAll('#sec-4 .ws-inp').forEach(function(inp){inp.value=inp.dataset.orig;inp.classList.remove('no');inp.classList.add('ok');});}
-
-// ─── Init ────────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', function(){
-    buildLuecken(LT1,'luecken1');
-    buildLuecken(LT2,'luecken2');
-    initZuordnung();
-    initSatzbau();
-    buildWortschatz();
-});
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
+}
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#sec-4 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(4);
+}
+function showWortschatzLoesung(){
+    timerStop(4);
+    document.querySelectorAll('#sec-4 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz(){
+    document.querySelectorAll('#sec-4 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerReset(4);
+}
 </script>
 </body>
 </html>
