@@ -292,6 +292,24 @@
     .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
     .nav-btn:last-child { border-right: 1px solid #ddd; }
   }
+
+/* Wortschatz input.blank */
+input.blank {
+    border: none; border-bottom: 2px solid #667eea; background: transparent;
+    outline: none; font-family: inherit; font-size: 1em; padding: 2px 4px;
+    transition: border-color 0.2s, background 0.2s;
+}
+input.blank:focus { border-bottom-color: #667eea; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
+
+/* Wortschatz Karten */
+.luecken-item {
+    background: #f8f9ff;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 12px 14px;
+}
 </style>
 </head>
 <body>
