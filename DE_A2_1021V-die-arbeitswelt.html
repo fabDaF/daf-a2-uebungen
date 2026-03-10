@@ -433,7 +433,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
                     <span>🏆 Bestzeit: <span class="timer-val" id="best-5">—</span></span>
                 </div>
             </div>
-            <div id="wortschatzContainer"></div>
+            <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
         </div>
     </div><!-- /sec-5 -->
 
@@ -934,7 +934,7 @@ function initWortschatz() {
     WORTSCHATZ.forEach(function(item) {
         var row = document.createElement('div');
         row.className = 'luecken-item';
-        row.style.marginBottom = '14px';
+        row.style.marginBottom = '0';
         var prompt = document.createElement('div');
         prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
         prompt.textContent = item.en;
