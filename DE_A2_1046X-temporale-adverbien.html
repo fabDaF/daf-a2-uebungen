@@ -346,7 +346,7 @@ var wortschatzInited = false;
 function initWortschatz(){
     if (wortschatzInited) return;
     wortschatzInited = true;
-    timerReset(4);
+    timerResetOne(4);
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
@@ -423,7 +423,7 @@ function resetWortschatz(){
     });
     wortschatzInited = false;
     initWortschatz();
-    timerReset(4);
+    timerResetOne(4);
 }
 
 function wsShowSolutions(){document.querySelectorAll('#wsBody .ws-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}

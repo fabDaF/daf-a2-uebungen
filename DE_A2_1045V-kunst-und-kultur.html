@@ -411,7 +411,7 @@ var wortschatzInited = false;
 function initWortschatz(){
     if (wortschatzInited) return;
     wortschatzInited = true;
-    timerReset(5);
+    timerResetOne(5);
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
@@ -488,7 +488,7 @@ function resetWortschatz(){
     });
     wortschatzInited = false;
     initWortschatz();
-    timerReset(5);
+    timerResetOne(5);
 }
 
 /* ===== INIT ===== */
