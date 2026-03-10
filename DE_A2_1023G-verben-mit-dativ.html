@@ -422,8 +422,8 @@ var LUECKEN_DATA = [
     { vor: 'Der Kuchen schmeckt ', nach: ' wunderbar.', ans: 'dem kind', hint: 'Dativ (neut.)', size: 80 }
 ];
 function liveCheckBlank(inp) {
-    var val = inp.value.trim().toLowerCase();
-    var ans = inp.dataset.answer.toLowerCase();
+    var val = inp.value.trim();
+    var ans = inp.dataset.answer;
     inp.classList.remove('correct','wrong');
     if (!val) return;
     if (val === ans) { inp.classList.add('correct'); timerAutoStart(2); checkLueckenOk(); return; }

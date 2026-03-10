@@ -443,7 +443,7 @@ var LUECKEN_DATA = [
     { vor: 'Er ', nach: ' gut, aber er hat keinen Spaß.', ans: 'verdient', size: 90 }
 ];
 function liveCheckLuecke(inp) {
-    var val=inp.value.trim().toLowerCase(); var ans=inp.dataset.answer.toLowerCase();
+    var val=inp.value.trim(); var ans=inp.dataset.answer;
     inp.classList.remove('correct','wrong');
     if (!val) return;
     if (val===ans) { inp.classList.add('correct'); timerAutoStart(2); checkLueckenOk(); return; }

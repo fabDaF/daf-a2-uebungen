@@ -496,7 +496,7 @@ function liveCheck(inp) {
     } else if (val === ans) {
         inp.classList.add('ok'); inp.classList.remove('no');
         checkAllLT();
-    } else if (ans.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
+    } else if (ans.startsWith(val) && val.length > 0) {
         inp.classList.remove('ok','no');
     } else {
         inp.classList.add('no'); inp.classList.remove('ok');

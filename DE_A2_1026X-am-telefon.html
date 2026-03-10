@@ -282,7 +282,7 @@ var LT1=[
     {vor:'Das Telefon ',nach:'.',ans:'klingelt',size:90},
     {vor:'Sie hat eine ',nach:' bekommen.',ans:'sprachnachricht',size:160}
 ];
-function liveCheckLuecke(inp){var val=inp.value.trim().toLowerCase();var ans=inp.dataset.answer.toLowerCase();inp.classList.remove('correct','wrong');if(!val)return;if(val===ans){inp.classList.add('correct');timerAutoStart(1);checkLueckenOk();return;}if(ans.indexOf(val)===0){timerAutoStart(1);return;}inp.classList.add('wrong');}
+function liveCheckLuecke(inp){var val=inp.value.trim();var ans=inp.dataset.answer;inp.classList.remove('correct','wrong');if(!val)return;if(val===ans){inp.classList.add('correct');timerAutoStart(1);checkLueckenOk();return;}if(ans.indexOf(val)===0){timerAutoStart(1);return;}inp.classList.add('wrong');}
 function checkLueckenOk(){var inputs=document.querySelectorAll('#lueckenContainer input.blank');if(Array.from(inputs).every(function(i){return i.classList.contains('correct');}))timerStop(1);}
 function buildLuecken(){var c=document.getElementById('lueckenContainer');LT1.forEach(function(item,i){var div=document.createElement('div');div.className='luecken-satz';div.innerHTML='<span class="luecken-num">'+(i+1)+'</span>'+item.vor+'<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="">'+item.nach;c.appendChild(div);var inp=div.querySelector('input.blank');inp.addEventListener('input',function(){liveCheckLuecke(inp);});});}
 function resetLuecken(){timerResetOne(1);document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){inp.value='';inp.classList.remove('correct','wrong');});}

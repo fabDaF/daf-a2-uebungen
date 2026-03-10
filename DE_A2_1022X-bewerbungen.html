@@ -407,8 +407,8 @@ document.addEventListener('DOMContentLoaded', function() { [1,3,4].forEach(updat
 // LIVE-FEEDBACK
 // ═════════════════════════════════════════════════
 function liveCheck(inp, timerIdx, allSel, stopFn) {
-    var val = inp.value.trim().toLowerCase();
-    var ans = (inp.dataset.ans || '').toLowerCase();
+    var val = inp.value.trim();
+    var ans = (inp.dataset.ans || '');
     inp.classList.remove('ok','no');
     if (!val) return;
     if (val === ans) {

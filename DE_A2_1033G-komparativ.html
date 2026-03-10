@@ -361,9 +361,9 @@ function buildLuecken(data, containerId) {
         var div=document.createElement('div'); div.className='luecken-satz';
         div.innerHTML=(idx+1)+'. '+item.vor;
         var inp=document.createElement('input'); inp.type='text'; inp.className='luecken-inp'; inp.placeholder=''; inp.style.width=item.size+'px';
-        inp.dataset.ans=item.ans.toLowerCase(); inp.dataset.orig=item.ans;
+        inp.dataset.ans=item.ans; inp.dataset.orig=item.ans;
         inp.addEventListener('input',function(){
-            var val=inp.value.trim().toLowerCase(),ans=inp.dataset.ans;
+            var val=inp.value.trim(),ans=inp.dataset.ans;
             inp.classList.remove('ok','no');
             if(!val)return;
             if(val===ans){inp.classList.add('ok');timerAutoStart(2);checkAllLuecken();}

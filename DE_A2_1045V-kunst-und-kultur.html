@@ -336,7 +336,7 @@ function ltCheck(inp) {
   if(!ltStarted){ltStarted=true;timerAutoStart(2);}
   var val=inp.value.trim(); var ans=inp.dataset.ans;
   if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
-  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(ans.startsWith(val)&&val.length>0){inp.classList.remove('ok','no');}
   else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
   else{inp.classList.remove('ok','no');}
   if(Array.from(document.querySelectorAll('.lt-input')).every(function(i){return i.classList.contains('ok');})){if(!ltDone){ltDone=true;timerStop(2);}}

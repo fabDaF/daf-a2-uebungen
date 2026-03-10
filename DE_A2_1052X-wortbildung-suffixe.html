@@ -411,14 +411,14 @@ function liveCheckLt(inp) {
   var ans = inp.dataset.ans || '';
   inp.classList.remove('ok','no');
   if (!val) return;
-  if (val.toLowerCase() === ans.toLowerCase()) {
+  if (val === ans) {
     inp.classList.add('ok');
     timerAutoStart(1);
     var alle = LT_IDS.map(function(id) { return document.getElementById(id); }).filter(Boolean);
     if (alle.every(function(i) { return i.classList.contains('ok'); })) timerStop(1);
     return;
   }
-  if (ans.toLowerCase().startsWith(val.toLowerCase())) { timerAutoStart(1); return; }
+  if (ans.startsWith(val)) { timerAutoStart(1); return; }
   inp.classList.add('no');
 }
 

@@ -398,7 +398,7 @@ var RM_MEINUNG = [
   { de: 'Ich bin davon überzeugt, dass …', en: 'I am convinced that …' },
   { de: 'Ich bin dafür, dass …', en: 'I am in favour of …' },
   { de: 'Ich bin dagegen, dass …', en: 'I am against …' },
-  { de: 'Das glaube ich nicht.', en: 'I don't believe that.' }
+  { de: 'Das glaube ich nicht.', en: 'I don\'t believe that.' }
 ];
 var RM_ZEIT = [
   { de: 'morgens', en: 'in the morning' },
@@ -538,14 +538,14 @@ function liveCheckLt(inp) {
   var ans = inp.dataset.ans || '';
   inp.classList.remove('ok', 'no');
   if (!val) return;
-  if (val.toLowerCase() === ans.toLowerCase()) {
+  if (val === ans) {
     inp.classList.add('ok');
     timerAutoStart(2);
     var alle = LT2_IDS.map(function(id) { return document.getElementById(id); }).filter(Boolean);
     if (alle.every(function(i) { return i.classList.contains('ok'); })) timerStop(2);
     return;
   }
-  if (ans.toLowerCase().startsWith(val.toLowerCase())) {
+  if (ans.startsWith(val)) {
     timerAutoStart(2);
     return;
   }

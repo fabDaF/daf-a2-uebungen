@@ -398,10 +398,10 @@ function buildLt(data, containerId, timerN) {
         inp.type = 'text'; inp.className = 'luecken-inp';
         inp.style.width = item.size + 'px';
         inp.placeholder = '';
-        inp.dataset.ans = item.ans.toLowerCase();
+        inp.dataset.ans = item.ans;
         inp.addEventListener('input', function() {
             timerAutoStart(timerN);
-            var val = inp.value.trim().toLowerCase();
+            var val = inp.value.trim();
             var ans = inp.dataset.ans;
             inp.classList.remove('ok','no');
             if (!val) return;
@@ -538,7 +538,7 @@ function sbShowSolution() {
         zone.innerHTML = '';
         sd.valid[0].forEach(function(w, i){
             var word = (i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-            zone.appendChild(sbMakeChip(word, w.toLowerCase()));
+            zone.appendChild(sbMakeChip(word, word));
         });
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
         zone.appendChild(punkt);
@@ -558,7 +558,7 @@ function initSatzbau() {
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
         zone.appendChild(punkt);
         var fb = document.createElement('div'); fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + n;
-        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip(w, w.toLowerCase())); });
+        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip(w, w)); });
         sbRegisterZone(zone, bank, n);
         sb.appendChild(lbl); sb.appendChild(bank); sb.appendChild(zone); sb.appendChild(fb);
         container.appendChild(sb);

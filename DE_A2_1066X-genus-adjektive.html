@@ -414,8 +414,8 @@ function showSection(idx) {
 // ────────────────────────────────────────────────────────────────────────
 
 function ltCheck(inp) {
-    var val = inp.value.trim().toLowerCase();
-    var ans = (inp.dataset.ans || '').toLowerCase();
+    var val = inp.value.trim();
+    var ans = (inp.dataset.ans || '');
     inp.classList.remove('ok', 'no');
     if (!val) return;
     if (val === ans) {

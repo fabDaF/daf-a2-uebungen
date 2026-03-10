@@ -324,7 +324,7 @@ function ltCheck(inp){
   var val=inp.value.trim();
   var ans=inp.dataset.ans;
   if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
-  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(ans.startsWith(val)&&val.length>0){inp.classList.remove('ok','no');}
   else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
   else{inp.classList.remove('ok','no');}
   // Check all done

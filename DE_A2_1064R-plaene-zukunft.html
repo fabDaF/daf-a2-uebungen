@@ -496,7 +496,7 @@ function ltCheckLive(idx) {
     if (val === ans) {
         inp.classList.add('ok');
         ltCheckAllLt();
-    } else if (ans.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
+    } else if (ans.startsWith(val) && val.length > 0) {
         // neutral
     } else if (val.length > 0) {
         inp.classList.add('no');
@@ -802,11 +802,11 @@ function makeWsInp(ans, placeholder, width) {
     inp.type = 'text'; inp.className = 'ws-inp';
     inp.placeholder = placeholder;
     inp.style.width = width + 'px';
-    inp.dataset.ans = ans.toLowerCase();
+    inp.dataset.ans = ans;
     inp.setAttribute('autocomplete', 'off');
     inp.addEventListener('input', function() {
         wsTimerAutoStart = true; initTimer(5);
-        var val = inp.value.trim().toLowerCase();
+        var val = inp.value.trim();
         var a = inp.dataset.ans;
         inp.classList.remove('ok', 'no');
         if (!val) return;
@@ -861,12 +861,12 @@ function wsCheckAllWs() {
 }
 
 function wsCheckField(inp, expected) {
-    var val = inp ? inp.value.trim().toLowerCase() : '';
+    var val = inp ? inp.value.trim() : '';
     if (!inp) return;
     inp.classList.remove('ok', 'no');
     if (!val) return;
-    if (val === expected.toLowerCase()) { inp.classList.add('ok'); return; }
-    if (expected.toLowerCase().startsWith(val)) return;
+    if (val === expected) { inp.classList.add('ok'); return; }
+    if (expected.startsWith(val)) return;
     inp.classList.add('no');
 }
 

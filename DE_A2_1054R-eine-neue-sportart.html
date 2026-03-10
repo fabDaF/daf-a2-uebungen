@@ -453,14 +453,14 @@ function liveCheckLt(inp) {
   var ans = inp.dataset.ans || '';
   inp.classList.remove('ok','no');
   if (!val) return;
-  if (val.toLowerCase() === ans.toLowerCase()) {
+  if (val === ans) {
     inp.classList.add('ok');
     timerAutoStart(3);
     var alle = LT_IDS.map(function(id) { return document.getElementById(id); }).filter(Boolean);
     if (alle.every(function(i) { return i.classList.contains('ok'); })) timerStop(3);
     return;
   }
-  if (ans.toLowerCase().startsWith(val.toLowerCase())) { timerAutoStart(3); return; }
+  if (ans.startsWith(val)) { timerAutoStart(3); return; }
   inp.classList.add('no');
 }
 
@@ -638,14 +638,14 @@ function liveCheckWs(inp) {
   var ans = inp.dataset.ans || '';
   inp.classList.remove('ok','no');
   if (!val) return;
-  if (val.toLowerCase() === ans.toLowerCase()) {
+  if (val === ans) {
     inp.classList.add('ok');
     timerAutoStart(5);
     var alle = document.querySelectorAll('#sec-5 .ws-inp');
     if (Array.from(alle).every(function(i) { return i.classList.contains('ok'); })) timerStop(5);
     return;
   }
-  if (ans.toLowerCase().startsWith(val.toLowerCase())) { timerAutoStart(5); return; }
+  if (ans.startsWith(val)) { timerAutoStart(5); return; }
   inp.classList.add('no');
 }
 
