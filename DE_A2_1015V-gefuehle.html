@@ -522,12 +522,13 @@ body {
                 Am Ende des Abends war Tina wieder <input class="luecken-inp" data-ans="zufrieden" placeholder="">.
             </div>
         </div>
+    </div>
 
     <div class="section" id="sec-3">
         <div class="sec-inner">
             <h2 style="font-size:1.3em;color:#4a148c;margin-bottom:12px;">📖 Text &amp; Fragen</h2>
             <div class="control-bar">
-                <div class="btn-row"><button class="btn btn-loesung" onclick="showRF()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetRF()">↺ Neustart</button></div>
+                <div class="btn-row"><button class="btn btn-loesung" onclick="showRFLoesung()">💡 Lösungen</button><button class="btn btn-reset" onclick="resetRF()">↺ Neustart</button></div>
                 <div class="timer-display"><span class="current-time">⏱ <span id="timer-3">00:00</span></span> <span class="best-time">🏆 <span id="best-3">--:--</span></span></div>
             </div>
 
@@ -538,8 +539,40 @@ body {
             </div>
 
             <h3 style="font-size:1.05em;color:#4a148c;margin-bottom:12px;">Richtig oder falsch?</h3>
-            <div id="rf-container"></div>
+            <div id="rf-container">
+                <div class="rf-item">
+                    <span>1. Lena hat heute ein Vorstellungsgespräch.</span>
+                    <button class="rf-btn" onclick="checkRF(this, true)">Richtig</button>
+                    <button class="rf-btn" onclick="checkRF(this, false)">Falsch</button>
+                </div>
+                <div class="rf-item">
+                    <span>2. Lena ist vor dem Interview glücklich.</span>
+                    <button class="rf-btn" onclick="checkRF(this, false)">Richtig</button>
+                    <button class="rf-btn" onclick="checkRF(this, true)">Falsch</button>
+                </div>
+                <div class="rf-item">
+                    <span>3. Das Interview ist gut gelaufen.</span>
+                    <button class="rf-btn" onclick="checkRF(this, false)">Richtig</button>
+                    <button class="rf-btn" onclick="checkRF(this, true)">Falsch</button>
+                </div>
+                <div class="rf-item">
+                    <span>4. Lena hat Angst, dass sie den Job nicht bekommt.</span>
+                    <button class="rf-btn" onclick="checkRF(this, true)">Richtig</button>
+                    <button class="rf-btn" onclick="checkRF(this, false)">Falsch</button>
+                </div>
+                <div class="rf-item">
+                    <span>5. Lena bekommt den Job nach drei Tagen.</span>
+                    <button class="rf-btn" onclick="checkRF(this, true)">Richtig</button>
+                    <button class="rf-btn" onclick="checkRF(this, false)">Falsch</button>
+                </div>
+                <div class="rf-item">
+                    <span>6. Tim ist enttäuscht von Lena.</span>
+                    <button class="rf-btn" onclick="checkRF(this, false)">Richtig</button>
+                    <button class="rf-btn" onclick="checkRF(this, true)">Falsch</button>
+                </div>
+            </div>
         </div>
+    </div>
 
     <div class="section" id="sec-4">
         <div class="sec-inner" id="satzbauContainer">
