@@ -110,16 +110,14 @@ body {
 .satzbau-feedback { font-size: .85em; margin-top: 6px; min-height: 20px; color: #555; }
 
 /* ===== WORTSCHATZ ===== */
-.ws-item { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; align-items: center; margin-bottom: 10px; }
-.ws-en { background: #f0ecff; border-radius: 8px; padding: 8px 14px; font-size: 0.88em; color: #4a148c; font-weight: 600; }
-.ws-inp {
-    border: none; border-bottom: 2px solid #c5cae9; background: transparent;
-    outline: none; font-family: inherit; font-size: 0.93em;
-    transition: border-color .2s; width: 100%; padding: 4px 6px;
-}
-.ws-inp:focus { border-bottom-color: #667eea; }
-.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
-.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+/* ─── WORTSCHATZ-ÜBUNG ──────────────────────────────────────────── */
+.luecken-item { background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 8px; padding: 12px 14px; }
+.luecken-item .en-label { font-weight: 600; color: #555; font-size: 0.95em; margin-bottom: 6px; }
+.luecken-item .inp-row  { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+input.blank { border: none; border-bottom: 2px solid #667eea; background: transparent; outline: none; font-family: inherit; font-size: 1em; padding: 2px 4px; transition: border-color 0.2s, background 0.2s; }
+input.blank:focus { border-bottom-color: #667eea; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
 
 /* ===== SHARED ===== */
 .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; font-size: .88em; color: #555; }
@@ -250,10 +248,10 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     <div class="btn-row" style="margin-bottom:16px;">
       ⏱ <span id="t5">0:00</span>
       <span class="timer-val">🏆 <span id="b5">–</span></span>
-      <button class="btn" onclick="timerResetOne(5)">↺ Neustart</button>
-      <button class="btn secondary" onclick="showWs()">💡 Lösungen</button>
+      <button class="btn" onclick="resetWortschatz()">↺ Neustart</button>
+      <button class="btn secondary" onclick="showWortschatzLoesung()">💡 Lösungen</button>
     </div>
-    <div id="wsContainer"></div>
+    <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
   </section>
 
   <div class="footer">
@@ -310,19 +308,19 @@ var satzbauData = [
   { words: ['Sie', 'verspricht', 'ihm', 'mit', 'Lea', 'nach', 'Australien', 'zu', 'fliegen'], punct: '.' }
 ];
 
-var WS_DATA = [
-  { en: '(plan)',                 art: 'der', de: 'Plan',           plural: '-̈e' },
-  { en: '(intention)',            art: 'die', de: 'Absicht',        plural: '-en' },
-  { en: '(wish)',                 art: 'der', de: 'Wunsch',         plural: '-̈e' },
-  { en: '(to wish / hope for)',   art: '',    de: 'sich wünschen',    plural: '' },
-  { en: '(goal / aim)',           art: 'das', de: 'Ziel',           plural: '-e' },
-  { en: '(to plan / intend)',     art: '',    de: 'etwas vorhaben', plural: '' },
-  { en: '(to promise)',           art: '',    de: 'etwas versprechen', plural: '' },
-  { en: '(future)',               art: 'die', de: 'Zukunft',        plural: '' },
-  { en: '(to hope)',              art: '',    de: 'hoffen',          plural: '' },
-  { en: '(probably)',             art: '',    de: 'wahrscheinlich', plural: '' },
-  { en: '(perhaps / maybe)',      art: '',    de: 'vielleicht',     plural: '' },
-  { en: '(to put into action)',   art: '',    de: 'in die Tat umsetzen', plural: '' }
+var WORTSCHATZ = [
+  { id: 1, type: 'n', en: '🎯 (plan)',                 artikel: 'der', de: 'Plan',                    plural: 'Pläne' },
+  { id: 2, type: 'n', en: '🤔 (intention)',            artikel: 'die', de: 'Absicht',                 plural: 'Absichten' },
+  { id: 3, type: 'n', en: '😍 (wish)',                 artikel: 'der', de: 'Wunsch',                  plural: 'Wünsche' },
+  { id: 4, type: 'p', en: '✨ (to wish / hope for)',   artikel: '', de: 'sich wünschen',              plural: '' },
+  { id: 5, type: 'n', en: '🎯 (goal / aim)',           artikel: 'das', de: 'Ziel',                    plural: 'Ziele' },
+  { id: 6, type: 'p', en: '📋 (to plan / intend)',     artikel: '', de: 'etwas vorhaben',             plural: '' },
+  { id: 7, type: 'p', en: '🤝 (to promise)',           artikel: '', de: 'etwas versprechen',          plural: '' },
+  { id: 8, type: 'n', en: '🔮 (future)',               artikel: 'die', de: 'Zukunft',                 plural: '' },
+  { id: 9, type: 'p', en: '🙏 (to hope)',              artikel: '', de: 'hoffen',                     plural: '' },
+  { id: 10, type: 'p', en: '💭 (probably)',            artikel: '', de: 'wahrscheinlich',             plural: '' },
+  { id: 11, type: 'p', en: '❓ (perhaps / maybe)',     artikel: '', de: 'vielleicht',                 plural: '' },
+  { id: 12, type: 'p', en: '⚡ (to put into action)',  artikel: '', de: 'in die Tat umsetzen',        plural: '' }
 ];
 
 var TIMER_PREFIX = 'a2-1061v-';
@@ -361,7 +359,7 @@ function timerResetOne(n){
   var el=document.getElementById('t'+n); if(el) el.textContent='0:00';
   if(n===2) resetLt();
   if(n===4) initSatzbau();
-  if(n===5) initWs();
+  if(n===5) { wortschatzInited = false; initWortschatz(); }
 }
 function loadBests(){
   [2,4,5].forEach(function(n){
@@ -629,60 +627,25 @@ function initSatzbau(){
 }
 
 // ===== WORTSCHATZ =====
-function makeWsInp(ans, placeholder, width) {
-  var inp = document.createElement('input');
-  inp.type = 'text'; inp.className = 'ws-inp';
-  inp.placeholder = placeholder;
-  inp.style.width = width + 'px';
-  inp.dataset.ans = ans.toLowerCase();
-  inp.setAttribute('autocomplete', 'off');
-  inp.addEventListener('input', function() {
-    timerAutoStart(5);
-    var val = inp.value.trim().toLowerCase();
-    var a = inp.dataset.ans;
-    inp.classList.remove('ok', 'no');
-    if (!val) return;
-    if (val === a) { inp.classList.add('ok'); checkWsAll(); return; }
-    if (a.startsWith(val)) return;
-    inp.classList.add('no');
-  });
-  return inp;
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return; wortschatzInited = true; timerReset(5);
+    var c = document.getElementById('wortschatzContainer'); c.innerHTML = '';
+    WORTSCHATZ.forEach(function(item){
+        var card = document.createElement('div'); card.className = 'luecken-item';
+        var lbl = document.createElement('div'); lbl.className = 'en-label'; lbl.textContent = item.en;
+        card.appendChild(lbl);
+        var row = document.createElement('div'); row.className = 'inp-row';
+        if (item.artikel) { var a = document.createElement('input'); a.className = 'blank'; a.placeholder = ''; a.style.width = '50px'; a.dataset.answer = item.artikel; a.dataset.field = 'art'; a.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(a); checkWortschatzAllOk(); }); row.appendChild(a); }
+        var w = document.createElement('input'); w.className = 'blank'; w.placeholder = ''; w.style.width = '160px'; w.dataset.answer = item.de; w.dataset.field = 'word'; w.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(w); checkWortschatzAllOk(); }); row.appendChild(w);
+        if (item.plural) { var p = document.createElement('input'); p.className = 'blank'; p.placeholder = ''; p.style.width = '140px'; p.dataset.answer = item.plural; p.dataset.field = 'plural'; p.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(p); checkWortschatzAllOk(); }); row.appendChild(p); }
+        card.appendChild(row); c.appendChild(card);
+    });
 }
-
-function checkWsAll() {
-  var all = document.querySelectorAll('#sec-5 .ws-inp');
-  if (Array.from(all).every(function(i){ return i.classList.contains('ok'); })) timerStop(5);
-}
-
-function initWs() {
-  var container = document.getElementById('wsContainer');
-  container.innerHTML = '';
-  WS_DATA.forEach(function(item) {
-    var div = document.createElement('div'); div.className = 'ws-item';
-    var en = document.createElement('div'); en.className = 'ws-en'; en.textContent = item.en;
-    var inputs = document.createElement('div');
-    inputs.style.display = 'flex'; inputs.style.gap = '8px'; inputs.style.flexWrap = 'wrap'; inputs.style.alignItems = 'center';
-    if (item.art) {
-      inputs.appendChild(makeWsInp(item.art, 'Artikel', 70));
-    }
-    inputs.appendChild(makeWsInp(item.de, item.art ? 'Wort' : 'Verb/Adj.', Math.max(100, item.de.length * 9 + 20)));
-    if (item.plural) {
-      inputs.appendChild(makeWsInp(item.plural, 'Plural', Math.max(80, item.plural.length * 9 + 20)));
-    }
-    div.appendChild(en); div.appendChild(inputs);
-    container.appendChild(div);
-  });
-  timerStarted[5] = false; timerRunning[5] = false; timerSeconds[5] = 0;
-  var el = document.getElementById('t5'); if (el) el.textContent = '0:00';
-}
-
-function showWs() {
-  document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp) {
-    inp.value = inp.dataset.ans;
-    inp.classList.remove('no'); inp.classList.add('ok');
-  });
-  timerStop(5);
-}
+function wortschatzCheck(inp){ var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field; inp.classList.remove('correct','wrong'); if (!user) return; var cmpUser = (field === 'art') ? user.toLowerCase().trim() : user.trim(); var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer; if (cmpUser === cmpAnswer) inp.classList.add('correct'); else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix */ } else inp.classList.add('wrong'); }
+function checkWortschatzAllOk(){ var inputs = document.querySelectorAll('#sec-5 input.blank'); var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); }); if (allOk) timerStop(5); }
+function showWortschatzLoesung(){ timerStop(5); document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){ inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong'); }); }
+function resetWortschatz(){ document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){ if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); } }); wortschatzInited = false; initWortschatz(); timerReset(5); }
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function(){
@@ -690,7 +653,7 @@ document.addEventListener('DOMContentLoaded', function(){
   initQa();
   initRf();
   initSatzbau();
-  initWs();
+  initWortschatz();
   loadBests();
   for(var i=0;i<LT_COUNT;i++){
     (function(idx){

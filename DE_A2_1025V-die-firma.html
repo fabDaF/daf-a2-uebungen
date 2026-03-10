@@ -108,16 +108,23 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .sb-num { font-size: 0.78em; font-weight: 700; color: #764ba2; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
 .solution-btn { background: #fff; color: #667eea; border: 2px solid #667eea; padding: 5px 14px; border-radius: 20px; cursor: pointer; font-size: 0.8em; font-weight: 600; margin-top: 4px; }
 
-/* ── Wortschatz-Training ─────────────────────────── */
-.ws-item { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 12px 16px; background: #fafbff; border-radius: 10px; margin-bottom: 10px; border: 1px solid #e8ecff; }
-.ws-en { font-size: 0.9em; color: #555; font-style: italic; }
-.ws-fields { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-input.ws-inp { border: 2px solid #c5cae9; border-radius: 6px; padding: 4px 10px; font-size: 0.88rem; font-family: inherit; outline: none; transition: border-color .2s, background .2s; width: 110px; }
-input.ws-inp.art { width: 60px; }
-input.ws-inp.pl  { width: 120px; }
-input.ws-inp:focus { border-color: #667eea; }
-input.ws-inp.correct { border-color: #27ae60; background: #e8f5e9; }
-input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
+/* ─── WORTSCHATZ-ÜBUNG ──────────────────────────────────────────── */
+.luecken-item {
+    background: #f8f9ff;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 12px 14px;
+}
+.luecken-item .en-label { font-weight: 600; color: #555; font-size: 0.95em; margin-bottom: 6px; }
+.luecken-item .inp-row  { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+#sec-5 input.blank {
+    border: none; border-bottom: 2px solid #667eea; background: transparent;
+    outline: none; font-family: inherit; font-size: 1em; padding: 2px 4px;
+    transition: border-color 0.2s, background 0.2s;
+}
+#sec-5 input.blank:focus { border-bottom-color: #667eea; }
+#sec-5 input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+#sec-5 input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
 
 /* ── Footer ──────────────────────────────────────── */
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
@@ -231,11 +238,11 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
                 <div class="btn-row">
                     <button class="btn btn-reset" onclick="resetWortschatz()">↺ Neustart</button>
-                    <button class="btn btn-loesung" onclick="loesungWortschatz()">💡 Lösungen</button>
+                    <button class="btn btn-loesung" onclick="showWortschatzLoesung()">💡 Lösungen</button>
                 </div>
             </div>
             <div class="hilfe-box">Tippe die deutsche Übersetzung. Bei Nomen: <strong>Artikel · Wort · Plural</strong>.</div>
-            <div id="wsContainer"></div>
+            <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
         </div>
     </div>
 
@@ -252,7 +259,6 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
 var lueckenBuilt = false;
 var rfBuilt = false;
 var sbBuilt = false;
-var wsBuilt = false;
 
 function showSection(idx) {
     document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
@@ -261,7 +267,7 @@ function showSection(idx) {
     if (idx === 2 && !lueckenBuilt) { buildLuecken(); lueckenBuilt = true; }
     if (idx === 3 && !rfBuilt) { buildRF(); rfBuilt = true; }
     if (idx === 4 && !sbBuilt) { sbInit(); sbBuilt = true; }
-    if (idx === 5 && !wsBuilt) { buildWortschatz(); wsBuilt = true; }
+    if (idx === 5) { initWortschatz(); }
 }
 
 // ══════════════════════════════════════
@@ -531,24 +537,81 @@ function sbInit(){var container=document.getElementById('satzbauContainer');cont
 // TAB 5: WORTSCHATZ-TRAINING
 // ══════════════════════════════════════
 var WORTSCHATZ = [
-    { type:'p', en:'💪 hardworking', de:'fleißig' },
-    { type:'p', en:'😴 lazy', de:'faul' },
-    { type:'n', en:'💔 the weakness', artikel:'die', de:'Schwäche', plural:'Schw\u00e4chen' },
-    { type:'n', en:'💪 the strength', artikel:'die', de:'Stärke', plural:'St\u00e4rken' },
-    { type:'n', en:'📩 the rejection', artikel:'die', de:'Absage', plural:'Absagen' },
-    { type:'n', en:'🗓 the meeting', artikel:'die', de:'Besprechung', plural:'Besprechungen' },
-    { type:'n', en:'📊 the accounting dept.', artikel:'die', de:'Buchhaltung', plural:'Buchhaltungen' },
-    { type:'n', en:'📢 the marketing', artikel:'das', de:'Marketing', plural:'–' },
-    { type:'p', en:'✍️ to resign', de:'kündigen' },
-    { type:'p', en:'💶 to earn', de:'verdienen' },
-    { type:'n', en:'🌅 the retirement', artikel:'der', de:'Ruhestand', plural:'Ruhest\u00e4nde' },
-    { type:'n', en:'💰 the pension', artikel:'die', de:'Rente', plural:'Renten' }
+    { id:1, type:'p', en:'💪 hardworking', artikel:'', de:'fleißig', plural:'' },
+    { id:2, type:'p', en:'😴 lazy', artikel:'', de:'faul', plural:'' },
+    { id:3, type:'n', en:'💔 the weakness', artikel:'die', de:'Schwäche', plural:'Schwächen' },
+    { id:4, type:'n', en:'💪 the strength', artikel:'die', de:'Stärke', plural:'Stärken' },
+    { id:5, type:'n', en:'📩 the rejection', artikel:'die', de:'Absage', plural:'Absagen' },
+    { id:6, type:'n', en:'🗓 the meeting', artikel:'die', de:'Besprechung', plural:'Besprechungen' },
+    { id:7, type:'n', en:'📊 the accounting dept.', artikel:'die', de:'Buchhaltung', plural:'Buchhaltungen' },
+    { id:8, type:'n', en:'📢 the marketing', artikel:'das', de:'Marketing', plural:'–' },
+    { id:9, type:'p', en:'✍️ to resign', artikel:'', de:'kündigen', plural:'' },
+    { id:10, type:'p', en:'💶 to earn', artikel:'', de:'verdienen', plural:'' },
+    { id:11, type:'n', en:'🌅 the retirement', artikel:'der', de:'Ruhestand', plural:'Ruhestände' },
+    { id:12, type:'n', en:'💰 the pension', artikel:'die', de:'Rente', plural:'Renten' }
 ];
-function liveCheckWs(inp){var user=inp.value;var answer=inp.dataset.answer;var field=inp.dataset.field;inp.classList.remove('correct','wrong');if(!user)return;var cu=(field==='art')?user.toLowerCase():user;var ca=(field==='art')?answer.toLowerCase():answer;if(cu===ca){inp.classList.add('correct');timerAutoStart(5);checkWsOk();}else if(ca.indexOf(cu)===0){timerAutoStart(5);}else{inp.classList.add('wrong');}}
-function checkWsOk(){var all=document.querySelectorAll('#wsContainer input.ws-inp');if(all.length>0&&Array.from(all).every(function(i){return i.classList.contains('correct');}))timerStop(5);}
-function buildWortschatz(){var c=document.getElementById('wsContainer');WORTSCHATZ.forEach(function(item){var div=document.createElement('div');div.className='ws-item';var fh='';if(item.type==='n'){fh='<div class="ws-fields"><input class="ws-inp art" data-answer="'+item.artikel+'" data-field="art" placeholder="Artikel"><input class="ws-inp" data-answer="'+item.de+'" data-field="de" placeholder="Wort"><input class="ws-inp pl" data-answer="'+item.plural+'" data-field="pl" placeholder="Plural"></div>';}else{fh='<div class="ws-fields"><input class="ws-inp" data-answer="'+item.de+'" data-field="de" placeholder="Deutsch"></div>';}div.innerHTML='<div class="ws-en">'+item.en+'</div>'+fh;c.appendChild(div);div.querySelectorAll('input.ws-inp').forEach(function(inp){inp.addEventListener('input',function(){liveCheckWs(inp);});});});}
-function resetWortschatz(){timerResetOne(5);document.querySelectorAll('#wsContainer input.ws-inp').forEach(function(inp){inp.value='';inp.classList.remove('correct','wrong');});}
-function loesungWortschatz(){document.querySelectorAll('#wsContainer input.ws-inp').forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.remove('wrong');inp.classList.add('correct');});}
+
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerReset(5);
+    var c = document.getElementById('wortschatzContainer');
+    c.innerHTML = '';
+    WORTSCHATZ.forEach(function(item){
+        var card = document.createElement('div'); card.className = 'luecken-item';
+        var lbl = document.createElement('div'); lbl.className = 'en-label'; lbl.textContent = item.en;
+        card.appendChild(lbl);
+        var row = document.createElement('div'); row.className = 'inp-row';
+        if (item.artikel) {
+            var a = document.createElement('input'); a.className = 'blank'; a.placeholder = '';
+            a.style.width = '50px'; a.dataset.answer = item.artikel; a.dataset.field = 'art';
+            a.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(a); checkWortschatzAllOk(); });
+            row.appendChild(a);
+        }
+        var w = document.createElement('input'); w.className = 'blank'; w.placeholder = '';
+        w.style.width = '160px'; w.dataset.answer = item.de; w.dataset.field = 'word';
+        w.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(w); checkWortschatzAllOk(); });
+        row.appendChild(w);
+        if (item.plural) {
+            var p = document.createElement('input'); p.className = 'blank'; p.placeholder = '';
+            p.style.width = '140px'; p.dataset.answer = item.plural; p.dataset.field = 'plural';
+            p.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(p); checkWortschatzAllOk(); });
+            row.appendChild(p);
+        }
+        card.appendChild(row);
+        c.appendChild(card);
+    });
+}
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
+}
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#sec-5 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(5);
+}
+function showWortschatzLoesung(){
+    timerStop(5);
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz(){
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerReset(5);
+}
 
 // ══════════════════════════════════════
 // INIT

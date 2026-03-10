@@ -86,18 +86,14 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .satzbau-feedback.ok { color: #4caf50; }
 .satzbau-feedback.no { color: #e53935; }
 
-/* Wortschatz */
-.ws-row { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 8px; align-items: center; padding: 9px 10px; border-bottom: 1px solid #eee; font-size: .9rem; }
-.ws-row:first-child { background: #667eea; color: white; font-weight: 700; font-size: .85rem; border-radius: 8px 8px 0 0; }
-.ws-row:nth-child(even) { background: #f8f8ff; }
-.art { width: 70px; border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: .9rem; outline: none; padding: 2px 4px; }
-.art:focus { border-color: #667eea; }
-.art.ok { border-color: #4caf50; color: #2e7d32; }
-.art.no { border-color: #e53935; color: #c62828; }
-.wort-inp { width: 100%; border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: .9rem; outline: none; padding: 2px 4px; }
-.wort-inp:focus { border-color: #667eea; }
-.wort-inp.ok { border-color: #4caf50; color: #2e7d32; }
-.wort-inp.no { border-color: #e53935; color: #c62828; }
+/* ─── WORTSCHATZ-ÜBUNG ─────────────────────────────────────────── */
+.luecken-item { background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 8px; padding: 12px 14px; }
+.luecken-item .en-label { font-weight: 600; color: #555; font-size: 0.95em; margin-bottom: 6px; }
+.luecken-item .inp-row  { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+input.blank { border: none; border-bottom: 2px solid #667eea; background: transparent; outline: none; font-family: inherit; font-size: 1em; padding: 2px 4px; transition: border-color 0.2s, background 0.2s; }
+input.blank:focus { border-bottom-color: #667eea; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
 
 /* Timer */
 .btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
@@ -202,10 +198,10 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
   <div class="btn-row">
     <span class="timer-display">⏱ <span id="ws-time">0:00</span></span>
     <span class="timer-display">🏆 <span id="ws-best">—</span></span>
-    <button class="btn-small" onclick="timerResetOne(5)">↺ Neustart</button>
-    <button class="btn-small" onclick="wsShowSolutions()">💡 Lösungen</button>
+    <button class="btn-small" onclick="resetWortschatz()">↺ Neustart</button>
+    <button class="btn-small" onclick="showWortschatzLoesung()">💡 Lösungen</button>
   </div>
-  <div id="wsContainer"></div>
+  <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
 </div>
 </section>
 
@@ -227,7 +223,7 @@ function showTab(n) {
     if (b) b.classList.toggle('active', i === n);
   }
   if (n === 4) timerAutoStart(4);
-  if (n === 5) timerAutoStart(5);
+  if (n === 5) { initWortschatz(); timerAutoStart(5); }
 }
 
 /* ===== VOKABELN ===== */
@@ -280,7 +276,7 @@ function timerResetOne(n) {
   clearInterval(timerIntervals[n]); timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
   var els=['','','lt-time','','sb-time','ws-time']; var el=document.getElementById(els[n]); if(el) el.textContent='0:00';
   if(n===4) initSatzbau();
-  if(n===5) initWs();
+  if(n===5) initWortschatz();
 }
 [2,4,5].forEach(function(n){
   var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);
@@ -399,56 +395,80 @@ function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.ge
 function initSatzbau(){var cont=document.getElementById('satzbauContainer');cont.innerHTML='';satzbauData.forEach(function(d,i){var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}var wrap=document.createElement('div');wrap.className='sentence-builder';var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);sbRegisterZone(zone,i);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);});}
 
 /* ===== WORTSCHATZ ===== */
-var WS_VOCAB = [
-  { en: 'theatre play', art: 'das', de: 'Theaterstück', pl: '-e' },
-  { en: 'film / movie', art: 'der', de: 'Film', pl: '-e' },
-  { en: 'ticket (entry)', art: 'die', de: 'Eintrittskarte', pl: '-n' },
-  { en: 'seat / place', art: 'der', de: 'Platz', pl: '-\u0308e' },
-  { en: 'break / interval', art: 'die', de: 'Pause', pl: '-n' },
-  { en: 'audience', art: 'das', de: 'Publikum', pl: '—' },
-  { en: 'event', art: 'die', de: 'Veranstaltung', pl: '-en' },
-  { en: 'exhibition', art: 'die', de: 'Ausstellung', pl: '-en' },
-  { en: 'museum', art: 'das', de: 'Museum', pl: '-een' },
-  { en: 'exciting / thrilling', art: '—', de: 'spannend', pl: '—' },
-  { en: 'enthusiastic', art: '—', de: 'begeistert', pl: '—' },
-  { en: 'to look at / to watch', art: '—', de: 'anschauen', pl: '—' }
+var WORTSCHATZ = [
+  { id: 1, type: 'n', en: '🎭 theatre play', artikel: 'das', de: 'Theaterstück', plural: '-e' },
+  { id: 2, type: 'n', en: '🎬 film / movie', artikel: 'der', de: 'Film', plural: '-e' },
+  { id: 3, type: 'n', en: '🎫 ticket (entry)', artikel: 'die', de: 'Eintrittskarte', plural: '-n' },
+  { id: 4, type: 'n', en: '💺 seat / place', artikel: 'der', de: 'Platz', plural: '-\u0308e' },
+  { id: 5, type: 'n', en: '⏸️ break / interval', artikel: 'die', de: 'Pause', plural: '-n' },
+  { id: 6, type: 'n', en: '👥 audience', artikel: 'das', de: 'Publikum', plural: '—' },
+  { id: 7, type: 'n', en: '🎪 event', artikel: 'die', de: 'Veranstaltung', plural: '-en' },
+  { id: 8, type: 'n', en: '🖼️ exhibition', artikel: 'die', de: 'Ausstellung', plural: '-en' },
+  { id: 9, type: 'n', en: '🏛️ museum', artikel: 'das', de: 'Museum', plural: '-een' },
+  { id: 10, type: 'a', en: '⚡ exciting / thrilling', artikel: null, de: 'spannend', plural: null },
+  { id: 11, type: 'a', en: '😍 enthusiastic', artikel: null, de: 'begeistert', plural: null },
+  { id: 12, type: 'v', en: '👀 to look at / to watch', artikel: null, de: 'anschauen', plural: null }
 ];
-var wsDone = false;
-function initWs() {
-  wsDone = false;
-  var cont = document.getElementById('wsContainer'); cont.innerHTML = '';
-  var header = document.createElement('div'); header.className = 'ws-row';
-  header.innerHTML = '<div>Artikel</div><div>Englisch → Deutsch</div><div>Plural</div>';
-  cont.appendChild(header);
-  WS_VOCAB.forEach(function(v,i) {
-    var row = document.createElement('div'); row.className = 'ws-row';
-    var artInp = document.createElement('input'); artInp.className = 'art'; artInp.placeholder = 'Artikel';
-    artInp.dataset.ans = v.art; artInp.id = 'art'+i;
-    artInp.addEventListener('input', function(){wsCheckInp(artInp, v.art);});
-    var deInp = document.createElement('input'); deInp.className = 'wort-inp';
-    deInp.placeholder = v.en; deInp.dataset.ans = v.de; deInp.id = 'de'+i;
-    deInp.addEventListener('input', function(){wsCheckInp(deInp, v.de); timerAutoStart(5);});
-    var plInp = document.createElement('input'); plInp.className = 'wort-inp';
-    plInp.placeholder = 'Plural'; plInp.dataset.ans = v.pl; plInp.id = 'pl'+i;
-    plInp.addEventListener('input', function(){wsCheckInp(plInp, v.pl);});
-    row.appendChild(artInp); row.appendChild(deInp); row.appendChild(plInp);
-    cont.appendChild(row);
-  });
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerReset(5);
+    var c = document.getElementById('wortschatzContainer');
+    c.innerHTML = '';
+    WORTSCHATZ.forEach(function(item){
+        var card = document.createElement('div'); card.className = 'luecken-item';
+        var lbl = document.createElement('div'); lbl.className = 'en-label'; lbl.textContent = item.en;
+        card.appendChild(lbl);
+        var row = document.createElement('div'); row.className = 'inp-row';
+        if (item.artikel) {
+            var a = document.createElement('input'); a.className = 'blank'; a.placeholder = '';
+            a.style.width = '50px'; a.dataset.answer = item.artikel; a.dataset.field = 'art';
+            a.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(a); checkWortschatzAllOk(); });
+            row.appendChild(a);
+        }
+        var w = document.createElement('input'); w.className = 'blank'; w.placeholder = '';
+        w.style.width = '160px'; w.dataset.answer = item.de; w.dataset.field = 'word';
+        w.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(w); checkWortschatzAllOk(); });
+        row.appendChild(w);
+        if (item.plural) {
+            var p = document.createElement('input'); p.className = 'blank'; p.placeholder = '';
+            p.style.width = '140px'; p.dataset.answer = item.plural; p.dataset.field = 'plural';
+            p.addEventListener('input', function(){ timerAutoStart(5); wortschatzCheck(p); checkWortschatzAllOk(); });
+            row.appendChild(p);
+        }
+        card.appendChild(row);
+        c.appendChild(card);
+    });
 }
-function wsCheckInp(inp, ans) {
-  timerAutoStart(5);
-  var val = inp.value.trim();
-  if(val === ans){inp.classList.add('ok');inp.classList.remove('no');}
-  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
-  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
-  else{inp.classList.remove('ok','no');}
-  var allOk = Array.from(document.querySelectorAll('#wsContainer .art, #wsContainer .wort-inp')).every(function(i){return i.classList.contains('ok');});
-  if(allOk && !wsDone){wsDone=true; timerStop(5);}
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
 }
-function wsShowSolutions() {
-  document.querySelectorAll('#wsContainer .art, #wsContainer .wort-inp').forEach(function(i){
-    i.value=i.dataset.ans; i.classList.add('ok'); i.classList.remove('no');
-  });
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#tab-5 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(5);
+}
+function showWortschatzLoesung(){
+    timerStop(5);
+    document.querySelectorAll('#tab-5 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz(){
+    document.querySelectorAll('#tab-5 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerReset(5);
 }
 
 /* ===== INIT ===== */
@@ -456,7 +476,7 @@ buildVocabCards();
 initQa();
 initRf();
 initSatzbau();
-initWs();
+initWortschatz();
 </script>
 </body>
 </html>
