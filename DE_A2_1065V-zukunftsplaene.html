@@ -326,7 +326,7 @@ function buildVocab(){
   var grid = document.getElementById('vocabGrid');
   VOCAB.forEach(function(v){
     var card = document.createElement('div'); card.className='vocab-card';
-    card.innerHTML = '<img class="vocab-img" src="https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="'+v.term+'" loading="lazy"><div class="vocab-body"><div class="vocab-term">'+v.term+'</div><div class="vocab-en">'+v.en+'</div><div class="vocab-ex">'+v.ex+'</div></div>';
+    card.innerHTML = '<img class="vocab-img" src="'+(String(v.img).startsWith('data:')?v.img:'https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop')+'" alt="'+v.term+'" loading="lazy"><div class="vocab-body"><div class="vocab-term">'+v.term+'</div><div class="vocab-en">'+v.en+'</div><div class="vocab-ex">'+v.ex+'</div></div>';
     grid.appendChild(card);
   });
 }

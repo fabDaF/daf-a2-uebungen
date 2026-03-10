@@ -384,7 +384,7 @@ function initVocab(){
   var grid=document.getElementById('vocabGrid');
   VOCAB.forEach(function(v){
     var card=document.createElement('div'); card.className='vocab-card';
-    card.innerHTML='<img src="https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="'+v.term+'" loading="lazy">'
+    card.innerHTML='<img src="'+(String(v.img).startsWith('data:')?v.img:'https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop')+'" alt="'+v.term+'" loading="lazy">'
       +'<div class="card-body">'
       +'<div class="card-term">'+v.term+'</div>'
       +'<div class="card-en">'+v.en+'</div>'

@@ -316,7 +316,7 @@ function buildVocabCards() {
         var card = document.createElement('div');
         card.className = 'vocab-card';
         card.innerHTML =
-            '<img src="https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="'+v.term+'" loading="lazy">' +
+            '<img src="'+(String(v.img).startsWith('data:')?v.img:'https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop')+'" alt="'+v.term+'" loading="lazy">' +
             '<div class="vc-body">' +
             '<div class="vc-term">'+v.term+'</div>' +
             '<div class="vc-en">'+v.en+'</div>' +
