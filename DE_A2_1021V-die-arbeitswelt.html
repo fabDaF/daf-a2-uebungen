@@ -943,7 +943,7 @@ function initWortschatz() {
         var pluralHolder = item.plural === '—' ? '<span style="color:#bbb">—</span>' :
             '<input class="ws-inp" id="' + pluralKey + '" data-ans="' + item.plural.toLowerCase() + '" placeholder="" style="width:140px">';
 
-        tr.innerHTML = '<td><img class="ws-img" src="\' + item.img + \'" alt="' + item.en + '"></td>'
+        tr.innerHTML = '<td><img class="ws-img" src="' + item.img + '" alt="' + item.en + '"></td>'
             + '<td><span class="ws-en">' + item.en + '</span></td>'
             + '<td>' + artHolder + '</td>'
             + '<td><input class="ws-inp" id="' + wortKey + '" data-ans="' + item.wort.toLowerCase() + '" placeholder="" style="width:150px"></td>'
