@@ -329,18 +329,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
                 <button class="btn btn-reset" style="padding:6px 14px;font-size:0.82em;" onclick="timerReset(4)">↺ Neustart</button>
                 <button class="btn btn-primary" style="padding:6px 14px;font-size:0.82em;" onclick="showWsLoesungen()">💡 Lösungen</button>
             </div>
-            <table class="ws-table">
-                <thead>
-                    <tr>
-                        <th style="width:60px"></th>
-                        <th>Englisch</th>
-                        <th>Artikel</th>
-                        <th>Wort</th>
-                        <th>Plural</th>
-                    </tr>
-                </thead>
-                <tbody id="wsBody"></tbody>
-            </table>
+            <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
         </div>
     </div><!-- /sec-4 -->
 
