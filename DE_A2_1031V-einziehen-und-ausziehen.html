@@ -421,7 +421,7 @@ function buildLuecken(data, containerId) {
             else{inp.classList.add('no');}
         });
         div.appendChild(inp);
-        div.innerHTML += item.nach;
+        var nachSpan = document.createElement('span'); nachSpan.innerHTML = item.nach; div.appendChild(nachSpan);
         container.appendChild(div);
     });
 }
