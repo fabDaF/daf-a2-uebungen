@@ -710,7 +710,7 @@ function initSatzbau() {
 
     var shuffled = shuffle(s.words.slice());
     shuffled.forEach(function(word) {
-      bank.appendChild(sbMakeChip((wi===0)?sbCapitalize(word):word, idx));
+      bank.appendChild(sbMakeChip(word, idx));
     });
 
     var zone = document.createElement('div');

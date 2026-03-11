@@ -408,7 +408,7 @@ function sbShowSolution(){
     var pt=zone.querySelector('.sb-punkt');
     Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});
     d.words.forEach(function(w,j){var cap=(j===0)?w.charAt(0).toUpperCase()+w.slice(1):w;
-      var c=sbMakeChip(cap,w.toLowerCase());
+      var c=sbMakeChip(cap,word);
       if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);
     });
     sbColorRow(zone,true);

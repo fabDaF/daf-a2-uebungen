@@ -482,7 +482,7 @@ function sbShowSolution(){
     if (!bank || !row) return;
     bank.innerHTML=''; row.innerHTML='';
     data.words.forEach(function(word, i){
-      var ch = sbMakeChip((i===0)?sbCapitalize(word):word, w.toLowerCase());
+      var ch = sbMakeChip((i===0)?sbCapitalize(word):word, word);
       ch.classList.add('sb-placed'); row.appendChild(ch);
     });
     var pt = document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
@@ -500,7 +500,7 @@ function sbBuild(){
     var wrap = document.createElement('div'); wrap.className='sentence-builder';
     wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
     var bank = document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
-    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(word):word, w.toLowerCase())); });
+    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(word):word, word)); });
     wrap.appendChild(bank);
     var row = document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx;
     var pt = document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);

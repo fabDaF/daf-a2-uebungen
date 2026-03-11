@@ -561,7 +561,7 @@ function sbShowSolution() {
     cursor.className = 'sb-insert-cursor'; cursor.id = 'sb-insert-cursor-' + idx; cursor.style.display = 'none';
     zone.appendChild(cursor);
     s.words.forEach(function(word, wi) {
-      var chip = sbMakeChip((wi===0)?sbCapitalize(word):word, idx);
+      var chip = sbMakeChip(word, idx);
       chip.textContent = word;
       chip.classList.add('ok'); zone.appendChild(chip);
     });
@@ -584,7 +584,7 @@ function initSatzbau() {
       sbUpdateCapitalization(idx);
       setTimeout(function() { sbCheckAuto(idx); }, 500);
     });
-    shuffle(s.words.slice()).forEach(function(word) { bank.appendChild(sbMakeChip((wi===0)?sbCapitalize(word):word, idx)); });
+    shuffle(s.words.slice()).forEach(function(word) { bank.appendChild(sbMakeChip(word, idx)); });
     var zone = document.createElement('div'); zone.className = 'sb-zone'; zone.id = 'sb-row-' + idx;
     var cursor = document.createElement('div');
     cursor.className = 'sb-insert-cursor'; cursor.id = 'sb-insert-cursor-' + idx; cursor.style.display = 'none';

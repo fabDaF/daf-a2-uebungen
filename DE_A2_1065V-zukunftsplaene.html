@@ -492,7 +492,7 @@ function sbShowSolution(){
   satzbauData.forEach(function(data,rowIdx){
     var bank=document.getElementById('sb-bank-'+rowIdx); var row=document.getElementById('sb-row-'+rowIdx); if(!bank||!row) return;
     bank.innerHTML=''; row.innerHTML='';
-    data.words.filter(function(w){return w!==',';}).forEach(function(word,i){ var ch=sbMakeChip((i===0)?sbCapitalize(word):word, w.toLowerCase()); ch.classList.add('sb-placed'); row.appendChild(ch); });
+    data.words.filter(function(w){return w!==',';}).forEach(function(word,i){ var ch=sbMakeChip(i===0?word.charAt(0).toUpperCase()+word.slice(1):word,word); ch.classList.add('sb-placed'); row.appendChild(ch); });
     var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
     sbColorRow(rowIdx,true); sbCorrect[rowIdx]=true;
   });
@@ -506,7 +506,7 @@ function sbBuild(){
     var shuffled=words.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;}
     var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
     var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
-    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(word):word, w.toLowerCase())); });
+    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); });
     wrap.appendChild(bank);
     var row=document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx;
     var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);

@@ -626,7 +626,7 @@ function initSatzbau(){
     // bank
     var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx;
     var shuffled=sbFisherYates(item.words.slice());
-    shuffled.forEach(function(w,i){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(w):w,i,idx)); });
+    shuffled.forEach(function(w,i){ bank.appendChild(sbMakeChip(w,i,idx)); });
     // zone
     var zone=document.createElement('div'); zone.className='sb-zone'; zone.id='sb-row-'+idx;
     var cursor=document.createElement('div'); cursor.className='sb-insert-cursor'; zone.appendChild(cursor);
