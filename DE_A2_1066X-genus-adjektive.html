@@ -908,8 +908,8 @@ function wortschatzCheck(inp){
     var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
     inp.classList.remove('correct','wrong');
     if (!user) return;
-    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
-    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    var cmpUser   = user.trim();
+    var cmpAnswer = answer;
     if (cmpUser === cmpAnswer) inp.classList.add('correct');
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
     else inp.classList.add('wrong');

@@ -736,7 +736,7 @@ function initWortschatz(){
         container.appendChild(row);
     });
 }
-function wortschatzCheck(inp){ var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field; inp.classList.remove('correct','wrong'); if (!user) return; var cmpUser = (field === 'art') ? user.toLowerCase().trim() : user.trim(); var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer; if (cmpUser === cmpAnswer) inp.classList.add('correct'); else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix */ } else inp.classList.add('wrong'); }
+function wortschatzCheck(inp){ var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field; inp.classList.remove('correct','wrong'); if (!user) return; var cmpUser = user.trim(); var cmpAnswer = answer; if (cmpUser === cmpAnswer) inp.classList.add('correct'); else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix */ } else inp.classList.add('wrong'); }
 function checkWortschatzAllOk(){ var inputs = document.querySelectorAll('#sec-5 input.blank'); var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); }); if (allOk) timerStop(5); }
 function showWortschatzLoesung(){ timerStop(5); document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){ inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong'); }); }
 function resetWortschatz(){ document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){ if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); } }); wortschatzInited = false; initWortschatz(); timerResetOne(5); }
