@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1065V · Zukunftspläne</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p { font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border-top: none; border-left: none; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+.section { display: none; padding: 28px 30px; }
+.section.aktiv { display: block; }
+@media (max-width: 600px) {
+  body { padding: 8px; }
+  .section { padding: 18px 14px; }
+  .nav { flex-wrap: wrap; }
+  .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+  .nav-btn:last-child { border-right: 1px solid #ddd; }
+}
+/* VOCAB CARDS */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.vocab-card { border: 2px solid #e0d8f8; border-radius: 12px; overflow: hidden; background: #fafafa; }
+.vocab-img { width: 100%; height: 160px; object-fit: cover; }
+.vocab-body { padding: 12px 14px; }
+.vocab-term { font-size: 1.05rem; font-weight: 700; color: #5a3e9e; margin-bottom: 2px; }
+.vocab-en { font-size: .85rem; color: #777; font-style: italic; margin-bottom: 6px; }
+.vocab-ex { font-size: .85rem; color: #444; line-height: 1.5; border-left: 3px solid #c0b0e8; padding-left: 8px; }
+/* QA */
+.qa-pool { display: flex; flex-wrap: wrap; gap: 8px; background: #f5f3fc; border: 2px dashed #c0b0e8; border-radius: 8px; padding: 12px; min-height: 50px; margin-bottom: 18px; }
+.qa-chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; font-size: .88rem; cursor: grab; user-select: none; white-space: nowrap; }
+.qa-chip:active { cursor: grabbing; opacity: .7; }
+.qa-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.qa-question { font-style: italic; color: #555; flex: 1; min-width: 180px; font-size: .9rem; padding-top: 6px; }
+.qa-drop { min-width: 220px; min-height: 38px; background: #fff; border: 2px dashed #c0b0e8; border-radius: 8px; padding: 6px 10px; display: flex; flex-wrap: wrap; gap: 4px; flex: 2; }
+.qa-drop.drag-over { border-color: #667eea; background: #f0edf8; }
+.qa-fb { font-size: .82rem; margin-top: 4px; }
+.qa-fb.ok { color: #27ae60; }
+.qa-fb.no { color: #e74c3c; }
+/* LÜCKENTEXT */
+.lt-section { margin-bottom: 24px; }
+.lt-title { font-weight: 700; color: #5a3e9e; margin-bottom: 12px; font-size: 1rem; border-bottom: 2px solid #e8e0f7; padding-bottom: 6px; }
+.lt-row { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; line-height: 1.7; }
+.lt-num { color: #888; font-size: .85rem; min-width: 22px; }
+.lt-inp { border: none; border-bottom: 2px solid #aaa; outline: none; font-size: .95rem; padding: 2px 4px; width: 160px; background: transparent; transition: border-color .2s; }
+.lt-inp:focus { border-color: #667eea; }
+.lt-inp.ok { border-color: #27ae60; color: #27ae60; }
+.lt-inp.no { border-color: #e74c3c; color: #e74c3c; }
+/* TEXT */
+.story-text { line-height: 1.8; color: #333; font-size: .95rem; background: #f8f6ff; border-radius: 8px; padding: 20px 24px; margin-bottom: 14px; }
+.rf-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.rf-text { flex: 1; font-size: .92rem; color: #333; }
+.rf-btns { display: flex; gap: 6px; }
+.rf-btn { padding: 4px 14px; border: 2px solid #c0b0e8; border-radius: 16px; cursor: pointer; font-size: .84rem; color: #5a3e9e; background: #f8f6ff; transition: all .2s; }
+.rf-btn:hover { background: #e8e0f7; }
+.rf-btn.correct { background: #27ae60; color: white; border-color: #27ae60; }
+.rf-btn.wrong { background: #e74c3c; color: white; border-color: #e74c3c; }
+/* SATZBAU */
+.sentence-builder { margin-bottom: 22px; }
+.sb-label { font-size: .85rem; color: #888; margin-bottom: 6px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 6px; background: #f5f3fc; border: 2px dashed #c0b0e8; border-radius: 8px; padding: 10px; min-height: 44px; margin-bottom: 6px; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 6px; background: #fff; border: 2px dashed #ccc; border-radius: 8px; padding: 8px; min-height: 44px; position: relative; }
+.sb-zone.drag-over { border-color: #667eea; background: #f0edf8; }
+.chip { background: #667eea; color: white; border-radius: 20px; padding: 5px 12px; font-size: .88rem; cursor: grab; user-select: none; white-space: nowrap; transition: opacity .15s; }
+.chip:active { cursor: grabbing; opacity: .7; }
+.chip.sb-placed { background: #764ba2; }
+.sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; }
+.satzbau-feedback { font-size: .88rem; margin-top: 4px; min-height: 20px; }
+.satzbau-feedback.ok { color: #27ae60; }
+.satzbau-feedback.no { color: #e74c3c; }
+.sb-insert-cursor { display: inline-block; width: 2px; height: 28px; background: #667eea; animation: blink 1s infinite; align-self: center; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+/* WS */
+.ws-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.ws-item { display: flex; align-items: center; gap: 10px; background: #f8f6ff; border-radius: 8px; padding: 8px 12px; }
+.ws-num { color: #888; font-size: .82rem; min-width: 20px; }
+.ws-en { font-style: italic; color: #555; min-width: 140px; font-size: .88rem; }
+.ws-inp { border: none; border-bottom: 2px solid #aaa; outline: none; font-size: .9rem; padding: 2px 4px; flex: 1; background: transparent; transition: border-color .2s; }
+.ws-inp:focus { border-color: #667eea; }
+.ws-inp.ok { border-color: #27ae60; color: #27ae60; }
+.ws-inp.no { border-color: #e74c3c; color: #e74c3c; }
+/* BTN-ROW */
+.btn-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid #eee; font-size: .9rem; color: #555; }
+.btn-row button { background: none; border: 1px solid #c0b0e8; border-radius: 16px; padding: 4px 14px; cursor: pointer; font-size: .88rem; color: #5a3e9e; transition: background .2s; }
+.btn-row button:hover { background: #f0edf8; }
+/* FOOTER */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>1065V · Zukunftspläne</h1>
+    <p style="font-family: Georgia, serif;">A2.1 · Wortschatz · Zukunft &amp; Pläne</p>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">📸</span><span class="nav-label">Wörter</span></div>
+    <div class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">💬</span><span class="nav-label">Redemittel</span></div>
+    <div class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+    <div class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">📖</span><span class="nav-label">Text &amp; Fragen</span></div>
+    <div class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+    <div class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
+  </div>
+
+  <!-- TAB 0: WÖRTER -->
+  <section class="section aktiv" id="tab0">
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </section>
+
+  <!-- TAB 1: REDEMITTEL -->
+  <section class="section" id="tab1">
+    <p style="color:#555;margin-bottom:14px;">Ziehe die Antwort zur passenden Frage.</p>
+    <div class="qa-pool" id="qa-pool"></div>
+    <div id="qa-rows"></div>
+    <div class="btn-row">
+      <button onclick="qaReset()">↺ Neustart</button>
+      <button onclick="qaSolve()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 2: LÜCKENTEXT -->
+  <section class="section" id="tab2">
+    <div class="lt-section">
+      <div class="lt-title">Teil 1 · Annas Besuch bei der Wahrsagerin</div>
+      <div class="lt-row"><span class="lt-num">1.</span>
+        Anna möchte sich die Zukunft <input class="lt-inp" id="lt0" data-ans="wahrsagen" placeholder="" oninput="ltCheck(this)"> lassen.
+      </div>
+      <div class="lt-row"><span class="lt-num">2.</span>
+        Sybil ist eine <input class="lt-inp" id="lt1" data-ans="Wahrsagerin" placeholder="" oninput="ltCheck(this)">, die die Zukunft vorhersagen kann.
+      </div>
+      <div class="lt-row"><span class="lt-num">3.</span>
+        Sybil macht eine <input class="lt-inp" id="lt2" data-ans="Vorhersage" placeholder="" oninput="ltCheck(this)"> über Annas Zukunft.
+      </div>
+      <div class="lt-row"><span class="lt-num">4.</span>
+        In Annas Familie wird es <input class="lt-inp" id="lt3" data-ans="bald" placeholder="" oninput="ltCheck(this)"> eine große Überraschung geben.
+      </div>
+      <div class="lt-row"><span class="lt-num">5.</span>
+        Das ist kein Grund, <input class="lt-inp" id="lt4" data-ans="pessimistisch" placeholder="" oninput="ltCheck(this)"> oder nervös zu sein.
+      </div>
+      <div class="lt-row"><span class="lt-num">6.</span>
+        Anna wird viele positive <input class="lt-inp" id="lt5" data-ans="Erlebnisse" placeholder="" oninput="ltCheck(this)"> haben.
+      </div>
+    </div>
+
+    <div class="lt-section">
+      <div class="lt-title">Teil 2 · Über die Zukunft sprechen</div>
+      <div class="lt-row"><span class="lt-num">7.</span>
+        Maria schreibt heute einen Test und ist sehr <input class="lt-inp" id="lt6" data-ans="nervös" placeholder="" oninput="ltCheck(this)">.
+      </div>
+      <div class="lt-row"><span class="lt-num">8.</span>
+        Frieda ist <input class="lt-inp" id="lt7" data-ans="optimistisch" placeholder="" oninput="ltCheck(this)"> und glaubt, dass die Zukunft gut wird.
+      </div>
+      <div class="lt-row"><span class="lt-num">9.</span>
+        Der Arzt gibt die <input class="lt-inp" id="lt8" data-ans="Prognose" placeholder="" oninput="ltCheck(this)">, dass das Kind bald wieder gesund wird.
+      </div>
+      <div class="lt-row"><span class="lt-num">10.</span>
+        Lisa hat die <input class="lt-inp" id="lt9" data-ans="Vermutung" placeholder="" oninput="ltCheck(this)">, dass sie eine Grippe hat.
+      </div>
+      <div class="lt-row"><span class="lt-num">11.</span>
+        Ein Baby bringt eine große <input class="lt-inp" id="lt10" data-ans="Veränderung" placeholder="" oninput="ltCheck(this)"> für eine Familie.
+      </div>
+      <div class="lt-row"><span class="lt-num">12.</span>
+        Kyle fliegt heute in den Urlaub und ist sehr <input class="lt-inp" id="lt11" data-ans="aufgeregt" placeholder="" oninput="ltCheck(this)">.
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <span>⏱ <span id="lt-timer">0:00</span></span>
+      <span>🏆 <span id="lt-best">–</span></span>
+      <button onclick="ltResetAll()">↺ Neustart</button>
+      <button onclick="ltShowAll()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 3: TEXT & FRAGEN -->
+  <section class="section" id="tab3">
+    <div class="story-text">
+      <strong>Bei der Wahrsagerin</strong><br><br>
+      Anna hat heute einen Termin bei der Wahrsagerin Sybil. Anna möchte sich die Zukunft wahrsagen lassen. Sie ist ganz aufgeregt.<br><br>
+      <em>Sybil:</em> „Guten Tag, Anna! Ich habe schon gesehen, dass du kommst. Wir wollen heute über deine Zukunft sprechen. Ich werde dir eine Vorhersage über deine Zukunft geben. Ich kann sehen, dass es viele Veränderungen in deinem Leben geben wird."<br><br>
+      <em>Sybil:</em> „In deiner Familie wird es bald eine große Überraschung geben. Es wird ein neuer Mann oder eine neue Frau in dein Leben kommen. Das ist noch unsicher. Aber das ist kein Grund, pessimistisch oder nervös zu sein. Ich sehe, dass deine Zukunft gut wird. Du wirst einen guten Job finden und eine große und gesunde Familie haben. Du kannst optimistisch sein. Ich bin mir sicher, dass du zukünftig viele positive Erlebnisse haben wirst."<br><br>
+      Nach dem Termin bei Sybil ist Anna sich unsicher. Manche Vorhersagen gefallen Anna, manche aber auch nicht. „Hat die Wahrsagerin recht? Werde ich wirklich solche Überraschungen erleben? Ein neuer Mann oder eine neue Frau? Was bedeutet das? Oder sind die Vorhersagen falsch?", denkt Anna nervös.<br><br>
+      Anna hat die Vermutung, dass die Vorhersage sehr unsicher ist. Aber sie ist optimistisch, dass ihre Zukunft trotzdem sehr positiv wird.
+    </div>
+
+    <h3 style="color:#5a3e9e;margin-bottom:12px;font-size:1rem;">Richtig oder Falsch?</h3>
+    <div id="rfContainer"></div>
+    <div class="btn-row">
+      <button onclick="rfReset()">↺ Neustart</button>
+      <button onclick="rfSolve()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 4: SATZBAU -->
+  <section class="section" id="tab4">
+    <p style="color:#555;margin-bottom:16px;">Bringe die Wörter in die richtige Reihenfolge.</p>
+    <div id="satzbauContainer"></div>
+    <div class="btn-row">
+      <span>⏱ <span id="sb-timer">0:00</span></span>
+      <span>🏆 <span id="sb-best">–</span></span>
+      <button onclick="sbTimerReset()">↺ Neustart</button>
+      <button onclick="sbShowSolution()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <!-- TAB 5: WORTSCHATZ -->
+  <section class="section" id="tab5">
+    <p style="color:#555;margin-bottom:14px;">Tippe die deutsche Übersetzung.</p>
+    <div class="ws-grid" id="wsGrid"></div>
+    <div class="btn-row">
+      <span>⏱ <span id="ws-timer">0:00</span></span>
+      <span>🏆 <span id="ws-best">–</span></span>
+      <button onclick="wsReset()">↺ Neustart</button>
+      <button onclick="wsShowAll()">💡 Lösungen</button>
+    </div>
+  </section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────
+var VOCAB = [
+  { term: 'nervös', en: '(nervous)', ex: 'Maria schreibt heute einen Test und ist sehr nervös.', img: 4226390 },
+  { term: 'aufgeregt', en: '(excited)', ex: 'Kyle fliegt heute in den Urlaub und ist sehr aufgeregt.', img: 3633307 },
+  { term: 'optimistisch', en: '(optimistic)', ex: 'Frieda ist optimistisch und glaubt, dass die Zukunft gut wird.', img: 11597333 },
+  { term: 'pessimistisch', en: '(pessimistic)', ex: 'Markus hat Angst vor der Zukunft, er ist pessimistisch.', img: 5543221 },
+  { term: 'etwas erleben', en: '(to experience something)', ex: 'Nicolas erlebt im Urlaub viele neue Dinge.', img: 1047443 },
+  { term: 'das Erlebnis, -se', en: '(the experience)', ex: 'Das Praktikum war ein interessantes Erlebnis für Nina.', img: 3184418 },
+  { term: 'bald', en: '(soon)', ex: 'Die Studenten haben ihr Studium beendet und müssen bald arbeiten.', img: 1194196 },
+  { term: 'die Veränderung, -en', en: '(the change)', ex: 'Ein Baby bringt eine große Veränderung für eine Familie.', img: 3889661 },
+  { term: 'die Vermutung, -en', en: '(the assumption / guess)', ex: 'Lisa hat die Vermutung, dass sie eine Grippe hat.', img: 12911259 },
+  { term: 'die Prognose, -n', en: '(the prognosis / forecast)', ex: 'Der Arzt gibt die Prognose, dass das Kind schnell gesund wird.', img: 15211444 },
+  { term: 'wahrsagen / der Wahrsager', en: '(to tell fortunes / the fortune teller)', ex: 'Die Wahrsagerin macht eine Vorhersage über Annas Zukunft.', img: 4790578 },
+  { term: 'die Überraschung, -en', en: '(the surprise)', ex: 'Die Geburtstagsparty war eine schöne Überraschung für sie.', img: 7294675 }
+];
+
+var QA_DATA = [
+  { q: 'Bist du nervös vor dem Test?', a: 'Ja, ich bin sehr nervös. Hoffentlich schaffe ich ihn!' },
+  { q: 'Bist du optimistisch für die Zukunft?', a: 'Ja, ich bin optimistisch. Ich glaube, alles wird gut.' },
+  { q: 'Was erwartest du in der Zukunft?', a: 'Ich erwarte viele Veränderungen und hoffentlich positive Erlebnisse.' },
+  { q: 'Hast du eine Prognose für das Wetter?', a: 'Laut Prognose wird es morgen sonnig und warm.' },
+  { q: 'Welche Überraschung hast du erlebt?', a: 'Die Überraschungsparty war ein unvergessliches Erlebnis!' },
+  { q: 'Was ist deine Vermutung?', a: 'Ich habe die Vermutung, dass sie bald eine Stelle findet.' }
+];
+
+var RF_DATA = [
+  { text: 'Anna besucht die Wahrsagerin Sybil.', ans: true },
+  { text: 'Anna ist bei dem Termin sehr ruhig.', ans: false },
+  { text: 'Sybil macht eine Vorhersage über Annas Zukunft.', ans: true },
+  { text: 'In Annas Familie wird es bald eine Überraschung geben.', ans: true },
+  { text: 'Sybil sagt, dass Annas Zukunft schlecht wird.', ans: false },
+  { text: 'Anna wird einen guten Job finden.', ans: true },
+  { text: 'Nach dem Termin ist Anna sich sicher, dass die Vorhersage stimmt.', ans: false },
+  { text: 'Anna ist am Ende optimistisch für ihre Zukunft.', ans: true }
+];
+
+var satzbauData = [
+  { words: ['Ich', 'bin', 'sehr', 'nervös', 'vor', 'dem', 'Test'], punct: '.' },
+  { words: ['Das', 'war', 'ein', 'tolles', 'Erlebnis', 'für', 'mich'], punct: '!' },
+  { words: ['Die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], punct: '.' },
+  { words: ['Ich', 'bin', 'optimistisch', ',', 'dass', 'alles', 'gut', 'wird'], punct: '.' },
+  { words: ['Ein', 'Baby', 'bringt', 'eine', 'große', 'Veränderung', 'für', 'die', 'Familie'], punct: '.' },
+  { words: ['Anna', 'hat', 'die', 'Vermutung', ',', 'dass', 'die', 'Vorhersage', 'nicht', 'der', 'Wahrheit', 'entspricht'], punct: '.' },
+  { words: ['Bald', 'wird', 'es', 'eine', 'große', 'Überraschung', 'geben'], punct: '.' },
+  { words: ['Sie', 'erwarten', 'in', 'der', 'Zukunft', 'viele', 'positive', 'Erlebnisse'], punct: '.' }
+];
+
+var WS_DATA = [
+  { en: '(nervous)', de: 'nervös' },
+  { en: '(excited)', de: 'aufgeregt' },
+  { en: '(optimistic)', de: 'optimistisch' },
+  { en: '(pessimistic)', de: 'pessimistisch' },
+  { en: '(to experience)', de: 'erleben' },
+  { en: '(the experience)', de: 'das Erlebnis' },
+  { en: '(soon)', de: 'bald' },
+  { en: '(the change)', de: 'die Veränderung' },
+  { en: '(the assumption)', de: 'die Vermutung' },
+  { en: '(the forecast)', de: 'die Prognose' },
+  { en: '(the surprise)', de: 'die Überraschung' },
+  { en: '(the fortune teller)', de: 'der Wahrsager' }
+];
+
+// ── TAB NAVIGATION ─────────────────────────────────────────
+function showTab(n) {
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('aktiv', i===n); });
+  document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
+  if (n === 2) ltTimerAutoStart();
+  if (n === 4) sbTimerAutoStart();
+  if (n === 5) wsTimerAutoStart();
+}
+
+// ── TIMER ───────────────────────────────────────────────────
+var TIMER_PREFIX = 'a2-1065v-';
+var ltStarted=false, ltRunning=false, ltSecs=0, ltInterval=null;
+var sbStarted=false, sbRunning=false, sbSecs=0, sbInterval=null;
+var wsStarted=false, wsRunning=false, wsSecs=0, wsInterval=null;
+function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerLoadBest(key, elId){ var b=localStorage.getItem(key); document.getElementById(elId).textContent=b?timerFmt(parseInt(b)):'–'; }
+function ltTimerAutoStart(){ if(ltStarted) return; ltStarted=true; ltRunning=true; ltInterval=setInterval(function(){ ltSecs++; document.getElementById('lt-timer').textContent=timerFmt(ltSecs); },1000); }
+function ltTimerStop(){ if(!ltRunning) return; ltRunning=false; clearInterval(ltInterval); var b=localStorage.getItem(TIMER_PREFIX+'best-lt'); if(!b||ltSecs<parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-lt',ltSecs); document.getElementById('lt-best').textContent=timerFmt(ltSecs); } }
+function ltTimerReset(){ ltRunning=false; ltStarted=false; ltSecs=0; clearInterval(ltInterval); document.getElementById('lt-timer').textContent='0:00'; }
+function sbTimerAutoStart(){ if(sbStarted) return; sbStarted=true; sbRunning=true; sbInterval=setInterval(function(){ sbSecs++; document.getElementById('sb-timer').textContent=timerFmt(sbSecs); },1000); }
+function sbTimerStop(){ if(!sbRunning) return; sbRunning=false; clearInterval(sbInterval); var b=localStorage.getItem(TIMER_PREFIX+'best-sb'); if(!b||sbSecs<parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-sb',sbSecs); document.getElementById('sb-best').textContent=timerFmt(sbSecs); } }
+function sbTimerReset(){ sbRunning=false; sbStarted=false; sbSecs=0; clearInterval(sbInterval); document.getElementById('sb-timer').textContent='0:00'; sbCorrect=[]; sbBuild(); }
+function wsTimerAutoStart(){ if(wsStarted) return; wsStarted=true; wsRunning=true; wsInterval=setInterval(function(){ wsSecs++; document.getElementById('ws-timer').textContent=timerFmt(wsSecs); },1000); }
+function wsTimerStop(){ if(!wsRunning) return; wsRunning=false; clearInterval(wsInterval); var b=localStorage.getItem(TIMER_PREFIX+'best-ws'); if(!b||wsSecs<parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-ws',wsSecs); document.getElementById('ws-best').textContent=timerFmt(wsSecs); } }
+function wsTimerReset(){ wsRunning=false; wsStarted=false; wsSecs=0; clearInterval(wsInterval); document.getElementById('ws-timer').textContent='0:00'; }
+
+// ── VOCAB CARDS ─────────────────────────────────────────────
+function buildVocab(){
+  var grid = document.getElementById('vocabGrid');
+  VOCAB.forEach(function(v){
+    var card = document.createElement('div'); card.className='vocab-card';
+    card.innerHTML = '<img class="vocab-img" src="https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="'+v.term+'" loading="lazy"><div class="vocab-body"><div class="vocab-term">'+v.term+'</div><div class="vocab-en">'+v.en+'</div><div class="vocab-ex">'+v.ex+'</div></div>';
+    grid.appendChild(card);
+  });
+}
+
+// ── QA REDEMITTEL ───────────────────────────────────────────
+var draggedChip = null;
+function qaInit(){
+  var pool = document.getElementById('qa-pool');
+  var rowsDiv = document.getElementById('qa-rows');
+  pool.innerHTML=''; rowsDiv.innerHTML='';
+  var answers = QA_DATA.map(function(d){ return d.a; }).sort(function(){ return Math.random()-.5; });
+  answers.forEach(function(ans){
+    var ch = document.createElement('div'); ch.className='qa-chip'; ch.textContent=ans; ch.dataset.orig=ans; ch.draggable=true;
+    ch.addEventListener('dragstart', function(){ draggedChip=ch; });
+    pool.appendChild(ch);
+  });
+  QA_DATA.forEach(function(item, idx){
+    var row = document.createElement('div'); row.className='qa-row';
+    var q = document.createElement('div'); q.className='qa-question'; q.textContent=(idx+1)+'. '+item.q;
+    var drop = document.createElement('div'); drop.className='qa-drop'; drop.dataset.ans=item.a;
+    drop.addEventListener('dragover', function(e){ e.preventDefault(); drop.classList.add('drag-over'); });
+    drop.addEventListener('dragleave', function(){ drop.classList.remove('drag-over'); });
+    drop.addEventListener('drop', function(e){
+      e.preventDefault(); drop.classList.remove('drag-over');
+      if (!draggedChip) return;
+      // return existing chip in drop to pool
+      var existing = drop.querySelector('.qa-chip');
+      if (existing) pool.appendChild(existing);
+      drop.appendChild(draggedChip);
+      draggedChip=null;
+      qaCheckRow(drop);
+    });
+    var fb = document.createElement('div'); fb.className='qa-fb';
+    row.appendChild(q); row.appendChild(drop); row.appendChild(fb);
+    rowsDiv.appendChild(row);
+  });
+}
+function qaCheckRow(drop){
+  var chip = drop.querySelector('.qa-chip');
+  if (!chip) return;
+  var correct = chip.dataset.orig === drop.dataset.ans;
+  var row = drop.parentElement;
+  var fb = row.querySelector('.qa-fb');
+  chip.style.background = correct ? '#27ae60' : '#e74c3c';
+  fb.textContent = correct ? '✅' : '❌';
+  fb.className = 'qa-fb ' + (correct ? 'ok' : 'no');
+}
+function qaReset(){ qaInit(); }
+function qaSolve(){
+  var pool = document.getElementById('qa-pool');
+  document.querySelectorAll('.qa-drop').forEach(function(drop){
+    var existing = drop.querySelector('.qa-chip');
+    if (existing) pool.appendChild(existing);
+    var chips = pool.querySelectorAll('.qa-chip');
+    chips.forEach(function(ch){
+      if (ch.dataset.orig === drop.dataset.ans){ drop.appendChild(ch); ch.style.background='#27ae60'; }
+    });
+    var row = drop.parentElement;
+    var fb = row.querySelector('.qa-fb');
+    fb.textContent='✅'; fb.className='qa-fb ok';
+  });
+}
+
+// ── LÜCKENTEXT ──────────────────────────────────────────────
+var LT_COUNT = 12;
+function ltCheck(inp){
+  ltTimerAutoStart();
+  var val=inp.value.trim(); var ans=inp.dataset.ans;
+  if(val===ans){ inp.classList.remove('no'); inp.classList.add('ok'); }
+  else if(ans.startsWith(val)&&val.length>0){ inp.classList.remove('ok','no'); }
+  else if(val.length>0){ inp.classList.remove('ok'); inp.classList.add('no'); }
+  else{ inp.classList.remove('ok','no'); }
+  var all=true;
+  for(var i=0;i<LT_COUNT;i++){ var el=document.getElementById('lt'+i); if(el&&!el.classList.contains('ok')){ all=false; break; } }
+  if(all) ltTimerStop();
+}
+function ltResetAll(){
+  for(var i=0;i<LT_COUNT;i++){ var el=document.getElementById('lt'+i); if(el){ el.value=''; el.classList.remove('ok','no'); } }
+  ltTimerReset();
+}
+function ltShowAll(){
+  for(var i=0;i<LT_COUNT;i++){ var el=document.getElementById('lt'+i); if(el){ el.value=el.dataset.ans; el.classList.remove('no'); el.classList.add('ok'); } }
+  ltTimerStop();
+}
+
+// ── RICHTIG/FALSCH ──────────────────────────────────────────
+function rfBuild(){
+  var container = document.getElementById('rfContainer');
+  container.innerHTML='';
+  RF_DATA.forEach(function(item, idx){
+    var row = document.createElement('div'); row.className='rf-item';
+    var txt = document.createElement('div'); txt.className='rf-text'; txt.textContent=(idx+1)+'. '+item.text;
+    var btns = document.createElement('div'); btns.className='rf-btns';
+    ['Richtig','Falsch'].forEach(function(label){
+      var btn = document.createElement('button'); btn.className='rf-btn'; btn.textContent=label;
+      btn.addEventListener('click', function(){
+        if(row.dataset.answered) return;
+        row.dataset.answered='1';
+        var correct = (label==='Richtig') === item.ans;
+        btn.classList.add(correct ? 'correct' : 'wrong');
+        btns.querySelectorAll('.rf-btn').forEach(function(b){
+          if(b!==btn){ b.style.opacity='.4'; b.style.pointerEvents='none'; }
+        });
+      });
+      btns.appendChild(btn);
+    });
+    row.appendChild(txt); row.appendChild(btns);
+    container.appendChild(row);
+  });
+}
+function rfReset(){ rfBuild(); }
+function rfSolve(){
+  document.querySelectorAll('.rf-item').forEach(function(row, idx){
+    if(row.dataset.answered) return;
+    row.dataset.answered='1';
+    var btns = row.querySelectorAll('.rf-btn');
+    btns.forEach(function(btn){
+      var isR = btn.textContent==='Richtig';
+      if(isR === RF_DATA[idx].ans) btn.classList.add('correct');
+      else { btn.style.opacity='.4'; btn.style.pointerEvents='none'; }
+    });
+  });
+}
+
+// ── SATZBAU ─────────────────────────────────────────────────
+var sbDragged = null;
+var sbCorrect = [];
+function sbMakeChip(word, orig){
+  var ch=document.createElement('span'); ch.className='chip'; ch.textContent=word; ch.dataset.orig=orig!==undefined?orig:word; ch.draggable=true;
+  ch.addEventListener('dragstart',function(){ sbDragged=ch; }); return ch;
+}
+function sbGetDragAfter(container, x){
+  var chips=Array.from(container.querySelectorAll('.chip:not(.dragging)'));
+  return chips.reduce(function(closest,child){ var box=child.getBoundingClientRect(); var offset=x-box.left-box.width/2; if(offset<0&&offset>closest.offset) return{offset:offset,element:child}; return closest; },{offset:Number.NEGATIVE_INFINITY}).element;
+}
+function sbUpdateCapitalization(rowIdx){
+  var row=document.getElementById('sb-row-'+rowIdx); if(!row) return;
+  row.querySelectorAll('.chip').forEach(function(ch,i){ var orig=ch.dataset.orig; ch.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig; });
+}
+function sbColorRow(rowIdx, correct){
+  var fb=document.getElementById('sb-fb-'+rowIdx);
+  if(fb){ fb.textContent=correct?'✅':'❌'; fb.className='satzbau-feedback '+(correct?'ok':'no'); }
+}
+function sbCheckAuto(rowIdx){
+  var row=document.getElementById('sb-row-'+rowIdx); if(!row) return;
+  var placed=Array.from(row.querySelectorAll('.chip')).map(function(ch){ return ch.dataset.orig; });
+  var data=satzbauData[rowIdx];
+  var expected=data.words.filter(function(w){ return w!==','; });
+  if(placed.length===0){ sbColorRow(rowIdx,false); return; }
+  var ok=placed.length===expected.length;
+  if(ok){ for(var i=0;i<placed.length;i++){ var p=placed[i].charAt(0).toUpperCase()+placed[i].slice(1); var ex=expected[i].charAt(0).toUpperCase()+expected[i].slice(1); if(p!==ex){ok=false;break;} } }
+  sbColorRow(rowIdx,ok);
+  if(ok) sbCorrect[rowIdx]=true;
+  if(sbCorrect.filter(Boolean).length===satzbauData.length) sbTimerStop();
+}
+function sbRegisterZone(zone,rowIdx){
+  zone.addEventListener('dragover',function(e){ e.preventDefault(); zone.classList.add('drag-over'); var cursor=zone.querySelector('.sb-insert-cursor'); if(!cursor){cursor=document.createElement('span');cursor.className='sb-insert-cursor';} var afterEl=sbGetDragAfter(zone,e.clientX); if(afterEl) zone.insertBefore(cursor,afterEl); else zone.appendChild(cursor); });
+  zone.addEventListener('dragleave',function(){ zone.classList.remove('drag-over'); var c=zone.querySelector('.sb-insert-cursor'); if(c) c.remove(); });
+  zone.addEventListener('drop',function(e){ e.preventDefault(); zone.classList.remove('drag-over'); var cursor=zone.querySelector('.sb-insert-cursor'); if(!sbDragged){if(cursor) cursor.remove(); return;} if(cursor) zone.insertBefore(sbDragged,cursor); else zone.appendChild(sbDragged); if(cursor) cursor.remove(); sbDragged.classList.add('sb-placed'); sbDragged=null; sbUpdateCapitalization(rowIdx); setTimeout(function(){ sbCheckAuto(rowIdx); },500); });
+  var bank=document.getElementById('sb-bank-'+rowIdx);
+  bank.addEventListener('dragover',function(e){ e.preventDefault(); });
+  bank.addEventListener('drop',function(e){ e.preventDefault(); if(!sbDragged) return; sbDragged.classList.remove('sb-placed'); bank.appendChild(sbDragged); sbDragged=null; sbUpdateCapitalization(rowIdx); setTimeout(function(){ sbCheckAuto(rowIdx); },500); });
+}
+function sbShowSolution(){
+  satzbauData.forEach(function(data,rowIdx){
+    var bank=document.getElementById('sb-bank-'+rowIdx); var row=document.getElementById('sb-row-'+rowIdx); if(!bank||!row) return;
+    bank.innerHTML=''; row.innerHTML='';
+    data.words.filter(function(w){return w!==',';}).forEach(function(word,i){ var ch=sbMakeChip(i===0?word.charAt(0).toUpperCase()+word.slice(1):word,word); ch.classList.add('sb-placed'); row.appendChild(ch); });
+    var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
+    sbColorRow(rowIdx,true); sbCorrect[rowIdx]=true;
+  });
+  sbTimerStop();
+}
+function sbBuild(){
+  var container=document.getElementById('satzbauContainer'); container.innerHTML='';
+  sbCorrect=new Array(satzbauData.length).fill(false);
+  satzbauData.forEach(function(data,rowIdx){
+    var words=data.words.filter(function(w){return w!==',';});
+    var shuffled=words.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;}
+    var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
+    var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
+    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); });
+    wrap.appendChild(bank);
+    var row=document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx;
+    var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
+    wrap.appendChild(row);
+    var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+rowIdx;
+    wrap.appendChild(fb);
+    container.appendChild(wrap);
+    sbRegisterZone(row,rowIdx);
+  });
+}
+
+// ── WORTSCHATZ ──────────────────────────────────────────────
+function wsBuild(){
+  var grid=document.getElementById('wsGrid'); grid.innerHTML='';
+  WS_DATA.forEach(function(item,i){
+    var div=document.createElement('div'); div.className='ws-item';
+    var num=document.createElement('span'); num.className='ws-num'; num.textContent=(i+1)+'.';
+    var en=document.createElement('span'); en.className='ws-en'; en.textContent=item.en;
+    var inp=document.createElement('input'); inp.className='ws-inp'; inp.dataset.ans=item.de; inp.placeholder='';
+    inp.addEventListener('input',function(){ wsTimerAutoStart(); var val=inp.value.trim(); var ans=inp.dataset.ans; if(val===ans){inp.classList.remove('no');inp.classList.add('ok');}else if(ans.startsWith(val)&&val.length>0){inp.classList.remove('ok','no');}else if(val.length>0){inp.classList.remove('ok');inp.classList.add('no');}else{inp.classList.remove('ok','no');} var all=Array.from(document.querySelectorAll('.ws-inp')).every(function(el){return el.classList.contains('ok');}); if(all) wsTimerStop(); });
+    div.appendChild(num); div.appendChild(en); div.appendChild(inp);
+    grid.appendChild(div);
+  });
+}
+function wsReset(){ document.querySelectorAll('.ws-inp').forEach(function(el){el.value='';el.classList.remove('ok','no');}); wsTimerReset(); wsStarted=false; }
+function wsShowAll(){ document.querySelectorAll('.ws-inp').forEach(function(el){el.value=el.dataset.ans;el.classList.remove('no');el.classList.add('ok');}); wsTimerStop(); }
+
+// ── INIT ────────────────────────────────────────────────────
+(function init(){
+  timerLoadBest(TIMER_PREFIX+'best-lt','lt-best');
+  timerLoadBest(TIMER_PREFIX+'best-sb','sb-best');
+  timerLoadBest(TIMER_PREFIX+'best-ws','ws-best');
+  buildVocab();
+  qaInit();
+  rfBuild();
+  sbBuild();
+  wsBuild();
+})();
+</script>
+</body>
+</html>

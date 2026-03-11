@@ -417,7 +417,7 @@ function liveCheck(inp) {
     if (user.length === 0) return;
     var cmpUser = user;
     var cmpAnswer = answer;
-    if (field === 'art') { cmpUser = user.toLowerCase(); cmpAnswer = answer.toLowerCase(); }
+    if (field === 'art') { cmpUser = user; cmpAnswer = answer; }
     if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* prefix ok */ }
     else { inp.classList.add('wrong'); }
@@ -765,14 +765,14 @@ function getSbInsertPos(zone, clientX) {
     return null;
 }
 
-function sbCapitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+function sbCapitalize(str) { return str; }
 
 function sbUpdateCapitalization(row) {
     var chips = Array.from(row.querySelectorAll('.chip'));
     chips.forEach(function(c, i) {
         var orig = c.dataset.orig;
         var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
-                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+                    && orig.charAt(0) !== orig.charAt(0);
         c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
     });
 }

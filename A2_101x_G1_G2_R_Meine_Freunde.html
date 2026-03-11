@@ -446,7 +446,7 @@ function liveCheck(inp) {
     if (user.length === 0) return;
     var cmpUser = user;
     var cmpAnswer = answer;
-    if (field === 'art') { cmpUser = user.toLowerCase(); cmpAnswer = answer.toLowerCase(); }
+    if (field === 'art') { cmpUser = user; cmpAnswer = answer; }
     if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* prefix ok */ }
     else { inp.classList.add('wrong'); }
@@ -601,8 +601,8 @@ function renderLuecken(data, containerId, cssClass, timerIdx) {
 
 function showLueckenLoesung(cssClass) {
     document.querySelectorAll('.' + cssClass).forEach(function(inp) {
-        var user = inp.value.trim().toLowerCase();
-        var answer = inp.dataset.answer.toLowerCase();
+        var user = inp.value.trim();
+        var answer = inp.dataset.answer;
         var next = inp.nextElementSibling;
         if (next && next.classList.contains('correction-hint')) next.remove();
         if (user === answer) {
@@ -938,7 +938,7 @@ function updateCaps(exId) {
     var first = row.querySelector('.chip');
     if (first && first.textContent !== '.' && !first.classList.contains('punct')) {
         var t = first.dataset.text;
-        if (t && t.length > 0) { first.textContent = t.charAt(0).toUpperCase() + t.slice(1); }
+        if (t && t.length > 0) { first.textContent = t; }
     }
 }
 

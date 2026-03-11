@@ -555,9 +555,9 @@ function buildLueckentext() {
         inp.className = 'luecken-inp';
         inp.placeholder = '';
         inp.style.width = item.size+'px';
-        inp.dataset.ans = item.ans.toLowerCase();
+        inp.dataset.ans = item.ans;
         inp.addEventListener('input', function() {
-            var val = inp.value.trim().toLowerCase();
+            var val = inp.value.trim();
             var ans = inp.dataset.ans;
             inp.classList.remove('ok','no');
             if (!val) return;
@@ -589,7 +589,7 @@ function lueckenLoesungen() {
         var ans = inp.dataset.ans;
         // Korrekten Wert mit originaler Schreibweise setzen
         LUECKEN_DATA.forEach(function(item) {
-            if (item.ans.toLowerCase() === ans) inp.value = item.ans;
+            if (item.ans === ans) inp.value = item.ans;
         });
         inp.classList.remove('no');
         inp.classList.add('ok');

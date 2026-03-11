@@ -96,15 +96,21 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 .satzbau-feedback.incorrect { color: #e74c3c; }
 .sb-nr { font-size: 0.8em; color: #999; margin-bottom: 4px; margin-top: 14px; font-weight: 600; }
 
-/* Wortschatz-Tab */
-.ws-row { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #f0f0f8; padding-bottom: 12px; }
-.ws-row:last-child { border-bottom: none; }
-.ws-en { font-size: 0.85em; color: #888; font-style: italic; }
-.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.95em; transition: border-color 0.2s; padding: 2px 4px; width: 100%; }
-.ws-inp:focus { border-bottom-color: #667eea; }
-.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
-.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
-.art { width: 70px; }
+/* ─── WORTSCHATZ-ÜBUNG ──────────────────────────────────────────── */
+.luecken-item {
+    background: #f8f9ff;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 12px 14px;
+}
+input.blank {
+    border: none; border-bottom: 2px solid #667eea; background: transparent;
+    outline: none; font-family: inherit; font-size: 1em; padding: 2px 4px;
+    transition: border-color 0.2s, background 0.2s;
+}
+input.blank:focus { border-bottom-color: #667eea; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
 
 /* Timer */
 .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
@@ -221,11 +227,11 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
             <div class="hilfe-box">
                 Tippe Artikel, Wort und Plural auf Deutsch. Die Felder werden grün, wenn du richtig liegst.
             </div>
-            <div id="wsContainer"></div>
+            <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
             <div class="btn-row">
                 <div class="timer-box">⏱ <span class="timer-display" id="timer-5">0:00</span> &nbsp;🏆 <span class="best-display" id="best-5">–</span></div>
-                <button class="btn btn-reset" onclick="wsReset()">↺ Neustart</button>
-                <button class="solution-btn" onclick="wsLoesungen()">💡 Lösungen</button>
+                <button class="btn btn-reset" onclick="resetWortschatz()">↺ Neustart</button>
+                <button class="solution-btn" onclick="showWortschatzLoesung()">💡 Lösungen</button>
             </div>
         </div>
     </div>
@@ -242,6 +248,7 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 function showSection(idx) {
     document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
     document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+    if (idx === 5) initWortschatz();
 }
 
 // ─── Timer ───────────────────────────────────────────────────────────────────
@@ -309,7 +316,7 @@ function buildVocabCards() {
         var card = document.createElement('div');
         card.className = 'vocab-card';
         card.innerHTML =
-            '<img src="https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop" alt="'+v.term+'" loading="lazy">' +
+            '<img src="'+(String(v.img).startsWith('data:')?v.img:'https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop')+'" alt="'+v.term+'" loading="lazy">' +
             '<div class="vc-body">' +
             '<div class="vc-term">'+v.term+'</div>' +
             '<div class="vc-en">'+v.en+'</div>' +
@@ -410,10 +417,10 @@ function buildLuecken(data, containerId) {
         var div = document.createElement('div'); div.className='luecken-satz';
         div.innerHTML = (idx+1)+'. '+item.vor;
         var inp = document.createElement('input'); inp.type='text'; inp.className='luecken-inp'; inp.placeholder=''; inp.style.width=item.size+'px';
-        inp.dataset.ans = item.ans.toLowerCase();
+        inp.dataset.ans = item.ans;
         inp.dataset.orig = item.ans;
         inp.addEventListener('input', function(){
-            var val=inp.value.trim().toLowerCase(), ans=inp.dataset.ans;
+            var val=inp.value.trim(), ans=inp.dataset.ans;
             inp.classList.remove('ok','no');
             if(!val) return;
             if(val===ans){inp.classList.add('ok');timerAutoStart(2);checkAllLuecken();}
@@ -500,8 +507,7 @@ function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}
 function sbUpdateCapitalization(row) {
     Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
         var orig=c.dataset.orig;
-        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+        c.textContent=orig;
     });
 }
 function sbMakeChip(word) {
@@ -575,66 +581,103 @@ function initSatzbau() {
 function sbResetAll(){timerResetOne(4);initSatzbau();}
 
 // ─── Wortschatz ──────────────────────────────────────────────────────────────
-var WS_VOCAB = [
-    { en:'to rent', art:'', term:'mieten', plural:'' },
-    { en:'to rent out', art:'', term:'vermieten', plural:'' },
-    { en:'furnished', art:'', term:'möbliert', plural:'' },
-    { en:'fitted kitchen', art:'die', term:'Einbauküche', plural:'Einbauküchen' },
-    { en:'apartment search', art:'die', term:'Wohnungssuche', plural:'Wohnungssuchen' },
-    { en:'advertisement', art:'die', term:'Anzeige', plural:'Anzeigen' },
-    { en:'floor plan', art:'der', term:'Grundriss', plural:'Grundrisse' },
-    { en:'to move in', art:'', term:'einziehen', plural:'' },
-    { en:'to move out', art:'', term:'ausziehen', plural:'' },
-    { en:'move/relocation', art:'der', term:'Umzug', plural:'Umzüge' },
-    { en:'rent', art:'die', term:'Miete', plural:'Mieten' },
-    { en:'deposit', art:'die', term:'Kaution', plural:'Kautionen' }
+var WORTSCHATZ = [
+    { id:1, type:'p', en:'🏠 to rent', artikel:'', de:'mieten', plural:'' },
+    { id:2, type:'p', en:'🏘️ to rent out', artikel:'', de:'vermieten', plural:'' },
+    { id:3, type:'p', en:'✨ furnished', artikel:'', de:'möbliert', plural:'' },
+    { id:4, type:'n', en:'🍳 fitted kitchen', artikel:'die', de:'Einbauküche', plural:'Einbauküchen' },
+    { id:5, type:'n', en:'🔍 apartment search', artikel:'die', de:'Wohnungssuche', plural:'Wohnungssuchen' },
+    { id:6, type:'n', en:'📰 advertisement', artikel:'die', de:'Anzeige', plural:'Anzeigen' },
+    { id:7, type:'n', en:'📋 floor plan', artikel:'der', de:'Grundriss', plural:'Grundrisse' },
+    { id:8, type:'p', en:'🚪 to move in', artikel:'', de:'einziehen', plural:'' },
+    { id:9, type:'p', en:'🚪 to move out', artikel:'', de:'ausziehen', plural:'' },
+    { id:10, type:'n', en:'🚚 move/relocation', artikel:'der', de:'Umzug', plural:'Umzüge' },
+    { id:11, type:'n', en:'💰 rent', artikel:'die', de:'Miete', plural:'Mieten' },
+    { id:12, type:'n', en:'🔐 deposit', artikel:'die', de:'Kaution', plural:'Kautionen' }
 ];
 
-function buildWortschatz() {
-    var container = document.getElementById('wsContainer'); container.innerHTML='';
-    WS_VOCAB.forEach(function(w, idx) {
-        var row = document.createElement('div'); row.className='ws-row';
-        var enDiv = document.createElement('div'); enDiv.className='ws-en'; enDiv.textContent=w.en;
-        row.appendChild(enDiv);
-        var inputsDiv = document.createElement('div'); inputsDiv.style.display='flex'; inputsDiv.style.gap='8px'; inputsDiv.style.flexWrap='wrap'; inputsDiv.style.alignItems='center';
-        function makeInp(ans, placeholder, cls, size) {
-            var inp = document.createElement('input'); inp.type='text'; inp.placeholder=placeholder; inp.style.width=size+'px';
-            inp.className='ws-inp'+(cls?' '+cls:'');
-            inp.dataset.ans = ans.toLowerCase(); inp.dataset.orig = ans;
-            inp.addEventListener('input', function(){
-                var val=inp.value.trim().toLowerCase(), a=inp.dataset.ans;
-                inp.classList.remove('ok','no');
-                if(!val) return;
-                if(val===a){inp.classList.add('ok');timerAutoStart(5);checkAllWs();}
-                else if(a.startsWith(val)){timerAutoStart(5);}
-                else{inp.classList.add('no');}
-            });
-            return inp;
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerResetOne(5);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
         }
-        if (w.art) {
-            inputsDiv.appendChild(makeInp(w.art, 'Artikel', 'art', 70));
-        }
-        inputsDiv.appendChild(makeInp(w.term, w.art ? 'Wort' : 'Verb/Adj.', '', w.term.length > 8 ? w.term.length*10+20 : 120));
-        if (w.plural) {
-            inputsDiv.appendChild(makeInp(w.plural, 'Plural', '', w.plural.length*9+20));
-        }
-        row.appendChild(inputsDiv);
+        row.appendChild(fields);
         container.appendChild(row);
     });
 }
-
-function checkAllWs() {
-    var all = Array.from(document.querySelectorAll('#sec-5 .ws-inp'));
-    if (all.every(function(i){return i.classList.contains('ok');})) timerStop(5);
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser   = user.trim();
+    var cmpAnswer = answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
 }
-
-function wsReset() { timerResetOne(5); buildWortschatz(); }
-
-function wsLoesungen() {
-    document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp){
-        inp.value = inp.dataset.orig;
-        inp.classList.remove('no'); inp.classList.add('ok');
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#sec-5 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(5);
+}
+function showWortschatzLoesung(){
+    timerStop(5);
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
     });
+}
+function resetWortschatz(){
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerResetOne(5);
 }
 
 // ─── Init ────────────────────────────────────────────────────────────────────
@@ -645,7 +688,6 @@ window.addEventListener('DOMContentLoaded', function() {
     buildLuecken(LT2, 'luecken2');
     buildRF();
     initSatzbau();
-    buildWortschatz();
 });
 </script>
 </body>

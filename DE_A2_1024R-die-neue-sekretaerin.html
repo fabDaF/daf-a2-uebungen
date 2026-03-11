@@ -350,21 +350,21 @@ function checkRF(i, btn, answer) {
 // TAB 3: LÜCKENTEXT
 // ═══════════════════════════════════════
 var LUECKEN_DATA = [
-    { vor: 'Tim sitzt am ', nach: ' in seinem Büro.', ans: 'schreibtisch', size: 130 },
-    { vor: 'Tim ist ', nach: '. Er ist selbstständig.', ans: 'anwalt', size: 80 },
-    { vor: 'Er ist sein eigener ', nach: '.', ans: 'chef', size: 60 },
-    { vor: 'Tims Firma ist in Berlin, aber er wohnt in ', nach: '.', ans: 'potsdam', size: 100 },
+    { vor: 'Tim sitzt am ', nach: ' in seinem Büro.', ans: 'Schreibtisch', size: 130 },
+    { vor: 'Tim ist ', nach: '. Er ist selbstständig.', ans: 'Anwalt', size: 80 },
+    { vor: 'Er ist sein eigener ', nach: '.', ans: 'Chef', size: 60 },
+    { vor: 'Tims Firma ist in Berlin, aber er wohnt in ', nach: '.', ans: 'Potsdam', size: 100 },
     { vor: 'Also ', nach: ' er jeden Tag von Potsdam nach Berlin.', ans: 'pendelt', size: 90 },
-    { vor: 'Tim hat vier ', nach: ' in der Firma.', ans: 'angestellte', size: 120 },
-    { vor: '35 Personen haben sich um die Stelle als ', nach: ' beworben.', ans: 'sekretär', size: 110 },
-    { vor: 'Tim muss sich für einen ', nach: ' entscheiden.', ans: 'bewerber', size: 110 },
+    { vor: 'Tim hat vier ', nach: ' in der Firma.', ans: 'Angestellte', size: 120 },
+    { vor: '35 Personen haben sich um die Stelle als ', nach: ' beworben.', ans: 'Sekretär', size: 110 },
+    { vor: 'Tim muss sich für einen ', nach: ' entscheiden.', ans: 'Bewerber', size: 110 },
     { vor: 'Nur acht Bewerbungen liegen auf dem ', nach: ' Stapel.', ans: 'linken', size: 80 },
     { vor: 'Alle acht Personen wirken sehr ', nach: '.', ans: 'professionell', size: 140 }
 ];
 
 function liveCheckLuecke(inp) {
-    var val = inp.value.trim().toLowerCase();
-    var ans = inp.dataset.answer.toLowerCase();
+    var val = inp.value.trim();
+    var ans = inp.dataset.answer;
     inp.classList.remove('correct','wrong');
     if (!val) return;
     if (val === ans) { inp.classList.add('correct'); timerAutoStart(3); checkLueckenOk(); return; }
@@ -398,7 +398,7 @@ function resetLuecken() {
 function loesungLuecken() {
     document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){
         var ans = inp.dataset.answer;
-        inp.value = ans.charAt(0).toUpperCase() + ans.slice(1);
+        inp.value = ans;
         inp.classList.remove('wrong'); inp.classList.add('correct');
     });
 }
@@ -542,8 +542,8 @@ function liveCheckWs(inp) {
     var field = inp.dataset.field;
     inp.classList.remove('correct','wrong');
     if (!user) return;
-    var cu = (field==='art') ? user.toLowerCase() : user;
-    var ca = (field==='art') ? answer.toLowerCase() : answer;
+    var cu = user;
+    var ca = answer;
     if (cu===ca) { inp.classList.add('correct'); timerAutoStart(5); checkWsOk(); }
     else if (ca.indexOf(cu)===0) { timerAutoStart(5); }
     else { inp.classList.add('wrong'); }

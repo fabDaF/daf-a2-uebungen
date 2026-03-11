@@ -444,8 +444,8 @@ function lueckeInit() {
 }
 
 function liveCheck(inp) {
-  var val = inp.value.trim().toLowerCase();
-  var ans = (inp.dataset.answer || '').toLowerCase();
+  var val = inp.value.trim();
+  var ans = (inp.dataset.answer || '');
   inp.classList.remove('correct', 'wrong');
   if (val.length === 0) return;
   if (val === ans) {
@@ -519,7 +519,7 @@ function sbUpdateCaps(idx) {
   if (!row) return;
   Array.from(row.querySelectorAll('.chip')).forEach(function(ch, i) {
     var orig = ch.dataset.orig;
-    ch.textContent = (i === 0) ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig;
+    ch.textContent = orig;
   });
 }
 
@@ -533,7 +533,7 @@ function sbColorRow(idx) {
   chips.forEach(function(ch, i) {
     ch.classList.remove('correct', 'wrong');
     if (i < data.answer.length) {
-      var ok = ch.dataset.orig.toLowerCase() === data.answer[i].toLowerCase();
+      var ok = ch.dataset.orig === data.answer[i];
       ch.classList.add(ok ? 'correct' : 'wrong');
       if (!ok) allCorrect = false;
     } else {
@@ -640,7 +640,7 @@ function showSb() {
     Array.from(row.querySelectorAll('.chip')).forEach(function(ch) { ch.remove(); });
     var pt = row.querySelector('.sb-punkt');
     data.words.forEach(function(word, i) {
-      var ch = sbMakeChip(i === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word, word);
+      var ch = sbMakeChip(word, word);
       ch.classList.add('sb-placed', 'correct');
       if (pt) row.insertBefore(ch, pt); else row.appendChild(ch);
     });

@@ -96,6 +96,24 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
 .author-footer a { color: #aaa; }
 .author-name { font-weight: 700; }
+
+/* Wortschatz input.blank */
+input.blank {
+    border: none; border-bottom: 2px solid #667eea; background: transparent;
+    outline: none; font-family: inherit; font-size: 1em; padding: 2px 4px;
+    transition: border-color 0.2s, background 0.2s;
+}
+input.blank:focus { border-bottom-color: #667eea; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
+
+/* Wortschatz Karten */
+.luecken-item {
+    background: #f8f9ff;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 12px 14px;
+}
 </style>
 </head>
 <body>
@@ -136,93 +154,7 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
     <h4>💡 Grammatik — Position im Satz</h4>
     <p>Temporaladverbien stehen <strong>vor</strong> oder <strong>nach</strong> dem konjugierten Verb:</p>
   </div>
-  <table class="gram-table">
-    <tr><th>Adverb am Anfang</th><th>Adverb in der Mitte</th></tr>
-    <tr><td><strong>Zuerst</strong> gehe ich zur Bank.</td><td>Ich gehe <strong>zuerst</strong> zur Bank.</td></tr>
-    <tr><td><strong>Danach</strong> muss ich einkaufen.</td><td>Ich muss <strong>danach</strong> einkaufen.</td></tr>
-    <tr><td><strong>Morgens</strong> frühstücke ich.</td><td>Ich frühstücke <strong>morgens</strong>.</td></tr>
-  </table>
-</div>
-</section>
-
-<!-- TAB 1: Lückentext -->
-<section class="section" id="tab-1">
-<div>
-  <h2>✏️ Lückentext</h2>
-  <div class="btn-row">
-    <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
-    <span class="timer-display">🏆 <span id="lt-best">—</span></span>
-    <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
-    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
-  </div>
-
-  <div class="lt-block">
-    <h3>Teil 1 — Das richtige Adverb</h3>
-    <p>1. <input class="lt-input" id="lt0" data-ans="Morgens" placeholder="" oninput="ltCheck(this)"> stehe ich auf, wenn der Wecker klingelt.</p>
-    <p>2. <input class="lt-input" id="lt1" data-ans="Zuerst" placeholder="" oninput="ltCheck(this)"> frühstücke ich in Ruhe.</p>
-    <p>3. <input class="lt-input" id="lt2" data-ans="Danach" placeholder="" oninput="ltCheck(this)"> putze ich meine Zähne und dusche.</p>
-    <p>4. <input class="lt-input" id="lt3" data-ans="Früher" placeholder="" oninput="ltCheck(this)"> musste ich nicht arbeiten. Als Kind bin ich nur in die Schule gegangen.</p>
-    <p>5. <input class="lt-input" id="lt4" data-ans="Später" placeholder="" oninput="ltCheck(this)">, wenn ich 60 bin, muss ich nicht mehr arbeiten.</p>
-    <p>6. <input class="lt-input" id="lt5" data-ans="Samstags" placeholder="" oninput="ltCheck(this)"> und sonntags muss ich auch jetzt nicht arbeiten.</p>
-    <p>7. Heute ist Montag. <input class="lt-input" id="lt6" data-ans="Montags" placeholder="" oninput="ltCheck(this)"> gehe ich immer zum Fußball-Training.</p>
-    <p>8. Ich gehe erst <input class="lt-input" id="lt7" data-ans="abends" placeholder="" oninput="ltCheck(this)"> zum Training.</p>
-  </div>
-
-  <div class="lt-block">
-    <h3>Teil 2 — Linas Tag</h3>
-    <p>Lina steht <input class="lt-input" id="lt8" data-ans="morgens" placeholder="" oninput="ltCheck(this)"> um 8 Uhr auf. Sie putzt sich die Zähne, geht duschen, zieht sich an und geht zur Arbeit. <input class="lt-input" id="lt9" data-ans="Mittags" placeholder="" oninput="ltCheck(this)"> macht sie Pause und geht mit ihren Kollegen ins Restaurant. <input class="lt-input" id="lt10" data-ans="Abends" placeholder="" oninput="ltCheck(this)"> entspannt sie zuhause.</p>
-  </div>
-</div>
-</section>
-
-<!-- TAB 2: Zuordnung -->
-<section class="section" id="tab-2">
-<div>
-  <h2>💬 Zuordnung — Tageszeit oder Reihenfolge?</h2>
-  <p style="margin-bottom:14px;color:#555;font-size:.9rem">Ziehe jedes Adverb in die richtige Gruppe.</p>
-  <div class="chip-pool" id="zuordPool"></div>
-  <div class="zuord-cols">
-    <div class="zuord-col">
-      <h4>🕐 Tageszeit</h4>
-      <div class="zuord-zone" id="z-tageszeit" ondragover="zuordOver(event)" ondragleave="zuordLeave(event)" ondrop="zuordDrop(event,'tageszeit')"></div>
-    </div>
-    <div class="zuord-col">
-      <h4>🔢 Reihenfolge</h4>
-      <div class="zuord-zone" id="z-reihenfolge" ondragover="zuordOver(event)" ondragleave="zuordLeave(event)" ondrop="zuordDrop(event,'reihenfolge')"></div>
-    </div>
-  </div>
-  <button class="btn-small" onclick="zuordReset()">↺ Neustart</button>
-</div>
-</section>
-
-<!-- TAB 3: Satzbau -->
-<section class="section" id="tab-3">
-<div>
-  <h2>🧩 Satzbau</h2>
-  <div class="btn-row">
-    <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
-    <span class="timer-display">🏆 <span id="sb-best">—</span></span>
-    <button class="btn-small" onclick="timerResetOne(3)">↺ Neustart</button>
-    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
-  </div>
-  <div id="satzbauContainer"></div>
-</div>
-</section>
-
-<!-- TAB 4: Wortschatz -->
-<section class="section" id="tab-4">
-<div>
-  <h2>🔠 Wortschatz — Adverbien tippen</h2>
-  <div class="btn-row">
-    <span class="timer-display">⏱ <span id="ws-time">0:00</span></span>
-    <span class="timer-display">🏆 <span id="ws-best">—</span></span>
-    <button class="btn-small" onclick="timerResetOne(4)">↺ Neustart</button>
-    <button class="btn-small" onclick="wsShowSolutions()">💡 Lösungen</button>
-  </div>
-  <table class="ws-table">
-    <thead><tr><th>Englisch</th><th>Deutsch (tippen)</th></tr></thead>
-    <tbody id="wsBody"></tbody>
-  </table>
+  <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
 </div>
 </section>
 
@@ -252,7 +184,7 @@ function timerFmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
 function timerTick(n){timerSeconds[n]++;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(timerSeconds[n]);}
 function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerTick(n);},1000);}
 function timerStop(n){if(!timerRunning[n])return;timerRunning[n]=false;clearInterval(timerIntervals[n]);var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');if(timerSeconds[n]<best)localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);var b=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n));var els=['','lt-best','','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(b);}
-function timerResetOne(n){clearInterval(timerIntervals[n]);timerStarted[n]=false;timerRunning[n]=false;timerSeconds[n]=0;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent='0:00';if(n===3)initSatzbau();if(n===4)initWs();}
+function timerResetOne(n){clearInterval(timerIntervals[n]);timerStarted[n]=false;timerRunning[n]=false;timerSeconds[n]=0;var els=['','lt-time','','sb-time','ws-time'];var el=document.getElementById(els[n]);if(el)el.textContent='0:00';if(n===3)initSatzbau();if(n===4)initWortschatz();}
 [1,3,4].forEach(function(n){var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);if(b){var els=['','lt-best','','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(parseInt(b));}});
 
 /* ===== LÜCKENTEXT ===== */
@@ -261,7 +193,7 @@ function ltCheck(inp){
   if(!ltStarted){ltStarted=true;timerAutoStart(1);}
   var val=inp.value.trim();var ans=inp.dataset.ans;
   if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
-  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(ans.startsWith(val)&&val.length>0){inp.classList.remove('ok','no');}
   else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
   else{inp.classList.remove('ok','no');}
   if(Array.from(document.querySelectorAll('.lt-input')).every(function(i){return i.classList.contains('ok');})){if(!ltDone){ltDone=true;timerStop(1);}}
@@ -321,49 +253,117 @@ var sbDragged=null;
 function sbMakeChip(word,orig){var c=document.createElement('div');c.className='chip';c.textContent=word;c.dataset.orig=orig;c.draggable=true;c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});return c;}
 function sbRegisterZone(zone,rowIdx){zone.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';var cursor=zone.querySelector('.sb-insert-cursor');if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}zone.classList.add('drag-over');});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('drag-over');var cursor=zone.querySelector('.sb-insert-cursor');if(sbDragged){if(cursor)zone.insertBefore(sbDragged,cursor);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}}zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});sbUpdateCapitalization(zone);setTimeout(function(){sbCheckAuto(rowIdx);},500);});}
 function sbColorRow(zone,ok){zone.querySelectorAll('.chip').forEach(function(c){c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';});}
-function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;c.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig;});}
-function sbCheckAuto(rowIdx){var zone=document.getElementById('sb-row-'+rowIdx);var fb=document.getElementById('sb-fb-'+rowIdx);if(!zone)return;var chips=Array.from(zone.querySelectorAll('.chip'));var words=chips.map(function(c){return c.dataset.orig.toLowerCase();});var expected=satzbauData[rowIdx].words.map(function(w){return w.toLowerCase();});var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});sbColorRow(zone,ok?true:chips.length>0?false:null);if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}if(ok){var allOk=satzbauData.every(function(_,i){var z=document.getElementById('sb-row-'+i);if(!z)return false;var ch=Array.from(z.querySelectorAll('.chip'));var ex=satzbauData[i].words.map(function(w){return w.toLowerCase();});return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig.toLowerCase()===ex[j];});});if(allOk)timerStop(3);}}
-function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.getElementById('sb-bank-'+i);var zone=document.getElementById('sb-row-'+i);if(!bank||!zone)return;bank.innerHTML='';var pt=zone.querySelector('.sb-punkt');Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});d.words.forEach(function(w,j){var c=sbMakeChip(j===0?w.charAt(0).toUpperCase()+w.slice(1):w,w);if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);});sbColorRow(zone,true);var fb=document.getElementById('sb-fb-'+i);if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}});}
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;c.textContent=orig;});}
+function sbCheckAuto(rowIdx){var zone=document.getElementById('sb-row-'+rowIdx);var fb=document.getElementById('sb-fb-'+rowIdx);if(!zone)return;var chips=Array.from(zone.querySelectorAll('.chip'));var words=chips.map(function(c){return c.dataset.orig;});var expected=satzbauData[rowIdx].words.map(function(w){return w;});var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});sbColorRow(zone,ok?true:chips.length>0?false:null);if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}if(ok){var allOk=satzbauData.every(function(_,i){var z=document.getElementById('sb-row-'+i);if(!z)return false;var ch=Array.from(z.querySelectorAll('.chip'));var ex=satzbauData[i].words.map(function(w){return w;});return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig===ex[j];});});if(allOk)timerStop(3);}}
+function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.getElementById('sb-bank-'+i);var zone=document.getElementById('sb-row-'+i);if(!bank||!zone)return;bank.innerHTML='';var pt=zone.querySelector('.sb-punkt');Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});d.words.forEach(function(w,j){var c=sbMakeChip(w,w);if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);});sbColorRow(zone,true);var fb=document.getElementById('sb-fb-'+i);if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}});}
 function initSatzbau(){var cont=document.getElementById('satzbauContainer');cont.innerHTML='';satzbauData.forEach(function(d,i){var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}var wrap=document.createElement('div');wrap.className='sentence-builder';var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);sbRegisterZone(zone,i);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);});}
 
 /* ===== WORTSCHATZ ===== */
-var WS_DATA=[
-  {en:'in the morning',de:'morgens'},
-  {en:'at midday / at noon',de:'mittags'},
-  {en:'in the evening',de:'abends'},
-  {en:'earlier / in the past',de:'früher'},
-  {en:'later',de:'später'},
-  {en:'first',de:'zuerst'},
-  {en:'afterwards',de:'danach'},
-  {en:'then',de:'dann'},
-  {en:'thereupon / after that',de:'daraufhin'},
-  {en:'on Mondays',de:'montags'},
-  {en:'on Saturdays',de:'samstags'}
+// ─── WORTSCHATZ-TRAINING ──────────────────────────────────────────────────────
+var WORTSCHATZ = [
+    { id:1, type:'p', en:'✨ in the morning', artikel:'', de:'morgens', plural:'' },
+    { id:2, type:'p', en:'🌈 at midday / at noon', artikel:'', de:'mittags', plural:'' },
+    { id:3, type:'p', en:'💡 in the evening', artikel:'', de:'abends', plural:'' },
+    { id:4, type:'p', en:'🎨 earlier / in the past', artikel:'', de:'früher', plural:'' },
+    { id:5, type:'p', en:'🔆 later', artikel:'', de:'später', plural:'' },
+    { id:6, type:'p', en:'🌀 first', artikel:'', de:'zuerst', plural:'' },
+    { id:7, type:'p', en:'🔮 afterwards', artikel:'', de:'danach', plural:'' },
+    { id:8, type:'p', en:'🪄 then', artikel:'', de:'dann', plural:'' },
+    { id:9, type:'p', en:'🌸 thereupon / after that', artikel:'', de:'daraufhin', plural:'' },
+    { id:10, type:'p', en:'🍀 on Mondays', artikel:'', de:'montags', plural:'' },
+    { id:11, type:'p', en:'🔄 on Saturdays', artikel:'', de:'samstags', plural:'' }
 ];
-var wsDone=false;
-function initWs(){
-  wsDone=false;var tbody=document.getElementById('wsBody');tbody.innerHTML='';
-  WS_DATA.forEach(function(d,i){
-    var tr=document.createElement('tr');
-    tr.innerHTML='<td>'+d.en+'</td><td><input class="ws-input" id="ws'+i+'" data-ans="'+d.de+'" placeholder="" oninput="wsCheck(this)"></td>';
-    tbody.appendChild(tr);
-  });
+
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerResetOne(4);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
+        }
+        row.appendChild(fields);
+        container.appendChild(row);
+    });
 }
-function wsCheck(inp){
-  timerAutoStart(4);
-  var val=inp.value.trim();var ans=inp.dataset.ans;
-  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
-  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
-  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
-  else{inp.classList.remove('ok','no');}
-  if(Array.from(document.querySelectorAll('#wsBody .ws-input')).every(function(i){return i.classList.contains('ok');})){if(!wsDone){wsDone=true;timerStop(4);}}
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser   = user.trim();
+    var cmpAnswer = answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
 }
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#tab-4 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(4);
+}
+function showWortschatzLoesung(){
+    timerStop(4);
+    document.querySelectorAll('#tab-4 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz(){
+    document.querySelectorAll('#tab-4 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerResetOne(4);
+}
+
 function wsShowSolutions(){document.querySelectorAll('#wsBody .ws-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}
 
 /* ===== INIT ===== */
 initZuord();
 initSatzbau();
-initWs();
+initWortschatz();
 </script>
 </body>
 </html>
