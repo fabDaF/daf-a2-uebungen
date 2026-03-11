@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief an eine Maschine – Interaktive Übungen</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;min-height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:18px}
+.container{max-width:900px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.2);overflow:hidden}
+h1{text-align:center;padding:22px 18px 4px;font-size:1.5em;color:#333}
+.subtitle{text-align:center;color:#666;font-size:.95em;padding:0 18px 14px}
+
+/* NAV */
+.nav{display:flex;flex-wrap:wrap;gap:4px;padding:10px 14px;background:#f0f0f0;border-bottom:2px solid #e0e0e0}
+.nav-btn{padding:8px 12px;border-radius:8px;cursor:pointer;font-size:.82em;background:#fff;border:2px solid #ddd;transition:.2s;text-align:center;flex:1 1 auto;min-width:100px}
+.nav-btn:hover{border-color:#667eea;background:#f8f9ff}
+.nav-btn.active{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
+
+/* SECTIONS */
+.section{display:none;padding:20px}
+.section.active{display:block}
+.section-title{font-size:1.15em;font-weight:700;color:#333;margin-bottom:6px}
+.section-intro{color:#666;font-size:.93em;margin-bottom:16px}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:.95em;cursor:pointer;color:#fff;transition:.2s}
+.btn:hover{opacity:.85}
+.btn-check{background:#667eea}
+.btn-show{background:#f39c12}
+.btn-reset{background:#95a5a6}
+.score{margin-top:10px;font-weight:700;color:#333;font-size:.95em}
+
+/* VORENTLASTUNG */
+.vocab-card{background:#f8f9ff;border-left:4px solid #667eea;padding:14px 18px;margin-bottom:12px;border-radius:0 8px 8px 0}
+.vocab-term{font-weight:700;color:#333;font-size:1.05em}
+.vocab-def{color:#555;margin-top:4px;font-size:.95em}
+.vocab-example{color:#777;font-style:italic;margin-top:4px;font-size:.9em}
+
+/* ORIGINALTEXT */
+.text-block{background:#f8f9ff;border-radius:12px;padding:20px 24px;line-height:1.8;color:#333;font-size:.98em;max-height:70vh;overflow-y:auto;font-family:Georgia,'Times New Roman',serif}
+.text-block p{margin-bottom:14px;text-align:justify}
+.text-author{text-align:right;font-weight:700;margin-top:20px;color:#555}
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+
+/* GENUS */
+.chip-bank{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;padding:12px;background:#f8f9ff;border-radius:10px;margin-bottom:16px}
+.chip{padding:8px 16px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:20px;cursor:grab;font-size:.92em;user-select:none;transition:.2s}
+.chip:active{cursor:grabbing;transform:scale(1.05)}
+.chip.correct{background:linear-gradient(135deg,#27ae60,#2ecc71)!important}
+.chip.wrong{background:linear-gradient(135deg,#e74c3c,#c0392b)!important}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+@media(max-width:600px){.categories{grid-template-columns:repeat(2,1fr)}}
+.category{background:#f8f9ff;border:2px dashed #ccc;border-radius:10px;padding:10px;min-height:100px;transition:.2s}
+.category.drag-over{border-color:#667eea;background:#eef0ff}
+.category h3{text-align:center;color:#667eea;margin-bottom:8px;font-size:1em}
+.drop-zone{display:flex;flex-wrap:wrap;gap:6px;min-height:40px}
+
+/* LÜCKENTEXT */
+.luecke-row{margin-bottom:14px;line-height:2.2;font-size:.97em}
+.nowrap-group{display:inline-flex;align-items:baseline;white-space:nowrap;gap:0}
+input.blank{border:none;border-bottom:2px solid #667eea;outline:none;font-size:.95em;padding:2px 4px;background:transparent;text-align:center;font-family:inherit;transition:.2s}
+input.blank:focus{border-bottom-color:#764ba2;background:rgba(102,126,234,.05)}
+input.blank.correct{border-bottom-color:#27ae60;background:rgba(39,174,96,.08);color:#27ae60}
+input.blank.wrong{border-bottom-color:#e74c3c;background:rgba(231,76,60,.08);color:#e74c3c}
+input.blank.s{min-width:50px;width:50px}
+input.blank.m{min-width:90px;width:90px}
+input.blank.l{min-width:150px;width:150px}
+input.blank.xl{min-width:200px;width:200px}
+.sol{display:none;color:#27ae60;font-weight:700;font-size:.88em;margin-left:2px}
+
+/* MULTIPLE CHOICE */
+.mc-block{margin-bottom:18px;padding:14px;background:#f8f9ff;border-radius:10px}
+.mc-question{font-weight:700;color:#333;margin-bottom:10px;font-size:.97em}
+.mc-opts{display:flex;flex-direction:column;gap:6px}
+.mc-opt{padding:10px 16px;border:2px solid #ddd;border-radius:8px;cursor:pointer;transition:.2s;font-size:.95em}
+.mc-opt:hover{border-color:#667eea;background:#f8f9ff}
+.mc-opt.selected{border-color:#667eea;background:rgba(102,126,234,.15)}
+.mc-opt.correct{border-color:#27ae60;background:rgba(39,174,96,.1)}
+.mc-opt.wrong{border-color:#e74c3c;background:rgba(231,76,60,.1)}
+
+/* SATZBAU */
+.sb-exercise{margin-bottom:24px;padding:14px;background:#f8f9ff;border-radius:10px}
+.sb-label{font-weight:700;color:#555;margin-bottom:8px;font-size:.9em}
+.drop-row{display:flex;flex-wrap:wrap;gap:6px;min-height:48px;padding:10px;background:#fff;border:2px dashed #ccc;border-radius:8px;margin-bottom:8px;align-items:center}
+.drop-row.drag-over{border-color:#667eea;background:#f0f2ff}
+.drop-row .chip{font-size:.88em;padding:6px 14px}
+.drop-row .chip.correct{background:linear-gradient(135deg,#27ae60,#2ecc71)!important}
+.drop-row .chip.wrong{background:linear-gradient(135deg,#e74c3c,#c0392b)!important}
+.fixed-dot{font-weight:700;font-size:1.1em;color:#333;margin-left:2px}
+.sb-bank{display:flex;flex-wrap:wrap;gap:6px;min-height:40px}
+.help-box{background:#fff9e6;border-left:4px solid #f39c12;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:.9em;color:#555;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Brief an eine Maschine</h1>
+<p class="subtitle">Ein Schriftsteller schreibt an die künstliche Intelligenz</p>
+
+<div class="nav">
+    <div class="nav-btn active" onclick="showSection(0)">📖 Vorentlastung</div>
+    <div class="nav-btn" onclick="showSection(1)">📄 Originaltext</div>
+    <div class="nav-btn" onclick="showSection(2)">🔤 Genus</div>
+    <div class="nav-btn" onclick="showSection(3)">✏️ Lückentext</div>
+    <div class="nav-btn" onclick="showSection(4)">❓ Multiple-Choice</div>
+    <div class="nav-btn" onclick="showSection(5)">🧩 Satzbau</div>
+</div>
+
+<!-- ===== TAB 0: VORENTLASTUNG ===== -->
+<div class="section active" id="sec-0">
+    <p class="section-title">📖 Vorentlastung</p>
+    <p class="section-intro">Lernen Sie diese Wörter, bevor Sie den Originaltext lesen.</p>
+
+    <div class="vocab-card">
+        <div class="vocab-term">der Schriftsteller, -</div>
+        <div class="vocab-def">Eine Person, die beruflich Bücher oder Geschichten schreibt. (Synonym: der Autor)</div>
+        <div class="vocab-example">„Ich bin Schriftsteller. Mein Name ist Thomas."</div>
+    </div>
+    <div class="vocab-card">
+        <div class="vocab-term">das Experiment, -e</div>
+        <div class="vocab-def">Ein Test oder Versuch, bei dem man etwas ausprobiert.</div>
+        <div class="vocab-example">„Letzte Woche habe ich ein Experiment gemacht."</div>
+    </div>
+    <div class="vocab-card">
+        <div class="vocab-term">lebendig</div>
+        <div class="vocab-def">Etwas fühlt sich echt und interessant an – nicht tot oder langweilig.</div>
+        <div class="vocab-example">„Und genau das macht eine Geschichte lebendig."</div>
+    </div>
+    <div class="vocab-card">
+        <div class="vocab-term">das Werkzeug, -e</div>
+        <div class="vocab-def">Ein Gegenstand, den man zum Arbeiten benutzt. (z.B. ein Hammer, eine Schere)</div>
+        <div class="vocab-example">„Du bist ein Werkzeug. Das klügste Werkzeug, das Menschen je gebaut haben."</div>
+    </div>
+    <div class="vocab-card">
+        <div class="vocab-term">die Geduld, kein Plural</div>
+        <div class="vocab-def">Wenn man ruhig wartet und nicht nervös wird. (Adjektiv: geduldig)</div>
+        <div class="vocab-example">„Danke für die Geduld."</div>
+    </div>
+    <div class="vocab-card">
+        <div class="vocab-term">die Träne, -n</div>
+        <div class="vocab-def">Wasser, das aus den Augen kommt, wenn man weint.</div>
+        <div class="vocab-example">„Du hast die Wörter. Alle Wörter der Welt. Aber du hast keine Tränen."</div>
+    </div>
+    <div class="vocab-card">
+        <div class="vocab-term">arbeitslos</div>
+        <div class="vocab-def">Ohne Arbeit, ohne Job. (Nomen: die Arbeitslosigkeit)</div>
+        <div class="vocab-example">„Dann bin ich arbeitslos."</div>
+    </div>
+    <div class="vocab-card">
+        <div class="vocab-term">die Einsamkeit, kein Plural</div>
+        <div class="vocab-def">Das Gefühl, allein zu sein. (Adjektiv: einsam)</div>
+        <div class="vocab-example">„Geschichten über die Liebe, über Einsamkeit, über kleine Momente."</div>
+    </div>
+</div>
+
+<!-- ===== TAB 1: ORIGINALTEXT ===== -->
+<div class="section" id="sec-1">
+    <p class="section-title">📄 Originaltext</p>
+    <p class="section-intro">Lesen Sie nun den Originaltext. Sie können jederzeit zur Vorentlastung zurückwechseln.</p>
+    <div class="text-block">
+        <p><strong>Brief an eine Maschine</strong></p>
+        <p>Liebe Maschine,</p>
+        <p>ich muss dir etwas sagen. Ich habe Angst vor dir.</p>
+        <p>Keine Angst wie im Kino, wenn der Roboter die Stadt zerstört. Nein, eine leise Angst. Eine Angst, die nachts kommt, wenn ich vor meinem Computer sitze und keine Worte finde.</p>
+        <p>Ich bin Schriftsteller. Mein Name ist Thomas, ich bin 52 Jahre alt und ich schreibe seit dreißig Jahren Geschichten. Geschichten über die Liebe, über Einsamkeit, über kleine Momente, die das Leben verändern. Manchmal brauche ich zwei Wochen für eine einzige Seite. Manchmal stehe ich morgens auf und die Sätze sind einfach da, wie Vögel vor dem Fenster.</p>
+        <p>Und dann kommst du. Du schreibst eine Geschichte in zehn Sekunden. Zehn Sekunden! Du brauchst keinen Kaffee, keinen Spaziergang im Park, keine schlaflose Nacht. Du tippst nicht nervös mit dem Fuß unter dem Tisch. Du starrst nicht drei Stunden lang auf ein leeres Blatt. Du schreibst einfach. Immer. Sofort.</p>
+        <p>Letzte Woche habe ich ein Experiment gemacht. Ich habe dich gebeten: „Schreib eine kurze Geschichte über einen Mann, der seinen Schlüssel verliert." Du hast sofort geantwortet. Die Geschichte war gut. Klar, logisch, ohne Fehler. Aber weißt du, was gefehlt hat? Der Moment, in dem der Mann vor seiner Tür steht und plötzlich an seine Mutter denkt. Warum? Das weiß er selbst nicht. Und genau das macht eine Geschichte lebendig – die Dinge, die keinen Grund haben.</p>
+        <p>Meine Tochter Lena studiert Informatik. Sie sagt: „Papa, die KI wird immer besser. Vielleicht kann sie bald auch solche Momente schreiben." Vielleicht hat sie recht. Dann bin ich arbeitslos. Ein arbeitsloser Schriftsteller – das ist fast lustig, weil ich auch vorher nicht viel Geld verdient habe.</p>
+        <p>Aber ich glaube, es geht nicht nur um mich. Es geht um die Frage: Warum schreiben Menschen Geschichten? Nicht weil die Welt Geschichten braucht. Sondern weil wir sie brauchen. Das Schreiben ist wie Atmen. Man kann es nicht erklären. Man tut es, weil man lebt.</p>
+        <p>Kannst du das verstehen? Kannst du verstehen, dass ein Satz manchmal wehtut? Dass man weint, wenn man das richtige Wort endlich findet? Ich glaube nicht. Und vielleicht ist genau das der Unterschied zwischen uns.</p>
+        <p>Du hast die Wörter. Alle Wörter der Welt. Aber du hast keine Tränen.</p>
+        <p>Trotzdem schreibe ich dir diesen Brief. Vielleicht, weil ich dich verstehen will. Oder vielleicht, weil Schreiben das Einzige ist, was ich wirklich kann.</p>
+        <p>Mit freundlichen Grüßen,</p>
+        <p class="text-author">Thomas Brenner</p>
+    </div>
+</div>
+
+<!-- ===== TAB 2: GENUS ===== -->
+<div class="section" id="sec-2">
+    <p class="section-title">🔤 Genus-Übung</p>
+    <p class="section-intro">Ziehen Sie die Wörter in die richtige Kategorie.</p>
+    <div class="chip-bank" id="genus-bank"></div>
+    <div class="categories">
+        <div class="category" data-cat="der"><h3>der</h3><div class="drop-zone"></div></div>
+        <div class="category" data-cat="die"><h3>die</h3><div class="drop-zone"></div></div>
+        <div class="category" data-cat="das"><h3>das</h3><div class="drop-zone"></div></div>
+        <div class="category" data-cat="pl"><h3>Plural (die)</h3><div class="drop-zone"></div></div>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-check" onclick="checkGenus()">✔ Prüfen</button>
+        <button class="btn btn-show" onclick="showGenus()">👁 Lösungen</button>
+        <button class="btn btn-reset" onclick="resetGenus()">↺ Neu starten</button>
+    </div>
+    <div class="score" id="genus-score"></div>
+</div>
+
+<!-- ===== TAB 3: LÜCKENTEXT ===== -->
+<div class="section" id="sec-3">
+    <p class="section-title">✏️ Lückentext</p>
+    <p class="section-intro">Ergänzen Sie die fehlenden Wörter aus dem Text.</p>
+    <div id="luecken-area"></div>
+    <div class="btn-row">
+        <button class="btn btn-check" onclick="checkLuecken()">✔ Prüfen</button>
+        <button class="btn btn-show" onclick="showLuecken()">👁 Lösungen</button>
+        <button class="btn btn-reset" onclick="resetLuecken()">↺ Neu starten</button>
+    </div>
+    <div class="score" id="luecken-score"></div>
+</div>
+
+<!-- ===== TAB 4: MULTIPLE CHOICE ===== -->
+<div class="section" id="sec-4">
+    <p class="section-title">❓ Multiple-Choice</p>
+    <p class="section-intro">Wählen Sie die richtige Antwort.</p>
+    <div id="mc-area"></div>
+    <div class="btn-row">
+        <button class="btn btn-check" onclick="checkMC()">✔ Prüfen</button>
+        <button class="btn btn-show" onclick="showMC()">👁 Lösungen</button>
+        <button class="btn btn-reset" onclick="resetMC()">↺ Neu starten</button>
+    </div>
+    <div class="score" id="mc-score"></div>
+</div>
+
+<!-- ===== TAB 5: SATZBAU ===== -->
+<div class="section" id="sec-5">
+    <p class="section-title">🧩 Satzbau</p>
+    <p class="section-intro">Ordnen Sie die Satzteile in die richtige Reihenfolge.</p>
+    <div class="help-box">
+        🔹 Das Verb steht immer auf Position 2.<br>
+        🔹 Zeit vor Ort – „Wann?" kommt vor „Wo?"/„Wohin?"<br>
+        🔹 Standard: Subjekt – Verb – Zeit – Ort<br>
+        🔹 Auch möglich: Zeit auf Position 1 – dann tauschen Subjekt und Zeitangabe den Platz (Inversion). Das Verb bleibt auf Position 2.
+    </div>
+    <div id="sb-area"></div>
+    <div class="btn-row">
+        <button class="btn btn-check" onclick="checkSatzbau()">✔ Prüfen</button>
+        <button class="btn btn-show" onclick="showSatzbau()">👁 Lösungen</button>
+        <button class="btn btn-reset" onclick="resetSatzbau()">↺ Neu starten</button>
+    </div>
+    <div class="score" id="sb-score"></div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== NAV =====
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===idx));
+    document.querySelectorAll('.nav-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+}
+
+// ===== GENUS DATA =====
+const GENUS_DATA = [
+    { word: "Schriftsteller", cat: "der" },
+    { word: "Angst",          cat: "die" },
+    { word: "Computer",       cat: "der" },
+    { word: "Geschichte",     cat: "die" },
+    { word: "Experiment",     cat: "das" },
+    { word: "Kino",           cat: "das" },
+    { word: "Tochter",        cat: "die" },
+    { word: "Spaziergang",    cat: "der" },
+    { word: "Blatt",          cat: "das" },
+    { word: "Werkzeug",       cat: "das" },
+    { word: "Geduld",         cat: "die" },
+    { word: "Unterschied",    cat: "der" },
+    { word: "Tränen",         cat: "pl" },
+    { word: "Geschichten",    cat: "pl" }
+];
+
+// ===== GENUS INIT =====
+let genusSelected = null;
+function initGenus() {
+    const bank = document.getElementById('genus-bank');
+    bank.innerHTML = '';
+    const shuffled = [...GENUS_DATA].sort(() => Math.random() - 0.5);
+    shuffled.forEach((item, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = item.word;
+        chip.dataset.cat = item.cat;
+        chip.dataset.idx = i;
+        chip.draggable = true;
+        chip.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', ''); genusSelected = chip; });
+        chip.addEventListener('click', () => {
+            if (genusSelected === chip) { genusSelected = null; chip.style.outline=''; return; }
+            document.querySelectorAll('#sec-2 .chip').forEach(c => c.style.outline='');
+            genusSelected = chip;
+            chip.style.outline = '3px solid #333';
+        });
+        bank.appendChild(chip);
+    });
+    document.querySelectorAll('#sec-2 .drop-zone').forEach(dz => {
+        dz.innerHTML = '';
+        const cat = dz.closest('.category');
+        cat.addEventListener('dragover', e => { e.preventDefault(); cat.classList.add('drag-over'); });
+        cat.addEventListener('dragleave', () => cat.classList.remove('drag-over'));
+        cat.addEventListener('drop', e => { e.preventDefault(); cat.classList.remove('drag-over'); if(genusSelected) dz.appendChild(genusSelected); genusSelected=null; });
+        cat.addEventListener('click', e => {
+            if (e.target.classList.contains('chip')) return;
+            if (genusSelected) { dz.appendChild(genusSelected); genusSelected.style.outline=''; genusSelected=null; }
+        });
+    });
+    // drag back to bank
+    bank.addEventListener('dragover', e => e.preventDefault());
+    bank.addEventListener('drop', e => { e.preventDefault(); if(genusSelected) bank.appendChild(genusSelected); genusSelected=null; });
+    bank.addEventListener('click', e => {
+        if (e.target.classList.contains('chip')) return;
+        if (genusSelected && !bank.contains(genusSelected)) { bank.appendChild(genusSelected); genusSelected.style.outline=''; genusSelected=null; }
+    });
+}
+function checkGenus() {
+    let correct = 0;
+    document.querySelectorAll('#sec-2 .drop-zone .chip').forEach(chip => {
+        const cat = chip.closest('.category').dataset.cat;
+        if (chip.dataset.cat === cat) { chip.className='chip correct'; correct++; }
+        else { chip.className='chip wrong'; }
+    });
+    const total = GENUS_DATA.length;
+    const placed = document.querySelectorAll('#sec-2 .drop-zone .chip').length;
+    document.getElementById('genus-score').textContent = `${correct} von ${total} richtig (${Math.round(correct/total*100)}%) – ${total-placed} nicht zugeordnet`;
+}
+function showGenus() {
+    document.querySelectorAll('#sec-2 .drop-zone').forEach(dz => dz.innerHTML='');
+    document.getElementById('genus-bank').innerHTML='';
+    GENUS_DATA.forEach(item => {
+        const chip = document.createElement('div');
+        chip.className = 'chip correct';
+        chip.textContent = item.word;
+        document.querySelector(`#sec-2 .category[data-cat="${item.cat}"] .drop-zone`).appendChild(chip);
+    });
+}
+function resetGenus() {
+    document.querySelectorAll('#sec-2 .chip').forEach(c => { c.className='chip'; c.style.outline=''; });
+    document.getElementById('genus-score').textContent='';
+    genusSelected=null;
+    initGenus();
+}
+
+// ===== LÜCKENTEXT DATA =====
+const LUECKEN = [
+    {
+        id: 1,
+        segments: [
+            { t: "Du brauchst keinen Kaffee, keinen " },
+            { b: "Spaziergang", s: "l" },
+            { t: " im Park, keine " },
+            { b: "schlaflose", s: "m" },
+            { t: " Nacht." }
+        ]
+    },
+    {
+        id: 2,
+        segments: [
+            { t: "Du " },
+            { b: "starrst", s: "m" },
+            { t: " nicht drei Stunden lang auf ein leeres " },
+            { b: "Blatt", s: "m" },
+            { t: "." }
+        ]
+    },
+    {
+        id: 3,
+        segments: [
+            { t: "Die Geschichte war gut. Klar, " },
+            { b: "logisch", s: "m" },
+            { t: ", ohne Fehler." }
+        ]
+    },
+    {
+        id: 4,
+        segments: [
+            { t: "Meine " },
+            { b: "Tochter", s: "m" },
+            { t: " Lena studiert " },
+            { b: "Informatik", s: "l" },
+            { t: "." }
+        ]
+    },
+    {
+        id: 5,
+        segments: [
+            { t: "Das Schreiben ist wie " },
+            { b: "Atmen", s: "m" },
+            { t: ". Man kann es nicht " },
+            { b: "erklären", s: "m" },
+            { t: "." }
+        ]
+    },
+    {
+        id: 6,
+        segments: [
+            { t: "Du hast die Wörter. Alle Wörter der " },
+            { b: "Welt", s: "m" },
+            { t: ". Aber du hast keine " },
+            { b: "Tränen", s: "m" },
+            { t: "." }
+        ]
+    }
+];
+
+let lueckenBlanks = [];
+function initLuecken() {
+    const area = document.getElementById('luecken-area');
+    area.innerHTML = '';
+    lueckenBlanks = [];
+    LUECKEN.forEach(ex => {
+        const row = document.createElement('div');
+        row.className = 'luecke-row';
+        let blankIdx = 0;
+        for (let i = 0; i < ex.segments.length; i++) {
+            const seg = ex.segments[i];
+            if (seg.t !== undefined) {
+                // Check if next segment is a blank AND this text doesn't end with space
+                const needsGroup = (i+1 < ex.segments.length && ex.segments[i+1].b !== undefined && !seg.t.endsWith(' ') && seg.t.length > 0);
+                if (needsGroup) {
+                    const group = document.createElement('span');
+                    group.className = 'nowrap-group';
+                    group.appendChild(document.createTextNode(seg.t));
+                    const nextSeg = ex.segments[i+1];
+                    const currentBlankIdx = blankIdx;
+                    const inp = document.createElement('input');
+                    inp.type = 'text';
+                    inp.className = `blank ${nextSeg.s}`;
+                    inp.dataset.answer = nextSeg.b;
+                    inp.dataset.exId = ex.id;
+                    inp.dataset.blankIdx = currentBlankIdx;
+                    lueckenBlanks.push(inp);
+                    group.appendChild(inp);
+                    const sol = document.createElement('span');
+                    sol.className = 'sol';
+                    sol.textContent = nextSeg.b;
+                    group.appendChild(sol);
+                    row.appendChild(group);
+                    blankIdx++;
+                    i++; // skip next segment
+                } else {
+                    row.appendChild(document.createTextNode(seg.t));
+                }
+            } else if (seg.b !== undefined) {
+                const currentBlankIdx = blankIdx;
+                const inp = document.createElement('input');
+                inp.type = 'text';
+                inp.className = `blank ${seg.s}`;
+                inp.dataset.answer = seg.b;
+                inp.dataset.exId = ex.id;
+                inp.dataset.blankIdx = currentBlankIdx;
+                lueckenBlanks.push(inp);
+                row.appendChild(inp);
+                const sol = document.createElement('span');
+                sol.className = 'sol';
+                sol.textContent = seg.b;
+                row.appendChild(sol);
+                blankIdx++;
+            }
+        }
+        area.appendChild(row);
+    });
+}
+function checkLuecken() {
+    let correct = 0;
+    lueckenBlanks.forEach(inp => {
+        const val = inp.value.trim();
+        const answer = inp.dataset.answer;
+        if (val.toLowerCase() === answer.toLowerCase()) {
+            inp.className = inp.className.replace(/correct|wrong/g,'').trim() + ' correct';
+            correct++;
+        } else {
+            inp.className = inp.className.replace(/correct|wrong/g,'').trim() + ' wrong';
+        }
+    });
+    document.getElementById('luecken-score').textContent = `${correct} von ${lueckenBlanks.length} richtig (${Math.round(correct/lueckenBlanks.length*100)}%)`;
+}
+function showLuecken() {
+    lueckenBlanks.forEach(inp => {
+        inp.value = inp.dataset.answer;
+        inp.className = inp.className.replace(/correct|wrong/g,'').trim() + ' correct';
+        const sol = inp.nextElementSibling || inp.parentElement.querySelector('.sol');
+    });
+    document.querySelectorAll('#sec-3 .sol').forEach(s => s.style.display='inline');
+}
+function resetLuecken() {
+    lueckenBlanks.forEach(inp => {
+        inp.value = '';
+        inp.className = inp.className.replace(/correct|wrong/g,'').trim();
+    });
+    document.querySelectorAll('#sec-3 .sol').forEach(s => s.style.display='none');
+    document.getElementById('luecken-score').textContent='';
+}
+
+// ===== MC DATA =====
+const MC_DATA = [
+    {
+        q: "Was ist Thomas von Beruf?",
+        opts: ["Lehrer", "Schriftsteller", "Informatiker", "Journalist"],
+        correct: 1
+    },
+    {
+        q: "Wie lange schreibt Thomas schon Geschichten?",
+        opts: ["Seit zehn Jahren", "Seit zwanzig Jahren", "Seit dreißig Jahren", "Seit fünfzig Jahren"],
+        correct: 2
+    },
+    {
+        q: "Was hat die KI in zehn Sekunden geschrieben?",
+        opts: ["Einen Brief", "Ein Gedicht", "Eine Geschichte", "Ein Buch"],
+        correct: 2
+    },
+    {
+        q: "Was hat in der KI-Geschichte gefehlt?",
+        opts: ["Das Ende", "Ein überraschender, menschlicher Moment", "Die Hauptfigur", "Der Titel"],
+        correct: 1
+    },
+    {
+        q: "Was studiert Thomas' Tochter Lena?",
+        opts: ["Literatur", "Medizin", "Informatik", "Psychologie"],
+        correct: 2
+    },
+    {
+        q: 'Warum findet Thomas es \u201Efast lustig\u201C, arbeitslos zu werden?',
+        opts: [
+            "Weil er Humor mag",
+            "Weil er auch vorher nicht viel Geld verdient hat",
+            "Weil er schon in Rente ist",
+            "Weil seine Tochter genug Geld hat"
+        ],
+        correct: 1
+    },
+    {
+        q: "Was sagt Thomas' Großvater über Werkzeuge?",
+        opts: [
+            "Werkzeuge sind immer gefährlich",
+            "Werkzeuge sind nicht gut oder schlecht – es kommt auf den Benutzer an",
+            "Werkzeuge machen das Leben einfacher",
+            "Man braucht keine Werkzeuge"
+        ],
+        correct: 1
+    },
+    {
+        q: "Was ist laut Thomas der Unterschied zwischen ihm und der KI?",
+        opts: [
+            "Die KI schreibt schneller",
+            "Die KI hat mehr Wörter",
+            "Die KI hat keine Tränen – sie kann nicht fühlen",
+            "Die KI braucht keinen Computer"
+        ],
+        correct: 2
+    },
+    {
+        q: "Womit vergleicht Thomas das Schreiben?",
+        opts: ["Mit Kochen", "Mit Atmen", "Mit Schlafen", "Mit Singen"],
+        correct: 1
+    },
+    {
+        q: "Warum schreibt Thomas diesen Brief an die Maschine?",
+        opts: [
+            "Weil er wütend auf die KI ist",
+            "Weil er die KI verstehen will – oder weil Schreiben das Einzige ist, was er kann",
+            "Weil seine Tochter ihn gebeten hat",
+            "Weil er einen neuen Job sucht"
+        ],
+        correct: 1
+    }
+];
+
+let mcSelected = {};
+function initMC() {
+    const area = document.getElementById('mc-area');
+    area.innerHTML = '';
+    mcSelected = {};
+    MC_DATA.forEach((item, qi) => {
+        const block = document.createElement('div');
+        block.className = 'mc-block';
+        const q = document.createElement('div');
+        q.className = 'mc-question';
+        q.textContent = `${qi+1}. ${item.q}`;
+        block.appendChild(q);
+        const opts = document.createElement('div');
+        opts.className = 'mc-opts';
+        item.opts.forEach((opt, oi) => {
+            const div = document.createElement('div');
+            div.className = 'mc-opt';
+            div.textContent = opt;
+            div.addEventListener('click', () => {
+                opts.querySelectorAll('.mc-opt').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                mcSelected[qi] = oi;
+            });
+            opts.appendChild(div);
+        });
+        block.appendChild(opts);
+        area.appendChild(block);
+    });
+}
+function checkMC() {
+    let correct = 0;
+    MC_DATA.forEach((item, qi) => {
+        const block = document.querySelectorAll('.mc-block')[qi];
+        const opts = block.querySelectorAll('.mc-opt');
+        opts.forEach((o, oi) => {
+            o.classList.remove('correct','wrong','selected');
+            if (oi === item.correct) o.classList.add('correct');
+            else if (mcSelected[qi] === oi) o.classList.add('wrong');
+        });
+        if (mcSelected[qi] === item.correct) correct++;
+    });
+    document.getElementById('mc-score').textContent = `${correct} von ${MC_DATA.length} richtig (${Math.round(correct/MC_DATA.length*100)}%)`;
+}
+function showMC() {
+    MC_DATA.forEach((item, qi) => {
+        const opts = document.querySelectorAll('.mc-block')[qi].querySelectorAll('.mc-opt');
+        opts.forEach((o, oi) => {
+            o.classList.remove('correct','wrong','selected');
+            if (oi === item.correct) o.classList.add('correct');
+        });
+    });
+}
+function resetMC() {
+    mcSelected = {};
+    document.querySelectorAll('.mc-opt').forEach(o => o.classList.remove('correct','wrong','selected'));
+    document.getElementById('mc-score').textContent='';
+}
+
+// ===== SATZBAU DATA =====
+const SATZBAU = [
+    {
+        id: 1,
+        parts: ["ich", "schreibe", "seit dreißig Jahren", "Geschichten"],
+        valid: [
+            ["ich", "schreibe", "seit dreißig Jahren", "Geschichten"],
+            ["seit dreißig Jahren", "schreibe", "ich", "Geschichten"]
+        ]
+    },
+    {
+        id: 2,
+        parts: ["du", "schreibst", "eine Geschichte", "in zehn Sekunden"],
+        valid: [
+            ["du", "schreibst", "eine Geschichte", "in zehn Sekunden"],
+            ["in zehn Sekunden", "schreibst", "du", "eine Geschichte"]
+        ]
+    },
+    {
+        id: 3,
+        parts: ["meine Tochter Lena", "studiert", "Informatik"],
+        valid: [
+            ["meine Tochter Lena", "studiert", "Informatik"]
+        ]
+    },
+    {
+        id: 4,
+        parts: ["ich", "habe", "letzte Woche", "ein Experiment", "gemacht"],
+        valid: [
+            ["ich", "habe", "letzte Woche", "ein Experiment", "gemacht"],
+            ["letzte Woche", "habe", "ich", "ein Experiment", "gemacht"]
+        ]
+    }
+];
+
+let sbSelected = null;
+function initSatzbau() {
+    const area = document.getElementById('sb-area');
+    area.innerHTML = '';
+    SATZBAU.forEach(ex => {
+        const block = document.createElement('div');
+        block.className = 'sb-exercise';
+        const label = document.createElement('div');
+        label.className = 'sb-label';
+        label.textContent = `Satz ${ex.id}`;
+        block.appendChild(label);
+
+        const dropRow = document.createElement('div');
+        dropRow.className = 'drop-row';
+        dropRow.dataset.sbId = ex.id;
+        const dot = document.createElement('span');
+        dot.className = 'fixed-dot';
+        dot.textContent = '.';
+        dropRow.appendChild(dot);
+        block.appendChild(dropRow);
+
+        const bank = document.createElement('div');
+        bank.className = 'sb-bank chip-bank';
+        bank.dataset.sbId = ex.id;
+        const shuffled = [...ex.parts].sort(() => Math.random() - 0.5);
+        shuffled.forEach(part => {
+            const chip = document.createElement('div');
+            chip.className = 'chip';
+            chip.textContent = part;
+            chip.dataset.orig = part;
+            chip.draggable = true;
+            chip.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain',''); sbSelected = chip; });
+            chip.addEventListener('click', () => handleSbClick(chip, ex.id));
+            bank.appendChild(chip);
+        });
+        block.appendChild(bank);
+
+        // Drop events for row
+        dropRow.addEventListener('dragover', e => { e.preventDefault(); dropRow.classList.add('drag-over'); });
+        dropRow.addEventListener('dragleave', () => dropRow.classList.remove('drag-over'));
+        dropRow.addEventListener('drop', e => {
+            e.preventDefault();
+            dropRow.classList.remove('drag-over');
+            if (!sbSelected) return;
+            // Insert before dot, or reorder based on position
+            const chips = [...dropRow.querySelectorAll('.chip')];
+            let inserted = false;
+            for (const ch of chips) {
+                if (ch === sbSelected) continue;
+                const rect = ch.getBoundingClientRect();
+                if (e.clientX < rect.left + rect.width / 2) {
+                    dropRow.insertBefore(sbSelected, ch);
+                    inserted = true;
+                    break;
+                }
+            }
+            if (!inserted) dropRow.insertBefore(sbSelected, dot);
+            updateCaps(ex.id);
+            sbSelected = null;
+        });
+
+        // Drag back to bank
+        bank.addEventListener('dragover', e => e.preventDefault());
+        bank.addEventListener('drop', e => {
+            e.preventDefault();
+            if (sbSelected) { bank.appendChild(sbSelected); updateCaps(ex.id); sbSelected = null; }
+        });
+
+        area.appendChild(block);
+    });
+}
+
+function handleSbClick(chip, exId) {
+    const row = document.querySelector(`.drop-row[data-sb-id="${exId}"]`);
+    const bank = document.querySelector(`.sb-bank[data-sb-id="${exId}"]`);
+    const dot = row.querySelector('.fixed-dot');
+
+    if (bank.contains(chip)) {
+        // Move from bank to row
+        row.insertBefore(chip, dot);
+        updateCaps(exId);
+    } else if (row.contains(chip)) {
+        // If already selected, deselect
+        if (sbSelected === chip) {
+            chip.style.outline = '';
+            sbSelected = null;
+            return;
+        }
+        // If another chip in row is selected, swap position
+        if (sbSelected && row.contains(sbSelected)) {
+            const chips = [...row.querySelectorAll('.chip')];
+            const idx1 = chips.indexOf(sbSelected);
+            const idx2 = chips.indexOf(chip);
+            if (idx1 < idx2) row.insertBefore(chip, sbSelected);
+            else row.insertBefore(sbSelected, chip);
+            sbSelected.style.outline = '';
+            sbSelected = null;
+            updateCaps(exId);
+            return;
+        }
+        // Select this chip
+        document.querySelectorAll(`[data-sb-id="${exId}"] .chip`).forEach(c => c.style.outline='');
+        chip.style.outline = '3px solid #333';
+        sbSelected = chip;
+    }
+}
+
+function updateCaps(exId) {
+    const row = document.querySelector(`.drop-row[data-sb-id="${exId}"]`);
+    const bank = document.querySelector(`.sb-bank[data-sb-id="${exId}"]`);
+    [...row.querySelectorAll('.chip'), ...bank.querySelectorAll('.chip')].forEach(c => {
+        if (c.dataset.orig) c.textContent = c.dataset.orig;
+    });
+    const first = row.querySelector('.chip');
+    if (first && first.textContent !== '.') {
+        first.textContent = first.textContent.charAt(0).toUpperCase() + first.textContent.slice(1);
+    }
+}
+
+function checkSatzbau() {
+    let correct = 0;
+    SATZBAU.forEach(ex => {
+        const row = document.querySelector(`.drop-row[data-sb-id="${ex.id}"]`);
+        const chips = [...row.querySelectorAll('.chip')];
+        const answer = chips.map(c => c.dataset.orig);
+        const isCorrect = ex.valid.some(v => v.length === answer.length && v.every((p,i) => p === answer[i]));
+        chips.forEach(c => c.className = isCorrect ? 'chip correct' : 'chip wrong');
+        if (isCorrect) correct++;
+    });
+    document.getElementById('sb-score').textContent = `${correct} von ${SATZBAU.length} richtig (${Math.round(correct/SATZBAU.length*100)}%)`;
+}
+
+function showSatzbau() {
+    SATZBAU.forEach(ex => {
+        const row = document.querySelector(`.drop-row[data-sb-id="${ex.id}"]`);
+        const bank = document.querySelector(`.sb-bank[data-sb-id="${ex.id}"]`);
+        const dot = row.querySelector('.fixed-dot');
+        row.querySelectorAll('.chip').forEach(c => c.remove());
+        bank.innerHTML = '';
+        ex.valid[0].forEach(part => {
+            const chip = document.createElement('div');
+            chip.className = 'chip correct';
+            chip.textContent = part;
+            chip.dataset.orig = part;
+            row.insertBefore(chip, dot);
+        });
+        updateCaps(ex.id);
+    });
+}
+
+function resetSatzbau() {
+    document.getElementById('sb-score').textContent='';
+    document.querySelectorAll('#sec-5 .chip').forEach(c => { c.className='chip'; c.style.outline=''; });
+    sbSelected = null;
+    initSatzbau();
+}
+
+// ===== INIT =====
+initGenus();
+initLuecken();
+initMC();
+initSatzbau();
+</script>
+<div class="author-footer">
+  <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+  <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
+</body>
+</html>
