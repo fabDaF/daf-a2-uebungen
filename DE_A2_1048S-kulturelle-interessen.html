@@ -677,7 +677,7 @@ function sbShowSolution() {
     cursor.className = 'sb-insert-cursor'; cursor.id = 'sb-insert-cursor-' + idx; cursor.style.display = 'none';
     zone.appendChild(cursor);
     s.words.forEach(function(word, wi) {
-      var chip = sbMakeChip((wi===0)?sbCapitalize(word):word, idx);
+      var chip = sbMakeChip(word, idx);
       chip.textContent = word;
       chip.classList.add('ok');
       zone.appendChild(chip);

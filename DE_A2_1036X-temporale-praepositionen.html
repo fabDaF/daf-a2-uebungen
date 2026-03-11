@@ -525,7 +525,7 @@ function sbShowSolution() {
         zone.innerHTML = '';
         sd.valid[0].forEach(function(w, i) {
             var word = (i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-            var chip = sbMakeChip((i===0)?sbCapitalize(w):word, w);
+            var chip = sbMakeChip(word, w);
             zone.appendChild(chip);
         });
         var punkt = document.createElement('span');

@@ -640,7 +640,7 @@ function initSatzbau(){
     var builder=document.createElement('div'); builder.className='sentence-builder';
     var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx;
     var shuffled=sbFisherYates(item.words.slice());
-    shuffled.forEach(function(w,i){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(w):w,i,idx)); });
+    shuffled.forEach(function(w,i){ bank.appendChild(sbMakeChip(w,i,idx)); });
     var zone=document.createElement('div'); zone.className='sb-zone'; zone.id='sb-row-'+idx;
     var cursor=document.createElement('div'); cursor.className='sb-insert-cursor'; zone.appendChild(cursor);
     var punkt=document.createElement('span'); punkt.className='sb-punkt'; punkt.textContent=item.punct;

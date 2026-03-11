@@ -860,7 +860,7 @@ function sbBuild() {
     bank.className = 'chips-container';
     bank.id = 'sb-bank-'+rowIdx;
     shuffled.forEach(function(word) {
-      bank.appendChild(sbMakeChip((i===0)?sbCapitalize(word):word, word));
+      bank.appendChild(sbMakeChip(word, word));
     });
     wrap.appendChild(bank);
     var row = document.createElement('div');

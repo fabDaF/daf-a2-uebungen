@@ -619,7 +619,7 @@ function initSatzbau() {
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
         zone.appendChild(punkt);
         var fb = document.createElement('div'); fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + n;
-        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(w):w, word)); });
+        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip(w, w)); });
         sbRegisterZone(zone, bank, n);
         sb.appendChild(lbl); sb.appendChild(bank); sb.appendChild(zone); sb.appendChild(fb);
         container.appendChild(sb);
