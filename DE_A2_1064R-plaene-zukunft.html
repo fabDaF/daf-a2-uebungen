@@ -598,7 +598,11 @@ function sbUpdateCapitalization(row) {
                     && orig.charAt(0) !== orig.charAt(0).toLowerCase();
         if (isProper) {
             c.textContent = orig;
+        } else {
+            c.textContent = (i === 0) ? sbCapitalize(orig) : orig;
         }
+    });
+}
 
 function sbMakeChip(word) {
     var chip = document.createElement('div');
