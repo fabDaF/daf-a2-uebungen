@@ -545,7 +545,7 @@ function sbRegisterZone(zone, sentIdx){
     }
   });
 }
-function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();c.textContent=isProper?orig:(i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig);});});
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();c.textContent=isProper?orig:(i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig);});}
 }
 function sbColorRow(idx){
   var zone=document.getElementById('sb-row-'+idx);
