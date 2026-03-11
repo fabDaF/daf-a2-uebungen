@@ -611,14 +611,12 @@ function getSbInsertPos(zone, clientX) {
     }
     return null;
 }
-function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
+function sbCapitalize(str){ return str; }
 function sbUpdateCapitalization(row) {
     var chips = Array.from(row.querySelectorAll('.chip-sb'));
     chips.forEach(function(c,i){
         var orig = c.dataset.orig;
-        var isProper = orig.charAt(0)===orig.charAt(0).toUpperCase() && orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        if (isProper) { c.textContent = orig; }
-        else { c.textContent = (i===0) ? sbCapitalize(orig) : orig; }
+        c.textContent = orig;
     });
 }
 function sbMakeChip(word) {
@@ -728,8 +726,7 @@ function sbShowSolution(idx) {
     solution.forEach(function(word,i){
         var chip=allChips[word];
         if(chip){
-            var isProper=word.charAt(0)===word.charAt(0).toUpperCase()&&word.charAt(0)!==word.charAt(0).toLowerCase();
-            chip.textContent=(i===0&&!isProper)?sbCapitalize(word):word;
+            chip.textContent=word;
             chip.classList.remove('correct','incorrect');
             row.appendChild(chip);
         }

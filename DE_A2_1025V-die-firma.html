@@ -432,12 +432,12 @@ function qaShowSolution() {
 var LUECKEN_DATA = [
     { vor: 'Ulrike arbeitet ', nach: ' bis spät abends.', ans: 'fleißig', size: 80 },
     { vor: 'Heute ist Sonntag — Petra ist eher ', nach: '.', ans: 'faul', size: 60 },
-    { vor: 'Er räumt seine ', nach: ' offen ein.', ans: 'schwäche', size: 90 },
-    { vor: 'Er kann seine ', nach: ' im Gespräch zeigen.', ans: 'stärken', size: 90 },
-    { vor: 'Leider hat er eine ', nach: ' erhalten.', ans: 'absage', size: 80 },
-    { vor: 'Die ', nach: ' dauerte drei Stunden.', ans: 'besprechung', size: 120 },
-    { vor: 'Georg arbeitet in der ', nach: '.', ans: 'buchhaltung', size: 120 },
-    { vor: 'Sie arbeitet im ', nach: '.', ans: 'marketing', size: 100 },
+    { vor: 'Er räumt seine ', nach: ' offen ein.', ans: 'Schwäche', size: 90 },
+    { vor: 'Er kann seine ', nach: ' im Gespräch zeigen.', ans: 'Stärken', size: 90 },
+    { vor: 'Leider hat er eine ', nach: ' erhalten.', ans: 'Absage', size: 80 },
+    { vor: 'Die ', nach: ' dauerte drei Stunden.', ans: 'Besprechung', size: 120 },
+    { vor: 'Georg arbeitet in der ', nach: '.', ans: 'Buchhaltung', size: 120 },
+    { vor: 'Sie arbeitet im ', nach: '.', ans: 'Marketing', size: 100 },
     { vor: 'Er überlegt: Soll ich ', nach: '?', ans: 'kündigen', size: 90 },
     { vor: 'Er ', nach: ' gut, aber er hat keinen Spaß.', ans: 'verdient', size: 90 }
 ];
@@ -470,7 +470,7 @@ function resetLuecken() {
 }
 function loesungLuecken() {
     document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){
-        var ans=inp.dataset.answer; inp.value=ans.charAt(0).toUpperCase()+ans.slice(1);
+        var ans=inp.dataset.answer; inp.value=ans;
         inp.classList.remove('wrong'); inp.classList.add('correct');
     });
 }

@@ -688,7 +688,7 @@ function sbUpdateCapitalization(n) {
     var chips = zone.querySelectorAll('.chip');
     chips.forEach(function(chip, i) {
         var orig = chip.dataset.orig;
-        chip.textContent = (i === 0) ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig;
+        chip.textContent = orig;
     });
 }
 
@@ -699,8 +699,8 @@ function sbColorRow(n) {
     var chips = zone.querySelectorAll('.chip');
     if (chips.length === 0) { fb.textContent = ''; fb.className = 'satzbau-feedback'; return; }
     var sd = satzbauData[n];
-    var placed = Array.from(chips).map(function(c){ return c.dataset.orig.toLowerCase(); });
-    var correct = sd.valid.some(function(v){ return v.length === placed.length && v.every(function(w,i){ return w.toLowerCase() === placed[i]; }); });
+    var placed = Array.from(chips).map(function(c){ return c.dataset.orig; });
+    var correct = sd.valid.some(function(v){ return v.length === placed.length && v.every(function(w,i){ return w === placed[i]; }); });
     fb.className = 'satzbau-feedback ' + (correct ? 'ok' : 'no');
     fb.textContent = correct ? '✓ Richtig!' : '✗ Noch nicht richtig';
     if (correct) {

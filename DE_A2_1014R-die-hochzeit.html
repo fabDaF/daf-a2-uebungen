@@ -896,7 +896,6 @@ function liveCheck(inp) {
     if (user.length === 0) return;
     var cmpUser = user;
     var cmpAnswer = answer;
-    if (field === 'art') { cmpUser = user.toLowerCase(); cmpAnswer = answer.toLowerCase(); }
     if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* prefix ok */ }
     else { inp.classList.add('wrong'); }
@@ -1362,8 +1361,8 @@ function wortschatzCheck(inp) {
     var field = inp.dataset.field;
     inp.classList.remove('correct', 'wrong');
     if (!user) return;
-    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
-    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    var cmpUser   = user.trim();
+    var cmpAnswer = answer;
     if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
     else { inp.classList.add('wrong'); }

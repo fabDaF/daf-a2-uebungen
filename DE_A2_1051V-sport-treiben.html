@@ -206,8 +206,8 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
       <div class="lt-text">
         Das <input class="luecken-inp" id="lt9" data-ans="Finale" placeholder=""> ist die letzte Runde im <input class="luecken-inp" id="lt10" data-ans="Wettkampf" placeholder="">.
         Zwei <input class="luecken-inp" id="lt11" data-ans="Mannschaften" placeholder=""> kämpfen um den ersten <input class="luecken-inp" id="lt12" data-ans="Platz" placeholder="">.
-        Der Gewinner bekommt eine Gold<input class="luecken-inp" id="lt13" data-ans="medaille" placeholder="">.
-        Der dritte Platz erhält eine Bronze<input class="luecken-inp" id="lt14" data-ans="medaille" placeholder="">.
+        Der Gewinner bekommt eine Gold<input class="luecken-inp" id="lt13" data-ans="Medaille" placeholder="">.
+        Der dritte Platz erhält eine Bronze<input class="luecken-inp" id="lt14" data-ans="Medaille" placeholder="">.
       </div>
     </div>
   </section>
@@ -575,7 +575,7 @@ function sbUpdateCapitalization(idx) {
   var chips = Array.from(zone.querySelectorAll('.sb-chip'));
   chips.forEach(function(chip, i) {
     var orig = chip.dataset.orig;
-    chip.textContent = i === 0 ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig;
+    chip.textContent = orig;
   });
 }
 
@@ -593,15 +593,15 @@ function sbCheckAuto(idx) {
   var zone = document.getElementById('sb-row-' + idx);
   if (!zone) return;
   var chips = Array.from(zone.querySelectorAll('.sb-chip'));
-  var placed = chips.map(function(c) { return c.dataset.orig.toLowerCase(); });
-  var expected = satzbauData[idx].words.map(function(w) { return w.toLowerCase(); });
+  var placed = chips.map(function(c) { return c.dataset.orig; });
+  var expected = satzbauData[idx].words;
   sbColorRow(idx, JSON.stringify(placed) === JSON.stringify(expected));
   var allOk = satzbauData.every(function(_, i) {
     var z2 = document.getElementById('sb-row-' + i);
     if (!z2) return false;
     var cc = Array.from(z2.querySelectorAll('.sb-chip'));
-    var pl = cc.map(function(c) { return c.dataset.orig.toLowerCase(); });
-    var ex = satzbauData[i].words.map(function(w) { return w.toLowerCase(); });
+    var pl = cc.map(function(c) { return c.dataset.orig; });
+    var ex = satzbauData[i].words;
     return JSON.stringify(pl) === JSON.stringify(ex);
   });
   if (allOk) timerStop(4);
@@ -618,7 +618,7 @@ function sbShowSolution() {
     zone.appendChild(cursor);
     s.words.forEach(function(word, wi) {
       var chip = sbMakeChip(word, idx);
-      chip.textContent = wi === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word;
+      chip.textContent = word;
       chip.classList.add('ok');
       zone.appendChild(chip);
     });

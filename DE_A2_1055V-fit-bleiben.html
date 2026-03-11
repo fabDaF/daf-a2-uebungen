@@ -575,7 +575,7 @@ function sbUpdateCapitalization(idx){
   var chips=Array.from(zone.querySelectorAll('.sb-chip'));
   chips.forEach(function(chip,pos){
     var orig=chip.dataset.orig;
-    chip.textContent = pos===0 ? orig.charAt(0).toUpperCase()+orig.slice(1) : orig;
+    chip.textContent = orig;
   });
 }
 function sbColorRow(idx){
@@ -588,7 +588,7 @@ function sbColorRow(idx){
   if(chips.length!==correct.length){ ok=false; chips.forEach(function(c){ c.classList.add('no'); c.classList.remove('ok'); }); }
   else {
     chips.forEach(function(chip,i){
-      var match=chip.dataset.orig.toLowerCase()===correct[i].toLowerCase();
+      var match=chip.dataset.orig===correct[i];
       chip.classList.toggle('ok',match); chip.classList.toggle('no',!match);
       if(!match) ok=false;
     });
@@ -616,7 +616,7 @@ function sbShowSolution(){
     // move correct order to zone
     item.words.forEach(function(w){
       var chips=Array.from(bank.querySelectorAll('.sb-chip'));
-      var chip=chips.find(function(c){ return c.dataset.orig.toLowerCase()===w.toLowerCase(); });
+      var chip=chips.find(function(c){ return c.dataset.orig===w; });
       if(chip){ zone.appendChild(chip); }
     });
     sbUpdateCapitalization(idx);

@@ -408,18 +408,18 @@ function mcCheck(step, btn, correct) {
 // ═════════════════════════════════════════════════
 var lueckenBuilt = false;
 var LUECKEN_DATA = [
-    { vor: 'Er hilft ', nach: ' tatkräftig bei der Bewerbung.', ans: 'seinem kollegen', hint: 'Dativ (mask.)', size: 120 },
+    { vor: 'Er hilft ', nach: ' tatkräftig bei der Bewerbung.', ans: 'seinem Kollegen', hint: 'Dativ (mask.)', size: 120 },
     { vor: 'Das Gehalt gefällt ', nach: ' sehr gut.', ans: 'ihr', hint: 'Dativ (Pron. fem.)', size: 50 },
-    { vor: 'Martin schenkt ', nach: ' einen Blumenstrauß.', ans: 'seiner chefin', hint: 'Dativ (fem.)', size: 110 },
+    { vor: 'Martin schenkt ', nach: ' einen Blumenstrauß.', ans: 'seiner Chefin', hint: 'Dativ (fem.)', size: 110 },
     { vor: 'Ich wünsche ', nach: ' viel Erfolg beim Vorstellungsgespräch.', ans: 'dir', hint: 'Dativ (Pron.)', size: 50 },
-    { vor: 'Sie dankt ', nach: ' herzlich.', ans: 'dem arbeitgeber', hint: 'Dativ (mask.)', size: 130 },
-    { vor: 'Das Büro gehört ', nach: '.', ans: 'dem chef', hint: 'Dativ (mask.)', size: 90 },
+    { vor: 'Sie dankt ', nach: ' herzlich.', ans: 'dem Arbeitgeber', hint: 'Dativ (mask.)', size: 130 },
+    { vor: 'Das Büro gehört ', nach: '.', ans: 'dem Chef', hint: 'Dativ (mask.)', size: 90 },
     { vor: 'Sie zeigt ', nach: ' das Büro.', ans: 'ihm', hint: 'Dativ (Pron.)', size: 50 },
-    { vor: 'Sie schickt ', nach: ' die Unterlagen.', ans: 'dem arbeitgeber', hint: 'Dativ (mask.)', size: 130 },
+    { vor: 'Sie schickt ', nach: ' die Unterlagen.', ans: 'dem Arbeitgeber', hint: 'Dativ (mask.)', size: 130 },
     { vor: 'Ich glaube ', nach: ' nicht.', ans: 'ihm', hint: 'Dativ (Pron.)', size: 50 },
     { vor: 'Wir gratulieren ', nach: ' zum neuen Job.', ans: 'ihr', hint: 'Dativ (Pron. fem.)', size: 50 },
-    { vor: 'Er passt ', nach: ' ideal.', ans: 'dem team', hint: 'Dativ (neut.)', size: 80 },
-    { vor: 'Der Kuchen schmeckt ', nach: ' wunderbar.', ans: 'dem kind', hint: 'Dativ (neut.)', size: 80 }
+    { vor: 'Er passt ', nach: ' ideal.', ans: 'dem Team', hint: 'Dativ (neut.)', size: 80 },
+    { vor: 'Der Kuchen schmeckt ', nach: ' wunderbar.', ans: 'dem Kind', hint: 'Dativ (neut.)', size: 80 }
 ];
 function liveCheckBlank(inp) {
     var val = inp.value.trim();
@@ -458,7 +458,7 @@ function resetLuecken() {
 }
 function loesungLuecken() {
     document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){
-        inp.value=inp.dataset.answer.charAt(0).toUpperCase()+inp.dataset.answer.slice(1);
+        inp.value=inp.dataset.answer;
         inp.classList.remove('wrong'); inp.classList.add('correct');
     });
 }

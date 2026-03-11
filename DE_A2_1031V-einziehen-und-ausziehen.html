@@ -507,8 +507,7 @@ function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}
 function sbUpdateCapitalization(row) {
     Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
         var orig=c.dataset.orig;
-        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+        c.textContent=orig;
     });
 }
 function sbMakeChip(word) {

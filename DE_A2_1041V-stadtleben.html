@@ -439,7 +439,7 @@ function sbGetDragAfter(container, x) {
 }
 function sbUpdateCapitalization(n) {
     var zone = document.getElementById('sb-row-' + n); if (!zone) return;
-    zone.querySelectorAll('.chip').forEach(function(chip, i){ var orig = chip.dataset.orig; chip.textContent = (i === 0) ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig; });
+    zone.querySelectorAll('.chip').forEach(function(chip, i){ var orig = chip.dataset.orig; chip.textContent = orig; });
 }
 function sbColorRow(n) {
     var zone = document.getElementById('sb-row-' + n), fb = document.getElementById('sb-fb-' + n);
@@ -447,8 +447,8 @@ function sbColorRow(n) {
     var chips = zone.querySelectorAll('.chip');
     if (chips.length === 0){ fb.textContent = ''; fb.className = 'satzbau-feedback'; return; }
     var sd = satzbauData[n];
-    var placed = Array.from(chips).map(function(c){ return c.dataset.orig.toLowerCase(); });
-    var correct = sd.valid.some(function(v){ return v.length === placed.length && v.every(function(w,i){ return w.toLowerCase() === placed[i]; }); });
+    var placed = Array.from(chips).map(function(c){ return c.dataset.orig; });
+    var correct = sd.valid.some(function(v){ return v.length === placed.length && v.every(function(w,i){ return w === placed[i]; }); });
     fb.className = 'satzbau-feedback ' + (correct ? 'ok' : 'no');
     fb.textContent = correct ? '✓ Richtig!' : '✗ Noch nicht richtig';
     if (correct){ timerAutoStart(4); sbCheckAuto(); }
@@ -462,7 +462,7 @@ function sbShowSolution() {
         if (!zone || !bank) return;
         while (bank.firstChild) bank.removeChild(bank.firstChild);
         zone.innerHTML = '';
-        sd.valid[0].forEach(function(w, i){ zone.appendChild(sbMakeChip((i===0)?w.charAt(0).toUpperCase()+w.slice(1):w, w.toLowerCase())); });
+        sd.valid[0].forEach(function(w, i){ zone.appendChild(sbMakeChip(w, w)); });
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct; zone.appendChild(punkt);
         var fb = document.getElementById('sb-fb-' + n); if (fb){ fb.className = 'satzbau-feedback ok'; fb.textContent = '✓ Richtig!'; }
     });

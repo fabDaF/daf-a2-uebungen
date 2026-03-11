@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 · 1045V · Kunst und Kultur</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+h1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 22px 28px; font-size: 1.5rem; letter-spacing: .5px; }
+h1 span { font-size: .9rem; opacity: .85; margin-left: 10px; }
+
+/* Nav */
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e8ecff; color: #667eea; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+@media (max-width: 600px) { body { padding: 8px; } .nav { flex-wrap: wrap; } .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; } .nav-btn:last-child { border-right: 1px solid #ddd; } }
+
+.section { display: none; }
+.section.active { display: block; }
+.section > div { padding: 28px 24px; }
+h2 { color: #667eea; margin-bottom: 16px; font-size: 1.15rem; }
+h3 { color: #764ba2; margin: 18px 0 8px; font-size: 1rem; }
+p { line-height: 1.7; color: #333; margin-bottom: 10px; }
+
+/* Vokabelkarten */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.vocab-card { border-radius: 12px; overflow: hidden; box-shadow: 0 3px 12px rgba(0,0,0,.1); border: 1px solid #eee; }
+.vocab-card img { width: 100%; height: 160px; object-fit: cover; }
+.vocab-card .vc-body { padding: 12px 14px; }
+.vocab-card .vc-de { font-weight: 700; color: #333; font-size: 1rem; }
+.vocab-card .vc-en { color: #888; font-size: .82rem; margin: 2px 0 8px; }
+.vocab-card .vc-ex { font-style: italic; color: #555; font-size: .85rem; border-left: 3px solid #667eea; padding-left: 8px; line-height: 1.5; }
+
+/* Redemittel QA */
+.qa-pool { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f0; border-radius: 10px; margin-bottom: 18px; min-height: 50px; }
+.qa-chip { background: white; border: 2px solid #667eea; border-radius: 20px; padding: 6px 14px; font-size: .9rem; cursor: grab; user-select: none; transition: background .2s; }
+.qa-chip:active { cursor: grabbing; }
+.qa-chip.placed { opacity: .35; }
+.qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .qa-grid { grid-template-columns: 1fr; } }
+.qa-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; margin-bottom: 10px; }
+.qa-question { background: #f8f8ff; border-radius: 8px; padding: 10px 12px; font-size: .9rem; font-weight: 600; color: #333; min-height: 44px; display: flex; align-items: center; }
+.qa-zone { background: #fafafa; border: 2px dashed #ccc; border-radius: 8px; padding: 8px 10px; min-height: 44px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; transition: background .2s; }
+.qa-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.qa-zone .qa-chip { cursor: default; }
+.qa-zone .qa-chip.ok { background: #e8f5e9; border-color: #4caf50; }
+.qa-zone .qa-chip.no { background: #ffebee; border-color: #e53935; }
+
+/* Lückentext */
+.lt-block { background: #f8f8ff; border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+.lt-input { border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: 1rem; color: #333; width: 130px; outline: none; padding: 2px 4px; transition: border-color .2s; }
+.lt-input:focus { border-color: #667eea; }
+.lt-input.ok { border-color: #4caf50; color: #2e7d32; }
+.lt-input.no { border-color: #e53935; color: #c62828; }
+
+/* Text & Fragen */
+.rf-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; margin-bottom: 9px; background: #f8f8ff; border-radius: 8px; font-size: .93rem; }
+.rf-item span { flex: 1; }
+.rf-btn { padding: 5px 14px; border-radius: 16px; border: 2px solid; cursor: pointer; font-size: .84rem; font-weight: 600; transition: all .2s; }
+.rf-r { border-color: #4caf50; color: #4caf50; background: white; }
+.rf-r:hover { background: #e8f5e9; }
+.rf-r.correct { background: #4caf50; color: white; }
+.rf-r.wrong { background: #ffebee; border-color: #e53935; color: #e53935; }
+.rf-f { border-color: #e53935; color: #e53935; background: white; }
+.rf-f:hover { background: #ffebee; }
+.rf-f.correct { background: #e53935; color: white; }
+.rf-f.wrong { background: #e8f5e9; border-color: #4caf50; color: #4caf50; }
+.rf-fb { font-size: .8rem; width: 20px; }
+
+/* Satzbau */
+.sentence-builder { margin-bottom: 22px; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
+.chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
+.chip:active { cursor: grabbing; }
+.sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
+.sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
+.sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
+.satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
+.satzbau-feedback.ok { color: #4caf50; }
+.satzbau-feedback.no { color: #e53935; }
+
+/* Wortschatz */
+.ws-row { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 8px; align-items: center; padding: 9px 10px; border-bottom: 1px solid #eee; font-size: .9rem; }
+.ws-row:first-child { background: #667eea; color: white; font-weight: 700; font-size: .85rem; border-radius: 8px 8px 0 0; }
+.ws-row:nth-child(even) { background: #f8f8ff; }
+.art { width: 70px; border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: .9rem; outline: none; padding: 2px 4px; }
+.art:focus { border-color: #667eea; }
+.art.ok { border-color: #4caf50; color: #2e7d32; }
+.art.no { border-color: #e53935; color: #c62828; }
+.wort-inp { width: 100%; border: none; border-bottom: 2px solid #aaa; background: transparent; font-size: .9rem; outline: none; padding: 2px 4px; }
+.wort-inp:focus { border-color: #667eea; }
+.wort-inp.ok { border-color: #4caf50; color: #2e7d32; }
+.wort-inp.no { border-color: #e53935; color: #c62828; }
+
+/* Timer */
+.btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.btn-small { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 20px; padding: 6px 16px; font-size: .82rem; cursor: pointer; }
+.btn-small:hover { opacity: .88; }
+.timer-display { font-size: .88rem; color: #555; }
+
+/* Footer */
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>1045V · Kunst und Kultur <span>Vokabular · A2.1</span></h1>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">📸</span><span class="nav-label">Wörter</span></button>
+  <button class="nav-btn" onclick="showTab(1)"><span class="nav-emoji">💬</span><span class="nav-label">Redemittel</span></button>
+  <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
+  <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">📖</span><span class="nav-label">Text & Fragen</span></button>
+  <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
+  <button class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></button>
+</nav>
+
+<!-- TAB 0: Wörter -->
+<section class="section active" id="tab-0">
+<div>
+  <h2>📸 Vokabelkarten — Kunst und Kultur</h2>
+  <div class="vocab-grid" id="vocabGrid"></div>
+</div>
+</section>
+
+<!-- TAB 1: Redemittel -->
+<section class="section" id="tab-1">
+<div>
+  <h2>💬 Redemittel — Frage &amp; Antwort</h2>
+  <p style="color:#555;font-size:.9rem;margin-bottom:14px">Ziehe die Antwort zur passenden Frage.</p>
+  <div class="qa-pool" id="qaPool"></div>
+  <div id="qaRows"></div>
+  <button class="btn-small" onclick="qaReset()">↺ Neustart</button>
+</div>
+</section>
+
+<!-- TAB 2: Lückentext -->
+<section class="section" id="tab-2">
+<div>
+  <h2>✏️ Lückentext</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="lt-best">—</span></span>
+    <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
+    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
+  </div>
+  <div class="lt-block">
+    <h3>Im Kino</h3>
+    <p>Heute Abend geht es ins Kino. Die ganze Familie geht, das heißt Mama, Papa, Toby und Sam. Im Kino kaufen Mama und Papa vier <input class="lt-input" id="lt0" data-ans="Eintrittskarten" placeholder="" oninput="ltCheck(this)">. Die ganze Familie geht zur Vorstellung, aber es gibt nicht genügend freie <input class="lt-input" id="lt1" data-ans="Plätze" placeholder="" oninput="ltCheck(this)" style="width:80px">. Mama und Papa sitzen weit weg von Toby und Sam. Die Kinder sind <input class="lt-input" id="lt2" data-ans="begeistert" placeholder="" oninput="ltCheck(this)"> vom Film. Er ist <input class="lt-input" id="lt3" data-ans="spannend" placeholder="" oninput="ltCheck(this)" style="width:100px"> und lustig. Nächstes Mal geht es ins <input class="lt-input" id="lt4" data-ans="Museum" placeholder="" oninput="ltCheck(this)" style="width:90px"> — für Mama und Papa.</p>
+  </div>
+  <div class="lt-block">
+    <h3>Kulturelles Programm</h3>
+    <p>1. Das <input class="lt-input" id="lt5" data-ans="Theaterstück" placeholder="" oninput="ltCheck(this)"> hat mir gut gefallen.</p>
+    <p>2. Dem <input class="lt-input" id="lt6" data-ans="Publikum" placeholder="" oninput="ltCheck(this)" style="width:90px"> hat das Stück gut gefallen.</p>
+    <p>3. Die <input class="lt-input" id="lt7" data-ans="Veranstaltung" placeholder="" oninput="ltCheck(this)"> war gut besucht.</p>
+    <p>4. Das ist eine Kunst-<input class="lt-input" id="lt8" data-ans="Ausstellung" placeholder="" oninput="ltCheck(this)" style="width:110px">.</p>
+    <p>5. In der <input class="lt-input" id="lt9" data-ans="Pause" placeholder="" oninput="ltCheck(this)" style="width:80px"> gibt es Essen und Trinken.</p>
+  </div>
+</div>
+</section>
+
+<!-- TAB 3: Text & Fragen -->
+<section class="section" id="tab-3">
+<div>
+  <h2>📖 Text &amp; Fragen — Im Kino</h2>
+  <div style="background:#f8f8ff;border-left:4px solid #667eea;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:20px;line-height:1.8;color:#333;font-size:.97rem;">
+    Heute Abend geht es ins Kino. Die ganze Familie geht, das heißt Mama, Papa, Toby und Sam. Die Kinder freuen sich schon sehr aufs Kino. Sie dürfen sich einen Film aussuchen. Im Kino kaufen Mama und Papa vier Eintrittskarten. Die ganze Familie geht zur Vorstellung, aber es gibt nicht genügend freie Plätze. Mama und Papa sitzen weit weg von Toby und Sam. Die Kinder sind begeistert vom Film. Er ist spannend und lustig. Nächstes Mal geht es ins Museum — für Mama und Papa.
+  </div>
+  <h3>Richtig oder Falsch?</h3>
+  <div id="rfContainer"></div>
+  <button class="btn-small" onclick="rfReset()" style="margin-top:14px">↺ Neustart</button>
+</div>
+</section>
+
+<!-- TAB 4: Satzbau -->
+<section class="section" id="tab-4">
+<div>
+  <h2>🧩 Satzbau</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="sb-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(4)">↺ Neustart</button>
+    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+  </div>
+  <div id="satzbauContainer"></div>
+</div>
+</section>
+
+<!-- TAB 5: Wortschatz -->
+<section class="section" id="tab-5">
+<div>
+  <h2>🔠 Wortschatz — Artikel + Wort + Plural tippen</h2>
+  <div class="btn-row">
+    <span class="timer-display">⏱ <span id="ws-time">0:00</span></span>
+    <span class="timer-display">🏆 <span id="ws-best">—</span></span>
+    <button class="btn-small" onclick="timerResetOne(5)">↺ Neustart</button>
+    <button class="btn-small" onclick="wsShowSolutions()">💡 Lösungen</button>
+  </div>
+  <div id="wsContainer"></div>
+</div>
+</section>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ===== TAB NAVIGATION ===== */
+var TABS = 6;
+function showTab(n) {
+  for (var i = 0; i < TABS; i++) {
+    var s = document.getElementById('tab-' + i);
+    var b = document.querySelectorAll('.nav-btn')[i];
+    if (s) s.classList.toggle('active', i === n);
+    if (b) b.classList.toggle('active', i === n);
+  }
+  if (n === 4) timerAutoStart(4);
+  if (n === 5) timerAutoStart(5);
+}
+
+/* ===== VOKABELN ===== */
+var VOCAB = [
+  { term: 'das Theaterstück, -e', en: '(theatre play)', ex: 'Die Schauspieler führen ein klassisches Theaterstück auf.', img: 19658083 },
+  { term: 'der Film, -e', en: '(film / movie)', ex: 'Wir schauen uns heute Abend einen spannenden Film an.', img: 3866658 },
+  { term: 'die Eintrittskarte, -n', en: '(ticket / entry ticket)', ex: 'Er kauft die Eintrittskarten schon vor zwei Tagen.', img: 8170126 },
+  { term: 'der Platz, -\u0308e', en: '(seat / place)', ex: 'Ist der Platz noch frei?', img: 6896179 },
+  { term: 'die Pause, -n', en: '(break / interval)', ex: 'In der Pause gibt es Essen und Trinken.', img: 7266990 },
+  { term: 'das Publikum', en: '(audience)', ex: 'Dem Publikum hat das Theaterstück sehr gut gefallen.', img: 1049746 },
+  { term: 'die Veranstaltung, -en', en: '(event)', ex: 'Die kulturelle Veranstaltung war gut besucht.', img: 16118361 },
+  { term: 'die Ausstellung, -en', en: '(exhibition)', ex: 'Wir besuchen die neue Ausstellung im Kunstmuseum.', img: 700413 },
+  { term: 'das Museum, -een', en: '(museum)', ex: 'Das Museum hat viele Skulpturen und Gemälde.', img: 2527390 },
+  { term: 'spannend', en: '(exciting / thrilling)', ex: 'Der Film ist spannend und wir können nicht aufhören zuzuschauen.', img: 2803819 },
+  { term: 'begeistert (von)', en: '(enthusiastic / thrilled)', ex: 'Die Kinder sind begeistert von der Vorstellung.', img: 6340702 },
+  { term: 'anschauen', en: '(to look at / to watch)', ex: 'Wir schauen uns die Gemälde in der Ausstellung an.', img: 2721507 }
+];
+
+function buildVocabCards() {
+  var grid = document.getElementById('vocabGrid');
+  VOCAB.forEach(function(v) {
+    var card = document.createElement('div'); card.className = 'vocab-card';
+    var img = document.createElement('img');
+    img.src = 'https://images.pexels.com/photos/' + v.img + '/pexels-photo-' + v.img + '.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop';
+    img.alt = v.term; img.loading = 'lazy';
+    var body = document.createElement('div'); body.className = 'vc-body';
+    body.innerHTML = '<div class="vc-de">' + v.term + '</div><div class="vc-en">' + v.en + '</div><div class="vc-ex">' + v.ex + '</div>';
+    card.appendChild(img); card.appendChild(body);
+    grid.appendChild(card);
+  });
+}
+
+/* ===== TIMER ===== */
+var TIMER_PREFIX = 'a2-1045v-';
+var timerStarted = [false,false,false,false,false,false];
+var timerRunning = [false,false,false,false,false,false];
+var timerSeconds = [0,0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null,null];
+function timerFmt(s) { return Math.floor(s/60) + ':' + (s%60<10?'0':'') + s%60; }
+function timerTick(n) { timerSeconds[n]++; var els=['','','lt-time','','sb-time','ws-time']; var el=document.getElementById(els[n]); if(el) el.textContent=timerFmt(timerSeconds[n]); }
+function timerAutoStart(n) { if(timerStarted[n])return; timerStarted[n]=true; timerRunning[n]=true; timerIntervals[n]=setInterval(function(){timerTick(n);},1000); }
+function timerStop(n) {
+  if(!timerRunning[n])return; timerRunning[n]=false; clearInterval(timerIntervals[n]);
+  var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');
+  if(timerSeconds[n]<best)localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);
+  var b=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n));
+  var els=['','','lt-best','','sb-best','ws-best']; var el=document.getElementById(els[n]); if(el) el.textContent=timerFmt(b);
+}
+function timerResetOne(n) {
+  clearInterval(timerIntervals[n]); timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
+  var els=['','','lt-time','','sb-time','ws-time']; var el=document.getElementById(els[n]); if(el) el.textContent='0:00';
+  if(n===4) initSatzbau();
+  if(n===5) initWs();
+}
+[2,4,5].forEach(function(n){
+  var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);
+  if(b){var els=['','','lt-best','','sb-best','ws-best'];var el=document.getElementById(els[n]);if(el)el.textContent=timerFmt(parseInt(b));}
+});
+
+/* ===== QA REDEMITTEL ===== */
+var QA_DATA = [
+  { q: 'Hast du die Eintrittskarten für das Kino gekauft?', a: 'Ja, schon vor zwei Tagen.' },
+  { q: 'Welchen Film möchtest du sehen?', a: 'Ich möchte den neuen James Bond sehen.' },
+  { q: 'Ist der Platz noch frei?', a: 'Nein, der Platz ist besetzt.' },
+  { q: 'Wie gefällt dir das Theaterstück?', a: 'Es gefällt mir sehr gut.' },
+  { q: 'War die Veranstaltung gut besucht?', a: 'Ja, es gab kaum freie Plätze.' },
+  { q: 'Wie war die Ausstellung?', a: 'Das Museum hatte tolle Gemälde.' }
+];
+var draggedChip = null;
+function initQa() {
+  var pool = document.getElementById('qaPool'); pool.innerHTML = '';
+  var rowsDiv = document.getElementById('qaRows'); rowsDiv.innerHTML = '';
+  var shuffled = QA_DATA.slice();
+  for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}
+  shuffled.forEach(function(d) {
+    var c = document.createElement('div'); c.className = 'qa-chip'; c.textContent = d.a; c.dataset.ans = d.a; c.draggable = true;
+    c.addEventListener('dragstart', function(){draggedChip=c; setTimeout(function(){c.classList.add('placed');},0);});
+    c.addEventListener('dragend', function(){c.classList.remove('placed'); draggedChip=null;});
+    pool.appendChild(c);
+  });
+  QA_DATA.forEach(function(d) {
+    var row = document.createElement('div'); row.className = 'qa-row';
+    var qDiv = document.createElement('div'); qDiv.className = 'qa-question'; qDiv.textContent = d.q;
+    var zone = document.createElement('div'); zone.className = 'qa-zone'; zone.dataset.ans = d.a;
+    zone.addEventListener('dragover', function(e){e.preventDefault();zone.classList.add('drag-over');});
+    zone.addEventListener('dragleave', function(){zone.classList.remove('drag-over');});
+    zone.addEventListener('drop', function(e){
+      e.preventDefault(); zone.classList.remove('drag-over');
+      if(!draggedChip) return;
+      draggedChip.classList.remove('placed');
+      var chip = draggedChip.cloneNode(true);
+      chip.draggable = false;
+      var correct = chip.dataset.ans === zone.dataset.ans;
+      chip.classList.toggle('ok', correct);
+      chip.classList.toggle('no', !correct);
+      zone.innerHTML = '';
+      zone.appendChild(chip);
+      draggedChip.remove();
+      draggedChip = null;
+      colorAllQaChips();
+    });
+    row.appendChild(qDiv); row.appendChild(zone);
+    rowsDiv.appendChild(row);
+  });
+}
+function colorAllQaChips() { /* chips colored on drop */ }
+function qaReset() { initQa(); }
+
+/* ===== LÜCKENTEXT ===== */
+var ltDone=false; var ltStarted=false;
+function ltCheck(inp) {
+  if(!ltStarted){ltStarted=true;timerAutoStart(2);}
+  var val=inp.value.trim(); var ans=inp.dataset.ans;
+  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  if(Array.from(document.querySelectorAll('.lt-input')).every(function(i){return i.classList.contains('ok');})){if(!ltDone){ltDone=true;timerStop(2);}}
+}
+function ltRestart(){timerResetOne(2);ltStarted=false;ltDone=false;document.querySelectorAll('.lt-input').forEach(function(i){i.value='';i.classList.remove('ok','no');});}
+function ltShowSolutions(){document.querySelectorAll('.lt-input').forEach(function(i){i.value=i.dataset.ans;i.classList.add('ok');i.classList.remove('no');});}
+
+/* ===== RICHTIG/FALSCH ===== */
+var RF_DATA = [
+  { text: 'Die Eltern kaufen die Eintrittskarten.', ans: true },
+  { text: 'Die Kinder freuen sich schon sehr aufs Kino.', ans: true },
+  { text: 'Mama und Papa sitzen neben den Kindern.', ans: false },
+  { text: 'Den Kindern hat der Film gut gefallen.', ans: true },
+  { text: 'Das nächste Mal geht es ins Theater.', ans: false }
+];
+function initRf() {
+  var cont=document.getElementById('rfContainer'); cont.innerHTML='';
+  RF_DATA.forEach(function(d,i){
+    var div=document.createElement('div'); div.className='rf-item';
+    var sp=document.createElement('span'); sp.textContent=(i+1)+'. '+d.text;
+    var btnR=document.createElement('button'); btnR.className='rf-btn rf-r'; btnR.textContent='Richtig';
+    var btnF=document.createElement('button'); btnF.className='rf-btn rf-f'; btnF.textContent='Falsch';
+    var fb=document.createElement('div'); fb.className='rf-fb';
+    function check(chosen){
+      var ok=chosen===d.ans;
+      btnR.className='rf-btn rf-r'+(chosen===true?(ok?' correct':' wrong'):'');
+      btnF.className='rf-btn rf-f'+(chosen===false?(ok?' correct':' wrong'):'');
+      fb.textContent=ok?'✓':'✗'; fb.style.color=ok?'#4caf50':'#e53935';
+    }
+    btnR.onclick=function(){check(true);}; btnF.onclick=function(){check(false);};
+    div.appendChild(sp);div.appendChild(btnR);div.appendChild(btnF);div.appendChild(fb);
+    cont.appendChild(div);
+  });
+}
+function rfReset(){initRf();}
+
+/* ===== SATZBAU ===== */
+var satzbauData = [
+  { words: ['Das', 'Theaterstück', 'hat', 'mir', 'gut', 'gefallen'], punct: '.' },
+  { words: ['Dem', 'Publikum', 'hat', 'das', 'Stück', 'gut', 'gefallen'], punct: '.' },
+  { words: ['Die', 'Veranstaltung', 'war', 'gut', 'besucht'], punct: '.' },
+  { words: ['In', 'der', 'Pause', 'gibt', 'es', 'Essen', 'und', 'Trinken'], punct: '.' },
+  { words: ['Die', 'Kinder', 'sind', 'begeistert', 'vom', 'Film'], punct: '.' },
+  { words: ['Wir', 'schauen', 'uns', 'die', 'Ausstellung', 'an'], punct: '.' },
+  { words: ['Ist', 'der', 'Platz', 'noch', 'frei'], punct: '?' }
+];
+var sbDragged = null;
+function sbMakeChip(word,orig){var c=document.createElement('div');c.className='chip';c.textContent=word;c.dataset.orig=orig;c.draggable=true;c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});return c;}
+function sbRegisterZone(zone,rowIdx){zone.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';var cursor=zone.querySelector('.sb-insert-cursor');if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}zone.classList.add('drag-over');});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('drag-over');var cursor=zone.querySelector('.sb-insert-cursor');if(sbDragged){if(cursor)zone.insertBefore(sbDragged,cursor);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}}zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});sbUpdateCapitalization(zone);setTimeout(function(){sbCheckAuto(rowIdx);},500);});}
+function sbColorRow(zone,ok){zone.querySelectorAll('.chip').forEach(function(c){c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';});}
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;c.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig;});}
+function sbCheckAuto(rowIdx){var zone=document.getElementById('sb-row-'+rowIdx);var fb=document.getElementById('sb-fb-'+rowIdx);if(!zone)return;var chips=Array.from(zone.querySelectorAll('.chip'));var words=chips.map(function(c){return c.dataset.orig.toLowerCase();});var expected=satzbauData[rowIdx].words.map(function(w){return w.toLowerCase();});var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});sbColorRow(zone,ok?true:chips.length>0?false:null);if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}if(ok){var allOk=satzbauData.every(function(_,i){var z=document.getElementById('sb-row-'+i);if(!z)return false;var ch=Array.from(z.querySelectorAll('.chip'));var ex=satzbauData[i].words.map(function(w){return w.toLowerCase();});return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig.toLowerCase()===ex[j];});});if(allOk)timerStop(4);}}
+function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.getElementById('sb-bank-'+i);var zone=document.getElementById('sb-row-'+i);if(!bank||!zone)return;bank.innerHTML='';var pt=zone.querySelector('.sb-punkt');Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});d.words.forEach(function(w,j){var c=sbMakeChip(j===0?w.charAt(0).toUpperCase()+w.slice(1):w,w);if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);});sbColorRow(zone,true);var fb=document.getElementById('sb-fb-'+i);if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}});}
+function initSatzbau(){var cont=document.getElementById('satzbauContainer');cont.innerHTML='';satzbauData.forEach(function(d,i){var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}var wrap=document.createElement('div');wrap.className='sentence-builder';var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);sbRegisterZone(zone,i);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);});}
+
+/* ===== WORTSCHATZ ===== */
+var WS_VOCAB = [
+  { en: 'theatre play', art: 'das', de: 'Theaterstück', pl: '-e' },
+  { en: 'film / movie', art: 'der', de: 'Film', pl: '-e' },
+  { en: 'ticket (entry)', art: 'die', de: 'Eintrittskarte', pl: '-n' },
+  { en: 'seat / place', art: 'der', de: 'Platz', pl: '-\u0308e' },
+  { en: 'break / interval', art: 'die', de: 'Pause', pl: '-n' },
+  { en: 'audience', art: 'das', de: 'Publikum', pl: '—' },
+  { en: 'event', art: 'die', de: 'Veranstaltung', pl: '-en' },
+  { en: 'exhibition', art: 'die', de: 'Ausstellung', pl: '-en' },
+  { en: 'museum', art: 'das', de: 'Museum', pl: '-een' },
+  { en: 'exciting / thrilling', art: '—', de: 'spannend', pl: '—' },
+  { en: 'enthusiastic', art: '—', de: 'begeistert', pl: '—' },
+  { en: 'to look at / to watch', art: '—', de: 'anschauen', pl: '—' }
+];
+var wsDone = false;
+function initWs() {
+  wsDone = false;
+  var cont = document.getElementById('wsContainer'); cont.innerHTML = '';
+  var header = document.createElement('div'); header.className = 'ws-row';
+  header.innerHTML = '<div>Artikel</div><div>Englisch → Deutsch</div><div>Plural</div>';
+  cont.appendChild(header);
+  WS_VOCAB.forEach(function(v,i) {
+    var row = document.createElement('div'); row.className = 'ws-row';
+    var artInp = document.createElement('input'); artInp.className = 'art'; artInp.placeholder = 'Artikel';
+    artInp.dataset.ans = v.art; artInp.id = 'art'+i;
+    artInp.addEventListener('input', function(){wsCheckInp(artInp, v.art);});
+    var deInp = document.createElement('input'); deInp.className = 'wort-inp';
+    deInp.placeholder = v.en; deInp.dataset.ans = v.de; deInp.id = 'de'+i;
+    deInp.addEventListener('input', function(){wsCheckInp(deInp, v.de); timerAutoStart(5);});
+    var plInp = document.createElement('input'); plInp.className = 'wort-inp';
+    plInp.placeholder = 'Plural'; plInp.dataset.ans = v.pl; plInp.id = 'pl'+i;
+    plInp.addEventListener('input', function(){wsCheckInp(plInp, v.pl);});
+    row.appendChild(artInp); row.appendChild(deInp); row.appendChild(plInp);
+    cont.appendChild(row);
+  });
+}
+function wsCheckInp(inp, ans) {
+  timerAutoStart(5);
+  var val = inp.value.trim();
+  if(val === ans){inp.classList.add('ok');inp.classList.remove('no');}
+  else if(ans.toLowerCase().startsWith(val.toLowerCase())&&val.length>0){inp.classList.remove('ok','no');}
+  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
+  else{inp.classList.remove('ok','no');}
+  var allOk = Array.from(document.querySelectorAll('#wsContainer .art, #wsContainer .wort-inp')).every(function(i){return i.classList.contains('ok');});
+  if(allOk && !wsDone){wsDone=true; timerStop(5);}
+}
+function wsShowSolutions() {
+  document.querySelectorAll('#wsContainer .art, #wsContainer .wort-inp').forEach(function(i){
+    i.value=i.dataset.ans; i.classList.add('ok'); i.classList.remove('no');
+  });
+}
+
+/* ===== INIT ===== */
+buildVocabCards();
+initQa();
+initRf();
+initSatzbau();
+initWs();
+</script>
+</body>
+</html>

@@ -283,9 +283,9 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 Jonas ist
                 <input class="luecken-inp" data-ans="arbeitslos" placeholder="" style="width:120px">.
                 Er liest eine
-                <input class="luecken-inp" data-ans="stellenanzeige" placeholder="" style="width:140px">
+                <input class="luecken-inp" data-ans="Stellenanzeige" placeholder="" style="width:140px">
                 und schreibt eine
-                <input class="luecken-inp" data-ans="bewerbung" placeholder="" style="width:120px">.
+                <input class="luecken-inp" data-ans="Bewerbung" placeholder="" style="width:120px">.
                 Er hofft, dass er
                 <input class="luecken-inp" data-ans="eingestellt" placeholder="" style="width:120px">
                 wird.
@@ -294,7 +294,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
             <h3 style="color:#764ba2;margin:20px 0 10px 0;font-size:1.05em;">📝 Lückentext 2 — Jonas als Sekretär</h3>
             <p class="luecken-text">
                 Heute hat Jonas ein
-                <input class="luecken-inp" data-ans="vorstellungsgespräch" placeholder="" style="width:190px">.
+                <input class="luecken-inp" data-ans="Vorstellungsgespräch" placeholder="" style="width:190px">.
                 Er
                 <input class="luecken-inp" data-ans="bewirbt" placeholder="" style="width:90px">
                 sich um eine Stelle als Sekretär. Er
@@ -302,7 +302,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 sich gut mit Computern
                 <input class="luecken-inp" data-ans="aus" placeholder="" style="width:50px">.
                 Sein
-                <input class="luecken-inp" data-ans="lebenslauf" placeholder="" style="width:110px">
+                <input class="luecken-inp" data-ans="Lebenslauf" placeholder="" style="width:110px">
                 ist sehr gut.
             </p>
         </div>
@@ -448,7 +448,7 @@ function resetLuecken() {
 }
 function showLueckenLoesungen(tab) {
     document.querySelectorAll('#sec-' + tab + ' .luecken-inp').forEach(function(inp) {
-        inp.value = inp.dataset.ans.charAt(0).toUpperCase() + inp.dataset.ans.slice(1);
+        inp.value = inp.dataset.ans;
         inp.classList.remove('no'); inp.classList.add('ok');
     });
 }
@@ -757,7 +757,7 @@ function resetWortschatz(){
 function showWsLoesungen() {
     document.querySelectorAll('#sec-4 .ws-inp').forEach(function(inp){
         var ans=inp.dataset.ans||'';
-        inp.value=ans.charAt(0).toUpperCase()+ans.slice(1);
+        inp.value=ans;
         inp.classList.remove('no');inp.classList.add('ok');
     });
 }

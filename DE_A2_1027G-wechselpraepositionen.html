@@ -365,7 +365,7 @@ function liveCheckLuecke(inp){var val=inp.value.trim();var ans=inp.dataset.answe
 function checkLueckenOk(){var inputs=document.querySelectorAll('#lueckenContainer input.blank');if(Array.from(inputs).every(function(i){return i.classList.contains('correct');}))timerStop(2);}
 function buildLuecken(){var c=document.getElementById('lueckenContainer');LUECKEN_DATA.forEach(function(item,i){var div=document.createElement('div');div.className='luecken-satz';div.innerHTML='<span class="luecken-num">'+(i+1)+'</span>'+item.vor+'<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="">'+item.nach;c.appendChild(div);var inp=div.querySelector('input.blank');inp.addEventListener('input',function(){liveCheckLuecke(inp);});});}
 function resetLuecken(){timerResetOne(2);document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){inp.value='';inp.classList.remove('correct','wrong');});}
-function loesungLuecken(){document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){var ans=inp.dataset.answer;inp.value=ans.charAt(0).toUpperCase()+ans.slice(1);inp.classList.remove('wrong');inp.classList.add('correct');});}
+function loesungLuecken(){document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){var ans=inp.dataset.answer;inp.value=ans;inp.classList.remove('wrong');inp.classList.add('correct');});}
 
 // ══════════════════════════════════════
 // SATZBAU

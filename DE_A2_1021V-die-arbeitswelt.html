@@ -360,27 +360,27 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
             <h2>📝 Lückentext 1 — Im Büro</h2>
             <p class="luecken-text">
                 Mark arbeitet in der Stadtmitte in einem modernen
-                <input class="luecken-inp" data-ans="büro" placeholder="" style="width:80px">.
+                <input class="luecken-inp" data-ans="Büro" placeholder="" style="width:80px">.
                 Er sitzt jeden Tag an seinem
-                <input class="luecken-inp" data-ans="schreibtisch" placeholder="" style="width:130px">
+                <input class="luecken-inp" data-ans="Schreibtisch" placeholder="" style="width:130px">
                 und bearbeitet viele
-                <input class="luecken-inp" data-ans="aufgaben" placeholder="" style="width:100px">.
+                <input class="luecken-inp" data-ans="Aufgaben" placeholder="" style="width:100px">.
                 Sein
-                <input class="luecken-inp" data-ans="arbeitgeber" placeholder="" style="width:130px">
+                <input class="luecken-inp" data-ans="Arbeitgeber" placeholder="" style="width:130px">
                 ist sehr nett und zahlt ihm ein gutes
-                <input class="luecken-inp" data-ans="gehalt" placeholder="" style="width:90px">.
+                <input class="luecken-inp" data-ans="Gehalt" placeholder="" style="width:90px">.
             </p>
 
             <h2>📝 Lückentext 2 — Tom macht Überstunden</h2>
             <p class="luecken-text">
                 Tom liebt seinen Job, aber er muss oft
-                <input class="luecken-inp" data-ans="überstunden" placeholder="" style="width:130px">
+                <input class="luecken-inp" data-ans="Überstunden" placeholder="" style="width:130px">
                 machen und hat viel
-                <input class="luecken-inp" data-ans="stress" placeholder="" style="width:80px">.
+                <input class="luecken-inp" data-ans="Stress" placeholder="" style="width:80px">.
                 Er möchte bei einer anderen großen
-                <input class="luecken-inp" data-ans="firma" placeholder="" style="width:80px">
+                <input class="luecken-inp" data-ans="Firma" placeholder="" style="width:80px">
                 eine neue
-                <input class="luecken-inp" data-ans="stelle" placeholder="" style="width:80px">
+                <input class="luecken-inp" data-ans="Stelle" placeholder="" style="width:80px">
                 finden, wo er auch gut
                 <input class="luecken-inp" data-ans="verdient" placeholder="" style="width:90px">,
                 aber weniger Überstunden machen muss.
@@ -545,7 +545,7 @@ function resetLuecken() {
 }
 function showLueckenLoesungen(tab) {
     document.querySelectorAll('#sec-' + tab + ' .luecken-inp').forEach(function(inp) {
-        inp.value = inp.dataset.ans.charAt(0).toUpperCase() + inp.dataset.ans.slice(1);
+        inp.value = inp.dataset.ans;
         inp.classList.remove('no'); inp.classList.add('ok');
     });
 }
@@ -987,8 +987,8 @@ function wortschatzCheck(inp) {
     var field = inp.dataset.field;
     inp.classList.remove('correct', 'wrong');
     if (!user) return;
-    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
-    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    var cmpUser   = user.trim();
+    var cmpAnswer = answer;
     if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
     else { inp.classList.add('wrong'); }
