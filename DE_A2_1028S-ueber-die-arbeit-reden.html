@@ -573,7 +573,7 @@ function buildLueckentext() {
             }
         });
         div.appendChild(inp);
-        div.innerHTML += item.nach;
+        var nachSpan = document.createElement('span'); nachSpan.innerHTML = item.nach; div.appendChild(nachSpan);
         container.appendChild(div);
     });
 }
