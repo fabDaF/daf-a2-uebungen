@@ -467,6 +467,28 @@ document.addEventListener('DOMContentLoaded', function(){
     })(i);
   }
 });
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
+function sbShowSolution() {
+    satzbauData.forEach(function(sd, n) {
+        var zone = document.getElementById('sb-row-' + n);
+        var bank = document.getElementById('sb-bank-' + n);
+        if (!zone || !bank) return;
+        while (bank.firstChild) bank.removeChild(bank.firstChild);
+        zone.innerHTML = '';
+        sd.valid[0].forEach(function(w, i) {
+            var word = (i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+            var chip = sbMakeChip((i===0)?sbCapitalize(w):word, w.toLowerCase());
+            zone.appendChild(chip);
+        });
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
+        zone.appendChild(punkt);
+        var fb = document.getElementById('sb-fb-' + n);
+        if (fb) { fb.className = 'satzbau-feedback ok'; fb.textContent = '✓ Richtig!'; }
+    });
+    timerStop(4);
+}
+
 </script>
 </body>
 </html>

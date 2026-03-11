@@ -498,12 +498,11 @@ function sbGetDragAfter(container, x) {
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
-function sbUpdateCapitalization(n) {
-    var zone = document.getElementById('sb-row-' + n); if (!zone) return;
-    var chips = zone.querySelectorAll('.chip');
-    chips.forEach(function(chip, i){
-        var orig = chip.dataset.orig;
-        chip.textContent = orig;
+function sbUpdateCapitalization(row) {
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
+        var orig=c.dataset.orig;
+        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
+        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
     });
 }
 
@@ -529,6 +528,7 @@ function sbCheckAuto() {
     if (allOk) timerStop(3);
 }
 
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
 function sbShowSolution() {
     satzbauData.forEach(function(sd, n){
         var zone = document.getElementById('sb-row-' + n);
@@ -538,7 +538,7 @@ function sbShowSolution() {
         zone.innerHTML = '';
         sd.valid[0].forEach(function(w, i){
             var word = (i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-            zone.appendChild(sbMakeChip(word, word));
+            zone.appendChild(sbMakeChip((i===0)?sbCapitalize(w):word, w.toLowerCase()));
         });
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
         zone.appendChild(punkt);
@@ -558,7 +558,7 @@ function initSatzbau() {
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
         zone.appendChild(punkt);
         var fb = document.createElement('div'); fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + n;
-        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip(w, w)); });
+        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(w):w, w.toLowerCase())); });
         sbRegisterZone(zone, bank, n);
         sb.appendChild(lbl); sb.appendChild(bank); sb.appendChild(zone); sb.appendChild(fb);
         container.appendChild(sb);

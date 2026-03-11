@@ -438,8 +438,14 @@ function sbGetDragAfter(container, x) {
     return Array.from(container.querySelectorAll('.chip:not(.dragging)')).reduce(function(closest, child){ var box = child.getBoundingClientRect(); var offset = x - box.left - box.width / 2; if (offset < 0 && offset > closest.offset) return { offset: offset, element: child }; return closest; }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 function sbUpdateCapitalization(n) {
-    var zone = document.getElementById('sb-row-' + n); if (!zone) return;
-    zone.querySelectorAll('.chip').forEach(function(chip, i){ var orig = chip.dataset.orig; chip.textContent = orig; });
+    var zone = document.getElementById('sb-row-' + n);
+    if (!zone) return;
+    var chips = zone.querySelectorAll('.chip');
+    chips.forEach(function(chip, i) {
+        var orig = chip.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase() && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        chip.textContent = isProper ? orig : ((i === 0) ? orig.charAt(0).toUpperCase() + orig.slice(1) : orig);
+    });
 }
 function sbColorRow(n) {
     var zone = document.getElementById('sb-row-' + n), fb = document.getElementById('sb-fb-' + n);
@@ -456,13 +462,14 @@ function sbColorRow(n) {
 function sbCheckAuto() {
     if (satzbauData.every(function(_, n){ var fb = document.getElementById('sb-fb-' + n); return fb && fb.classList.contains('ok'); })) timerStop(4);
 }
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
 function sbShowSolution() {
     satzbauData.forEach(function(sd, n){
         var zone = document.getElementById('sb-row-' + n), bank = document.getElementById('sb-bank-' + n);
         if (!zone || !bank) return;
         while (bank.firstChild) bank.removeChild(bank.firstChild);
         zone.innerHTML = '';
-        sd.valid[0].forEach(function(w, i){ zone.appendChild(sbMakeChip(w, w)); });
+        sd.valid[0].forEach(function(w, i){ zone.appendChild(sbMakeChip((i===0)?sbCapitalize(w):w, w.toLowerCase())); });
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct; zone.appendChild(punkt);
         var fb = document.getElementById('sb-fb-' + n); if (fb){ fb.className = 'satzbau-feedback ok'; fb.textContent = '✓ Richtig!'; }
     });
@@ -477,7 +484,7 @@ function initSatzbau() {
         var zone = document.createElement('div'); zone.className = 'sb-zone'; zone.id = 'sb-row-' + n;
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct; zone.appendChild(punkt);
         var fb = document.createElement('div'); fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + n;
-        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip(w, w)); });
+        shuffle(sd.parts).forEach(function(w){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(w):w, w.toLowerCase())); });
         sbRegisterZone(zone, bank, n);
         sb.appendChild(lbl); sb.appendChild(bank); sb.appendChild(zone); sb.appendChild(fb);
         container.appendChild(sb);

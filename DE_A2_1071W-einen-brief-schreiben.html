@@ -613,10 +613,10 @@ function getSbInsertPos(zone, clientX) {
 }
 function sbCapitalize(str){ return str; }
 function sbUpdateCapitalization(row) {
-    var chips = Array.from(row.querySelectorAll('.chip-sb'));
-    chips.forEach(function(c,i){
-        var orig = c.dataset.orig;
-        c.textContent = orig;
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
+        var orig=c.dataset.orig;
+        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
+        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
     });
 }
 function sbMakeChip(word) {

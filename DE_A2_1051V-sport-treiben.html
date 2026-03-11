@@ -569,14 +569,7 @@ function sbRegisterZone(zone, sbIdx) {
   });
 }
 
-function sbUpdateCapitalization(idx) {
-  var zone = document.getElementById('sb-row-' + idx);
-  if (!zone) return;
-  var chips = Array.from(zone.querySelectorAll('.sb-chip'));
-  chips.forEach(function(chip, i) {
-    var orig = chip.dataset.orig;
-    chip.textContent = orig;
-  });
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();c.textContent=isProper?orig:(i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig);});});
 }
 
 function sbColorRow(idx, ok) {
@@ -607,6 +600,7 @@ function sbCheckAuto(idx) {
   if (allOk) timerStop(4);
 }
 
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
 function sbShowSolution() {
   satzbauData.forEach(function(s, idx) {
     var zone = document.getElementById('sb-row-' + idx);
@@ -617,7 +611,7 @@ function sbShowSolution() {
     cursor.className = 'sb-insert-cursor'; cursor.id = 'sb-insert-cursor-' + idx; cursor.style.display = 'none';
     zone.appendChild(cursor);
     s.words.forEach(function(word, wi) {
-      var chip = sbMakeChip(word, idx);
+      var chip = sbMakeChip((wi===0)?sbCapitalize(word):word, idx);
       chip.textContent = word;
       chip.classList.add('ok');
       zone.appendChild(chip);
@@ -646,7 +640,7 @@ function initSatzbau() {
       sbUpdateCapitalization(idx);
       setTimeout(function() { sbCheckAuto(idx); }, 500);
     });
-    shuffle(s.words.slice()).forEach(function(word) { bank.appendChild(sbMakeChip(word, idx)); });
+    shuffle(s.words.slice()).forEach(function(word) { bank.appendChild(sbMakeChip((wi===0)?sbCapitalize(word):word, idx)); });
     var zone = document.createElement('div');
     zone.className = 'sb-zone'; zone.id = 'sb-row-' + idx;
     var cursor = document.createElement('div');

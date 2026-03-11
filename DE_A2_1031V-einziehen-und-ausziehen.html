@@ -507,9 +507,9 @@ function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}
 function sbUpdateCapitalization(row) {
     Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
         var orig=c.dataset.orig;
-        c.textContent=orig;
-    });
-}
+        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
+        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+    }
 function sbMakeChip(word) {
     var chip=document.createElement('div'); chip.className='chip'; chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
     chip.addEventListener('dragstart',function(e){sbDragged=chip;e.dataTransfer.setData('text/plain','');setTimeout(function(){chip.style.opacity='0.4';},0);});

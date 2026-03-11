@@ -462,9 +462,7 @@ function sbGetDragAfter(container, x){
   var chips=Array.from(container.querySelectorAll('.chip:not(.dragging)'));
   return chips.reduce(function(closest,child){ var box=child.getBoundingClientRect(); var offset=x-box.left-box.width/2; if(offset<0&&offset>closest.offset) return{offset:offset,element:child}; return closest; },{offset:Number.NEGATIVE_INFINITY}).element;
 }
-function sbUpdateCapitalization(rowIdx){
-  var row=document.getElementById('sb-row-'+rowIdx); if(!row) return;
-  row.querySelectorAll('.chip').forEach(function(ch,i){ var orig=ch.dataset.orig; ch.textContent=orig; });
+function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();c.textContent=isProper?orig:(i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig);});});
 }
 function sbColorRow(rowIdx, correct){
   var fb=document.getElementById('sb-fb-'+rowIdx);
@@ -490,11 +488,12 @@ function sbRegisterZone(zone,rowIdx){
   bank.addEventListener('dragover',function(e){ e.preventDefault(); });
   bank.addEventListener('drop',function(e){ e.preventDefault(); if(!sbDragged) return; sbDragged.classList.remove('sb-placed'); bank.appendChild(sbDragged); sbDragged=null; sbUpdateCapitalization(rowIdx); setTimeout(function(){ sbCheckAuto(rowIdx); },500); });
 }
+function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
 function sbShowSolution(){
   satzbauData.forEach(function(data,rowIdx){
     var bank=document.getElementById('sb-bank-'+rowIdx); var row=document.getElementById('sb-row-'+rowIdx); if(!bank||!row) return;
     bank.innerHTML=''; row.innerHTML='';
-    data.words.filter(function(w){return w!==',';}).forEach(function(word,i){ var ch=sbMakeChip(word,word); ch.classList.add('sb-placed'); row.appendChild(ch); });
+    data.words.filter(function(w){return w!==',';}).forEach(function(word,i){ var ch=sbMakeChip((i===0)?sbCapitalize(word):word, w.toLowerCase()); ch.classList.add('sb-placed'); row.appendChild(ch); });
     var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
     sbColorRow(rowIdx,true); sbCorrect[rowIdx]=true;
   });
@@ -508,7 +507,7 @@ function sbBuild(){
     var shuffled=words.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;}
     var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
     var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
-    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); });
+    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip((i===0)?sbCapitalize(word):word, w.toLowerCase())); });
     wrap.appendChild(bank);
     var row=document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx;
     var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);

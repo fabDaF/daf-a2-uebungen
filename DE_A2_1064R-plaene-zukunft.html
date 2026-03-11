@@ -594,9 +594,11 @@ function sbUpdateCapitalization(row) {
     var chips = Array.from(row.querySelectorAll('.chip'));
     chips.forEach(function(c, i) {
         var orig = c.dataset.orig;
-        c.textContent = orig;
-    });
-}
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        if (isProper) {
+            c.textContent = orig;
+        }
 
 function sbMakeChip(word) {
     var chip = document.createElement('div');
