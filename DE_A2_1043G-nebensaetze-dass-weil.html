@@ -74,10 +74,12 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .sentence-builder { margin-bottom: 22px; }
 .chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
 .chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
+.chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 .chip:active { cursor: grabbing; }
 .sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
 .sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
-.sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
+
 .sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
 .satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
 .satzbau-feedback.ok { color: #4caf50; }
@@ -119,7 +121,9 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 <div class="container">
 <div class="header">
 <h1>1043G · Nebensätze mit <em>dass</em> und <em>weil</em> <span>Grammatik · A2.1</span></h1>
+    <p style="font-family: Georgia, serif;">A2.1 · Lektion 1043G</p>
 
+    <div class="big-emoji">🔗</div>
 </div>
 <nav class="nav">
   <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></button>
@@ -284,7 +288,7 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
     <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
     <span class="timer-display">🏆 <span id="sb-best">—</span></span>
     <button class="btn-small" onclick="timerResetOne(3)">↺ Neustart</button>
-    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+    <button class="btn-small" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">💡 Lösungen</button>
   </div>
   <div id="satzbauContainer"></div>
 </div>
@@ -415,104 +419,207 @@ var satzbauData = [
 ];
 var sbDragged = null;
 
-function sbMakeChip(word, orig) {
-  var c = document.createElement('div');
-  c.className = 'chip'; c.textContent = word; c.dataset.orig = orig; c.draggable = true;
-  c.addEventListener('dragstart', function(e) { sbDragged = c; e.dataTransfer.effectAllowed = 'move'; });
-  c.addEventListener('dragend', function() { sbDragged = null; document.querySelectorAll('.sb-insert-cursor').forEach(function(x) { x.remove(); }); });
-  return c;
-}
-function sbRegisterZone(zone, rowIdx) {
-  zone.addEventListener('dragover', function(e) {
-    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
-    var cursor = zone.querySelector('.sb-insert-cursor');
-    if (!cursor) { cursor = document.createElement('div'); cursor.className = 'sb-insert-cursor'; cursor.style.height = '28px'; }
-    var after = null; var children = Array.from(zone.children).filter(function(c) { return !c.classList.contains('sb-insert-cursor') && !c.classList.contains('sb-punkt'); });
-    for (var i = 0; i < children.length; i++) { var r = children[i].getBoundingClientRect(); if (e.clientX < r.left + r.width / 2) { after = children[i]; break; } }
-    if (after) zone.insertBefore(cursor, after); else { var p = zone.querySelector('.sb-punkt'); if (p) zone.insertBefore(cursor, p); else zone.appendChild(cursor); }
-    zone.classList.add('drag-over');
-  });
-  zone.addEventListener('dragleave', function(e) { if (!zone.contains(e.relatedTarget)) { zone.classList.remove('drag-over'); zone.querySelectorAll('.sb-insert-cursor').forEach(function(x) { x.remove(); }); } });
-  zone.addEventListener('drop', function(e) {
-    e.preventDefault(); zone.classList.remove('drag-over');
-    var cursor = zone.querySelector('.sb-insert-cursor');
-    if (sbDragged) {
-      if (cursor) zone.insertBefore(sbDragged, cursor);
-      else { var p = zone.querySelector('.sb-punkt'); if (p) zone.insertBefore(sbDragged, p); else zone.appendChild(sbDragged); }
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
     }
-    zone.querySelectorAll('.sb-insert-cursor').forEach(function(x) { x.remove(); });
-    sbUpdateCapitalization(zone);
-    setTimeout(function() { sbCheckAuto(rowIdx); }, 500);
-  });
+    return c;
 }
-function sbColorRow(zone, ok) {
-  zone.querySelectorAll('.chip').forEach(function(c) {
-    c.style.background = ok ? '#e8f5e9' : ok === false ? '#ffebee' : '#fff';
-    c.style.borderColor = ok ? '#4caf50' : ok === false ? '#e53935' : '#667eea';
-  });
+
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
 }
+
+function sbCapitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function sbUpdateCapitalization(row) {
-    Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
-        var orig=c.dataset.orig;
-        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        if (isProper) {
+            c.textContent = orig;
+        } else {
+            c.textContent = (i === 0) ? sbCapitalize(orig) : orig;
+        }
     });
 }
-function sbCheckAuto(rowIdx) {
-  var zone = document.getElementById('sb-row-' + rowIdx);
-  var fb = document.getElementById('sb-fb-' + rowIdx);
-  if (!zone) return;
-  var chips = Array.from(zone.querySelectorAll('.chip'));
-  var words = chips.map(function(c) { return c.dataset.orig; });
-  var expected = satzbauData[rowIdx].words.map(function(w) { return w; });
-  var ok = words.length === expected.length && words.every(function(w, i) { return w === expected[i]; });
-  sbColorRow(zone, ok ? true : chips.length > 0 ? false : null);
-  if (fb) { fb.textContent = ok ? '✓ Richtig!' : chips.length > 0 ? 'Noch nicht richtig …' : ''; fb.className = 'satzbau-feedback' + (ok ? ' ok' : chips.length > 0 ? ' no' : ''); }
-  if (ok) {
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before);
+        else zone.appendChild(cursor);
+    });
+
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = satzbauData[idx].valid.some(function(v) {
+        return JSON.stringify(v) === JSON.stringify(order);
+    });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt';
+        punkt.textContent = satzbauData[idx].punct || '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) {
+            c.classList.remove('correct', 'incorrect');
+        });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+
+    setTimeout(function() {
+        timerAutoStart(3);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    }, 500);
+}
+
+function sbCheckAllDone() {
     var allOk = satzbauData.every(function(_, i) {
-      var z = document.getElementById('sb-row-' + i); if (!z) return false;
-      var ch = Array.from(z.querySelectorAll('.chip'));
-      var ex = satzbauData[i].words.map(function(w) { return w; });
-      return ch.length === ex.length && ch.every(function(c, j) { return c.dataset.orig === ex[j]; });
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
     });
     if (allOk) timerStop(3);
-  }
 }
-function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
-function sbShowSolution() {
-  satzbauData.forEach(function(d, i) {
-    var bank = document.getElementById('sb-bank-' + i);
-    var zone = document.getElementById('sb-row-' + i);
-    if (!bank || !zone) return;
-    bank.innerHTML = '';
-    var pt = zone.querySelector('.sb-punkt');
-    Array.from(zone.querySelectorAll('.chip')).forEach(function(c) { bank.appendChild(c); });
-    d.words.forEach(function(w, j) {
-      var c = sbMakeChip((j===0)?w.charAt(0).toUpperCase()+w.slice(1):w, w);
-      if (pt) zone.insertBefore(c, pt); else zone.appendChild(c);
+
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    var solution = satzbauData[idx].valid[0];
+
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild)  row.removeChild(row.firstChild);
+
+    solution.forEach(function(word, i) {
+        var chip = allChips[word];
+        if (chip) {
+            chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+            chip.classList.remove('correct', 'incorrect');
+            row.appendChild(chip);
+        }
     });
-    sbColorRow(zone, true);
-    var fb = document.getElementById('sb-fb-' + i);
-    if (fb) { fb.textContent = '✓ Lösung'; fb.className = 'satzbau-feedback ok'; }
-  });
+
+    fb.textContent = '';
+    setTimeout(function() { sbCheckAuto(idx); }, 100);
 }
+
 function initSatzbau() {
-  var cont = document.getElementById('satzbauContainer');
-  cont.innerHTML = '';
-  satzbauData.forEach(function(d, i) {
-    var shuffled = d.words.slice();
-    for (var k = shuffled.length - 1; k > 0; k--) { var r = Math.floor(Math.random() * (k + 1)); var t = shuffled[k]; shuffled[k] = shuffled[r]; shuffled[r] = t; }
-    var wrap = document.createElement('div'); wrap.className = 'sentence-builder';
-    var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + i;
-    shuffled.forEach(function(w) { bank.appendChild(sbMakeChip(w, w)); });
-    var zone = document.createElement('div'); zone.className = 'sb-zone'; zone.id = 'sb-row-' + i;
-    var pt = document.createElement('span'); pt.className = 'sb-punkt'; pt.textContent = d.punct;
-    zone.appendChild(pt);
-    sbRegisterZone(zone, i);
-    var fb = document.createElement('div'); fb.className = 'satzbau-feedback'; fb.id = 'sb-fb-' + i;
-    wrap.appendChild(bank); wrap.appendChild(zone); wrap.appendChild(fb);
-    cont.appendChild(wrap);
-  });
+    var area = document.getElementById('satzbauContainer');
+    area.innerHTML = '';
+    satzbauData.forEach(function(ex, idx) {
+        var label = document.createElement('p');
+        label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
+        label.textContent = (idx + 1) + '. Satz';
+        area.appendChild(label);
+        var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
+        var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
+        var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;
+        var parts = ex.parts.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+        }
+        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank, idx);
+        sbRegisterZone(row, idx);
+        area.appendChild(bank);
+        area.appendChild(row);
+        area.appendChild(fb);
+    });
 }
 
 /* ===== MULTIPLE CHOICE ===== */

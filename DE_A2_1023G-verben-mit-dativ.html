@@ -76,6 +76,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .zuo-zone h4 { font-size: 0.85em; font-weight: 700; color: #764ba2; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
 .zuo-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f0f0f8; border-radius: 10px; min-height: 56px; margin-bottom: 16px; border: 1px dashed #bbb; }
 .chip { padding: 7px 14px; border-radius: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; transition: transform .15s, opacity .15s; white-space: nowrap; display: inline-block; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 .chip:active { cursor: grabbing; transform: scale(1.04); }
 .chip.selected { outline: 3px solid #f39c12; }
 .chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; }
@@ -91,9 +92,9 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
 .satzbau-feedback.correct   { color: #27ae60; }
 .satzbau-feedback.incorrect { color: #e74c3c; }
-.sb-chip { padding: 7px 14px; border-radius: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; display: inline-block; white-space: nowrap; transition: all .15s; }
+.chip { padding: 7px 14px; border-radius: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; display: inline-block; white-space: nowrap; transition: all .15s; }
 .sb-chip:active { cursor: grabbing; transform: scale(1.04); }
-.sb-chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; }
+.chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; }
 .sb-chip.wrong   { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; }
 
 /* ── Timer + Buttons ────────────────────────────────────────────── */
@@ -294,7 +295,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
                 <span>⏱</span>
                 <span>Zeit: <span class="timer-display" id="timer-3">0:00</span></span>
                 <span class="best-display">🏆 <span id="best-3">—</span></span>
-                <button class="btn btn-reset" onclick="timerResetOne(3); sbInit(); ">↺ Neustart</button>
+                <button class="btn btn-reset" onclick="timerResetOne(3); initSatzbau(); ">↺ Neustart</button>
                 <button class="btn btn-primary" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">💡 Lösungen</button>
             </div>
             <div id="satzbauContainer"></div>
@@ -328,7 +329,7 @@ function showSection(idx) {
     document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
     document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
     if (idx === 2 && !lueckenBuilt) { buildLuecken(); lueckenBuilt = true; }
-    if (idx === 3 && !sbBuilt) { sbInit(); sbBuilt = true; }
+    if (idx === 3 && !sbBuilt) { initSatzbau(); sbBuilt = true; }
     if (idx === 4 && !mcBuilt) { initMC(); mcBuilt = true; }
 }
 
@@ -477,12 +478,12 @@ var satzbauData = [
     { parts: ['sie', 'schickt', 'dem', 'Arbeitgeber', 'ihre', 'Unterlagen'], valid: [['sie', 'schickt', 'dem', 'Arbeitgeber', 'ihre', 'Unterlagen']], punct: '.' },
     { parts: ['wir', 'gratulieren', 'ihr', 'zum', 'neuen', 'Job'], valid: [['wir', 'gratulieren', 'ihr', 'zum', 'neuen', 'Job']], punct: '.' }
 ];
-function sbGetCursor() {
+function getSbCursor() {
     var c=document.getElementById('sb-insert-cursor');
     if(!c){c=document.createElement('div');c.id='sb-insert-cursor';c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';}
     return c;
 }
-function sbGetInsertPos(zone,clientX){
+function getSbInsertPos(zone,clientX){
     var chips=Array.from(zone.querySelectorAll('.sb-chip'));
     for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}
     return null;
@@ -498,7 +499,7 @@ function sbUpdateCapitalization(row){
 }
 function sbMakeChip(word){
     var chip=document.createElement('div');
-    chip.className='sb-chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;
+    chip.className='chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;
     chip.addEventListener('dragstart',function(e){sbDragged=chip;e.dataTransfer.setData('text/plain','');setTimeout(function(){chip.style.opacity='0.4';},0);});
     chip.addEventListener('dragend',function(){chip.style.opacity='';sbDragged=null;var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode)c.parentNode.removeChild(c);});
     return chip;
@@ -506,7 +507,7 @@ function sbMakeChip(word){
 function sbRegisterZone(zone,idx){
     zone.addEventListener('dragover',function(e){
         e.preventDefault();if(!sbDragged)return;
-        var cursor=sbGetCursor();var before=sbGetInsertPos(zone,e.clientX);
+        var cursor=getSbCursor();var before=getSbInsertPos(zone,e.clientX);
         if(before)zone.insertBefore(cursor,before);else zone.appendChild(cursor);
     });
     zone.addEventListener('dragleave',function(e){
@@ -561,7 +562,7 @@ function sbShowSolution(idx){
     fb.textContent='';
     setTimeout(function(){sbCheckAuto(idx);},100);
 }
-function sbInit(){
+function initSatzbau(){
     var container=document.getElementById('satzbauContainer');container.innerHTML='';
     satzbauData.forEach(function(ex,idx){
         var block=document.createElement('div');block.className='sb-block';

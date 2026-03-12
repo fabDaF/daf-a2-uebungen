@@ -255,7 +255,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 .chip.wrong    { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; }
 
 /* Satzbau-Chips (Tab 3) — satzbau-drag-drop Skill */
-.sb-chip {
+.chip {
   background: white;
   border: 2px solid #667eea;
   color: #667eea;
@@ -268,8 +268,8 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
   user-select: none;
   white-space: nowrap;
 }
-.sb-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
-.sb-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 
 .zuo-layout {
   display: grid;
@@ -342,8 +342,10 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
   <!-- Header -->
   <div class="header">
     <h1>Das Plusquamperfekt</h1>
-    <p>A2 · Lektion 1013G · Meine Freunde</p>
-  </div>
+    <p style="font-family: Georgia, serif;">A2 · Lektion 1013G · Meine Freunde</p>
+  
+    <div class="big-emoji">⏮️</div>
+</div>
 
   <!-- Nav -->
   <div class="nav">
@@ -951,7 +953,7 @@ function sbUpdateCapitalization(row) {
 
 function sbMakeChip(word) {
   var chip = document.createElement('div');
-  chip.className = 'sb-chip';
+  chip.className = 'chip';
   chip.textContent = word;
   chip.dataset.orig = word;
   chip.draggable = true;

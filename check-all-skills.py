@@ -366,27 +366,27 @@ def check_satzbau(content, fname):
     if re.search(r'\.chip\s*\{', content):
         ok('.chip CSS')
     else:
-        warn('[S] .chip CSS fehlt (altes Satzbau-Pattern)')
+        err('[S] .chip CSS FEHLT')
 
     if re.search(r'\.chip\.correct', content):
         ok('.chip.correct CSS')
     else:
-        warn('[S] .chip.correct CSS fehlt (altes Satzbau-Pattern)')
+        err('[S] .chip.correct CSS FEHLT')
 
     if re.search(r'\.chip\.incorrect', content):
         ok('.chip.incorrect CSS')
     else:
-        warn('[S] .chip.incorrect CSS fehlt (altes Satzbau-Pattern)')
+        err('[S] .chip.incorrect CSS FEHLT')
 
     if re.search(r'\.sb-punkt\s*\{', content):
         ok('.sb-punkt CSS')
     else:
-        warn('[S] .sb-punkt CSS fehlt')
+        err('[S] .sb-punkt CSS FEHLT')
 
     if re.search(r'\.satzbau-feedback\s*\{', content):
         ok('.satzbau-feedback CSS')
     else:
-        warn('[S] .satzbau-feedback CSS fehlt')
+        err('[S] .satzbau-feedback CSS FEHLT')
 
     # JS Functions
     if re.search(r'var\s+sbDragged', content):
@@ -397,22 +397,22 @@ def check_satzbau(content, fname):
     if re.search(r'function\s+getSbCursor', content):
         ok('getSbCursor()')
     else:
-        warn('[S] getSbCursor() fehlt (altes Satzbau-Pattern)')
+        err('[S] getSbCursor() FEHLT')
 
     if re.search(r'function\s+sbMakeChip', content):
         ok('sbMakeChip()')
     else:
-        warn('[S] sbMakeChip() fehlt (altes Satzbau-Pattern)')
+        err('[S] sbMakeChip() FEHLT')
 
     if re.search(r'function\s+sbRegisterZone', content):
         ok('sbRegisterZone()')
     else:
-        warn('[S] sbRegisterZone() fehlt (altes Satzbau-Pattern)')
+        err('[S] sbRegisterZone() FEHLT')
 
-    if re.search(r'function\s+initSatzbau|function\s+sbInit', content):
+    if re.search(r'function\s+initSatzbau', content):
         ok('initSatzbau()')
     else:
-        warn('[S] initSatzbau() nicht gefunden')
+        err('[S] initSatzbau() FEHLT')
 
     if re.search(r'dataset\.orig', content):
         ok('dataset.orig verwendet')
@@ -423,18 +423,18 @@ def check_satzbau(content, fname):
     if re.search(r'var\s+satzbauData\s*=|satzbauData\s*=\s*\[', content):
         ok('satzbauData Array')
     else:
-        warn('[S] satzbauData Array nicht gefunden')
+        err('[S] satzbauData Array FEHLT')
 
-    # HTML IDs
-    if re.search(r'id="sb-bank-0"', content):
-        ok('sb-bank-0 HTML ID')
+    # HTML IDs (statisch oder dynamisch generiert — beides OK)
+    if re.search(r'id="sb-bank-0"|sb-bank-.*idx|sb-bank-.*\+', content):
+        ok('sb-bank-N IDs (statisch oder dynamisch)')
     else:
-        warn('[S] sb-bank-0 nicht als HTML-ID (vielleicht JS-generiert)')
+        warn('[S] sb-bank-0 nicht gefunden (weder statisch noch dynamisch)')
 
-    if re.search(r'id="sb-row-0"', content):
-        ok('sb-row-0 HTML ID')
+    if re.search(r'id="sb-row-0"|sb-row-.*idx|sb-row-.*\+', content):
+        ok('sb-row-N IDs (statisch oder dynamisch)')
     else:
-        warn('[S] sb-row-0 nicht als HTML-ID (vielleicht JS-generiert)')
+        warn('[S] sb-row-0 nicht gefunden (weder statisch noch dynamisch)')
 
     return errors, warnings, ok_items
 

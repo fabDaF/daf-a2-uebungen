@@ -86,13 +86,14 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .sb-zone { display: flex; flex-wrap: wrap; gap: 6px; background: #fff; border: 2px dashed #ccc; border-radius: 8px; padding: 8px; min-height: 44px; position: relative; }
 .sb-zone.drag-over { border-color: #667eea; background: #f0edf8; }
 .chip { background: #667eea; color: white; border-radius: 20px; padding: 5px 12px; font-size: .88rem; cursor: grab; user-select: none; white-space: nowrap; transition: opacity .15s; }
+.chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 .chip:active { cursor: grabbing; opacity: .7; }
 .chip.sb-placed { background: #764ba2; }
 .sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; }
 .satzbau-feedback { font-size: .88rem; margin-top: 4px; min-height: 20px; }
 .satzbau-feedback.ok { color: #27ae60; }
 .satzbau-feedback.no { color: #e74c3c; }
-.sb-insert-cursor { display: inline-block; width: 2px; height: 28px; background: #667eea; animation: blink 1s infinite; align-self: center; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 /* MC */
 .mc-item { margin-bottom: 18px; }
@@ -123,7 +124,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   <div class="header">
     <h1>1063G · Futur I mit <em>werden</em></h1>
     <p style="font-family: Georgia, serif;">A2.1 · Grammatik · Zukunft &amp; Pläne</p>
-  </div>
+  
+    <div class="big-emoji">🔮</div>
+</div>
 
   <div class="nav">
     <div class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></div>
@@ -352,8 +355,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <div class="btn-row">
       <span>⏱ <span id="sb-timer">0:00</span></span>
       <span>🏆 <span id="sb-best">–</span></span>
-      <button onclick="sbTimerReset()">↺ Neustart</button>
-      <button onclick="sbShowSolution()">💡 Lösungen</button>
+      <button onclick="initSatzbau()">↺ Neustart</button>
+      <button onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">💡 Lösungen</button>
     </div>
   </section>
 
@@ -415,7 +418,6 @@ function mcCheck(step, btn, correct) {
 // ── TIMER ───────────────────────────────────────────────────
 var TIMER_PREFIX = 'a2-1063g-';
 var ltStarted = false, ltRunning = false, ltSecs = 0, ltInterval = null;
-var sbStarted = false, sbRunning = false, sbSecs = 0, sbInterval = null;
 function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
 function timerLoadBest(key, elId){
   var b = localStorage.getItem(key);
@@ -431,16 +433,9 @@ function ltTimerStop(){
   if (!b || ltSecs < parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-lt', ltSecs); document.getElementById('lt-best').textContent = timerFmt(ltSecs); }
 }
 function ltTimerReset(){ ltRunning=false; ltStarted=false; ltSecs=0; clearInterval(ltInterval); document.getElementById('lt-timer').textContent='0:00'; }
-function sbTimerAutoStart(){
-  if (sbStarted) return; sbStarted = true; sbRunning = true;
-  sbInterval = setInterval(function(){ sbSecs++; document.getElementById('sb-timer').textContent = timerFmt(sbSecs); }, 1000);
+, 1000);
 }
-function sbTimerStop(){
-  if (!sbRunning) return; sbRunning = false; clearInterval(sbInterval);
-  var b = localStorage.getItem(TIMER_PREFIX+'best-sb');
-  if (!b || sbSecs < parseInt(b)){ localStorage.setItem(TIMER_PREFIX+'best-sb', sbSecs); document.getElementById('sb-best').textContent = timerFmt(sbSecs); }
 }
-function sbTimerReset(){ sbRunning=false; sbStarted=false; sbSecs=0; clearInterval(sbInterval); document.getElementById('sb-timer').textContent='0:00'; sbCorrect=[]; sbBuild(); }
 
 // ── LÜCKENTEXT ──────────────────────────────────────────────
 var LT_COUNT = 16;
@@ -468,128 +463,222 @@ function ltShowAll(){
 
 // ── SATZBAU ─────────────────────────────────────────────────
 var satzbauData = [
-  { words: ['Ich', 'werde', 'morgen', 'früh', 'aufstehen'], punct: '.' },
-  { words: ['Nina', 'wird', 'nächstes', 'Jahr', 'nach', 'Australien', 'fliegen'], punct: '.' },
-  { words: ['Wir', 'werden', 'im', 'Sommer', 'ein', 'Haus', 'kaufen'], punct: '.' },
-  { words: ['Du', 'wirst', 'bestimmt', 'den', 'Test', 'bestehen'], punct: '.' },
-  { words: ['Er', 'wird', 'morgen', 'lange', 'arbeiten', 'müssen'], punct: '.' },
-  { words: ['Ihr', 'werdet', 'hier', 'nicht', 'rauchen', 'dürfen'], punct: '.' },
-  { words: ['Es', 'wird', 'heute', 'noch', 'regnen'], punct: '.' }
+    { parts: ["ich", "werde", "morgen", "früh", "aufstehen"],
+      valid: [["ich", "werde", "morgen", "früh", "aufstehen"]],
+      punct: '.' },
+    { parts: ["Nina", "wird", "nächstes", "Jahr", "nach", "Australien", "fliegen"],
+      valid: [["Nina", "wird", "nächstes", "Jahr", "nach", "Australien", "fliegen"]],
+      punct: '.' },
+    { parts: ["wir", "werden", "im", "Sommer", "ein", "Haus", "kaufen"],
+      valid: [["wir", "werden", "im", "Sommer", "ein", "Haus", "kaufen"]],
+      punct: '.' },
+    { parts: ["du", "wirst", "bestimmt", "den", "Test", "bestehen"],
+      valid: [["du", "wirst", "bestimmt", "den", "Test", "bestehen"]],
+      punct: '.' },
+    { parts: ["er", "wird", "morgen", "lange", "arbeiten", "müssen"],
+      valid: [["er", "wird", "morgen", "lange", "arbeiten", "müssen"]],
+      punct: '.' },
+    { parts: ["ihr", "werdet", "hier", "nicht", "rauchen", "dürfen"],
+      valid: [["ihr", "werdet", "hier", "nicht", "rauchen", "dürfen"]],
+      punct: '.' },
+    { parts: ["es", "wird", "heute", "noch", "regnen"],
+      valid: [["es", "wird", "heute", "noch", "regnen"]],
+      punct: '.' }
 ];
 var sbDragged = null;
-var sbCorrect = [];
 
-function sbMakeChip(word, orig){
-  var ch = document.createElement('span');
-  ch.className = 'chip';
-  ch.textContent = word;
-  ch.dataset.orig = orig !== undefined ? orig : word;
-  ch.draggable = true;
-  ch.addEventListener('dragstart', function(){ sbDragged = ch; });
-  return ch;
-}
-function sbGetDragAfter(container, x){
-  var chips = Array.from(container.querySelectorAll('.chip:not(.dragging)'));
-  return chips.reduce(function(closest, child){
-    var box = child.getBoundingClientRect();
-    var offset = x - box.left - box.width/2;
-    if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
-    return closest;
-  }, { offset: Number.NEGATIVE_INFINITY }).element;
-}
-function sbUpdateCapitalization(row) {
-    Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
-        var orig=c.dataset.orig;
-        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
-    });
-}
-function sbColorRow(rowIdx, correct){
-  var fb = document.getElementById('sb-fb-'+rowIdx);
-  if (fb){ fb.textContent = correct ? '✅' : '❌'; fb.className = 'satzbau-feedback '+(correct?'ok':'no'); }
-}
-function sbCheckAuto(rowIdx){
-  var row = document.getElementById('sb-row-'+rowIdx);
-  if (!row) return;
-  var chips = row.querySelectorAll('.chip');
-  var placed = Array.from(chips).map(function(ch){ return ch.dataset.orig; });
-  var data = satzbauData[rowIdx];
-  var expected = data.words;
-  if (placed.length === 0){ sbColorRow(rowIdx, false); return; }
-  var ok = placed.length === expected.length;
-  if (ok){
-    for (var i=0; i<placed.length; i++){
-      if (placed[i] !== expected[i]){ ok=false; break; }
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
     }
-  }
-  sbColorRow(rowIdx, ok);
-  if (ok) sbCorrect[rowIdx] = true;
-  if (sbCorrect.filter(Boolean).length === satzbauData.length) sbTimerStop();
+    return c;
 }
-function sbRegisterZone(zone, rowIdx){
-  zone.addEventListener('dragover', function(e){
-    e.preventDefault(); zone.classList.add('drag-over');
-    var cursor = zone.querySelector('.sb-insert-cursor');
-    if (!cursor){ cursor=document.createElement('span'); cursor.className='sb-insert-cursor'; }
-    var afterEl = sbGetDragAfter(zone, e.clientX);
-    if (afterEl) zone.insertBefore(cursor, afterEl); else zone.appendChild(cursor);
-  });
-  zone.addEventListener('dragleave', function(){ zone.classList.remove('drag-over'); var c=zone.querySelector('.sb-insert-cursor'); if(c) c.remove(); });
-  zone.addEventListener('drop', function(e){
-    e.preventDefault(); zone.classList.remove('drag-over');
-    var cursor = zone.querySelector('.sb-insert-cursor');
-    if (!sbDragged){ if(cursor) cursor.remove(); return; }
-    if (cursor) zone.insertBefore(sbDragged, cursor); else zone.appendChild(sbDragged);
-    if (cursor) cursor.remove();
-    sbDragged.classList.add('sb-placed'); sbDragged=null;
-    sbUpdateCapitalization(rowIdx);
-    setTimeout(function(){ sbCheckAuto(rowIdx); }, 500);
-  });
-  var bank = document.getElementById('sb-bank-'+rowIdx);
-  bank.addEventListener('dragover', function(e){ e.preventDefault(); });
-  bank.addEventListener('drop', function(e){
-    e.preventDefault(); if (!sbDragged) return;
-    sbDragged.classList.remove('sb-placed'); bank.appendChild(sbDragged); sbDragged=null;
-    sbUpdateCapitalization(rowIdx);
-    setTimeout(function(){ sbCheckAuto(rowIdx); }, 500);
-  });
+
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
 }
-function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
-function sbShowSolution(){
-  satzbauData.forEach(function(data, rowIdx){
-    var bank = document.getElementById('sb-bank-'+rowIdx);
-    var row = document.getElementById('sb-row-'+rowIdx);
-    if (!bank || !row) return;
-    bank.innerHTML=''; row.innerHTML='';
-    data.words.forEach(function(word, i){
-      var ch = sbMakeChip((i===0)?sbCapitalize(word):word, word);
-      ch.classList.add('sb-placed'); row.appendChild(ch);
+
+function sbCapitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        if (isProper) {
+            c.textContent = orig;
+        } else {
+            c.textContent = (i === 0) ? sbCapitalize(orig) : orig;
+        }
     });
-    var pt = document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
-    sbColorRow(rowIdx, true); sbCorrect[rowIdx]=true;
-  });
-  sbTimerStop();
 }
-function sbBuild(){
-  var container = document.getElementById('satzbauContainer');
-  container.innerHTML='';
-  sbCorrect = new Array(satzbauData.length).fill(false);
-  satzbauData.forEach(function(data, rowIdx){
-    var shuffled = data.words.slice();
-    for (var i=shuffled.length-1; i>0; i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=shuffled[i]; shuffled[i]=shuffled[j]; shuffled[j]=tmp; }
-    var wrap = document.createElement('div'); wrap.className='sentence-builder';
-    wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
-    var bank = document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
-    shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word, word)); });
-    wrap.appendChild(bank);
-    var row = document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx;
-    var pt = document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt);
-    wrap.appendChild(row);
-    var fb = document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+rowIdx;
-    wrap.appendChild(fb);
-    container.appendChild(wrap);
-    sbRegisterZone(row, rowIdx);
-  });
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before);
+        else zone.appendChild(cursor);
+    });
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = satzbauData[idx].valid.some(function(v) {
+        return JSON.stringify(v) === JSON.stringify(order);
+    });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt';
+        punkt.textContent = satzbauData[idx].punct || '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) {
+            c.classList.remove('correct', 'incorrect');
+        });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+    setTimeout(function() {
+        timerAutoStart(3);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '✓ Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '✗ Falsche Reihenfolge – verschiebe die Chips!';
+        }
+    }, 500);
+}
+
+function sbCheckAllDone() {
+    var allOk = satzbauData.every(function(_, i) {
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
+    });
+    if (allOk) timerStop(3);
+}
+
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    var solution = satzbauData[idx].valid[0];
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild)  row.removeChild(row.firstChild);
+    solution.forEach(function(word, i) {
+        var chip = allChips[word];
+        if (chip) {
+            chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+            chip.classList.remove('correct', 'incorrect');
+            row.appendChild(chip);
+        }
+    });
+    fb.textContent = '';
+    setTimeout(function() { sbCheckAuto(idx); }, 100);
+}
+
+function initSatzbau() {
+    var area = document.getElementById('satzbauContainer');
+    area.innerHTML = '';
+    satzbauData.forEach(function(ex, idx) {
+        var label = document.createElement('p');
+        label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
+        label.textContent = (idx + 1) + '. Satz';
+        area.appendChild(label);
+        var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
+        var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
+        var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;
+        var parts = ex.parts.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+        }
+        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank, idx);
+        sbRegisterZone(row, idx);
+        area.appendChild(bank);
+        area.appendChild(row);
+        area.appendChild(fb);
+    });
 }
 
 // ── MULTIPLE CHOICE ─────────────────────────────────────────

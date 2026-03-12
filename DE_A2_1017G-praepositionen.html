@@ -278,8 +278,10 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
   <!-- ── Header ── -->
   <div class="header">
     <h1>Präpositionen mit Akkusativ und Dativ</h1>
-    <p>A2 · Einheit 101x · 1017G · Grammatik</p>
-  </div>
+    <p style="font-family: Georgia, serif;">A2 · Einheit 101x · 1017G · Grammatik</p>
+  
+    <div class="big-emoji">📍</div>
+</div>
 
   <!-- ── Nav ── -->
   <nav class="nav">
@@ -1036,7 +1038,7 @@ function sbShowSolution(idx) {
   setTimeout(function() { sbCheckAuto(idx); }, 100);
 }
 
-function sbInit() {
+function initSatzbau() {
   var container = document.getElementById('satzbauContainer');
   container.innerHTML = '';
   satzbauData.forEach(function(ex, idx) {
@@ -1087,7 +1089,7 @@ function showSbAll() {
 
 function resetSb() {
   timerResetOne(3);
-  sbInit();
+  initSatzbau();
 }
 
 function shuffle(arr) {
@@ -1104,7 +1106,7 @@ function shuffle(arr) {
 ══════════════════════════════════════════════════════════ */
 zuoInit();
 lueckeInit();
-sbInit();
+initSatzbau();
 loadBestTimes();
 </script>
 </body>
