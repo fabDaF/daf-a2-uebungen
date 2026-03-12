@@ -63,18 +63,20 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .zuord-zone .zuord-chip.ok { background: #e8f5e9; border-color: #4caf50; }
 .zuord-zone .zuord-chip.no { background: #ffebee; border-color: #e53935; }
 
-/* Satzbau */
-.sentence-builder { margin-bottom: 22px; }
-.chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
-.chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
-.chip:active { cursor: grabbing; }
-.sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
-.sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
-.sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
-.sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
-.satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
-.satzbau-feedback.ok { color: #4caf50; }
-.satzbau-feedback.no { color: #e53935; }
+/* Satzbau (satzbau-drag-drop Skill) */
+.satzbau-item { background: #f8f9ff; padding: 16px 20px; margin-bottom: 20px; border-radius: 10px; border-left: 4px solid #667eea; }
+.sb-label { font-size: 0.8em; color: #888; margin-bottom: 6px; font-weight: 600; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
 
 /* Wortschatz */
 .ws-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -156,6 +158,19 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
   </div>
   <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
 </div>
+</section>
+
+<!-- TAB 3: SATZBAU -->
+<section class="section" id="tab-3">
+  <h2>🧩 Satzbau</h2>
+  <p style="color:#666;font-size:0.9em;margin-bottom:14px;">Bringe die Wörter in die richtige Reihenfolge!</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px;font-size:.88em;color:#555;">
+    ⏱ <span id="sb-time">0:00</span>
+    <span style="font-weight:700;color:#4a148c;">🏆 <span id="sb-best">–</span></span>
+    <button onclick="resetSatzbau(); timerResetOne(3);" style="padding:5px 12px;border-radius:16px;border:2px solid #764ba2;color:#764ba2;background:white;cursor:pointer;font-size:.82em;font-weight:600;">↺ Neustart</button>
+    <button onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})" style="padding:5px 12px;border-radius:16px;border:2px solid #764ba2;color:#764ba2;background:white;cursor:pointer;font-size:.82em;font-weight:600;">💡 Lösungen</button>
+  </div>
+  <div id="satzbauContainer"></div>
 </section>
 
   <div class="author-footer">
@@ -240,30 +255,250 @@ function zuordDrop(e,cat){
 function zuordReset(){initZuord();}
 
 /* ===== SATZBAU ===== */
-var satzbauData=[
-  {words:['Morgens','stehe','ich','um','8','Uhr','auf'],punct:'.'},
-  {words:['Mittags','macht','sie','eine','Pause'],punct:'.'},
-  {words:['Zuerst','gehe','ich','duschen'],punct:'.'},
-  {words:['Danach','putze','ich','mir','die','Zähne'],punct:'.'},
-  {words:['Früher','habe','ich','immer','morgens','geduscht'],punct:'.'},
-  {words:['Später','muss','ich','zur','Bank','gehen'],punct:'.'},
-  {words:['Abends','entspannt','sie','zuhause'],punct:'.'}
+/* ========== TAB 3: SATZBAU (satzbau-drag-drop Skill) ========== */
+var satzbauData = [
+    { parts: ['morgens', 'stehe', 'ich', 'um', '8', 'Uhr', 'auf'],
+      valid: [['morgens', 'stehe', 'ich', 'um', '8', 'Uhr', 'auf']], punct: '.' },
+    { parts: ['mittags', 'macht', 'sie', 'eine', 'Pause'],
+      valid: [['mittags', 'macht', 'sie', 'eine', 'Pause']], punct: '.' },
+    { parts: ['zuerst', 'gehe', 'ich', 'duschen'],
+      valid: [['zuerst', 'gehe', 'ich', 'duschen']], punct: '.' },
+    { parts: ['danach', 'putze', 'ich', 'mir', 'die', 'Zähne'],
+      valid: [['danach', 'putze', 'ich', 'mir', 'die', 'Zähne']], punct: '.' },
+    { parts: ['früher', 'habe', 'ich', 'immer', 'morgens', 'geduscht'],
+      valid: [['früher', 'habe', 'ich', 'immer', 'morgens', 'geduscht']], punct: '.' },
+    { parts: ['später', 'muss', 'ich', 'zur', 'Bank', 'gehen'],
+      valid: [['später', 'muss', 'ich', 'zur', 'Bank', 'gehen']], punct: '.' },
+    { parts: ['abends', 'entspannt', 'sie', 'zuhause'],
+      valid: [['abends', 'entspannt', 'sie', 'zuhause']], punct: '.' }
 ];
-var sbDragged=null;
-function sbMakeChip(word,orig){var c=document.createElement('div');c.className='chip';c.textContent=word;c.dataset.orig=orig;c.draggable=true;c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});return c;}
-function sbRegisterZone(zone,rowIdx){zone.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';var cursor=zone.querySelector('.sb-insert-cursor');if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}zone.classList.add('drag-over');});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('drag-over');var cursor=zone.querySelector('.sb-insert-cursor');if(sbDragged){if(cursor)zone.insertBefore(sbDragged,cursor);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}}zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});sbUpdateCapitalization(zone);setTimeout(function(){sbCheckAuto(rowIdx);},500);});}
-function sbColorRow(zone,ok){zone.querySelectorAll('.chip').forEach(function(c){c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';});}
+
+var sbDragged = null;
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'sb-insert-cursor';
+        c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';
+    }
+    return c;
+}
+
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i = 0; i < chips.length; i++) {
+        var r = chips[i].getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) return chips[i];
+    }
+    return null;
+}
+
+function sbCapitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function sbUpdateCapitalization(row) {
-    Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
-        var orig=c.dataset.orig;
-        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
+                    && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        if (isProper) {
+            c.textContent = orig;
+        } else {
+            c.textContent = (i === 0) ? sbCapitalize(orig) : orig;
+        }
     });
 }
-function sbCheckAuto(rowIdx){var zone=document.getElementById('sb-row-'+rowIdx);var fb=document.getElementById('sb-fb-'+rowIdx);if(!zone)return;var chips=Array.from(zone.querySelectorAll('.chip'));var words=chips.map(function(c){return c.dataset.orig;});var expected=satzbauData[rowIdx].words.map(function(w){return w;});var ok=words.length===expected.length&&words.every(function(w,i){return w===expected[i];});sbColorRow(zone,ok?true:chips.length>0?false:null);if(fb){fb.textContent=ok?'✓ Richtig!':chips.length>0?'Noch nicht richtig …':'';fb.className='satzbau-feedback'+(ok?' ok':chips.length>0?' no':'');}if(ok){var allOk=satzbauData.every(function(_,i){var z=document.getElementById('sb-row-'+i);if(!z)return false;var ch=Array.from(z.querySelectorAll('.chip'));var ex=satzbauData[i].words.map(function(w){return w;});return ch.length===ex.length&&ch.every(function(c,j){return c.dataset.orig===ex[j];});});if(allOk)timerStop(3);}}
-function sbCapitalize(str){ return str.charAt(0).toUpperCase()+str.slice(1); }
-function sbShowSolution(){satzbauData.forEach(function(d,i){var bank=document.getElementById('sb-bank-'+i);var zone=document.getElementById('sb-row-'+i);if(!bank||!zone)return;bank.innerHTML='';var pt=zone.querySelector('.sb-punkt');Array.from(zone.querySelectorAll('.chip')).forEach(function(c){bank.appendChild(c);});d.words.forEach(function(w,j){var cap=(j===0)?w.charAt(0).toUpperCase()+w.slice(1):w;var c=sbMakeChip(cap,w);if(pt)zone.insertBefore(c,pt);else zone.appendChild(c);});sbColorRow(zone,true);var fb=document.getElementById('sb-fb-'+i);if(fb){fb.textContent='✓ Lösung';fb.className='satzbau-feedback ok';}});}
-function initSatzbau(){var cont=document.getElementById('satzbauContainer');cont.innerHTML='';satzbauData.forEach(function(d,i){var shuffled=d.words.slice();for(var k=shuffled.length-1;k>0;k--){var r=Math.floor(Math.random()*(k+1));var t=shuffled[k];shuffled[k]=shuffled[r];shuffled[r]=t;}var wrap=document.createElement('div');wrap.className='sentence-builder';var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+i;shuffled.forEach(function(w){bank.appendChild(sbMakeChip(w,w));});var zone=document.createElement('div');zone.className='sb-zone';zone.id='sb-row-'+i;var pt=document.createElement('span');pt.className='sb-punkt';pt.textContent=d.punct;zone.appendChild(pt);sbRegisterZone(zone,i);var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+i;wrap.appendChild(bank);wrap.appendChild(zone);wrap.appendChild(fb);cont.appendChild(wrap);});}
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = word;
+    chip.dataset.orig = word;
+    chip.draggable = true;
+
+    chip.addEventListener('dragstart', function(e) {
+        sbDragged = chip;
+        e.dataTransfer.setData('text/plain', '');
+        setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+    });
+    chip.addEventListener('dragend', function() {
+        chip.style.opacity = '';
+        sbDragged = null;
+        var c = document.getElementById('sb-insert-cursor');
+        if (c && c.parentNode) c.parentNode.removeChild(c);
+    });
+    return chip;
+}
+
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = getSbCursor();
+        var before = getSbInsertPos(zone, e.clientX);
+        if (before) zone.insertBefore(cursor, before);
+        else zone.appendChild(cursor);
+    });
+
+    zone.addEventListener('dragleave', function(e) {
+        if (!zone.contains(e.relatedTarget)) {
+            var c = document.getElementById('sb-insert-cursor');
+            if (c && c.parentNode === zone) zone.removeChild(c);
+        }
+    });
+
+    zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!sbDragged) return;
+        var cursor = document.getElementById('sb-insert-cursor');
+        if (cursor && cursor.parentNode === zone) {
+            zone.insertBefore(sbDragged, cursor);
+            zone.removeChild(cursor);
+        } else {
+            zone.appendChild(sbDragged);
+        }
+        sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-' + idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c) { return c.dataset.orig; });
+    var ok = satzbauData[idx].valid.some(function(v) {
+        return JSON.stringify(v) === JSON.stringify(order);
+    });
+    chips.forEach(function(c) {
+        c.classList.remove('correct', 'incorrect');
+        c.classList.add(ok ? 'correct' : 'incorrect');
+    });
+    var existing = row.querySelector('.sb-punkt');
+    if (existing) existing.parentNode.removeChild(existing);
+    if (ok) {
+        var punkt = document.createElement('span');
+        punkt.className = 'sb-punkt';
+        punkt.textContent = satzbauData[idx].punct || '.';
+        row.appendChild(punkt);
+    }
+    return ok;
+}
+
+function sbCheckAuto(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+
+    if (bank.querySelectorAll('.chip').length > 0) {
+        row.querySelectorAll('.chip').forEach(function(c) {
+            c.classList.remove('correct', 'incorrect');
+        });
+        row.classList.remove('correct', 'incorrect');
+        fb.textContent = '';
+        return;
+    }
+
+    setTimeout(function() {
+        timerAutoStart(3);
+        var ok = sbColorRow(idx);
+        if (ok) {
+            row.classList.add('correct'); row.classList.remove('incorrect');
+            fb.className = 'satzbau-feedback correct';
+            fb.textContent = '\u2713 Korrekt!';
+            sbCheckAllDone();
+        } else {
+            row.classList.add('incorrect'); row.classList.remove('correct');
+            fb.className = 'satzbau-feedback incorrect';
+            fb.textContent = '\u2717 Falsche Reihenfolge \u2013 verschiebe die Chips!';
+        }
+    }, 500);
+}
+
+function sbCheckAllDone() {
+    var allOk = satzbauData.every(function(_, i) {
+        var row = document.getElementById('sb-row-' + i);
+        return row && row.classList.contains('correct');
+    });
+    if (allOk) timerStop(3);
+}
+
+function sbShowSolution(idx) {
+    var bank = document.getElementById('sb-bank-' + idx);
+    var row  = document.getElementById('sb-row-' + idx);
+    var fb   = document.getElementById('sb-fb-' + idx);
+    var solution = satzbauData[idx].valid[0];
+
+    var allChips = {};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+
+    while (bank.firstChild) bank.removeChild(bank.firstChild);
+    while (row.firstChild)  row.removeChild(row.firstChild);
+
+    solution.forEach(function(word, i) {
+        var chip = allChips[word];
+        if (chip) {
+            chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+            chip.classList.remove('correct', 'incorrect');
+            row.appendChild(chip);
+        }
+    });
+
+    fb.textContent = '';
+    setTimeout(function() { sbCheckAuto(idx); }, 100);
+}
+
+function initSatzbau() {
+    var container = document.getElementById('satzbauContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    satzbauData.forEach(function(ex, idx) {
+        var item = document.createElement('div');
+        item.className = 'satzbau-item';
+
+        var label = document.createElement('div');
+        label.className = 'sb-label';
+        label.textContent = 'Satz ' + (idx + 1);
+        item.appendChild(label);
+
+        var bank = document.createElement('div');
+        bank.className = 'chips-container';
+        bank.id = 'sb-bank-' + idx;
+        item.appendChild(bank);
+
+        var row = document.createElement('div');
+        row.className = 'sentence-builder';
+        row.id = 'sb-row-' + idx;
+        item.appendChild(row);
+
+        var fb = document.createElement('div');
+        fb.className = 'satzbau-feedback';
+        fb.id = 'sb-fb-' + idx;
+        item.appendChild(fb);
+
+        container.appendChild(item);
+
+        var parts = ex.parts.slice();
+        for (var i = parts.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+        }
+
+        parts.forEach(function(word) {
+            bank.appendChild(sbMakeChip(word));
+        });
+
+        sbRegisterZone(bank, idx);
+        sbRegisterZone(row, idx);
+    });
+}
+
+function resetSatzbau() { initSatzbau(); }
 
 /* ===== WORTSCHATZ ===== */
 // ─── WORTSCHATZ-TRAINING ──────────────────────────────────────────────────────

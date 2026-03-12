@@ -605,7 +605,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
             </div>
             <p style="color:#666;font-size:0.93em;margin-bottom:18px;">Bringe die Wörter in die richtige Reihenfolge.</p>
 
-            <div id="sb-area"></div>
+            <div id="satzbauContainer"></div>
         </div>
     </div>
 
@@ -940,7 +940,7 @@ function sbShowSolution(idx){
     setTimeout(function(){sbCheckAuto(idx);},100);
 }
 function initSatzbau(){
-    var area=document.getElementById('sb-area');
+    var area=document.getElementById('satzbauContainer');
     area.innerHTML='';
     timerReset(4);
     satzbauData.forEach(function(ex,idx){
