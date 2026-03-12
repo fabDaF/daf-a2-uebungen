@@ -577,7 +577,6 @@ function resetWortschatz(){
     initWortschatz();
     timerResetOne(5);
 }
-initWortschatz();
 
 /* ===== TIMER ===== */
 var timerStarted=[false,false,false,false,false,false], timerRunning=[false,false,false,false,false,false], timerSeconds=[0,0,0,0,0,0], timerIntervals=[null,null,null,null,null,null];
@@ -590,9 +589,10 @@ function timerResetOne(n) {
     var el=document.getElementById('timer-'+n); if (el) el.textContent='⏱ 0:00';
     if (n===2){ document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){ inp.value=''; inp.classList.remove('ok','no'); }); }
     if (n===4){ document.getElementById('satzbauContainer').innerHTML=''; initSatzbau(); }
-    if (n===5){ document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp){ inp.value=''; inp.classList.remove('ok','no'); }); }
+    if (n===5){ document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){ if(!inp.disabled){inp.value=''; inp.classList.remove('correct','wrong');} }); }
 }
 [2,4,5].forEach(function(n){ var best=localStorage.getItem(TIMER_PREFIX+'best-'+n); if (best){ var el=document.getElementById('best-'+n); if (el) el.textContent='🏆 '+timerFmt(parseInt(best)); } });
+initWortschatz();
 </script>
 </body>
 </html>

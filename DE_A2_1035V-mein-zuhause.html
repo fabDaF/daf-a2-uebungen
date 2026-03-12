@@ -857,7 +857,6 @@ function resetWortschatz(){
     initWortschatz();
     timerResetOne(5);
 }
-initWortschatz();
 
 /* ===== TIMER ===== */
 var timerStarted  = [false,false,false,false,false,false];
@@ -922,6 +921,7 @@ function initSatzbauReset() {
         if (el) el.textContent = '🏆 ' + timerFmt(parseInt(best));
     }
 });
+initWortschatz();
 </script>
 </body>
 </html>
