@@ -383,6 +383,10 @@ footer {
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
   </footer>
+<div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
 </div>
 
 <script>
@@ -493,12 +497,7 @@ function showSection(idx) {
             '<div class="card-term">' + v.term + '</div>' +
             '<div class="card-en">' + v.en + '</div>' +
             (v.ex ? '<div class="card-ex">' + v.ex + '</div>' : '') +
-            '
-<div class="author-footer">
-    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
-</div>
-</div>';
+            '</div>';
         grid.appendChild(card);
     });
 })();

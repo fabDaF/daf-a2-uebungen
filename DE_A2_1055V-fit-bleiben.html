@@ -268,6 +268,10 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
   </div>
+<div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
 </div>
 
 <script>
@@ -393,16 +397,12 @@ function initVocab(){
   VOCAB.forEach(function(v){
     var card=document.createElement('div'); card.className='vocab-card';
     card.innerHTML='<img src="'+(String(v.img).startsWith('data:')?v.img:'https://images.pexels.com/photos/'+v.img+'/pexels-photo-'+v.img+'.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop')+'" alt="'+v.term+'" loading="lazy">'
-      +'<div class="card-body">'
+      +'<div class="card-body">' +
       +'<div class="card-term">'+v.term+'</div>'
       +'<div class="card-en">'+v.en+'</div>'
       +'<div class="card-ex">'+v.ex+'</div>'
-      +'
-<div class="author-footer">
-    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
-</div>
-</div>';
+      +
+    '</div>';
     grid.appendChild(card);
   });
 }

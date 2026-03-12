@@ -332,6 +332,10 @@ table.ap-table tr:nth-child(even) td { background: #f8f7ff; }
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
   </footer>
+<div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
 </div><!-- /container -->
 
 <script>
@@ -426,12 +430,7 @@ function buildRmGrid(data, gridId) {
   data.forEach(function(item) {
     var card = document.createElement('div');
     card.className = 'rm-card';
-    card.innerHTML = '<div class="rm-de">' + item.de + '</div><div class="rm-en">' + item.en + '
-<div class="author-footer">
-    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
-</div>
-</div>';
+    card.innerHTML = '<div class="rm-de">' + item.de + '</div><div class="rm-en">' + item.en + '</div>';
     g.appendChild(card);
   });
 }
