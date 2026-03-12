@@ -354,7 +354,9 @@ function initGenus() {
             draggedChip = chip;
         });
         chip.addEventListener('dragend', function() { colorAllGenusChips(); });
-        chip.addEventListener('click', function() {
+        chip.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (draggedChip && draggedChip !== chip) { draggedChip.style.outline = ''; }
             if (draggedChip === chip) { draggedChip = null; chip.style.outline = ''; }
             else { draggedChip = chip; chip.style.outline = '3px solid #e67e22'; }
         });
