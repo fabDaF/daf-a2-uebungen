@@ -112,6 +112,12 @@ table.ap-table tr:nth-child(even) td { background: #f8f7ff; }
   .qa-drop-cell { border-radius: 0 0 8px 8px; margin-bottom: 10px; }
   .rm-grid { grid-template-columns: 1fr; }
 }
+.author-footer {
+  text-align: center; margin-top: 40px; padding: 16px;
+  font-size: 0.8rem; color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
 </style>
 </head>
 <body>
@@ -416,7 +422,12 @@ function buildRmGrid(data, gridId) {
   data.forEach(function(item) {
     var card = document.createElement('div');
     card.className = 'rm-card';
-    card.innerHTML = '<div class="rm-de">' + item.de + '</div><div class="rm-en">' + item.en + '</div>';
+    card.innerHTML = '<div class="rm-de">' + item.de + '</div><div class="rm-en">' + item.en + '
+<div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
+</div>';
     g.appendChild(card);
   });
 }

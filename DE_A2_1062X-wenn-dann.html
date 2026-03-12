@@ -310,6 +310,12 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
     border-radius: 8px;
     padding: 12px 14px;
 }
+.author-footer {
+  text-align: center; margin-top: 40px; padding: 16px;
+  font-size: 0.8rem; color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
 </style>
 </head>
 <body>
@@ -855,7 +861,12 @@ function sbBuild() {
     }
     var wrap = document.createElement('div');
     wrap.className = 'sentence-builder';
-    wrap.innerHTML = '<div class="sb-label">Satz ' + (rowIdx+1) + '</div>';
+    wrap.innerHTML = '<div class="sb-label">Satz ' + (rowIdx+1) + '
+<div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
+</div>';
     var bank = document.createElement('div');
     bank.className = 'chips-container';
     bank.id = 'sb-bank-'+rowIdx;

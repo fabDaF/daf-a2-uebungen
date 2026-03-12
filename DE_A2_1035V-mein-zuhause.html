@@ -260,12 +260,28 @@ footer {
 .blank:focus { border-bottom-color: #667eea; }
 .blank.correct { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .blank.wrong { border-bottom-color: #e74c3c; color: #e74c3c; }
+.author-footer {
+  text-align: center; margin-top: 40px; padding: 16px;
+  font-size: 0.8rem; color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+.header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white; text-align: center; padding: 30px 20px;
+  border-radius: 12px 12px 0 0;
+}
+.header h1 { margin: 0; font-size: 1.5rem; }
+.header p { margin: 6px 0 0; opacity: 0.9; font-size: 0.9rem; }
+.header .big-emoji { font-size: 2.5rem; margin-top: 10px; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
+    <div class="header">
     <h1>A2 · 1035V · Mein Zuhause</h1>
+    </div>
     <p>Wortschatz rund ums Haus und die Wohnumgebung</p>
   </header>
 
@@ -477,7 +493,12 @@ function showSection(idx) {
             '<div class="card-term">' + v.term + '</div>' +
             '<div class="card-en">' + v.en + '</div>' +
             (v.ex ? '<div class="card-ex">' + v.ex + '</div>' : '') +
-            '</div>';
+            '
+<div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+</div>
+</div>';
         grid.appendChild(card);
     });
 })();
