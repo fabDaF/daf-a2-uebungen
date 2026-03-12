@@ -145,7 +145,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <div class="text-block">
                 <p><strong>Die Eskalationsfalle — Warum Bomben Kriege nicht beenden</strong></p>
 
-                <p>Professor Robert Pape von der Universität Chicago hat 20 Jahre lang Kriegssimulationen über einen möglichen Iran-Konflikt durchgeführt. Seine Kernthese lautet: Bomben treffen Ziele, aber sie verändern die Politik. In der Ära der Präzisionswaffen konzentrieren sich Öffentlichkeit und Medien auf den taktischen Erfolg einzelner Luftschläge. Doch Kriege werden nicht allein durch militärische Operationen entschieden — sie werden durch politische Dynamiken bestimmt.</p>
+                <p>Professor Robert Pape von der Universität Chicago hat 20 Jahre lang Kriegssimulationen über einen möglichen Iran-Konflikt durchgeführt. Seine Kernthese lautet: Bomben treffen Ziele, aber sie verändern die Politik nicht. In der Ära der Präzisionswaffen konzentrieren sich Öffentlichkeit und Medien auf den taktischen Erfolg einzelner Luftschläge. Doch Kriege werden nicht allein durch militärische Operationen entschieden — sie werden durch politische Dynamiken bestimmt.</p>
 
                 <p>Pape beschreibt drei Stufen der Eskalation. In <strong>Stufe eins</strong> bombardierten die USA im Juni 2025 iranische Atomanlagen wie Natans und Fordo. Die Bomben zerstörten über 90 Prozent der Gebäude. Doch das eigentliche Ziel — das angereicherte Uran — blieb unauffindbar. Satellitenbilder zeigten, dass der Iran bereits zwei Tage vor dem Angriff Lastwagen von den Anlagen wegfahren ließ. Nach Papes Einschätzung verfügte der Iran zu diesem Zeitpunkt über genügend Material für 16 Atombomben. Keiner wusste, wo sich dieses Material befand.</p>
 
@@ -400,7 +400,7 @@ function showGenusLoesungen() {
 // ═══════════════════════════════════════════════════════════════════════
 var LUECKEN_DATA = [
     { pre: 'Professor Pape hat 20 Jahre lang Kriegs', answer: 'simulationen', post: ' über einen möglichen Iran-Konflikt durchgeführt.', size: 'l' },
-    { pre: 'Bomben treffen Ziele, aber sie verändern die ', answer: 'Politik', post: '.', size: 'm' },
+    { pre: 'Bomben treffen Ziele, aber sie verändern die Politik ', answer: 'nicht', post: '.', size: 's' },
     { pre: 'In der Ära der Präzisionswaffen konzentrieren sich die Medien auf den taktischen ', answer: 'Erfolg', post: ' einzelner Luftschläge.', size: 'm' },
     { pre: 'Das angereicherte ', answer: 'Uran', post: ' blieb nach dem Angriff unauffindbar.', size: 's' },
     { pre: 'Satellitenbilder zeigten, dass der Iran Lastwagen von den ', answer: 'Anlagen', post: ' wegfahren ließ.', size: 'm' },
@@ -464,7 +464,7 @@ function showLueckenLoesungen() {
 //  TAB 4: MULTIPLE CHOICE
 // ═══════════════════════════════════════════════════════════════════════
 var MC_DATA = [
-    { q: '1. Was ist die Kernthese von Professor Pape?', opts: ['Bomben treffen Ziele, aber sie verändern die Politik.', 'Moderne Waffen sind zu ungenau für gezielte Angriffe.', 'Luftschläge sind die effektivste Form der Kriegsführung.', 'Atomwaffen sind die einzige Lösung für den Iran-Konflikt.'], correct: 0 },
+    { q: '1. Was ist die Kernthese von Professor Pape?', opts: ['Bomben treffen Ziele, aber sie verändern die Politik nicht.', 'Moderne Waffen sind zu ungenau für gezielte Angriffe.', 'Luftschläge sind die effektivste Form der Kriegsführung.', 'Atomwaffen sind die einzige Lösung für den Iran-Konflikt.'], correct: 0 },
     { q: '2. Was passierte, als die USA iranische Atomanlagen bombardierten?', opts: ['Die Gebäude wurden zerstört, aber das Uran blieb unauffindbar.', 'Der Iran kapitulierte sofort.', 'Die Bomben verfehlten alle Ziele.', 'Die Atomanlagen wurden vollständig neutralisiert.'], correct: 0 },
     { q: '3. Was bedeutet „horizontale Eskalation"?', opts: ['Angriffe gegen die Verbündeten des Gegners statt gegen den Gegner selbst', 'Eine Ausweitung des Krieges auf den Weltraum', 'Die Verstärkung der eigenen Bodentruppen', 'Der Übergang von Drohnen zu konventionellen Flugzeugen'], correct: 0 },
     { q: '4. Welches Ziel verfolgte der Iran mit Angriffen auf Saudi-Arabien und die VAE?', opts: ['Die Koalition gegen den Iran zu spalten', 'Die Ölpreise dauerhaft zu erhöhen', 'Die Bevölkerung dieser Länder zu terrorisieren', 'Militärbasen in diesen Ländern zu zerstören'], correct: 0 },
@@ -536,7 +536,7 @@ function showMcLoesungen() {
 //  TAB 5: SATZBAU
 // ═══════════════════════════════════════════════════════════════════════
 var satzbauData = [
-    { parts: ['Bomben', 'treffen', 'Ziele', ',', 'aber', 'sie', 'verändern', 'die', 'Politik'], valid: [['Bomben', 'treffen', 'Ziele', ',', 'aber', 'sie', 'verändern', 'die', 'Politik']], punct: '.' },
+    { parts: ['Bomben', 'treffen', 'Ziele', ',', 'aber', 'sie', 'verändern', 'die', 'Politik', 'nicht'], valid: [['Bomben', 'treffen', 'Ziele', ',', 'aber', 'sie', 'verändern', 'die', 'Politik', 'nicht']], punct: '.' },
     { parts: ['der', 'Iran', 'verfügte', 'über', 'genügend', 'Material', 'für', '16', 'Atombomben'], valid: [['der', 'Iran', 'verfügte', 'über', 'genügend', 'Material', 'für', '16', 'Atombomben']], punct: '.' },
     { parts: ['Satellitenbilder', 'zeigten', ',', 'dass', 'Lastwagen', 'Material', 'von', 'den', 'Anlagen', 'wegfuhren'], valid: [['Satellitenbilder', 'zeigten', ',', 'dass', 'Lastwagen', 'Material', 'von', 'den', 'Anlagen', 'wegfuhren']], punct: '.' },
     { parts: ['iranische', 'Drohnenangriffe', 'richteten', 'sich', 'gegen', 'Verbündete', 'in', 'der', 'Region'], valid: [['iranische', 'Drohnenangriffe', 'richteten', 'sich', 'gegen', 'Verbündete', 'in', 'der', 'Region']], punct: '.' },
