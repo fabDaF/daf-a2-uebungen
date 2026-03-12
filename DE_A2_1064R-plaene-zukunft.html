@@ -406,7 +406,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
             <button class="btn" onclick="wsShowAll()">💡 Lösungen</button>
         </div>
 
-        <div id="wortschatzContainer"></div>
+        <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
     </div>
 
     <div class="author-footer">
@@ -421,6 +421,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
 // TAB NAVIGATION
 // ─────────────────────────────────────────────────────────────────────────
 function showSection(idx) {
+    if (idx === 5 || arguments[0] === 5) initWortschatz();
     document.querySelectorAll('.section').forEach(function(s, i) {
         s.classList.toggle('active', i === idx);
     });
@@ -800,198 +801,111 @@ function sbTimerResetOne() {
 // ─────────────────────────────────────────────────────────────────────────
 // TAB 5: WORTSCHATZ
 // ─────────────────────────────────────────────────────────────────────────
-var WS_DATA = [
-    { en: '(to finish / complete)', art: '',    de: 'beenden',          plural: '' },
-    { en: '(the future)',           art: 'die', de: 'Zukunft',          plural: '' },
-    { en: '(the internship)',       art: 'das', de: 'Praktikum',        plural: '-ka' },
-    { en: '(to study at university)', art: '', de: 'studieren',         plural: '' },
-    { en: '(complicated)',          art: '',    de: 'kompliziert',       plural: '' },
-    { en: '(the hope)',             art: 'die', de: 'Hoffnung',         plural: '-en' },
-    { en: '(smart / clever)',       art: '',    de: 'schlau',            plural: '' },
-    { en: '(the salary)',           art: 'das', de: 'Gehalt',           plural: '-̈er' },
-    { en: '(the A-levels)',         art: 'das', de: 'Abitur',           plural: '' },
-    { en: '(the nurse)',            art: 'die', de: 'Krankenschwester', plural: '-n' }
-];
-
 var wsTimerAutoStart = false;
 
-function makeWsInp(ans, placeholder, width) {
-    var inp = document.createElement('input');
-    inp.type = 'text'; inp.className = 'ws-inp';
-    inp.placeholder = placeholder;
-    inp.style.width = width + 'px';
-    inp.dataset.ans = ans;
-    inp.setAttribute('autocomplete', 'off');
-    inp.addEventListener('input', function() {
-        wsTimerAutoStart = true; initTimer(5);
-        var val = inp.value.trim();
-        var a = inp.dataset.ans;
-        inp.classList.remove('ok', 'no');
-        if (!val) return;
-        if (val === a) { inp.classList.add('ok'); wsCheckAllWs(); return; }
-        if (a.startsWith(val)) return;
-        inp.classList.add('no');
-    });
+);
     return inp;
 }
 
+var WORTSCHATZ = [
+    { id:1, type:'n', en:'🍕 pizzeria', artikel:'die', de:'Pizzeria', plural:'Pizzerien' },
+    { id:2, type:'n', en:'👧 niece', artikel:'die', de:'Nichte', plural:'Nichten' },
+    { id:3, type:'n', en:'🎓 dream job', artikel:'der', de:'Traumberuf', plural:'Traumberufe' },
+    { id:4, type:'n', en:'🔬 scientist', artikel:'der', de:'Wissenschaftler', plural:'Wissenschaftler' },
+    { id:5, type:'n', en:'🌍 future', artikel:'die', de:'Zukunft', plural:'\u2013' },
+    { id:6, type:'n', en:'📋 plan', artikel:'der', de:'Plan', plural:'Pl\u00e4ne' },
+    { id:7, type:'p', en:'😋 delicious', de:'lecker' },
+    { id:8, type:'p', en:'🔮 to become / will', de:'werden' },
+    { id:9, type:'p', en:'🎯 one day / someday', de:'eines Tages' },
+    { id:10, type:'p', en:'✨ to wish', de:'w\u00fcnschen' }
+];
+var wsInited = false;
 function initWortschatz() {
-    var container = document.getElementById('wortschatzContainer');
-    if (container.innerHTML !== '') return;
-
-    WS_DATA.forEach(function(item, idx) {
-        var wsItem = document.createElement('div');
-        wsItem.className = 'ws-item';
-
-        var row = document.createElement('div');
-        row.className = 'ws-row';
-
-        var en = document.createElement('div');
-        en.className = 'ws-en';
-        en.textContent = item.en;
-
-        var inputs = document.createElement('div');
-        inputs.style.display = 'flex';
-        inputs.style.gap = '8px';
-        inputs.style.flexWrap = 'wrap';
-        inputs.style.alignItems = 'center';
-
-        if (item.art) {
-            inputs.appendChild(makeWsInp(item.art, 'Artikel', 70));
-        }
-        inputs.appendChild(makeWsInp(item.de, item.art ? 'Wort' : 'Verb/Adj.', Math.max(100, item.de.length * 9 + 20)));
-        if (item.plural) {
-            inputs.appendChild(makeWsInp(item.plural, 'Plural', Math.max(80, item.plural.length * 9 + 20)));
-        }
-
-        row.appendChild(en);
-        row.appendChild(inputs);
-        wsItem.appendChild(row);
-        container.appendChild(wsItem);
-    });
-}
-
-function wsCheckAllWs() {
-    var all = document.querySelectorAll('#wortschatzContainer .ws-inp');
-    if (Array.from(all).every(function(i){ return i.classList.contains('ok'); })) {
-        stopTimer(5);
-    }
-}
-
-function wsCheckField(inp, expected) {
-    var val = inp ? inp.value.trim() : '';
-    if (!inp) return;
-    inp.classList.remove('ok', 'no');
-    if (!val) return;
-    if (val === expected) { inp.classList.add('ok'); return; }
-    if (expected.startsWith(val)) return;
-    inp.classList.add('no');
-}
-
-function showWsSolution() {
-    document.querySelectorAll('#wortschatzContainer .ws-inp').forEach(function(inp) {
-        inp.value = inp.dataset.ans;
-        inp.classList.remove('no'); inp.classList.add('ok');
-    });
-    stopTimer(5);
-}
-
-function wsReset() {
+    if (wsInited) return;
+    wsInited = true;
+    timerResetOne(5);
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
-    initWortschatz();
-}
-
-function wsTimerResetOne() {
-    timerResetOne(5);
-    wsTimerAutoStart = false;
-    wsReset();
-}
-
-function wsShowAll() {
-    showWsSolution();
-}
-
-// ─────────────────────────────────────────────────────────────────────────
-// TIMER FUNCTIONS
-// ─────────────────────────────────────────────────────────────────────────
-var TIMER_PREFIX = 'a2-1064r-';
-var timers = {};
-
-function initTimer(tabIdx) {
-    if (timers[tabIdx]) return;
-    timers[tabIdx] = {
-        startTime: Date.now(),
-        intervalId: null
-    };
-    updateTimer(tabIdx);
-    timers[tabIdx].intervalId = setInterval(function() { updateTimer(tabIdx); }, 100);
-}
-
-function updateTimer(tabIdx) {
-    var elapsed = Math.floor((Date.now() - timers[tabIdx].startTime) / 1000);
-    var min = Math.floor(elapsed / 60);
-    var sec = elapsed % 60;
-    var display = min + ':' + (sec < 10 ? '0' : '') + sec;
-
-    var displayId = ['timer-lt', 'timer-2', 'timer-3', 'timer-lt', 'timer-4', 'timer-ws'][tabIdx];
-    var elem = document.getElementById(displayId);
-    if (elem) elem.textContent = display;
-}
-
-function timerAutoStart(tabIdx) {
-    if (!timers[tabIdx]) initTimer(tabIdx);
-}
-
-function timerStop(tabIdx) {
-    if (timers[tabIdx]) {
-        clearInterval(timers[tabIdx].intervalId);
-        var elapsed = Math.floor((Date.now() - timers[tabIdx].startTime) / 1000);
-        saveBestTime(tabIdx, elapsed);
-        timers[tabIdx] = null;
-    }
-}
-
-function timerResetOne(tabIdx) {
-    if (timers[tabIdx]) {
-        clearInterval(timers[tabIdx].intervalId);
-        timers[tabIdx] = null;
-    }
-    var displayId = ['timer-lt', 'timer-2', 'timer-3', 'timer-lt', 'timer-4', 'timer-ws'][tabIdx];
-    var elem = document.getElementById(displayId);
-    if (elem) elem.textContent = '0:00';
-}
-
-function saveBestTime(tabIdx, elapsed) {
-    var key = TIMER_PREFIX + 'best-' + tabIdx;
-    var best = localStorage.getItem(key);
-    if (!best || parseInt(best) > elapsed) {
-        localStorage.setItem(key, elapsed);
-        updateBestDisplay(tabIdx, elapsed);
-    } else {
-        updateBestDisplay(tabIdx, parseInt(best));
-    }
-}
-
-function updateBestDisplay(tabIdx, seconds) {
-    var min = Math.floor(seconds / 60);
-    var sec = seconds % 60;
-    var display = min + ':' + (sec < 10 ? '0' : '') + sec;
-    var bestId = ['best-lt', 'best-2', 'best-3', 'best-lt', 'best-4', 'best-ws'][tabIdx];
-    var elem = document.getElementById(bestId);
-    if (elem) elem.textContent = display;
-}
-
-// Load best times on page load
-window.addEventListener('DOMContentLoaded', function() {
-    for (var i = 0; i < 6; i++) {
-        var key = TIMER_PREFIX + 'best-' + i;
-        var best = localStorage.getItem(key);
-        if (best) {
-            updateBestDisplay(i, parseInt(best));
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
         }
-    }
-});
+        row.appendChild(fields);
+        container.appendChild(row);
+    });
+}
+function wortschatzCheck(inp) {
+    var user = inp.value, answer = inp.dataset.answer;
+    inp.classList.remove('correct', 'wrong');
+    if (!user) return;
+    var cmpUser = user.trim();
+    var cmpAnswer = answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
+}
+function checkWortschatzAllOk() {
+    var inputs = document.querySelectorAll('#sec-5 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i) {
+        return i.disabled || i.classList.contains('correct');
+    });
+    if (allOk) timerStop(5);
+}
+function showWortschatzLoesung() {
+    timerStop(5);
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp) {
+        inp.value = inp.dataset.answer;
+        inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz() {
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp) {
+        if (!inp.disabled) {
+            inp.value = ''; inp.classList.remove('correct', 'wrong');
+        }
+    });
+    timerResetOne(5);
+}
+
 </script>
 
 </body>

@@ -124,6 +124,13 @@ body {
 .btn-sm { padding: 5px 12px; border-radius: 16px; border: 2px solid #764ba2; color: #764ba2; background: white; cursor: pointer; font-size: 0.82em; font-weight: 600; transition: background .2s, color .2s; }
 .btn-sm:hover { background: #764ba2; color: white; }
 
+/* ===== WORTSCHATZ-ITEMS ===== */
+.luecken-item { margin-bottom: 14px; }
+.blank { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.95em; transition: border-color 0.2s, color 0.2s; padding: 2px 4px; }
+.blank:focus { border-bottom-color: #667eea; }
+.blank.correct { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
+.blank.wrong { border-bottom-color: #e74c3c; color: #e74c3c; }
+
 /* ===== FOOTER ===== */
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
 .author-footer a { color: #aaa; }
@@ -209,11 +216,11 @@ body {
     <div class="btn-row">
       <span class="timer-display" id="timer-5">⏱ 0:00</span>
       <span class="best-display" id="best-5">🏆 –</span>
-      <button class="btn-sm" onclick="timerResetOne(5)">↺ Neustart</button>
-      <button class="btn-sm" onclick="showWsSolution()">💡 Lösungen</button>
+      <button class="btn-sm" onclick="resetWortschatz()">↺ Neustart</button>
+      <button class="btn-sm" onclick="showWortschatzLoesung()">💡 Lösungen</button>
     </div>
     <p style="color:#666;margin-bottom:12px;font-size:0.9em;">Tippe: Artikel + Wort + Plural. Beispiel: <em>die Apotheke, -n</em></p>
-    <div id="wsContainer"></div>
+    <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
   </div>
 
   <div class="author-footer">
@@ -289,25 +296,26 @@ var satzbauData = [
     { parts:['in','New','York','gibt','es','viele','Hochh\u00e4user'], valid:[['in','New','York','gibt','es','viele','Hochh\u00e4user']], punct:'.' }
 ];
 
-var WS_VOCAB = [
-    { en:'pharmacy', art:'die', term:'Apotheke', plural:'-n' },
-    { en:'hospital', art:'das', term:'Krankenhaus', plural:'-\u0308er' },
-    { en:'train station', art:'der', term:'Bahnhof', plural:'-\u0308e' },
-    { en:'bank', art:'die', term:'Bank', plural:'-en' },
-    { en:'supermarket', art:'der', term:'Supermarkt', plural:'-\u0308e' },
-    { en:'market', art:'der', term:'Markt', plural:'-\u0308e' },
-    { en:'park', art:'der', term:'Park', plural:'-s' },
-    { en:'church', art:'die', term:'Kirche', plural:'-n' },
-    { en:'cathedral', art:'der', term:'Dom', plural:'-e' },
-    { en:'main street', art:'die', term:'Hauptstra\u00dfe', plural:'-n' },
-    { en:'skyscraper', art:'das', term:'Hochhaus', plural:'-\u0308er' },
-    { en:'airport', art:'der', term:'Flughafen', plural:'-\u0308' }
+var WORTSCHATZ = [
+    { id:1,  type:'n', en:'💊 pharmacy',           artikel:'die', de:'Apotheke',      plural:'-n' },
+    { id:2,  type:'n', en:'🏥 hospital',           artikel:'das', de:'Krankenhaus',   plural:'-ä' },
+    { id:3,  type:'n', en:'🚂 train station',      artikel:'der', de:'Bahnhof',       plural:'-ö' },
+    { id:4,  type:'n', en:'🏦 bank',               artikel:'die', de:'Bank',          plural:'-en' },
+    { id:5,  type:'n', en:'🛒 supermarket',        artikel:'der', de:'Supermarkt',    plural:'-ö' },
+    { id:6,  type:'n', en:'🏪 market',             artikel:'der', de:'Markt',         plural:'-ö' },
+    { id:7,  type:'n', en:'🌳 park',               artikel:'der', de:'Park',          plural:'-s' },
+    { id:8,  type:'n', en:'⛪ church',             artikel:'die', de:'Kirche',        plural:'-n' },
+    { id:9,  type:'n', en:'🏛️ cathedral',          artikel:'der', de:'Dom',           plural:'-e' },
+    { id:10, type:'n', en:'🛣️ main street',        artikel:'die', de:'Hauptstraße',   plural:'-n' },
+    { id:11, type:'n', en:'🏢 skyscraper',         artikel:'das', de:'Hochhaus',      plural:'-ä' },
+    { id:12, type:'n', en:'✈️ airport',            artikel:'der', de:'Flughafen',     plural:'–' }
 ];
 
 /* ===== NAV ===== */
 function showSection(idx) {
     document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
     document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+    if (idx === 5) initWortschatz();
 }
 
 function shuffle(arr) {
@@ -486,31 +494,90 @@ function initSatzbau() {
 initSatzbau();
 
 /* ===== WORTSCHATZ ===== */
-function buildWs() {
-    var c = document.getElementById('wsContainer');
-    WS_VOCAB.forEach(function(v) {
-        var row = document.createElement('div'); row.className = 'ws-row';
-        var en = document.createElement('div'); en.className = 'ws-en'; en.textContent = v.en;
-        var answer = (v.art ? v.art + ' ' : '') + v.term + (v.plural ? ', ' + v.plural : '');
-        var inp = document.createElement('input'); inp.type = 'text'; inp.className = 'ws-inp'; inp.placeholder = ''; inp.dataset.ans = answer; inp.setAttribute('autocomplete','off');
-        inp.addEventListener('input', function() {
-            timerAutoStart(5);
-            var val = inp.value.trim(), ans = inp.dataset.ans;
-            inp.classList.remove('ok','no');
-            if (!val) return;
-            if (val === ans) { inp.classList.add('ok'); if (Array.from(document.querySelectorAll('#sec-5 .ws-inp')).every(function(i){ return i.classList.contains('ok'); })) timerStop(5); return; }
-            if (ans.startsWith(val)) return;
-            inp.classList.add('no');
-        });
-        row.appendChild(en); row.appendChild(inp); c.appendChild(row);
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerResetOne(5);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
+        }
+        row.appendChild(fields);
+        container.appendChild(row);
     });
 }
-buildWs();
-
-function showWsSolution() {
-    document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp){ inp.value = inp.dataset.ans; inp.classList.remove('no'); inp.classList.add('ok'); });
-    timerStop(5);
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser = user.trim();
+    var cmpAnswer = answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
 }
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#sec-5 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(5);
+}
+function showWortschatzLoesung(){
+    timerStop(5);
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz(){
+    document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerResetOne(5);
+}
+initWortschatz();
 
 /* ===== TIMER ===== */
 var timerStarted=[false,false,false,false,false,false], timerRunning=[false,false,false,false,false,false], timerSeconds=[0,0,0,0,0,0], timerIntervals=[null,null,null,null,null,null];
