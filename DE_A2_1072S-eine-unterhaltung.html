@@ -748,7 +748,7 @@ function initSatzbau() {
         fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx;
         wrap.appendChild(bank); wrap.appendChild(row); wrap.appendChild(fb);
         container.appendChild(wrap);
-        var parts=ex.words.slice();
+        var parts=ex.parts.slice();
         for(var i=parts.length-1;i>0;i--){
             var j=Math.floor(Math.random()*(i+1));
             var tmp=parts[i]; parts[i]=parts[j]; parts[j]=tmp;

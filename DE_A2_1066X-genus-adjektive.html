@@ -796,7 +796,7 @@ function initSatzbau() {
     var container = document.getElementById('satzbauContainer');
 
     satzbauData.forEach(function(ex, idx) {
-        var parts = ex.words.slice();
+        var parts = ex.parts.slice();
         for (var i = parts.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
             var tmp = parts[i];
