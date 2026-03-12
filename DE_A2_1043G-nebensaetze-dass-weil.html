@@ -37,15 +37,30 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .gram-table .verb { color: #e53935; font-weight: 700; }
 .gram-table .subj { color: #1976d2; font-weight: 700; }
 
-/* Entdecken-Karten */
-.discover-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-@media (max-width: 600px) { .discover-grid { grid-template-columns: 1fr; } }
-.disc-card { background: #f8f8ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: .95rem; }
-.disc-card .label { font-size: .75rem; color: #764ba2; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
-
-/* Regel-Box */
-.regel-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 18px; }
-.regel-box h4 { color: #667eea; margin-bottom: 8px; font-size: .95rem; }
+/* ===== ENTDECKEN ===== */
+.entdeck-intro {
+  background: #f3e5f5; border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 20px;
+  border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75;
+}
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
 
 /* Lückentext */
 .lt-block { background: #f8f8ff; border-radius: 10px; padding: 18px; margin-bottom: 18px; }
@@ -104,33 +119,79 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
   <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></button>
 </nav>
 
-<!-- TAB 0: Entdecken -->
+<!-- TAB 0: Entdecken (kein Timer, kein Reset) -->
 <section class="section active" id="tab-0">
 <div>
-  <h2>🔍 Entdecken — dass oder weil?</h2>
-  <p>Lies die Sätze. Was fällt dir auf? Wo steht das Verb im Nebensatz?</p>
-  <div class="discover-grid">
-    <div class="disc-card">
-      <div class="label">weil — Grund angeben</div>
-      Ich gehe heute ins Kino, <strong>weil</strong> ich den neuen Film sehen <span style="color:#e53935;font-weight:700">möchte</span>.
+    <div class="entdeck-intro">
+        <h3>🔍 Entdecke die Regel</h3>
+        <p>Lies die Sätze. Was passiert mit dem Verb nach <span class="hl">dass</span> und <span class="hl">weil</span>?</p>
+        <p>Ich glaube, <span class="hl">dass</span> es heute <span class="hl">regnet</span>.</p>
+        <p>Ich gehe ins Kino, <span class="hl">weil</span> ich den Film sehen <span class="hl">möchte</span>.</p>
+        <p><span class="hl">Weil</span> du Urlaub <span class="hl">brauchst</span>, fliegst du nach Mallorca.</p>
+        <p><span class="hl">Dass</span> du nicht kommen <span class="hl">kannst</span>, ist schade.</p>
+        <p>Sie sagt, <span class="hl">dass</span> sie morgen <span class="hl">kommt</span>.</p>
     </div>
-    <div class="disc-card">
-      <div class="label">dass — Meinung / Gedanke</div>
-      Ich glaube, <strong>dass</strong> es heute <span style="color:#e53935;font-weight:700">regnet</span>.
+
+    <div class="progress-dots">
+        <div class="pdot" id="pdot0"></div>
+        <div class="pdot" id="pdot1"></div>
+        <div class="pdot" id="pdot2"></div>
+        <div class="pdot" id="pdot3"></div>
     </div>
-    <div class="disc-card">
-      <div class="label">weil — am Satzanfang</div>
-      <strong>Weil</strong> du Urlaub <span style="color:#e53935;font-weight:700">brauchst</span>, fliegst du nach Mallorca.
+
+    <div class="mc-step active" id="mc-step0">
+        <h4>Frage 1: Wo steht das konjugierte Verb im Nebensatz mit „dass" oder „weil"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">An Position 2 (wie im Hauptsatz)</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,true)">Am Ende des Nebensatzes</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">An Position 1 (am Anfang)</button>
+        </div>
+        <div class="mc-feedback" id="mcfb0"></div>
     </div>
-    <div class="disc-card">
-      <div class="label">dass — am Satzanfang</div>
-      <strong>Dass</strong> du nicht kommen <span style="color:#e53935;font-weight:700">kannst</span>, ist schade.
+
+    <div class="mc-step" id="mc-step1">
+        <h4>Frage 2: Wann benutzt man „weil"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(1,this,true)">Um einen Grund anzugeben (Warum?)</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Um eine Meinung auszudrücken</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Um eine Bedingung zu nennen</button>
+        </div>
+        <div class="mc-feedback" id="mcfb1"></div>
     </div>
-  </div>
-  <div class="regel-box">
-    <h4>💡 Erkennst du das Muster?</h4>
-    <p>Im Nebensatz (nach <em>dass</em> oder <em>weil</em>) steht das Verb immer am <strong>Ende</strong>!</p>
-  </div>
+
+    <div class="mc-step" id="mc-step2">
+        <h4>Frage 3: Wann benutzt man „dass"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Um einen Grund zu nennen</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Um eine Zeit anzugeben</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,true)">Nach Verben wie glauben, sagen, hoffen, finden (Meinung/Gedanke)</button>
+        </div>
+        <div class="mc-feedback" id="mcfb2"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step3">
+        <h4>Frage 4: Welcher Satz ist korrekt?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">Ich glaube, dass regnet es heute.</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,true)">Ich glaube, dass es heute regnet.</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">Ich glaube, dass es regnet heute.</button>
+        </div>
+        <div class="mc-feedback" id="mcfb3"></div>
+    </div>
+
+    <div class="regel-karte" id="regelkarte">
+        <h3>📌 Die Regel</h3>
+        <ul>
+            <li>Nach <strong>dass</strong> und <strong>weil</strong> steht das konjugierte Verb am <strong>Ende</strong> des Nebensatzes.</li>
+            <li><strong>weil</strong> = Grund (Warum?) · <strong>dass</strong> = Meinung, Gedanke, Gefühl</li>
+            <li>Zwischen Haupt- und Nebensatz steht immer ein <strong>Komma</strong>.</li>
+            <li>Bei trennbaren Verben wird das Verb im Nebensatz <strong>zusammengeschrieben</strong>: Ich glaube, dass er morgen <strong>ankommt</strong>.</li>
+        </ul>
+        <div class="rk-example">
+            <b>weil:</b> Ich lerne Deutsch, <b>weil</b> ich in Berlin arbeiten <b>möchte</b>.<br>
+            <b>dass:</b> Ich hoffe, <b>dass</b> du morgen <b>kommst</b>.
+        </div>
+    </div>
 </div>
 </section>
 
@@ -246,6 +307,35 @@ function showTab(n) {
     if (b) b.classList.toggle('active', i === n);
   }
   if (n === 3) timerAutoStart(3);
+}
+
+/* ===== ENTDECKEN — mcCheck ===== */
+var mcDone = [false, false, false, false];
+function mcCheck(step, btn, correct) {
+  var btns = btn.parentElement.querySelectorAll('.mc-btn');
+  btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+  var fb = document.getElementById('mcfb' + step);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+    fb.className = 'mc-feedback ok';
+    mcDone[step] = true;
+    document.getElementById('pdot' + step).classList.add('done');
+    setTimeout(function() {
+      var next = document.getElementById('mc-step' + (step + 1));
+      if (next) { next.classList.add('active'); }
+      else { document.getElementById('regelkarte').style.display = 'block'; }
+    }, 700);
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '\u2717 Nicht ganz — schau nochmal genau hin und versuche es erneut.';
+    fb.className = 'mc-feedback err';
+    setTimeout(function() {
+      btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+      fb.textContent = '';
+      fb.className = 'mc-feedback';
+    }, 1400);
+  }
 }
 
 /* ===== TIMER ===== */

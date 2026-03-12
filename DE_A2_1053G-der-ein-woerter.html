@@ -49,6 +49,30 @@ table.gram td { padding: 7px 10px; border-bottom: 1px solid #eee; text-align: ce
 table.gram tr:nth-child(even) td { background: #f8f7ff; }
 table.gram td:first-child { font-weight: 700; color: #4a148c; text-align: left; }
 .highlight { background: #fff3e0 !important; color: #e65100; font-weight: 700; }
+/* ===== ENTDECKEN ===== */
+.entdeck-intro {
+  background: #f3e5f5; border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 20px;
+  border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75;
+}
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
 .rule-box { background: #fff3e0; border-radius: 10px; padding: 14px 18px; margin: 14px 0; border-left: 4px solid #ff9800; font-size: .93em; color: #555; }
 .rule-box strong { color: #e65100; }
 .example-box { background: #f0ecff; border-radius: 10px; padding: 12px 16px; margin: 10px 0; font-size: .93em; border-left: 4px solid #667eea; }
@@ -144,36 +168,78 @@ table.gram td:first-child { font-weight: 700; color: #4a148c; text-align: left; 
     </button>
   </nav>
 
-  <!-- ===== TAB 0: ENTDECKEN ===== -->
+  <!-- ===== TAB 0: ENTDECKEN (kein Timer, kein Reset) ===== -->
   <section id="sec-0" class="section aktiv">
-    <h2>🔍 Entdecken — dieser, jener, welcher, jeder …</h2>
-    <div class="rule-box">
-      <strong>Aufgabe:</strong> Lies die Sätze. Welche Wörter ersetzen den Artikel <em>der/die/das</em>? Was ist der Unterschied zwischen <em>dieser</em> und <em>jener</em>?
+    <div class="entdeck-intro">
+        <h3>🔍 Entdecke die Regel</h3>
+        <p>Lies die Sätze. Welche Wörter stehen anstelle von <em>der/die/das</em>?</p>
+        <p><span class="hl">Welcher</span> Pullover gefällt dir?</p>
+        <p><span class="hl">Dieser</span> Pullover hier gefällt mir nicht.</p>
+        <p>Aber ich mag <span class="hl">jenen</span> Pullover dort hinten.</p>
+        <p><span class="hl">Jeder</span> Gast bekommt ein Stück Kuchen.</p>
+        <p><span class="hl">Manche</span> Teams verlieren oft, aber <span class="hl">alle</span> versuchen zu gewinnen.</p>
     </div>
 
-    <div class="example-box">
-      <p class="de">Welcher Pullover gefällt dir?</p>
-      <p>→ <em>Welcher</em> fragt nach einer Option (Fragewort)</p>
+    <div class="progress-dots">
+        <div class="pdot" id="pdot0"></div>
+        <div class="pdot" id="pdot1"></div>
+        <div class="pdot" id="pdot2"></div>
+        <div class="pdot" id="pdot3"></div>
     </div>
-    <div class="example-box">
-      <p class="de">Dieser Pullover hier gefällt mir nicht.</p>
-      <p>→ <em>Dieser</em> = etwas in der Nähe (nah)</p>
+
+    <div class="mc-step active" id="mc-step0">
+        <h4>Frage 1: Was haben diese Wörter (dieser, jener, welcher, jeder) gemeinsam?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">Sie sind Adjektive</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,true)">Sie stehen anstelle des bestimmten Artikels (der-Wörter)</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">Sie stehen anstelle des unbestimmten Artikels</button>
+        </div>
+        <div class="mc-feedback" id="mcfb0"></div>
     </div>
-    <div class="example-box">
-      <p class="de">Aber ich mag jenen Pullover dort hinten.</p>
-      <p>→ <em>Jener</em> = etwas weiter weg (fern)</p>
+
+    <div class="mc-step" id="mc-step1">
+        <h4>Frage 2: Was ist der Unterschied zwischen „dieser" und „jener"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(1,this,true)">dieser = nah (hier) · jener = fern (dort)</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">dieser = Singular · jener = Plural</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Sie bedeuten dasselbe</button>
+        </div>
+        <div class="mc-feedback" id="mcfb1"></div>
     </div>
-    <div class="example-box">
-      <p class="de">Jeder Gast bekommt ein Stück Kuchen.</p>
-      <p>→ <em>Jeder</em> = alle Personen/Dinge (nur Singular)</p>
+
+    <div class="mc-step" id="mc-step2">
+        <h4>Frage 3: Wie werden der-Wörter dekliniert?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(2,this,true)">Wie der bestimmte Artikel: dies<em>er</em>, dies<em>e</em>, dies<em>es</em> (= d<em>er</em>, d<em>ie</em>, d<em>as</em>)</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Sie bekommen keine Endung</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Wie der unbestimmte Artikel: dies-ein, dies-eine</button>
+        </div>
+        <div class="mc-feedback" id="mcfb2"></div>
     </div>
-    <div class="example-box">
-      <p class="de">Manche Teams verlieren oft, aber jedes Team versucht zu gewinnen.</p>
-      <p>→ <em>Manche</em> = nur ein paar · <em>Alle</em> = ohne Ausnahme</p>
+
+    <div class="mc-step" id="mc-step3">
+        <h4>Frage 4: Welche Form ist richtig? „Ich mag ___ Kuchen." (Akkusativ, maskulin)</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">dieser Kuchen</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,true)">diesen Kuchen</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">diesem Kuchen</button>
+        </div>
+        <div class="mc-feedback" id="mcfb3"></div>
     </div>
-    <div class="example-box">
-      <p class="de">Eine solche Idee kannst nur du haben.</p>
-      <p>→ <em>Solch-</em> = so beschaffen, in dieser Art</p>
+
+    <div class="regel-karte" id="regelkarte">
+        <h3>📌 Die Regel</h3>
+        <ul>
+            <li><strong>Der-Wörter</strong> (dieser, jener, welcher, jeder, mancher, alle, solcher) ersetzen den bestimmten Artikel und haben <strong>die gleichen Endungen</strong>.</li>
+            <li><strong>Ein-Wörter</strong> (mein, dein, sein, kein …) ersetzen den unbestimmten Artikel.</li>
+            <li>dieser = <strong>nah</strong> · jener = <strong>fern</strong> · welcher = <strong>Frage</strong> · jeder = <strong>alle einzeln</strong></li>
+            <li>Deklination: dies<strong>er</strong> (Nom. m.) · dies<strong>en</strong> (Akk. m.) · dies<strong>em</strong> (Dat. m.) · dies<strong>es</strong> (Gen. m.)</li>
+        </ul>
+        <div class="rk-example">
+            <b>Nom.:</b> Dies<b>er</b> Pullover ist schön.<br>
+            <b>Akk.:</b> Ich kaufe dies<b>en</b> Pullover.<br>
+            <b>Dat.:</b> Ich gebe dies<b>em</b> Mann den Schlüssel.
+        </div>
     </div>
   </section>
 
@@ -312,6 +378,35 @@ function showTab(n, btn) {
   document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
   document.getElementById('sec-' + n).classList.add('aktiv');
   btn.classList.add('active');
+}
+
+// ===== ENTDECKEN — mcCheck =====
+var mcDone = [false, false, false, false];
+function mcCheck(step, btn, correct) {
+  var btns = btn.parentElement.querySelectorAll('.mc-btn');
+  btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+  var fb = document.getElementById('mcfb' + step);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+    fb.className = 'mc-feedback ok';
+    mcDone[step] = true;
+    document.getElementById('pdot' + step).classList.add('done');
+    setTimeout(function() {
+      var next = document.getElementById('mc-step' + (step + 1));
+      if (next) { next.classList.add('active'); }
+      else { document.getElementById('regelkarte').style.display = 'block'; }
+    }, 700);
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '\u2717 Nicht ganz — schau nochmal genau hin und versuche es erneut.';
+    fb.className = 'mc-feedback err';
+    setTimeout(function() {
+      btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+      fb.textContent = '';
+      fb.className = 'mc-feedback';
+    }, 1400);
+  }
 }
 
 // ===== SHUFFLE =====
