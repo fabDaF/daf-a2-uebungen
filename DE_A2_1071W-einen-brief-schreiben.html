@@ -597,13 +597,13 @@ function resetZuord() {
 
 // ─── Satzbau ────────────────────────────────────────────────────────────────
 var satzbauData = [
-    { words: ['ich', 'habe', 'Ihre', 'Anzeige', 'in', 'der', 'Zeitung', 'gesehen'], punct: '.' },
-    { words: ['wann', 'werden', 'die', 'jetzigen', 'Mieter', 'ausziehen'], punct: '?' },
-    { words: ['ich', 'werde', 'die', 'Kaution', 'am', '30.', 'September', 'überweisen'], punct: '.' },
-    { words: ['am', 'Wochenende', 'werde', 'ich', 'in', 'die', 'Berge', 'fahren'], punct: '.' },
-    { words: ['ich', 'würde', 'die', 'Wohnung', 'gern', 'besichtigen'], punct: '.' },
-    { words: ['ich', 'werde', 'bald', 'mit', 'Yoga', 'anfangen'], punct: '.' },
-    { words: ['wenn', 'ich', 'eine', 'Diät', 'mache', ',', 'nehme', 'ich', 'vielleicht', 'etwas', 'ab'], punct: '.' }
+    { parts: ['ich', 'habe', 'Ihre', 'Anzeige', 'in', 'der', 'Zeitung', 'gesehen'], valid: [['ich', 'habe', 'Ihre', 'Anzeige', 'in', 'der', 'Zeitung', 'gesehen']], punct: '.' },
+    { parts: ['wann', 'werden', 'die', 'jetzigen', 'Mieter', 'ausziehen'], valid: [['wann', 'werden', 'die', 'jetzigen', 'Mieter', 'ausziehen']], punct: '?' },
+    { parts: ['ich', 'werde', 'die', 'Kaution', 'am', '30.', 'September', 'überweisen'], valid: [['ich', 'werde', 'die', 'Kaution', 'am', '30.', 'September', 'überweisen']], punct: '.' },
+    { parts: ['am', 'Wochenende', 'werde', 'ich', 'in', 'die', 'Berge', 'fahren'], valid: [['am', 'Wochenende', 'werde', 'ich', 'in', 'die', 'Berge', 'fahren']], punct: '.' },
+    { parts: ['ich', 'würde', 'die', 'Wohnung', 'gern', 'besichtigen'], valid: [['ich', 'würde', 'die', 'Wohnung', 'gern', 'besichtigen']], punct: '.' },
+    { parts: ['ich', 'werde', 'bald', 'mit', 'Yoga', 'anfangen'], valid: [['ich', 'werde', 'bald', 'mit', 'Yoga', 'anfangen']], punct: '.' },
+    { parts: ['wenn', 'ich', 'eine', 'Diät', 'mache', ',', 'nehme', 'ich', 'vielleicht', 'etwas', 'ab'], valid: [['wenn', 'ich', 'eine', 'Diät', 'mache', ',', 'nehme', 'ich', 'vielleicht', 'etwas', 'ab']], punct: '.' }
 ];
 var sbInited = false;
 var sbDragged = null;

@@ -409,13 +409,13 @@ function ltShowSolutions() {
 
 /* ===== SATZBAU ===== */
 var satzbauData = [
-  { words: ['Ich', 'gehe', 'ins', 'Kino', 'weil', 'ich', 'den', 'Film', 'sehen', 'möchte'], punct: '.' },
-  { words: ['Weil', 'du', 'Urlaub', 'brauchtest', 'bist', 'du', 'nach', 'Mallorca', 'geflogen'], punct: '.' },
-  { words: ['Er', 'weint', 'weil', 'er', 'traurig', 'ist'], punct: '.' },
-  { words: ['Ich', 'glaube', 'dass', 'es', 'heute', 'regnet'], punct: '.' },
-  { words: ['Es', 'ist', 'schade', 'dass', 'du', 'nicht', 'kommen', 'kannst'], punct: '.' },
-  { words: ['Sie', 'weiß', 'viel', 'weil', 'sie', 'viel', 'liest'], punct: '.' },
-  { words: ['Ich', 'finde', 'dass', 'das', 'Museum', 'sehr', 'schön', 'ist'], punct: '.' }
+  { parts: ['Ich', 'gehe', 'ins', 'Kino', 'weil', 'ich', 'den', 'Film', 'sehen', 'möchte'], valid: [['Ich', 'gehe', 'ins', 'Kino', 'weil', 'ich', 'den', 'Film', 'sehen', 'möchte']], punct: '.' },
+  { parts: ['Weil', 'du', 'Urlaub', 'brauchtest', 'bist', 'du', 'nach', 'Mallorca', 'geflogen'], valid: [['Weil', 'du', 'Urlaub', 'brauchtest', 'bist', 'du', 'nach', 'Mallorca', 'geflogen']], punct: '.' },
+  { parts: ['Er', 'weint', 'weil', 'er', 'traurig', 'ist'], valid: [['Er', 'weint', 'weil', 'er', 'traurig', 'ist']], punct: '.' },
+  { parts: ['Ich', 'glaube', 'dass', 'es', 'heute', 'regnet'], valid: [['Ich', 'glaube', 'dass', 'es', 'heute', 'regnet']], punct: '.' },
+  { parts: ['Es', 'ist', 'schade', 'dass', 'du', 'nicht', 'kommen', 'kannst'], valid: [['Es', 'ist', 'schade', 'dass', 'du', 'nicht', 'kommen', 'kannst']], punct: '.' },
+  { parts: ['Sie', 'weiß', 'viel', 'weil', 'sie', 'viel', 'liest'], valid: [['Sie', 'weiß', 'viel', 'weil', 'sie', 'viel', 'liest']], punct: '.' },
+  { parts: ['Ich', 'finde', 'dass', 'das', 'Museum', 'sehr', 'schön', 'ist'], valid: [['Ich', 'finde', 'dass', 'das', 'Museum', 'sehr', 'schön', 'ist']], punct: '.' }
 ];
 var sbDragged = null;
 

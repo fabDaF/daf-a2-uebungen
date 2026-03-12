@@ -494,13 +494,13 @@ LT_IDS.forEach(function(id) {
 
 // ===== SATZBAU =====
 var satzbauData = [
-  { words: ['Alex', 'war', 'heute', 'im', 'Fußballstadion'], punct: '.' },
-  { words: ['Sein', 'Team', 'hat', 'leider', 'das', 'Spiel', 'verloren'], punct: '.' },
-  { words: ['Als', 'Kind', 'hat', 'er', 'dreimal', 'pro', 'Woche', 'trainiert'], punct: '.' },
-  { words: ['Er', 'findet', 'das', 'Fitnessstudio', 'langweilig'], punct: '.' },
-  { words: ['Alex', 'möchte', 'lieber', 'in', 'einem', 'Team', 'Sport', 'treiben'], punct: '.' },
-  { words: ['Schwimmen', 'ist', 'kein', 'Teamsport'], punct: '.' },
-  { words: ['Ich', 'gehe', 'nächste', 'Woche', 'zum', 'Fußballtraining'], punct: '.' }
+  { parts: ['Alex', 'war', 'heute', 'im', 'Fußballstadion'], valid: [['Alex', 'war', 'heute', 'im', 'Fußballstadion']], punct: '.' },
+  { parts: ['Sein', 'Team', 'hat', 'leider', 'das', 'Spiel', 'verloren'], valid: [['Sein', 'Team', 'hat', 'leider', 'das', 'Spiel', 'verloren']], punct: '.' },
+  { parts: ['Als', 'Kind', 'hat', 'er', 'dreimal', 'pro', 'Woche', 'trainiert'], valid: [['Als', 'Kind', 'hat', 'er', 'dreimal', 'pro', 'Woche', 'trainiert']], punct: '.' },
+  { parts: ['Er', 'findet', 'das', 'Fitnessstudio', 'langweilig'], valid: [['Er', 'findet', 'das', 'Fitnessstudio', 'langweilig']], punct: '.' },
+  { parts: ['Alex', 'möchte', 'lieber', 'in', 'einem', 'Team', 'Sport', 'treiben'], valid: [['Alex', 'möchte', 'lieber', 'in', 'einem', 'Team', 'Sport', 'treiben']], punct: '.' },
+  { parts: ['Schwimmen', 'ist', 'kein', 'Teamsport'], valid: [['Schwimmen', 'ist', 'kein', 'Teamsport']], punct: '.' },
+  { parts: ['Ich', 'gehe', 'nächste', 'Woche', 'zum', 'Fußballtraining'], valid: [['Ich', 'gehe', 'nächste', 'Woche', 'zum', 'Fußballtraining']], punct: '.' }
 ];
 
 var sbDragged = null;

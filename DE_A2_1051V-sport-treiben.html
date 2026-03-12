@@ -527,14 +527,14 @@ function resetRf() { initRf(); }
 
 // ===== SATZBAU =====
 var satzbauData = [
-  { words: ['Die', 'Mannschaft', 'gewinnt', 'das', 'Finale'], punct: '.' },
-  { words: ['Oscar', 'trainiert', 'jeden', 'Tag', 'professionell'], punct: '.' },
-  { words: ['Er', 'nimmt', 'allein', 'an', 'den', 'Wettkämpfen', 'teil'], punct: '.' },
-  { words: ['Die', 'Fans', 'feiern', 'den', 'Sieg', 'ihrer', 'Mannschaft'], punct: '.' },
-  { words: ['Sie', 'bekommt', 'eine', 'Goldmedaille', 'für', 'den', 'ersten', 'Platz'], punct: '.' },
-  { words: ['Das', 'Team', 'hat', 'dreimal', 'pro', 'Woche', 'Training'], punct: '.' },
-  { words: ['Wir', 'nehmen', 'am', 'Wettkampf', 'teil'], punct: '.' },
-  { words: ['Leider', 'hat', 'die', 'Mannschaft', 'das', 'Spiel', 'verloren'], punct: '.' }
+  { parts: ['Die', 'Mannschaft', 'gewinnt', 'das', 'Finale'], valid: [['Die', 'Mannschaft', 'gewinnt', 'das', 'Finale']], punct: '.' },
+  { parts: ['Oscar', 'trainiert', 'jeden', 'Tag', 'professionell'], valid: [['Oscar', 'trainiert', 'jeden', 'Tag', 'professionell']], punct: '.' },
+  { parts: ['Er', 'nimmt', 'allein', 'an', 'den', 'Wettkämpfen', 'teil'], valid: [['Er', 'nimmt', 'allein', 'an', 'den', 'Wettkämpfen', 'teil']], punct: '.' },
+  { parts: ['Die', 'Fans', 'feiern', 'den', 'Sieg', 'ihrer', 'Mannschaft'], valid: [['Die', 'Fans', 'feiern', 'den', 'Sieg', 'ihrer', 'Mannschaft']], punct: '.' },
+  { parts: ['Sie', 'bekommt', 'eine', 'Goldmedaille', 'für', 'den', 'ersten', 'Platz'], valid: [['Sie', 'bekommt', 'eine', 'Goldmedaille', 'für', 'den', 'ersten', 'Platz']], punct: '.' },
+  { parts: ['Das', 'Team', 'hat', 'dreimal', 'pro', 'Woche', 'Training'], valid: [['Das', 'Team', 'hat', 'dreimal', 'pro', 'Woche', 'Training']], punct: '.' },
+  { parts: ['Wir', 'nehmen', 'am', 'Wettkampf', 'teil'], valid: [['Wir', 'nehmen', 'am', 'Wettkampf', 'teil']], punct: '.' },
+  { parts: ['Leider', 'hat', 'die', 'Mannschaft', 'das', 'Spiel', 'verloren'], valid: [['Leider', 'hat', 'die', 'Mannschaft', 'das', 'Spiel', 'verloren']], punct: '.' }
 ];
 
 var sbDragged = null;

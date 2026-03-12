@@ -515,13 +515,13 @@ LT_IDS.forEach(function(id) {
 
 // ===== SATZBAU =====
 var satzbauData = [
-  { words: ['Welcher', 'Pullover', 'gefällt', 'dir'], punct: '?' },
-  { words: ['Dieser', 'Pullover', 'hier', 'gefällt', 'mir', 'nicht'], punct: '.' },
-  { words: ['Jeder', 'Gast', 'bekommt', 'ein', 'Stück', 'Kuchen'], punct: '.' },
-  { words: ['Manche', 'Teams', 'verlieren', 'oft'], punct: '.' },
-  { words: ['Nicht', 'alle', 'Frauen', 'mögen', 'diesen', 'Film'], punct: '.' },
-  { words: ['Wir', 'trainieren', 'jeden', 'Mittwoch', 'und', 'Freitag'], punct: '.' },
-  { words: ['Welche', 'Sportart', 'gefällt', 'dir', 'am', 'besten'], punct: '?' }
+  { parts: ['Welcher', 'Pullover', 'gefällt', 'dir'], valid: [['Welcher', 'Pullover', 'gefällt', 'dir']], punct: '?' },
+  { parts: ['Dieser', 'Pullover', 'hier', 'gefällt', 'mir', 'nicht'], valid: [['Dieser', 'Pullover', 'hier', 'gefällt', 'mir', 'nicht']], punct: '.' },
+  { parts: ['Jeder', 'Gast', 'bekommt', 'ein', 'Stück', 'Kuchen'], valid: [['Jeder', 'Gast', 'bekommt', 'ein', 'Stück', 'Kuchen']], punct: '.' },
+  { parts: ['Manche', 'Teams', 'verlieren', 'oft'], valid: [['Manche', 'Teams', 'verlieren', 'oft']], punct: '.' },
+  { parts: ['Nicht', 'alle', 'Frauen', 'mögen', 'diesen', 'Film'], valid: [['Nicht', 'alle', 'Frauen', 'mögen', 'diesen', 'Film']], punct: '.' },
+  { parts: ['Wir', 'trainieren', 'jeden', 'Mittwoch', 'und', 'Freitag'], valid: [['Wir', 'trainieren', 'jeden', 'Mittwoch', 'und', 'Freitag']], punct: '.' },
+  { parts: ['Welche', 'Sportart', 'gefällt', 'dir', 'am', 'besten'], valid: [['Welche', 'Sportart', 'gefällt', 'dir', 'am', 'besten']], punct: '?' }
 ];
 
 var sbDragged = null;

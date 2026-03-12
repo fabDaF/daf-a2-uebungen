@@ -583,13 +583,13 @@ LT2_IDS.forEach(function(id) {
 
 // ===== SATZBAU =====
 var satzbauData = [
-  { words: ['Ich', 'interessiere', 'mich', 'für', 'moderne', 'Kunst'], punct: '.' },
-  { words: ['Meiner', 'Meinung', 'nach', 'ist', 'das', 'Theater', 'sehr', 'gut'], punct: '.' },
-  { words: ['Ich', 'bin', 'davon', 'überzeugt', 'dass', 'Kultur', 'wichtig', 'ist'], punct: '.' },
-  { words: ['Zuerst', 'gehen', 'wir', 'ins', 'Museum'], punct: '.' },
-  { words: ['Abends', 'schaue', 'ich', 'mir', 'einen', 'Film', 'an'], punct: '.' },
-  { words: ['Ich', 'freue', 'mich', 'sehr', 'über', 'die', 'Eintrittskarten'], punct: '.' },
-  { words: ['Interessierst', 'du', 'dich', 'für', 'Musik'], punct: '?' }
+  { parts: ['Ich', 'interessiere', 'mich', 'für', 'moderne', 'Kunst'], valid: [['Ich', 'interessiere', 'mich', 'für', 'moderne', 'Kunst']], punct: '.' },
+  { parts: ['Meiner', 'Meinung', 'nach', 'ist', 'das', 'Theater', 'sehr', 'gut'], valid: [['Meiner', 'Meinung', 'nach', 'ist', 'das', 'Theater', 'sehr', 'gut']], punct: '.' },
+  { parts: ['Ich', 'bin', 'davon', 'überzeugt', 'dass', 'Kultur', 'wichtig', 'ist'], valid: [['Ich', 'bin', 'davon', 'überzeugt', 'dass', 'Kultur', 'wichtig', 'ist']], punct: '.' },
+  { parts: ['Zuerst', 'gehen', 'wir', 'ins', 'Museum'], valid: [['Zuerst', 'gehen', 'wir', 'ins', 'Museum']], punct: '.' },
+  { parts: ['Abends', 'schaue', 'ich', 'mir', 'einen', 'Film', 'an'], valid: [['Abends', 'schaue', 'ich', 'mir', 'einen', 'Film', 'an']], punct: '.' },
+  { parts: ['Ich', 'freue', 'mich', 'sehr', 'über', 'die', 'Eintrittskarten'], valid: [['Ich', 'freue', 'mich', 'sehr', 'über', 'die', 'Eintrittskarten']], punct: '.' },
+  { parts: ['Interessierst', 'du', 'dich', 'für', 'Musik'], valid: [['Interessierst', 'du', 'dich', 'für', 'Musik']], punct: '?' }
 ];
 
 var sbDragged = null;

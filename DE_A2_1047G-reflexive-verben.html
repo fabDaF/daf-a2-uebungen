@@ -383,13 +383,13 @@ function ltShowSolutions(){document.querySelectorAll('.lt-input').forEach(functi
 
 /* ===== SATZBAU ===== */
 var satzbauData=[
-  {words:['Ich','freue','mich','über','das','Geschenk'],punct:'.'},
-  {words:['Er','ärgert','sich','über','das','Wetter'],punct:'.'},
-  {words:['Sie','hat','sich','bei','der','Firma','beworben'],punct:'.'},
-  {words:['Wir','haben','uns','im','Wald','verlaufen'],punct:'.'},
-  {words:['Du','hast','dich','verspätet'],punct:'.'},
-  {words:['Lisa','hat','sich','erkältet'],punct:'.'},
-  {words:['Interessierst','du','dich','für','Kunst'],punct:'?'}
+  { parts: ['Ich', 'freue', 'mich', 'über', 'das', 'Geschenk'], valid: [['Ich', 'freue', 'mich', 'über', 'das', 'Geschenk']], punct: '.' },
+  { parts: ['Er', 'ärgert', 'sich', 'über', 'das', 'Wetter'], valid: [['Er', 'ärgert', 'sich', 'über', 'das', 'Wetter']], punct: '.' },
+  { parts: ['Sie', 'hat', 'sich', 'bei', 'der', 'Firma', 'beworben'], valid: [['Sie', 'hat', 'sich', 'bei', 'der', 'Firma', 'beworben']], punct: '.' },
+  { parts: ['Wir', 'haben', 'uns', 'im', 'Wald', 'verlaufen'], valid: [['Wir', 'haben', 'uns', 'im', 'Wald', 'verlaufen']], punct: '.' },
+  { parts: ['Du', 'hast', 'dich', 'verspätet'], valid: [['Du', 'hast', 'dich', 'verspätet']], punct: '.' },
+  { parts: ['Lisa', 'hat', 'sich', 'erkältet'], valid: [['Lisa', 'hat', 'sich', 'erkältet']], punct: '.' },
+  { parts: ['Interessierst', 'du', 'dich', 'für', 'Kunst'], valid: [['Interessierst', 'du', 'dich', 'für', 'Kunst']], punct: '?' }
 ];
 var sbDragged = null;
 

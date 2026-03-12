@@ -389,13 +389,13 @@ function rfReset(){initRf();}
 
 /* ===== SATZBAU ===== */
 var satzbauData = [
-  { words: ['Das', 'Theaterstück', 'hat', 'mir', 'gut', 'gefallen'], punct: '.' },
-  { words: ['Dem', 'Publikum', 'hat', 'das', 'Stück', 'gut', 'gefallen'], punct: '.' },
-  { words: ['Die', 'Veranstaltung', 'war', 'gut', 'besucht'], punct: '.' },
-  { words: ['In', 'der', 'Pause', 'gibt', 'es', 'Essen', 'und', 'Trinken'], punct: '.' },
-  { words: ['Die', 'Kinder', 'sind', 'begeistert', 'vom', 'Film'], punct: '.' },
-  { words: ['Wir', 'schauen', 'uns', 'die', 'Ausstellung', 'an'], punct: '.' },
-  { words: ['Ist', 'der', 'Platz', 'noch', 'frei'], punct: '?' }
+  { parts: ['Das', 'Theaterstück', 'hat', 'mir', 'gut', 'gefallen'], valid: [['Das', 'Theaterstück', 'hat', 'mir', 'gut', 'gefallen']], punct: '.' },
+  { parts: ['Dem', 'Publikum', 'hat', 'das', 'Stück', 'gut', 'gefallen'], valid: [['Dem', 'Publikum', 'hat', 'das', 'Stück', 'gut', 'gefallen']], punct: '.' },
+  { parts: ['Die', 'Veranstaltung', 'war', 'gut', 'besucht'], valid: [['Die', 'Veranstaltung', 'war', 'gut', 'besucht']], punct: '.' },
+  { parts: ['In', 'der', 'Pause', 'gibt', 'es', 'Essen', 'und', 'Trinken'], valid: [['In', 'der', 'Pause', 'gibt', 'es', 'Essen', 'und', 'Trinken']], punct: '.' },
+  { parts: ['Die', 'Kinder', 'sind', 'begeistert', 'vom', 'Film'], valid: [['Die', 'Kinder', 'sind', 'begeistert', 'vom', 'Film']], punct: '.' },
+  { parts: ['Wir', 'schauen', 'uns', 'die', 'Ausstellung', 'an'], valid: [['Wir', 'schauen', 'uns', 'die', 'Ausstellung', 'an']], punct: '.' },
+  { parts: ['Ist', 'der', 'Platz', 'noch', 'frei'], valid: [['Ist', 'der', 'Platz', 'noch', 'frei']], punct: '?' }
 ];
 var sbDragged = null;
 

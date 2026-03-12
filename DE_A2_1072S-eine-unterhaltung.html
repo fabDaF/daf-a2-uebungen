@@ -578,13 +578,13 @@ function resetRM() {
 
 // ─── Satzbau ────────────────────────────────────────────────────────────────
 var satzbauData = [
-    { words: ['er', 'ist', 'nervös', ',', 'weil', 'er', 'ein', 'Bewerbungsgespräch', 'hat'], punct: '.' },
-    { words: ['in', 'Zukunft', 'werde', 'ich', 'mehr', 'Sport', 'machen'], punct: '.' },
-    { words: ['wir', 'müssen', 'eine', 'Entscheidung', 'für', 'unsere', 'Zukunft', 'treffen'], punct: '.' },
-    { words: ['möchtest', 'du', 'mit', 'mir', 'tanzen', 'gehen'], punct: '?' },
-    { words: ['sie', 'wünscht', 'sich', 'ein', 'glückliches', 'Leben'], punct: '.' },
-    { words: ['am', 'Wochenende', 'werde', 'ich', 'in', 'die', 'Berge', 'fahren'], punct: '.' },
-    { words: ['mein', 'Lebensziel', 'ist', 'ein', 'glückliches', 'Leben'], punct: '.' }
+    { parts: ['er', 'ist', 'nervös', ',', 'weil', 'er', 'ein', 'Bewerbungsgespräch', 'hat'], valid: [['er', 'ist', 'nervös', ',', 'weil', 'er', 'ein', 'Bewerbungsgespräch', 'hat']], punct: '.' },
+    { parts: ['in', 'Zukunft', 'werde', 'ich', 'mehr', 'Sport', 'machen'], valid: [['in', 'Zukunft', 'werde', 'ich', 'mehr', 'Sport', 'machen']], punct: '.' },
+    { parts: ['wir', 'müssen', 'eine', 'Entscheidung', 'für', 'unsere', 'Zukunft', 'treffen'], valid: [['wir', 'müssen', 'eine', 'Entscheidung', 'für', 'unsere', 'Zukunft', 'treffen']], punct: '.' },
+    { parts: ['möchtest', 'du', 'mit', 'mir', 'tanzen', 'gehen'], valid: [['möchtest', 'du', 'mit', 'mir', 'tanzen', 'gehen']], punct: '?' },
+    { parts: ['sie', 'wünscht', 'sich', 'ein', 'glückliches', 'Leben'], valid: [['sie', 'wünscht', 'sich', 'ein', 'glückliches', 'Leben']], punct: '.' },
+    { parts: ['am', 'Wochenende', 'werde', 'ich', 'in', 'die', 'Berge', 'fahren'], valid: [['am', 'Wochenende', 'werde', 'ich', 'in', 'die', 'Berge', 'fahren']], punct: '.' },
+    { parts: ['mein', 'Lebensziel', 'ist', 'ein', 'glückliches', 'Leben'], valid: [['mein', 'Lebensziel', 'ist', 'ein', 'glückliches', 'Leben']], punct: '.' }
 ];
 var sbInited = false;
 var sbDragged = null;

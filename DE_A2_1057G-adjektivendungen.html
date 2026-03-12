@@ -409,13 +409,13 @@ function mcCheck(step, btn, correct) {
 
 // ===== DATA =====
 var satzbauData = [
-  { words: ['Das', 'kleine', 'Kind', 'isst', 'ein', 'Eis'], punct: '.' },
-  { words: ['Ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen'], punct: '.' },
-  { words: ['Paul', 'isst', 'den', 'leckeren', 'Kuchen'], punct: '.' },
-  { words: ['Ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell'], punct: '.' },
-  { words: ['Nina', 'kauft', 'eine', 'blaue', 'Bluse'], punct: '.' },
-  { words: ['Frisches', 'Obst', 'ist', 'sehr', 'gesund'], punct: '.' },
-  { words: ['Ich', 'trinke', 'gern', 'roten', 'Wein'], punct: '.' }
+  { parts: ['Das', 'kleine', 'Kind', 'isst', 'ein', 'Eis'], valid: [['Das', 'kleine', 'Kind', 'isst', 'ein', 'Eis']], punct: '.' },
+  { parts: ['Ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen'], valid: [['Ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen']], punct: '.' },
+  { parts: ['Paul', 'isst', 'den', 'leckeren', 'Kuchen'], valid: [['Paul', 'isst', 'den', 'leckeren', 'Kuchen']], punct: '.' },
+  { parts: ['Ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell'], valid: [['Ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell']], punct: '.' },
+  { parts: ['Nina', 'kauft', 'eine', 'blaue', 'Bluse'], valid: [['Nina', 'kauft', 'eine', 'blaue', 'Bluse']], punct: '.' },
+  { parts: ['Frisches', 'Obst', 'ist', 'sehr', 'gesund'], valid: [['Frisches', 'Obst', 'ist', 'sehr', 'gesund']], punct: '.' },
+  { parts: ['Ich', 'trinke', 'gern', 'roten', 'Wein'], valid: [['Ich', 'trinke', 'gern', 'roten', 'Wein']], punct: '.' }
 ];
 
 var MC_DATA = [

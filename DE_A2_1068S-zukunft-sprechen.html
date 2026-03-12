@@ -661,13 +661,13 @@ function resetRM() {
 
 // ─── Satzbau ────────────────────────────────────────────────────────────────
 var satzbauData = [
-    { words: ['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen'], punct: '.' },
-    { words: ['Wenn', 'du', 'deine', 'Ziele', 'verfolgst', ',', 'dann', 'wirst', 'du', 'erfolgreich', 'sein'], punct: '.' },
-    { words: ['Mia', 'hat', 'die', 'Vermutung', ',', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt'], punct: '.' },
-    { words: ['Leons', 'Lebensziel', 'ist', 'es', ',', 'eine', 'gesunde', 'Familie', 'zu', 'haben'], punct: '.' },
-    { words: ['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], punct: '.' },
-    { words: ['Wenn', 'ich', 'eine', 'Million', 'gewinne', ',', 'dann', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen'], punct: '.' },
-    { words: ['ich', 'wünsche', 'mir', ',', 'im', 'Ausland', 'zu', 'arbeiten'], punct: '.' }
+    { parts: ['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen'], valid: [['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen']], punct: '.' },
+    { parts: ['Wenn', 'du', 'deine', 'Ziele', 'verfolgst', ',', 'dann', 'wirst', 'du', 'erfolgreich', 'sein'], valid: [['Wenn', 'du', 'deine', 'Ziele', 'verfolgst', ',', 'dann', 'wirst', 'du', 'erfolgreich', 'sein']], punct: '.' },
+    { parts: ['Mia', 'hat', 'die', 'Vermutung', ',', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt'], valid: [['Mia', 'hat', 'die', 'Vermutung', ',', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt']], punct: '.' },
+    { parts: ['Leons', 'Lebensziel', 'ist', 'es', ',', 'eine', 'gesunde', 'Familie', 'zu', 'haben'], valid: [['Leons', 'Lebensziel', 'ist', 'es', ',', 'eine', 'gesunde', 'Familie', 'zu', 'haben']], punct: '.' },
+    { parts: ['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], valid: [['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft']], punct: '.' },
+    { parts: ['Wenn', 'ich', 'eine', 'Million', 'gewinne', ',', 'dann', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen'], valid: [['Wenn', 'ich', 'eine', 'Million', 'gewinne', ',', 'dann', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen']], punct: '.' },
+    { parts: ['ich', 'wünsche', 'mir', ',', 'im', 'Ausland', 'zu', 'arbeiten'], valid: [['ich', 'wünsche', 'mir', ',', 'im', 'Ausland', 'zu', 'arbeiten']], punct: '.' }
 ];
 var sbInited = false;
 var sbDragged = null;

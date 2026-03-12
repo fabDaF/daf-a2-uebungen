@@ -593,13 +593,13 @@ function checkZuordnung() {
 // ────────────────────────────────────────────────────────────────────────
 
 var satzbauData = [
-    { words: ['Das', 'große', 'Haus', 'gehört', 'dem', 'alten', 'Mann'], punct: '.' },
-    { words: ['Der', 'neue', 'Nachbar', 'ist', 'ein', 'alter', 'Mann'], punct: '.' },
-    { words: ['Die', 'junge', 'Frau', 'fragt', 'den', 'netten', 'Polizisten'], punct: '.' },
-    { words: ['Kleine', 'Kinder', 'müssen', 'früh', 'schlafen', 'gehen'], punct: '.' },
-    { words: ['Ich', 'habe', 'meinen', 'neuen', 'Nachbarn', 'kennengelernt'], punct: '.' },
-    { words: ['Ein', 'schnelles', 'Auto', 'fährt', 'auf', 'der', 'breiten', 'Straße'], punct: '.' },
-    { words: ['Im', 'dunklen', 'Wald', 'habe', 'ich', 'einen', 'gefährlichen', 'Bären', 'gesehen'], punct: '.' }
+    { parts: ['Das', 'große', 'Haus', 'gehört', 'dem', 'alten', 'Mann'], valid: [['Das', 'große', 'Haus', 'gehört', 'dem', 'alten', 'Mann']], punct: '.' },
+    { parts: ['Der', 'neue', 'Nachbar', 'ist', 'ein', 'alter', 'Mann'], valid: [['Der', 'neue', 'Nachbar', 'ist', 'ein', 'alter', 'Mann']], punct: '.' },
+    { parts: ['Die', 'junge', 'Frau', 'fragt', 'den', 'netten', 'Polizisten'], valid: [['Die', 'junge', 'Frau', 'fragt', 'den', 'netten', 'Polizisten']], punct: '.' },
+    { parts: ['Kleine', 'Kinder', 'müssen', 'früh', 'schlafen', 'gehen'], valid: [['Kleine', 'Kinder', 'müssen', 'früh', 'schlafen', 'gehen']], punct: '.' },
+    { parts: ['Ich', 'habe', 'meinen', 'neuen', 'Nachbarn', 'kennengelernt'], valid: [['Ich', 'habe', 'meinen', 'neuen', 'Nachbarn', 'kennengelernt']], punct: '.' },
+    { parts: ['Ein', 'schnelles', 'Auto', 'fährt', 'auf', 'der', 'breiten', 'Straße'], valid: [['Ein', 'schnelles', 'Auto', 'fährt', 'auf', 'der', 'breiten', 'Straße']], punct: '.' },
+    { parts: ['Im', 'dunklen', 'Wald', 'habe', 'ich', 'einen', 'gefährlichen', 'Bären', 'gesehen'], valid: [['Im', 'dunklen', 'Wald', 'habe', 'ich', 'einen', 'gefährlichen', 'Bären', 'gesehen']], punct: '.' }
 ];
 
 var sbDragged = null;
