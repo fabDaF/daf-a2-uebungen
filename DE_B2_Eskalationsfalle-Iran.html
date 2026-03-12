@@ -81,7 +81,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .btn-reset { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
 
 /* Timer */
-.timer-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 0.9em; color: #666; flex-wrap: wrap; }
+.timer-bar { display: flex; align-items: center; gap: 12px; background: white; border-radius: 10px; padding: 10px 16px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.07); font-size: 0.85rem; color: #666; flex-wrap: wrap; }
+.timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
+.best-display { color: #f39c12; font-weight: 600; }
 
 /* Footer */
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
@@ -165,8 +167,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <h2 style="color:#4a148c; margin-bottom:16px;">🔤 Genus</h2>
             <p style="margin-bottom:14px; color:#555;">Ziehe die Nomen in die richtige Kategorie.</p>
             <div class="timer-bar" id="timer-genus">
-                <span>⏱ <span id="timer-2">0:00</span></span>
-                <span>🏆 <span id="best-2">—</span></span>
+                <span>⏱ <span class="timer-display" id="timer-2">0:00</span></span>
+                <span>🏆 <span class="best-display" id="best-2">—</span></span>
                 <span class="btn-row" style="margin:0;">
                     <button class="btn-small btn-solution" onclick="showGenusLoesungen()">💡 Lösungen</button>
                     <button class="btn-small btn-reset" onclick="initGenus()">↺ Neustart</button>
@@ -188,8 +190,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <h2 style="color:#4a148c; margin-bottom:16px;">✏️ Lückentext</h2>
             <p style="margin-bottom:14px; color:#555;">Ergänze die fehlenden Wörter aus dem Text.</p>
             <div class="timer-bar">
-                <span>⏱ <span id="timer-3">0:00</span></span>
-                <span>🏆 <span id="best-3">—</span></span>
+                <span>⏱ <span class="timer-display" id="timer-3">0:00</span></span>
+                <span>🏆 <span class="best-display" id="best-3">—</span></span>
                 <span class="btn-row" style="margin:0;">
                     <button class="btn-small btn-solution" onclick="showLueckenLoesungen()">💡 Lösungen</button>
                     <button class="btn-small btn-reset" onclick="initLuecken()">↺ Neustart</button>
@@ -205,8 +207,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <h2 style="color:#4a148c; margin-bottom:16px;">☑️ Multiple Choice</h2>
             <p style="margin-bottom:14px; color:#555;">Wähle die richtige Antwort.</p>
             <div class="timer-bar">
-                <span>⏱ <span id="timer-4">0:00</span></span>
-                <span>🏆 <span id="best-4">—</span></span>
+                <span>⏱ <span class="timer-display" id="timer-4">0:00</span></span>
+                <span>🏆 <span class="best-display" id="best-4">—</span></span>
                 <span class="btn-row" style="margin:0;">
                     <button class="btn-small btn-solution" onclick="showMcLoesungen()">💡 Lösungen</button>
                     <button class="btn-small btn-reset" onclick="initMc()">↺ Neustart</button>
@@ -222,8 +224,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <h2 style="color:#4a148c; margin-bottom:16px;">🧩 Satzbau</h2>
             <p style="margin-bottom:14px; color:#555;">Ordne die Wörter zu einem korrekten Satz.</p>
             <div class="timer-bar">
-                <span>⏱ <span id="timer-5">0:00</span></span>
-                <span>🏆 <span id="best-5">—</span></span>
+                <span>⏱ <span class="timer-display" id="timer-5">0:00</span></span>
+                <span>🏆 <span class="best-display" id="best-5">—</span></span>
                 <span class="btn-row" style="margin:0;">
                     <button class="btn-small btn-solution" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">💡 Lösungen</button>
                     <button class="btn-small btn-reset" onclick="initSatzbau()">↺ Neustart</button>
