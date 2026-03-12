@@ -29,7 +29,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .ve-table td:last-child { color: #555; line-height: 1.5; }
 
 /* Originaltext */
-.text-block { line-height: 1.8; color: #333; font-size: 1.0em; }
+.text-block { line-height: 1.8; color: #333; font-size: 1.0em; font-family: Georgia, 'Times New Roman', serif; }
 .text-block p { margin-bottom: 14px; text-align: justify; }
 .source { margin-top: 20px; font-size: 0.8em; color: #999; font-style: italic; }
 
@@ -464,16 +464,16 @@ function showLueckenLoesungen() {
 //  TAB 4: MULTIPLE CHOICE
 // ═══════════════════════════════════════════════════════════════════════
 var MC_DATA = [
-    { q: '1. Was ist die Kernthese von Professor Pape?', opts: ['Bomben treffen Ziele, aber sie verändern die Politik nicht.', 'Moderne Waffen sind zu ungenau für gezielte Angriffe.', 'Luftschläge sind die effektivste Form der Kriegsführung.', 'Atomwaffen sind die einzige Lösung für den Iran-Konflikt.'], correct: 0 },
-    { q: '2. Was passierte, als die USA iranische Atomanlagen bombardierten?', opts: ['Die Gebäude wurden zerstört, aber das Uran blieb unauffindbar.', 'Der Iran kapitulierte sofort.', 'Die Bomben verfehlten alle Ziele.', 'Die Atomanlagen wurden vollständig neutralisiert.'], correct: 0 },
-    { q: '3. Was bedeutet „horizontale Eskalation"?', opts: ['Angriffe gegen die Verbündeten des Gegners statt gegen den Gegner selbst', 'Eine Ausweitung des Krieges auf den Weltraum', 'Die Verstärkung der eigenen Bodentruppen', 'Der Übergang von Drohnen zu konventionellen Flugzeugen'], correct: 0 },
+    { q: '1. Was ist die Kernthese von Professor Pape?', opts: ['Moderne Waffen sind zu ungenau für gezielte Angriffe.', 'Bomben treffen Ziele, aber sie verändern die Politik nicht.', 'Luftschläge sind die effektivste Form der Kriegsführung.', 'Atomwaffen sind die einzige Lösung für den Iran-Konflikt.'], correct: 1 },
+    { q: '2. Was passierte, als die USA iranische Atomanlagen bombardierten?', opts: ['Der Iran kapitulierte sofort.', 'Die Bomben verfehlten alle Ziele.', 'Die Gebäude wurden zerstört, aber das Uran blieb unauffindbar.', 'Die Atomanlagen wurden vollständig neutralisiert.'], correct: 2 },
+    { q: '3. Was bedeutet „horizontale Eskalation"?', opts: ['Eine Ausweitung des Krieges auf den Weltraum', 'Die Verstärkung der eigenen Bodentruppen', 'Der Übergang von Drohnen zu konventionellen Flugzeugen', 'Angriffe gegen die Verbündeten des Gegners statt gegen den Gegner selbst'], correct: 3 },
     { q: '4. Welches Ziel verfolgte der Iran mit Angriffen auf Saudi-Arabien und die VAE?', opts: ['Die Koalition gegen den Iran zu spalten', 'Die Ölpreise dauerhaft zu erhöhen', 'Die Bevölkerung dieser Länder zu terrorisieren', 'Militärbasen in diesen Ländern zu zerstören'], correct: 0 },
-    { q: '5. Warum vergleicht Pape das iranische Regime mit einer Matrix und nicht mit einem Jenga-Turm?', opts: ['Weil es sich an Verluste anpasst und sich reorganisiert', 'Weil es aus virtuellen Strukturen besteht', 'Weil es von außen nicht sichtbar ist', 'Weil es nur durch Technologie funktioniert'], correct: 0 },
-    { q: '6. Was war die religiöse Fatwa des alten Obersten Führers?', opts: ['Ein religiöses Edikt gegen iranische Atomwaffen', 'Ein Aufruf zum heiligen Krieg gegen die USA', 'Ein Friedensangebot an Israel', 'Ein Verbot westlicher Kultur im Iran'], correct: 0 },
-    { q: '7. Warum ist die Eliminierung des Obersten Führers laut Pape kontraproduktiv?', opts: ['Sein Nachfolger ist aggressiver und die Fatwa gegen Atomwaffen ist erloschen.', 'Der alte Führer war der einzige Verbündete der USA im Iran.', 'Die Bevölkerung hat den Führer ohnehin nicht unterstützt.', 'Regime-Change ist nur bei demokratischen Staaten wirksam.'], correct: 0 },
-    { q: '8. Über wie viel Material für Atombomben verfügte der Iran laut Pape?', opts: ['Material für 16 Bomben', 'Material für 2 Bomben', 'Material für 100 Bomben', 'Kein waffenfähiges Material'], correct: 0 },
-    { q: '9. Was geschah laut Satellitenbildern zwei Tage vor dem US-Angriff?', opts: ['Lastwagen fuhren Material von den Atomanlagen weg.', 'Iran evakuierte die Zivilbevölkerung.', 'Der Iran startete einen Gegenangriff.', 'Die Anlagen wurden unterirdisch verlegt.'], correct: 0 },
-    { q: '10. Welches historische Beispiel nennt Pape für die Eskalationsfalle?', opts: ['Die Bombardierung Libyens 1986 und den Anschlag auf Pan-Am-Flug 103', 'Den Zweiten Weltkrieg und die Bombardierung Dresdens', 'Den Vietnamkrieg und die Tet-Offensive', 'Den Koreakrieg und den Waffenstillstand von 1953'], correct: 0 }
+    { q: '5. Warum vergleicht Pape das iranische Regime mit einer Matrix und nicht mit einem Jenga-Turm?', opts: ['Weil es aus virtuellen Strukturen besteht', 'Weil es sich an Verluste anpasst und sich reorganisiert', 'Weil es von außen nicht sichtbar ist', 'Weil es nur durch Technologie funktioniert'], correct: 1 },
+    { q: '6. Was war die religiöse Fatwa des alten Obersten Führers?', opts: ['Ein Aufruf zum heiligen Krieg gegen die USA', 'Ein Friedensangebot an Israel', 'Ein religiöses Edikt gegen iranische Atomwaffen', 'Ein Verbot westlicher Kultur im Iran'], correct: 2 },
+    { q: '7. Warum ist die Eliminierung des Obersten Führers laut Pape kontraproduktiv?', opts: ['Der alte Führer war der einzige Verbündete der USA im Iran.', 'Die Bevölkerung hat den Führer ohnehin nicht unterstützt.', 'Regime-Change ist nur bei demokratischen Staaten wirksam.', 'Sein Nachfolger ist aggressiver und die Fatwa gegen Atomwaffen ist erloschen.'], correct: 3 },
+    { q: '8. Über wie viel Material für Atombomben verfügte der Iran laut Pape?', opts: ['Material für 2 Bomben', 'Material für 100 Bomben', 'Material für 16 Bomben', 'Kein waffenfähiges Material'], correct: 2 },
+    { q: '9. Was geschah laut Satellitenbildern zwei Tage vor dem US-Angriff?', opts: ['Iran evakuierte die Zivilbevölkerung.', 'Lastwagen fuhren Material von den Atomanlagen weg.', 'Der Iran startete einen Gegenangriff.', 'Die Anlagen wurden unterirdisch verlegt.'], correct: 1 },
+    { q: '10. Welches historische Beispiel nennt Pape für die Eskalationsfalle?', opts: ['Den Zweiten Weltkrieg und die Bombardierung Dresdens', 'Den Vietnamkrieg und die Tet-Offensive', 'Den Koreakrieg und den Waffenstillstand von 1953', 'Die Bombardierung Libyens 1986 und den Anschlag auf Pan-Am-Flug 103'], correct: 3 }
 ];
 
 function initMc() {
