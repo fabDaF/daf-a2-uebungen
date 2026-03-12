@@ -87,13 +87,6 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 .sb-nr { font-size: 0.8em; color: #999; margin-bottom: 4px; margin-top: 14px; font-weight: 600; }
 
 /* Wortschatz */
-.ws-row { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #f0f0f8; padding-bottom: 12px; }
-.ws-row:last-child { border-bottom: none; }
-.ws-en { font-size: 0.85em; color: #888; font-style: italic; }
-.ws-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: inherit; font-size: 0.95em; transition: border-color 0.2s; padding: 2px 4px; width: 100%; }
-.ws-inp:focus { border-bottom-color: #667eea; }
-.ws-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
-.ws-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
 .art { width: 70px; }
 
 /* Timer / Buttons */
@@ -270,14 +263,6 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
         </div>
         <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
     </div>
-            <div id="wsContainer"></div>
-            <div class="btn-row">
-                <div class="timer-box">⏱ <span class="timer-display" id="timer-5">0:00</span> &nbsp;🏆 <span class="best-display" id="best-5">–</span></div>
-                <button class="btn btn-reset" onclick="wsReset()">↺ Neustart</button>
-                <button class="solution-btn" onclick="wsLoesungen()">💡 Lösungen</button>
-            </div>
-        </div>
-    </div>
 
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
@@ -416,57 +401,12 @@ function initSatzbau(){
 }
 function sbResetAll(){timerResetOne(4);initSatzbau();}
 
-// ─── Wortschatz ──────────────────────────────────────────────────────────────
-var WS_VOCAB = [
-    { en:'to move (relocate)', art:'', term:'umziehen', plural:'' },
-    { en:'cozy, comfortable', art:'', term:'gemütlich', plural:'' },
-    { en:'construction site', art:'die', term:'Baustelle', plural:'Baustellen' },
-    { en:'ground floor', art:'das', term:'Erdgeschoss', plural:'Erdgeschosse' },
-    { en:'deposit', art:'die', term:'Kaution', plural:'Kautionen' },
-    { en:'rent (without utilities)', art:'die', term:'Kaltmiete', plural:'Kaltmieten' },
-    { en:'surroundings', art:'die', term:'Umgebung', plural:'Umgebungen' },
-    { en:'dream apartment', art:'die', term:'Traumwohnung', plural:'Traumwohnungen' },
-    { en:'advertisement', art:'die', term:'Anzeige', plural:'Anzeigen' },
-    { en:'apartment search', art:'die', term:'Wohnungssuche', plural:'Wohnungssuchen' }
-];
-
-function buildWortschatz(){
-    var container=document.getElementById('wsContainer');container.innerHTML='';
-    WS_VOCAB.forEach(function(w){
-        var row=document.createElement('div');row.className='ws-row';
-        var enDiv=document.createElement('div');enDiv.className='ws-en';enDiv.textContent=w.en;
-        row.appendChild(enDiv);
-        var inputsDiv=document.createElement('div');inputsDiv.style.cssText='display:flex;gap:8px;flex-wrap:wrap;align-items:center;';
-        function makeInp(ans,placeholder,cls,size){
-            var inp=document.createElement('input');inp.type='text';inp.placeholder=placeholder;inp.style.width=size+'px';
-            inp.className='ws-inp'+(cls?' '+cls:'');inp.dataset.ans=ans;inp.dataset.orig=ans;
-            inp.addEventListener('input',function(){
-                var val=inp.value.trim(),a=inp.dataset.ans;
-                inp.classList.remove('ok','no');
-                if(!val)return;
-                if(val===a){inp.classList.add('ok');timerAutoStart(5);checkAllWs();}
-                else if(a.startsWith(val)){timerAutoStart(5);}
-                else{inp.classList.add('no');}
-            });
-            return inp;
-        }
-        if(w.art)inputsDiv.appendChild(makeInp(w.art,'Artikel','art',70));
-        inputsDiv.appendChild(makeInp(w.term,w.art?'Wort':'Verb/Adj.','',Math.max(w.term.length*10,110)));
-        if(w.plural){inputsDiv.appendChild(makeInp(w.plural,'Plural','',Math.max(w.plural.length*9,90)));}
-        row.appendChild(inputsDiv);container.appendChild(row);
-    });
-}
-function checkAllWs(){var all=Array.from(document.querySelectorAll('#sec-5 .ws-inp'));if(all.every(function(i){return i.classList.contains('ok');}))timerStop(5);}
-function wsReset(){timerResetOne(5);buildWortschatz();}
-function wsLoesungen(){document.querySelectorAll('#sec-5 .ws-inp').forEach(function(inp){inp.value=inp.dataset.orig;inp.classList.remove('no');inp.classList.add('ok');});}
-
 // ─── Init ────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function(){
     buildRF();
     buildLuecken(LT1,'luecken1');
     buildLuecken(LT2,'luecken2');
     initSatzbau();
-    buildWortschatz();
 });
 
 
