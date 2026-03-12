@@ -39,6 +39,10 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .mc-step.active { display: block; }
 .mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
 .mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-btn { padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem; transition: all .2s; }
+.mc-btn:hover { border-color: #667eea; background: #f3f4ff; }
+.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
 .mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
 .mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
 .mc-feedback.err { color: #c62828; }

@@ -34,24 +34,29 @@ h2 { color: #4a148c; font-size: 1.25em; margin-bottom: 14px; }
 h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 
 /* Entdecken-Tab */
-.example-box { background: #f7f0ff; border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
-.example-box p { font-size: 1.0em; line-height: 1.9; color: #333; }
-.hl { color: #764ba2; font-weight: 700; }
-.progress-dots { display: flex; gap: 8px; margin: 16px 0; }
-.dot { width: 14px; height: 14px; border-radius: 50%; background: #ddd; transition: background 0.3s; }
-.dot.done { background: #667eea; }
-.mc-step { display: none; margin-bottom: 16px; }
-.mc-step.visible { display: block; }
-.mc-question { font-weight: 600; color: #333; margin-bottom: 10px; font-size: 0.95em; }
+.entdeck-intro { background: #f3e5f5; border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75; }
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
 .mc-options { display: flex; flex-direction: column; gap: 8px; }
-.mc-opt { background: white; border: 2px solid #c5cae9; border-radius: 8px; padding: 10px 14px; cursor: pointer; font-size: 0.9em; transition: all 0.2s; }
-.mc-opt:hover { border-color: #667eea; background: #f0f4ff; }
-.mc-opt.correct { border-color: #27ae60; background: #f0fff4; color: #27ae60; font-weight: 700; cursor: default; }
-.mc-opt.wrong { border-color: #e74c3c; background: #fff5f5; color: #e74c3c; cursor: default; }
-.regel-karte { display: none; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 12px; padding: 20px 24px; margin-top: 18px; }
-.regel-karte.visible { display: block; }
-.regel-karte h3 { color: white; margin-top: 0; }
-.regel-karte p { font-size: 0.9em; line-height: 1.7; opacity: 0.95; margin-top: 6px; }
+.mc-btn { padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem; transition: all .2s; }
+.mc-btn:hover { border-color: #667eea; background: #f3f4ff; }
+.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
 
 /* Regel-Tab */
 .regel-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92em; }
@@ -132,34 +137,74 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
         <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
     </div>
 
-    <!-- ===== TAB 0: ENTDECKEN ===== -->
+    <!-- ===== TAB 0: ENTDECKEN (kein Timer, kein Reset) ===== -->
     <div class="section active" id="sec-0">
         <div class="tab-content">
             <h2>Entdecken — Wie vergleichen wir?</h2>
-            <div class="example-box">
-                <p>
-                    Der Tiger rennt <span class="hl">schneller als</span> die Schnecke.<br>
-                    Der Elefant ist <span class="hl">größer als</span> die Maus.<br>
-                    Mein Sohn ist <span class="hl">klüger als</span> ich.<br>
-                    Der Bär ist <span class="hl">stärker als</span> der Hase.<br>
-                    Tim rennt <span class="hl">schneller als</span> Anna.
-                </p>
+            <div class="entdeck-intro">
+                <h3>Lies die Sätze. Was fällt dir auf?</h3>
+                Der Tiger rennt <span class="hl">schneller als</span> die Schnecke.<br>
+                Der Elefant ist <span class="hl">größer als</span> die Maus.<br>
+                Mein Sohn ist <span class="hl">klüger als</span> ich.<br>
+                Der Bär ist <span class="hl">stärker als</span> der Hase.<br>
+                Ich esse <span class="hl">lieber</span> Tomaten <span class="hl">als</span> Zwiebeln.
             </div>
             <div class="progress-dots">
-                <div class="dot" id="dot-0"></div>
-                <div class="dot" id="dot-1"></div>
-                <div class="dot" id="dot-2"></div>
-                <div class="dot" id="dot-3"></div>
+                <div class="pdot" id="pdot0"></div>
+                <div class="pdot" id="pdot1"></div>
+                <div class="pdot" id="pdot2"></div>
+                <div class="pdot" id="pdot3"></div>
             </div>
-            <div id="mc-steps"></div>
-            <div class="regel-karte" id="regelKarte">
+
+            <div class="mc-step active" id="mc-step0">
+                <h4>Schritt 1: Was haben die hervorgehobenen Wörter gemeinsam?</h4>
+                <div class="mc-options">
+                    <button class="mc-btn" onclick="mcCheck(0,this,false)">Sie beschreiben Gleichheit.</button>
+                    <button class="mc-btn" onclick="mcCheck(0,this,true)">Sie zeigen einen Vergleich — etwas ist mehr.</button>
+                    <button class="mc-btn" onclick="mcCheck(0,this,false)">Sie sind Substantive.</button>
+                </div>
+                <div class="mc-feedback" id="mcfb0"></div>
+            </div>
+
+            <div class="mc-step" id="mc-step1">
+                <h4>Schritt 2: Wie werden die Komparativformen gebildet?</h4>
+                <div class="mc-options">
+                    <button class="mc-btn" onclick="mcCheck(1,this,false)">Adjektiv + „-ste"</button>
+                    <button class="mc-btn" onclick="mcCheck(1,this,true)">Adjektiv + „-er"</button>
+                    <button class="mc-btn" onclick="mcCheck(1,this,false)">Adjektiv + „-lich"</button>
+                </div>
+                <div class="mc-feedback" id="mcfb1"></div>
+            </div>
+
+            <div class="mc-step" id="mc-step2">
+                <h4>Schritt 3: Was steht zwischen den beiden verglichenen Dingen?</h4>
+                <div class="mc-options">
+                    <button class="mc-btn" onclick="mcCheck(2,this,false)">„wie"</button>
+                    <button class="mc-btn" onclick="mcCheck(2,this,false)">„aber"</button>
+                    <button class="mc-btn" onclick="mcCheck(2,this,true)">„als"</button>
+                </div>
+                <div class="mc-feedback" id="mcfb2"></div>
+            </div>
+
+            <div class="mc-step" id="mc-step3">
+                <h4>Schritt 4: Was ist richtig über Umlaut-Formen?</h4>
+                <div class="mc-options">
+                    <button class="mc-btn" onclick="mcCheck(3,this,false)">Alle Adjektive bekommen einen Umlaut.</button>
+                    <button class="mc-btn" onclick="mcCheck(3,this,true)">Einsilbige Adjektive bekommen oft einen Umlaut: groß → größer, alt → älter.</button>
+                    <button class="mc-btn" onclick="mcCheck(3,this,false)">Nur Verben bekommen einen Umlaut.</button>
+                </div>
+                <div class="mc-feedback" id="mcfb3"></div>
+            </div>
+
+            <div class="regel-karte" id="regelkarte">
                 <h3>✓ Die Komparativ-Regel</h3>
-                <p>
-                    <strong>Komparativ</strong> = Adjektiv + <strong>-er</strong><br>
-                    Vergleich: Adjektiv-er + <strong>als</strong><br>
-                    Adjektive mit einer Silbe: Umlaut (a→ä, o→ö, u→ü): groß → <strong>größer</strong>, alt → <strong>älter</strong><br>
-                    Unregelmäßig: gut → <strong>besser</strong>, viel → <strong>mehr</strong>, gern → <strong>lieber</strong>, hoch → <strong>höher</strong>
-                </p>
+                <ul>
+                    <li><strong>Komparativ</strong> = Adjektiv + <strong>-er</strong></li>
+                    <li>Vergleich: Adjektiv<strong>-er</strong> + <strong>als</strong></li>
+                    <li>Einsilbige Adjektive: oft Umlaut (a→ä, o→ö, u→ü): groß → <strong>größer</strong>, alt → <strong>älter</strong></li>
+                    <li>Unregelmäßig: gut → <strong>besser</strong>, viel → <strong>mehr</strong>, gern → <strong>lieber</strong>, hoch → <strong>höher</strong></li>
+                </ul>
+                <div class="rk-example">Peter ist <b>größer als</b> Felix. · Ich esse <b>lieber</b> Tomaten <b>als</b> Zwiebeln.</div>
             </div>
         </div>
     </div>
@@ -281,59 +326,33 @@ function timerResetOne(n){timerRunning[n]=false;timerStarted[n]=false;clearInter
 (function(){[2,3].forEach(function(n){var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);if(b){var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(parseInt(b));}});})();
 
 // ─── Entdecken-Tab ───────────────────────────────────────────────────────────
-var MC_STEPS = [
-    {
-        q: 'Was haben die hervorgehobenen Wörter gemeinsam?',
-        opts: ['Sie beschreiben Gleichheit.','Sie zeigen einen Vergleich — etwas ist mehr.','Sie sind Substantive.'],
-        correct: 1
-    },
-    {
-        q: 'Wie werden die Komparativformen gebildet?',
-        opts: ['Adjektiv + "-ste"','Adjektiv + "-er"','Adjektiv + "-lich"'],
-        correct: 1
-    },
-    {
-        q: 'Was steht zwischen den beiden verglichenen Dingen?',
-        opts: ['"wie"','"aber"','"als"'],
-        correct: 2
-    },
-    {
-        q: 'Was ist richtig über Umlaut-Formen?',
-        opts: ['Alle Adjektive bekommen einen Umlaut.','Einsilbige Adjektive bekommen oft einen Umlaut: groß→größer, alt→älter.','Nur Verben bekommen einen Umlaut.'],
-        correct: 1
-    }
-];
-var mcDone = [false,false,false,false];
+var mcDone = [false, false, false, false];
 
-function buildMcSteps(){
-    var container = document.getElementById('mc-steps'); container.innerHTML='';
-    MC_STEPS.forEach(function(step,idx){
-        var div = document.createElement('div'); div.className='mc-step'; div.id='mc-step-'+idx;
-        var qDiv = document.createElement('div'); qDiv.className='mc-question'; qDiv.textContent=step.q;
-        div.appendChild(qDiv);
-        var optsDiv = document.createElement('div'); optsDiv.className='mc-options';
-        step.opts.forEach(function(opt,oi){
-            var btn = document.createElement('div'); btn.className='mc-opt'; btn.textContent=opt;
-            btn.addEventListener('click', function(){
-                if(mcDone[idx]) return;
-                if(oi===step.correct){
-                    btn.classList.add('correct');
-                    mcDone[idx]=true;
-                    document.getElementById('dot-'+idx).classList.add('done');
-                    // Show next step
-                    if(idx+1<MC_STEPS.length) document.getElementById('mc-step-'+(idx+1)).classList.add('visible');
-                    else document.getElementById('regelKarte').classList.add('visible');
-                } else {
-                    btn.classList.add('wrong');
-                    setTimeout(function(){btn.classList.remove('wrong');},800);
-                }
-            });
-            optsDiv.appendChild(btn);
-        });
-        div.appendChild(optsDiv);
-        container.appendChild(div);
-    });
-    document.getElementById('mc-step-0').classList.add('visible');
+function mcCheck(step, btn, correct) {
+    var btns = btn.parentElement.querySelectorAll('.mc-btn');
+    btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+    var fb = document.getElementById('mcfb' + step);
+    if (correct) {
+        btn.classList.add('correct');
+        fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+        fb.className = 'mc-feedback ok';
+        mcDone[step] = true;
+        document.getElementById('pdot' + step).classList.add('done');
+        setTimeout(function() {
+            var next = document.getElementById('mc-step' + (step + 1));
+            if (next) { next.classList.add('active'); }
+            else { document.getElementById('regelkarte').style.display = 'block'; }
+        }, 700);
+    } else {
+        btn.classList.add('wrong');
+        fb.textContent = '\u2717 Nicht ganz \u2014 schau nochmal genau hin und versuche es erneut.';
+        fb.className = 'mc-feedback err';
+        setTimeout(function() {
+            btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+            fb.textContent = '';
+            fb.className = 'mc-feedback';
+        }, 1400);
+    }
 }
 
 // ─── Lückentext ──────────────────────────────────────────────────────────────
@@ -463,7 +482,6 @@ function buildMc(){
 
 // ─── Init ────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function(){
-    buildMcSteps();
     buildLuecken(LT1,'luecken1');
     buildLuecken(LT2,'luecken2');
     initSatzbau();
