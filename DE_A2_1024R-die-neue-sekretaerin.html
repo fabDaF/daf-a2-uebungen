@@ -256,13 +256,12 @@ var sbBuilt = false;
 var wsBuilt = false;
 
 function showSection(idx) {
-    if (arguments[0] === 5) initWortschatz();
     document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
     document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
     if (idx === 2 && !rfBuilt) { buildRF(); rfBuilt = true; }
     if (idx === 3 && !lueckenBuilt) { buildLuecken(); lueckenBuilt = true; }
     if (idx === 4 && !sbBuilt) { sbInit(); sbBuilt = true; }
-    if (idx === 5 && !wsBuilt) { buildWortschatz(); wsBuilt = true; }
+    if (idx === 5) { initWortschatz(); }
 }
 
 // ═══════════════════════════════════════

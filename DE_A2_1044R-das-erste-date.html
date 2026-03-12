@@ -212,8 +212,8 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 <section class="section" id="tab-5">
   <h2>🔠 Wortschatz — Englisch → Deutsch</h2>
   <div class="btn-row">
-    <span>⏱ <span id="timer-5">0:00</span></span>
-    <span>🏆 <span id="best-5">—</span></span>
+    <span>⏱ <span id="ws-time">0:00</span></span>
+    <span>🏆 <span id="ws-best">—</span></span>
     <button class="btn-small" onclick="resetWortschatz()">↺ Neustart</button>
     <button class="btn-small" onclick="showWortschatzLoesung()">💡 Lösungen</button>
   </div>
@@ -264,7 +264,7 @@ function timerResetOne(n) {
   clearInterval(timerIntervals[n]); timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
   var els=['','','','lt-time','sb-time','ws-time']; var el=document.getElementById(els[n]); if(el) el.textContent='0:00';
   if(n===4) initSatzbau();
-  if(n===5) initWs();
+  /* Wortschatz-Reset wird von resetWortschatz() gesteuert */
 }
 [3,4,5].forEach(function(n){
   var b=localStorage.getItem(TIMER_PREFIX+'best-'+n);
@@ -493,6 +493,7 @@ function resetWortschatz() {
     });
     timerResetOne(5);
     wsInited = false;
+    initWortschatz();
 }
 
 /* ===== INIT ===== */
