@@ -270,6 +270,9 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 }
 .sb-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .sb-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-chip.punct-chip { background: #f8f8f8; border: 2px solid #667eea; padding: 8px 16px; color: #333; font-weight: 700; font-size: 1.3em; min-width: 18px; text-align: center; cursor: move; }
+.sb-chip.punct-chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.sb-chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 
 .zuo-layout {
   display: grid;
@@ -465,7 +468,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="control-bar">
       <div class="btn-row">
-        <button class="btn" onclick="lueckeLoesung(1)">💡 Lösungen</button>
+        <button class="btn" onclick="lueckeLoesung(1)">Lösungen</button>
         <button class="btn" onclick="lueckeReset(1)">↺ Neustart</button>
       </div>
       <div class="timer-display">
@@ -476,7 +479,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="wortkasten">
       <strong>Infinitive zur Auswahl:</strong>
-      ankommen · bestellen · einladen · fliegen · heiraten · kaufen · kennenlernen · packen · reservieren · tanzen · vorbereiten · verschicken
+      ankommen · bestellen · besuchen · einladen · fliegen · geben · heiraten · kaufen · kennenlernen · können · packen · reservieren · tanzen · vorbereiten · verschicken
     </div>
 
     <div id="luecke-container-1"></div>
@@ -494,7 +497,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="control-bar">
       <div class="btn-row">
-        <button class="btn" onclick="zuoLoesung()">💡 Lösungen</button>
+        <button class="btn" onclick="zuoLoesung()">Lösungen</button>
         <button class="btn" onclick="zuoReset()">↺ Neustart</button>
       </div>
       <div class="timer-display">
@@ -537,7 +540,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="control-bar">
       <div class="btn-row">
-        <button class="btn" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">💡 Lösungen</button>
+        <button class="btn" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">Lösungen</button>
         <button class="btn" onclick="resetSatzbau(); timerResetOne(3);">↺ Neustart</button>
       </div>
       <div class="timer-display">
@@ -597,43 +600,43 @@ var ZUO_DATA = [
 // Satzbau-Daten (Tab 3) — satzbau-drag-drop Skill
 var satzbauData = [
   {
-    parts:  ['nachdem', 'Alex', 'das', 'Restaurant', 'reserviert', 'hatte,', 'fuhr', 'er', 'es', 'mit', 'Louise', 'besichtigen.'],
-    valid:  [['nachdem', 'Alex', 'das', 'Restaurant', 'reserviert', 'hatte,', 'fuhr', 'er', 'es', 'mit', 'Louise', 'besichtigen.']],
+    parts:  ['nachdem', 'Alex', 'das', 'Restaurant', 'reserviert', 'hatte', ',', 'fuhr', 'er', 'es', 'mit', 'Louise', 'besichtigen'],
+    valid:  [['nachdem', 'Alex', 'das', 'Restaurant', 'reserviert', 'hatte', ',', 'fuhr', 'er', 'es', 'mit', 'Louise', 'besichtigen']],
     punct:  '.'
   },
   {
-    parts:  ['bevor', 'Petra', 'die', 'Einladungen', 'verschickte,', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt.'],
-    valid:  [['bevor', 'Petra', 'die', 'Einladungen', 'verschickte,', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt.']],
+    parts:  ['bevor', 'Petra', 'die', 'Einladungen', 'verschickte', ',', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt'],
+    valid:  [['bevor', 'Petra', 'die', 'Einladungen', 'verschickte', ',', 'hatte', 'sie', 'zuvor', 'die', 'Ringe', 'bestellt']],
     punct:  '.'
   },
   {
-    parts:  ['nachdem', 'Gwyneth', 'einen', 'großen', 'Hochzeitsstrauß', 'erworben', 'hatte,', 'fuhr', 'sie', 'damit', 'zur', 'Hochzeitsgesellschaft.'],
-    valid:  [['nachdem', 'Gwyneth', 'einen', 'großen', 'Hochzeitsstrauß', 'erworben', 'hatte,', 'fuhr', 'sie', 'damit', 'zur', 'Hochzeitsgesellschaft.']],
+    parts:  ['nachdem', 'Gwyneth', 'einen', 'großen', 'Hochzeitsstrauß', 'erworben', 'hatte', ',', 'fuhr', 'sie', 'damit', 'zur', 'Hochzeitsgesellschaft'],
+    valid:  [['nachdem', 'Gwyneth', 'einen', 'großen', 'Hochzeitsstrauß', 'erworben', 'hatte', ',', 'fuhr', 'sie', 'damit', 'zur', 'Hochzeitsgesellschaft']],
     punct:  '.'
   },
   {
-    parts:  ['nachdem', 'Alex', 'und', 'Louise', 'schon', 'lange', 'getanzt', 'hatten,', 'kam', 'endlich', 'auch', 'Gwyneth', 'dazu.'],
-    valid:  [['nachdem', 'Alex', 'und', 'Louise', 'schon', 'lange', 'getanzt', 'hatten,', 'kam', 'endlich', 'auch', 'Gwyneth', 'dazu.']],
+    parts:  ['nachdem', 'Alex', 'und', 'Louise', 'schon', 'lange', 'getanzt', 'hatten', ',', 'kam', 'endlich', 'auch', 'Gwyneth', 'dazu'],
+    valid:  [['nachdem', 'Alex', 'und', 'Louise', 'schon', 'lange', 'getanzt', 'hatten', ',', 'kam', 'endlich', 'auch', 'Gwyneth', 'dazu']],
     punct:  '.'
   },
   {
-    parts:  ['Alex', 'hatte', 'Louise', 'schon', 'angerufen,', 'bevor', 'er', 'nach', 'Berlin', 'geflogen', 'war.'],
-    valid:  [['Alex', 'hatte', 'Louise', 'schon', 'angerufen,', 'bevor', 'er', 'nach', 'Berlin', 'geflogen', 'war.']],
+    parts:  ['Alex', 'hatte', 'Louise', 'schon', 'angerufen', ',', 'bevor', 'er', 'nach', 'Berlin', 'geflogen', 'war'],
+    valid:  [['Alex', 'hatte', 'Louise', 'schon', 'angerufen', ',', 'bevor', 'er', 'nach', 'Berlin', 'geflogen', 'war']],
     punct:  '.'
   },
   {
-    parts:  ['nachdem', 'sie', 'sich', 'das', 'Ja-Wort', 'gegeben', 'hatten,', 'stießen', 'alle', 'mit', 'Sekt', 'darauf', 'an.'],
-    valid:  [['nachdem', 'sie', 'sich', 'das', 'Ja-Wort', 'gegeben', 'hatten,', 'stießen', 'alle', 'mit', 'Sekt', 'darauf', 'an.']],
+    parts:  ['nachdem', 'sie', 'sich', 'das', 'Ja-Wort', 'gegeben', 'hatten', ',', 'stießen', 'alle', 'mit', 'Sekt', 'darauf', 'an'],
+    valid:  [['nachdem', 'sie', 'sich', 'das', 'Ja-Wort', 'gegeben', 'hatten', ',', 'stießen', 'alle', 'mit', 'Sekt', 'darauf', 'an']],
     punct:  '.'
   },
   {
-    parts:  ['Tina', 'war', 'etwas', 'nervös,', 'weil', 'sie', 'noch', 'nie', 'so', 'viele', 'Gäste', 'eingeladen', 'hatte.'],
-    valid:  [['Tina', 'war', 'etwas', 'nervös,', 'weil', 'sie', 'noch', 'nie', 'so', 'viele', 'Gäste', 'eingeladen', 'hatte.']],
+    parts:  ['Tina', 'war', 'etwas', 'nervös', ',', 'weil', 'sie', 'noch', 'nie', 'so', 'viele', 'Gäste', 'eingeladen', 'hatte'],
+    valid:  [['Tina', 'war', 'etwas', 'nervös', ',', 'weil', 'sie', 'noch', 'nie', 'so', 'viele', 'Gäste', 'eingeladen', 'hatte']],
     punct:  '.'
   },
   {
-    parts:  ['bevor', 'die', 'eigentliche', 'Feier', 'begann,', 'hatten', 'Alex', 'und', 'Max', 'schon', 'für', 'die', 'Musik', 'gesorgt.'],
-    valid:  [['bevor', 'die', 'eigentliche', 'Feier', 'begann,', 'hatten', 'Alex', 'und', 'Max', 'schon', 'für', 'die', 'Musik', 'gesorgt.']],
+    parts:  ['bevor', 'die', 'eigentliche', 'Feier', 'begann', ',', 'hatten', 'Alex', 'und', 'Max', 'schon', 'für', 'die', 'Musik', 'gesorgt'],
+    valid:  [['bevor', 'die', 'eigentliche', 'Feier', 'begann', ',', 'hatten', 'Alex', 'und', 'Max', 'schon', 'für', 'die', 'Musik', 'gesorgt']],
     punct:  '.'
   },
 ];
@@ -939,6 +942,7 @@ function sbUpdateCapitalization(row) {
   var chips = Array.from(row.querySelectorAll('.sb-chip'));
   chips.forEach(function(c, i) {
     var orig = c.dataset.orig;
+    if (orig === ',' || orig === ';') return;
     var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase()
                 && orig.charAt(0) !== orig.charAt(0).toLowerCase();
     if (isProper) {
@@ -952,6 +956,7 @@ function sbUpdateCapitalization(row) {
 function sbMakeChip(word) {
   var chip = document.createElement('div');
   chip.className = 'sb-chip';
+  if (word === ',' || word === ';') chip.classList.add('punct-chip');
   chip.textContent = word;
   chip.dataset.orig = word;
   chip.draggable = true;
@@ -1070,7 +1075,9 @@ function sbShowSolution(idx) {
   solution.forEach(function(word, i) {
     var chip = allChips[word];
     if (chip) {
-      chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+      if (word !== ',' && word !== ';') {
+        chip.textContent = (i === 0) ? sbCapitalize(word) : word;
+      }
       chip.classList.remove('correct', 'incorrect');
       row.appendChild(chip);
     }
