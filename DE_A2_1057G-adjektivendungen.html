@@ -106,29 +106,38 @@ body {
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
 
-/* ===== SATZBAU ===== */
-.sentence-builder { margin-bottom: 22px; }
-.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 50px; border: 1px dashed #bbb; margin-bottom: 8px; }
-.sb-zone { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 2px dashed #c5cae9; border-radius: 10px; min-height: 48px; background: #fafbff; transition: background .2s; align-items: center; }
-.sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
-.chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; cursor: grab; font-size: .88em; user-select: none; white-space: nowrap; }
+/* ===== SATZBAU (gemäß satzbau-drag-drop Skill) ===== */
+.chips-container {
+    display: flex; flex-wrap: wrap; gap: 8px; padding: 14px;
+    background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px;
+}
+.sentence-builder {
+    display: flex; flex-wrap: wrap; gap: 6px; padding: 14px;
+    background: white; border: 2px dashed #ccc; border-radius: 10px;
+    min-height: 56px; align-items: center; margin-bottom: 6px;
+}
+.sentence-builder.correct   { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip {
+    background: white; border: 2px solid #667eea; color: #667eea;
+    padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500;
+    font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap;
+}
+.chip.selected { background: #667eea; color: white; }
 .chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
-.sb-chip.ok { background: #27ae60; }
-.sb-chip.no { background: #e74c3c; }
-.sb-punkt { font-weight: 700; color: #4a148c; font-size: 1.1em; padding: 0 4px; align-self: center; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct   { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
 
-.satzbau-feedback { font-size: .85em; margin-top: 6px; min-height: 20px; color: #555; }
-
-/* ===== MULTIPLE CHOICE ===== */
+/* ===== MULTIPLE CHOICE (Tab 4) ===== */
 .mc-item { background: #fafbff; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e0e0e0; }
 .mc-item .mc-q { font-size: 0.93em; color: #333; margin-bottom: 10px; font-weight: 600; }
-.mc-options { display: flex; flex-wrap: wrap; gap: 8px; }
 .mc-opt { background: #f0ecff; border: 2px solid transparent; color: #4a148c; border-radius: 20px; padding: 5px 16px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all .2s; }
 .mc-opt:hover { background: #e0d7ff; }
 .mc-opt.selected-ok  { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
 .mc-opt.selected-no  { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
-.mc-feedback { font-size: 0.82em; margin-top: 8px; min-height: 18px; }
 
 /* ===== SHARED ===== */
 .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; font-size: .88em; color: #555; }
@@ -140,9 +149,6 @@ body {
 h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 
 /* Footer */
-.footer { text-align: center; padding: 16px; font-size: .8em; color: #888; border-top: 1px solid #eee; }
-.footer a { color: #667eea; text-decoration: none; }
-.author-name { font-weight: 600; }
 .author-footer {
   text-align: center; margin-top: 40px; padding: 16px;
   font-size: 0.8rem; color: #aaa;
@@ -176,7 +182,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     </button>
   </nav>
 
-  <!-- ===== TAB 0: ENTDECKEN (kein Timer, kein Reset) ===== -->
+  <!-- ===== TAB 0: ENTDECKEN ===== -->
   <section id="sec-0" class="section aktiv">
     <div class="entdeck-intro">
         <h3>🔍 Entdecke die Regel</h3>
@@ -366,15 +372,10 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     </div>
   </section>
 
-  <div class="footer">
+  <div class="author-footer">
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
   </div>
-
-<div class="author-footer">
-    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
-</div>
 </div>
 
 <script>
@@ -409,13 +410,16 @@ function mcCheck(step, btn, correct) {
 
 // ===== DATA =====
 var satzbauData = [
-  { parts: ['Das', 'kleine', 'Kind', 'isst', 'ein', 'Eis'], valid: [['Das', 'kleine', 'Kind', 'isst', 'ein', 'Eis']], punct: '.' },
-  { parts: ['Ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen'], valid: [['Ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen']], punct: '.' },
+  { parts: ['das', 'kleine', 'Kind', 'isst', 'ein', 'Eis'], valid: [['das', 'kleine', 'Kind', 'isst', 'ein', 'Eis']], punct: '.' },
+  { parts: ['ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen'], valid: [['ich', 'habe', 'mit', 'diesem', 'netten', 'Mann', 'gesprochen']], punct: '.' },
   { parts: ['Paul', 'isst', 'den', 'leckeren', 'Kuchen'], valid: [['Paul', 'isst', 'den', 'leckeren', 'Kuchen']], punct: '.' },
-  { parts: ['Ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell'], valid: [['Ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell']], punct: '.' },
+  { parts: ['ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell'], valid: [['ein', 'junger', 'Mann', 'läuft', 'sehr', 'schnell']], punct: '.' },
   { parts: ['Nina', 'kauft', 'eine', 'blaue', 'Bluse'], valid: [['Nina', 'kauft', 'eine', 'blaue', 'Bluse']], punct: '.' },
   { parts: ['Frisches', 'Obst', 'ist', 'sehr', 'gesund'], valid: [['Frisches', 'Obst', 'ist', 'sehr', 'gesund']], punct: '.' },
-  { parts: ['Ich', 'trinke', 'gern', 'roten', 'Wein'], valid: [['Ich', 'trinke', 'gern', 'roten', 'Wein']], punct: '.' }
+  { parts: ['ich', 'trinke', 'gern', 'roten', 'Wein'], valid: [['ich', 'trinke', 'gern', 'roten', 'Wein']], punct: '.' },
+  { parts: ['die', 'neue', 'Lehrerin', 'ist', 'sehr', 'nett'], valid: [['die', 'neue', 'Lehrerin', 'ist', 'sehr', 'nett']], punct: '.' },
+  { parts: ['er', 'kauft', 'einen', 'warmen', 'Mantel'], valid: [['er', 'kauft', 'einen', 'warmen', 'Mantel']], punct: '.' },
+  { parts: ['mit', 'frischer', 'Milch', 'schmeckt', 'der', 'Kaffee', 'besser'], valid: [['mit', 'frischer', 'Milch', 'schmeckt', 'der', 'Kaffee', 'besser']], punct: '.' }
 ];
 
 var MC_DATA = [
@@ -425,7 +429,10 @@ var MC_DATA = [
   { q: 'Nina hilft der ___ Frau.', opts: ['alte', 'alten', 'alter'], ans: 'alten' },
   { q: 'Ich kaufe ein ___ Fahrrad.', opts: ['neue', 'neuen', 'neues'], ans: 'neues' },
   { q: '___ Wein schmeckt sehr gut.', opts: ['Rote', 'Roten', 'Roter'], ans: 'Roter' },
-  { q: 'Paul kauft die ___ Bluse.', opts: ['rote', 'roten', 'roter'], ans: 'rote' }
+  { q: 'Paul kauft die ___ Bluse.', opts: ['rote', 'roten', 'roter'], ans: 'rote' },
+  { q: 'Wir fahren mit dem ___ Zug.', opts: ['schnelle', 'schnellen', 'schneller'], ans: 'schnellen' },
+  { q: 'Eine ___ Frau singt auf der Bühne.', opts: ['junge', 'jungen', 'junger'], ans: 'junge' },
+  { q: 'Er trinkt ___ Kaffee am liebsten.', opts: ['starke', 'starken', 'starker'], ans: 'starken' }
 ];
 
 var TIMER_PREFIX = 'a2-1057g-';
@@ -478,7 +485,11 @@ function showTab(n, btn){
   document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('aktiv'); });
   document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('sec-'+n).classList.add('aktiv');
-  btn.classList.add('active');
+  if(btn) {
+    btn.classList.add('active');
+  } else {
+    document.querySelectorAll('.nav-btn')[n].classList.add('active');
+  }
 }
 
 // ===== LÜCKENTEXT =====
@@ -515,6 +526,7 @@ function showLt(){
 
 // ===== SATZBAU =====
 var sbDragged = null;
+var sbSelected = null;
 
 function getSbCursor() {
     var c = document.getElementById('sb-insert-cursor');
@@ -571,6 +583,20 @@ function sbMakeChip(word) {
         var c = document.getElementById('sb-insert-cursor');
         if (c && c.parentNode) c.parentNode.removeChild(c);
     });
+
+    // Click-to-Place
+    chip.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (sbSelected === chip) {
+            chip.classList.remove('selected');
+            sbSelected = null;
+            return;
+        }
+        if (sbSelected) sbSelected.classList.remove('selected');
+        sbSelected = chip;
+        chip.classList.add('selected');
+    });
+
     return chip;
 }
 
@@ -602,6 +628,18 @@ function sbRegisterZone(zone, idx) {
             zone.appendChild(sbDragged);
         }
         sbDragged = null;
+        var row = document.getElementById('sb-row-' + idx);
+        sbUpdateCapitalization(row);
+        sbCheckAuto(idx);
+    });
+
+    // Click-to-Place: Klick auf Zone verschiebt selected Chip hierher
+    zone.addEventListener('click', function(e) {
+        if (!sbSelected) return;
+        if (e.target.classList.contains('chip')) return;
+        zone.appendChild(sbSelected);
+        sbSelected.classList.remove('selected');
+        sbSelected = null;
         var row = document.getElementById('sb-row-' + idx);
         sbUpdateCapitalization(row);
         sbCheckAuto(idx);
@@ -703,8 +741,6 @@ function sbResetOne(idx) {
   row.classList.remove('correct', 'incorrect');
   fb.textContent = '';
   fb.className = 'satzbau-feedback';
-  var existing = row.querySelector('.sb-punkt');
-  if (existing) existing.parentNode.removeChild(existing);
   var parts = satzbauData[idx].parts.slice();
   for (var i = parts.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
@@ -714,20 +750,28 @@ function sbResetOne(idx) {
 }
 
 function initSatzbau() {
-    var area = document.getElementById('satzbauContainer');
-    area.innerHTML = '';
+    var container = document.getElementById('satzbauContainer');
+    container.innerHTML = '';
     satzbauData.forEach(function(ex, idx) {
-        var label = document.createElement('p');
-        label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
-        var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
-        var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
-        var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;
+        var bank = document.createElement('div');
+        bank.className = 'chips-container';
+        bank.id = 'sb-bank-' + idx;
+
+        var row = document.createElement('div');
+        row.className = 'sentence-builder';
+        row.id = 'sb-row-' + idx;
+
+        var fb = document.createElement('div');
+        fb.className = 'satzbau-feedback';
+        fb.id = 'sb-fb-' + idx;
+
         var parts = ex.parts.slice();
         for (var i = parts.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
             var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
         }
         parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+
         sbRegisterZone(bank, idx);
         sbRegisterZone(row, idx);
 
@@ -745,10 +789,11 @@ function initSatzbau() {
         resetBtn.addEventListener('click', function() { sbResetOne(parseInt(this.getAttribute('data-idx'))); });
         btnRow.appendChild(solveBtn);
         btnRow.appendChild(resetBtn);
-        area.appendChild(bank);
-        area.appendChild(row);
-        area.appendChild(fb);
-        area.appendChild(btnRow);
+
+        container.appendChild(bank);
+        container.appendChild(row);
+        container.appendChild(fb);
+        container.appendChild(btnRow);
     });
 }
 
