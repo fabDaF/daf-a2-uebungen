@@ -1120,9 +1120,17 @@ function initSatzbau() {
     sbRegisterZone(bank, idx);
     sbRegisterZone(row, idx);
 
+    var solveBtn = document.createElement('button');
+    solveBtn.className = 'btn';
+    solveBtn.textContent = 'Lösen';
+    solveBtn.style.marginTop = '6px';
+    solveBtn.setAttribute('data-idx', idx);
+    solveBtn.addEventListener('click', function() { sbShowSolution(parseInt(this.getAttribute('data-idx'))); });
+
     item.appendChild(bank);
     item.appendChild(row);
     item.appendChild(fb);
+    item.appendChild(solveBtn);
     container.appendChild(item);
   });
 }
