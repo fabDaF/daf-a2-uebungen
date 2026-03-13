@@ -49,13 +49,33 @@ body {
 }
 
 /* ===== ENTDECKEN ===== */
-.disc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px; }
-.disc-card { background: #f8f7ff; border-radius: 10px; padding: 16px 18px; border-left: 4px solid #667eea; }
-.disc-card .disc-label { font-size: 0.78em; font-weight: 700; color: #764ba2; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
-.disc-card .disc-sent { font-size: 0.95em; color: #333; line-height: 1.5; }
-.disc-card .disc-sent em { color: #4a148c; font-weight: 700; font-style: normal; }
-.rule-box { background: #e8e0ff; border-radius: 10px; padding: 14px 18px; margin-top: 16px; font-size: 0.92em; color: #333; }
-.rule-box strong { color: #4a148c; }
+.entdeck-intro {
+  background: #f3e5f5; border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 20px;
+  border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75;
+}
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-btn { padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem; transition: all .2s; }
+.mc-btn:hover { border-color: #667eea; background: #f3f4ff; }
+.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
 
 /* ===== REGEL TABLES ===== */
 .adj-table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin-bottom: 20px; }
@@ -148,40 +168,78 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     </button>
   </nav>
 
-  <!-- ===== TAB 0: ENTDECKEN ===== -->
+  <!-- ===== TAB 0: ENTDECKEN (kein Timer, kein Reset) ===== -->
   <section id="sec-0" class="section aktiv">
-    <h2>🔍 Adjektivendungen entdecken</h2>
-    <p style="font-size:.88em;color:#888;margin-bottom:16px;">Was fällt dir bei den farbigen Adjektivendungen auf?</p>
-    <div class="disc-grid">
-      <div class="disc-card">
-        <div class="disc-label">Bestimmter Artikel — Maskulinum</div>
-        <div class="disc-sent">Der alt<em>e</em> Mann läuft jeden Tag.<br>Ich sehe den alt<em>en</em> Mann.</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-label">Bestimmter Artikel — Femininum</div>
-        <div class="disc-sent">Die jung<em>e</em> Frau trainiert viel.<br>Ich kenne die jung<em>e</em> Frau.</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-label">Bestimmter Artikel — Neutrum</div>
-        <div class="disc-sent">Das klein<em>e</em> Kind schläft.<br>Ich sehe das klein<em>e</em> Kind.</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-label">Unbestimmter Artikel — Maskulinum</div>
-        <div class="disc-sent">Ein alt<em>er</em> Mann läuft schnell.<br>Ich sehe einen alt<em>en</em> Mann.</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-label">Unbestimmter Artikel — Neutrum</div>
-        <div class="disc-sent">Ein klein<em>es</em> Kind lacht laut.<br>Ich kaufe ein neu<em>es</em> Buch.</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-label">Kein Artikel (Nullartikel)</div>
-        <div class="disc-sent">Alt<em>er</em> Wein schmeckt gut.<br>Sie kauft frisch<em>es</em> Gemüse.</div>
-      </div>
+    <div class="entdeck-intro">
+        <h3>🔍 Entdecke die Regel</h3>
+        <p>Was fällt dir bei den Adjektivendungen auf?</p>
+        <p>Der alt<span class="hl">e</span> Mann läuft jeden Tag. — Ich sehe den alt<span class="hl">en</span> Mann.</p>
+        <p>Die jung<span class="hl">e</span> Frau trainiert viel. — Ich kenne die jung<span class="hl">e</span> Frau.</p>
+        <p>Ein alt<span class="hl">er</span> Mann läuft schnell. — Ich sehe einen alt<span class="hl">en</span> Mann.</p>
+        <p>Ein klein<span class="hl">es</span> Kind lacht laut. — Ich kaufe ein neu<span class="hl">es</span> Buch.</p>
+        <p>Alt<span class="hl">er</span> Wein schmeckt gut. — Sie kauft frisch<span class="hl">es</span> Gemüse.</p>
     </div>
-    <div class="rule-box">
-      <strong>Beobachtung:</strong> Nach <strong>bestimmten Artikeln</strong> benutzen wir meistens <strong>-e</strong> oder <strong>-en</strong>.
-      Nach <strong>unbestimmten Artikeln</strong> gibt es auch <strong>-er</strong>, <strong>-es</strong>.
-      Ohne Artikel zeigt das Adjektiv selbst den Kasus: es übernimmt die Endung des bestimmten Artikels.
+
+    <div class="progress-dots">
+        <div class="pdot" id="pdot0"></div>
+        <div class="pdot" id="pdot1"></div>
+        <div class="pdot" id="pdot2"></div>
+        <div class="pdot" id="pdot3"></div>
+    </div>
+
+    <div class="mc-step active" id="mc-step0">
+        <h4>Frage 1: Welche Endungen haben Adjektive nach bestimmten Artikeln (der, die, das)?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">-er, -es, -em (starke Endungen)</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,true)">Meistens nur -e oder -en (schwache Endungen)</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">Keine Endung</button>
+        </div>
+        <div class="mc-feedback" id="mcfb0"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step1">
+        <h4>Frage 2: Warum heißt es „ein alt<em>er</em> Mann" aber „der alt<em>e</em> Mann"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Weil „ein" ein anderes Genus hat</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,true)">Weil „ein" das Genus nicht zeigt — das Adjektiv muss es übernehmen (-er = maskulin)</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Das ist eine Ausnahme ohne Regel</button>
+        </div>
+        <div class="mc-feedback" id="mcfb1"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step2">
+        <h4>Frage 3: Was passiert ohne Artikel? „Alt<em>er</em> Wein schmeckt gut."</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Das Adjektiv bekommt keine Endung</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Das Adjektiv bekommt immer -en</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,true)">Das Adjektiv übernimmt die Endung des bestimmten Artikels (starke Deklination)</button>
+        </div>
+        <div class="mc-feedback" id="mcfb2"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step3">
+        <h4>Frage 4: Welche Form ist richtig? „Ich trinke ___ Kaffee." (Akk., maskulin, ohne Artikel)</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">Ich trinke heiße Kaffee.</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,true)">Ich trinke heißen Kaffee.</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">Ich trinke heißer Kaffee.</button>
+        </div>
+        <div class="mc-feedback" id="mcfb3"></div>
+    </div>
+
+    <div class="regel-karte" id="regelkarte">
+        <h3>📌 Die Regel</h3>
+        <ul>
+            <li>Nach <strong>bestimmtem Artikel</strong> (der/die/das): meistens <strong>-e</strong> oder <strong>-en</strong> (schwache Deklination)</li>
+            <li>Nach <strong>unbestimmtem Artikel</strong> (ein/eine): Das Adjektiv zeigt das Genus: <strong>-er</strong> (m.), <strong>-e</strong> (f.), <strong>-es</strong> (n.) im Nominativ</li>
+            <li><strong>Ohne Artikel:</strong> Das Adjektiv übernimmt die Endung des bestimmten Artikels (starke Deklination)</li>
+            <li>Im <strong>Akkusativ maskulin</strong> und im <strong>Dativ</strong> (alle Genera): immer <strong>-en</strong></li>
+        </ul>
+        <div class="rk-example">
+            <b>bestimmt:</b> Der alt<b>e</b> Mann · den alt<b>en</b> Mann<br>
+            <b>unbestimmt:</b> Ein alt<b>er</b> Mann · einen alt<b>en</b> Mann<br>
+            <b>ohne Artikel:</b> Alt<b>er</b> Wein · alt<b>en</b> Wein
+        </div>
     </div>
   </section>
 
@@ -240,7 +298,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
       ⏱ <span id="t2">0:00</span>
       <span class="timer-val">🏆 <span id="b2">–</span></span>
       <button class="btn" onclick="timerResetOne(2)">↺ Neustart</button>
-      <button class="btn secondary" onclick="showLt()">💡 Lösungen</button>
+      <button class="btn secondary" onclick="showLt()">Lösungen</button>
     </div>
 
     <div class="lt-block">
@@ -284,7 +342,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
       ⏱ <span id="t3">0:00</span>
       <span class="timer-val">🏆 <span id="b3">–</span></span>
       <button class="btn" onclick="timerResetOne(3)">↺ Neustart</button>
-      <button class="btn secondary" onclick="sbShowSolution()">💡 Lösungen</button>
+      <button class="btn secondary" onclick="sbShowSolution()">Lösungen</button>
     </div>
     <div id="satzbauContainer"></div>
   </section>
@@ -307,6 +365,35 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 </div>
 
 <script>
+// ===== ENTDECKEN — mcCheck =====
+var mcDone = [false, false, false, false];
+function mcCheck(step, btn, correct) {
+  var btns = btn.parentElement.querySelectorAll('.mc-btn');
+  btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+  var fb = document.getElementById('mcfb' + step);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+    fb.className = 'mc-feedback ok';
+    mcDone[step] = true;
+    document.getElementById('pdot' + step).classList.add('done');
+    setTimeout(function() {
+      var next = document.getElementById('mc-step' + (step + 1));
+      if (next) { next.classList.add('active'); }
+      else { document.getElementById('regelkarte').style.display = 'block'; }
+    }, 700);
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '\u2717 Nicht ganz — schau nochmal genau hin und versuche es erneut.';
+    fb.className = 'mc-feedback err';
+    setTimeout(function() {
+      btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+      fb.textContent = '';
+      fb.className = 'mc-feedback';
+    }, 1400);
+  }
+}
+
 // ===== DATA =====
 var satzbauData = [
   { words: ['Das', 'kleine', 'Kind', 'isst', 'ein', 'Eis'], punct: '.' },

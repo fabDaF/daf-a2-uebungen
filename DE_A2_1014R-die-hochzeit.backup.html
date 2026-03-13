@@ -89,9 +89,7 @@
         .btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.82em; color: #888; cursor: pointer; transition: all 0.15s; font-weight: 500; }
         .btn:hover { background: #eee; color: #444; }
         .timer-display { display: flex; gap: 14px; font-size: 0.82em; color: #bbb; font-variant-numeric: tabular-nums; }
-        .current-time { }
-        .best-time { }
-                                
+                                                
         /* Hilfe-Box */
         .hilfe-box {
             background: #f0f4ff;
@@ -420,7 +418,7 @@
         <div class="section-title">🔤 Genus</div>
         <div class="section-sub">Ziehe die Wörter in die richtige Spalte.</div>
         <div class="control-bar">
-            <div class="btn-row"><button class="btn btn-loesung" onclick="showGenusLoesung()">💡 Lösungen</button>
+            <div class="btn-row"><button class="btn btn-loesung" onclick="showGenusLoesung()">Lösungen</button>
             <button class="btn btn-reset" onclick="resetGenus()">🔄 Neu starten</button></div>
             <div class="timer-display"><span class="current-time">&#9201; <span id="timer-2">00:00</span></span> <span class="best-time">&#127942; <span id="best-2">--:--</span></span></div>
         </div>
@@ -447,7 +445,7 @@
         <div class="section-title">✏️ Lückentext</div>
         <div class="section-sub">Ergänze die fehlenden Wörter.</div>
         <div class="control-bar">
-            <div class="btn-row"><button class="btn btn-loesung" onclick="showLueckenLoesung()">💡 Lösungen</button>
+            <div class="btn-row"><button class="btn btn-loesung" onclick="showLueckenLoesung()">Lösungen</button>
             <button class="btn btn-reset" onclick="resetLuecken()">🔄 Neu starten</button></div>
             <div class="timer-display"><span class="current-time">&#9201; <span id="timer-3">00:00</span></span> <span class="best-time">&#127942; <span id="best-3">--:--</span></span></div>
         </div>
@@ -477,7 +475,7 @@
         <div class="section-title">🧩 Satzbau</div>
         <div class="section-sub">Bringe die Wörter in die richtige Reihenfolge.</div>
         <div class="control-bar">
-            <div class="btn-row"><button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">💡 Lösungen</button>
+            <div class="btn-row"><button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">Lösungen</button>
             <button class="btn btn-reset" onclick="resetSatzbau()">🔄 Neu starten</button></div>
             <div class="timer-display"><span class="current-time">&#9201; <span id="timer-5">00:00</span></span> <span class="best-time">&#127942; <span id="best-5">--:--</span></span></div>
         </div>
@@ -499,7 +497,7 @@
         <div class="section-title">🔠 Wortschatz-Training</div>
         <div class="section-sub">Schreibe die deutsche Übersetzung.</div>
         <div class="control-bar">
-            <div class="btn-row"><button class="btn btn-loesung" onclick="showWortschatzLoesung()">💡 Lösungen</button>
+            <div class="btn-row"><button class="btn btn-loesung" onclick="showWortschatzLoesung()">Lösungen</button>
             <button class="btn btn-reset" onclick="resetWortschatz()">🔄 Neu starten</button></div>
             <div class="timer-display"><span class="current-time">&#9201; <span id="timer-6">00:00</span></span> <span class="best-time">&#127942; <span id="best-6">--:--</span></span></div>
         </div>

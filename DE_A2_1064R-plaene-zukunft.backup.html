@@ -90,9 +90,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
 .btn { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.2s; background: #f0f0f0; color: #666; }
 .btn:hover { background: #e0e0e0; }
-.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.btn-primary:hover { opacity: 0.9; }
-.btn-reset { background: white; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn:hover { background: #eee; color: #444; }
 .timer-display { display: flex; gap: 14px; font-size: 0.85em; color: #888; font-variant-numeric: tabular-nums; }
 .timer-item { display: flex; gap: 4px; }
 
@@ -353,7 +351,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <span style="color: #888; font-size: 0.9em;">⏱ <span id="timer-lt">0:00</span></span>
             <span style="color: #888; font-size: 0.9em;">🏆 <span id="best-lt">—</span></span>
             <button class="btn" onclick="ltTimerResetOne()">↺ Neustart</button>
-            <button class="btn" onclick="ltShowAll()">💡 Lösungen</button>
+            <button class="btn" onclick="ltShowAll()">Lösungen</button>
         </div>
 
         <div id="lueckentextContainer"></div>
@@ -367,7 +365,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <span style="color: #888; font-size: 0.9em;">⏱ <span id="timer-4">0:00</span></span>
             <span style="color: #888; font-size: 0.9em;">🏆 <span id="best-4">—</span></span>
             <button class="btn" onclick="sbTimerResetOne()">↺ Neustart</button>
-            <button class="btn" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);}); sbTimerStop(4);">💡 Lösungen</button>
+            <button class="btn" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);}); sbTimerStop(4);">Lösungen</button>
         </div>
 
         <div id="satzbauContainer"></div>
@@ -381,7 +379,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <span style="color: #888; font-size: 0.9em;">⏱ <span id="timer-ws">0:00</span></span>
             <span style="color: #888; font-size: 0.9em;">🏆 <span id="best-ws">—</span></span>
             <button class="btn" onclick="wsTimerResetOne()">↺ Neustart</button>
-            <button class="btn" onclick="wsShowAll()">💡 Lösungen</button>
+            <button class="btn" onclick="wsShowAll()">Lösungen</button>
         </div>
 
         <div id="wortschatzContainer"></div>

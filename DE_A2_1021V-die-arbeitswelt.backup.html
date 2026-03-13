@@ -140,9 +140,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
 /* ── Timer ───────────────────────────────────────────────────────────── */
 .btn-row { display: flex; gap: 10px; margin: 18px 0 10px 0; flex-wrap: wrap; align-items: center; }
-.btn { padding: 10px 22px; border: none; border-radius: 25px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.2s; }
-.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.btn-reset   { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.82em; color: #888; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { background: #eee; color: #444; }
 .solution-btn { background: #fff; color: #667eea; border: 2px solid #667eea; padding: 6px 16px; border-radius: 20px; cursor: pointer; font-size: 0.82em; font-weight: 600; }
 .timer-box { display: flex; gap: 14px; align-items: center; background: #f8f8ff; border-radius: 8px; padding: 8px 16px; font-size: 0.88em; }
 .timer-val { font-weight: 700; color: #667eea; font-variant-numeric: tabular-nums; }
@@ -345,8 +344,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
                 <span>⏱</span>
                 <span>Zeit: <span class="timer-val" id="timer-2">0:00</span></span>
                 <span>🏆 Bestzeit: <span class="timer-val" id="best-2">—</span></span>
-                <button class="btn btn-reset" style="padding:6px 14px;font-size:0.82em;" onclick="timerReset(2)">↺ Neustart</button>
-                <button class="btn btn-primary" style="padding:6px 14px;font-size:0.82em;" onclick="showLueckenLoesungen(2)">💡 Lösungen</button>
+                <button class="btn btn-reset" onclick="timerReset(2)">↺ Neustart</button>
+                <button class="btn btn-show" onclick="showLueckenLoesungen(2)">Lösungen</button>
             </div>
 
             <h2>📝 Lückentext 1 — Im Büro</h2>
@@ -404,8 +403,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
                 <span>⏱</span>
                 <span>Zeit: <span class="timer-val" id="timer-4">0:00</span></span>
                 <span>🏆 Bestzeit: <span class="timer-val" id="best-4">—</span></span>
-                <button class="btn btn-reset" style="padding:6px 14px;font-size:0.82em;" onclick="timerReset(4)">↺ Neustart</button>
-                <button class="btn btn-primary" style="padding:6px 14px;font-size:0.82em;" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">💡 Lösungen</button>
+                <button class="btn btn-reset" onclick="timerReset(4)">↺ Neustart</button>
+                <button class="btn btn-show" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">Lösungen</button>
             </div>
             <div id="satzbauContainer"></div>
         </div>
@@ -420,8 +419,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
                 <span>⏱</span>
                 <span>Zeit: <span class="timer-val" id="timer-5">0:00</span></span>
                 <span>🏆 Bestzeit: <span class="timer-val" id="best-5">—</span></span>
-                <button class="btn btn-reset" style="padding:6px 14px;font-size:0.82em;" onclick="timerReset(5)">↺ Neustart</button>
-                <button class="btn btn-primary" style="padding:6px 14px;font-size:0.82em;" onclick="showWsLoesungen()">💡 Lösungen</button>
+                <button class="btn btn-reset" onclick="timerReset(5)">↺ Neustart</button>
+                <button class="btn btn-show" onclick="showWsLoesungen()">Lösungen</button>
             </div>
             <table class="ws-table">
                 <thead>

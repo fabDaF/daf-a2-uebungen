@@ -48,7 +48,6 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .btn { background: none; border: 2px solid #ddd; border-radius: 20px; padding: 5px 14px; font-size: 0.82em; color: #888; cursor: pointer; font-weight: 600; transition: all 0.15s; }
 .btn:hover { background: #eee; color: #444; }
 .btn-loesung { border-color: #667eea; color: #667eea; }
-.btn-reset { border-color: #e74c3c; color: #e74c3c; }
 .timer-display { font-size: 0.82em; color: #bbb; display: flex; gap: 12px; }
 .timer-current { font-weight: 700; color: #667eea; }
 .timer-best { color: #f39c12; font-weight: 600; }
@@ -92,15 +91,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .solution-btn { background: #fff; color: #667eea; border: 2px solid #667eea; padding: 5px 14px; border-radius: 20px; cursor: pointer; font-size: 0.8em; font-weight: 600; margin-top: 4px; }
 
 /* ── Wortschatz ─────────────────────────────────── */
-.ws-item { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 12px 16px; background: #fafbff; border-radius: 10px; margin-bottom: 10px; border: 1px solid #e8ecff; }
-.ws-en { font-size: 0.9em; color: #555; font-style: italic; }
-.ws-fields { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-input.ws-inp { border: 2px solid #c5cae9; border-radius: 6px; padding: 4px 10px; font-size: 0.88rem; font-family: inherit; outline: none; transition: border-color .2s, background .2s; width: 110px; }
-input.ws-inp.art { width: 60px; }
-input.ws-inp.pl  { width: 120px; }
-input.ws-inp:focus { border-color: #667eea; }
-input.ws-inp.correct { border-color: #27ae60; background: #e8f5e9; }
-input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
+.luecken-item { padding: 12px 16px; background: #f8f9ff; border-radius: 10px; border-left: 4px solid #667eea; }
 
 /* ── Footer ──────────────────────────────────────── */
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
@@ -144,7 +135,7 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
                 <div class="btn-row">
                     <button class="btn btn-reset" onclick="resetLuecken()">↺ Neustart</button>
-                    <button class="btn btn-loesung" onclick="loesungLuecken()">💡 Lösungen</button>
+                    <button class="btn btn-loesung" onclick="loesungLuecken()">Lösungen</button>
                 </div>
             </div>
             <div class="hilfe-box">Ergänze die Lücken mit dem passenden Wort aus dem Dialog.</div>
@@ -170,7 +161,7 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
             </div>
             <div style="margin-top:12px;">
                 <button class="btn btn-reset" onclick="qaInit()">↺ Neu starten</button>
-                <button class="btn btn-loesung" style="margin-left:8px;" onclick="qaShowSolution()">💡 Lösungen</button>
+                <button class="btn btn-loesung" style="margin-left:8px;" onclick="qaShowSolution()">Lösungen</button>
             </div>
         </div>
     </div>
@@ -186,7 +177,7 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
                 <div class="btn-row">
                     <button class="btn btn-reset" onclick="timerResetOne(3); sbInit();">↺ Neustart</button>
-                    <button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">💡 Lösungen</button>
+                    <button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">Lösungen</button>
                 </div>
             </div>
             <div id="satzbauContainer"></div>
@@ -204,11 +195,11 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
                 <div class="btn-row">
                     <button class="btn btn-reset" onclick="resetWortschatz()">↺ Neustart</button>
-                    <button class="btn btn-loesung" onclick="loesungWortschatz()">💡 Lösungen</button>
+                    <button class="btn btn-loesung" onclick="showWortschatzLoesung()">Lösungen</button>
                 </div>
             </div>
             <div class="hilfe-box">Tippe die deutsche Übersetzung. Bei Nomen: <strong>Artikel · Wort · Plural</strong>.</div>
-            <div id="wsContainer"></div>
+            <div id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
         </div>
     </div>
 
@@ -229,7 +220,7 @@ function showSection(idx){
     if(idx===1&&!lueckenBuilt){buildLuecken();lueckenBuilt=true;}
     if(idx===2&&!qaBuilt){qaInit();qaBuilt=true;}
     if(idx===3&&!sbBuilt){sbInit();sbBuilt=true;}
-    if(idx===4&&!wsBuilt){buildWortschatz();wsBuilt=true;}
+    if(idx===4){initWortschatz();}
 }
 
 // ══════════════════════════════════════
@@ -337,22 +328,105 @@ function sbInit(){var container=document.getElementById('satzbauContainer');cont
 // TAB 4: WORTSCHATZ
 // ══════════════════════════════════════
 var WORTSCHATZ=[
-    {type:'p',en:'📞 to phone / call',de:'telefonieren'},
-    {type:'p',en:'📲 to call (someone)',de:'anrufen'},
-    {type:'p',en:'🔔 to ring',de:'klingeln'},
-    {type:'n',en:'📱 the mobile phone',artikel:'das',de:'Handy',plural:'Handys'},
-    {type:'n',en:'📡 the (phone) line',artikel:'die',de:'Leitung',plural:'Leitungen'},
-    {type:'p',en:'🚫 busy / engaged',de:'besetzt'},
-    {type:'n',en:'🎙 the voice message',artikel:'die',de:'Sprachnachricht',plural:'Sprachnachrichten'},
-    {type:'p',en:'🔁 to call back',de:'zurückrufen'},
-    {type:'p',en:'🤝 to help further',de:'weiterhelfen'},
-    {type:'p',en:'👋 Goodbye! (phone)',de:'Auf Wiederhören'}
+    {id:1, type:'p',en:'📞 to phone / call',de:'telefonieren'},
+    {id:2, type:'p',en:'📲 to call (someone)',de:'anrufen'},
+    {id:3, type:'p',en:'🔔 to ring',de:'klingeln'},
+    {id:4, type:'n',en:'📱 the mobile phone',artikel:'das',de:'Handy',plural:'Handys'},
+    {id:5, type:'n',en:'📡 the (phone) line',artikel:'die',de:'Leitung',plural:'Leitungen'},
+    {id:6, type:'p',en:'🚫 busy / engaged',de:'besetzt'},
+    {id:7, type:'n',en:'🎙 the voice message',artikel:'die',de:'Sprachnachricht',plural:'Sprachnachrichten'},
+    {id:8, type:'p',en:'🔁 to call back',de:'zurückrufen'},
+    {id:9, type:'p',en:'🤝 to help further',de:'weiterhelfen'},
+    {id:10, type:'p',en:'👋 Goodbye! (phone)',de:'Auf Wiederhören'}
 ];
-function liveCheckWs(inp){var user=inp.value;var answer=inp.dataset.answer;var field=inp.dataset.field;inp.classList.remove('correct','wrong');if(!user)return;var cu=user;var ca=answer;if(cu===ca){inp.classList.add('correct');timerAutoStart(4);checkWsOk();}else if(ca.indexOf(cu)===0){timerAutoStart(4);}else{inp.classList.add('wrong');}}
-function checkWsOk(){var all=document.querySelectorAll('#wsContainer input.ws-inp');if(all.length>0&&Array.from(all).every(function(i){return i.classList.contains('correct');}))timerStop(4);}
-function buildWortschatz(){var c=document.getElementById('wsContainer');WORTSCHATZ.forEach(function(item){var div=document.createElement('div');div.className='ws-item';var fh='';if(item.type==='n'){fh='<div class="ws-fields"><input class="ws-inp art" data-answer="'+item.artikel+'" data-field="art" placeholder="Artikel"><input class="ws-inp" data-answer="'+item.de+'" data-field="de" placeholder="Wort"><input class="ws-inp pl" data-answer="'+item.plural+'" data-field="pl" placeholder="Plural"></div>';}else{fh='<div class="ws-fields"><input class="ws-inp" data-answer="'+item.de+'" data-field="de" placeholder="Deutsch"></div>';}div.innerHTML='<div class="ws-en">'+item.en+'</div>'+fh;c.appendChild(div);div.querySelectorAll('input.ws-inp').forEach(function(inp){inp.addEventListener('input',function(){liveCheckWs(inp);});});});}
-function resetWortschatz(){timerResetOne(4);document.querySelectorAll('#wsContainer input.ws-inp').forEach(function(inp){inp.value='';inp.classList.remove('correct','wrong');});}
-function loesungWortschatz(){document.querySelectorAll('#wsContainer input.ws-inp').forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.remove('wrong');inp.classList.add('correct');});}
+var wsInited = false;
+function initWortschatz() {
+    if (wsInited) return;
+    wsInited = true;
+    timerResetOne(4);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
+        }
+        row.appendChild(fields);
+        container.appendChild(row);
+    });
+}
+function wortschatzCheck(inp) {
+    var user = inp.value, answer = inp.dataset.answer;
+    inp.classList.remove('correct', 'wrong');
+    if (!user) return;
+    var cmpUser = user.trim();
+    var cmpAnswer = answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
+}
+function checkWortschatzAllOk() {
+    var inputs = document.querySelectorAll('#sec-4 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i) {
+        return i.disabled || i.classList.contains('correct');
+    });
+    if (allOk) timerStop(4);
+}
+function showWortschatzLoesung() {
+    timerStop(4);
+    document.querySelectorAll('#sec-4 input.blank').forEach(function(inp) {
+        inp.value = inp.dataset.answer;
+        inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
+}
+function resetWortschatz() {
+    document.querySelectorAll('#sec-4 input.blank').forEach(function(inp) {
+        if (!inp.disabled) {
+            inp.value = ''; inp.classList.remove('correct', 'wrong');
+        }
+    });
+    timerResetOne(4);
+    wsInited = false;
+    initWortschatz();
+}
 
 // INIT
 document.addEventListener('DOMContentLoaded',function(){loadBestTimes();});

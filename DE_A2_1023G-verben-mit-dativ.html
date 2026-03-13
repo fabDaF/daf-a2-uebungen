@@ -101,8 +101,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
 .best-display  { color: #f39c12; font-weight: 600; }
 .btn { padding: 8px 18px; border: none; border-radius: 20px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.2s; }
-.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.btn-reset   { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn:hover { background: #eee; color: #444; }
 .solution-btn { background: #fff; color: #667eea; border: 2px solid #667eea; padding: 5px 14px; border-radius: 20px; cursor: pointer; font-size: 0.8em; font-weight: 600; margin-top: 4px; }
 .hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
 .section-inner { padding: 28px 30px; }
@@ -279,7 +278,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
                 <span>Zeit: <span class="timer-display" id="timer-2">0:00</span></span>
                 <span class="best-display">🏆 <span id="best-2">—</span></span>
                 <button class="btn btn-reset" onclick="resetLuecken()">↺ Neustart</button>
-                <button class="btn btn-primary" onclick="loesungLuecken()">💡 Lösungen</button>
+                <button class="btn btn-show" onclick="loesungLuecken()">Lösungen</button>
             </div>
             <div class="hilfe-box">Setze die richtige Form des Dativs ein.</div>
             <div id="lueckenContainer"></div>
@@ -295,7 +294,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
                 <span>Zeit: <span class="timer-display" id="timer-3">0:00</span></span>
                 <span class="best-display">🏆 <span id="best-3">—</span></span>
                 <button class="btn btn-reset" onclick="timerResetOne(3); sbInit(); ">↺ Neustart</button>
-                <button class="btn btn-primary" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">💡 Lösungen</button>
+                <button class="btn btn-show" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">Lösungen</button>
             </div>
             <div id="satzbauContainer"></div>
         </div>

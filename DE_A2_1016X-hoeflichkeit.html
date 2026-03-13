@@ -83,9 +83,8 @@ body {
 
 /* ── Buttons ───────────────────────────────────────────────────────────── */
 .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-.btn { padding: 10px 22px; border: none; border-radius: 25px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.2s; }
-.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.btn-reset { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.82em; color: #888; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { background: #eee; color: #444; }
 
 /* ── Hilfe-Box ─────────────────────────────────────────────────────────── */
 .hilfe-box {
@@ -429,7 +428,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
             <div id="zuordContainer"></div>
             <div class="btn-row">
                 <button class="btn btn-reset" onclick="resetZuord()">↺ Neustart</button>
-                <button class="btn btn-primary" onclick="zeigeLoesung1()">💡 Lösung</button>
+                <button class="btn btn-show" onclick="zeigeLoesung1()">Lösung</button>
             </div>
         </div>
     </div>
@@ -443,7 +442,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 <span>⏱ <span id="timer-2">0:00</span></span>
                 <span>🏆 <span id="best-2">–</span></span>
                 <button onclick="resetLuecken()">↺ Neustart</button>
-                <button onclick="zeigeLoesung2()">💡 Lösungen</button>
+                <button onclick="zeigeLoesung2()">Lösungen</button>
             </div>
 
             <div class="luecken-block">
@@ -478,7 +477,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 <span>⏱ <span id="timer-3">0:00</span></span>
                 <span>🏆 <span id="best-3">–</span></span>
                 <button onclick="resetSatzbau()">↺ Neustart</button>
-                <button onclick="alleLoesungenSb()">💡 Lösungen</button>
+                <button onclick="alleLoesungenSb()">Lösungen</button>
             </div>
             <div class="hilfe-box">
                 Bringe die Wörter in die richtige Reihenfolge. Ziehe die Chips in das weiße Feld.
@@ -496,7 +495,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 <span>⏱ <span id="timer-4">0:00</span></span>
                 <span>🏆 <span id="best-4">–</span></span>
                 <button onclick="resetWortschatz()">↺ Neustart</button>
-                <button onclick="showWortschatzLoesung()">💡 Lösungen</button>
+                <button onclick="showWortschatzLoesung()">Lösungen</button>
             </div>
             <div class="hilfe-box">
                 Tippe das deutsche Wort. Bei Nomen: Artikel + Wort + Plural eingeben.

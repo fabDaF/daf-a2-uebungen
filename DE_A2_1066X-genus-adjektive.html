@@ -161,25 +161,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     flex-wrap: wrap;
     align-items: center;
 }
-.btn {
-    padding: 10px 22px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 0.9em;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-.btn-primary {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
-.btn-reset {
-    background: #fff;
-    color: #e74c3c;
-    border: 2px solid #e74c3c;
-}
+.btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.82em; color: #888; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { background: #eee; color: #444; }
 .btn-reset:hover { background: #ffe8e8; }
 .timer-display {
     font-size: 0.9em;
@@ -337,7 +320,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
             <span class="timer-display">⏱ Zeit: <span id="timer-1">00:00</span></span>
             <span class="timer-display">🏆 Bestzeit: <span id="best-1">--:--</span></span>
             <button class="btn btn-reset" onclick="resetLuckentext()">↺ Neustart</button>
-            <button class="btn btn-primary" onclick="showLueckentextSolution()">💡 Lösungen</button>
+            <button class="btn btn-show" onclick="showLueckentextSolution()">Lösungen</button>
         </div>
     </div>
 
@@ -376,7 +359,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
             <span class="timer-display">⏱ Zeit: <span id="timer-3">00:00</span></span>
             <span class="timer-display">🏆 Bestzeit: <span id="best-3">--:--</span></span>
             <button class="btn btn-reset" onclick="resetSatzbau()">↺ Neustart</button>
-            <button class="btn btn-primary" onclick="sbShowAllSolutions()">💡 Lösungen</button>
+            <button class="btn btn-show" onclick="sbShowAllSolutions()">Lösungen</button>
         </div>
     </div>
 

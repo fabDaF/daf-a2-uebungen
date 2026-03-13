@@ -112,9 +112,8 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 
 /* Timer-Zeile */
 .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
-.btn { padding: 10px 22px; border: none; border-radius: 25px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.2s; }
-.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-.btn-reset { background: #fff; color: #e74c3c; border: 2px solid #e74c3c; }
+.btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.82em; color: #888; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { background: #eee; color: #444; }
 .timer-box { display: inline-flex; align-items: center; gap: 8px; background: #f0f4ff; border-radius: 20px; padding: 8px 16px; font-size: 0.9em; color: #555; font-weight: 500; }
 .timer-display { font-family: monospace; font-weight: 700; color: #667eea; min-width: 52px; text-align: center; }
 .best-display { font-size: 0.85em; color: #999; }
@@ -218,8 +217,8 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
             </div>
             <div id="qaContainer"></div>
             <div class="btn-row">
-                <button class="btn btn-primary" onclick="initQa()">↺ Neu mischen</button>
-                <button class="btn btn-reset" onclick="qaShowSolutions()">💡 Lösungen</button>
+                <button class="btn btn-show" onclick="initQa()">↺ Neu mischen</button>
+                <button class="btn btn-reset" onclick="qaShowSolutions()">Lösungen</button>
             </div>
         </div>
     </div>
@@ -235,7 +234,7 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
             <div class="btn-row">
                 <div class="timer-box">⏱ <span class="timer-display" id="timer-2">0:00</span> &nbsp;🏆 <span class="best-display" id="best-2">–</span></div>
                 <button class="btn btn-reset" onclick="lueckenReset()">↺ Neustart</button>
-                <button class="solution-btn" onclick="lueckenLoesungen()">💡 Lösungen</button>
+                <button class="solution-btn" onclick="lueckenLoesungen()">Lösungen</button>
             </div>
         </div>
     </div>

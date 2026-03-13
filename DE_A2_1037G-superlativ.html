@@ -49,27 +49,37 @@ body {
 }
 
 /* ===== ENTDECKEN ===== */
-.discovery-card {
-    background: #f9f7ff; border: 2px solid #e0d7ff;
-    border-radius: 10px; padding: 18px; margin-bottom: 16px;
+.entdeck-intro {
+  background: #f3e5f5; border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 20px;
+  border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75;
 }
-.discovery-card .prompt { font-size: 0.9em; color: #666; margin-bottom: 10px; }
-.discovery-card .examples { font-size: 1em; line-height: 2.0; }
-.mc-step { margin-bottom: 16px; }
-.mc-step .step-q { font-weight: 600; color: #4a148c; margin-bottom: 8px; font-size: 0.95em; }
-.mc-choice {
-    display: inline-block; margin: 4px 6px 4px 0;
-    padding: 6px 16px; border-radius: 20px;
-    border: 2px solid #c5cae9; background: white;
-    cursor: pointer; font-size: 0.9em;
-    transition: background .2s, border-color .2s, color .2s;
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-btn {
+  padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px;
+  background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem;
+  transition: all .2s;
 }
-.mc-choice:hover { background: #f0ecff; border-color: #764ba2; }
-.mc-choice.ok { background: #eafaf1; border-color: #27ae60; color: #27ae60; font-weight: 700; }
-.mc-choice.no { background: #fdf2f2; border-color: #e74c3c; color: #e74c3c; }
-.mc-fb { font-size: 0.85em; margin-top: 6px; min-height: 18px; font-weight: 600; }
-.mc-fb.ok { color: #27ae60; }
-.mc-fb.no { color: #e74c3c; }
+.mc-btn:hover { border-color: #667eea; background: #f3f4ff; }
+.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
 
 /* ===== REGELKARTE ===== */
 .regel-table {
@@ -175,21 +185,78 @@ body {
     <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
   </div>
 
-  <!-- TAB 0: ENTDECKEN -->
+  <!-- TAB 0: ENTDECKEN (kein Timer, kein Reset) -->
   <div class="section active" id="sec-0">
-    <h2 style="color:#4a148c;margin-bottom:12px;">🔍 Entdecken — Was fällt dir auf?</h2>
-    <div class="discovery-card">
-      <div class="prompt">Lies die Sätze. Was passiert mit den Adjektiven?</div>
-      <div class="examples">
-        Timo ist <strong>groß</strong>.<br>
-        Paul ist <strong>größer</strong> als Timo.<br>
-        Aber Maria ist <strong>am größten</strong>.<br><br>
-        Louise ist <strong>alt</strong>.<br>
-        Gabriel ist <strong>älter</strong> als Louise.<br>
-        Aber Selina ist <strong>am ältesten</strong>.
-      </div>
+    <div class="entdeck-intro">
+        <h3>🔍 Entdecke die Regel</h3>
+        <p>Lies die Sätze. Was passiert mit den Adjektiven?</p>
+        <p>Timo ist groß. Paul ist <span class="hl">größer</span> als Timo. Aber Maria ist <span class="hl">am größten</span>.</p>
+        <p>Louise ist alt. Gabriel ist <span class="hl">älter</span> als Louise. Aber Selina ist <span class="hl">am ältesten</span>.</p>
+        <p>Der Film war gut. Der zweite Film war <span class="hl">besser</span>. Aber der dritte war <span class="hl">am besten</span>.</p>
+        <p>Sie trinkt gern Tee. Sie trinkt <span class="hl">lieber</span> Kaffee. Aber Kakao trinkt sie <span class="hl">am liebsten</span>.</p>
     </div>
-    <div id="discoveryContainer"></div>
+
+    <div class="progress-dots">
+        <div class="pdot" id="pdot0"></div>
+        <div class="pdot" id="pdot1"></div>
+        <div class="pdot" id="pdot2"></div>
+        <div class="pdot" id="pdot3"></div>
+    </div>
+
+    <div class="mc-step active" id="mc-step0">
+        <h4>Frage 1: Wie bildet man den Superlativ mit „am"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">am + Adjektiv + -er</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,true)">am + Adjektiv + -(e)sten</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">am + Adjektiv + -est</button>
+        </div>
+        <div class="mc-feedback" id="mcfb0"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step1">
+        <h4>Frage 2: Was passiert bei Adjektiven wie „alt" oder „groß" im Superlativ?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Sie bekommen keine Veränderung: am altsten</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,true)">Sie bekommen einen Umlaut: am <em>ä</em>ltesten, am gr<em>ö</em>ßten</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Sie werden komplett neu: am besten</button>
+        </div>
+        <div class="mc-feedback" id="mcfb1"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step2">
+        <h4>Frage 3: Wann braucht man „-esten" statt „-sten"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Bei allen langen Adjektiven</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">Bei Adjektiven mit Umlaut</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,true)">Bei Adjektiven auf -t, -d, -s, -sch, -z (z.B. am nett<em>esten</em>)</button>
+        </div>
+        <div class="mc-feedback" id="mcfb2"></div>
+    </div>
+
+    <div class="mc-step" id="mc-step3">
+        <h4>Frage 4: Welche Form ist korrekt?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">gut → güter → am gütesten</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">gut → guter → am gutsten</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,true)">gut → besser → am besten (unregelmäßig)</button>
+        </div>
+        <div class="mc-feedback" id="mcfb3"></div>
+    </div>
+
+    <div class="regel-karte" id="regelkarte">
+        <h3>📌 Die Regel</h3>
+        <ul>
+            <li>Superlativ mit „am": <strong>am + Adjektiv + -(e)sten</strong></li>
+            <li>Viele einsilbige Adjektive bekommen einen <strong>Umlaut</strong>: alt → älter → am <strong>ältesten</strong></li>
+            <li>Bei Adjektiven auf -t, -d, -s, -sch, -z: <strong>-esten</strong> (am nettesten, am hübschesten)</li>
+            <li>Unregelmäßig: gut → besser → <strong>am besten</strong> · viel → mehr → <strong>am meisten</strong> · gern → lieber → <strong>am liebsten</strong></li>
+        </ul>
+        <div class="rk-example">
+            <b>Regelmäßig:</b> schnell → schneller → am schnell<b>sten</b><br>
+            <b>Mit Umlaut:</b> groß → größer → am größ<b>ten</b><br>
+            <b>Unregelmäßig:</b> gut → besser → am <b>besten</b>
+        </div>
+    </div>
   </div>
 
   <!-- TAB 1: REGEL -->
@@ -235,7 +302,7 @@ body {
       <span class="timer-display" id="timer-2">⏱ 0:00</span>
       <span class="best-display" id="best-2">🏆 –</span>
       <button class="btn-sm" onclick="timerResetOne(2)">↺ Neustart</button>
-      <button class="btn-sm" onclick="showLtSolution()">💡 Lösungen</button>
+      <button class="btn-sm" onclick="showLtSolution()">Lösungen</button>
     </div>
     <div class="lt-block">
       <h3>1 · Superlativ mit „am"</h3>
@@ -253,7 +320,7 @@ body {
       <span class="timer-display" id="timer-3">⏱ 0:00</span>
       <span class="best-display" id="best-3">🏆 –</span>
       <button class="btn-sm" onclick="timerResetOne(3)">↺ Neustart</button>
-      <button class="btn-sm" onclick="sbShowSolution()">💡 Lösungen</button>
+      <button class="btn-sm" onclick="sbShowSolution()">Lösungen</button>
     </div>
     <p style="color:#666;margin-bottom:14px;font-size:0.9em;">Bringe die Wörter in die richtige Reihenfolge.</p>
     <div id="satzbauContainer"></div>
@@ -275,34 +342,35 @@ body {
 /* ===== DATA ===== */
 var TIMER_PREFIX = 'a2-1037g-';
 
-var MC_STEPS = [
-    {
-        q: 'Wie endet der Superlativ mit „am"?',
-        choices: ['am -er', 'am -sten', 'am -est'],
-        correct: 'am -sten',
-        fb: 'Richtig! Der Superlativ wird mit „am + Adjektiv + -sten" gebildet.'
-    },
-    {
-        q: 'Welche Regel gilt für Adjektive, die auf -t, -d, -s oder -sch enden?',
-        choices: ['am -sten', 'am -esten', 'am -ersten'],
-        correct: 'am -esten',
-        fb: 'Richtig! Bei Adjektiven auf -t, -d, -s, -sch (z.B. nett, hübsch) wird „-esten" angehängt.'
-    },
-    {
-        q: 'Was passiert mit Umlauten im Superlativ?',
-        choices: ['Umlaute verschwinden', 'Umlaute bleiben', 'Neue Umlaute entstehen'],
-        correct: 'Umlaute bleiben',
-        fb: 'Genau! Der Umlaut aus dem Komparativ bleibt: groß → größer → am größten.'
-    },
-    {
-        q: 'Wie bildet man „gut" im Superlativ?',
-        choices: ['am gutsten', 'am besten', 'am gutensten'],
-        correct: 'am besten',
-        fb: 'Richtig! „gut" ist unregelmäßig: gut → besser → am besten.'
-    }
-];
-
+/* ===== ENTDECKEN — mcCheck ===== */
 var mcDone = [false, false, false, false];
+
+function mcCheck(step, btn, correct) {
+  var btns = btn.parentElement.querySelectorAll('.mc-btn');
+  btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+  var fb = document.getElementById('mcfb' + step);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+    fb.className = 'mc-feedback ok';
+    mcDone[step] = true;
+    document.getElementById('pdot' + step).classList.add('done');
+    setTimeout(function() {
+      var next = document.getElementById('mc-step' + (step + 1));
+      if (next) { next.classList.add('active'); }
+      else { document.getElementById('regelkarte').style.display = 'block'; }
+    }, 700);
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '\u2717 Nicht ganz — schau nochmal genau hin und versuche es erneut.';
+    fb.className = 'mc-feedback err';
+    setTimeout(function() {
+      btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+      fb.textContent = '';
+      fb.className = 'mc-feedback';
+    }, 1400);
+  }
+}
 
 var LT1 = [
     { vor:'Georg rennt schnell, aber Mia rennt ', nach:'. (schnell)', ans:'am schnellsten', size:130 },
@@ -364,30 +432,7 @@ function shuffle(arr) {
     return a;
 }
 
-/* ===== ENTDECKEN ===== */
-(function() {
-    var c = document.getElementById('discoveryContainer');
-    MC_STEPS.forEach(function(step, idx) {
-        var div = document.createElement('div'); div.className = 'mc-step';
-        var q = document.createElement('div'); q.className = 'step-q'; q.textContent = (idx+1) + '. ' + step.q;
-        var choicesDiv = document.createElement('div');
-        var fb = document.createElement('div'); fb.className = 'mc-fb';
-        step.choices.forEach(function(ch) {
-            var btn = document.createElement('span'); btn.className = 'mc-choice'; btn.textContent = ch;
-            btn.addEventListener('click', function() {
-                if (mcDone[idx]) return;
-                var correct = ch === step.correct;
-                btn.classList.add(correct ? 'ok' : 'no');
-                fb.className = 'mc-fb ' + (correct ? 'ok' : 'no');
-                fb.textContent = correct ? '✓ ' + step.fb : '✗ Nicht ganz. Versuche es nochmal.';
-                if (correct) mcDone[idx] = true;
-            });
-            choicesDiv.appendChild(btn);
-        });
-        div.appendChild(q); div.appendChild(choicesDiv); div.appendChild(fb);
-        c.appendChild(div);
-    });
-})();
+/* Entdecken-Tab: mcCheck ist oben definiert, HTML ist statisch */
 
 /* ===== LÜCKENTEXT ===== */
 function buildLt(data, containerId, timerN) {
@@ -437,11 +482,6 @@ function sbMakeChip(word, orig) {
     c.draggable = true;
     c.addEventListener('dragstart', function(e){ sbDragged = c; e.dataTransfer.setData('text/plain',''); });
     c.addEventListener('dragend', function(){ sbDragged = null; });
-    c.addEventListener('click', function(){
-        if (c.classList.contains('selected')){ c.classList.remove('selected'); return; }
-        document.querySelectorAll('.sentence-builder .chip.selected').forEach(function(x){ x.classList.remove('selected'); });
-        c.classList.add('selected');
-    });
     return c;
 }
 
@@ -464,27 +504,29 @@ function sbRegisterZone(zone, bankEl, n) {
         var after = sbGetDragAfter(zone, e.clientX);
         if (!after) zone.appendChild(sbDragged); else zone.insertBefore(sbDragged, after);
         sbDragged = null;
-        sbUpdateCapitalization(n);
-        setTimeout(function(){ sbColorRow(n); }, 500);
+        sbUpdateCaps(n);
+        timerAutoStart(3);
+        sbColorRow(n);
     });
+    /* Click-to-place: click chip in bank → selected; click zone → move there */
     zone.addEventListener('click', function(e){
         if (e.target === zone || e.target.classList.contains('sb-punkt')){
-            var sel = zone.closest('.sentence-builder').querySelector('.chips-container .chip.selected');
-            if (sel){ zone.appendChild(sel); sel.classList.remove('selected'); sbUpdateCapitalization(n); setTimeout(function(){ sbColorRow(n); }, 500); }
+            var sel = bankEl.querySelector('.chip.selected');
+            if (sel){ zone.appendChild(sel); sel.classList.remove('selected'); sbUpdateCaps(n); timerAutoStart(3); sbColorRow(n); }
             return;
         }
+        /* Click chip in zone → move back to bank */
         if (e.target.classList.contains('chip')){
-            bankEl.appendChild(e.target); e.target.classList.remove('selected');
-            sbUpdateCapitalization(n); setTimeout(function(){ sbColorRow(n); }, 500);
+            bankEl.appendChild(e.target); e.target.classList.remove('selected','correct','incorrect');
+            sbUpdateCaps(n); sbColorRow(n);
         }
     });
     bankEl.addEventListener('click', function(e){
-        if (e.target.classList.contains('chip')){
-            var sel = zone.querySelector('.chip.selected'); if (sel) return;
-            if (e.target.classList.contains('selected')){ e.target.classList.remove('selected'); return; }
-            document.querySelectorAll('.sentence-builder .chip.selected').forEach(function(x){ x.classList.remove('selected'); });
-            e.target.classList.add('selected');
-        }
+        if (!e.target.classList.contains('chip')) return;
+        e.stopPropagation();
+        if (e.target.classList.contains('selected')){ e.target.classList.remove('selected'); return; }
+        document.querySelectorAll('#sec-3 .chip.selected').forEach(function(x){ x.classList.remove('selected'); });
+        e.target.classList.add('selected');
     });
 }
 
@@ -498,11 +540,13 @@ function sbGetDragAfter(container, x) {
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
-function sbUpdateCapitalization(row) {
+function sbUpdateCaps(n) {
+    var row = document.getElementById('sb-row-' + n);
+    if (!row) return;
     Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
-        var orig=c.dataset.orig;
-        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase() && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
     });
 }
 
@@ -511,13 +555,19 @@ function sbColorRow(n) {
     var fb = document.getElementById('sb-fb-' + n);
     if (!zone || !fb) return;
     var chips = zone.querySelectorAll('.chip');
-    if (chips.length === 0){ fb.textContent = ''; fb.className = 'satzbau-feedback'; return; }
+    if (chips.length === 0){ fb.textContent = ''; fb.className = 'satzbau-feedback'; chips.forEach(function(c){ c.classList.remove('correct','incorrect'); }); return; }
     var sd = satzbauData[n];
     var placed = Array.from(chips).map(function(c){ return c.dataset.orig; });
     var correct = sd.valid.some(function(v){ return v.length === placed.length && v.every(function(w,i){ return w === placed[i]; }); });
+    chips.forEach(function(c,i){
+        c.classList.remove('correct','incorrect');
+        if (i < sd.valid[0].length) {
+            c.classList.add(c.dataset.orig === sd.valid[0][i] ? 'correct' : 'incorrect');
+        } else { c.classList.add('incorrect'); }
+    });
     fb.className = 'satzbau-feedback ' + (correct ? 'ok' : 'no');
     fb.textContent = correct ? '✓ Richtig!' : '✗ Noch nicht richtig';
-    if (correct){ timerAutoStart(3); sbCheckAuto(); }
+    if (correct) sbCheckAuto();
 }
 
 function sbCheckAuto() {
@@ -537,8 +587,7 @@ function sbShowSolution() {
         while (bank.firstChild) bank.removeChild(bank.firstChild);
         zone.innerHTML = '';
         sd.valid[0].forEach(function(w, i){
-            var word = (i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-            zone.appendChild(sbMakeChip((i===0)?sbCapitalize(w):word, word));
+            zone.appendChild(sbMakeChip((i===0)?sbCapitalize(w):w, w));
         });
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;
         zone.appendChild(punkt);
@@ -550,6 +599,7 @@ function sbShowSolution() {
 
 function initSatzbau() {
     var container = document.getElementById('satzbauContainer');
+    container.innerHTML = '';
     satzbauData.forEach(function(sd, n){
         var sb = document.createElement('div'); sb.className = 'sentence-builder';
         var lbl = document.createElement('div'); lbl.className = 'sb-label'; lbl.textContent = 'Satz ' + (n+1);

@@ -48,7 +48,6 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .btn { background: none; border: 2px solid #ddd; border-radius: 20px; padding: 5px 14px; font-size: 0.82em; color: #888; cursor: pointer; font-weight: 600; transition: all 0.15s; }
 .btn:hover { background: #eee; color: #444; }
 .btn-loesung { border-color: #667eea; color: #667eea; }
-.btn-reset { border-color: #e74c3c; color: #e74c3c; }
 .timer-display { font-size: 0.82em; color: #bbb; display: flex; gap: 12px; }
 .timer-current { font-weight: 700; color: #667eea; }
 .timer-best { color: #f39c12; font-weight: 600; }
@@ -144,7 +143,7 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
                 <div class="btn-row">
                     <button class="btn btn-reset" onclick="resetLuecken()">↺ Neustart</button>
-                    <button class="btn btn-loesung" onclick="loesungLuecken()">💡 Lösungen</button>
+                    <button class="btn btn-loesung" onclick="loesungLuecken()">Lösungen</button>
                 </div>
             </div>
             <div class="hilfe-box">Ergänze die Lücken mit dem passenden Wort aus dem Dialog.</div>
@@ -170,7 +169,7 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
             </div>
             <div style="margin-top:12px;">
                 <button class="btn btn-reset" onclick="qaInit()">↺ Neu starten</button>
-                <button class="btn btn-loesung" style="margin-left:8px;" onclick="qaShowSolution()">💡 Lösungen</button>
+                <button class="btn btn-loesung" style="margin-left:8px;" onclick="qaShowSolution()">Lösungen</button>
             </div>
         </div>
     </div>
@@ -186,7 +185,7 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
                 <div class="btn-row">
                     <button class="btn btn-reset" onclick="timerResetOne(3); sbInit();">↺ Neustart</button>
-                    <button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">💡 Lösungen</button>
+                    <button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">Lösungen</button>
                 </div>
             </div>
             <div id="satzbauContainer"></div>
@@ -204,7 +203,7 @@ input.ws-inp.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
                 <div class="btn-row">
                     <button class="btn btn-reset" onclick="resetWortschatz()">↺ Neustart</button>
-                    <button class="btn btn-loesung" onclick="loesungWortschatz()">💡 Lösungen</button>
+                    <button class="btn btn-loesung" onclick="loesungWortschatz()">Lösungen</button>
                 </div>
             </div>
             <div class="hilfe-box">Tippe die deutsche Übersetzung. Bei Nomen: <strong>Artikel · Wort · Plural</strong>.</div>

@@ -28,14 +28,30 @@ h2 { color: #667eea; margin-bottom: 16px; font-size: 1.15rem; }
 h3 { color: #764ba2; margin: 18px 0 8px; font-size: 1rem; }
 p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 
-/* Entdecken */
-.disc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-@media (max-width: 600px) { .disc-grid { grid-template-columns: 1fr; } }
-.disc-card { background: #f8f8ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: .95rem; }
-.disc-card .label { font-size: .75rem; color: #764ba2; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
-.refl { color: #e53935; font-weight: 700; }
-.regel-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 18px; }
-.regel-box h4 { color: #667eea; margin-bottom: 8px; font-size: .95rem; }
+/* ===== ENTDECKEN ===== */
+.entdeck-intro {
+  background: #f3e5f5; border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 20px;
+  border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75;
+}
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.hl { background: #e1bee7; border-radius: 4px; padding: 0 4px; color: #4a148c; font-weight: 700; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; color: #333; }
+.regel-karte .rk-example b { color: #3949ab; }
 
 /* Tabellen */
 .gram-table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; }
@@ -100,41 +116,79 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
   <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></button>
 </nav>
 
-<!-- TAB 0: Entdecken -->
+<!-- TAB 0: Entdecken (kein Timer, kein Reset) -->
 <section class="section active" id="tab-0">
 <div>
-  <h2>🔍 Entdecken — Das Reflexivpronomen</h2>
-  <p>Lies die Sätze. Was fällt dir auf? Wo steht das hervorgehobene Wort?</p>
-  <div class="disc-grid">
-    <div class="disc-card">
-      <div class="label">sich freuen über</div>
-      Ich freue <span class="refl">mich</span> über den Kuchen.
+    <div class="entdeck-intro">
+        <h3>🔍 Entdecke die Regel</h3>
+        <p>Lies die Sätze. Was fällt dir bei den hervorgehobenen Wörtern auf?</p>
+        <p>Ich freue <span class="hl">mich</span> über den Kuchen.</p>
+        <p>Du interessierst <span class="hl">dich</span> für Tiere.</p>
+        <p>Er ärgert <span class="hl">sich</span> über das Wetter.</p>
+        <p>Wir haben <span class="hl">uns</span> im Wald verirrt.</p>
+        <p>Sie hat <span class="hl">sich</span> bei der Firma beworben.</p>
     </div>
-    <div class="disc-card">
-      <div class="label">sich interessieren für</div>
-      Ich interessiere <span class="refl">mich</span> für Tiere.
+
+    <div class="progress-dots">
+        <div class="pdot" id="pdot0"></div>
+        <div class="pdot" id="pdot1"></div>
+        <div class="pdot" id="pdot2"></div>
+        <div class="pdot" id="pdot3"></div>
     </div>
-    <div class="disc-card">
-      <div class="label">sich verirren</div>
-      Wir haben <span class="refl">uns</span> im Wald verirrt.
+
+    <div class="mc-step active" id="mc-step0">
+        <h4>Frage 1: Was sind die hervorgehobenen Wörter (mich, dich, sich, uns)?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">Personalpronomen im Nominativ</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,true)">Reflexivpronomen — sie beziehen sich auf das Subjekt zurück</button>
+            <button class="mc-btn" onclick="mcCheck(0,this,false)">Possessivpronomen (mein, dein, sein …)</button>
+        </div>
+        <div class="mc-feedback" id="mcfb0"></div>
     </div>
-    <div class="disc-card">
-      <div class="label">sich bewerben (bei/um)</div>
-      Sie hat <span class="refl">sich</span> bei der Firma beworben.
+
+    <div class="mc-step" id="mc-step1">
+        <h4>Frage 2: In welchem Fall stehen die Reflexivpronomen meistens?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Nominativ (wer?)</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,true)">Akkusativ (wen? — mich, dich, sich, uns, euch, sich)</button>
+            <button class="mc-btn" onclick="mcCheck(1,this,false)">Genitiv (wessen?)</button>
+        </div>
+        <div class="mc-feedback" id="mcfb1"></div>
     </div>
-    <div class="disc-card">
-      <div class="label">sich ärgern (über)</div>
-      Du ärgerst <span class="refl">dich</span> über dein Verhalten, oder?
+
+    <div class="mc-step" id="mc-step2">
+        <h4>Frage 3: Welches Reflexivpronomen passt zu „er/sie/es" und „sie (Plural)"?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">mich / uns</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,false)">dich / euch</button>
+            <button class="mc-btn" onclick="mcCheck(2,this,true)">sich / sich — immer die gleiche Form!</button>
+        </div>
+        <div class="mc-feedback" id="mcfb2"></div>
     </div>
-    <div class="disc-card">
-      <div class="label">sich bedanken</div>
-      Er hat <span class="refl">sich</span> bei mir für das Geschenk bedankt.
+
+    <div class="mc-step" id="mc-step3">
+        <h4>Frage 4: Welcher Satz ist korrekt?</h4>
+        <div class="mc-options">
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">Ich freue <em>sich</em> auf den Urlaub.</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,true)">Ich freue <em>mich</em> auf den Urlaub.</button>
+            <button class="mc-btn" onclick="mcCheck(3,this,false)">Ich freue <em>mir</em> auf den Urlaub.</button>
+        </div>
+        <div class="mc-feedback" id="mcfb3"></div>
     </div>
-  </div>
-  <div class="regel-box">
-    <h4>💡 Was hast du bemerkt?</h4>
-    <p>Das rote Wort (<em>mich, dich, sich, uns, euch</em>) ist das <strong>Reflexivpronomen</strong>. Es richtet sich nach dem Subjekt (der Person, die handelt).</p>
-  </div>
+
+    <div class="regel-karte" id="regelkarte">
+        <h3>📌 Die Regel</h3>
+        <ul>
+            <li><strong>Reflexive Verben</strong> brauchen ein Pronomen, das sich auf das Subjekt zurückbezieht.</li>
+            <li>Akkusativ-Reflexivpronomen: <strong>mich · dich · sich · uns · euch · sich</strong></li>
+            <li>Die 3. Person (er/sie/es) und die Höflichkeitsform (Sie) benutzen immer <strong>sich</strong>.</li>
+            <li>Wichtige reflexive Verben: sich freuen · sich interessieren · sich ärgern · sich bewerben · sich bedanken · sich verirren</li>
+        </ul>
+        <div class="rk-example">
+            <b>ich</b> freue <b>mich</b> · <b>du</b> freust <b>dich</b> · <b>er</b> freut <b>sich</b><br>
+            <b>wir</b> freuen <b>uns</b> · <b>ihr</b> freut <b>euch</b> · <b>sie</b> freuen <b>sich</b>
+        </div>
+    </div>
 </div>
 </section>
 
@@ -195,7 +249,7 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
     <span class="timer-display">⏱ <span id="lt-time">0:00</span></span>
     <span class="timer-display">🏆 <span id="lt-best">—</span></span>
     <button class="btn-small" onclick="ltRestart()">↺ Neustart</button>
-    <button class="btn-small" onclick="ltShowSolutions()">💡 Lösungen</button>
+    <button class="btn-small" onclick="ltShowSolutions()">Lösungen</button>
   </div>
 
   <div class="lt-block">
@@ -227,7 +281,7 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
     <span class="timer-display">⏱ <span id="sb-time">0:00</span></span>
     <span class="timer-display">🏆 <span id="sb-best">—</span></span>
     <button class="btn-small" onclick="timerResetOne(3)">↺ Neustart</button>
-    <button class="btn-small" onclick="sbShowSolution()">💡 Lösungen</button>
+    <button class="btn-small" onclick="sbShowSolution()">Lösungen</button>
   </div>
   <div id="satzbauContainer"></div>
 </div>
@@ -258,6 +312,35 @@ function showTab(n) {
 }
 
 /* ===== TIMER ===== */
+/* ===== ENTDECKEN — mcCheck ===== */
+var mcDone = [false, false, false, false];
+function mcCheck(step, btn, correct) {
+  var btns = btn.parentElement.querySelectorAll('.mc-btn');
+  btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+  var fb = document.getElementById('mcfb' + step);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
+    fb.className = 'mc-feedback ok';
+    mcDone[step] = true;
+    document.getElementById('pdot' + step).classList.add('done');
+    setTimeout(function() {
+      var next = document.getElementById('mc-step' + (step + 1));
+      if (next) { next.classList.add('active'); }
+      else { document.getElementById('regelkarte').style.display = 'block'; }
+    }, 700);
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '\u2717 Nicht ganz — schau nochmal genau hin und versuche es erneut.';
+    fb.className = 'mc-feedback err';
+    setTimeout(function() {
+      btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+      fb.textContent = '';
+      fb.className = 'mc-feedback';
+    }, 1400);
+  }
+}
+
 var TIMER_PREFIX='a2-1047g-';
 var timerStarted=[false,false,false,false,false];
 var timerRunning=[false,false,false,false,false];
