@@ -378,25 +378,26 @@ function buildLuecken(data, containerId) {
     var container=document.getElementById(containerId); container.innerHTML='';
     data.forEach(function(item,idx){
         var div=document.createElement('div'); div.className='luecken-satz';
-        div.innerHTML=(idx+1)+'. '+item.vor;
+        var span1=document.createElement('span'); span1.innerHTML=(idx+1)+'. '+item.vor;
         var inp=document.createElement('input'); inp.type='text'; inp.className='luecken-inp'; inp.placeholder=''; inp.style.width=item.size+'px';
         inp.dataset.ans=item.ans; inp.dataset.orig=item.ans;
         inp.addEventListener('input',function(){
+            timerAutoStart(2);
             var val=inp.value.trim(),ans=inp.dataset.ans;
             inp.classList.remove('ok','no');
             if(!val)return;
-            if(val===ans){inp.classList.add('ok');timerAutoStart(2);checkAllLuecken();}
-            else if(ans.startsWith(val)){timerAutoStart(2);}
+            if(val===ans){inp.classList.add('ok');checkAllLuecken();}
+            else if(ans.startsWith(val)){/* prefix ok */}
             else{inp.classList.add('no');}
         });
-        div.appendChild(inp);
-        div.innerHTML+=item.nach;
+        var span2=document.createElement('span'); span2.innerHTML=item.nach;
+        div.appendChild(span1); div.appendChild(inp); div.appendChild(span2);
         container.appendChild(div);
     });
 }
 function checkAllLuecken(){var all=Array.from(document.querySelectorAll('#sec-2 .luecken-inp'));if(all.every(function(i){return i.classList.contains('ok');}))timerStop(2);}
 function lueckenReset(){timerResetOne(2);buildLuecken(LT1,'luecken1');buildLuecken(LT2,'luecken2');}
-function lueckenLoesungen(){document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){inp.value=inp.dataset.orig;inp.classList.remove('no');inp.classList.add('ok');});}
+function lueckenLoesungen(){document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){inp.value=inp.dataset.orig;inp.classList.remove('no');inp.classList.add('ok');});timerStop(2);}
 
 // ─── Satzbau ─────────────────────────────────────────────────────────────────
 var sbDragged = null;
@@ -410,36 +411,127 @@ var satzbauData = [
     { parts:['Peter','ist','so','groß','wie','Felix'], valid:[['Peter','ist','so','groß','wie','Felix']], punct:'.' }
 ];
 
-function getSbCursor(){var c=document.getElementById('sb-insert-cursor');if(!c){c=document.createElement('div');c.id='sb-insert-cursor';c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';}return c;}
-function getSbInsertPos(zone,clientX){var chips=Array.from(zone.querySelectorAll('.chip'));for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}return null;}
 function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}
-function sbUpdateCapitalization(row) {
+
+function sbGetDragAfter(container, x) {
+    var chips = Array.from(container.querySelectorAll('.chip'));
+    return chips.reduce(function(closest, child){
+        var box = child.getBoundingClientRect();
+        var offset = x - box.left - box.width / 2;
+        if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+        return closest;
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+function sbUpdateCaps(idx) {
+    var row = document.getElementById('sb-row-'+idx);
+    if (!row) return;
     Array.from(row.querySelectorAll('.chip')).forEach(function(c,i){
-        var orig=c.dataset.orig;
-        var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
-        c.textContent=isProper?orig:(i===0?sbCapitalize(orig):orig);
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase() && orig.charAt(0) !== orig.charAt(0).toLowerCase();
+        c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
     });
 }
-function sbMakeChip(word){var chip=document.createElement('div');chip.className='chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;chip.addEventListener('dragstart',function(e){sbDragged=chip;e.dataTransfer.setData('text/plain','');setTimeout(function(){chip.style.opacity='0.4';},0);});chip.addEventListener('dragend',function(){chip.style.opacity='';sbDragged=null;var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode)c.parentNode.removeChild(c);});return chip;}
-function sbRegisterZone(zone,idx){zone.addEventListener('dragover',function(e){e.preventDefault();if(!sbDragged)return;var cursor=getSbCursor();var before=getSbInsertPos(zone,e.clientX);if(before)zone.insertBefore(cursor,before);else zone.appendChild(cursor);});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode===zone)zone.removeChild(c);}});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged)return;var cursor=document.getElementById('sb-insert-cursor');if(cursor&&cursor.parentNode===zone){zone.insertBefore(sbDragged,cursor);zone.removeChild(cursor);}else zone.appendChild(sbDragged);sbDragged=null;sbUpdateCapitalization(document.getElementById('sb-row-'+idx));sbCheckAuto(idx);});}
-function sbColorRow(idx){var row=document.getElementById('sb-row-'+idx);var chips=Array.from(row.querySelectorAll('.chip'));var order=chips.map(function(c){return c.dataset.orig;});var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});var ex=row.querySelector('.sb-punkt');if(ex)ex.parentNode.removeChild(ex);if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}return ok;}
-function sbCheckAuto(idx){var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx);if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}setTimeout(function(){timerAutoStart(3);var ok=sbColorRow(idx);if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='✓ Korrekt!';sbCheckAllDone();}else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!';}},500);}
+
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className = 'chip'; chip.textContent = word; chip.dataset.orig = word;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', function(e){ sbDragged = chip; e.dataTransfer.setData('text/plain',''); });
+    chip.addEventListener('dragend', function(){ sbDragged = null; });
+    return chip;
+}
+
+function sbRegisterZone(row, bank, idx) {
+    /* Drag into row */
+    row.addEventListener('dragover', function(e){
+        e.preventDefault(); row.classList.add('dragover');
+    });
+    row.addEventListener('dragleave', function(){ row.classList.remove('dragover'); });
+    row.addEventListener('drop', function(e){
+        e.preventDefault(); row.classList.remove('dragover');
+        if (!sbDragged) return;
+        var after = sbGetDragAfter(row, e.clientX);
+        if (after) row.insertBefore(sbDragged, after); else row.appendChild(sbDragged);
+        sbDragged = null;
+        sbUpdateCaps(idx); timerAutoStart(3); sbColorRow(idx);
+    });
+    /* Click chip in row → move back to bank */
+    row.addEventListener('click', function(e){
+        if (e.target.classList.contains('chip')){
+            bank.appendChild(e.target); e.target.classList.remove('selected','correct','incorrect');
+            sbUpdateCaps(idx); sbColorRow(idx);
+            return;
+        }
+        /* Click empty space in row → move selected chip from bank */
+        var sel = bank.querySelector('.chip.selected');
+        if (sel){ row.appendChild(sel); sel.classList.remove('selected'); sbUpdateCaps(idx); timerAutoStart(3); sbColorRow(idx); }
+    });
+    /* Click chip in bank → select it */
+    bank.addEventListener('click', function(e){
+        if (!e.target.classList.contains('chip')) return;
+        e.stopPropagation();
+        if (e.target.classList.contains('selected')){ e.target.classList.remove('selected'); return; }
+        document.querySelectorAll('#sec-3 .chip.selected').forEach(function(x){ x.classList.remove('selected'); });
+        e.target.classList.add('selected');
+    });
+    /* Drag back to bank */
+    bank.addEventListener('dragover', function(e){ e.preventDefault(); });
+    bank.addEventListener('drop', function(e){
+        e.preventDefault();
+        if (sbDragged){ bank.appendChild(sbDragged); sbDragged.classList.remove('correct','incorrect'); sbDragged = null; sbUpdateCaps(idx); sbColorRow(idx); }
+    });
+}
+
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-'+idx);
+    var fb = document.getElementById('sb-fb-'+idx);
+    if (!row || !fb) return;
+    var chips = row.querySelectorAll('.chip');
+    if (chips.length === 0){ fb.textContent = ''; fb.className = 'satzbau-feedback'; row.classList.remove('correct','incorrect'); return; }
+    var sd = satzbauData[idx];
+    var placed = Array.from(chips).map(function(c){ return c.dataset.orig; });
+    var correct = sd.valid.some(function(v){ return v.length === placed.length && v.every(function(w,i){ return w === placed[i]; }); });
+    chips.forEach(function(c,i){
+        c.classList.remove('correct','incorrect');
+        if (i < sd.valid[0].length) { c.classList.add(c.dataset.orig === sd.valid[0][i] ? 'correct' : 'incorrect'); }
+        else { c.classList.add('incorrect'); }
+    });
+    if (correct) { row.classList.add('correct'); row.classList.remove('incorrect'); }
+    else { row.classList.add('incorrect'); row.classList.remove('correct'); }
+    fb.className = 'satzbau-feedback ' + (correct ? 'correct' : 'incorrect');
+    fb.textContent = correct ? '✓ Korrekt!' : '✗ Falsche Reihenfolge — verschiebe die Chips!';
+    if (correct) sbCheckAllDone();
+}
 function sbCheckAllDone(){var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});if(allOk)timerStop(3);}
-function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx),solution=satzbauData[idx].valid[0];var allChips={};Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});fb.textContent='';setTimeout(function(){sbCheckAuto(idx);},100);}
+
+function sbShowSolution(idx){
+    var bank=document.getElementById('sb-bank-'+idx), row=document.getElementById('sb-row-'+idx), fb=document.getElementById('sb-fb-'+idx);
+    while(bank.firstChild) bank.removeChild(bank.firstChild);
+    row.innerHTML = '';
+    satzbauData[idx].valid[0].forEach(function(w, i){
+        row.appendChild(sbMakeChip(i===0 ? sbCapitalize(w) : w));
+    });
+    var punkt=document.createElement('span'); punkt.className='sb-punkt'; punkt.textContent=satzbauData[idx].punct||'.';
+    row.appendChild(punkt);
+    row.querySelectorAll('.chip').forEach(function(c){ c.classList.add('correct'); });
+    row.classList.add('correct'); row.classList.remove('incorrect');
+    fb.className='satzbau-feedback correct'; fb.textContent='✓ Korrekt!';
+}
 
 function initSatzbau(){
-    var container=document.getElementById('satzbauContainer');container.innerHTML='';
+    var container=document.getElementById('satzbauContainer'); container.innerHTML='';
     satzbauData.forEach(function(ex,idx){
-        var nr=document.createElement('div');nr.className='sb-nr';nr.textContent='Satz '+(idx+1);container.appendChild(nr);
-        var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;container.appendChild(bank);
-        var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;container.appendChild(row);
-        var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;container.appendChild(fb);
-        var solBtn=document.createElement('button');solBtn.className='solution-btn';solBtn.textContent='Lösung anzeigen';solBtn.style.marginBottom='18px';
+        var nr=document.createElement('div'); nr.className='sb-nr'; nr.textContent='Satz '+(idx+1); container.appendChild(nr);
+        var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx; container.appendChild(bank);
+        var row=document.createElement('div'); row.className='sentence-builder'; row.id='sb-row-'+idx; container.appendChild(row);
+        var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx; container.appendChild(fb);
+        var solBtn=document.createElement('button'); solBtn.className='solution-btn'; solBtn.textContent='Lösung anzeigen'; solBtn.style.marginBottom='18px';
         (function(i){solBtn.addEventListener('click',function(){sbShowSolution(i);});})(idx);
         container.appendChild(solBtn);
-        var parts=ex.parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}
-        parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});
-        sbRegisterZone(bank,idx);sbRegisterZone(row,idx);
+        var parts=ex.parts.slice(); for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}
+        parts.forEach(function(word){ bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(row, bank, idx);
     });
 }
 function sbResetAll(){timerResetOne(3);initSatzbau();}
