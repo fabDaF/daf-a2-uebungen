@@ -255,7 +255,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 .chip.wrong    { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; }
 
 /* Satzbau-Chips (Tab 3) — satzbau-drag-drop Skill */
-.chip {
+.sb-chip {
   background: white;
   border: 2px solid #667eea;
   color: #667eea;
@@ -268,8 +268,8 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
   user-select: none;
   white-space: nowrap;
 }
-.chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
-.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.sb-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 
 .zuo-layout {
   display: grid;
@@ -342,10 +342,8 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
   <!-- Header -->
   <div class="header">
     <h1>Das Plusquamperfekt</h1>
-    <p style="font-family: Georgia, serif;">A2 · Lektion 1013G · Meine Freunde</p>
-  
-    <div class="big-emoji">⏮️</div>
-</div>
+    <p>A2 · Lektion 1013G · Meine Freunde</p>
+  </div>
 
   <!-- Nav -->
   <div class="nav">
@@ -467,7 +465,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="control-bar">
       <div class="btn-row">
-        <button class="btn" onclick="lueckeLoesung(1)">💡 Lösungen</button>
+        <button class="btn" onclick="lueckeLoesung(1)">Lösungen</button>
         <button class="btn" onclick="lueckeReset(1)">↺ Neustart</button>
       </div>
       <div class="timer-display">
@@ -478,7 +476,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="wortkasten">
       <strong>Infinitive zur Auswahl:</strong>
-      ankommen · bestellen · einladen · fliegen · heiraten · kaufen · kennenlernen · packen · reservieren · tanzen · vorbereiten · verschicken
+      ankommen · bestellen · besuchen · einladen · fliegen · geben · heiraten · kaufen · kennenlernen · können · packen · reservieren · tanzen · vorbereiten · verschicken
     </div>
 
     <div id="luecke-container-1"></div>
@@ -496,7 +494,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="control-bar">
       <div class="btn-row">
-        <button class="btn" onclick="zuoLoesung()">💡 Lösungen</button>
+        <button class="btn" onclick="zuoLoesung()">Lösungen</button>
         <button class="btn" onclick="zuoReset()">↺ Neustart</button>
       </div>
       <div class="timer-display">
@@ -539,7 +537,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
 
     <div class="control-bar">
       <div class="btn-row">
-        <button class="btn" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">💡 Lösungen</button>
+        <button class="btn" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i);})">Lösungen</button>
         <button class="btn" onclick="resetSatzbau(); timerResetOne(3);">↺ Neustart</button>
       </div>
       <div class="timer-display">
@@ -953,7 +951,7 @@ function sbUpdateCapitalization(row) {
 
 function sbMakeChip(word) {
   var chip = document.createElement('div');
-  chip.className = 'chip';
+  chip.className = 'sb-chip';
   chip.textContent = word;
   chip.dataset.orig = word;
   chip.draggable = true;
