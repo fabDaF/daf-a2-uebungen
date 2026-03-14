@@ -621,7 +621,6 @@ function initSatzbau() {
     container.innerHTML = '';
     satzbauData.forEach(function(sd, n){
         var sb = document.createElement('div'); sb.className = 'sentence-builder';
-        var lbl = document.createElement('div'); lbl.className = 'sb-label'; lbl.textContent = 'Satz ' + (n+1);
         var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + n;
         var zone = document.createElement('div'); zone.className = 'sb-zone'; zone.id = 'sb-row-' + n;
         var punkt = document.createElement('span'); punkt.className = 'sb-punkt'; punkt.textContent = sd.punct;

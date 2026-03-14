@@ -633,8 +633,6 @@ function initSatzbau() {
     satzbauData.forEach(function(ex, idx) {
         var label = document.createElement('p');
         label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
-        label.textContent = (idx + 1) + '. Satz';
-        area.appendChild(label);
         var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
         var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
         var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;
@@ -657,7 +655,7 @@ function sbBuild(){
   satzbauData.forEach(function(data,rowIdx){
     var words=data.words.filter(function(w){return w!==',';});
     var shuffled=words.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;}
-    var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
+    var wrap=document.createElement('div'); wrap.className='sentence-builder'; /* label removed */
     var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
     shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); });
     wrap.appendChild(bank);
