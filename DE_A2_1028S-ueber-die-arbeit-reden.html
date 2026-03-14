@@ -777,10 +777,6 @@ function initSatzbau() {
     var container = document.getElementById('satzbauContainer');
     container.innerHTML = '';
     satzbauData.forEach(function(ex, idx) {
-        var nr = document.createElement('div');
-        nr.className = 'sb-nr';
-        nr.textContent = 'Satz '+(idx+1);
-        container.appendChild(nr);
 
         var bank = document.createElement('div');
         bank.className = 'chips-container';
