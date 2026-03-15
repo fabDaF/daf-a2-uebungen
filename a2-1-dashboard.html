@@ -224,6 +224,33 @@
         .typ-C { background: #e0f7fa; color: #00838f; }
         .typ-W { background: #f3e5f5; color: #6a1b9a; }
 
+        /* ── TEST-BADGE ── */
+        .test-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 6px;
+            width: fit-content;
+        }
+        .test-badge.bestanden {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        .test-badge.fehler {
+            background: #fce4ec;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        .test-badge .badge-detail {
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
         .card-actions {
             display: flex;
             align-items: center;
@@ -667,6 +694,7 @@
                 <div class="card" data-titel="1044R Das erste Date Geschichte Lesetext">
                     <span class="card-typ typ-R">R – Lesetext</span>
                     <div class="card-title">1044R · Das erste Date</div>
+                    <div class="test-badge bestanden">✅ Geprüft <span class="badge-detail">· 6/6 Tabs · 15.03.2026</span></div>
                     <div class="card-actions">
                         <a class="card-oeffnen" target="_blank" href="DE_A2_1044R-das-erste-date.html">Öffnen</a>
                         <button class="card-senden" onclick="oeffneModal('1044R · Das erste Date', 'DE_A2_1044R-das-erste-date.html')">✉ Senden</button>
