@@ -372,8 +372,7 @@ function showTab(n) {
     if (s) s.classList.toggle('active', i === n);
     if (b) b.classList.toggle('active', i === n);
   }
-  if (n === 4) timerAutoStart(4);
-  if (n === 5) { timerAutoStart(5); initVocab(); }
+  if (n === 5) { initVocab(); }
 }
 
 /* ===== TIMER ===== */
@@ -742,7 +741,6 @@ var wsInited = false;
 function initVocab() {
     if (wsInited) return;
     wsInited = true;
-    timerResetOne(5);
     var container = document.getElementById('vocabContainer');
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
