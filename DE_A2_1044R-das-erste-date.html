@@ -71,9 +71,9 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .chip { background: white; border: 2px solid #667eea; color: #667eea; padding: 8px 14px; border-radius: 20px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
 .chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
-.sb-chip.punct-chip { background: #f8f8f8; border: 2px solid #667eea; padding: 8px 16px; color: #333; font-weight: 700; font-size: 1.3em; min-width: 18px; text-align: center; cursor: move; }
-.sb-chip.punct-chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
-.sb-chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.chip.punct-chip { background: #f8f8f8; border: 2px solid #667eea; padding: 8px 16px; color: #333; font-weight: 700; font-size: 1.3em; min-width: 18px; text-align: center; cursor: move; }
+.chip.punct-chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 
 .sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
 .satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
@@ -277,7 +277,7 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
   <div class="hilfe-box">
     <strong>Aufgabe:</strong> Übersetze die Wörter ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
   </div>
-  <div id="vocabContainer"></div>
+  <div id="vocabContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
 </div>
 </section>
 
@@ -374,11 +374,19 @@ function rfReset() { initRf(); }
 var ltDone=false; var ltStarted=false;
 function ltCheck(inp) {
   if(!ltStarted){ltStarted=true; timerAutoStart(3);}
-  var val=inp.value.trim(); var ans=inp.dataset.ans;
-  if(val===ans){inp.classList.add('ok');inp.classList.remove('no');}
-  else if(ans.startsWith(val)&&val.length>0){inp.classList.remove('ok','no');}
-  else if(val.length>0){inp.classList.add('no');inp.classList.remove('ok');}
-  else{inp.classList.remove('ok','no');}
+  var ans = inp.dataset.ans || '';
+  var val = inp.value.trim();
+  /* Case-sensitive wenn Antwort mit Großbuchstabe beginnt (Satzanfang/Eigenname),
+     sonst case-insensitive (Lücke mitten im Satz) */
+  var caseSensitive = ans.charAt(0) === ans.charAt(0).toUpperCase()
+                   && ans.charAt(0) !== ans.charAt(0).toLowerCase();
+  var cmpVal = caseSensitive ? val : val.toLowerCase();
+  var cmpAns = caseSensitive ? ans : ans.toLowerCase();
+  inp.classList.remove('ok','no');
+  if(!cmpVal) return;
+  if(cmpVal === cmpAns){inp.classList.add('ok');}
+  else if(cmpAns.indexOf(cmpVal) === 0){ /* Präfix — neutral */ }
+  else {inp.classList.add('no');}
   if(Array.from(document.querySelectorAll('.lt-input')).every(function(i){return i.classList.contains('ok');})){
     if(!ltDone){ltDone=true;timerStop(3);}
   }
@@ -715,11 +723,11 @@ function initVocab() {
     });
 }
 function vocabLiveCheck(inp) {
-    var user = inp.value, answer = inp.dataset.answer;
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
     inp.classList.remove('correct', 'wrong');
     if (!user) return;
-    var cmpUser = user.trim();
-    var cmpAnswer = answer;
+    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
     if (cmpUser === cmpAnswer) inp.classList.add('correct');
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
     else inp.classList.add('wrong');
