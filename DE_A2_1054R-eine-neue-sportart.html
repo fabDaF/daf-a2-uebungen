@@ -100,6 +100,36 @@ h3 { font-size: 1em; color: #555; margin: 16px 0 8px; }
 .satzbau-feedback.correct   { color: #27ae60; }
 .satzbau-feedback.incorrect { color: #e74c3c; }
 
+/* ===== WORTSCHATZ-KARTEN ===== */
+.luecken-item {
+    background: #f8f9ff;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 0;
+}
+input.blank {
+    border: none;
+    border-bottom: 2px solid #667eea;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.93em;
+    padding: 4px 6px;
+    transition: border-color 0.2s;
+}
+input.blank:focus { border-bottom-color: #667eea; }
+input.blank.correct {
+    border-bottom-color: #27ae60;
+    color: #27ae60;
+    font-weight: 700;
+}
+input.blank.wrong {
+    border-bottom-color: #e74c3c;
+    color: #e74c3c;
+}
+input.blank:disabled { opacity: 0.6; }
+
 /* ===== WORTSCHATZ ===== */
 .ws-item { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; align-items: center; margin-bottom: 10px; }
 .ws-en { background: #f0ecff; border-radius: 8px; padding: 8px 14px; font-size: .88em; color: #4a148c; font-weight: 600; }
