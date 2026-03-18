@@ -101,16 +101,17 @@ body {
 .rf-result { font-size: 0.8em; margin-left: auto; font-weight: 700; min-width: 20px; }
 
 /* ===== SATZBAU ===== */
-.sentence-builder { margin-bottom: 22px; }
-.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 50px; border: 1px dashed #bbb; margin-bottom: 8px; }
-.sb-zone { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 2px dashed #c5cae9; border-radius: 10px; min-height: 48px; background: #fafbff; transition: background .2s; align-items: center; }
-.sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
-.chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; cursor: grab; font-size: .88em; user-select: none; white-space: nowrap; }
-.sb-chip.ok { background: #27ae60; }
-.sb-chip.no { background: #e74c3c; }
-.sb-punkt { font-weight: 700; color: #4a148c; font-size: 1.1em; padding: 0 4px; align-self: center; }
-
-.satzbau-feedback { font-size: .85em; margin-top: 6px; min-height: 20px; color: #555; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct   { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 8px 14px; cursor: move; font-weight: 500; font-size: 0.9em; transition: all 0.2s; user-select: none; white-space: nowrap; }
+.chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct   { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
 
 /* ─── WORTSCHATZ-ÜBUNG ──────────────────────────────────────────── */
 .luecken-item { background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 8px; padding: 12px 14px; }
@@ -327,29 +328,29 @@ var RF_DATA = [
 ];
 
 var satzbauData = [
-  { parts: ['Ich', 'möchte', 'fit', 'bleiben', 'und', 'mehr', 'Sport', 'treiben'], valid: [['Ich', 'möchte', 'fit', 'bleiben', 'und', 'mehr', 'Sport', 'treiben']], punct: '.' },
+  { parts: ['ich', 'möchte', 'fit', 'bleiben', 'und', 'mehr', 'Sport', 'treiben'], valid: [['ich', 'möchte', 'fit', 'bleiben', 'und', 'mehr', 'Sport', 'treiben']], punct: '.' },
   { parts: ['Maria', 'vermeidet', 'jetzt', 'bewusst', 'zu', 'viel', 'Stress'], valid: [['Maria', 'vermeidet', 'jetzt', 'bewusst', 'zu', 'viel', 'Stress']], punct: '.' },
-  { parts: ['Beim', 'Yoga', 'macht', 'sie', 'viele', 'Entspannungsübungen'], valid: [['Beim', 'Yoga', 'macht', 'sie', 'viele', 'Entspannungsübungen']], punct: '.' },
-  { parts: ['Ich', 'achte', 'auf', 'eine', 'gesunde', 'Ernährung'], valid: [['Ich', 'achte', 'auf', 'eine', 'gesunde', 'Ernährung']], punct: '.' },
+  { parts: ['beim', 'Yoga', 'macht', 'sie', 'viele', 'Entspannungsübungen'], valid: [['beim', 'Yoga', 'macht', 'sie', 'viele', 'Entspannungsübungen']], punct: '.' },
+  { parts: ['ich', 'achte', 'auf', 'eine', 'gesunde', 'Ernährung'], valid: [['ich', 'achte', 'auf', 'eine', 'gesunde', 'Ernährung']], punct: '.' },
   { parts: ['Fast', 'Food', 'hat', 'viel', 'Fett', 'und', 'viele', 'Kohlenhydrate'], valid: [['Fast', 'Food', 'hat', 'viel', 'Fett', 'und', 'viele', 'Kohlenhydrate']], punct: '.' },
-  { parts: ['Trainierst', 'du', 'auch', 'im', 'Fitnessstudio'], valid: [['Trainierst', 'du', 'auch', 'im', 'Fitnessstudio']], punct: '?' },
-  { parts: ['Sie', 'möchte', 'mit', 'der', 'Diät', 'abnehmen'], valid: [['Sie', 'möchte', 'mit', 'der', 'Diät', 'abnehmen']], punct: '.' },
-  { parts: ['Er', 'geht', 'dreimal', 'pro', 'Woche', 'laufen'], valid: [['Er', 'geht', 'dreimal', 'pro', 'Woche', 'laufen']], punct: '.' }
+  { parts: ['trainierst', 'du', 'auch', 'im', 'Fitnessstudio'], valid: [['trainierst', 'du', 'auch', 'im', 'Fitnessstudio']], punct: '?' },
+  { parts: ['sie', 'möchte', 'mit', 'der', 'Diät', 'abnehmen'], valid: [['sie', 'möchte', 'mit', 'der', 'Diät', 'abnehmen']], punct: '.' },
+  { parts: ['er', 'geht', 'dreimal', 'pro', 'Woche', 'laufen'], valid: [['er', 'geht', 'dreimal', 'pro', 'Woche', 'laufen']], punct: '.' }
 ];
 
 var WORTSCHATZ = [
-  { id: 1, type: 'p', en: '🏃 (to stay fit)', artikel: null, de: 'fit bleiben', plural: null },
-  { id: 2, type: 'p', en: '💪 (to train / work out)', artikel: null, de: 'trainieren', plural: null },
+  { id: 1, type: 'p', en: '🏃 (to stay fit)', de: 'fit bleiben' },
+  { id: 2, type: 'p', en: '💪 (to train / work out)', de: 'trainieren' },
   { id: 3, type: 'n', en: '🏢 (gym / fitness centre)', artikel: 'das', de: 'Fitnessstudio', plural: 'Fitnesstudios' },
-  { id: 4, type: 'p', en: '🏃‍♂️ (to run / jog)', artikel: null, de: 'laufen', plural: null },
-  { id: 5, type: 'n', en: '🥗 (healthy nutrition)', artikel: 'die', de: 'gesunde Ernährung', plural: null },
+  { id: 4, type: 'p', en: '🏃‍♂️ (to run / jog)', de: 'laufen' },
+  { id: 5, type: 'n', en: '🥗 (healthy nutrition)', artikel: 'die', de: 'gesunde Ernährung', plural: '–' },
   { id: 6, type: 'n', en: '⚖️ (diet)', artikel: 'die', de: 'Diät', plural: 'Diäten' },
-  { id: 7, type: 'p', en: '⬇️ (to lose weight)', artikel: null, de: 'abnehmen', plural: null },
-  { id: 8, type: 'adj', en: '🥒 (low-fat)', artikel: null, de: 'fettarm', plural: null },
-  { id: 9, type: 'n', en: '🍞 (carbohydrates)', artikel: 'die', de: 'Kohlenhydrate', plural: null },
-  { id: 10, type: 'n', en: '🧘 (relaxation)', artikel: 'die', de: 'Entspannung', plural: null },
-  { id: 11, type: 'p', en: '😌 (to avoid stress)', artikel: null, de: 'Stress vermeiden', plural: null },
-  { id: 12, type: 'n', en: '🧘‍♀️ (yoga)', artikel: 'das', de: 'Yoga', plural: null }
+  { id: 7, type: 'p', en: '⬇️ (to lose weight)', de: 'abnehmen' },
+  { id: 8, type: 'p', en: '🥒 (low-fat)', de: 'fettarm' },
+  { id: 9, type: 'n', en: '🍞 (carbohydrates)', artikel: 'die', de: 'Kohlenhydrate', plural: '–' },
+  { id: 10, type: 'n', en: '🧘 (relaxation)', artikel: 'die', de: 'Entspannung', plural: '–' },
+  { id: 11, type: 'p', en: '😌 (to avoid stress)', de: 'Stress vermeiden' },
+  { id: 12, type: 'n', en: '🧘‍♀️ (yoga)', artikel: 'das', de: 'Yoga', plural: '–' }
 ];
 
 var TIMER_PREFIX = 'a2-1055v-';
@@ -388,7 +389,7 @@ function timerResetOne(n){
   var el=document.getElementById('t'+n); if(el) el.textContent='0:00';
   if(n===2) resetLt();
   if(n===4) initSatzbau();
-  if(n===5) initWortschatz();
+  if(n===5) resetWortschatz();
 }
 function loadBests(){
   [2,4,5].forEach(function(n){
@@ -607,6 +608,7 @@ function sbMakeChip(word) {
 
     chip.addEventListener('dragstart', function(e) {
         sbDragged = chip;
+        timerAutoStart(4);
         e.dataTransfer.setData('text/plain', '');
         setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
     });
@@ -798,12 +800,9 @@ function initSatzbau() {
 }
 
 // ===== WORTSCHATZ =====
-var wortschatzInited = false;
 function initWortschatz(){
-    if (wortschatzInited) return;
-    wortschatzInited = true;
-    timerResetOne(5);
     var container = document.getElementById('wortschatzContainer');
+    if (container.children.length > 0) return;
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
         var row = document.createElement('div');
@@ -852,10 +851,28 @@ function initWortschatz(){
         container.appendChild(row);
     });
 }
-function wortschatzCheck(inp){ var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field; inp.classList.remove('correct','wrong'); if (!user) return; var cmpUser = user.trim(); var cmpAnswer = answer; if (cmpUser === cmpAnswer) inp.classList.add('correct'); else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix */ } else inp.classList.add('wrong'); }
+function wortschatzCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer;
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (!user) return;
+    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else { inp.classList.add('wrong'); }
+}
 function checkWortschatzAllOk(){ var inputs = document.querySelectorAll('#sec-5 input.blank'); var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); }); if (allOk) timerStop(5); }
 function showWortschatzLoesung(){ timerStop(5); document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){ inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong'); }); }
-function resetWortschatz(){ document.querySelectorAll('#sec-5 input.blank').forEach(function(inp){ if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); } }); wortschatzInited = false; initWortschatz(); timerStarted[5]=false; timerRunning[5]=false; timerSeconds[5]=0; var el=document.getElementById('t5'); if(el) el.textContent='0:00'; }
+function resetWortschatz(){
+    clearInterval(timerIntervals[5]);
+    timerStarted[5]=false; timerRunning[5]=false; timerSeconds[5]=0;
+    var el=document.getElementById('t5'); if(el) el.textContent='0:00';
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    initWortschatz();
+}
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function(){
