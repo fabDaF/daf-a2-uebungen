@@ -510,12 +510,12 @@ LT_IDS.forEach(function(id) {
 // ===== SATZBAU =====
 var satzbauData = [
   { parts: ['Alex', 'war', 'heute', 'im', 'Fußballstadion'], valid: [['Alex', 'war', 'heute', 'im', 'Fußballstadion']], punct: '.' },
-  { parts: ['Sein', 'Team', 'hat', 'leider', 'das', 'Spiel', 'verloren'], valid: [['Sein', 'Team', 'hat', 'leider', 'das', 'Spiel', 'verloren']], punct: '.' },
-  { parts: ['Als', 'Kind', 'hat', 'er', 'dreimal', 'pro', 'Woche', 'trainiert'], valid: [['Als', 'Kind', 'hat', 'er', 'dreimal', 'pro', 'Woche', 'trainiert']], punct: '.' },
-  { parts: ['Er', 'findet', 'das', 'Fitnessstudio', 'langweilig'], valid: [['Er', 'findet', 'das', 'Fitnessstudio', 'langweilig']], punct: '.' },
+  { parts: ['sein', 'Team', 'hat', 'leider', 'das', 'Spiel', 'verloren'], valid: [['sein', 'Team', 'hat', 'leider', 'das', 'Spiel', 'verloren']], punct: '.' },
+  { parts: ['als', 'Kind', 'hat', 'er', 'dreimal', 'pro', 'Woche', 'trainiert'], valid: [['als', 'Kind', 'hat', 'er', 'dreimal', 'pro', 'Woche', 'trainiert'], ['er', 'hat', 'als', 'Kind', 'dreimal', 'pro', 'Woche', 'trainiert']], punct: '.' },
+  { parts: ['er', 'findet', 'das', 'Fitnessstudio', 'langweilig'], valid: [['er', 'findet', 'das', 'Fitnessstudio', 'langweilig']], punct: '.' },
   { parts: ['Alex', 'möchte', 'lieber', 'in', 'einem', 'Team', 'Sport', 'treiben'], valid: [['Alex', 'möchte', 'lieber', 'in', 'einem', 'Team', 'Sport', 'treiben']], punct: '.' },
   { parts: ['Schwimmen', 'ist', 'kein', 'Teamsport'], valid: [['Schwimmen', 'ist', 'kein', 'Teamsport']], punct: '.' },
-  { parts: ['Ich', 'gehe', 'nächste', 'Woche', 'zum', 'Fußballtraining'], valid: [['Ich', 'gehe', 'nächste', 'Woche', 'zum', 'Fußballtraining']], punct: '.' }
+  { parts: ['ich', 'gehe', 'nächste', 'Woche', 'zum', 'Fußballtraining'], valid: [['ich', 'gehe', 'nächste', 'Woche', 'zum', 'Fußballtraining']], punct: '.' }
 ];
 
 var sbDragged = null;
@@ -566,6 +566,7 @@ function sbMakeChip(word) {
 
     chip.addEventListener('dragstart', function(e) {
         sbDragged = chip;
+        timerAutoStart(4);
         e.dataTransfer.setData('text/plain', '');
         setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
     });
@@ -769,10 +770,7 @@ var WORTSCHATZ = [
     { id:9, type:'p', en:'🤾 to throw', de:'werfen' },
     { id:10, type:'p', en:'✋ to catch', de:'fangen' }
 ];
-var wsInited = false;
 function initWortschatz() {
-    if (wsInited) return;
-    wsInited = true;
     timerResetOne(5);
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
@@ -824,14 +822,16 @@ function initWortschatz() {
     });
 }
 function wortschatzCheck(inp) {
-    var user = inp.value, answer = inp.dataset.answer;
+    var user = inp.value;
+    var answer = inp.dataset.answer;
+    var field = inp.dataset.field;
     inp.classList.remove('correct', 'wrong');
     if (!user) return;
-    var cmpUser = user.trim();
-    var cmpAnswer = answer;
-    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    var cmpUser   = (field === 'art') ? user.toLowerCase().trim() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
     else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
-    else inp.classList.add('wrong');
+    else { inp.classList.add('wrong'); }
 }
 function checkWortschatzAllOk() {
     var inputs = document.querySelectorAll('#sec-5 input.blank');
@@ -854,7 +854,6 @@ function resetWortschatz() {
         }
     });
     timerResetOne(5);
-    wsInited = false;
 }
 
 // ===== INIT =====
