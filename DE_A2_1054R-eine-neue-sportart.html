@@ -83,18 +83,22 @@ h3 { font-size: 1em; color: #555; margin: 16px 0 8px; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
 
 /* ===== SATZBAU ===== */
-.sentence-builder { margin-bottom: 22px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct   { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
 .chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 50px; border: 1px dashed #bbb; margin-bottom: 8px; }
 .sb-zone { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 2px dashed #c5cae9; border-radius: 10px; min-height: 48px; background: #fafbff; transition: background .2s; align-items: center; }
 .sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
-.chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; cursor: grab; font-size: .88em; user-select: none; white-space: nowrap; }
+.chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 8px 14px; cursor: move; font-size: 0.9em; font-weight: 500; user-select: none; white-space: nowrap; transition: all 0.2s; }
 .chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 .sb-chip.ok { background: #27ae60; }
 .sb-chip.no { background: #e74c3c; }
 .sb-punkt { font-weight: 700; color: #4a148c; font-size: 1.1em; padding: 0 4px; align-self: center; }
 
-.satzbau-feedback { font-size: .85em; margin-top: 6px; min-height: 20px; color: #555; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct   { color: #27ae60; }
+.satzbau-feedback.incorrect { color: #e74c3c; }
 
 /* ===== WORTSCHATZ ===== */
 .ws-item { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; align-items: center; margin-bottom: 10px; }
@@ -421,7 +425,7 @@ function timerResetOne(n) {
   var el = document.getElementById('t'+n); if (el) el.textContent = '0:00';
   if (n === 3) initLt();
   if (n === 4) initSatzbau();
-  if (n === 5) initWortschatz();
+  if (n === 5) resetWortschatz();
 }
 (function() {
   [3,4,5].forEach(function(n) {
@@ -771,8 +775,8 @@ var WORTSCHATZ = [
     { id:10, type:'p', en:'✋ to catch', de:'fangen' }
 ];
 function initWortschatz() {
-    timerResetOne(5);
     var container = document.getElementById('wortschatzContainer');
+    if (container.children.length > 0) return;  // schon befüllt → nicht nochmal
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
         var row = document.createElement('div');
@@ -853,7 +857,13 @@ function resetWortschatz() {
             inp.value = ''; inp.classList.remove('correct', 'wrong');
         }
     });
-    timerResetOne(5);
+    // Timer nur zurücksetzen (kein initWortschatz-Aufruf — würde Rekursion auslösen)
+    var n = 5;
+    clearInterval(timerIntervals[n]);
+    timerStarted[n] = false; timerRunning[n] = false; timerSeconds[n] = 0;
+    var el = document.getElementById('t'+n); if (el) el.textContent = '0:00';
+    // Container neu befüllen
+    initWortschatz();
 }
 
 // ===== INIT =====
