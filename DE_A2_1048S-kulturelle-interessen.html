@@ -54,7 +54,9 @@ table.ap-table tr:nth-child(even) td { background: #f8f7ff; }
 .chip.selected { outline: 3px solid #ffd600; }
 .drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
-.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.btn-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid #eee; }
+.btn-row button { background: none; border: 1px solid #c0b0e8; border-radius: 16px; padding: 5px 16px; cursor: pointer; font-size: .88rem; color: #5a3e9e; transition: background .2s; }
+.btn-row button:hover { background: #f0edf8; }
 .btn { background: none; color: #667eea; border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: .88em; }
 .btn:hover { background: #5a6fd6; }
 .btn.secondary { background: #9e9e9e; }
