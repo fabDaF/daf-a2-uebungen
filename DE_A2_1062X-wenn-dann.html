@@ -160,6 +160,8 @@
     transition: opacity .15s;
   }
   .chip:active { cursor: grabbing; opacity: .7; }
+  .chip.correct { background: #e8f5e9 !important; border-color: #43a047 !important; color: #2e7d32 !important; }
+  .chip.incorrect { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c !important; }
   .chip.sb-placed { background: #764ba2; }
   .sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; }
   .satzbau-feedback { font-size: .88rem; margin-top: 4px; min-height: 20px; }
@@ -275,14 +277,14 @@
   }
   .btn-row button:hover { background: #f0edf8; }
   /* FOOTER */
-  .footer {
+  .author-footer {
     text-align: center;
     padding: 18px;
     color: #888;
     font-size: .82rem;
     border-top: 1px solid #eee;
   }
-  .footer a { color: #667eea; text-decoration: none; }
+  .author-footer a { color: #667eea; text-decoration: none; }
   .author-name { font-weight: 600; color: #5a3e9e; }
   /* HIGHLIGHT */
   .hl-wenn { color: #764ba2; font-weight: 700; }
@@ -526,7 +528,7 @@
     </div>
   </section>
 
-  <div class="footer">
+  <div class="author-footer">
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
   </div>
@@ -947,6 +949,16 @@ function wsBuild() {
   });
 }
 
+
+function getSbCursor(zone, x) {
+    var chips = zone.querySelectorAll('.chip');
+    for (var i = 0; i < chips.length; i++) {
+        var rect = chips[i].getBoundingClientRect();
+        if (x < rect.left + rect.width / 2) return chips[i];
+    }
+    return null;
+}
+
 // ── INIT ─────────────────────────────────────────────────────
 (function init() {
   ['lt','sb','ws'].forEach(function(k){ timerLoad(timers[k]); });
@@ -954,6 +966,8 @@ function wsBuild() {
   sbBuild();
   wsBuild();
 })();
+
+function initSatzbau() { typeof sbBuild=="function" ? sbBuild() : typeof buildSb=="function" ? buildSb() : null; }
 </script>
 </body>
 </html>

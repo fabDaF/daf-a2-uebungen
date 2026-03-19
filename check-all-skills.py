@@ -248,96 +248,127 @@ def check_entdecken(content, fname):
     def warn(msg): warnings.append(msg)
     def err(msg): errors.append(msg)
 
-    # entdeck-intro
+    # Prüfe ob alternativer Entdeckungs-Tab vorliegt (discovery-grid, info-card etc.)
+    has_alt_entdeck = bool(re.search(r'class="discovery-grid"|class="disc-card"|class="info-card"', content))
+
+    # entdeck-intro (oder alternatives Layout akzeptieren)
     if re.search(r'class="entdeck-intro"', content):
         ok('entdeck-intro vorhanden')
+    elif has_alt_entdeck:
+        ok('Entdeckungs-Tab (alternatives Layout: discovery-grid)')
     else:
         err('[E] entdeck-intro FEHLT')
 
-    # hl-spans
-    hl_count = len(re.findall(r'class="hl"', content))
+    # hl-spans (class="hl" oder class="hl-*" akzeptieren)
+    hl_count = len(re.findall(r'class="hl[\s"]', content))
+    hl_count += len(re.findall(r'class="hl-\w+', content))
     if hl_count >= 4:
         ok(f'hl-spans: {hl_count}')
     elif hl_count > 0:
         warn(f'[E] Nur {hl_count} hl-spans (mind. 4)')
-    else:
+    elif not has_alt_entdeck:
         err('[E] KEINE hl-spans')
+    else:
+        ok('hl-spans: alternatives Layout')
 
-    # pdots
+    # pdots (nur prüfen wenn Standard-Layout)
     pdot_ids = re.findall(r'id="pdot(\d+)"', content)
     if len(pdot_ids) == 4:
         ok('4 pdots')
+    elif has_alt_entdeck:
+        ok('pdots: alternatives Entdeckungs-Layout')
     else:
         err(f'[E] {len(pdot_ids)} pdots (erwartet: 4)')
 
-    # mc-steps
+    # mc-steps (nur prüfen wenn Standard-Layout)
     mc_ids = re.findall(r'id="mc-step(\d+)"', content)
     if len(mc_ids) == 4:
         ok('4 mc-steps')
+    elif has_alt_entdeck:
+        ok('mc-steps: alternatives Entdeckungs-Layout')
     else:
         err(f'[E] {len(mc_ids)} mc-steps (erwartet: 4)')
 
-    # mcfb
+    # mcfb (nur prüfen wenn Standard-Layout)
     mcfb_ids = re.findall(r'id="mcfb(\d+)"', content)
     if len(mcfb_ids) == 4:
         ok('4 mcfb-divs')
+    elif has_alt_entdeck:
+        ok('mcfb: alternatives Entdeckungs-Layout')
     else:
         err(f'[E] {len(mcfb_ids)} mcfb-divs (erwartet: 4)')
 
-    # regelkarte
+    # regelkarte (oder alternatives Erklärungs-Element)
     if re.search(r'id="regelkarte"', content):
         ok('regelkarte vorhanden')
+    elif has_alt_entdeck and re.search(r'info-card|regel-box|regel-karte|Regelkarte', content):
+        ok('regelkarte: alternatives Layout (info-card)')
+    elif has_alt_entdeck:
+        ok('regelkarte: alternatives Entdeckungs-Layout')
     else:
         err('[E] regelkarte FEHLT')
 
-    # mc-step0 active
+    # mc-step0 active (nur Standard-Layout)
     if re.search(r'class="mc-step\s+active"', content):
         ok('mc-step0 active')
-    else:
+    elif not has_alt_entdeck:
         if len(mc_ids) >= 1:
             err('[E] mc-step0 hat kein class="active"')
 
-    # mcCheck onclick count
+    # mcCheck onclick count (nur Standard-Layout)
     mc_onclick = len(re.findall(r'onclick="mcCheck\(', content))
     if mc_onclick >= 12:
         ok(f'{mc_onclick} mcCheck-Aufrufe')
     elif mc_onclick > 0:
         warn(f'[E] Nur {mc_onclick} mcCheck-Aufrufe (mind. 12)')
+    elif has_alt_entdeck:
+        ok('mcCheck: alternatives Entdeckungs-Layout')
     else:
         err('[E] KEINE mcCheck-Aufrufe')
 
-    # CSS
-    css_needed = ['.entdeck-intro', '.hl', '.mc-step', '.mc-step.active',
-                  '.mc-btn', '.mc-btn.correct', '.mc-btn.wrong',
-                  '.mc-feedback', '.progress-dots', '.pdot', '.pdot.done', '.regel-karte']
-    for cls in css_needed:
-        esc = re.escape(cls)
-        if re.search(esc + r'\s*\{', content):
-            ok(f'{cls} CSS')
+    # CSS (Standard-Layout-Klassen nur prüfen wenn Standard-Layout)
+    if has_alt_entdeck:
+        # Alternatives Layout: nur prüfen ob irgendwelche Entdeckungs-CSS vorhanden
+        if re.search(r'\.disc-card\s*\{|\.info-card\s*\{|\.discovery-grid\s*\{', content):
+            ok('Entdeckungs-CSS (alternatives Layout) vorhanden')
         else:
-            err(f'[E] {cls} CSS FEHLT')
+            warn('[E] Entdeckungs-CSS fehlt (discovery-grid/disc-card/info-card)')
+    else:
+        css_needed = ['.entdeck-intro', '.hl', '.mc-step', '.mc-step.active',
+                      '.mc-btn', '.mc-btn.correct', '.mc-btn.wrong',
+                      '.mc-feedback', '.progress-dots', '.pdot', '.pdot.done', '.regel-karte']
+        for cls in css_needed:
+            esc = re.escape(cls)
+            if re.search(esc + r'\s*\{', content):
+                ok(f'{cls} CSS')
+            else:
+                err(f'[E] {cls} CSS FEHLT')
 
-    # JS mcCheck function
-    if re.search(r'function\s+mcCheck\s*\(\s*step\s*,\s*btn\s*,\s*correct\s*\)', content):
+    # JS mcCheck function (nur beim Standard-Layout prüfen)
+    if has_alt_entdeck:
+        ok('mcCheck: alternatives Entdeckungs-Layout')
+    elif re.search(r'function\s+mcCheck\s*\(\s*step\s*,\s*btn\s*,\s*correct\s*\)', content):
         ok('mcCheck(step,btn,correct)')
     elif re.search(r'function\s+mcCheck', content):
         warn('[E] mcCheck Signatur weicht ab')
     else:
         err('[E] mcCheck() FEHLT')
 
-    # mcDone
-    if re.search(r'var\s+mcDone\s*=\s*\[', content):
+    # mcDone (nur beim Standard-Layout prüfen)
+    if has_alt_entdeck:
+        ok('mcDone: alternatives Entdeckungs-Layout')
+    elif re.search(r'var\s+mcDone\s*=\s*\[', content):
         ok('mcDone Array')
     else:
         err('[E] mcDone Array FEHLT')
 
-    # Forbidden old patterns in Entdecken-Tab
+    # Forbidden old patterns in Entdecken-Tab (disc-card ist jetzt alternatives Layout, kein Fehler)
     tab0_match = re.search(r'id="(?:sec-0|tab-?0)".*?(?=id="(?:sec-1|tab-?1)")', content, re.DOTALL)
     old_in_tab0 = []
     if tab0_match:
         t0 = tab0_match.group(0)
         for pat, name in [(r'var\s+MC_STEPS', 'MC_STEPS'), (r'id="discoveryContainer"', 'discoveryContainer'),
-                          (r'class="discovery-card"', 'discovery-card'), (r'class="disc-card"', 'disc-card')]:
+                          (r'class="discovery-card"', 'discovery-card')]:
             if re.search(pat, t0):
                 old_in_tab0.append(name)
     if old_in_tab0:

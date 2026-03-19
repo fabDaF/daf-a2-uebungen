@@ -67,6 +67,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .sb-zone.drag-over { border-color: #667eea; background: #f0edf8; }
 .chip { background: #667eea; color: white; border-radius: 20px; padding: 5px 12px; font-size: .88rem; cursor: grab; user-select: none; white-space: nowrap; transition: opacity .15s; }
 .chip:active { cursor: grabbing; opacity: .7; }
+  .chip.correct { background: #e8f5e9 !important; border-color: #43a047 !important; color: #2e7d32 !important; }
+  .chip.incorrect { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c !important; }
 .chip.sb-placed { background: #764ba2; }
 .sb-punkt { color: #555; font-weight: 700; font-size: 1rem; align-self: center; }
 .satzbau-feedback { font-size: .88rem; margin-top: 4px; min-height: 20px; }
@@ -567,6 +569,16 @@ function mcSolve(){
   });
 }
 
+
+function getSbCursor(zone, x) {
+    var chips = zone.querySelectorAll('.chip');
+    for (var i = 0; i < chips.length; i++) {
+        var rect = chips[i].getBoundingClientRect();
+        if (x < rect.left + rect.width / 2) return chips[i];
+    }
+    return null;
+}
+
 // ── INIT ────────────────────────────────────────────────────
 (function init(){
   timerLoadBest(TIMER_PREFIX+'best-lt', 'lt-best');
@@ -574,6 +586,8 @@ function mcSolve(){
   sbBuild();
   mcBuild();
 })();
+
+function initSatzbau() { typeof sbBuild=="function" ? sbBuild() : typeof buildSb=="function" ? buildSb() : null; }
 </script>
 </body>
 </html>
