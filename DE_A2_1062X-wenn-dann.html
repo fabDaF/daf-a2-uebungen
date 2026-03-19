@@ -519,12 +519,12 @@
   <!-- TAB 4: WORTSCHATZ -->
   <section class="section" id="tab4">
     <p style="color:#555;margin-bottom:14px;">Tippe die deutsche Übersetzung (mit Artikel und Plural, wo nötig).</p>
-    <div class="ws-grid" id="wsGrid"></div>
+    <div class="ws-grid" id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
     <div class="btn-row">
       <span>⏱ <span id="ws-timer">0:00</span></span>
       <span>🏆 <span id="ws-best">–</span></span>
-      <button onclick="wsReset()">↺ Neustart</button>
-      <button onclick="wsShowAll()">💡 Lösungen</button>
+      <button onclick="resetWortschatz()">↺ Neustart</button>
+      <button onclick="showWortschatzLoesung()">💡 Lösungen</button>
     </div>
   </section>
 
@@ -887,87 +887,118 @@ function sbBuild() {
   });
 }
 
-// ── WORTSCHATZ ───────────────────────────────────────────────
-var WS_DATA = [
-  { en: '(to make a plan)', de: 'einen Plan machen' },
-  { en: '(to discard a plan)', de: 'einen Plan verwerfen' },
-  { en: '(to divide time)', de: 'Zeit einteilen' },
-  { en: '(to set a deadline)', de: 'eine Frist setzen' },
-  { en: '(to pursue goals)', de: 'Ziele verfolgen' },
-  { en: '(shortly / soon)', de: 'in Kürze' },
-  { en: '(to make a decision)', de: 'eine Entscheidung treffen' },
-  { en: '(to look ahead)', de: 'vorausschauen' },
-  { en: '(to take a risk)', de: 'ein Risiko eingehen' },
-  { en: '(the life goal)', de: 'das Lebensziel' },
-  { en: '(the role model)', de: 'das Vorbild' },
-  { en: '(to emulate someone)', de: 'jemandem nacheifern' }
+// ─── WORTSCHATZ-TRAINING ──────────────────────────────────────────────────────
+var WORTSCHATZ = [
+    { id:1, type:'p', en:'✨ (to make a plan)', artikel:'', de:'einen Plan machen', plural:'' },
+    { id:2, type:'p', en:'🌈 (to discard a plan)', artikel:'', de:'einen Plan verwerfen', plural:'' },
+    { id:3, type:'p', en:'💡 (to divide time)', artikel:'', de:'Zeit einteilen', plural:'' },
+    { id:4, type:'p', en:'🎨 (to set a deadline)', artikel:'', de:'eine Frist setzen', plural:'' },
+    { id:5, type:'p', en:'🔆 (to pursue goals)', artikel:'', de:'Ziele verfolgen', plural:'' },
+    { id:6, type:'p', en:'🌀 (shortly / soon)', artikel:'', de:'in Kürze', plural:'' },
+    { id:7, type:'p', en:'🔮 (to make a decision)', artikel:'', de:'eine Entscheidung treffen', plural:'' },
+    { id:8, type:'p', en:'🪄 (to look ahead)', artikel:'', de:'vorausschauen', plural:'' },
+    { id:9, type:'p', en:'🌸 (to take a risk)', artikel:'', de:'ein Risiko eingehen', plural:'' },
+    { id:10, type:'p', en:'🍀 (the life goal)', artikel:'', de:'das Lebensziel', plural:'' },
+    { id:11, type:'p', en:'🔄 (the role model)', artikel:'', de:'das Vorbild', plural:'' },
+    { id:12, type:'p', en:'▶️ (to emulate someone)', artikel:'', de:'jemandem nacheifern', plural:'' }
 ];
-var wsTimerStarted = false;
-function wsTimerStart() {
-  if (!wsTimerStarted) { wsTimerStarted = true; timerStart(timers.ws); }
+
+var wortschatzInited = false;
+function initWortschatz(){
+    if (wortschatzInited) return;
+    wortschatzInited = true;
+    timerReset(4);
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    WORTSCHATZ.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        row.style.marginBottom = '0';
+        var prompt = document.createElement('div');
+        prompt.style.cssText = 'font-weight:600; color:#667eea; margin-bottom:6px; font-size:1.05em;';
+        prompt.textContent = item.en;
+        row.appendChild(prompt);
+        var fields = document.createElement('div');
+        fields.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap; align-items:center;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank'; artInp.type = 'text';
+            artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank'; wordInp.type = 'text';
+            wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(wordInp);
+            var plInp = document.createElement('input');
+            plInp.className = 'blank'; plInp.type = 'text';
+            plInp.placeholder = 'Plural'; plInp.style.width = '140px';
+            plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+            if (item.plural === '\u2013') {
+                plInp.value = '\u2013'; plInp.disabled = true;
+                plInp.classList.add('correct'); plInp.style.opacity = '0.6';
+                plInp.title = 'Dieses Wort hat keinen Plural';
+            } else {
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            }
+            fields.appendChild(plInp);
+        } else {
+            var inp = document.createElement('input');
+            inp.className = 'blank'; inp.type = 'text';
+            inp.placeholder = 'Deutsch'; inp.style.width = '220px';
+            inp.dataset.answer = item.de; inp.dataset.field = 'word';
+            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            fields.appendChild(inp);
+        }
+        row.appendChild(fields);
+        container.appendChild(row);
+    });
 }
-function wsCheck(inp) {
-  wsTimerStart();
-  var val = inp.value.trim();
-  var ans = inp.dataset.ans;
-  if (val === ans) { inp.className = 'ws-inp ok'; }
-  else if (ans.startsWith(val) && val.length > 0) { inp.className = 'ws-inp'; }
-  else if (val.length > 0) { inp.className = 'ws-inp no'; }
-  else { inp.className = 'ws-inp'; }
-  var all = document.querySelectorAll('.ws-inp');
-  var done = Array.from(all).every(function(el){ return el.className.indexOf('ok') !== -1; });
-  if (done) timerStop(timers.ws);
+function wortschatzCheck(inp){
+    var user = inp.value, answer = inp.dataset.answer, field = inp.dataset.field;
+    inp.classList.remove('correct','wrong');
+    if (!user) return;
+    var cmpUser   = user.trim();
+    var cmpAnswer = answer;
+    if (cmpUser === cmpAnswer) inp.classList.add('correct');
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* Präfix — neutral */ }
+    else inp.classList.add('wrong');
 }
-function wsReset() {
-  document.querySelectorAll('.ws-inp').forEach(function(el){ el.value=''; el.className='ws-inp'; });
-  wsTimerStarted = false;
-  timerReset(timers.ws);
+function checkWortschatzAllOk(){
+    var inputs = document.querySelectorAll('#tab4 input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
+    if (allOk) timerStop(4);
 }
-function wsShowAll() {
-  document.querySelectorAll('.ws-inp').forEach(function(el){ el.value=el.dataset.ans; el.className='ws-inp ok'; });
-  timerStop(timers.ws);
+function showWortschatzLoesung(){
+    timerStop(4);
+    document.querySelectorAll('#tab4 input.blank').forEach(function(inp){
+        inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
+    });
 }
-function wsBuild() {
-  var grid = document.getElementById('wsGrid');
-  grid.innerHTML = '';
-  WS_DATA.forEach(function(item, i) {
-    var div = document.createElement('div');
-    div.className = 'ws-item';
-    var num = document.createElement('span');
-    num.className = 'ws-num';
-    num.textContent = (i+1)+'.';
-    var en = document.createElement('span');
-    en.className = 'ws-en';
-    en.textContent = item.en;
-    var inp = document.createElement('input');
-    inp.className = 'ws-inp';
-    inp.dataset.ans = item.de;
-    inp.placeholder = '';
-    inp.addEventListener('input', function(){ wsCheck(this); });
-    div.appendChild(num); div.appendChild(en); div.appendChild(inp);
-    grid.appendChild(div);
-  });
+function resetWortschatz(){
+    document.querySelectorAll('#tab4 input.blank').forEach(function(inp){
+        if (!inp.disabled){ inp.value = ''; inp.classList.remove('correct','wrong'); }
+    });
+    wortschatzInited = false;
+    initWortschatz();
+    timerReset(4);
 }
 
-
-function getSbCursor(zone, x) {
-    var chips = zone.querySelectorAll('.chip');
-    for (var i = 0; i < chips.length; i++) {
-        var rect = chips[i].getBoundingClientRect();
-        if (x < rect.left + rect.width / 2) return chips[i];
-    }
-    return null;
-}
 
 // ── INIT ─────────────────────────────────────────────────────
 (function init() {
   ['lt','sb','ws'].forEach(function(k){ timerLoad(timers[k]); });
   zuordInit();
   sbBuild();
-  wsBuild();
+  initWortschatz();
 })();
+</script>
+</body>
+</html>
 
-function initSatzbau() { typeof sbBuild=="function" ? sbBuild() : typeof buildSb=="function" ? buildSb() : null; }
 </script>
 </body>
 </html>
