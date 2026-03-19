@@ -133,6 +133,8 @@ body {
     user-select: none; transition: background .15s, color .15s;
 }
 .chip.selected { background: #667eea; color: white; }
+.chip.correct { background: #e8f5e9 !important; border-color: #43a047 !important; color: #2e7d32 !important; }
+.chip.incorrect { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c !important; }
 .sb-punkt { font-weight: 700; color: #4a148c; align-self: center; margin-left: 2px; }
 .satzbau-feedback { font-size: 0.8em; margin-top: 4px; min-height: 18px; }
 .satzbau-feedback.ok { color: #27ae60; font-weight: 700; }
@@ -176,7 +178,15 @@ body {
     margin-bottom: 18px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
-  </style>
+  .timer-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: white; border-radius: 10px;
+  padding: 10px 16px; margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  font-size: 0.85rem; color: #666;
+}
+.timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
+</style>
 </head>
 <body>
 <div class="container">
@@ -490,6 +500,14 @@ function showLtSolution() {
 /* ===== SATZBAU ===== */
 var sbDragged = null;
 
+function getSbCursor(zone, x) {
+    var chips = zone.querySelectorAll('.chip');
+    for (var i = 0; i < chips.length; i++) {
+        var rect = chips[i].getBoundingClientRect();
+        if (x < rect.left + rect.width / 2) return chips[i];
+    }
+    return null;
+}
 function sbMakeChip(word, orig) {
     var c = document.createElement('div');
     c.className = 'chip'; c.textContent = word; c.dataset.orig = orig;

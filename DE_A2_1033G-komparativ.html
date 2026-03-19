@@ -127,7 +127,15 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
     margin-bottom: 18px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
-  </style>
+  .timer-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: white; border-radius: 10px;
+  padding: 10px 16px; margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  font-size: 0.85rem; color: #666;
+}
+.timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
+</style>
 </head>
 <body>
 
@@ -447,6 +455,14 @@ function sbUpdateCaps(idx) {
     });
 }
 
+function getSbCursor(zone, x) {
+    var chips = zone.querySelectorAll('.chip');
+    for (var i = 0; i < chips.length; i++) {
+        var rect = chips[i].getBoundingClientRect();
+        if (x < rect.left + rect.width / 2) return chips[i];
+    }
+    return null;
+}
 function sbMakeChip(word) {
     var chip = document.createElement('div');
     chip.className = 'chip'; chip.textContent = word; chip.dataset.orig = word;
