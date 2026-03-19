@@ -18,10 +18,11 @@ body {
 }
 .header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white; padding: 24px 30px 20px;
+    color: white; padding: 30px; text-align: center;
 }
-.header h1 { font-size: 1.5em; font-weight: 700; }
-.header p { opacity: .85; font-size: .9em; margin-top: 4px; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p { font-size: 1.1em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
 .nav {
     display: flex; flex-wrap: nowrap; background: #f8f9fa;
     border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
@@ -186,10 +187,9 @@ input.blank:disabled { opacity: 0.6; }
 <body>
 <div class="container">
   <div class="header">
-    <h1>⚽ Eine neue Sportart</h1>
-    <p>A2 · Lektion 1054R · Sport &amp; Freizeit</p>
-  
-    <div class="big-emoji">🏃</div>
+    <h1>Eine neue Sportart</h1>
+    <p style="font-family: Georgia, serif;">A2 · Lektion 1054R · Sport &amp; Freizeit</p>
+    <div class="big-emoji">⚽</div>
 </div>
   <nav class="nav">
     <button class="nav-btn active" onclick="showTab(0,this)">
