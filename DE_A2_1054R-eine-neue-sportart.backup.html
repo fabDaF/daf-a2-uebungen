@@ -237,7 +237,7 @@ h3 { font-size: 1em; color: #555; margin: 16px 0 8px; }
         Alex' Lieblingsteam Hertha BSC hat gegen FC Bayern München gespielt.
         Leider hat sein Team verloren. FC Bayern München hat vier Tore geschossen und damit gewonnen.
         Alex macht das ein bisschen traurig, wie immer, wenn Hertha BSC verliert.
-        „Hoffentlich gewinnen sie das nächste Spiel!", denkt er.<br><br>
+        „Hoffentlich gewinnen sie das nächste Spiel!“, denkt er.<br><br>
         Alex sieht sich gern die Spiele an und liebt es, ins Stadion zu gehen, aber auch wenn Fußballspiele im Fernsehen übertragen werden, ist er dabei.
         Als Kind hat er auch selbst Fußball gespielt und dreimal die Woche Training gehabt.
         Beim Training ist er viel gerannt und gelaufen. Sogar viele Tore hat er geschossen.
@@ -258,7 +258,7 @@ h3 { font-size: 1em; color: #555; margin: 16px 0 8px; }
         Wenn er dahin geht, hebt er Gewichte oder rennt auf dem Laufband.
         Er trainiert immer allein. Das findet Alex zu langweilig.
         Er möchte lieber in einem Team Sport treiben.<br><br>
-        Alex überlegt. „Welche Sportart macht mir Spaß?", denkt er.
+        Alex überlegt. „Welche Sportart macht mir Spaß?“, denkt er.
         Er kann nicht gut werfen oder fangen.
         Handball oder Basketball sind also nicht gut für ihn.
         Alex weiß, dass Nils oft im Schwimmbad schwimmen geht.
@@ -274,13 +274,13 @@ h3 { font-size: 1em; color: #555; margin: 16px 0 8px; }
         Sie schwimmen viele Bahnen. Sie schwimmen fast zwei Stunden lang.
         Es ist sehr anstrengend. Alex und Nils können beim Schwimmen nicht reden.
         Das findet Alex nicht gut. Schwimmen ist auch kein Teamsport.
-        „Das ist auch nicht die richtige Sportart für mich", denkt Alex traurig.<br><br>
+        „Das ist auch nicht die richtige Sportart für mich“, denkt Alex traurig.<br><br>
         Auf dem Weg nach Hause sieht Alex ein Poster.
         „Wir suchen neue Fußballspieler. Wir sind Männer zwischen 30 und 50 und spielen gern Fußball.
-        Kannst du gut Fußball spielen? Dann komm vorbei!", steht auf dem Poster.
-        „Vielleicht bin ich doch nicht zu alt für Fußball", denkt Alex.
-        „Vielleicht kann ich noch gut Fußball spielen. Vielleicht schieße ich sogar ein Tor!"
-        Alex ist ganz aufgeregt. „Ich gehe also nächste Woche zum Fußballtraining. Ich freue mich schon!"
+        Kannst du gut Fußball spielen? Dann komm vorbei!“, steht auf dem Poster.
+        „Vielleicht bin ich doch nicht zu alt für Fußball“, denkt Alex.
+        „Vielleicht kann ich noch gut Fußball spielen. Vielleicht schieße ich sogar ein Tor!“
+        Alex ist ganz aufgeregt. „Ich gehe also nächste Woche zum Fußballtraining. Ich freue mich schon!“
       </p>
     </div>
   </section>
@@ -315,7 +315,7 @@ h3 { font-size: 1em; color: #555; margin: 16px 0 8px; }
         Alex kann nicht gut <input class="luecken-inp" id="lt7" data-ans="werfen" placeholder=""> oder <input class="luecken-inp" id="lt8" data-ans="fangen" placeholder="">.
         Schwimmen ist auch kein <input class="luecken-inp" id="lt9" data-ans="Teamsport" placeholder="">.
         Am Ende sieht Alex ein <input class="luecken-inp" id="lt10" data-ans="Poster" placeholder=""> für eine Fußballmannschaft.
-        „Ich gehe nächste Woche zum <input class="luecken-inp" id="lt11" data-ans="Fußballtraining" placeholder="">. Ich freue mich schon!"
+        „Ich gehe nächste Woche zum <input class=“luecken-inp" id="lt11" data-ans="Fußballtraining" placeholder="">. Ich freue mich schon!"
       </p>
     </div>
   </section>
@@ -688,8 +688,6 @@ function initSatzbau() {
     satzbauData.forEach(function(ex, idx) {
         var label = document.createElement('p');
         label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
-        label.textContent = (idx + 1) + '. Satz';
-        area.appendChild(label);
         var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
         var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
         var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;

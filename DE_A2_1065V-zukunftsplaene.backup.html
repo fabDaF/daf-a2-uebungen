@@ -193,9 +193,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <div class="story-text">
       <strong>Bei der Wahrsagerin</strong><br><br>
       Anna hat heute einen Termin bei der Wahrsagerin Sybil. Anna möchte sich die Zukunft wahrsagen lassen. Sie ist ganz aufgeregt.<br><br>
-      <em>Sybil:</em> „Guten Tag, Anna! Ich habe schon gesehen, dass du kommst. Wir wollen heute über deine Zukunft sprechen. Ich werde dir eine Vorhersage über deine Zukunft geben. Ich kann sehen, dass es viele Veränderungen in deinem Leben geben wird."<br><br>
-      <em>Sybil:</em> „In deiner Familie wird es bald eine große Überraschung geben. Es wird ein neuer Mann oder eine neue Frau in dein Leben kommen. Das ist noch unsicher. Aber das ist kein Grund, pessimistisch oder nervös zu sein. Ich sehe, dass deine Zukunft gut wird. Du wirst einen guten Job finden und eine große und gesunde Familie haben. Du kannst optimistisch sein. Ich bin mir sicher, dass du zukünftig viele positive Erlebnisse haben wirst."<br><br>
-      Nach dem Termin bei Sybil ist Anna sich unsicher. Manche Vorhersagen gefallen Anna, manche aber auch nicht. „Hat die Wahrsagerin recht? Werde ich wirklich solche Überraschungen erleben? Ein neuer Mann oder eine neue Frau? Was bedeutet das? Oder sind die Vorhersagen falsch?", denkt Anna nervös.<br><br>
+      <em>Sybil:</em> „Guten Tag, Anna! Ich habe schon gesehen, dass du kommst. Wir wollen heute über deine Zukunft sprechen. Ich werde dir eine Vorhersage über deine Zukunft geben. Ich kann sehen, dass es viele Veränderungen in deinem Leben geben wird.“<br><br>
+      <em>Sybil:</em> „In deiner Familie wird es bald eine große Überraschung geben. Es wird ein neuer Mann oder eine neue Frau in dein Leben kommen. Das ist noch unsicher. Aber das ist kein Grund, pessimistisch oder nervös zu sein. Ich sehe, dass deine Zukunft gut wird. Du wirst einen guten Job finden und eine große und gesunde Familie haben. Du kannst optimistisch sein. Ich bin mir sicher, dass du zukünftig viele positive Erlebnisse haben wirst.“<br><br>
+      Nach dem Termin bei Sybil ist Anna sich unsicher. Manche Vorhersagen gefallen Anna, manche aber auch nicht. „Hat die Wahrsagerin recht? Werde ich wirklich solche Überraschungen erleben? Ein neuer Mann oder eine neue Frau? Was bedeutet das? Oder sind die Vorhersagen falsch?“, denkt Anna nervös.<br><br>
       Anna hat die Vermutung, dass die Vorhersage sehr unsicher ist. Aber sie ist optimistisch, dass ihre Zukunft trotzdem sehr positiv wird.
     </div>
 
@@ -633,8 +633,6 @@ function initSatzbau() {
     satzbauData.forEach(function(ex, idx) {
         var label = document.createElement('p');
         label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
-        label.textContent = (idx + 1) + '. Satz';
-        area.appendChild(label);
         var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
         var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
         var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;
@@ -657,7 +655,7 @@ function sbBuild(){
   satzbauData.forEach(function(data,rowIdx){
     var words=data.words.filter(function(w){return w!==',';});
     var shuffled=words.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;}
-    var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>';
+    var wrap=document.createElement('div'); wrap.className='sentence-builder'; /* label removed */
     var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx;
     shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); });
     wrap.appendChild(bank);

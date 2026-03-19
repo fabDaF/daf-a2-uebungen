@@ -1,0 +1,85 @@
+SBMAKECHIP FIX REPORT
+=====================
+
+Summary: Fixed 9 HTML files with incorrect sbMakeChip() calls
+
+Fixed Files:
+============
+
+1. DE_A2_1035V-mein-zuhause.html (2 fixes)
+   - Line 731 (sbShowSolution): sbMakeChip(word, w.toLowerCase()) ✓ CORRECT (solution display)
+   - Line 753 (initSatzbau): sbMakeChip(w, w.toLowerCase()) ✓ CORRECT (chip bank)
+   Issue: Capitalization logic was incorrectly placed in chip creation instead of being handled by sbUpdateCapitalization
+
+2. DE_A2_1041V-stadtleben.html (2 fixes)
+   - Line 472 (sbShowSolution): Restored proper capitalization expression for solution display
+   - Line 487 (initSatzbau): sbMakeChip(w, w.toLowerCase()) ✓ CORRECT (chip bank)
+
+3. DE_A2_1044R-das-erste-date.html (2 fixes)
+   - Line 386 (sbShowSolution): sbMakeChip(j===0?w.charAt(0).toUpperCase()+w.slice(1):w,w) ✓ CORRECT
+   - Line 393 (initSatzbau): sbMakeChip(w,w) ✓ CORRECT (chip bank)
+   Issue: w.toLowerCase() was destroying original case in orig parameter
+
+4. DE_A2_1045V-kunst-und-kultur.html (2 fixes)
+   - Line 393 (sbShowSolution): Restored proper capitalization for solution display
+   - Line 394 (initSatzbau): sbMakeChip(w,w) ✓ CORRECT (chip bank)
+
+5. DE_A2_1051V-sport-treiben.html (2 fixes)
+   - Line 613 (initSatzbau): sbMakeChip(word, idx) ✓ CORRECT (chip bank)
+   - Line 642 (initSatzbau): sbMakeChip(word, idx) ✓ CORRECT (chip bank)
+   Issue: Unnecessary capitalization logic removed from chip bank creation
+
+6. DE_A2_1054R-eine-neue-sportart.html (2 fixes)
+   - Line 564 (initSatzbau): sbMakeChip(word, idx) ✓ CORRECT (chip bank)
+   - Line 587 (initSatzbau): sbMakeChip(word, idx) ✓ CORRECT (chip bank)
+
+7. DE_A2_1055V-fit-bleiben.html (1 fix)
+   - Line 629 (initSatzbau): sbMakeChip(w,i,idx) ✓ CORRECT (chip bank)
+   Issue: Capitalization logic removed from first parameter
+
+8. DE_A2_1061V-plaene-machen.html (1 fix)
+   - Line 602 (initSatzbau): sbMakeChip(w,i,idx) ✓ CORRECT (chip bank)
+
+9. DE_A2_1065V-zukunftsplaene.html (2 fixes)
+   - Line 495 (sbShowSolution): sbMakeChip(i===0?word.charAt(0).toUpperCase()+word.slice(1):word,word) ✓ CORRECT
+   - Line 509 (initSatzbau): sbMakeChip(word,word) ✓ CORRECT (chip bank)
+
+Key Corrections:
+================
+
+✓ Removed capitalization logic from chip bank (shuffled chips) - these should just use plain word
+✓ Removed w.toLowerCase() from orig parameter - restored original word case preservation
+✓ Solution display capitalization logic (sbShowSolution) restored correctly where needed
+✓ sbUpdateCapitalization() now handles all dynamic capitalization after placement
+
+Verification:
+=============
+
+✅ All 9 fixed files pass JavaScript syntax validation
+✅ Restored calls match backup versions exactly
+✅ Patterns conform to sbMakeChip function signatures in each file
+
+Files with No Backup:
+====================
+13 A2_* aggregate files (no backups needed - these are generated from individual files)
+2 S-type (Speaking) files created after initial backup
+2 W-type (Repetition) files created after initial backup
+1 G-type file (1013) created without backup
+2 Other files (1018S, 1028S) created after backups
+Plus other newer files
+
+Files with No Changes Needed:
+============================
+✓ DE_A2_1011V-meine-freunde.html
+✓ DE_A2_1012X-meine-freunde.html
+✓ DE_A2_1014R-die-hochzeit.html
+✓ DE_A2_1015V-gefuehle.html
+✓ DE_A2_1016X-hoeflichkeit.html
+✓ DE_A2_1021V-die-arbeitswelt.html
+✓ DE_A2_1022X-bewerbungen.html
+✓ DE_A2_1024R-die-neue-sekretaerin.html
+✓ DE_A2_1025V-die-firma.html
+✓ DE_A2_1026X-am-telefon.html
+✓ DE_A2_1031V-einziehen-und-ausziehen.html
+✓ DE_A2_1034R-die-neue-wohnung.html
+✓ DE_A2_1064R-plaene-zukunft.html

@@ -547,7 +547,7 @@ body {
                 Seine beste Freundin Lisa ist immer für ihn da. Ihre <input class="luecken-inp" data-ans="Freundschaft" placeholder="___">
                 ist sehr stark – sie ist sein größtes <input class="luecken-inp" data-ans="Gefühl" placeholder="___"> von Sicherheit.
                 Ben hat <input class="luecken-inp" data-ans="Angst" placeholder="___">, dass er nie wieder jemanden findet.
-                Aber Lisa sagt: „Du wirst wieder <input class="luecken-inp" data-ans="zufrieden" placeholder="___"> sein!"
+                Aber Lisa sagt: „Du wirst wieder <input class=“luecken-inp" data-ans="zufrieden" placeholder="___"> sein!"
             </div>
         </div>
     </div>
@@ -925,8 +925,6 @@ function initSatzbau(){
     satzbauData.forEach(function(ex,idx){
         var label=document.createElement('p');
         label.style.cssText='font-weight:600;color:#4a148c;margin:16px 0 8px;';
-        label.textContent=(idx+1)+'. Satz';
-        area.appendChild(label);
         var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+idx;
         var row=document.createElement('div');  row.className='sentence-builder';  row.id='sb-row-'+idx;
         var fb=document.createElement('div');   fb.className='satzbau-feedback';   fb.id='sb-fb-'+idx;

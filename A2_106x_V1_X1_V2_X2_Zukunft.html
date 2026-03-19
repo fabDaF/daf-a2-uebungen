@@ -116,9 +116,7 @@
   .satzbau-fb.err { color: #c62828; }
 
   /* Wortschatz-Tab */
-  .vocab-item { display:flex; align-items:center; gap:10px; padding:10px 14px;
-    border-radius:8px; border:1px solid #e0e0e0; margin-bottom:8px;
-    background:#fafafa; flex-wrap:wrap; }
+  .luecken-item { background: #f8f9ff; padding: 14px 18px; border-radius: 10px; border-left: 4px solid #667eea; }
   .vocab-en { font-weight:600; color:#e65100; min-width:160px; }
   .vocab-arrow { color:#aaa; font-size:1.1em; }
   .vocab-inputs { display:flex; gap:8px; flex-wrap:wrap; }
@@ -261,7 +259,7 @@
     <div class="help-box">
       <strong>Aufgabe:</strong> Übersetze die Wörter ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
     </div>
-    <div id="vocabContainer"></div>
+    <div id="wortschatzContainer" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
     <div class="btn-row">
       <button class="btn btn-show" style="background:#f57c00;color:#fff;" onclick="showVocabLoesung()">💡 Lösungen</button>
       <button class="btn btn-reset" onclick="resetVocab()">🔄 Neu starten</button>
@@ -774,50 +772,53 @@ var WORTSCHATZ = [
   { id:28, type:"n", en:"📝 exam", artikel:"das", de:"Examen", plural:"Examina" }
 ];
 
-function initVocab() {
-  var container = document.getElementById('vocabContainer');
-  container.innerHTML = '';
-  var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
-  shuffled.forEach(function(item) {
-    var div = document.createElement('div');
-    div.className = 'vocab-item';
-    var en = document.createElement('span');
-    en.className = 'vocab-en';
-    en.textContent = item.en;
-    div.appendChild(en);
-    var arrow = document.createElement('span');
-    arrow.className = 'vocab-arrow';
-    arrow.textContent = '\u2192';
-    div.appendChild(arrow);
-    var inputs = document.createElement('div');
-    inputs.className = 'vocab-inputs';
-    if (item.type === 'n') {
-      var artInp = document.createElement('input');
-      artInp.className = 'art'; artInp.placeholder = 'der/die/das';
-      artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
-      artInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
-      inputs.appendChild(artInp);
-      var wordInp = document.createElement('input');
-      wordInp.className = 'wort'; wordInp.placeholder = 'Deutsch';
-      wordInp.dataset.answer = item.de; wordInp.dataset.field = 'wort';
-      wordInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
-      inputs.appendChild(wordInp);
-      var pluralInp = document.createElement('input');
-      pluralInp.className = 'plural'; pluralInp.placeholder = 'Plural';
-      pluralInp.dataset.answer = item.plural; pluralInp.dataset.field = 'plural';
-      pluralInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
-      inputs.appendChild(pluralInp);
-    } else {
-      var deInp = document.createElement('input');
-      deInp.className = 'wort'; deInp.style.width = '200px'; deInp.placeholder = 'Deutsch';
-      deInp.dataset.answer = item.de; deInp.dataset.field = 'wort';
-      deInp.oninput = function() { timerAutoStart(5); liveCheck(this); checkVocabAllOk(); };
-      inputs.appendChild(deInp);
-    }
-    div.appendChild(inputs);
-    container.appendChild(div);
-  });
+function initWortschatz() {
+    var container = document.getElementById('wortschatzContainer');
+    container.innerHTML = '';
+    var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
+    shuffled.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        var en = document.createElement('div');
+        en.style.cssText = 'font-weight:600;color:#3949ab;margin-bottom:6px;';
+        en.textContent = item.en;
+        row.appendChild(en);
+        var inputs = document.createElement('div');
+        inputs.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank art'; artInp.placeholder = 'der/die/das'; artInp.style.width = '80px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.setAttribute('autocomplete','off'); artInp.setAttribute('spellcheck','false');
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            inputs.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank wort'; wordInp.placeholder = 'Deutsch'; wordInp.style.width = '140px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'wort';
+            wordInp.setAttribute('autocomplete','off'); wordInp.setAttribute('spellcheck','false');
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            inputs.appendChild(wordInp);
+            if (item.plural && item.plural !== '—') {
+                var plInp = document.createElement('input');
+                plInp.className = 'blank plural'; plInp.placeholder = 'Plural'; plInp.style.width = '120px';
+                plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+                plInp.setAttribute('autocomplete','off'); plInp.setAttribute('spellcheck','false');
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+                inputs.appendChild(plInp);
+            }
+        } else {
+            var deInp = document.createElement('input');
+            deInp.className = 'blank wort'; deInp.placeholder = 'Deutsch'; deInp.style.width = '200px';
+            deInp.dataset.answer = item.de; deInp.dataset.field = 'wort';
+            deInp.setAttribute('autocomplete','off'); deInp.setAttribute('spellcheck','false');
+            deInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            inputs.appendChild(deInp);
+        }
+        row.appendChild(inputs);
+        container.appendChild(row);
+    });
 }
+function initVocab() { initWortschatz(); }
 
 function checkVocabAllOk() {
   var secId = 'tab5';
@@ -917,6 +918,24 @@ window.onload = function() {
   }, false);
 })();
 /* ── Ende Tap-to-Select ─────────────────────────────────────────────── */
+
+function wortschatzCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer || '';
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (user.length === 0) return;
+    var cmpUser = (field === 'art') ? user.trim().toLowerCase() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* gültiger Prefix → neutral */ }
+    else { inp.classList.add('wrong'); }
+}
+function checkWortschatzAllOk() {
+    var inputs = document.querySelectorAll('#wortschatzContainer input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i) { return i.classList.contains('correct'); });
+    if (allOk) { timerStop(5); }
+}
 </script>
 <div class="author-footer">
   <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;

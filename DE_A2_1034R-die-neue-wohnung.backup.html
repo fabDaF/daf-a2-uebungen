@@ -182,9 +182,9 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
                 <h3>Teil 1 — Auf der Suche</h3>
                 <div class="story-text">
                     <p>Louise sitzt in ihrer Wohnung und ist sehr unglücklich. Sie möchte gerne ausziehen. Deswegen schaut sie in die Zeitung, doch sie findet dort nur wenige Wohnungsanzeigen. Im Internet hat sie mehr Glück: Hier gibt es sehr viele Anzeigen für Wohnungen in Berlin. Aber Louise braucht Hilfe bei der Wohnungssuche. Sie ruft Alex an. Alex ist ein echter Berliner, er lebt schon sein ganzes Leben in Berlin. Er kennt sich in Berlin besser aus als sie.</p>
-                    <div class="story-quote">„Hallo Alex! Ich brauche deine Hilfe! Ich möchte aus meiner Wohnung ausziehen. Sie gefällt mir nicht mehr. Möchtest du mir bei der Wohnungssuche helfen?", fragt Louise.</div>
-                    <p>„Natürlich! Ich helfe dir gern.", antwortet Alex. „Wie soll deine neue Wohnung denn sein?"</p>
-                    <div class="story-quote">„Die neue Wohnung muss gemütlicher sein als die alte Wohnung. Meine Wohnung jetzt ist alt, klein und dunkel. Die neue Wohnung soll neuer, größer und heller sein. Aber sie soll nicht viel teurer sein."</div>
+                    <div class="story-quote">„Hallo Alex! Ich brauche deine Hilfe! Ich möchte aus meiner Wohnung ausziehen. Sie gefällt mir nicht mehr. Möchtest du mir bei der Wohnungssuche helfen?“, fragt Louise.</div>
+                    <p>„Natürlich! Ich helfe dir gern.“, antwortet Alex. „Wie soll deine neue Wohnung denn sein?“</p>
+                    <div class="story-quote">„Die neue Wohnung muss gemütlicher sein als die alte Wohnung. Meine Wohnung jetzt ist alt, klein und dunkel. Die neue Wohnung soll neuer, größer und heller sein. Aber sie soll nicht viel teurer sein.“</div>
                 </div>
             </div>
 
@@ -194,9 +194,9 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
                 <h3>Teil 2 — Die zwei Wohnungen</h3>
                 <div class="story-text">
                     <p>Louise und Alex treffen sich wenig später vor der ersten Wohnung. Das Gebäude sieht schon alt aus. Daneben befindet sich eine große Baustelle. Es gibt keinen Garten und keine Garage. Das gefällt Louise nicht. Auch drinnen ist die Wohnung nicht gemütlich. Sie ist noch dunkler und älter als Louises Wohnung.</p>
-                    <div class="story-quote">„Komm, wir fahren schnell zur nächsten Wohnung. Die muss besser sein als diese Wohnung.", schlägt Alex vor.</div>
+                    <div class="story-quote">„Komm, wir fahren schnell zur nächsten Wohnung. Die muss besser sein als diese Wohnung.“, schlägt Alex vor.</div>
                     <p>Die nächste Wohnung gefällt Louise sofort. Sie ist in einem neuen Haus. Die Umgebung ist ruhiger und schöner als bei der ersten Wohnung. Diese Wohnung liegt im Erdgeschoss. Es gibt auch einen Garten. Der Vermieter öffnet die Tür zur Wohnung. Louise und Alex gehen in die Wohnung.</p>
-                    <div class="story-quote">„Die Wohnung ist viel größer und viel heller als meine alte Wohnung!"</div>
+                    <div class="story-quote">„Die Wohnung ist viel größer und viel heller als meine alte Wohnung!“</div>
                 </div>
             </div>
 
@@ -205,12 +205,12 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
             <div class="story-part">
                 <h3>Teil 3 — Die Traumwohnung</h3>
                 <div class="story-text">
-                    <p>„Wie hoch ist die Miete?", fragt Louise. „Die Wohnung kostet 600 Euro Kaltmiete plus Nebenkosten für Strom, Wasser und Gas. Die Kaution liegt bei 600 €", antwortet der Vermieter. „Außerdem gibt es einen Keller. Und wenn Sie ein Auto haben, können Sie in der Garage parken."</p>
+                    <p>„Wie hoch ist die Miete?“, fragt Louise. „Die Wohnung kostet 600 Euro Kaltmiete plus Nebenkosten für Strom, Wasser und Gas. Die Kaution liegt bei 600 €“, antwortet der Vermieter. „Außerdem gibt es einen Keller. Und wenn Sie ein Auto haben, können Sie in der Garage parken.“</p>
                     <p>Louise ist glücklich. Sie hat ihre Traumwohnung gefunden.</p>
-                    <div class="story-quote">„Ich nehme die Wohnung! Wann kann ich einziehen?"</div>
-                    <p>„Nächste Woche", antwortet der Vermieter.</p>
-                    <div class="story-quote">„Vielen Dank für deine Hilfe, Alex. Ich glaube, ich brauche auch noch neue Möbel. Meine neue Wohnung ist viel gemütlicher und moderner als die alte Wohnung. Meine alten Möbel passen nicht mehr! Hast du Lust, mit mir Möbel zu kaufen?"</div>
-                    <p>„Aber natürlich, Louise!", antwortet Alex. Er verbringt gern noch mehr Zeit mit Louise.</p>
+                    <div class="story-quote">„Ich nehme die Wohnung! Wann kann ich einziehen?“</div>
+                    <p>„Nächste Woche“, antwortet der Vermieter.</p>
+                    <div class="story-quote">„Vielen Dank für deine Hilfe, Alex. Ich glaube, ich brauche auch noch neue Möbel. Meine neue Wohnung ist viel gemütlicher und moderner als die alte Wohnung. Meine alten Möbel passen nicht mehr! Hast du Lust, mit mir Möbel zu kaufen?“</div>
+                    <p>„Aber natürlich, Louise!“, antwortet Alex. Er verbringt gern noch mehr Zeit mit Louise.</p>
                 </div>
             </div>
         </div>
@@ -395,7 +395,6 @@ function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx),ro
 function initSatzbau(){
     var container=document.getElementById('satzbauContainer');container.innerHTML='';
     satzbauData.forEach(function(ex,idx){
-        var nr=document.createElement('div');nr.className='sb-nr';nr.textContent='Satz '+(idx+1);container.appendChild(nr);
         var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;container.appendChild(bank);
         var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;container.appendChild(row);
         var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;container.appendChild(fb);

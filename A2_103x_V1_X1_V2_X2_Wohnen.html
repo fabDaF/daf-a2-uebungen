@@ -63,7 +63,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
 .drop-row .chip.punct { margin-left: -4px; }
 
 /* Wortschatz */
-.vocab-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.luecken-item { background: #f8f9ff; padding: 14px 18px; border-radius: 10px; border-left: 4px solid #667eea; }
 .vocab-en { font-weight: 600; color: #764ba2; min-width: 160px; font-size: 0.95em; }
 .vocab-arrow { color: #ccc; font-size: 1.2em; }
 .vocab-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -85,7 +85,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     .container { padding: 18px 14px; }
     .zuordnung-categories { grid-template-columns: 1fr; }
     .nav-btn { font-size: 0.78em; padding: 8px 12px; }
-    .vocab-item { flex-direction: column; align-items: flex-start; }
+    .luecken-item { background: #f8f9ff; padding: 14px 18px; border-radius: 10px; border-left: 4px solid #667eea; }
 }
 
 /* Author Footer */
@@ -220,7 +220,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
         <div class="help-box">
             Tippe die deutsche &Uuml;bersetzung. Bei Nomen: <strong>Artikel &middot; Wort &middot; Plural</strong>
         </div>
-        <div id="vocab-container"></div>
+        <div id="wortschatzContainer" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
         <div class="btn-row">
             <button class="btn btn-show" onclick="showVocabLoesung()">L&ouml;sung zeigen</button>
             <button class="btn btn-reset" onclick="resetVocab()">Reset</button>
@@ -817,61 +817,53 @@ function resetSatzbau() {
 /* ============================================================
    WORTSCHATZ
    ============================================================ */
-function initVocab() {
-    var container = document.getElementById('vocab-container');
+function initWortschatz() {
+    var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
-    VOCAB_DATA.forEach(function(item, idx) {
-        var div = document.createElement('div');
-        div.className = 'vocab-item';
-        var enDiv = document.createElement('div');
-        enDiv.className = 'vocab-en';
-        enDiv.textContent = item.en;
-        var arrow = document.createElement('div');
-        arrow.className = 'vocab-arrow';
-        arrow.textContent = '\u2192';
-        var inputsDiv = document.createElement('div');
-        inputsDiv.className = 'vocab-inputs';
-
-        if (item.type === 'noun') {
-            var iArt = document.createElement('input');
-            iArt.type = 'text'; iArt.className = 'art'; iArt.placeholder = 'Art.';
-            iArt.dataset.answer = item.art;
-            var iWort = document.createElement('input');
-            iWort.type = 'text'; iWort.className = 'wort'; iWort.placeholder = 'Nomen';
-            iWort.dataset.answer = item.wort;
-            var iPlural = document.createElement('input');
-            iPlural.type = 'text'; iPlural.className = 'plural'; iPlural.placeholder = 'Plural';
-            iPlural.dataset.answer = item.plural;
-            [iArt, iWort, iPlural].forEach(function(inp) {
-                inp.classList.add('vocab-inp-' + idx);
-                (function(ti) {
-                    inp.addEventListener('focus', function() { startTimer(ti); });
-                    inp.addEventListener('input', function() {
-                        liveCheck(inp);
-                    });
-                })(5);
-                inputsDiv.appendChild(inp);
-            });
+    var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
+    shuffled.forEach(function(item) {
+        var row = document.createElement('div');
+        row.className = 'luecken-item';
+        var en = document.createElement('div');
+        en.style.cssText = 'font-weight:600;color:#3949ab;margin-bottom:6px;';
+        en.textContent = item.en;
+        row.appendChild(en);
+        var inputs = document.createElement('div');
+        inputs.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;';
+        if (item.type === 'n') {
+            var artInp = document.createElement('input');
+            artInp.className = 'blank art'; artInp.placeholder = 'der/die/das'; artInp.style.width = '80px';
+            artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
+            artInp.setAttribute('autocomplete','off'); artInp.setAttribute('spellcheck','false');
+            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            inputs.appendChild(artInp);
+            var wordInp = document.createElement('input');
+            wordInp.className = 'blank wort'; wordInp.placeholder = 'Deutsch'; wordInp.style.width = '140px';
+            wordInp.dataset.answer = item.de; wordInp.dataset.field = 'wort';
+            wordInp.setAttribute('autocomplete','off'); wordInp.setAttribute('spellcheck','false');
+            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            inputs.appendChild(wordInp);
+            if (item.plural && item.plural !== '—') {
+                var plInp = document.createElement('input');
+                plInp.className = 'blank plural'; plInp.placeholder = 'Plural'; plInp.style.width = '120px';
+                plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
+                plInp.setAttribute('autocomplete','off'); plInp.setAttribute('spellcheck','false');
+                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+                inputs.appendChild(plInp);
+            }
         } else {
-            var iPhrase = document.createElement('input');
-            iPhrase.type = 'text'; iPhrase.className = 'phrase'; iPhrase.placeholder = 'Deutsch';
-            iPhrase.dataset.answer = item.phrase;
-            iPhrase.classList.add('vocab-inp-' + idx);
-            (function(ti) {
-                iPhrase.addEventListener('focus', function() { startTimer(ti); });
-                iPhrase.addEventListener('input', function() {
-                    liveCheck(iPhrase);
-                });
-            })(5);
-            inputsDiv.appendChild(iPhrase);
+            var deInp = document.createElement('input');
+            deInp.className = 'blank wort'; deInp.placeholder = 'Deutsch'; deInp.style.width = '200px';
+            deInp.dataset.answer = item.de; deInp.dataset.field = 'wort';
+            deInp.setAttribute('autocomplete','off'); deInp.setAttribute('spellcheck','false');
+            deInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            inputs.appendChild(deInp);
         }
-
-        div.appendChild(enDiv);
-        div.appendChild(arrow);
-        div.appendChild(inputsDiv);
-        container.appendChild(div);
+        row.appendChild(inputs);
+        container.appendChild(row);
     });
 }
+function initVocab() { initWortschatz(); }
 
 function showVocabLoesung() {
     VOCAB_DATA.forEach(function(item, idx) {
@@ -966,6 +958,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }, false);
 })();
 /* ── Ende Tap-to-Select ─────────────────────────────────────────────── */
+
+function wortschatzCheck(inp) {
+    var user = inp.value;
+    var answer = inp.dataset.answer || '';
+    var field = inp.dataset.field;
+    inp.classList.remove('correct', 'wrong');
+    if (user.length === 0) return;
+    var cmpUser = (field === 'art') ? user.trim().toLowerCase() : user.trim();
+    var cmpAnswer = (field === 'art') ? answer.toLowerCase() : answer;
+    if (cmpUser === cmpAnswer) { inp.classList.add('correct'); }
+    else if (cmpAnswer.indexOf(cmpUser) === 0) { /* gültiger Prefix → neutral */ }
+    else { inp.classList.add('wrong'); }
+}
+function checkWortschatzAllOk() {
+    var inputs = document.querySelectorAll('#wortschatzContainer input.blank');
+    var allOk = inputs.length > 0 && Array.from(inputs).every(function(i) { return i.classList.contains('correct'); });
+    if (allOk) { timerStop(5); }
+}
 </script>
 <div class="author-footer">
   <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;

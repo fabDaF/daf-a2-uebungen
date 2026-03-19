@@ -57,6 +57,10 @@ def has_entdecken_tab(content):
     """Prüft ob die Datei einen Entdecken-Tab hat oder haben sollte"""
     return bool(re.search(r'entdeck|Entdecken|mc-step', content))
 
+def has_wortschatz_tab(content):
+    """Prüft ob die Datei einen Wortschatz-Tab hat"""
+    return bool(re.search(r'WORTSCHATZ\s*=\s*\[|wortschatzContainer|vocabContainer|initWortschatz|initVocab', content))
+
 def check_layout(content, fname):
     """[L] Layout-Prüfung nach daf-html-layout Skill"""
     errors = []
@@ -436,6 +440,99 @@ def check_satzbau(content, fname):
     else:
         warn('[S] sb-row-0 nicht gefunden (weder statisch noch dynamisch)')
 
+    # [S15] .btn CSS: darf NICHT ausgefüllt lila/grau sein (background:#667eea oder background:#9e9e9e)
+    btn_css = re.search(r'\.btn\s*\{([^}]+)\}', content)
+    if btn_css:
+        btn_body = btn_css.group(1)
+        if re.search(r'background\s*:\s*#667eea|background\s*:\s*#5a6fd6', btn_body):
+            err('[S15] .btn hat gefüllten lila Hintergrund (background:#667eea) — muss dezent sein (background:none, border:1px solid #ddd)')
+        elif re.search(r'background\s*:\s*#9e9e9e|background\s*:\s*#757575', btn_body):
+            err('[S15] .btn.secondary mit grauem Hintergrund — .btn muss dezent sein (background:none)')
+        else:
+            ok('.btn dezent (kein gefüllter lila/grauer Hintergrund)')
+    # [S16] .btn-row button: muss border vorhanden haben
+    btnrow_btn_css = re.search(r'\.btn-row\s+button\s*\{([^}]+)\}', content)
+    if btnrow_btn_css:
+        if 'border' in btnrow_btn_css.group(1):
+            ok('.btn-row button mit border CSS')
+        else:
+            warn('[S16] .btn-row button CSS ohne border — Skill-Standard prüfen')
+    else:
+        warn('[S16] .btn-row button CSS nicht gefunden')
+
+    # [S17] .control-bar ist VERBOTEN — veraltetes Pattern statt .timer-bar
+    if re.search(r'class="control-bar"|\.control-bar\s*\{', content):
+        err('[S17] .control-bar gefunden — veraltetes Layout\! Korrekt: .timer-bar (weiß, Schatten) + .btn-row (lila Outline) als getrennte Divs')
+    else:
+        ok('Kein .control-bar (veraltetes Timer-Layout-Pattern)')
+
+    # [S18] .timer-bar CSS muss vorhanden sein wenn Timer-IDs vorhanden sind
+    has_timer_ids = bool(re.search(r'id="timer-\d', content))
+    if has_timer_ids:
+        if re.search(r'\.timer-bar\s*\{', content):
+            ok('.timer-bar CSS vorhanden (Skill-Standard Timer-Layout)')
+        else:
+            err('[S18] Timer-IDs vorhanden, aber .timer-bar CSS FEHLT — Skill-Standard: background:white, box-shadow, border-radius:10px')
+
+    return errors, warnings, ok_items
+
+
+def check_wortschatz(content, fname):
+    """[W] Wortschatz-Tab Prüfungen"""
+    errors = []
+    warnings = []
+    ok_items = []
+
+    def ok(msg): ok_items.append(msg)
+    def warn(msg): warnings.append(msg)
+    def err(msg): errors.append(msg)
+
+    # wortschatzContainer mit 2-Spalten-Grid im HTML
+    has_wc_html = bool(re.search(r'id="wortschatzContainer"', content))
+    has_grid = bool(re.search(r'grid-template-columns:\s*1fr\s+1fr', content))
+    if has_wc_html:
+        ok('[W] wortschatzContainer im HTML vorhanden')
+    else:
+        err('[W] FEHLT: id="wortschatzContainer" — kein 2-Spalten-Grid-Container')
+    if has_grid:
+        ok('[W] 2-Spalten-Grid (1fr 1fr) vorhanden')
+    else:
+        err('[W] FEHLT: grid-template-columns:1fr 1fr — Wortschatz muss 2-spaltig sein')
+
+    # .luecken-item (nicht .vocab-item)
+    if 'luecken-item' in content:
+        ok('[W] .luecken-item CSS-Klasse vorhanden')
+    else:
+        err('[W] FEHLT: .luecken-item — Wortschatz-Karten müssen .luecken-item verwenden (nicht .vocab-item)')
+    if re.search(r'class\s*=\s*["\']vocab-item["\']|\.vocab-item\s*\{', content):
+        err('[W] VERBOTEN: .vocab-item gefunden — stattdessen .luecken-item + wortschatzContainer verwenden')
+    else:
+        ok('[W] Kein .vocab-item (korrekt)')
+
+    # wortschatzCheck() statt liveCheck() im Wortschatz
+    if 'wortschatzCheck' in content:
+        ok('[W] wortschatzCheck() vorhanden')
+    else:
+        err('[W] FEHLT: wortschatzCheck() — muss verwendet werden statt liveCheck() im Wortschatz-Tab')
+
+    # initWortschatz oder initVocab → initWortschatz
+    if 'function initWortschatz' in content:
+        ok('[W] initWortschatz() Funktion vorhanden')
+    else:
+        err('[W] FEHLT: function initWortschatz() — Standard-Init für Wortschatz-Tab')
+
+    # checkWortschatzAllOk
+    if 'checkWortschatzAllOk' in content:
+        ok('[W] checkWortschatzAllOk() vorhanden (Timer-Stop)')
+    else:
+        warn('[W] checkWortschatzAllOk() fehlt — Timer stoppt nicht wenn alle Felder korrekt')
+
+    # KEIN vocabContainer (alter Name)
+    if 'vocabContainer' in content:
+        err('[W] VERBOTEN: id="vocabContainer" — muss id="wortschatzContainer" sein')
+    else:
+        ok('[W] Kein vocabContainer (korrekt)')
+
     return errors, warnings, ok_items
 
 
@@ -515,6 +612,13 @@ def check_file(filepath):
     # [S] Satzbau — alle Dateien mit Satzbau-Tab
     if has_satzbau_tab(content):
         e, w, o = check_satzbau(content, fname)
+        all_errors.extend(e)
+        all_warnings.extend(w)
+        all_ok.extend(o)
+
+    # [W] Wortschatz — alle Dateien mit Wortschatz-Tab
+    if has_wortschatz_tab(content):
+        e, w, o = check_wortschatz(content, fname)
         all_errors.extend(e)
         all_warnings.extend(w)
         all_ok.extend(o)
