@@ -383,7 +383,7 @@ function buildLuecken(data, containerId) {
             else{inp.classList.add('no');}
         });
         div.appendChild(inp);
-        div.innerHTML+=item.nach;
+        var nachSpan=document.createElement('span');nachSpan.textContent=item.nach;div.appendChild(nachSpan);
         container.appendChild(div);
     });
 }
@@ -521,18 +521,18 @@ function sbResetAll(){timerResetOne(3);initSatzbau();}
 // ─── Wortschatz ──────────────────────────────────────────────────────────────
 // ─── WORTSCHATZ-TRAINING ──────────────────────────────────────────────────────
 var WORTSCHATZ = [
-    { id:1, type:'p', en:'✨ straight ahead', artikel:'', de:'', plural:'' },
-    { id:2, type:'p', en:'🌈 to turn left', artikel:'', de:'', plural:'' },
-    { id:3, type:'p', en:'💡 to turn right', artikel:'', de:'', plural:'' },
-    { id:4, type:'p', en:'🎨 at the corner', artikel:'', de:'', plural:'' },
-    { id:5, type:'p', en:'🔆 at the end of the street', artikel:'', de:'', plural:'' },
-    { id:6, type:'p', en:'🌀 opposite', artikel:'', de:'', plural:'' },
-    { id:7, type:'p', en:'🔮 on the left side', artikel:'', de:'', plural:'' },
-    { id:8, type:'p', en:'🪄 on the right side', artikel:'', de:'', plural:'' },
-    { id:9, type:'p', en:'🌸 the floor plan', artikel:'', de:'', plural:'' },
-    { id:10, type:'p', en:'🍀 to move in', artikel:'', de:'', plural:'' },
-    { id:11, type:'p', en:'🔄 to move out', artikel:'', de:'', plural:'' },
-    { id:12, type:'p', en:'▶️ to relocate', artikel:'', de:'', plural:'' }
+    { id:1, type:'p', en:'✨ straight ahead', artikel:'—', de:'geradeaus', plural:'—' },
+    { id:2, type:'p', en:'🌈 to turn left', artikel:'—', de:'links abbiegen', plural:'—' },
+    { id:3, type:'p', en:'💡 to turn right', artikel:'—', de:'rechts abbiegen', plural:'—' },
+    { id:4, type:'n', en:'🎨 at the corner', artikel:'die', de:'Ecke', plural:'Ecken' },
+    { id:5, type:'n', en:'🔆 the end of the street', artikel:'das', de:'Ende', plural:'Enden' },
+    { id:6, type:'p', en:'🌀 opposite', artikel:'—', de:'gegenüber', plural:'—' },
+    { id:7, type:'p', en:'🔮 on the left side', artikel:'—', de:'auf der linken Seite', plural:'—' },
+    { id:8, type:'p', en:'🪄 on the right side', artikel:'—', de:'auf der rechten Seite', plural:'—' },
+    { id:9, type:'n', en:'🌸 the floor plan', artikel:'der', de:'Grundriss', plural:'Grundrisse' },
+    { id:10, type:'p', en:'🍀 to move in', artikel:'—', de:'einziehen', plural:'—' },
+    { id:11, type:'p', en:'🔄 to move out', artikel:'—', de:'ausziehen', plural:'—' },
+    { id:12, type:'p', en:'▶️ to relocate', artikel:'—', de:'umziehen', plural:'—' }
 ];
 
 var wortschatzInited = false;
