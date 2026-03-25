@@ -91,11 +91,11 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
 .satzbau-feedback.correct   { color: #27ae60; }
 .satzbau-feedback.incorrect { color: #e74c3c; }
-.chip { padding: 7px 14px; border-radius: 20px; background: white; border: 2px solid #667eea; color: #667eea; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; display: inline-block; white-space: nowrap; transition: all .15s; }
+.chips-container .chip, .sentence-builder .chip { padding: 7px 14px; border-radius: 20px; background: white; border: 2px solid #667eea; color: #3d37a8; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; display: inline-block; white-space: nowrap; transition: all .15s; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
-.chip:active { cursor: grabbing; transform: scale(1.04); }
-.chip.correct { background: #e8f5e9; border-color: #27ae60; color: #27ae60; }
-.chip.wrong   { background: #ffebee; border-color: #e74c3c; color: #e74c3c; }
+.chips-container .chip:active, .sentence-builder .chip:active { cursor: grabbing; transform: scale(1.04); }
+.chips-container .chip.correct, .sentence-builder .chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
+.chips-container .chip.wrong,   .sentence-builder .chip.wrong   { background: #e74c3c; border-color: #e74c3c; color: white; }
 .sb-block { margin-bottom: 24px; padding: 14px; background: #fafbff; border-radius: 10px; border: 1px solid #e8ecff; }
 .sb-num { font-size: 0.78em; font-weight: 700; color: #764ba2; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
 .solution-btn { background: #fff; color: #667eea; border: 2px solid #667eea; padding: 5px 14px; border-radius: 20px; cursor: pointer; font-size: 0.8em; font-weight: 600; margin-top: 4px; }
