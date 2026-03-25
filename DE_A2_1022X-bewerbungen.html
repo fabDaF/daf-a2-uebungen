@@ -715,7 +715,9 @@ var wortschatzInited = false;
 function initWortschatz(){
     if (wortschatzInited) return;
     wortschatzInited = true;
-    timerReset(4);
+    // Timer direkt zurücksetzen (NICHT timerReset(4) — das ruft resetWortschatz → Endlosschleife)
+    if (timers[4]) { clearInterval(timers[4].interval); timers[4] = null; }
+    var tEl = document.getElementById('timer-4'); if (tEl) tEl.textContent = '0:00';
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
@@ -792,7 +794,9 @@ function resetWortschatz(){
     });
     wortschatzInited = false;
     initWortschatz();
-    timerReset(4);
+    // Timer direkt zurücksetzen (NICHT timerReset(4) — das ruft resetWortschatz → Endlosschleife)
+    if (timers[4]) { clearInterval(timers[4].interval); timers[4] = null; }
+    var tEl2 = document.getElementById('timer-4'); if (tEl2) tEl2.textContent = '0:00';
 }
 
 function showWsLoesungen() {
