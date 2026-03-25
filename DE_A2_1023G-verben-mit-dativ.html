@@ -93,9 +93,9 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .satzbau-feedback.correct   { color: #27ae60; }
 .satzbau-feedback.incorrect { color: #e74c3c; }
 .chip { padding: 7px 14px; border-radius: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; display: inline-block; white-space: nowrap; transition: all .15s; }
-.sb-chip:active { cursor: grabbing; transform: scale(1.04); }
+.chip:active { cursor: grabbing; transform: scale(1.04); }
 .chip.correct { background: linear-gradient(135deg, #27ae60, #2ecc71) !important; }
-.sb-chip.wrong   { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; }
+.chip.wrong   { background: linear-gradient(135deg, #e74c3c, #c0392b) !important; }
 
 /* ── Timer + Buttons ────────────────────────────────────────────── */
 .timer-bar { display: flex; align-items: center; gap: 12px; background: #f8f8ff; border-radius: 10px; padding: 10px 16px; margin-bottom: 16px; font-size: 0.85rem; color: #666; flex-wrap: wrap; }
@@ -498,13 +498,13 @@ function getSbCursor() {
     return c;
 }
 function getSbInsertPos(zone,clientX){
-    var chips=Array.from(zone.querySelectorAll('.sb-chip'));
+    var chips=Array.from(zone.querySelectorAll('.chip'));
     for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}
     return null;
 }
 function sbCap(str){return str.charAt(0).toUpperCase()+str.slice(1);}
 function sbUpdateCapitalization(row){
-    var chips=Array.from(row.querySelectorAll('.sb-chip'));
+    var chips=Array.from(row.querySelectorAll('.chip'));
     chips.forEach(function(c,i){
         var orig=c.dataset.orig;
         var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();
@@ -538,7 +538,7 @@ function sbRegisterZone(zone,idx){
 }
 function sbColorRow(idx){
     var row=document.getElementById('sb-row-'+idx);
-    var chips=Array.from(row.querySelectorAll('.sb-chip'));
+    var chips=Array.from(row.querySelectorAll('.chip'));
     var order=chips.map(function(c){return c.dataset.orig;});
     var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});
     chips.forEach(function(c){c.classList.remove('correct','wrong');c.classList.add(ok?'correct':'wrong');});
@@ -550,7 +550,7 @@ function sbCheckAuto(idx){
     var bank=document.getElementById('sb-bank-'+idx);
     var row=document.getElementById('sb-row-'+idx);
     var fb=document.getElementById('sb-fb-'+idx);
-    if(bank.querySelectorAll('.sb-chip').length>0){row.querySelectorAll('.sb-chip').forEach(function(c){c.classList.remove('correct','wrong');});row.classList.remove('correct','incorrect');fb.textContent='';return;}
+    if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','wrong');});row.classList.remove('correct','incorrect');fb.textContent='';return;}
     setTimeout(function(){
         timerAutoStart(3);
         var ok=sbColorRow(idx);
@@ -568,8 +568,8 @@ function sbShowSolution(idx){
     var fb=document.getElementById('sb-fb-'+idx);
     var solution=satzbauData[idx].valid[0];
     var allChips={};
-    Array.from(bank.querySelectorAll('.sb-chip')).forEach(function(c){allChips[c.dataset.orig]=c;});
-    Array.from(row.querySelectorAll('.sb-chip')).forEach(function(c){allChips[c.dataset.orig]=c;});
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});
     while(bank.firstChild)bank.removeChild(bank.firstChild);
     while(row.firstChild)row.removeChild(row.firstChild);
     solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCap(word):word;chip.classList.remove('correct','wrong');row.appendChild(chip);}});
@@ -599,8 +599,7 @@ function initSatzbau(){
     var container=document.getElementById('satzbauContainer');container.innerHTML='';
     satzbauData.forEach(function(ex,idx){
         var block=document.createElement('div');block.className='sb-block';
-        block.innerHTML='<div class="sb-num">Satz '+(idx+1)+'</div>'
-            +'<div class="chips-container" id="sb-bank-'+idx+'"></div>'
+        block.innerHTML='<div class="chips-container" id="sb-bank-'+idx+'"></div>'
             +'<div class="sentence-builder" id="sb-row-'+idx+'"></div>'
             +'<div class="satzbau-feedback" id="sb-fb-'+idx+'"></div>'
             +'<button class="solution-btn" onclick="sbShowSolution('+idx+')">Lösung anzeigen</button>';

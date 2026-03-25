@@ -681,7 +681,7 @@ function initSatzbau() {
     container.innerHTML='';
     satzbauData.forEach(function(ex,idx){
         var block=document.createElement('div');block.className='sb-block';
-        block.innerHTML='<div class="sb-num">Satz '+(idx+1)+'</div>'+'<div class="chips-container" id="sb-bank-'+idx+'"></div>'+'<div class="sentence-builder" id="sb-row-'+idx+'"></div>'+'<div class="satzbau-feedback" id="sb-fb-'+idx+'"></div>'+'<button class="solution-btn" onclick="sbShowSolution('+idx+')">Lösung anzeigen</button>';
+        block.innerHTML='<div class="chips-container" id="sb-bank-'+idx+'"></div>'+'<div class="sentence-builder" id="sb-row-'+idx+'"></div>'+'<div class="satzbau-feedback" id="sb-fb-'+idx+'"></div>'+'<button class="solution-btn" onclick="sbShowSolution('+idx+')">Lösung anzeigen</button>';
         container.appendChild(block);
         var bank=document.getElementById('sb-bank-'+idx);
         var row=document.getElementById('sb-row-'+idx);

@@ -268,7 +268,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; color: #e74c3c; }
   user-select: none;
   white-space: nowrap;
 }
-.sb-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .sb-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 .sb-chip.punct-chip { background: #f8f8f8; border: 2px solid #667eea; padding: 8px 16px; color: #333; font-weight: 700; font-size: 1.3em; min-width: 18px; text-align: center; cursor: move; }
 .sb-chip.punct-chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
@@ -939,7 +939,7 @@ function getSbCursor() {
 }
 
 function getSbInsertPos(zone, clientX) {
-  var chips = Array.from(zone.querySelectorAll('.sb-chip'));
+  var chips = Array.from(zone.querySelectorAll('.chip'));
   for (var i = 0; i < chips.length; i++) {
     var r = chips[i].getBoundingClientRect();
     if (clientX < r.left + r.width / 2) return chips[i];
@@ -952,7 +952,7 @@ function sbCapitalize(str) {
 }
 
 function sbUpdateCapitalization(row) {
-  var chips = Array.from(row.querySelectorAll('.sb-chip'));
+  var chips = Array.from(row.querySelectorAll('.chip'));
   chips.forEach(function(c, i) {
     var orig = c.dataset.orig;
     if (orig === ',' || orig === ';') return;
@@ -1021,7 +1021,7 @@ function sbRegisterZone(zone, idx) {
 
 function sbColorRow(idx) {
   var row = document.getElementById('sb-row-' + idx);
-  var chips = Array.from(row.querySelectorAll('.sb-chip'));
+  var chips = Array.from(row.querySelectorAll('.chip'));
   var order = chips.map(function(c) { return c.dataset.orig; });
   var ok = satzbauData[idx].valid.some(function(v) {
     return JSON.stringify(v) === JSON.stringify(order);
@@ -1045,8 +1045,8 @@ function sbCheckAuto(idx) {
   var bank = document.getElementById('sb-bank-' + idx);
   var row  = document.getElementById('sb-row-'  + idx);
   var fb   = document.getElementById('sb-fb-'   + idx);
-  if (bank.querySelectorAll('.sb-chip').length > 0) {
-    row.querySelectorAll('.sb-chip').forEach(function(c) { c.classList.remove('correct', 'incorrect'); });
+  if (bank.querySelectorAll('.chip').length > 0) {
+    row.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('correct', 'incorrect'); });
     row.classList.remove('correct', 'incorrect');
     fb.textContent = '';
     return;
@@ -1081,8 +1081,8 @@ function sbShowSolution(idx) {
   var fb   = document.getElementById('sb-fb-'   + idx);
   var solution = satzbauData[idx].valid[0];
   var allChips = {};
-  Array.from(bank.querySelectorAll('.sb-chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
-  Array.from(row.querySelectorAll('.sb-chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
+  Array.from(bank.querySelectorAll('.chip')).forEach(function(c) { allChips[c.dataset.orig] = c; });
+  Array.from(row.querySelectorAll('.chip')).forEach(function(c)  { allChips[c.dataset.orig] = c; });
   while (bank.firstChild) bank.removeChild(bank.firstChild);
   while (row.firstChild)  row.removeChild(row.firstChild);
   solution.forEach(function(word, i) {

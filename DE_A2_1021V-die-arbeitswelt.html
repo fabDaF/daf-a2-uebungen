@@ -932,7 +932,7 @@ function initSatzbau() {
     satzbauData.forEach(function(ex, idx) {
         var block = document.createElement('div');
         block.className = 'sb-block';
-        block.innerHTML = '<div class="sb-num">Satz ' + (idx+1) + '</div>'
+        block.innerHTML = ''
             + '<div class="chips-container" id="sb-bank-' + idx + '"></div>'
             + '<div class="sentence-builder" id="sb-row-' + idx + '"></div>'
             + '<div class="satzbau-feedback" id="sb-fb-' + idx + '"></div>'

@@ -368,7 +368,7 @@ var RF_DATA = [
     { text: 'Tim ist Anwalt.', correct: true },
     { text: 'Es gibt nur wenige Bewerbungen.', correct: false },
     { text: 'Tim liest alle Bewerbungen.', correct: true },
-    { text: 'Tim lädt acht Personen zum Bewerbungsgespräch ein.', correct: true },
+    { text: 'Tim lädt acht Personen zum Bewerbungsgespräch ein.', correct: false },
     { text: 'Tim braucht einen neuen Sekretär oder eine neue Sekretärin.', correct: true },
     { text: 'Alle Bewerber passen gut zur Firma.', correct: false }
 ];
@@ -576,8 +576,7 @@ function initSatzbau() {
     var container=document.getElementById('satzbauContainer'); container.innerHTML='';
     satzbauData.forEach(function(ex,idx){
         var block=document.createElement('div'); block.className='sb-block';
-        block.innerHTML='<div class="sb-num">Satz '+(idx+1)+'</div>'
-            +'<div class="chips-container" id="sb-bank-'+idx+'"></div>'
+        block.innerHTML='<div class="chips-container" id="sb-bank-'+idx+'"></div>'
             +'<div class="sentence-builder" id="sb-row-'+idx+'"></div>'
             +'<div class="satzbau-feedback" id="sb-fb-'+idx+'"></div>'
             +'<button class="solution-btn" onclick="sbShowSolution('+idx+')">Lösung anzeigen</button>';
