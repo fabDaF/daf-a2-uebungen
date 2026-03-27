@@ -30,6 +30,9 @@
       --b11-color: #7b1fa2;
       --b11-dark:  #6a1b9a;
       --b11-light: #f3e5f5;
+      --b2-color:  #b71c1c;
+      --b2-dark:   #7f0000;
+      --b2-light:  #ffebee;
       --wkv-color: #1565c0;
       --wkv-dark:  #0d47a1;
       --wkv-light: #e3f2fd;
@@ -90,6 +93,9 @@
     .niveau-b11 > .niveau-header,
     .niveau-b12 > .niveau-header,
     .niveau-b13 > .niveau-header  { background: linear-gradient(135deg, var(--b11-color), var(--b11-dark));  color: #fff; }
+    .niveau-b21 > .niveau-header,
+    .niveau-b22 > .niveau-header,
+    .niveau-b23 > .niveau-header  { background: linear-gradient(135deg, var(--b2-color),  var(--b2-dark));   color: #fff; }
     .niveau-wkv > .niveau-header  { background: linear-gradient(135deg, var(--wkv-color), var(--wkv-dark));  color: #fff; }
 
     /* ── NIVEAU-BODY ── */
@@ -116,6 +122,9 @@
     .niveau-b11  .einheit-header,
     .niveau-b12  .einheit-header,
     .niveau-b13  .einheit-header { background: #faf3fc; }
+    .niveau-b21  .einheit-header,
+    .niveau-b22  .einheit-header,
+    .niveau-b23  .einheit-header { background: #fff5f5; }
 
     .einheit-header:hover { filter: brightness(0.97); }
     .einheit-header .chv { margin-left: auto; font-size: 0.85rem; transition: transform 0.2s; }
@@ -142,6 +151,9 @@
     .niveau-a22 .btn-einheit-senden { background: var(--a22-color); color: #fff; }
     .niveau-grund .btn-einheit-senden { background: var(--grund-color); color: #fff; }
     .niveau-b11  .btn-einheit-senden  { background: var(--b11-color);  color: #fff; }
+    .niveau-b21  .btn-einheit-senden,
+    .niveau-b22  .btn-einheit-senden,
+    .niveau-b23  .btn-einheit-senden  { background: var(--b2-color);   color: #fff; }
 
     /* ── EINHEIT-BODY ── */
     .einheit-body { display: none; }
@@ -160,6 +172,9 @@
     .niveau-a22 .karte:hover { background: #e0f2f1; }
     .niveau-grund .karte:hover { background: #faf3fc; }
     .niveau-b11  .karte:hover  { background: #f3e5f5; }
+    .niveau-b21  .karte:hover,
+    .niveau-b22  .karte:hover,
+    .niveau-b23  .karte:hover  { background: #ffebee; }
 
     .karte-typ {
       font-size: 0.68rem; font-weight: 700;
@@ -197,6 +212,9 @@
     .niveau-a22 .btn-oeffnen { background: var(--a22-color); color: #fff; }
     .niveau-grund .btn-oeffnen { background: var(--grund-color); color: #fff; }
     .niveau-b11  .btn-oeffnen  { background: var(--b11-color);  color: #fff; }
+    .niveau-b21  .btn-oeffnen,
+    .niveau-b22  .btn-oeffnen,
+    .niveau-b23  .btn-oeffnen  { background: var(--b2-color);   color: #fff; }
 
     .btn-mail {
       padding: 4px 11px; border-radius: 12px;
@@ -968,16 +986,30 @@ const KURSE = [
     ]
   },
   {
-    id: 'b2gram', label: 'B2 Grammatik',
-    titel: 'Deutsch B2 – Grammatik (Lingoda)',
+    id: 'b21', label: 'B2.1',
+    titel: 'Deutsch B2.1 – Auslandsjahr · Literatur · Umwelt · Gefühle · Internet · Philosophie',
     basis: 'https://fabdaf.github.io/daf-b2-uebungen/',
     einheiten: [
-      { nr: '1042G', titel: 'Wortbildungen und deren Bedeutungen', karten: [
+      { nr: 'Einheit 4', titel: 'Gefühle & KI', karten: [
         { typ:'G', label:'G – Grammatik', titel:'1042G · Wortbildungen: Präfixe, Suffixe, Nominalisierung', file:'DE_B2_1042G-wortbildungen.html' },
       ]},
-      { nr: '1062G', titel: 'Weitere Wortbildungen', karten: [
+      { nr: 'Einheit 6', titel: 'Philosophie & Karma', karten: [
         { typ:'G', label:'G – Grammatik', titel:'1062G · Weitere Wortbildungen: Komposition, Fugenelemente, Derivation', file:'DE_B2_1062G-weitere-wortbildungen.html' },
       ]},
+    ]
+  },
+  {
+    id: 'b22', label: 'B2.2',
+    titel: 'Deutsch B2.2 – Interkulturalismus · Urbanismus · Musik · Gaming · Wissenschaft · Wirtschaft',
+    basis: 'https://fabdaf.github.io/daf-b2-uebungen/',
+    einheiten: [
+    ]
+  },
+  {
+    id: 'b23', label: 'B2.3',
+    titel: 'Deutsch B2.3 – Mythen · Digitalisierung · Weltall · Sprachen · Politik · Arbeit',
+    basis: 'https://fabdaf.github.io/daf-b2-uebungen/',
+    einheiten: [
     ]
   },
   {
