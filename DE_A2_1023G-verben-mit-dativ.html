@@ -67,6 +67,7 @@ input.blank:focus { border-color: #667eea; }
 input.blank.correct { border-color: #27ae60; background: #e8f5e9; }
 input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .correction-hint { font-size: 0.78rem; color: #27ae60; font-weight: 700; margin-left: 4px; white-space: nowrap; }
+.nom-hint { font-size: 0.78rem; color: #7c6bc4; font-style: italic; margin-right: 4px; white-space: nowrap; }
 .luecken-satz { margin-bottom: 14px; font-size: 0.97em; line-height: 2.0; color: #333; }
 .luecken-num { display: inline-block; width: 24px; height: 24px; background: linear-gradient(135deg,#667eea,#764ba2); color: white; border-radius: 50%; text-align: center; line-height: 24px; font-size: 0.78em; font-weight: 700; margin-right: 6px; }
 
@@ -423,18 +424,18 @@ function mcCheck(step, btn, correct) {
 // ═════════════════════════════════════════════════
 var lueckenBuilt = false;
 var LUECKEN_DATA = [
-    { vor: 'Er hilft ', nach: ' tatkräftig bei der Bewerbung.', ans: 'seinem Kollegen', hint: 'Dativ (mask.)', size: 120 },
-    { vor: 'Das Gehalt gefällt ', nach: ' sehr gut.', ans: 'ihr', hint: 'Dativ (Pron. fem.)', size: 50 },
-    { vor: 'Martin schenkt ', nach: ' einen Blumenstrauß.', ans: 'seiner Chefin', hint: 'Dativ (fem.)', size: 110 },
-    { vor: 'Ich wünsche ', nach: ' viel Erfolg beim Vorstellungsgespräch.', ans: 'dir', hint: 'Dativ (Pron.)', size: 50 },
-    { vor: 'Sie dankt ', nach: ' herzlich.', ans: 'dem Arbeitgeber', hint: 'Dativ (mask.)', size: 130 },
-    { vor: 'Das Büro gehört ', nach: '.', ans: 'dem Chef', hint: 'Dativ (mask.)', size: 90 },
-    { vor: 'Sie zeigt ', nach: ' das Büro.', ans: 'ihm', hint: 'Dativ (Pron.)', size: 50 },
-    { vor: 'Sie schickt ', nach: ' die Unterlagen.', ans: 'dem Arbeitgeber', hint: 'Dativ (mask.)', size: 130 },
-    { vor: 'Ich glaube ', nach: ' nicht.', ans: 'ihm', hint: 'Dativ (Pron.)', size: 50 },
-    { vor: 'Wir gratulieren ', nach: ' zum neuen Job.', ans: 'ihr', hint: 'Dativ (Pron. fem.)', size: 50 },
-    { vor: 'Er passt ', nach: ' ideal.', ans: 'dem Team', hint: 'Dativ (neut.)', size: 80 },
-    { vor: 'Der Kuchen schmeckt ', nach: ' wunderbar.', ans: 'dem Kind', hint: 'Dativ (neut.)', size: 80 }
+    { vor: 'Er hilft ', nach: ' tatkräftig bei der Bewerbung.', ans: 'seinem Kollegen', nom: 'sein Kollege', size: 130 },
+    { vor: 'Das Gehalt gefällt ', nach: ' sehr gut.', ans: 'ihr', nom: 'sie', size: 50 },
+    { vor: 'Martin schenkt ', nach: ' einen Blumenstrauß.', ans: 'seiner Chefin', nom: 'seine Chefin', size: 120 },
+    { vor: 'Ich wünsche ', nach: ' viel Erfolg beim Vorstellungsgespräch.', ans: 'dir', nom: 'du', size: 50 },
+    { vor: 'Sie dankt ', nach: ' herzlich.', ans: 'dem Arbeitgeber', nom: 'der Arbeitgeber', size: 140 },
+    { vor: 'Das Büro gehört ', nach: '.', ans: 'dem Chef', nom: 'der Chef', size: 90 },
+    { vor: 'Sie zeigt ', nach: ' das Büro.', ans: 'ihm', nom: 'er', size: 50 },
+    { vor: 'Sie schickt ', nach: ' die Unterlagen.', ans: 'dem Arbeitgeber', nom: 'der Arbeitgeber', size: 140 },
+    { vor: 'Ich glaube ', nach: ' nicht.', ans: 'ihm', nom: 'er', size: 50 },
+    { vor: 'Wir gratulieren ', nach: ' zum neuen Job.', ans: 'ihr', nom: 'sie', size: 50 },
+    { vor: 'Er passt ', nach: ' ideal.', ans: 'dem Team', nom: 'das Team', size: 90 },
+    { vor: 'Der Kuchen schmeckt ', nach: ' wunderbar.', ans: 'dem Kind', nom: 'das Kind', size: 90 }
 ];
 function liveCheckBlank(inp) {
     var val = inp.value.trim();
@@ -456,7 +457,8 @@ function buildLuecken() {
         div.className = 'luecken-satz';
         div.innerHTML = '<span class="luecken-num">'+(i+1)+'</span>'
             + item.vor
-            + '<input class="blank" data-answer="'+item.ans+'" data-hint="'+item.hint+'" style="width:'+item.size+'px" placeholder="'+item.hint+'">'
+            + '<span class="nom-hint">('+item.nom+' →)</span>'
+            + '<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="Dativ …">'
             + item.nach;
         c.appendChild(div);
         var inp = div.querySelector('input.blank');
