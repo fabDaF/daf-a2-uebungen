@@ -456,7 +456,7 @@ function buildLuecken() {
         div.className = 'luecken-satz';
         div.innerHTML = '<span class="luecken-num">'+(i+1)+'</span>'
             + item.vor
-            + '<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="">'
+            + '<input class="blank" data-answer="'+item.ans+'" data-hint="'+item.hint+'" style="width:'+item.size+'px" placeholder="'+item.hint+'">'
             + item.nach;
         c.appendChild(div);
         var inp = div.querySelector('input.blank');
