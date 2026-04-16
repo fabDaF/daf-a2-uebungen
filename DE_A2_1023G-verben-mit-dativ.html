@@ -458,7 +458,7 @@ function buildLuecken() {
         div.innerHTML = '<span class="luecken-num">'+(i+1)+'</span>'
             + item.vor
             + '<span class="nom-hint">('+item.nom+' →)</span>'
-            + '<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="">'
+            + '<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="Dativ …">'
             + item.nach;
         c.appendChild(div);
         var inp = div.querySelector('input.blank');
