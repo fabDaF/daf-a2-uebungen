@@ -82,12 +82,8 @@ body {
   margin-bottom: 12px;
 }
 .btn-row { display: flex; gap: 6px; }
-.btn {
-  background: none; border: 1px solid #ddd; border-radius: 6px;
-  padding: 4px 12px; font-size: 0.82em; color: #888;
-  cursor: pointer; transition: all 0.15s; font-weight: 500; font-family: inherit;
-}
-.btn:hover { border-color: #667eea; color: #667eea; }
+.btn { background: #f5f7ff; border: 1px solid #c5cff5; border-radius: 8px; padding: 6px 16px; font-size: 0.85em; color: #667eea; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { background: #667eea; color: white; border-color: #667eea; }
 .timer-display { display: flex; gap: 14px; font-size: 0.82em; color: #bbb; font-variant-numeric: tabular-nums; }
 .timer-val { font-weight: 700; color: #667eea; }
 .best-val  { color: #f39c12; font-weight: 600; }
@@ -311,10 +307,10 @@ body {
 
       <div class="regel-box">
         <strong>Aussprache-Regel: ch nach a, o, u, au → [x] (hinten, dunkel)</strong><br>
-        Nach <em>a, o, u, au</em> klingt „ch" wie ein tiefes Kratzen im Rachen:
+        Nach <em>a, o, u, au</em> klingt „ch“ wie ein tiefes Kratzen im Rachen:
         <em>Ba<strong>ch</strong>, Bu<strong>ch</strong>, no<strong>ch</strong>, au<strong>ch</strong></em>.<br>
         <strong>ch nach e, i, ä, ei, eu → [ç] (vorn, hell)</strong><br>
-        Nach <em>e, i, ä, ei, eu</em> klingt „ch" wie ein leises Hauchen:
+        Nach <em>e, i, ä, ei, eu</em> klingt „ch“ wie ein leises Hauchen:
         <em>i<strong>ch</strong>, lei<strong>ch</strong>t, hei<strong>ch</strong></em> — Nein: <em>freu<strong>ch</strong></em>
         → Ausnahme: <em>freundli<strong>ch</strong></em>.
       </div>
@@ -383,7 +379,7 @@ body {
 
       <!-- Zuordnungs-Übung -->
       <div class="zuo-aufgabe">
-        <h3>Zuordnung: Welches „ch" hörst du? Ziehe die Wörter in die richtige Gruppe.</h3>
+        <h3>Zuordnung: Welches „ch“ hörst du? Ziehe die Wörter in die richtige Gruppe.</h3>
         <div class="zuo-bank" id="zuo-bank">
           <!-- wird per JS befüllt -->
         </div>
@@ -462,18 +458,18 @@ body {
       </div>
 
       <div class="szenario-box">
-        <h3>🎭 Rollenspiel: „Ein Ausflug in die Natur"</h3>
+        <h3>🎭 Rollenspiel: „Ein Ausflug in die Natur“</h3>
         <p>
           <strong>Person A</strong> macht einen Ausflug mit <strong>Person B</strong> in die Natur.
           Ihr seht einen Wald, einen Bach und eine Wiese. Person A beschreibt, was er/sie sieht.
           Person B stellt Fragen und reagiert auf die Beschreibung.
         </p>
         <div class="satz-anfaenge">
-          <div class="satz-anfang">„Schau mal, dort drüben ist ein ..."</div>
-          <div class="satz-anfang">„Die Landschaft hier ist wirklich ..."</div>
-          <div class="satz-anfang">„Hörst du das? Das klingt wie ..."</div>
-          <div class="satz-anfang">„Ich finde es hier besonders schön, weil ..."</div>
-          <div class="satz-anfang">„Das Wetter ist heute perfekt für ..."</div>
+          <div class="satz-anfang">„Schau mal, dort drüben ist ein ...“</div>
+          <div class="satz-anfang">„Die Landschaft hier ist wirklich ...“</div>
+          <div class="satz-anfang">„Hörst du das? Das klingt wie ...“</div>
+          <div class="satz-anfang">„Ich finde es hier besonders schön, weil ...“</div>
+          <div class="satz-anfang">„Das Wetter ist heute perfekt für ...“</div>
         </div>
       </div>
 
