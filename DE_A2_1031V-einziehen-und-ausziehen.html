@@ -145,7 +145,15 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
   font-size: 0.85rem; color: #666;
 }
 .timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
-</style>
+
+        .vocab-hl {
+            background: #ffe9a0;
+            border-radius: 3px;
+            padding: 1px 3px;
+            font-weight: 600;
+            cursor: help;
+        }
+    </style>
 </head>
 <body>
 
@@ -220,7 +228,16 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
         <div class="tab-content">
             <h2>Text &amp; Fragen</h2>
             <div class="lese-text">
-                Familie Miller hat ein neues Haus gefunden. Aber Herr Miller möchte das Haus nicht kaufen. Er möchte es <strong>mieten</strong>. Das Haus ist sehr groß. Es hat fünf Zimmer, drei Badezimmer und eine große Küche mit einer <strong>Einbauküche</strong>. Es gibt keinen Keller. Aber es gibt eine große Garage und einen schönen Garten. Vorher hatte Familie Miller nur eine kleine Wohnung. Jetzt braucht Familie Miller neue Möbel für das Haus.
+                <p><strong>Familie Meier sucht ein neues Zuhause</strong></p>
+                <p>Familie Meier wohnt seit sieben Jahren in einer kleinen Zweizimmerwohnung in Nürnberg. Zwei Kinder, ein Hund, 58 Quadratmeter. Am Wochenende beginnt die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Wohnungssuche</span>. Herr Meier sitzt mit seinem Laptop am Küchentisch und klickt sich durch die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Anzeigen</span> auf ImmoScout. Zu teuer. Zu klein. Zu weit weg.</p>
+
+                <p>Am Sonntag finden sie es: ein Reihenhaus in Fürth, vier Zimmer, kleiner Garten. Die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Miete</span> beträgt 1.250 Euro warm. Die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Kaution</span> sind drei Monatsmieten. Herr Meier klickt auf den <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Grundriss</span> und zeigt es seiner Frau: „Schau, hier sind die Kinderzimmer, und hier unten ist eine moderne <span class=“vocab-hl" title="📖 Vokabel aus der Vorentlastung">Einbauküche</span>."</p>
+
+                <p>Am Mittwoch ist Besichtigung. Das Haus gefällt ihnen sofort. Es ist nicht <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">möbliert</span> — gut, sie haben eigene Möbel. Die Vermieterin, Frau Gruber, erklärt: „Die alten Mieter <span class=“vocab-hl" title="📖 Vokabel aus der Vorentlastung">ziehen</span> nächsten Monat <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">aus</span>. Sie können am ersten September <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">einziehen</span>."</p>
+
+                <p>Ende August. Der <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Umzug</span> kostet 1.400 Euro. Zwei starke Männer von der Umzugsfirma tragen Kisten, Betten und das alte Klavier. Der Hund läuft aufgeregt zwischen den Räumen. Am Abend sitzt Familie Meier auf dem Boden im neuen Wohnzimmer, isst Pizza aus der Schachtel und trinkt Wein aus Plastikbechern.</p>
+
+                <p>Und die alte Wohnung in Nürnberg? Der Vermieter wird sie bald neu <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">vermieten</span>. Herr Meier hat sie sieben Jahre lang gern <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">gemietet</span>. Jetzt beginnt ein neues Kapitel.</p>
             </div>
             <h3>Richtig oder falsch?</h3>
             <table class="rf-table" id="rfTable"></table>
@@ -625,15 +642,15 @@ function sbResetAll(){timerResetOne(4);initSatzbau();}
 
 // ─── Wortschatz ──────────────────────────────────────────────────────────────
 var WORTSCHATZ = [
-    { id:1,  type:'p', en:'🏠 to rent',              artikel:'',    de:'mieten',          plural:'' },
-    { id:2,  type:'p', en:'🏠 to rent out',          artikel:'',    de:'vermieten',       plural:'' },
-    { id:3,  type:'p', en:'🏠 furnished',            artikel:'',    de:'möbliert',        plural:'' },
-    { id:4,  type:'n', en:'👨 fitted kitchen',       artikel:'die', de:'Einbauküche',     plural:'Einbauküchen' },
+    { id:1,  type:'p', en:'🔑 to rent',              artikel:'',    de:'mieten',          plural:'' },
+    { id:2,  type:'p', en:'🏘️ to rent out',          artikel:'',    de:'vermieten',       plural:'' },
+    { id:3,  type:'p', en:'🛋️ furnished',            artikel:'',    de:'möbliert',        plural:'' },
+    { id:4,  type:'n', en:'🍳 fitted kitchen',       artikel:'die', de:'Einbauküche',     plural:'Einbauküchen' },
     { id:5,  type:'n', en:'🔍 apartment search',     artikel:'die', de:'Wohnungssuche',   plural:'Wohnungssuchen' },
     { id:6,  type:'n', en:'📋 advertisement',        artikel:'die', de:'Anzeige',          plural:'Anzeigen' },
     { id:7,  type:'n', en:'📐 floor plan',           artikel:'der', de:'Grundriss',        plural:'Grundrisse' },
-    { id:8,  type:'p', en:'🚚 to move in',           artikel:'',    de:'einziehen',       plural:'' },
-    { id:9,  type:'p', en:'🚚 to move out',          artikel:'',    de:'ausziehen',       plural:'' },
+    { id:8,  type:'p', en:'📥 to move in',           artikel:'',    de:'einziehen',       plural:'' },
+    { id:9,  type:'p', en:'🏃 to move out',          artikel:'',    de:'ausziehen',       plural:'' },
     { id:10, type:'n', en:'🚚 move/relocation',      artikel:'der', de:'Umzug',           plural:'Umzüge' },
     { id:11, type:'n', en:'💰 rent',                 artikel:'die', de:'Miete',           plural:'Mieten' },
     { id:12, type:'n', en:'💳 deposit',              artikel:'die', de:'Kaution',         plural:'Kautionen' }
