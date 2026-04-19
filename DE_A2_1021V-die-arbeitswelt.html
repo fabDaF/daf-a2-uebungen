@@ -181,7 +181,15 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
   font-size: 0.85rem; color: #666;
 }
 .timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
-</style>
+
+        .vocab-hl {
+            background: #ffe9a0;
+            border-radius: 3px;
+            padding: 1px 3px;
+            font-weight: 600;
+            cursor: help;
+        }
+    </style>
 </head>
 <body>
 
@@ -414,10 +422,15 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
         <div class="text-block">
             <div class="section-title">📖 Text &amp; Fragen</div>
             <div class="lese-text">
-                <p><strong>Mark am Arbeitsplatz</strong></p>
-                <p>Mark arbeitet seit drei Jahren in einer großen Firma in München. Er sitzt in einem modernen Büro am Schreibtisch und entwickelt neue Software. Sein Arbeitgeber ist sehr nett. Mark verdient gut und er hat keinen Stress. Er mag seinen Job sehr.</p>
-                <p><strong>Tom überlegt zu kündigen</strong></p>
-                <p>Tom hat eine gute Stelle in einer bekannten Firma. Aber er macht jeden Abend Überstunden und hat viel Stress. Sein Gehalt ist nicht so hoch. Er liest gerade seinen Arbeitsvertrag und überlegt: Soll er kündigen? Er sucht eine neue Aufgabe in einer anderen Firma.</p>
+                <p><strong>Mark am Montagmorgen</strong></p>
+                <p>Mark arbeitet seit drei Jahren bei einer <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Firma</span> in München. Das <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Büro</span> liegt im vierten Stock. Es ist hell und ruhig. Vor Marks <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Schreibtisch</span> steht ein großes Fenster. Man sieht die Isar und den Englischen Garten.</p>
+                <p>Es ist halb neun. Mark trinkt seinen zweiten Kaffee. Er <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">entwickelt</span> Software für ein kleines Computerspiel. Die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Aufgabe</span> ist schwierig, aber sie macht ihm Spaß. Seine Chefin, Frau Weber, ist eine sehr nette <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Arbeitgeberin</span>. Sie sagt oft: „Gut gemacht, Mark!“</p>
+                <p>Mark <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">verdient</span> 3.400 Euro. Das <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Gehalt</span> reicht für seine Wohnung und zweimal im Jahr einen Urlaub. Er hat keinen <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Stress</span>. <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Überstunden</span> macht er selten. Sein <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Arbeitsvertrag</span> ist fair. Mark mag seine <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Stelle</span> sehr.</p>
+
+                <p><strong>Tom am Dienstagabend</strong></p>
+                <p>Es ist 21:30 Uhr. Tom sitzt noch im Büro. Auf seinem Schreibtisch liegen Papiere, Kaffeetassen und ein halb gegessenes Brötchen. Die Kollegen sind schon zu Hause. Nur das Licht an seinem Platz brennt noch.</p>
+                <p>Tom arbeitet bei einer bekannten Versicherung in Hamburg. Er ist dort Kundenberater. Die Firma ist groß, aber Tom hat jeden Abend drei Stunden Überstunden. Sein Gehalt ist nicht hoch genug. Die Mietpreise in Hamburg steigen, und die Miete für seine kleine Wohnung kostet die Hälfte vom Netto.</p>
+                <p>Tom liest seinen Arbeitsvertrag noch einmal. Die Kündigungsfrist ist drei Monate. Er öffnet eine Job-Website und sucht eine neue Stelle. Vielleicht eine andere Aufgabe, bei einer kleineren Firma. Vielleicht weniger Stress, vielleicht einen besseren Arbeitgeber. Morgen will er <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">kündigen</span>. Aber nur vielleicht.</p>
             </div>
 
             <h2 style="font-size:1.1em; color:#667eea; margin-bottom:14px;">Richtig oder falsch?</h2>
@@ -960,10 +973,10 @@ var WORTSCHATZ = [
     { id:3,  type:"n", en:"⏰ overtime",               artikel:"die", de:"Überstunden",    plural:"\u2013" },
     { id:4,  type:"n", en:"📋 task",                   artikel:"die", de:"Aufgabe",        plural:"Aufgaben" },
     { id:5,  type:"n", en:"📝 employment contract",    artikel:"der", de:"Arbeitsvertrag", plural:"Arbeitsverträge" },
-    { id:6,  type:"n", en:"desk",                        artikel:"der", de:"Schreibtisch",   plural:"Schreibtische" },
+    { id:6,  type:"n", en:"🖥️ desk",                        artikel:"der", de:"Schreibtisch",   plural:"Schreibtische" },
     { id:7,  type:"n", en:"🏬 office",                 artikel:"das", de:"Büro",           plural:"Büros" },
     { id:8,  type:"p", en:"💻 to develop",             de:"entwickeln" },
-    { id:9,  type:"n", en:"📌 position / job",         artikel:"die", de:"Stelle",         plural:"Stellen" },
+    { id:9,  type:"n", en:"💼 position / job",         artikel:"die", de:"Stelle",         plural:"Stellen" },
     { id:10, type:"n", en:"😰 stress",                 artikel:"der", de:"Stress",         plural:"\u2013" },
     { id:11, type:"p", en:"💶 to earn",                de:"verdienen" },
     { id:12, type:"n", en:"👔 employer",               artikel:"der", de:"Arbeitgeber",    plural:"Arbeitgeber" },

@@ -145,7 +145,15 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
     margin-bottom: 18px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
-  </style>
+  
+        .vocab-hl {
+            background: #ffe9a0;
+            border-radius: 3px;
+            padding: 1px 3px;
+            font-weight: 600;
+            cursor: help;
+        }
+    </style>
 </head>
 <body>
 
@@ -222,7 +230,17 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
         <div class="section-inner">
             <div class="section-title" style="font-size:1.25em;font-weight:700;color:#667eea;margin-bottom:18px;">📖 Lohn und Gehalt</div>
             <div class="story-text">
-                <p>Georg gefällt sein Job nicht. Er arbeitet in der Buchhaltung. Er verdient gut, aber er hat keinen Spaß. Und Geld macht nicht glücklich. Er muss noch zehn Jahre arbeiten, bis er in den Ruhestand geht. Er überlegt: Soll ich kündigen? Aber was wird dann aus seiner Rente?</p>
+                <p>Georg ist 55 Jahre alt. Er arbeitet seit zwanzig Jahren in der <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Buchhaltung</span> einer Versicherung in Frankfurt. Sein Büro ist im dritten Stock, am Ende des Flurs. An der Wand hängt ein Kalender von 2023. Georg hat ihn nie gewechselt.</p>
+
+                <p>Montagmorgen, halb neun. Georg sitzt vor einer Excel-Tabelle. Zahlen, Zahlen, Zahlen. Er ist <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">fleißig</span> und zuverlässig. Das ist seine <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Stärke</span>. Aber er hat auch eine <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Schwäche</span>: Er ist nicht kreativ. Und Zahlen machen ihn müde.</p>
+
+                <p>Um elf Uhr ist <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Besprechung</span> mit den anderen Abteilungen. Georg hört zu. Die Kollegin aus dem <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Marketing</span>, Frau Peters, erzählt von einer neuen Kampagne. Sie lacht, sie zeigt bunte Bilder. Die Marketing-Leute haben Spaß. Georg denkt: „Vielleicht sollte ich auch wechseln.“</p>
+
+                <p>Am Abend schreibt Georg eine Bewerbung. Marketing-Assistent, Teilzeit. Nach einer Woche kommt die erste <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Absage</span>. Nach zwei Wochen die zweite. Zu alt, zu wenig Erfahrung. Georg legt die Briefe in eine Schublade.</p>
+
+                <p>Er <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">verdient</span> 4.200 Euro brutto. Kein schlechtes Geld. Aber er muss noch zehn Jahre arbeiten, bis er in den <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Ruhestand</span> geht. Soll er <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">kündigen</span>? Was wird dann aus seiner <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Rente</span>?</p>
+
+                <p>Am Freitagabend trinkt Georg ein Bier in seiner Küche. Er ist nicht <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">faul</span>. Er ist auch nicht unglücklich. Er ist nur müde. Am Montag geht er wieder in den dritten Stock, an den Schreibtisch mit dem alten Kalender. So einfach ist das. Und so schwer.</p>
             </div>
             <div id="rfContainer"></div>
         </div>
@@ -582,7 +600,7 @@ var WORTSCHATZ = [
     { id:4, type:'n', en:'💪 the strength', artikel:'die', de:'Stärke', plural:'Stärken' },
     { id:5, type:'n', en:'📩 the rejection', artikel:'die', de:'Absage', plural:'Absagen' },
     { id:6, type:'n', en:'🗓 the meeting', artikel:'die', de:'Besprechung', plural:'Besprechungen' },
-    { id:7, type:'n', en:'📊 the accounting dept.', artikel:'die', de:'Buchhaltung', plural:'Buchhaltungen' },
+    { id:7, type:'n', en:'🧮 the accounting dept.', artikel:'die', de:'Buchhaltung', plural:'Buchhaltungen' },
     { id:8, type:'n', en:'📢 the marketing', artikel:'das', de:'Marketing', plural:'–' },
     { id:9, type:'p', en:'✍️ to resign', artikel:'', de:'kündigen', plural:'' },
     { id:10, type:'p', en:'💶 to earn', artikel:'', de:'verdienen', plural:'' },
