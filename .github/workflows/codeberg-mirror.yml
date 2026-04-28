@@ -1,0 +1,32 @@
+name: Mirror to Codeberg
+
+on:
+  push:
+    branches: ['**']
+    tags: ['**']
+  delete:
+  workflow_dispatch:
+
+concurrency:
+  group: codeberg-mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror to Codeberg
+        env:
+          CB_USER: ${{ secrets.CODEBERG_USERNAME }}
+          CB_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+        run: |
+          if [ -z "$CB_USER" ] || [ -z "$CB_TOKEN" ]; then
+            echo "::error::Secrets CODEBERG_USERNAME und CODEBERG_TOKEN fehlen"
+            exit 1
+          fi
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d/ -f2)
+          git clone --mirror "https://github.com/${{ github.repository }}.git" work
+          cd work
+          CB_URL="https://${CB_USER}:${CB_TOKEN}@codeberg.org/${CB_USER}/${REPO_NAME}.git"
+          git push --mirror "$CB_URL"
+          git push --force "$CB_URL" main:pages
