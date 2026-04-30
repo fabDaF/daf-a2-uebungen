@@ -413,13 +413,13 @@ function ltShowAll(){
 
 // ── SATZBAU ─────────────────────────────────────────────────
 var satzbauData = [
-  { words: ['Ich', 'werde', 'morgen', 'früh', 'aufstehen'], punct: '.' },
-  { words: ['Nina', 'wird', 'nächstes', 'Jahr', 'nach', 'Australien', 'fliegen'], punct: '.' },
-  { words: ['Wir', 'werden', 'im', 'Sommer', 'ein', 'Haus', 'kaufen'], punct: '.' },
-  { words: ['Du', 'wirst', 'bestimmt', 'den', 'Test', 'bestehen'], punct: '.' },
-  { words: ['Er', 'wird', 'morgen', 'lange', 'arbeiten', 'müssen'], punct: '.' },
-  { words: ['Ihr', 'werdet', 'hier', 'nicht', 'rauchen', 'dürfen'], punct: '.' },
-  { words: ['Es', 'wird', 'heute', 'noch', 'regnen'], punct: '.' }
+  { parts: ['ich', 'werde', 'morgen', 'früh', 'aufstehen'], valid: [['ich', 'werde', 'morgen', 'früh', 'aufstehen']], punct: '.' },
+  { parts: ['Nina', 'wird', 'nächstes', 'Jahr', 'nach', 'Australien', 'fliegen'], valid: [['Nina', 'wird', 'nächstes', 'Jahr', 'nach', 'Australien', 'fliegen']], punct: '.' },
+  { parts: ['wir', 'werden', 'im', 'Sommer', 'ein', 'Haus', 'kaufen'], valid: [['wir', 'werden', 'im', 'Sommer', 'ein', 'Haus', 'kaufen']], punct: '.' },
+  { parts: ['du', 'wirst', 'bestimmt', 'den', 'Test', 'bestehen'], valid: [['du', 'wirst', 'bestimmt', 'den', 'Test', 'bestehen']], punct: '.' },
+  { parts: ['er', 'wird', 'morgen', 'lange', 'arbeiten', 'müssen'], valid: [['er', 'wird', 'morgen', 'lange', 'arbeiten', 'müssen']], punct: '.' },
+  { parts: ['ihr', 'werdet', 'hier', 'nicht', 'rauchen', 'dürfen'], valid: [['ihr', 'werdet', 'hier', 'nicht', 'rauchen', 'dürfen']], punct: '.' },
+  { parts: ['es', 'wird', 'heute', 'noch', 'regnen'], valid: [['es', 'wird', 'heute', 'noch', 'regnen']], punct: '.' }
 ];
 var sbDragged = null;
 var sbCorrect = [];
@@ -549,7 +549,11 @@ var MC_DATA = [
   { q: 'Ich ___ morgen lange arbeiten müssen.', opts: ['werden', 'wirden', 'wirde', 'werde'], ans: 3 },
   { q: 'Es ist schon spät. Die Kinder ___ bestimmt schon im Bett sein.', opts: ['wirt', 'wird', 'werden', 'werdet'], ans: 2 },
   { q: 'Nina sieht so glücklich aus. Sie ___ wohl frisch verliebt sein.', opts: ['werde', 'wirst', 'wird', 'werden'], ans: 2 },
-  { q: 'Ich werde ab jetzt immer pünktlich ___. (Ich verspreche es!)', opts: ['kommen', 'komme', 'kommt', 'kommst'], ans: 0 }
+  { q: 'Ich werde ab jetzt immer pünktlich ___. (Ich verspreche es!)', opts: ['kommen', 'komme', 'kommt', 'kommst'], ans: 0 },
+  { q: 'Wir ___ im Sommer eine lange Reise nach Italien machen.', opts: ['werdet', 'wird', 'werden', 'werde'], ans: 2 },
+  { q: 'Marie ___ ihr Studium nächstes Jahr endlich abschließen.', opts: ['werden', 'wirst', 'wird', 'werdet'], ans: 2 },
+  { q: 'Wenn das Wetter schön wird, ___ wir morgen an den See fahren.', opts: ['werdet', 'werden', 'wird', 'werde'], ans: 1 }
+
 ];
 var mcAnswered = [];
 function mcBuild(){

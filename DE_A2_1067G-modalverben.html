@@ -369,13 +369,13 @@ function ltShowAll(){
 
 // ── SATZBAU ─────────────────────────────────────────────────
 var satzbauData = [
-  { words: ['Ich', 'kann', 'gut', 'Gitarre', 'spielen'], punct: '.' },
-  { words: ['Als', 'Kind', 'habe', 'ich', 'nicht', 'fernsehen', 'dürfen'], punct: '.' },
-  { words: ['Nina', 'hat', 'letzte', 'Woche', 'arbeiten', 'müssen'], punct: '.' },
-  { words: ['Wir', 'sollen', 'heute', 'die', 'Küche', 'putzen'], punct: '.' },
-  { words: ['Max', 'hat', 'ein', 'neues', 'Auto', 'kaufen', 'wollen'], punct: '.' },
-  { words: ['Hier', 'darf', 'man', 'nicht', 'rauchen'], punct: '.' },
-  { words: ['Anita', 'hat', 'allein', 'zur', 'Schule', 'fahren', 'dürfen'], punct: '.' }
+  { parts: ['ich', 'kann', 'gut', 'Gitarre', 'spielen'], valid: [['ich', 'kann', 'gut', 'Gitarre', 'spielen']], punct: '.' },
+  { parts: ['als', 'Kind', 'habe', 'ich', 'nicht', 'fernsehen', 'dürfen'], valid: [['als', 'Kind', 'habe', 'ich', 'nicht', 'fernsehen', 'dürfen']], punct: '.' },
+  { parts: ['Nina', 'hat', 'letzte', 'Woche', 'arbeiten', 'müssen'], valid: [['Nina', 'hat', 'letzte', 'Woche', 'arbeiten', 'müssen']], punct: '.' },
+  { parts: ['wir', 'sollen', 'heute', 'die', 'Küche', 'putzen'], valid: [['wir', 'sollen', 'heute', 'die', 'Küche', 'putzen']], punct: '.' },
+  { parts: ['Max', 'hat', 'ein', 'neues', 'Auto', 'kaufen', 'wollen'], valid: [['Max', 'hat', 'ein', 'neues', 'Auto', 'kaufen', 'wollen']], punct: '.' },
+  { parts: ['hier', 'darf', 'man', 'nicht', 'rauchen'], valid: [['hier', 'darf', 'man', 'nicht', 'rauchen']], punct: '.' },
+  { parts: ['Anita', 'hat', 'allein', 'zur', 'Schule', 'fahren', 'dürfen'], valid: [['Anita', 'hat', 'allein', 'zur', 'Schule', 'fahren', 'dürfen']], punct: '.' }
 ];
 var sbDragged = null;
 var sbCorrect = [];
@@ -390,13 +390,16 @@ function sbBuild(){ var container=document.getElementById('satzbauContainer'); c
 
 // ── MULTIPLE CHOICE ─────────────────────────────────────────
 var MC_DATA = [
-  { q: 'Kim ___ morgen früh aufstehen. (3. Person Singular von „müssen“)', opts: ['muss', 'müssen', 'musste', 'müsst'], ans: 0 },
+  { q: 'Kim ___ morgen früh aufstehen. (3. Person Singular von „müssen")', opts: ['muss', 'müssen', 'musste', 'müsst'], ans: 0 },
   { q: 'Als Kind habe ich nicht fernsehen ___.', opts: ['gedurft', 'dürfen', 'durfte', 'darf'], ans: 1 },
   { q: 'Gestern ___ ich lange arbeiten.', opts: ['muss', 'müssen', 'musste', 'mussten'], ans: 2 },
   { q: 'Nina hat letzte Woche arbeiten ___. (Perfekt)', opts: ['gemusst', 'musste', 'müssen', 'muss'], ans: 2 },
   { q: 'Hier ___ man nicht rauchen. (Verbot)', opts: ['muss', 'darf', 'soll', 'will'], ans: 1 },
   { q: '___ du schon Auto fahren? (Fähigkeit)', opts: ['Darfst', 'Kannst', 'Musst', 'Sollst'], ans: 1 },
-  { q: 'Max hat ein Auto kaufen ___. (Perfekt von „wollen“)', opts: ['gewollt', 'wollen', 'wollte', 'will'], ans: 1 }
+  { q: 'Max hat ein Auto kaufen ___. (Perfekt von „wollen")', opts: ['gewollt', 'wollen', 'wollte', 'will'], ans: 1 },
+  { q: 'Mein Chef ___, dass ich morgen früher komme. (Wunsch des Chefs)', opts: ['kann', 'darf', 'will', 'muss'], ans: 2 },
+  { q: 'Du ___ den Arzt fragen, wenn du dir nicht sicher bist. (Empfehlung)', opts: ['darfst', 'sollst', 'musst', 'kannst'], ans: 1 },
+  { q: 'Mit fünfzehn ___ man in Deutschland noch keinen Alkohol trinken. (Verbot)', opts: ['will', 'muss', 'darf', 'soll'], ans: 2 }
 ];
 var mcAnswered = [];
 function mcBuild(){ var container=document.getElementById('mcContainer'); container.innerHTML=''; mcAnswered=new Array(MC_DATA.length).fill(false); MC_DATA.forEach(function(item,idx){ var div=document.createElement('div'); div.className='mc-item'; var q=document.createElement('div'); q.className='mc-question'; q.textContent=(idx+1)+'. '+item.q; div.appendChild(q); var opts=document.createElement('div'); opts.className='mc-options'; item.opts.forEach(function(opt,oi){ var btn=document.createElement('button'); btn.className='mc-opt'; btn.textContent=opt; btn.addEventListener('click',function(){ if(mcAnswered[idx]) return; mcAnswered[idx]=true; opts.querySelectorAll('.mc-opt').forEach(function(b,bi){ if(bi===item.ans) b.classList.add('correct'); else b.classList.add('wrong'); }); if(oi===item.ans) btn.classList.remove('wrong'); }); opts.appendChild(btn); }); div.appendChild(opts); container.appendChild(div); }); }

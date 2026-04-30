@@ -202,7 +202,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
         <span class="word-chip"><span class="hl">pf</span>eifen</span>
         <span class="word-chip">A<span class="hl">pf</span>el</span>
         <span class="word-chip">Kno<span class="hl">pf</span></span>
-        <span class="word-chip">küm<span class="hl">pf</span>en</span>
+        <span class="word-chip">käm<span class="hl">pf</span>en</span>
         <span class="word-chip"><span class="hl">Pf</span>licht</span>
         <span class="word-chip">em<span class="hl">pf</span>ehlen</span>
         <span class="word-chip">hü<span class="hl">pf</span>en</span>
@@ -686,13 +686,13 @@ function resetRM() {
 
 // ─── Satzbau ────────────────────────────────────────────────────────────────
 var satzbauData = [
-    { words: ['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen'], punct: '.' },
-    { words: ['Wenn', 'du', 'deine', 'Ziele', 'verfolgst', ',', 'dann', 'wirst', 'du', 'erfolgreich', 'sein'], punct: '.' },
-    { words: ['Mia', 'hat', 'die', 'Vermutung', ',', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt'], punct: '.' },
-    { words: ['Leons', 'Lebensziel', 'ist', 'es', ',', 'eine', 'gesunde', 'Familie', 'zu', 'haben'], punct: '.' },
-    { words: ['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], punct: '.' },
-    { words: ['Wenn', 'ich', 'eine', 'Million', 'gewinne', ',', 'dann', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen'], punct: '.' },
-    { words: ['ich', 'wünsche', 'mir', ',', 'im', 'Ausland', 'zu', 'arbeiten'], punct: '.' }
+    { parts: ['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen'], valid: [['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen']], punct: '.' },
+    { parts: ['wenn', 'du', 'deine', 'Ziele', 'verfolgst', 'wirst', 'du', 'erfolgreich', 'sein'], valid: [['wenn', 'du', 'deine', 'Ziele', 'verfolgst', 'wirst', 'du', 'erfolgreich', 'sein']], punct: '.' },
+    { parts: ['Mia', 'hat', 'die', 'Vermutung', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt'], valid: [['Mia', 'hat', 'die', 'Vermutung', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt']], punct: '.' },
+    { parts: ['Leons', 'Lebensziel', 'ist', 'es', 'eine', 'gesunde', 'Familie', 'zu', 'haben'], valid: [['Leons', 'Lebensziel', 'ist', 'es', 'eine', 'gesunde', 'Familie', 'zu', 'haben']], punct: '.' },
+    { parts: ['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], valid: [['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft']], punct: '.' },
+    { parts: ['wenn', 'ich', 'eine', 'Million', 'gewinne', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen'], valid: [['wenn', 'ich', 'eine', 'Million', 'gewinne', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen']], punct: '.' },
+    { parts: ['ich', 'wünsche', 'mir', 'im', 'Ausland', 'zu', 'arbeiten'], valid: [['ich', 'wünsche', 'mir', 'im', 'Ausland', 'zu', 'arbeiten']], punct: '.' }
 ];
 var sbInited = false;
 var sbDragged = null;
