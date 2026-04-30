@@ -101,6 +101,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <div class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
     <div class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
     <div class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
+    <div class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
   </div>
 
   <!-- TAB 0: ENTDECKEN -->
@@ -294,6 +295,21 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     </div>
   </section>
 
+  
+  <section class="section" id="sec-5">
+    <div class="sec-inner">
+      <h2>🔠 Wortschatz üben</h2>
+      <p style="font-size:.9em;color:#888;margin-bottom:14px;">Tippe das deutsche Wort. Bei Nomen: Artikel, Wort und Plural.</p>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="showWortschatzModalLoesung()">Lösungen</button>
+          <button class="btn" onclick="resetWortschatzModal()">Neu starten</button>
+        </div>
+      </div>
+      <div id="wortschatzModalContainer" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+    </div>
+  </section>
+
   <div class="author-footer">
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
@@ -400,6 +416,64 @@ function getSbCursor(zone, x) {
 })();
 
 function initSatzbau() { typeof sbBuild=="function" ? sbBuild() : typeof buildSb=="function" ? buildSb() : null; }
+
+var WORTSCHATZ_MODAL = [
+  {id:1, type:'p', en:'✅ (must / have to)', artikel:'', de:'müssen', plural:''},
+  {id:2, type:'p', en:'💪 (can / be able to)', artikel:'', de:'können', plural:''},
+  {id:3, type:'p', en:'🟢 (be allowed to)', artikel:'', de:'dürfen', plural:''},
+  {id:4, type:'p', en:'📋 (should / be supposed to)', artikel:'', de:'sollen', plural:''},
+  {id:5, type:'p', en:'🎯 (want to)', artikel:'', de:'wollen', plural:''},
+  {id:6, type:'p', en:'❤️ (like / would like)', artikel:'', de:'mögen', plural:''},
+  {id:7, type:'n', en:'⚠️ (duty / obligation)', artikel:'die', de:'Pflicht', plural:'Pflichten'},
+  {id:8, type:'n', en:'✋ (permission)', artikel:'die', de:'Erlaubnis', plural:'Erlaubnisse'},
+  {id:9, type:'n', en:'💡 (possibility)', artikel:'die', de:'Möglichkeit', plural:'Möglichkeiten'},
+  {id:10, type:'n', en:'🚫 (prohibition)', artikel:'das', de:'Verbot', plural:'Verbote'},
+  {id:11, type:'n', en:'🤝 (advice)', artikel:'der', de:'Rat', plural:'Ratschläge'},
+  {id:12, type:'n', en:'🎓 (ability)', artikel:'die', de:'Fähigkeit', plural:'Fähigkeiten'}
+];
+
+function initWortschatzModal(){
+  var c=document.getElementById('wortschatzModalContainer');
+  if(!c) return;
+  c.innerHTML='';
+  WORTSCHATZ_MODAL.forEach(function(w){
+    var item=document.createElement('div'); item.className='luecken-item';
+    var p=document.createElement('div'); p.className='ws-prompt';
+    p.textContent=w.en; item.appendChild(p);
+    var fields=document.createElement('div'); fields.className='ws-fields';
+    if(w.type==='n'){
+      var a=document.createElement('input'); a.className='blank'; a.style.width='5ch'; a.placeholder='Artikel'; a.dataset.ans=w.artikel; a.dataset.cs='0';
+      var b=document.createElement('input'); b.className='blank'; b.style.width=(Math.max(w.de.length,4)+3)+'ch'; b.placeholder='Wort'; b.dataset.ans=w.de; b.dataset.cs='1';
+      var c2=document.createElement('input'); c2.className='blank'; c2.style.width=(Math.max((w.plural||'-').length,4)+3)+'ch'; c2.placeholder='Plural'; c2.dataset.ans=w.plural||'–'; c2.dataset.cs='1';
+      if(w.plural==='–'){ c2.value='–'; c2.disabled=true; c2.classList.add('correct'); }
+      [a,b,c2].forEach(function(i){ i.addEventListener('input',function(){ wsCheckModal(i); }); fields.appendChild(i); });
+    } else {
+      var d=document.createElement('input'); d.className='blank'; d.style.width=(Math.max(w.de.length,8)+3)+'ch'; d.placeholder='Deutsch'; d.dataset.ans=w.de; d.dataset.cs='0';
+      d.addEventListener('input',function(){ wsCheckModal(d); }); fields.appendChild(d);
+    }
+    item.appendChild(fields); c.appendChild(item);
+  });
+}
+function wsCheckModal(inp){
+  var v=inp.value.trim(); var ans=inp.dataset.ans||'';
+  var cs=inp.dataset.cs==='1';
+  inp.classList.remove('correct','wrong');
+  if(!v) return;
+  var ok=cs?(v===ans):(v.toLowerCase()===ans.toLowerCase());
+  inp.classList.toggle('correct',ok);
+  inp.classList.toggle('wrong',!ok);
+}
+function resetWortschatzModal(){ initWortschatzModal(); }
+function showWortschatzModalLoesung(){
+  document.querySelectorAll('#wortschatzModalContainer input.blank').forEach(function(i){
+    i.value=i.dataset.ans||'';
+    i.classList.add('correct'); i.classList.remove('wrong');
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initWortschatzModal);
+} else { initWortschatzModal(); }
 </script>
 </body>
 </html>
