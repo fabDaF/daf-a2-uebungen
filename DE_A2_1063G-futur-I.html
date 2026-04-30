@@ -19,7 +19,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 .section { display: none; padding: 28px 30px; }
-.section.aktiv { display: block; }
+.section.active { display: block; }
 @media (max-width: 600px) {
   body { padding: 8px; }
   .section { padding: 18px 14px; }
@@ -103,8 +103,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <div class="container">
 
   <div class="header">
-    <h1>1063G · Futur I mit <em>werden</em></h1>
-    <p style="font-family: Georgia, serif;">A2.1 · Grammatik · Zukunft &amp; Pläne</p>
+    <h1>Futur I mit <em>werden</em></h1>
+    <p>A2 – Lektion 1063G · Grammatik</p>
+    <div class="big-emoji">⏩</div>
   </div>
 
   <div class="nav">
@@ -116,7 +117,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </div>
 
   <!-- TAB 0: ENTDECKEN -->
-  <section class="section aktiv" id="tab0">
+  <section class="section active" id="sec-0">
     <div class="info-card">
       <h3>🔍 Entdecke das Muster</h3>
       <p>Lies die Sätze unten. Was fällt dir auf? Welches Verb kommt immer vor? Wo steht der Infinitiv?</p>
@@ -160,7 +161,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 1: REGEL -->
-  <section class="section" id="tab1">
+  <section class="section" id="sec-1">
     <div class="info-card">
       <h3>📐 Bildung: <em>werden</em> + Infinitiv</h3>
       <p><strong>werden</strong> steht konjugiert an Position 2 (linke Klammer). Der <strong>Infinitiv</strong> steht am Ende (rechte Klammer).</p>
@@ -223,7 +224,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 2: LÜCKENTEXT -->
-  <section class="section" id="tab2">
+  <section class="section" id="sec-2">
     <div class="lt-section">
       <div class="lt-title">Teil 1 · Konjugation von <em>werden</em></div>
 
@@ -297,7 +298,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 3: SATZBAU -->
-  <section class="section" id="tab3">
+  <section class="section" id="sec-3">
     <p style="color:#555;margin-bottom:16px;">Bilde Sätze im Futur I. Stelle <em>werden</em> auf Position 2, den Infinitiv ans Ende.</p>
     <div id="satzbauContainer"></div>
     <div class="btn-row">
@@ -309,7 +310,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 4: MULTIPLE CHOICE -->
-  <section class="section" id="tab4">
+  <section class="section" id="sec-4">
     <p style="color:#555;margin-bottom:16px;">Wähle die richtige Form von <em>werden</em> oder den richtigen Infinitiv.</p>
     <div id="mcContainer"></div>
     <div class="btn-row">
@@ -328,7 +329,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <script>
 // ── TAB NAVIGATION ─────────────────────────────────────────
 function showTab(n) {
-  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('aktiv', i===n); });
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n); });
   document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
   if (n === 2) ltTimerAutoStart();
   if (n === 3) sbTimerAutoStart();
