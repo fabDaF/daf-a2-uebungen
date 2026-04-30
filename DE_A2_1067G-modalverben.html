@@ -148,7 +148,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
       <div class="pdot" id="pdot3"></div>
     </div>
     <div class="mc-step active" id="mc-step0">
-      <h4>❓ Schritt 1: Was haben „kann, darf, musst, wollen, soll, möchte" gemeinsam?</h4>
+      <h4>❓ Schritt 1: Was haben „kann, darf, musst, wollen, soll, möchte“ gemeinsam?</h4>
       <div class="mc-options">
         <button class="mc-btn" onclick="mcCheck(0, this, false)">Es sind alles Hilfsverben (sein/haben/werden).</button>
         <button class="mc-btn" onclick="mcCheck(0, this, true)">Es sind Modalverben — sie verändern die Bedeutung des zweiten Verbs.</button>
@@ -173,12 +173,12 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
         <button class="mc-btn" onclick="mcCheck(2, this, false)">Konjugiert (spielst, raucht, machen)</button>
         <button class="mc-btn" onclick="mcCheck(2, this, true)">Im Infinitiv (Grundform: spielen, rauchen, machen)</button>
         <button class="mc-btn" onclick="mcCheck(2, this, false)">Im Partizip II (gespielt, geraucht)</button>
-        <button class="mc-btn" onclick="mcCheck(2, this, false)">Mit „zu" davor (zu spielen)</button>
+        <button class="mc-btn" onclick="mcCheck(2, this, false)">Mit „zu“ davor (zu spielen)</button>
       </div>
       <div class="mc-feedback" id="mcfb2"></div>
     </div>
     <div class="mc-step" id="mc-step3">
-      <h4>❓ Schritt 4: „Hier <em>darf</em> man nicht rauchen." — Was bedeutet <em>darf</em> hier?</h4>
+      <h4>❓ Schritt 4: „Hier <em>darf</em> man nicht rauchen.“ — Was bedeutet <em>darf</em> hier?</h4>
       <div class="mc-options">
         <button class="mc-btn" onclick="mcCheck(3, this, false)">Pflicht: Man muss es tun.</button>
         <button class="mc-btn" onclick="mcCheck(3, this, false)">Wunsch: Man möchte es tun.</button>
@@ -192,7 +192,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
       <ul>
         <li><strong>Form:</strong> konjugiertes <span class="hl-modal">Modalverb</span> an Position 2 + <span class="hl-inf">Infinitiv</span> am Ende</li>
         <li><strong>Bedeutungen:</strong> können (Fähigkeit) · dürfen (Erlaubnis) · müssen (Pflicht) · sollen (Auftrag) · wollen (starker Wunsch) · mögen / möchten (Wunsch)</li>
-        <li><strong>Konjugation:</strong> ich kann · du kannst · er/sie/es kann · wir können · ihr könnt · sie/Sie können (im Singular oft kein „-e"/„-t"!)</li>
+        <li><strong>Konjugation:</strong> ich kann · du kannst · er/sie/es kann · wir können · ihr könnt · sie/Sie können (im Singular oft kein „-e“/„-t“!)</li>
       </ul>
       <div class="rk-example">
         <b>Beispiele:</b> Ich <b>kann</b> gut Gitarre <b>spielen</b>. · Hier <b>darf</b> man nicht <b>rauchen</b>. · Wir <b>wollen</b> heute Pizza <b>essen</b>.
@@ -452,13 +452,13 @@ function sbBuild(){ var container=document.getElementById('satzbauContainer'); c
 
 // ── MULTIPLE CHOICE ─────────────────────────────────────────
 var MC_DATA = [
-  { q: 'Kim ___ morgen früh aufstehen. (3. Person Singular von „müssen")', opts: ['muss', 'müssen', 'musste', 'müsst'], ans: 0 },
+  { q: 'Kim ___ morgen früh aufstehen. (3. Person Singular von „müssen“)', opts: ['muss', 'müssen', 'musste', 'müsst'], ans: 0 },
   { q: 'Als Kind habe ich nicht fernsehen ___.', opts: ['gedurft', 'dürfen', 'durfte', 'darf'], ans: 1 },
   { q: 'Gestern ___ ich lange arbeiten.', opts: ['muss', 'müssen', 'musste', 'mussten'], ans: 2 },
   { q: 'Nina hat letzte Woche arbeiten ___. (Perfekt)', opts: ['gemusst', 'musste', 'müssen', 'muss'], ans: 2 },
   { q: 'Hier ___ man nicht rauchen. (Verbot)', opts: ['muss', 'darf', 'soll', 'will'], ans: 1 },
   { q: '___ du schon Auto fahren? (Fähigkeit)', opts: ['Darfst', 'Kannst', 'Musst', 'Sollst'], ans: 1 },
-  { q: 'Max hat ein Auto kaufen ___. (Perfekt von „wollen")', opts: ['gewollt', 'wollen', 'wollte', 'will'], ans: 1 },
+  { q: 'Max hat ein Auto kaufen ___. (Perfekt von „wollen“)', opts: ['gewollt', 'wollen', 'wollte', 'will'], ans: 1 },
   { q: 'Mein Chef ___, dass ich morgen früher komme. (Wunsch des Chefs)', opts: ['kann', 'darf', 'will', 'muss'], ans: 2 },
   { q: 'Du ___ den Arzt fragen, wenn du dir nicht sicher bist. (Empfehlung)', opts: ['darfst', 'sollst', 'musst', 'kannst'], ans: 1 },
   { q: 'Mit fünfzehn ___ man in Deutschland noch keinen Alkohol trinken. (Verbot)', opts: ['will', 'muss', 'darf', 'soll'], ans: 2 }

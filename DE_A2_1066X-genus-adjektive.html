@@ -490,7 +490,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">1</span><span class="schreib-aufgabe-titel">Ein Foto beschreiben</span>
         <div class="schreib-aufgabe-frage">Beschreib ein Foto oder Bild mit drei Adjektiven (mit Endungen).</div>
-        <div class="schreib-beispiel">Beispiel: „Auf dem Foto sehe ich eine schöne Frau. Sie hat lange braune Haare. Sie trägt ein grünes Kleid."</div>
+        <div class="schreib-beispiel">Beispiel: „Auf dem Foto sehe ich eine schöne Frau. Sie hat lange braune Haare. Sie trägt ein grünes Kleid.“</div>
         <textarea class="schreib-mini-textarea" data-aufgabe="1" data-titel="Ein Foto beschreiben"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-1">0</strong> <span class="schreib-mini-status" id="sw-status-1"></span></span>
@@ -500,7 +500,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">2</span><span class="schreib-aufgabe-titel">Drei Lieblingssachen</span>
         <div class="schreib-aufgabe-frage">Beschreib drei Sachen aus deinem Zuhause mit Adjektiven.</div>
-        <div class="schreib-beispiel">Beispiel: „Ich habe ein altes Klavier, einen großen Esstisch und einen kleinen weißen Hund."</div>
+        <div class="schreib-beispiel">Beispiel: „Ich habe ein altes Klavier, einen großen Esstisch und einen kleinen weißen Hund.“</div>
         <textarea class="schreib-mini-textarea" data-aufgabe="2" data-titel="Drei Lieblingssachen"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-2">0</strong> <span class="schreib-mini-status" id="sw-status-2"></span></span>
@@ -510,7 +510,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">3</span><span class="schreib-aufgabe-titel">Im Geschäft</span>
         <div class="schreib-aufgabe-frage">Stell dir vor, du kaufst Kleidung. Beschreib drei Sachen mit Adjektivendung.</div>
-        <div class="schreib-beispiel">Beispiel: „Ich suche eine schwarze Hose. Ich brauche auch ein blaues Hemd und einen warmen Pullover."</div>
+        <div class="schreib-beispiel">Beispiel: „Ich suche eine schwarze Hose. Ich brauche auch ein blaues Hemd und einen warmen Pullover.“</div>
         <textarea class="schreib-mini-textarea" data-aufgabe="3" data-titel="Im Geschäft"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-3">0</strong> <span class="schreib-mini-status" id="sw-status-3"></span></span>
@@ -520,7 +520,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">4</span><span class="schreib-aufgabe-titel">Eine Person beschreiben</span>
         <div class="schreib-aufgabe-frage">Beschreib eine Person mit drei Adjektiven.</div>
-        <div class="schreib-beispiel">Beispiel: „Mein bester Freund ist ein netter und freundlicher Mensch. Er hat blaue Augen und kurze braune Haare."</div>
+        <div class="schreib-beispiel">Beispiel: „Mein bester Freund ist ein netter und freundlicher Mensch. Er hat blaue Augen und kurze braune Haare.“</div>
         <textarea class="schreib-mini-textarea" data-aufgabe="4" data-titel="Eine Person beschreiben"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-4">0</strong> <span class="schreib-mini-status" id="sw-status-4"></span></span>
@@ -530,7 +530,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">5</span><span class="schreib-aufgabe-titel">Mini-Dialog: Im Geschäft</span>
         <div class="schreib-aufgabe-frage">Du bist im Geschäft. Schreib zwei Fragen und zwei Antworten mit Adjektivendungen.</div>
-        <div class="schreib-beispiel">Beispiel: „— Haben Sie diese rote Bluse auch in Größe 38? — Ja, hier ist eine kleine. — Gibt es das Hemd in einer anderen Farbe? — Wir haben blaue und weiße."</div>
+        <div class="schreib-beispiel">Beispiel: „— Haben Sie diese rote Bluse auch in Größe 38? — Ja, hier ist eine kleine. — Gibt es das Hemd in einer anderen Farbe? — Wir haben blaue und weiße.“</div>
         <textarea class="schreib-mini-textarea" data-aufgabe="5" data-titel="Mini-Dialog: Im Geschäft"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-5">0</strong> <span class="schreib-mini-status" id="sw-status-5"></span></span>
@@ -1328,10 +1328,10 @@ function schreibFehlerErklaerung(err) {
     return 'Der Versand-Endpunkt ist gerade nicht freigeschaltet (das passiert manchmal bei Adress-Wechsel auf Franks Seite).';
   }
   if (code.indexOf('HTTP_') === 0) {
-    return 'Der Server hat eine technische Antwort gegeben (' + code.replace('HTTP_', 'HTTP ') + '), die nicht „erfolgreich" bedeutet.';
+    return 'Der Server hat eine technische Antwort gegeben (' + code.replace('HTTP_', 'HTTP ') + '), die nicht „erfolgreich“ bedeutet.';
   }
   if (code === 'API_ERROR') {
-    return 'Der Versand-Dienst hat „nicht erfolgreich" zurückgemeldet' + (err && err.apiMessage ? ' („' + err.apiMessage + '")' : '') + '.';
+    return 'Der Versand-Dienst hat „nicht erfolgreich“ zurückgemeldet' + (err && err.apiMessage ? ' („' + err.apiMessage + '“)' : '') + '.';
   }
   return 'Es gab ein Netz- oder Browser-Problem beim Senden — keine Server-Antwort.';
 }
@@ -1346,7 +1346,7 @@ function schreibKopierenEinzeln(nr) {
   function fertig(ok) {
     if (!st) return;
     if (ok) { st.classList.remove('error'); st.classList.add('success'); st.innerHTML = '✓ In die Zwischenablage kopiert. Jetzt in deine Mail oder deinen Chat einfügen und an Frank schicken.'; }
-    else { st.classList.add('error'); st.innerHTML = '✗ Kopieren ging nicht — markier den Text in der Box selbst und nutz „kopieren" deines Browsers.'; }
+    else { st.classList.add('error'); st.innerHTML = '✗ Kopieren ging nicht — markier den Text in der Box selbst und nutz „kopieren“ deines Browsers.'; }
   }
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(function () { fertig(true); }, function () { fertig(false); });
