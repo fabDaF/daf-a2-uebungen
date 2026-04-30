@@ -348,23 +348,21 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
 
         <div class="rf-grid">
             <div class="rf-item">
-                <div class="rf-statement">1. Hermine ist Alexas Nichte.</div>
+                <div class="rf-statement">1. Hermines Tante Alexa wohnt in Berlin.</div>
                 <div class="rf-buttons">
                     <button class="rf-btn richtig" onclick="checkRF(0, true)">Richtig</button>
                     <button class="rf-btn falsch" onclick="checkRF(0, false)">Falsch</button>
                 </div>
                 <div class="rf-feedback" id="rf-fb-0"></div>
             </div>
-
             <div class="rf-item">
-                <div class="rf-statement">2. Sie sitzen in einem Café.</div>
+                <div class="rf-statement">2. Hermine und Alexa sitzen in einem Café in Kreuzberg.</div>
                 <div class="rf-buttons">
                     <button class="rf-btn richtig" onclick="checkRF(1, true)">Richtig</button>
                     <button class="rf-btn falsch" onclick="checkRF(1, false)">Falsch</button>
                 </div>
                 <div class="rf-feedback" id="rf-fb-1"></div>
             </div>
-
             <div class="rf-item">
                 <div class="rf-statement">3. Hermine hat gerade die 10. Klasse beendet.</div>
                 <div class="rf-buttons">
@@ -373,73 +371,47 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 </div>
                 <div class="rf-feedback" id="rf-fb-2"></div>
             </div>
-
             <div class="rf-item">
-                <div class="rf-statement">4. Hermine wird im August nach Mallorca fliegen.</div>
+                <div class="rf-statement">4. In den Sommerferien fliegt Hermine mit ihren Eltern für zwei Wochen nach Italien.</div>
                 <div class="rf-buttons">
                     <button class="rf-btn richtig" onclick="checkRF(3, true)">Richtig</button>
                     <button class="rf-btn falsch" onclick="checkRF(3, false)">Falsch</button>
                 </div>
                 <div class="rf-feedback" id="rf-fb-3"></div>
             </div>
-
             <div class="rf-item">
-                <div class="rf-statement">5. Hermine wird ein Praktikum im Krankenhaus machen.</div>
+                <div class="rf-statement">5. Nach den Ferien möchte Hermine zwei Wochen lang in einem Krankenhaus arbeiten.</div>
                 <div class="rf-buttons">
                     <button class="rf-btn richtig" onclick="checkRF(4, true)">Richtig</button>
                     <button class="rf-btn falsch" onclick="checkRF(4, false)">Falsch</button>
                 </div>
                 <div class="rf-feedback" id="rf-fb-4"></div>
             </div>
-
             <div class="rf-item">
-                <div class="rf-statement">6. Hermines Freundin Annika möchte Krankenschwester werden.</div>
+                <div class="rf-statement">6. Hermines Freundin Annika hat überall Einsen in der Schule.</div>
                 <div class="rf-buttons">
                     <button class="rf-btn richtig" onclick="checkRF(5, true)">Richtig</button>
                     <button class="rf-btn falsch" onclick="checkRF(5, false)">Falsch</button>
                 </div>
                 <div class="rf-feedback" id="rf-fb-5"></div>
             </div>
-
             <div class="rf-item">
-                <div class="rf-statement">7. Hermine hat sehr gute Noten in der Schule.</div>
+                <div class="rf-statement">7. Hermine glaubt, sie wird das Medizinstudium leicht schaffen.</div>
                 <div class="rf-buttons">
                     <button class="rf-btn richtig" onclick="checkRF(6, true)">Richtig</button>
                     <button class="rf-btn falsch" onclick="checkRF(6, false)">Falsch</button>
                 </div>
                 <div class="rf-feedback" id="rf-fb-6"></div>
             </div>
-
             <div class="rf-item">
-                <div class="rf-statement">8. Als Ärztin muss Hermine an der Universität studieren.</div>
+                <div class="rf-statement">8. Tante Alexa schlägt vor, auch andere medizinische Berufe wie Hebamme oder Physiotherapeutin zu prüfen.</div>
                 <div class="rf-buttons">
                     <button class="rf-btn richtig" onclick="checkRF(7, true)">Richtig</button>
                     <button class="rf-btn falsch" onclick="checkRF(7, false)">Falsch</button>
                 </div>
                 <div class="rf-feedback" id="rf-fb-7"></div>
             </div>
-
-            <div class="rf-item">
-                <div class="rf-statement">9. Hermine entscheidet sich, zuerst Krankenschwester zu werden.</div>
-                <div class="rf-buttons">
-                    <button class="rf-btn richtig" onclick="checkRF(8, true)">Richtig</button>
-                    <button class="rf-btn falsch" onclick="checkRF(8, false)">Falsch</button>
-                </div>
-                <div class="rf-feedback" id="rf-fb-8"></div>
-            </div>
-
-            <div class="rf-item">
-                <div class="rf-statement">10. Am Ende gehen Alex und Hermine ins Restaurant.</div>
-                <div class="rf-buttons">
-                    <button class="rf-btn richtig" onclick="checkRF(9, true)">Richtig</button>
-                    <button class="rf-btn falsch" onclick="checkRF(9, false)">Falsch</button>
-                </div>
-                <div class="rf-feedback" id="rf-fb-9"></div>
-            </div>
         </div>
-
-        <button class="btn btn-reset" onclick="resetRF()" style="margin-top: 20px;">Alle zurücksetzen</button>
-    </div>
 
     <!-- TAB 3: LÜCKENTEXT -->
     <div class="section" id="sec-3">
@@ -587,7 +559,7 @@ initSchreibwerkstatt();
 // ─────────────────────────────────────────────────────────────────────────
 // TAB 2: RICHTIG/FALSCH
 // ─────────────────────────────────────────────────────────────────────────
-var rfAnswers = [true, false, false, true, true, false, false, true, true, false];
+var rfAnswers = [true, false, true, false, true, true, false, true];
 
 function checkRF(idx, answer) {
     var fb = document.getElementById('rf-fb-' + idx);
@@ -615,7 +587,7 @@ function resetRF() {
 // ─────────────────────────────────────────────────────────────────────────
 // TAB 3: LÜCKENTEXT
 // ─────────────────────────────────────────────────────────────────────────
-var ltAnswers = ['Nichte', 'Pizzeria', 'beendet', 'beenden', 'fliegen', 'Praktikum', 'Krankenschwester', 'Ärztin', 'studieren', 'Hoffnung', 'Gehalt', 'Kino'];
+var ltAnswers = ['Nichte', 'Pizzeria', 'beendet', 'Mallorca', 'Krankenhaus', 'Krankenschwester', 'Ärztin', 'Einsen', 'Abitur', 'Physiotherapeutin', 'Kino', 'Hoffnung'];
 
 var ltTimerAutoStart = false;
 
@@ -624,18 +596,18 @@ function initLueckentext() {
     if (container.innerHTML !== '') return;
 
     var sentences = [
-        'Hermine ist Alex\' ___.',
-        'Sie sitzen in einer ___.',
-        'Hermine hat die 9. Klasse ___.',
-        'Nächstes Jahr wird Hermine die Schule ___.',
-        'Im August wird Hermine nach Mallorca ___.',
-        'Hermine wird ein ___ im Krankenhaus machen.',
+        'Hermine ist Alexas ___.',
+        'Sie sitzen in einer ___ in Kreuzberg.',
+        'Hermine hat gerade die 10. Klasse ___.',
+        'In den Sommerferien fliegt Hermine mit ihren Eltern nach ___.',
+        'Hermine wird zwei Wochen lang in einem ___ arbeiten.',
         'Hermine möchte vielleicht ___ werden.',
         'Hermines Freundin Annika möchte ___ werden.',
-        'Als Ärztin muss Hermine an der Universität ___.',
-        'Hermine darf die ___ nicht aufgeben.',
-        'Als Krankenschwester bekommt man nicht so ein gutes ___ wie als Ärztin.',
-        'Am Ende wollen sie ins ___ gehen.'
+        'Annika hat in der Schule überall ___.',
+        'Für ein Medizinstudium braucht Hermine das ___.',
+        'Tante Alexa nennt auch Berufe wie Hebamme oder ___.',
+        'Am Ende möchten sie noch ein Eis essen und ins ___ gehen.',
+        'Hermine darf die ___ nicht aufgeben.'
     ];
 
     for (var i = 0; i < sentences.length; i++) {
