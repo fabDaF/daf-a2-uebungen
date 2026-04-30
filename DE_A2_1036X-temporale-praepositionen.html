@@ -263,7 +263,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
 <div class="container">
   <div class="header">
     <h1>Temporale Präpositionen</h1>
-    <p style="font-family: Georgia, serif;">A2 · 1036X · Wohnen — Extra-Übungen</p>
+    <p style="font-family: Georgia, serif;">A2 – Lektion 1036X · Extra-Übungen</p>
     <div class="big-emoji">⏰</div>
   </div>
 
@@ -913,7 +913,64 @@ function resetSatzbau() { initSatzbau(); }
 function showSection(n) {
     document.querySelectorAll('.section').forEach(function(s, i) { s.classList.toggle('active', i === n); });
     document.querySelectorAll('.nav-btn').forEach(function(b, i) { b.classList.toggle('active', i === n); });
-    if (n === 4) initWortschatz();
+    if (n === 1) initLt();
+    if (n === 5) initWortschatz();
+}
+
+/* ===== LÜCKENTEXT (initLt) ===== */
+var ltInited = false;
+function initLt() {
+    if (ltInited) return;
+    ltInited = true;
+    var groups = [['lt1-container', LT1], ['lt2-container', LT2], ['lt3-container', LT3]];
+    groups.forEach(function(g) {
+        var c = document.getElementById(g[0]);
+        if (!c) return;
+        g[1].forEach(function(item) {
+            var p = document.createElement('p');
+            p.style.lineHeight = '2.0';
+            p.style.marginBottom = '8px';
+            var w = Math.max((item.ans||'').length, 4) + 4;
+            p.innerHTML = (item.vor||'') + '<input class="luecken-inp" data-ans="' + (item.ans||'') + '" placeholder="" style="width:' + w + 'ch;text-align:center;">' + (item.nach||'');
+            c.appendChild(p);
+        });
+    });
+    document.querySelectorAll('#sec-1 .luecken-inp').forEach(function(inp) {
+        inp.addEventListener('input', function() {
+            var v = inp.value.trim().toLowerCase();
+            var a = (inp.dataset.ans || '').toLowerCase();
+            inp.classList.remove('ok','no');
+            if (!v) return;
+            timerAutoStart(1);
+            if (v === a) {
+                inp.classList.add('ok');
+                checkAllLtDone();
+                return;
+            }
+            if (a.indexOf(v) === 0) return;
+            inp.classList.add('no');
+        });
+    });
+}
+
+function checkAllLtDone() {
+    var inps = document.querySelectorAll('#sec-1 .luecken-inp');
+    if (!inps.length) return;
+    var allOk = Array.prototype.every.call(inps, function(i){ return i.classList.contains('ok'); });
+    if (allOk && typeof timerStop === 'function') timerStop(1);
+    else if (allOk) {
+        timerRunning[1] = false;
+        clearInterval(timerIntervals[1]);
+    }
+}
+
+function showLtSolution() {
+    initLt();
+    document.querySelectorAll('#sec-1 .luecken-inp').forEach(function(inp){
+        inp.value = inp.dataset.ans || '';
+        inp.classList.remove('no');
+        inp.classList.add('ok');
+    });
 }
 
 /* ===== INIT ===== */
