@@ -619,16 +619,23 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 var WORTSCHATZ = [
-    { id:1, type:'n', en:'🏠 apartment', artikel:'die', de:'Wohnung', plural:'Wohnungen' },
-    { id:2, type:'n', en:'🏗️ construction site', artikel:'die', de:'Baustelle', plural:'Baustellen' },
-    { id:3, type:'n', en:'🏢 ground floor', artikel:'das', de:'Erdgeschoss', plural:'Erdgeschosse' },
-    { id:4, type:'n', en:'💰 cold rent', artikel:'die', de:'Kaltmiete', plural:'Kaltmieten' },
-    { id:5, type:'n', en:'🌟 dream apartment', artikel:'die', de:'Traumwohnung', plural:'Traumwohnungen' },
-    { id:6, type:'n', en:'🍀 luck', artikel:'das', de:'Glück', plural:'\u2013' },
-    { id:7, type:'p', en:'🌑 dark', de:'dunkel' },
-    { id:8, type:'p', en:'🛋️ cozy (comparative)', de:'gemütlicher' },
-    { id:9, type:'p', en:'📐 bigger (comparative)', de:'größer' },
-    { id:10, type:'p', en:'👴 older (comparative)', de:'älter' }
+    // Nomen — zentrale Wohnen-Vokabeln aus der Story
+    { id:1,  type:'n', en:'🏠 apartment',          artikel:'die', de:'Wohnung',      plural:'Wohnungen' },
+    { id:2,  type:'n', en:'🏗️ construction site',  artikel:'die', de:'Baustelle',    plural:'Baustellen' },
+    { id:3,  type:'n', en:'🏢 ground floor',       artikel:'das', de:'Erdgeschoss',  plural:'Erdgeschosse' },
+    { id:4,  type:'n', en:'💰 cold rent',          artikel:'die', de:'Kaltmiete',    plural:'Kaltmieten' },
+    { id:5,  type:'n', en:'🌟 dream apartment',    artikel:'die', de:'Traumwohnung', plural:'Traumwohnungen' },
+    { id:6,  type:'n', en:'🛗 elevator',           artikel:'der', de:'Aufzug',       plural:'Aufzüge' },
+    { id:7,  type:'n', en:'☀️ balcony',            artikel:'der', de:'Balkon',       plural:'Balkone' },
+    { id:8,  type:'n', en:'🔑 landlord',           artikel:'der', de:'Vermieter',    plural:'Vermieter' },
+    { id:9,  type:'n', en:'📄 lease (contract)',   artikel:'der', de:'Mietvertrag',  plural:'Mietverträge' },
+    { id:10, type:'n', en:'🔐 deposit',            artikel:'die', de:'Kaution',      plural:'Kautionen' },
+    // Adjektive — Grundformen (Komparative werden in 1033G geübt)
+    { id:11, type:'p', en:'🌑 dark',               de:'dunkel' },
+    { id:12, type:'p', en:'💡 bright',             de:'hell' },
+    { id:13, type:'p', en:'🛋️ cozy',              de:'gemütlich' },
+    // Verb — zentrales Wohnen-Verb der Lektion
+    { id:14, type:'p', en:'📦 to move out',        de:'ausziehen' }
 ];
 var wsInited = false;
 function initWortschatz() {
