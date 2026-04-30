@@ -383,7 +383,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
     <div class="zuord-bank" id="zuordBank"></div>
     <div class="zuord-grid" id="zuordGrid"></div>
     <div class="btn-row">
-      <button class="btn" onclick="checkZuord()">🔍 Prüfen</button>
+      <button class="btn" onclick="showZuordLoesung()">💡 Lösungen</button>
       <button class="btn secondary" onclick="resetZuord()">↺ Neu</button>
     </div>
     <div id="zuordFeedback" style="margin-top:10px;font-size:.9em;"></div>
@@ -631,12 +631,18 @@ function initZuord() {
   bank.addEventListener('drop', function(e) {
     e.preventDefault();
     if (!draggedZuord) return;
+    draggedZuord.classList.remove('ok','no');
     bank.appendChild(draggedZuord); draggedZuord = null;
+    updateZuordFeedback();
   });
   bank.addEventListener('click', function(e) {
     if (e.target === bank) {
       var sel = document.querySelector('#sec-2 .z-chip.selected');
-      if (sel) { bank.appendChild(sel); sel.classList.remove('selected'); }
+      if (sel) {
+        sel.classList.remove('ok','no','selected');
+        bank.appendChild(sel);
+        updateZuordFeedback();
+      }
     }
   });
 
@@ -664,30 +670,63 @@ function initZuord() {
     drop.addEventListener('drop', function(e) {
       e.preventDefault();
       if (!draggedZuord) return;
-      drop.appendChild(draggedZuord); draggedZuord = null;
+      drop.appendChild(draggedZuord);
+      markZuordChip(draggedZuord, drop);
+      draggedZuord = null;
+      updateZuordFeedback();
     });
     drop.addEventListener('click', function() {
       var sel = document.querySelector('#sec-2 .z-chip.selected');
-      if (sel) { drop.appendChild(sel); sel.classList.remove('selected'); }
+      if (sel) {
+        drop.appendChild(sel);
+        sel.classList.remove('selected');
+        markZuordChip(sel, drop);
+        updateZuordFeedback();
+      }
     });
     catDiv.appendChild(head); catDiv.appendChild(drop);
     grid.appendChild(catDiv);
   });
+  updateZuordFeedback();
 }
 
-function checkZuord() {
-  var correct = 0; var total = 0;
-  document.querySelectorAll('#zuordGrid .zuord-drop').forEach(function(drop) {
-    drop.querySelectorAll('.z-chip').forEach(function(chip) {
-      chip.classList.remove('ok','no');
-      total++;
-      if (chip.dataset.cat === drop.dataset.cat) { chip.classList.add('ok'); correct++; }
-      else chip.classList.add('no');
-    });
-  });
+function markZuordChip(chip, drop) {
+  chip.classList.remove('ok','no');
+  if (chip.dataset.cat === drop.dataset.cat) chip.classList.add('ok');
+  else chip.classList.add('no');
+}
+
+function updateZuordFeedback() {
+  var total = document.querySelectorAll('#sec-2 .z-chip').length;
+  var placed = document.querySelectorAll('#zuordGrid .z-chip').length;
+  var ok = document.querySelectorAll('#zuordGrid .z-chip.ok').length;
   var fb = document.getElementById('zuordFeedback');
-  fb.textContent = correct + ' von ' + total + ' korrekt.';
-  fb.style.color = correct === total ? '#27ae60' : '#e74c3c';
+  if (placed === 0) {
+    fb.textContent = '';
+    return;
+  }
+  if (ok === total) {
+    fb.textContent = '🎉 Perfekt! Alle ' + total + ' Wörter richtig zugeordnet.';
+    fb.style.color = '#27ae60';
+  } else {
+    fb.textContent = ok + ' von ' + total + ' korrekt zugeordnet.';
+    fb.style.color = ok === placed ? '#27ae60' : '#666';
+  }
+}
+
+function showZuordLoesung() {
+  var bank = document.getElementById('zuordBank');
+  var chips = Array.from(document.querySelectorAll('#sec-2 .z-chip'));
+  chips.forEach(function(chip) {
+    var cat = chip.dataset.cat;
+    var drop = document.querySelector('#zuordGrid .zuord-drop[data-cat="' + cat + '"]');
+    if (drop) {
+      drop.appendChild(chip);
+      chip.classList.remove('no','selected');
+      chip.classList.add('ok');
+    }
+  });
+  updateZuordFeedback();
 }
 
 function resetZuord() {
