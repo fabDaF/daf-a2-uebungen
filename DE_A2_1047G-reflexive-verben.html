@@ -134,10 +134,10 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 <body>
 <div class="container">
 <div class="header">
-<h1>1047G · Reflexive Verben <span>Grammatik · A2.1</span></h1>
-    <p style="font-family: Georgia, serif;">A2.1 · Lektion 1047G</p>
-
-    <div class="big-emoji">🪞</div>
+    <h1>Reflexive Verben</h1>
+    <p>A2 – Lektion 1047G · Grammatik</p>
+    <div class="big-emoji">🔄</div>
+  </div>
 </div>
 <nav class="nav">
   <button class="nav-btn active" onclick="showTab(0)"><span class="nav-emoji">🔍</span><span class="nav-label">Entdecken</span></button>
@@ -145,6 +145,7 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
   <button class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></button>
   <button class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></button>
   <button class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></button>
+    <button class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></button>
 </nav>
 
 <!-- TAB 0: Entdecken (kein Timer, kein Reset) -->
@@ -332,6 +333,20 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 </div>
 </section>
 
+  
+  <section class="section" id="sec-5">
+    <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCflKA8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+V29ydHNjaGF0ejwvdGV4dD48L3N2Zz4=" alt="Wortschatz">
+    <h2 style="margin:14px 0;">🔠 Wortschatz</h2>
+    <p style="font-size:.9em;color:#888;margin-bottom:14px;">Tippe das deutsche Wort. Bei Nomen: Artikel, Wort und Plural.</p>
+    <div class="control-bar">
+      <div class="btn-row">
+        <button class="btn" onclick="showWORTSCHATZ_1047GLoesung()">Lösungen</button>
+        <button class="btn" onclick="resetWORTSCHATZ_1047G()">Neu starten</button>
+      </div>
+    </div>
+    <div id="wortschatz1047GContainer" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+  </section>
+
   <div class="author-footer">
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
@@ -342,9 +357,9 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 <script>
 /* ===== TAB NAVIGATION ===== */
 var TABS = 5;
-function showTab(n) {
-  for(var i=0;i<TABS;i++){var s=document.getElementById('tab-'+i);var b=document.querySelectorAll('.nav-btn')[i];if(s)s.classList.toggle('active',i===n);if(b)b.classList.toggle('active',i===n);}
-  if(n===3) timerAutoStart(3);
+function showTab(n){
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n); });
+  document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
 }
 
 /* ===== TIMER ===== */
@@ -687,6 +702,56 @@ function mcReset(){initMc();}
 /* ===== INIT ===== */
 initSatzbau();
 initMc();
+
+var WORTSCHATZ_1047G = [
+  {id:1, type:'p', en:'🚿 (to shower)', artikel:'', de:'sich duschen', plural:''},
+  {id:2, type:'p', en:'🧼 (to wash oneself)', artikel:'', de:'sich waschen', plural:''},
+  {id:3, type:'p', en:'😀 (to be happy / pleased)', artikel:'', de:'sich freuen', plural:''},
+  {id:4, type:'p', en:'😣 (to be annoyed)', artikel:'', de:'sich ärgern', plural:''},
+  {id:5, type:'p', en:'🛌 (to relax)', artikel:'', de:'sich entspannen', plural:''},
+  {id:6, type:'p', en:'🙋 (to introduce oneself)', artikel:'', de:'sich vorstellen', plural:''},
+  {id:7, type:'p', en:'❤️ (to fall in love)', artikel:'', de:'sich verlieben', plural:''},
+  {id:8, type:'p', en:'🤝 (to meet)', artikel:'', de:'sich treffen', plural:''},
+  {id:9, type:'p', en:'💍 (to get engaged)', artikel:'', de:'sich verloben', plural:''},
+  {id:10, type:'p', en:'🤔 (to wish for)', artikel:'', de:'sich wünschen', plural:''},
+  {id:11, type:'p', en:'📚 (to remember)', artikel:'', de:'sich erinnern', plural:''},
+  {id:12, type:'p', en:'🎯 (to concentrate)', artikel:'', de:'sich konzentrieren', plural:''}
+];
+function initWORTSCHATZ_1047G(){
+  var c=document.getElementById('wortschatz1047GContainer'); if(!c) return;
+  c.innerHTML='';
+  WORTSCHATZ_1047G.forEach(function(w){
+    var item=document.createElement('div'); item.className='luecken-item';
+    var p=document.createElement('div'); p.className='ws-prompt'; p.textContent=w.en; item.appendChild(p);
+    var fields=document.createElement('div'); fields.className='ws-fields';
+    if(w.type==='n'){
+      var a=document.createElement('input'); a.className='blank'; a.style.width='5ch'; a.placeholder='Artikel'; a.dataset.ans=w.artikel; a.dataset.cs='0';
+      var b=document.createElement('input'); b.className='blank'; b.style.width=(Math.max(w.de.length,4)+3)+'ch'; b.placeholder='Wort'; b.dataset.ans=w.de; b.dataset.cs='1';
+      var c2=document.createElement('input'); c2.className='blank'; c2.style.width=(Math.max((w.plural||'-').length,4)+3)+'ch'; c2.placeholder='Plural'; c2.dataset.ans=w.plural||'–'; c2.dataset.cs='1';
+      if(w.plural==='–'){ c2.value='–'; c2.disabled=true; c2.classList.add('correct'); }
+      [a,b,c2].forEach(function(i){ i.addEventListener('input',function(){ checkWORTSCHATZ_1047G(i); }); fields.appendChild(i); });
+    } else {
+      var d=document.createElement('input'); d.className='blank'; d.style.width=(Math.max(w.de.length,8)+3)+'ch'; d.placeholder='Deutsch'; d.dataset.ans=w.de; d.dataset.cs='0';
+      d.addEventListener('input',function(){ checkWORTSCHATZ_1047G(d); }); fields.appendChild(d);
+    }
+    item.appendChild(fields); c.appendChild(item);
+  });
+}
+function checkWORTSCHATZ_1047G(inp){
+  var v=inp.value.trim(); var ans=inp.dataset.ans||''; var cs=inp.dataset.cs==='1';
+  inp.classList.remove('correct','wrong'); if(!v) return;
+  var ok=cs?(v===ans):(v.toLowerCase()===ans.toLowerCase());
+  inp.classList.toggle('correct',ok); inp.classList.toggle('wrong',!ok);
+}
+function resetWORTSCHATZ_1047G(){ initWORTSCHATZ_1047G(); }
+function showWORTSCHATZ_1047GLoesung(){
+  document.querySelectorAll('#wortschatz1047GContainer input.blank').forEach(function(i){
+    i.value=i.dataset.ans||''; i.classList.add('correct'); i.classList.remove('wrong');
+  });
+}
+
+
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initWORTSCHATZ_1047G); } else { initWORTSCHATZ_1047G(); }
 </script>
 </body>
 </html>

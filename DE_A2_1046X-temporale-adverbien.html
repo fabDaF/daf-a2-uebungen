@@ -175,7 +175,9 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 </head>
 <body>
   <div class="header">
-    <h1>A2 · 1046X · Temporale Adverbien</h1>
+    <h1>Temporale Adverbien</h1>
+    <p>A2 – Lektion 1046X · Extra-Übungen</p>
+    <div class="big-emoji">⏰</div>
   </div>
   <div class="container">
 <h1>1046X · Temporale Adverbien <span>Zeitangaben · Tagesroutine</span></h1>
@@ -387,10 +389,9 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 <script>
 /* ===== TAB NAVIGATION ===== */
 var TABS = 5;
-function showTab(n) {
-  for(var i=0;i<TABS;i++){var s=document.getElementById('tab-'+i);var b=document.querySelectorAll('.nav-btn')[i];if(s)s.classList.toggle('active',i===n);if(b)b.classList.toggle('active',i===n);}
-  if(n===3) timerAutoStart(3);
-  if(n===4) timerAutoStart(4);
+function showTab(n){
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n); });
+  document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
 }
 
 /* ===== TIMER ===== */
