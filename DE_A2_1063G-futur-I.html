@@ -97,6 +97,33 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
 .author-footer a { color: #aaa; }
 .author-name { font-weight: 700; }
+
+/* ===== ENTDECKEN-TAB (Skill: daf-grammatik) ===== */
+.entdeck-intro { background: #f3e5f5; border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75; }
+.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
+.entdeck-intro .hl-werden { color: #6a1b9a; font-weight: 700; background: #ffe9a0; padding: 1px 4px; border-radius: 3px; }
+.entdeck-intro .hl-inf { color: #d84315; font-weight: 700; }
+.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
+.mc-step.active { display: block; }
+.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-btn { padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem; transition: all .2s; font-family: inherit; }
+.mc-btn:hover:not(:disabled) { border-color: #667eea; background: #f3f4ff; }
+.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
+.mc-btn:disabled { cursor: default; opacity: 0.7; }
+.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
+.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
+.mc-feedback.err { color: #c62828; }
+.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
+.pdot.done { background: #667eea; }
+.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
+.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
+.regel-karte ul { margin-left: 18px; }
+.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
+.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; }
+
 </style>
 </head>
 <body>
@@ -120,45 +147,70 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   <!-- TAB 0: ENTDECKEN -->
   <section class="section active" id="sec-0">
       <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCflI08L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+RW50ZGVja2VuPC90ZXh0Pjwvc3ZnPg==" alt="sec-0">
-    <div class="info-card">
-      <h3>🔍 Entdecke das Muster</h3>
-      <p>Lies die Sätze unten. Was fällt dir auf? Welches Verb kommt immer vor? Wo steht der Infinitiv?</p>
+    <h2>📖 Entdecke die Regel selbst</h2>
+    <div class="entdeck-intro">
+      <h3>👀 Schau dir diese Sätze an:</h3>
+      <p>Ich <span class="hl-werden">werde</span> morgen früh <span class="hl-inf">aufstehen</span>. — Max <span class="hl-werden">wird</span> bald in den Urlaub <span class="hl-inf">fahren</span>.</p>
+      <p>Wir <span class="hl-werden">werden</span> im Juli <span class="hl-inf">heiraten</span>. — Ihr <span class="hl-werden">werdet</span> nächste Woche <span class="hl-inf">arbeiten</span>.</p>
+      <p style="margin-top:10px">Es <span class="hl-werden">wird</span> heute noch <span class="hl-inf">regnen</span>. — Du <span class="hl-werden">wirst</span> bestimmt den Test <span class="hl-inf">bestehen</span>.</p>
     </div>
-
-    <div class="discovery-grid">
-      <div class="disc-card">
-        <div class="disc-sentence">Ich <span class="hl-werden">werde</span> morgen früh <span class="hl-inf">aufstehen</span>.</div>
-        <div class="disc-note">Zukunft: Ich (jetzt) → aufstehen (morgen)</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-sentence">Max <span class="hl-werden">wird</span> bald in den Urlaub <span class="hl-inf">fahren</span>.</div>
-        <div class="disc-note">Plan für die nahe Zukunft</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-sentence">Wir <span class="hl-werden">werden</span> im Juli <span class="hl-inf">heiraten</span>.</div>
-        <div class="disc-note">Versprechen / Plan</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-sentence">Ihr <span class="hl-werden">werdet</span> nächste Woche <span class="hl-inf">arbeiten</span>.</div>
-        <div class="disc-note">Prognose</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-sentence">Es <span class="hl-werden">wird</span> heute noch <span class="hl-inf">regnen</span>.</div>
-        <div class="disc-note">Prognose basierend auf Zeichen</div>
-      </div>
-      <div class="disc-card">
-        <div class="disc-sentence">Ich <span class="hl-werden">werde</span> ab jetzt immer lieb sein. (Ich <span class="hl-werden">verspreche</span> es!)</div>
-        <div class="disc-note">Versprechen für die Zukunft</div>
-      </div>
+    <div class="progress-dots">
+      <div class="pdot" id="pdot0"></div>
+      <div class="pdot" id="pdot1"></div>
+      <div class="pdot" id="pdot2"></div>
+      <div class="pdot" id="pdot3"></div>
     </div>
-
-    <div class="info-card">
-      <h3>💡 Was hast du entdeckt?</h3>
-      <p>
-        Das Futur I besteht aus zwei Teilen:<br>
-        <strong>konjugiertes <span class="hl-werden">werden</span></strong> an Position 2 + <strong><span class="hl-inf">Infinitiv</span></strong> am Ende des Satzes.<br><br>
-        Wir benutzen Futur I für: <strong>Pläne</strong> · <strong>Prognosen</strong> · <strong>Versprechen</strong> · <strong>Vermutungen</strong>
-      </p>
+    <div class="mc-step active" id="mc-step0">
+      <h4>❓ Schritt 1: Welches Verb taucht in allen Sätzen auf?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(0, this, false)">haben (z.B. habe, hat, haben)</button>
+        <button class="mc-btn" onclick="mcCheck(0, this, true)">werden (z.B. werde, wird, werden)</button>
+        <button class="mc-btn" onclick="mcCheck(0, this, false)">sein (z.B. bin, ist, sind)</button>
+        <button class="mc-btn" onclick="mcCheck(0, this, false)">möchten (z.B. möchte, möchtest)</button>
+      </div>
+      <div class="mc-feedback" id="mcfb0"></div>
+    </div>
+    <div class="mc-step" id="mc-step1">
+      <h4>❓ Schritt 2: Wo steht das konjugierte „werden" im Satz?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(1, this, false)">Am Anfang des Satzes</button>
+        <button class="mc-btn" onclick="mcCheck(1, this, true)">An Position 2 (zweite Stelle)</button>
+        <button class="mc-btn" onclick="mcCheck(1, this, false)">Am Ende des Satzes</button>
+        <button class="mc-btn" onclick="mcCheck(1, this, false)">Es steht überall verschieden</button>
+      </div>
+      <div class="mc-feedback" id="mcfb1"></div>
+    </div>
+    <div class="mc-step" id="mc-step2">
+      <h4>❓ Schritt 3: In welcher Form steht das zweite Verb? (z.B. <em>aufstehen, fahren, heiraten</em>)</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(2, this, false)">Konjugiert (z.B. fahre, fährst, fährt)</button>
+        <button class="mc-btn" onclick="mcCheck(2, this, true)">Im Infinitiv (Grundform: fahren, lernen, …)</button>
+        <button class="mc-btn" onclick="mcCheck(2, this, false)">Im Partizip II (z.B. gefahren, gelernt)</button>
+        <button class="mc-btn" onclick="mcCheck(2, this, false)">Mit „zu" davor (z.B. zu fahren)</button>
+      </div>
+      <div class="mc-feedback" id="mcfb2"></div>
+    </div>
+    <div class="mc-step" id="mc-step3">
+      <h4>❓ Schritt 4: Wo steht der Infinitiv (das zweite Verb) im Satz?</h4>
+      <div class="mc-options">
+        <button class="mc-btn" onclick="mcCheck(3, this, false)">Direkt nach „werden"</button>
+        <button class="mc-btn" onclick="mcCheck(3, this, false)">An Position 1</button>
+        <button class="mc-btn" onclick="mcCheck(3, this, true)">Am Ende des Satzes</button>
+        <button class="mc-btn" onclick="mcCheck(3, this, false)">An Position 3</button>
+      </div>
+      <div class="mc-feedback" id="mcfb3"></div>
+    </div>
+    <div class="regel-karte" id="regelkarte">
+      <h3>✅ Die Regel: Futur I mit <em>werden</em></h3>
+      <ul>
+        <li><strong>Form:</strong> konjugiertes <span class="hl-werden">werden</span> + <span class="hl-inf">Infinitiv</span> am Ende</li>
+        <li><strong>Position:</strong> <span class="hl-werden">werden</span> steht an Position 2, der <span class="hl-inf">Infinitiv</span> am Satzende</li>
+        <li><strong>Konjugation:</strong> ich werde · du wirst · er/sie/es wird · wir werden · ihr werdet · sie/Sie werden</li>
+      </ul>
+      <div class="rk-example">
+        <b>Beispiele:</b> Ich <b>werde</b> morgen früh <b>aufstehen</b>. · Wir <b>werden</b> im Juli <b>heiraten</b>. · Es <b>wird</b> heute noch <b>regnen</b>.<br>
+        <b>Verwendung:</b> Pläne · Prognosen · Versprechen · Vermutungen
+      </div>
     </div>
   </section>
 
@@ -671,6 +723,36 @@ function showWortschatzFuturLoesung(){
   });
 }
 document.addEventListener('DOMContentLoaded', function(){ initWortschatzFutur(); });
+
+// ===== MC-CHECK (Skill: daf-grammatik) =====
+var mcDone = [false, false, false, false];
+function mcCheck(step, btn, correct) {
+    var btns = btn.parentElement.querySelectorAll('.mc-btn');
+    btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
+    var fb = document.getElementById('mcfb' + step);
+    if (correct) {
+        btn.classList.add('correct');
+        fb.textContent = '✓ Richtig! Weiter zum nächsten Schritt.';
+        fb.className = 'mc-feedback ok';
+        mcDone[step] = true;
+        document.getElementById('pdot' + step).classList.add('done');
+        setTimeout(function() {
+            var next = document.getElementById('mc-step' + (step + 1));
+            if (next) { next.classList.add('active'); }
+            else { document.getElementById('regelkarte').style.display = 'block'; }
+        }, 700);
+    } else {
+        btn.classList.add('wrong');
+        fb.textContent = '✗ Nicht ganz — schau nochmal in die Beispielsätze.';
+        fb.className = 'mc-feedback err';
+        setTimeout(function() {
+            btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
+            fb.textContent = '';
+            fb.className = 'mc-feedback';
+        }, 1400);
+    }
+}
+
 </script>
 </body>
 </html>
