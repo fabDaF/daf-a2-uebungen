@@ -19,7 +19,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 .section { display: none; padding: 28px 30px; }
-.section.aktiv { display: block; }
+.section.active { display: block; }
 @media (max-width: 600px) {
   body { padding: 8px; }
   .section { padding: 18px 14px; }
@@ -90,8 +90,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <div class="container">
 
   <div class="header">
-    <h1>1067G · Modalverben</h1>
-    <p style="font-family: Georgia, serif;">A2.1 · Grammatik · Wiederholung &amp; Vergangenheit</p>
+    <h1>Modalverben (Wiederholung)</h1>
+    <p>A2 – Lektion 1067G · Grammatik</p>
+    <div class="big-emoji">🔁</div>
   </div>
 
   <div class="nav">
@@ -103,7 +104,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </div>
 
   <!-- TAB 0: ENTDECKEN -->
-  <section class="section aktiv" id="tab0">
+  <section class="section active" id="sec-0">
     <div class="info-card">
       <h3>🔍 Entdecke das Muster</h3>
       <p>Lies die Sätze. Was fällt auf? Wie bildet man das Perfekt von Modalverben?</p>
@@ -136,7 +137,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 1: REGEL -->
-  <section class="section" id="tab1">
+  <section class="section" id="sec-1">
     <div class="info-card">
       <h3>📐 Modalverben im Präsens</h3>
       <p>6 Modalverben: können · wollen · dürfen · möchten · müssen · sollen</p>
@@ -199,7 +200,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 2: LÜCKENTEXT -->
-  <section class="section" id="tab2">
+  <section class="section" id="sec-2">
     <div class="lt-section">
       <div class="lt-title">Teil 1 · Modalverben im Präsens</div>
       <div class="lt-row"><span class="lt-num">1.</span>
@@ -272,7 +273,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 3: SATZBAU -->
-  <section class="section" id="tab3">
+  <section class="section" id="sec-3">
     <p style="color:#555;margin-bottom:16px;">Bilde Sätze mit Modalverben — achte auf die Wortstellung!</p>
     <div id="satzbauContainer"></div>
     <div class="btn-row">
@@ -284,7 +285,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 4: MULTIPLE CHOICE -->
-  <section class="section" id="tab4">
+  <section class="section" id="sec-4">
     <p style="color:#555;margin-bottom:16px;">Wähle die richtige Form des Modalverbs oder die richtige Zeitform.</p>
     <div id="mcContainer"></div>
     <div class="btn-row">
@@ -303,7 +304,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <script>
 // ── TAB NAVIGATION ─────────────────────────────────────────
 function showTab(n) {
-  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('aktiv', i===n); });
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n); });
   document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
   if (n === 2) ltTimerAutoStart();
   if (n === 3) sbTimerAutoStart();

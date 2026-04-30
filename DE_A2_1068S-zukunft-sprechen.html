@@ -40,7 +40,7 @@ body {
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 .section { display: none; padding: 28px 30px; }
-.section.aktiv { display: block; }
+.section.active { display: block; }
 @media (max-width: 600px) {
     body { padding: 8px; }
     .nav { flex-wrap: wrap; }
@@ -146,7 +146,10 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 <div class="container">
 
   <div class="header">
-    <div class="big-emoji">🔮</div>
+    <h1>Über die Zukunft sprechen</h1>
+    <p>A2 – Lektion 1068S · Sprechen</p>
+    <div class="big-emoji">🎙️</div>
+  </div>
     <h1>Über die Zukunft sprechen</h1>
     <p style="font-family: Georgia, serif;">A2 · Lektion 1068S · Zukunft &amp; Pläne</p>
   </div>
@@ -170,7 +173,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
   </div>
 
   <!-- ===== TAB 0: AUSSPRACHE pf ===== -->
-  <div id="sec-0" class="section aktiv">
+  <div id="sec-0" class="section active">
     <h2>🔊 Aussprache: pf</h2>
 
     <div class="aussprachebox">
@@ -435,7 +438,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 // ─── Tab-Navigation ────────────────────────────────────────────────────────
 function showTab(idx) {
     document.querySelectorAll('.section').forEach(function(s,i){
-        s.classList.toggle('aktiv', i===idx);
+        s.classList.toggle('active', i===idx);
     });
     document.querySelectorAll('.nav-btn').forEach(function(b,i){
         b.classList.toggle('active', i===idx);

@@ -19,7 +19,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 .section { display: none; padding: 28px 30px; }
-.section.aktiv { display: block; }
+.section.active { display: block; }
 @media (max-width: 600px) {
   body { padding: 8px; }
   .section { padding: 18px 14px; }
@@ -104,8 +104,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <div class="container">
 
   <div class="header">
-    <h1>1065V · Zukunftspläne</h1>
-    <p style="font-family: Georgia, serif;">A2.1 · Wortschatz · Zukunft &amp; Pläne</p>
+    <h1>Zukunftspläne</h1>
+    <p>A2 – Lektion 1065V · Wortschatz</p>
+    <div class="big-emoji">🎯</div>
   </div>
 
   <div class="nav">
@@ -118,12 +119,12 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </div>
 
   <!-- TAB 0: WÖRTER -->
-  <section class="section aktiv" id="tab0">
+  <section class="section active" id="sec-0">
     <div class="vocab-grid" id="vocabGrid"></div>
   </section>
 
   <!-- TAB 1: REDEMITTEL -->
-  <section class="section" id="tab1">
+  <section class="section" id="sec-1">
     <p style="color:#555;margin-bottom:14px;">Ziehe die Antwort zur passenden Frage.</p>
     <div class="qa-pool" id="qa-pool"></div>
     <div id="qa-rows"></div>
@@ -134,7 +135,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 2: LÜCKENTEXT -->
-  <section class="section" id="tab2">
+  <section class="section" id="sec-2">
     <div class="lt-section">
       <div class="lt-title">Teil 1 · Annas Besuch bei der Wahrsagerin</div>
       <div class="lt-row"><span class="lt-num">1.</span>
@@ -188,7 +189,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 3: TEXT & FRAGEN -->
-  <section class="section" id="tab3">
+  <section class="section" id="sec-3">
     <div class="story-text">
       <strong>Bei der Wahrsagerin</strong><br><br>
       Anna hat heute einen Termin bei der Wahrsagerin Sybil. Anna möchte sich die Zukunft wahrsagen lassen. Sie ist ganz aufgeregt.<br><br>
@@ -207,7 +208,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 4: SATZBAU -->
-  <section class="section" id="tab4">
+  <section class="section" id="sec-4">
     <p style="color:#555;margin-bottom:16px;">Bringe die Wörter in die richtige Reihenfolge.</p>
     <div id="satzbauContainer"></div>
     <div class="btn-row">
@@ -219,7 +220,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 5: WORTSCHATZ -->
-  <section class="section" id="tab5">
+  <section class="section" id="sec-5">
     <p style="color:#555;margin-bottom:14px;">Tippe die deutsche Übersetzung.</p>
     <div class="ws-grid" id="wortschatzContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
     <div class="btn-row">
@@ -302,7 +303,7 @@ var WS_DATA = [
 
 // ── TAB NAVIGATION ─────────────────────────────────────────
 function showTab(n) {
-  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('aktiv', i===n); });
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n); });
   document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
   if (n === 2) ltTimerAutoStart();
   if (n === 4) sbTimerAutoStart();
