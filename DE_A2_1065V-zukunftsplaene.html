@@ -309,7 +309,9 @@ var WS_DATA = [
 
 // ── TAB NAVIGATION ─────────────────────────────────────────
 function showTab(n) {
-  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n); });
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n);
+  if (n === 5 && typeof initWortschatz === "function") initWortschatz();
+});
   document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
   if (n === 2) ltTimerAutoStart();
   if (n === 4) sbTimerAutoStart();
@@ -532,12 +534,27 @@ function sbBuild(){
   });
 }
 
+var WORTSCHATZ = [
+  {id:1, type:'p', en:'😰 (nervous)', artikel:'', de:'nervös', plural:''},
+  {id:2, type:'p', en:'😬 (excited)', artikel:'', de:'aufgeregt', plural:''},
+  {id:3, type:'p', en:'😊 (optimistic)', artikel:'', de:'optimistisch', plural:''},
+  {id:4, type:'p', en:'😟 (pessimistic)', artikel:'', de:'pessimistisch', plural:''},
+  {id:5, type:'p', en:'🌍 (to experience)', artikel:'', de:'erleben', plural:''},
+  {id:6, type:'n', en:'✨ (experience)', artikel:'das', de:'Erlebnis', plural:'Erlebnisse'},
+  {id:7, type:'p', en:'⏰ (soon)', artikel:'', de:'bald', plural:''},
+  {id:8, type:'n', en:'🔄 (change)', artikel:'die', de:'Veränderung', plural:'Veränderungen'},
+  {id:9, type:'n', en:'🤔 (suspicion)', artikel:'die', de:'Vermutung', plural:'Vermutungen'},
+  {id:10, type:'n', en:'📊 (prediction)', artikel:'die', de:'Prognose', plural:'Prognosen'},
+  {id:11, type:'p', en:'🔮 (to predict the future)', artikel:'', de:'wahrsagen', plural:''},
+  {id:12, type:'n', en:'🎁 (surprise)', artikel:'die', de:'Überraschung', plural:'Überraschungen'}
+];
+
 // ── WORTSCHATZ ────────────────────────────────────────────
 var wortschatzInited = false;
 function initWortschatz(){
     if (wortschatzInited) return;
     wortschatzInited = true;
-    timerReset(5);
+    wsTimerReset();
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
@@ -603,10 +620,32 @@ function resetWortschatz(){ document.querySelectorAll('#sec-5 input.blank').forE
   rfBuild();
   sbBuild();
 })();
+
+document.addEventListener('DOMContentLoaded', function(){
+  if (typeof buildVocab === 'function') buildVocab();
+  if (typeof qaInit === 'function') qaInit();
+  if (typeof rfBuild === 'function') rfBuild();
+  if (typeof initSatzbau === 'function') initSatzbau();
+  if (typeof initWortschatz === 'function') initWortschatz();
+  // timerLoadBest needs args - skipped at init
+});
+
+function timerAutoStart(n){ if (n===5 && typeof wsTimerAutoStart === "function") wsTimerAutoStart(); }
 </script>
 </body>
 </html>
 
+
+document.addEventListener('DOMContentLoaded', function(){
+  if (typeof buildVocab === 'function') buildVocab();
+  if (typeof qaInit === 'function') qaInit();
+  if (typeof rfBuild === 'function') rfBuild();
+  if (typeof initSatzbau === 'function') initSatzbau();
+  if (typeof initWortschatz === 'function') initWortschatz();
+  // timerLoadBest needs args - skipped at init
+});
+
+function timerAutoStart(n){ if (n===5 && typeof wsTimerAutoStart === "function") wsTimerAutoStart(); }
 </script>
 </body>
 </html>

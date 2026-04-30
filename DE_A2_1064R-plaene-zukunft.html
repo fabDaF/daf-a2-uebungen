@@ -340,6 +340,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 <strong>Hermine:</strong> „Auf jeden Fall! Danke, Tante Alexa."
             </div>
         </div>
+    </div>
 
     <!-- TAB 2: VERSTÄNDNIS (Richtig/Falsch) -->
     <div class="section" id="sec-2">
@@ -412,6 +413,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
                 <div class="rf-feedback" id="rf-fb-7"></div>
             </div>
         </div>
+    </div>
 
     <!-- TAB 3: LÜCKENTEXT -->
     <div class="section" id="sec-3">
@@ -542,6 +544,44 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
 // ─────────────────────────────────────────────────────────────────────────
 // TAB NAVIGATION
 // ─────────────────────────────────────────────────────────────────────────
+
+// ===== TIMER (added 2026-04 fix) =====
+var __timerSec = [0,0,0,0,0,0,0];
+var __timerInt = [null,null,null,null,null,null,null];
+var __timerStarted = [false,false,false,false,false,false,false];
+function __timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerAutoStart(n){
+  if (__timerStarted[n]) return;
+  __timerStarted[n] = true;
+  __timerInt[n] = setInterval(function(){
+    __timerSec[n]++;
+    var el = document.getElementById('timer-'+n);
+    if (el) el.textContent = __timerFmt(__timerSec[n]);
+  }, 1000);
+}
+function timerStop(n){
+  if (!__timerStarted[n]) return;
+  clearInterval(__timerInt[n]);
+  __timerStarted[n] = false;
+  try {
+    var key = 'a2-1064r-best-' + n;
+    var best = parseInt(localStorage.getItem(key) || '99999');
+    if (__timerSec[n] < best) {
+      localStorage.setItem(key, __timerSec[n]);
+      var el = document.getElementById('best-' + n);
+      if (el) el.textContent = __timerFmt(__timerSec[n]);
+    }
+  } catch(e) {}
+}
+function timerStart(n){ timerAutoStart(n); }
+function timerResetOne(n){
+  clearInterval(__timerInt[n]);
+  __timerStarted[n] = false;
+  __timerSec[n] = 0;
+  var el = document.getElementById('timer-'+n);
+  if (el) el.textContent = '0:00';
+}
+
 function showSection(idx) {
     if (idx === 6 || arguments[0] === 6) initWortschatz();
 initSchreibwerkstatt();

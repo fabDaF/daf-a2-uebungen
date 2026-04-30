@@ -725,7 +725,6 @@ var wortschatzInited = false;
 function initWortschatz(){
     if (wortschatzInited) return;
     wortschatzInited = true;
-    timerResetOne(5);
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
     WORTSCHATZ.forEach(function(item) {
