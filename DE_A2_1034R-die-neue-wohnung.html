@@ -64,61 +64,54 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 .rf-btn.active.f { background: #e74c3c; border-color: #e74c3c; color: white; }
 .rf-btn.wrong { background: #e74c3c; border-color: #e74c3c; color: white; }
 
-/* Lückentext — Karten-Design mit Skill-konformem lila Akzent */
-.luecken-block {
-    background: white;
-    border: 1px solid #e5e7f0;
-    border-radius: 12px;
-    margin-bottom: 22px;
-    overflow: hidden;
-}
-.luecken-block h3 {
-    margin: 0 0 14px;
-    color: #4a148c;
+/* Lückentext — Fließtext mit Serifenschrift */
+.luecken-text {
+    max-width: 600px;
+    margin: 0 auto 22px;
+    font-family: Georgia, 'Times New Roman', serif;
     font-size: 1.05em;
-    background: linear-gradient(135deg, #f0ecff 0%, #e8e3ff 100%);
-    padding: 12px 18px;
-    border-bottom: 2px solid #c5b6f5;
+    line-height: 2.4;
+    color: #1a1a1a;
+    background: #faf9f6;
+    border-radius: 10px;
+    padding: 20px 26px;
 }
-.luecken-block-inner { padding: 4px 14px 14px; }
+.luecken-text h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #667eea;
+    margin: 0 0 14px;
+    letter-spacing: 0.02em;
+}
 .luecken-satz {
-    background: #f8f9ff;
-    border-left: 4px solid #667eea;
-    border-radius: 8px;
-    padding: 14px 18px;
     margin-bottom: 10px;
-    font-size: 1.0em;
-    line-height: 2;
-    color: #2d3748;
-    transition: background 0.2s, border-left-color 0.2s;
+    color: #1a1a1a;
 }
-.luecken-satz:hover { background: #f0f0ff; }
 .luecken-satz:last-child { margin-bottom: 0; }
-.luecken-satz.has-ok { border-left-color: #27ae60; background: #f0fbf5; }
 .luecken-inp {
     border: none;
     border-bottom: 2px solid #667eea;
     background: transparent;
     outline: none;
-    font-family: inherit;
-    font-size: 0.98em;
-    font-weight: 500;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.0em;
+    font-weight: normal;
     transition: all 0.2s;
-    padding: 3px 8px;
+    padding: 2px 4px;
     min-width: 4ch;
-    color: #2d3748;
+    color: #1a1a1a;
+    vertical-align: baseline;
 }
 .luecken-inp::placeholder { color: transparent; }
-.luecken-inp:focus { background: #eef1ff; border-bottom-width: 2.5px; }
+.luecken-inp:focus { background: rgba(102,126,234,0.07); border-bottom-width: 2.5px; }
 .luecken-inp.ok {
     border-bottom-color: #27ae60;
-    background: #e8f8f0;
     color: #27ae60;
-    font-weight: 700;
+    font-weight: 600;
 }
 .luecken-inp.no {
     border-bottom-color: #e74c3c;
-    background: #fdeaea;
     color: #e74c3c;
 }
 
@@ -446,13 +439,13 @@ input.blank:disabled { opacity: 0.6; }
                 </div>
             </div>
             <div class="hilfe-box">Tippe das fehlende Wort aus der Geschichte. Live-Feedback: grün = richtig, rot = falsch.</div>
-            <div class="luecken-block">
+            <div class="luecken-text">
                 <h3>📖 Teil 1 — Louises Wohnungssuche</h3>
-                <div class="luecken-block-inner"><div id="luecken1"></div></div>
+                <div id="luecken1"></div>
             </div>
-            <div class="luecken-block">
+            <div class="luecken-text">
                 <h3>🏠 Teil 2 — Die Besichtigungen</h3>
-                <div class="luecken-block-inner"><div id="luecken2"></div></div>
+                <div id="luecken2"></div>
             </div>
         </div>
     </div>
@@ -644,7 +637,7 @@ function buildLuecken(data, containerId){
     var container=document.getElementById(containerId);
     container.innerHTML='';
     data.forEach(function(item){
-        var div=document.createElement('div');
+        var div=document.createElement('p');
         div.className='luecken-satz';
         // Skill daf-kern §VERBOTE: keine Satznummerierung
         div.appendChild(document.createTextNode(item.vor));
