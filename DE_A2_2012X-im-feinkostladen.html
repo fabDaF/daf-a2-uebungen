@@ -1457,7 +1457,9 @@ function insertWordFromBank(w) {
 }
 // ────────────────────────────────────────────────────────────────────────────
 
-buildWordBank(document.getElementById('lt0'));
+document.addEventListener('DOMContentLoaded', function(){
+  buildWordBank(document.getElementById('lt0'));
+});
 </script>
 </body>
 </html>

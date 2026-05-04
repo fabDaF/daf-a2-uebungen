@@ -1108,7 +1108,9 @@ function insertWordFromBank(w) {
 }
 // ────────────────────────────────────────────────────────────────────────────
 
-buildWordBank(document.getElementById('luecken-main'));
+document.addEventListener('DOMContentLoaded', function(){
+  buildWordBank(document.getElementById('luecken-main'));
+});
 </script>
 </body>
 </html>
