@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vokalisiertes R – A2 · Phonetik 0002P</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh; padding: 20px;
+}
+.container {
+  max-width: 1000px; margin: 0 auto; background: white;
+  border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia,'Times New Roman',serif; color: white; margin-bottom: 8px; }
+.header p  { font-size: 1.1em; font-family: Georgia,'Times New Roman',serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e9ecef; color: #495057; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 600; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+
+.section { display: none; }
+.section.active { display: block; }
+.sec-inner { padding: 28px 30px; }
+
+.tab-banner { width: 100%; max-height: 180px; object-fit: cover; border-radius: 0; }
+@media (max-width: 600px) { .tab-banner { max-height: 120px; } }
+
+.control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding: 6px 12px; background: #f8f9fa; border-radius: 8px; }
+.btn-row { display: flex; gap: 6px; }
+.btn { background: #f5f7ff; border: 1px solid #c5cff5; border-radius: 8px; padding: 6px 16px; font-size: 0.85em; color: #667eea; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { background: #667eea; color: white; border-color: #667eea; }
+.timer-display { display: flex; gap: 14px; font-size: 0.82em; color: #bbb; font-variant-numeric: tabular-nums; }
+
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+
+/* ── REGEL ── */
+.regel-box { background: linear-gradient(135deg,#f0f4ff,#e8f0fe); border: 2px solid #667eea; border-radius: 10px; padding: 18px 22px; margin-bottom: 22px; font-size: 0.95em; line-height: 1.7; color: #333; }
+.regel-box strong { color: #4a148c; }
+.regel-tabelle { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.97em; }
+.regel-tabelle th { background: #667eea; color: white; padding: 10px 16px; text-align: center; font-weight: 600; }
+.regel-tabelle td { padding: 12px 16px; border-bottom: 1px solid #e8e8e8; }
+.regel-tabelle tr:nth-child(even) td { background: #f8f9ff; }
+.ipa-gross { font-size: 1.6em; font-weight: 700; color: #880e4f; display: inline-block; background: #fce4ec; border-radius: 6px; padding: 2px 10px; margin: 0 4px; }
+.position-tag { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 0.8em; font-weight: 600; border-radius: 4px; padding: 2px 8px; }
+.schrift-rot { color: #e53935; font-weight: 700; }
+.schrift-gruen { color: #2e7d32; font-weight: 700; }
+.merke-box { background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-top: 18px; font-size: 0.9em; color: #5d4037; line-height: 1.6; }
+.merke-box strong { color: #e65100; }
+
+/* ── WÖRTER ── */
+.wort-gruppe { margin-bottom: 28px; }
+.wort-gruppe-titel { font-size: 0.88em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #e0e0e0; }
+.wort-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(120px,1fr)); gap: 12px; }
+.wort-karte { background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px; padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none; }
+.wort-karte:hover { background: #eef1ff; border-color: #667eea; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102,126,234,0.2); }
+.wort-karte.aufgedeckt { background: #fce4ec; border-color: #e91e63; }
+.wort-emoji { font-size: 2em; display: block; margin-bottom: 6px; }
+.wort-text  { font-size: 0.95em; font-weight: 700; color: #333; display: block; margin-bottom: 4px; }
+.wort-text .er-mark { color: #e53935; }
+.wort-ipa  { font-size: 0.88em; color: #880e4f; display: none; margin-top: 4px; letter-spacing: 0.03em; }
+.wort-karte.aufgedeckt .wort-ipa { display: block; }
+.wort-karte.aufgedeckt .wort-text { color: #880e4f; }
+
+/* ── ALTERNATION ── */
+.alt-erklaerung { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+.alt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.alt-karte { background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px; padding: 16px 14px; cursor: pointer; transition: all 0.2s; user-select: none; }
+.alt-karte:hover { background: #eef1ff; border-color: #667eea; }
+.alt-karte.aufgedeckt { background: #fce4ec; border-color: #e91e63; }
+.alt-paar { display: flex; align-items: center; gap: 10px; justify-content: center; }
+.alt-wort-box { text-align: center; flex: 1; }
+.alt-wort { font-size: 1.05em; font-weight: 700; color: #333; display: block; }
+.alt-wort .er-mark { color: #e53935; }
+.alt-ipa  { font-size: 0.82em; color: #888; display: none; margin-top: 3px; }
+.alt-karte.aufgedeckt .alt-ipa { display: block; color: #880e4f; }
+.alt-karte.aufgedeckt .alt-wort { color: #880e4f; }
+.alt-pfeil { font-size: 1.4em; color: #9e9e9e; flex-shrink: 0; }
+.alt-hinweis { font-size: 0.75em; color: #999; display: block; margin-top: 4px; }
+@media (max-width: 600px) { .alt-grid { grid-template-columns: 1fr; } }
+
+/* ── SÄTZE ── */
+.satz-liste { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.satz-item { background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px; padding: 16px 20px; cursor: pointer; transition: all 0.2s; user-select: none; font-size: 1.05em; line-height: 1.6; color: #333; }
+.satz-item:hover { background: #eef1ff; border-color: #667eea; }
+.satz-item.aufgedeckt { background: #fce4ec; border-color: #e91e63; }
+.ziel { color: #e53935; font-weight: 700; transition: color 0.2s; }
+.satz-item.aufgedeckt .ziel { color: #880e4f; }
+.satz-ipa { display: none; font-size: 0.82em; color: #880e4f; margin-top: 8px; padding-top: 8px; border-top: 1px solid #f8bbd0; letter-spacing: 0.02em; }
+.satz-item.aufgedeckt .satz-ipa { display: block; }
+.satz-tipp { font-size: 0.8em; color: #bbb; margin-top: 14px; text-align: center; font-style: italic; }
+
+/* ── ZUNGENBRECHER ── */
+.zb-anleitung { background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #5d4037; line-height: 1.6; }
+.zb-karte { background: linear-gradient(135deg,#fce4ec,#f8bbd0); border: 2px solid #e91e63; border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; cursor: pointer; transition: all 0.2s; user-select: none; }
+.zb-karte:hover { box-shadow: 0 4px 16px rgba(233,30,99,0.2); transform: translateY(-2px); }
+.zb-karte.aufgedeckt { background: linear-gradient(135deg,#e8f5e9,#f1f8e9); border-color: #66bb6a; }
+.zb-nr { font-size: 0.78em; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.zb-text { font-size: 1.15em; font-weight: 600; color: #333; line-height: 1.8; }
+.zb-karte.aufgedeckt .zb-text { color: #1b5e20; }
+.zb-ziel { color: #c62828; font-weight: 800; }
+.zb-karte.aufgedeckt .zb-ziel { color: #2e7d32; }
+.zb-ipa { display: none; font-size: 0.85em; color: #555; margin-top: 12px; padding-top: 12px; border-top: 1px solid #c8e6c9; line-height: 1.8; }
+.zb-karte.aufgedeckt .zb-ipa { display: block; }
+
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+@media (max-width: 600px) {
+  body { padding: 8px; }
+  .nav { flex-wrap: wrap; }
+  .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+  .nav-btn:last-child { border-right: 1px solid #ddd; }
+  .sec-inner { padding: 16px; }
+  .wort-grid { grid-template-columns: repeat(auto-fill,minmax(100px,1fr)); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Vokalisiertes R</h1>
+    <p>A2 – Phonetik 0002P · Aussprachetraining</p>
+    <div class="big-emoji">🔊</div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">📖</span><span class="nav-label">Regel</span></div>
+    <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">🔤</span><span class="nav-label">Wörter</span></div>
+    <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">🔄</span><span class="nav-label">Position</span></div>
+    <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">💬</span><span class="nav-label">Sätze</span></div>
+    <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Zungenbrecher</span></div>
+  </div>
+
+  <!-- ══ TAB 0: REGEL ══ -->
+  <div class="section active" id="sec-0">
+    <img class="tab-banner" src="https://images.pexels.com/photos/8107287/pexels-photo-8107287.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Aussprache Phonetik">
+    <div class="sec-inner">
+      <h2>📖 Die Regel</h2>
+      <div class="hilfe-box">
+        Das <strong>„r"</strong> klingt in bestimmten Silben <strong>nicht</strong> wie ein Konsonant — es wird zu einem kurzen, entspannten <span class="ipa-gross">[ɐ]</span>-Laut. Das ist wie ein sehr kurzes, offenes <strong>„a"</strong>.
+      </div>
+
+      <div class="regel-box">
+        <strong>Die Regel:</strong> Das Schriftbild „<span class="schrift-rot">er</span>" oder „<span class="schrift-rot">r</span>" klingt wie <span class="ipa-gross">[ɐ]</span>, wenn die Silbe <strong>unbetont</strong> ist.<br>
+        Das betrifft zwei Positionen:
+        <ol style="margin-top:10px; margin-left:20px; line-height:2">
+          <li><strong>Am Wortende:</strong> Va<span class="schrift-rot">ter</span> → [ˈfaːt<strong>ɐ</strong>]</li>
+          <li><strong>In der Wortmitte</strong> (unbetonte Silbe): Elt<span class="schrift-rot">er</span>n → [ˈɛlt<strong>ɐ</strong>n]</li>
+        </ol>
+      </div>
+
+      <table class="regel-tabelle">
+        <thead>
+          <tr><th>Position</th><th>Schrift</th><th>Klang</th><th>Beispiel</th><th>Aussprache</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="position-tag">Wortende</span></td>
+            <td style="text-align:center"><span class="schrift-rot">-er</span></td>
+            <td style="text-align:center"><span class="ipa-gross">[ɐ]</span></td>
+            <td>Vat<span class="schrift-rot">er</span></td>
+            <td>[ˈfaːt<strong>ɐ</strong>]</td>
+          </tr>
+          <tr>
+            <td><span class="position-tag">Wortende</span></td>
+            <td style="text-align:center"><span class="schrift-rot">-er</span></td>
+            <td style="text-align:center"><span class="ipa-gross">[ɐ]</span></td>
+            <td>Lehr<span class="schrift-rot">er</span></td>
+            <td>[ˈleːʁ<strong>ɐ</strong>]</td>
+          </tr>
+          <tr>
+            <td><span class="position-tag">Wortmitte</span></td>
+            <td style="text-align:center"><span class="schrift-rot">-er-</span></td>
+            <td style="text-align:center"><span class="ipa-gross">[ɐ]</span></td>
+            <td>Elt<span class="schrift-rot">er</span>n</td>
+            <td>[ˈɛlt<strong>ɐ</strong>n]</td>
+          </tr>
+          <tr>
+            <td><span class="position-tag">Wortmitte</span></td>
+            <td style="text-align:center"><span class="schrift-rot">-er-</span></td>
+            <td style="text-align:center"><span class="ipa-gross">[ɐ]</span></td>
+            <td>gest<span class="schrift-rot">er</span>n</td>
+            <td>[ˈɡɛst<strong>ɐ</strong>n]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="merke-box">
+        <strong>🔑 Achtung:</strong> Am Wortanfang oder in einer <em>betonten</em> Silbe bleibt das „r" ein Konsonant [ʁ].<br>
+        <strong>Rad</strong> [ʁaːt] · <strong>Regen</strong> [ˈʁeːɡən] · <strong>Beruf</strong> [bəˈʁuːf] · aber: <strong>Vat<span class="schrift-rot">er</span></strong> [ˈfaːt<strong>ɐ</strong>]
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 1: WÖRTER ══ -->
+  <div class="section" id="sec-1">
+    <img class="tab-banner" src="https://images.pexels.com/photos/18512916/pexels-photo-18512916.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Wörter üben">
+    <div class="sec-inner">
+      <h2>🔤 Wörter</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(1)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(1); resetTimer(1);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-1">00:00</span></span>
+          <span>🏆 <span id="best-1">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">Das rote <span class="schrift-rot">er</span> wird zu [ɐ] — klick auf das Wort und sprich es nach!</div>
+
+      <div class="wort-gruppe">
+        <div class="wort-gruppe-titel">-<span class="schrift-rot">er</span> am Wortende</div>
+        <div class="wort-grid">
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👨</span>
+            <span class="wort-text">Vat<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈfaːtɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👩</span>
+            <span class="wort-text">Mutt<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈmʊtɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👦</span>
+            <span class="wort-text">Brud<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈbʁuːdɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👧</span>
+            <span class="wort-text">Schwest<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈʃvɛstɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👨‍🏫</span>
+            <span class="wort-text">Lehr<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈleːʁɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">🛏️</span>
+            <span class="wort-text">Zimm<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈtsɪmɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">🪟</span>
+            <span class="wort-text">Fenst<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈfɛnstɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">💧</span>
+            <span class="wort-text">Wass<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈvasɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">☀️</span>
+            <span class="wort-text">Somm<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈzɔmɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">❄️</span>
+            <span class="wort-text">Wint<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈvɪntɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👍</span>
+            <span class="wort-text">bess<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈbɛsɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">↔️</span>
+            <span class="wort-text">od<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈoːdɐ]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">🔄</span>
+            <span class="wort-text">ab<span class="er-mark">er</span></span>
+            <span class="wort-ipa">[ˈaːbɐ]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wort-gruppe">
+        <div class="wort-gruppe-titel">-<span class="schrift-rot">er</span>- in der Wortmitte (unbetont)</div>
+        <div class="wort-grid">
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👨‍👩‍👧</span>
+            <span class="wort-text">Elt<span class="er-mark">er</span>n</span>
+            <span class="wort-ipa">[ˈɛltɐn]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">📅</span>
+            <span class="wort-text">gest<span class="er-mark">er</span>n</span>
+            <span class="wort-ipa">[ˈɡɛstɐn]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">🐣</span>
+            <span class="wort-text">Ost<span class="er-mark">er</span>n</span>
+            <span class="wort-ipa">[ˈoːstɐn]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">🏫</span>
+            <span class="wort-text">Kind<span class="er-mark">er</span>garten</span>
+            <span class="wort-ipa">[ˈkɪndɐˌɡaʁtən]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">👩‍🏫</span>
+            <span class="wort-text">Lehr<span class="er-mark">er</span>in</span>
+            <span class="wort-ipa">[ˈleːʁɐʁɪn]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this,1)">
+            <span class="wort-emoji">🎓</span>
+            <span class="wort-text">Schül<span class="er-mark">er</span>in</span>
+            <span class="wort-ipa">[ˈʃyːlɐʁɪn]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 2: POSITION ══ -->
+  <div class="section" id="sec-2">
+    <img class="tab-banner" src="https://images.pexels.com/photos/8386889/pexels-photo-8386889.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Buchstaben und Positionen">
+    <div class="sec-inner">
+      <h2>🔄 Position</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(2)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(2); resetTimer(2);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-2">00:00</span></span>
+          <span>🏆 <span id="best-2">--:--</span></span>
+        </div>
+      </div>
+      <div class="alt-erklaerung">
+        Jedes Paar zeigt dasselbe Wort in zwei Formen — das <span class="schrift-rot">-er-</span> rutscht von der Endsilbe in die Mitte, bleibt aber <span class="ipa-gross" style="font-size:1em">[ɐ]</span>.<br>
+        Klick → Aussprache erscheint. Sprich beide Formen!
+      </div>
+      <div class="alt-grid">
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Lehr<span class="er-mark">er</span></span>
+              <span class="alt-ipa">[ˈleːʁ<strong>ɐ</strong>]</span>
+              <span class="alt-hinweis">-er am Ende</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Lehr<span class="er-mark">er</span>in</span>
+              <span class="alt-ipa">[ˈleːʁ<strong>ɐ</strong>ʁɪn]</span>
+              <span class="alt-hinweis">-er- in der Mitte</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Schül<span class="er-mark">er</span></span>
+              <span class="alt-ipa">[ˈʃyːl<strong>ɐ</strong>]</span>
+              <span class="alt-hinweis">-er am Ende</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Schül<span class="er-mark">er</span>in</span>
+              <span class="alt-ipa">[ˈʃyːl<strong>ɐ</strong>ʁɪn]</span>
+              <span class="alt-hinweis">-er- in der Mitte</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Kind<span class="er-mark">er</span></span>
+              <span class="alt-ipa">[ˈkɪnd<strong>ɐ</strong>]</span>
+              <span class="alt-hinweis">Plural, -er am Ende</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Kind<span class="er-mark">er</span>garten</span>
+              <span class="alt-ipa">[ˈkɪnd<strong>ɐ</strong>ˌɡaʁtən]</span>
+              <span class="alt-hinweis">-er- in der Mitte</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Wint<span class="er-mark">er</span></span>
+              <span class="alt-ipa">[ˈvɪnt<strong>ɐ</strong>]</span>
+              <span class="alt-hinweis">-er am Ende</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Ost<span class="er-mark">er</span>n</span>
+              <span class="alt-ipa">[ˈoːst<strong>ɐ</strong>n]</span>
+              <span class="alt-hinweis">-er- in der Mitte</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Mutt<span class="er-mark">er</span></span>
+              <span class="alt-ipa">[ˈmʊt<strong>ɐ</strong>]</span>
+              <span class="alt-hinweis">-er am Ende</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Elt<span class="er-mark">er</span>n</span>
+              <span class="alt-ipa">[ˈɛlt<strong>ɐ</strong>n]</span>
+              <span class="alt-hinweis">-er- in der Mitte</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Vat<span class="er-mark">er</span></span>
+              <span class="alt-ipa">[ˈfaːt<strong>ɐ</strong>]</span>
+              <span class="alt-hinweis">-er am Ende</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">gest<span class="er-mark">er</span>n</span>
+              <span class="alt-ipa">[ˈɡɛst<strong>ɐ</strong>n]</span>
+              <span class="alt-hinweis">-er- in der Mitte</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 3: SÄTZE ══ -->
+  <div class="section" id="sec-3">
+    <img class="tab-banner" src="https://images.pexels.com/photos/6829478/pexels-photo-6829478.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Deutsche Sätze sprechen">
+    <div class="sec-inner">
+      <h2>💬 Sätze</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(3)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(3); resetTimer(3);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-3">00:00</span></span>
+          <span>🏆 <span id="best-3">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">Die <span class="schrift-rot">roten Wörter</span> enthalten ein vokalisiertes R → [ɐ]. Klick auf den Satz!</div>
+      <ul class="satz-liste">
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          Mein <span class="ziel">Vater</span> und meine <span class="ziel">Mutter</span> wohnen im zweiten Stock.
+          <div class="satz-ipa">Vater [ˈfaːtɐ] · Mutter [ˈmʊtɐ] — beide -er am Ende → [ɐ]</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          Die Kinder spielen jeden Tag im <span class="ziel">Kindergarten</span>.
+          <div class="satz-ipa">Kindergarten [ˈkɪndɐˌɡaʁtən] — das -er- in der Mitte → [ɐ]</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          Der <span class="ziel">Lehrer</span> öffnet das <span class="ziel">Fenster</span> im <span class="ziel">Zimmer</span>.
+          <div class="satz-ipa">Lehrer [ˈleːʁɐ] · Fenster [ˈfɛnstɐ] · Zimmer [ˈtsɪmɐ] — dreimal [ɐ]!</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          <span class="ziel">Gestern</span> war das <span class="ziel">Wetter</span> viel <span class="ziel">besser</span>.
+          <div class="satz-ipa">gestern [ˈɡɛstɐn] · Wetter [ˈvɛtɐ] · besser [ˈbɛsɐ] — dreimal [ɐ]!</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          Im <span class="ziel">Sommer</span> ist es wärmer als im <span class="ziel">Winter</span>.
+          <div class="satz-ipa">Sommer [ˈzɔmɐ] · Winter [ˈvɪntɐ] — beide -er am Ende → [ɐ]</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          Mein <span class="ziel">Bruder</span> und meine <span class="ziel">Schwester</span> wohnen in Wien.
+          <div class="satz-ipa">Bruder [ˈbʁuːdɐ] · Schwester [ˈʃvɛstɐ] — beide -er am Ende → [ɐ]</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          Das <span class="ziel">Wasser</span> ist <span class="ziel">besser</span> als Kaffee — <span class="ziel">oder</span>?
+          <div class="satz-ipa">Wasser [ˈvasɐ] · besser [ˈbɛsɐ] · oder [ˈoːdɐ] — dreimal [ɐ]!</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this,3)">
+          Die <span class="ziel">Lehrerin</span> spricht mit den <span class="ziel">Eltern</span> über die Noten.
+          <div class="satz-ipa">Lehrerin [ˈleːʁɐʁɪn] · Eltern [ˈɛltɐn] — -er- in der Mitte → [ɐ]</div>
+        </li>
+      </ul>
+      <p class="satz-tipp">Tipp: Zähl die [ɐ]-Laute im Satz, bevor du klickst!</p>
+    </div>
+  </div>
+
+  <!-- ══ TAB 4: ZUNGENBRECHER ══ -->
+  <div class="section" id="sec-4">
+    <img class="tab-banner" src="https://images.pexels.com/photos/1841952/pexels-photo-1841952.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Zungenbrecher sprechen">
+    <div class="sec-inner">
+      <h2>🎯 Zungenbrecher</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(4)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(4); resetTimer(4);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-4">00:00</span></span>
+          <span>🏆 <span id="best-4">--:--</span></span>
+        </div>
+      </div>
+      <div class="zb-anleitung">
+        Lies <strong>langsam</strong> — dann <strong>normal</strong> — dann <strong>schnell</strong>.<br>
+        Die <span class="schrift-rot">roten Wörter</span> haben alle ein [ɐ]. Klick → Aussprache.
+      </div>
+
+      <div class="zb-karte" onclick="zbToggle(this,4)">
+        <div class="zb-nr">Zungenbrecher 1</div>
+        <div class="zb-text">
+          Mein <span class="zb-ziel">Vater</span>, meine <span class="zb-ziel">Mutter</span>,
+          mein <span class="zb-ziel">Bruder</span> und meine <span class="zb-ziel">Schwester</span>
+          sitzen im <span class="zb-ziel">Zimmer</span> am <span class="zb-ziel">Fenster</span>.
+        </div>
+        <div class="zb-ipa">
+          Vater [ˈfaːtɐ] · Mutter [ˈmʊtɐ] · Bruder [ˈbʁuːdɐ] · Schwester [ˈʃvɛstɐ] · Zimmer [ˈtsɪmɐ] · Fenster [ˈfɛnstɐ]<br>
+          <em>Sechs [ɐ]-Laute hintereinander!</em>
+        </div>
+      </div>
+
+      <div class="zb-karte" onclick="zbToggle(this,4)">
+        <div class="zb-nr">Zungenbrecher 2</div>
+        <div class="zb-text">
+          Im <span class="zb-ziel">Sommer</span> fahren die <span class="zb-ziel">Kinder</span>
+          mit dem <span class="zb-ziel">Lehrer</span> in den <span class="zb-ziel">Kindergarten</span>
+          — im <span class="zb-ziel">Winter</span> <span class="zb-ziel">aber</span>
+          lieber nach Hause.
+        </div>
+        <div class="zb-ipa">
+          Sommer [ˈzɔmɐ] · Kinder [ˈkɪndɐ] · Lehrer [ˈleːʁɐ] · Kindergarten [ˈkɪndɐˌɡaʁtən] · Winter [ˈvɪntɐ] · aber [ˈaːbɐ]<br>
+          <em>Sechsmal [ɐ] — und Kindergarten hat es sogar zweimal!</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+<script>
+function showSection(idx) {
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+  document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+}
+var timerIntervals={}, timerSeconds={}, timerBest={}, timerStarted={};
+function timerTick(t){ timerSeconds[t]=(timerSeconds[t]||0)+1; var s=timerSeconds[t],mm=String(Math.floor(s/60)).padStart(2,'0'),ss=String(s%60).padStart(2,'0'),el=document.getElementById('timer-'+t); if(el)el.textContent=mm+':'+ss; }
+function startTimer(t){ if(timerStarted[t])return; timerStarted[t]=true; timerSeconds[t]=timerSeconds[t]||0; timerIntervals[t]=setInterval(function(){timerTick(t);},1000); }
+function stopTimer(t){ clearInterval(timerIntervals[t]); timerStarted[t]=false; var s=timerSeconds[t]||0; if(!timerBest[t]||s<timerBest[t]){timerBest[t]=s; var mm=String(Math.floor(s/60)).padStart(2,'0'),ss=String(s%60).padStart(2,'0'),el=document.getElementById('best-'+t); if(el)el.textContent=mm+':'+ss;} }
+function resetTimer(t){ clearInterval(timerIntervals[t]); timerStarted[t]=false; timerSeconds[t]=0; var el=document.getElementById('timer-'+t); if(el)el.textContent='00:00'; }
+function getAllCards(t){ if(t===1)return Array.from(document.querySelectorAll('#sec-1 .wort-karte')); if(t===2)return Array.from(document.querySelectorAll('#sec-2 .alt-karte')); if(t===3)return Array.from(document.querySelectorAll('#sec-3 .satz-item')); if(t===4)return Array.from(document.querySelectorAll('#sec-4 .zb-karte')); return[]; }
+function checkComplete(t){ var c=getAllCards(t); if(c.length>0&&c.every(function(x){return x.classList.contains('aufgedeckt');}))stopTimer(t); }
+function karteToggle(el,t){ startTimer(t); el.classList.toggle('aufgedeckt'); checkComplete(t); }
+function altKarteToggle(el){ startTimer(2); el.classList.toggle('aufgedeckt'); checkComplete(2); }
+function satzToggle(el,t){ startTimer(t); el.classList.toggle('aufgedeckt'); checkComplete(t); }
+function zbToggle(el,t){ startTimer(t); el.classList.toggle('aufgedeckt'); checkComplete(t); }
+function alleAufdecken(t){ getAllCards(t).forEach(function(c){c.classList.add('aufgedeckt');}); stopTimer(t); }
+function alleZudecken(t){ getAllCards(t).forEach(function(c){c.classList.remove('aufgedeckt');}); }
+</script>
+</body>
+</html>
