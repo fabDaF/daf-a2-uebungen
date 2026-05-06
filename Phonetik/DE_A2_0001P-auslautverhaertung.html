@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auslautverhärtung – A2 · Phonetik 0001P</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+.header h1 { font-size: 2.2em; font-family: Georgia,'Times New Roman',serif; color: white; margin-bottom: 8px; }
+.header p  { font-size: 1.1em; font-family: Georgia,'Times New Roman',serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+
+/* NAV */
+.nav {
+  display: flex;
+  flex-wrap: nowrap;
+  background: #f8f9fa;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.nav-btn {
+  flex: 1;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  transition: all 0.3s;
+  font-size: 0.92em;
+  font-weight: 500;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e9ecef; color: #495057; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 600; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+
+/* SECTIONS */
+.section { display: none; }
+.section.active { display: block; }
+.sec-inner { padding: 28px 30px; }
+
+/* TAB BANNER */
+.tab-banner {
+  width: 100%; max-height: 180px; object-fit: cover;
+  border-radius: 0; margin-bottom: 0;
+}
+@media (max-width: 600px) { .tab-banner { max-height: 120px; } }
+
+/* CONTROL BAR */
+.control-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px; padding: 6px 12px;
+  background: #f8f9fa; border-radius: 8px;
+}
+.btn-row { display: flex; gap: 6px; }
+.btn {
+  background: #f5f7ff; border: 1px solid #c5cff5; border-radius: 8px;
+  padding: 6px 16px; font-size: 0.85em; color: #667eea;
+  cursor: pointer; transition: all 0.15s; font-weight: 500;
+}
+.btn:hover { background: #667eea; color: white; border-color: #667eea; }
+.timer-display { display: flex; gap: 14px; font-size: 0.82em; color: #bbb; font-variant-numeric: tabular-nums; }
+
+/* HILFE-BOX */
+.hilfe-box {
+  background: #f0f4ff; border-left: 4px solid #667eea;
+  border-radius: 0 8px 8px 0; padding: 14px 18px;
+  margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6;
+}
+
+/* ── TAB 1: REGEL ── */
+.regel-tabelle {
+  width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 1em;
+}
+.regel-tabelle th {
+  background: #667eea; color: white; padding: 10px 16px;
+  text-align: center; font-weight: 600;
+}
+.regel-tabelle td {
+  padding: 12px 16px; text-align: center; border-bottom: 1px solid #e8e8e8;
+}
+.regel-tabelle tr:nth-child(even) td { background: #f8f9ff; }
+.regel-tabelle .laut-von { font-size: 1.3em; font-weight: 700; color: #e53935; }
+.regel-tabelle .pfeil { color: #888; font-size: 1.1em; }
+.regel-tabelle .laut-zu { font-size: 1.3em; font-weight: 700; color: #2e7d32; }
+.regel-tabelle .ipa-cell { font-size: 0.95em; color: #555; letter-spacing: 0.03em; }
+.regel-tabelle .beispiel-cell { color: #444; font-size: 0.93em; }
+.regel-tabelle .beispiel-cell em { color: #667eea; font-style: normal; font-weight: 600; }
+.regel-box {
+  background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+  border: 2px solid #667eea; border-radius: 10px;
+  padding: 18px 22px; margin-bottom: 22px; font-size: 0.95em; line-height: 1.7; color: #333;
+}
+.regel-box strong { color: #4a148c; }
+.merke-box {
+  background: #fff8e1; border-left: 4px solid #f9a825;
+  border-radius: 0 8px 8px 0; padding: 14px 18px; margin-top: 18px;
+  font-size: 0.9em; color: #5d4037; line-height: 1.6;
+}
+.merke-box strong { color: #e65100; }
+
+/* ── TAB 2: WÖRTER ── */
+.wort-gruppe { margin-bottom: 28px; }
+.wort-gruppe-titel {
+  font-size: 0.88em; font-weight: 700; color: #888; text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.wort-gruppe-titel .laut-von { color: #e53935; }
+.wort-gruppe-titel .laut-zu  { color: #2e7d32; }
+.wort-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;
+}
+.wort-karte {
+  background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px;
+  padding: 14px 10px; text-align: center; cursor: pointer;
+  transition: all 0.2s; user-select: none;
+}
+.wort-karte:hover { background: #eef1ff; border-color: #667eea; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102,126,234,0.2); }
+.wort-karte.aufgedeckt { background: #e8f5e9; border-color: #66bb6a; }
+.wort-emoji { font-size: 2em; display: block; margin-bottom: 6px; }
+.wort-text  { font-size: 0.95em; font-weight: 700; color: #333; display: block; margin-bottom: 4px; }
+.wort-ipa   { font-size: 0.88em; color: #2e7d32; display: none; margin-top: 4px; letter-spacing: 0.03em; }
+.wort-karte.aufgedeckt .wort-ipa { display: block; }
+.wort-karte.aufgedeckt .wort-text { color: #1b5e20; }
+
+/* ── TAB 3: ALTERNATION ── */
+.alt-erklaerung {
+  background: #f0f4ff; border-left: 4px solid #667eea;
+  border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px;
+  font-size: 0.9em; color: #444; line-height: 1.6;
+}
+.alt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.alt-karte {
+  background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px;
+  padding: 16px 14px; cursor: pointer; transition: all 0.2s; user-select: none;
+}
+.alt-karte:hover { background: #eef1ff; border-color: #667eea; }
+.alt-karte.aufgedeckt { background: #e8f5e9; border-color: #66bb6a; }
+.alt-paar { display: flex; align-items: center; gap: 10px; justify-content: center; }
+.alt-wort-box { text-align: center; flex: 1; }
+.alt-wort { font-size: 1.1em; font-weight: 700; color: #333; display: block; }
+.alt-ipa  { font-size: 0.85em; color: #888; display: none; margin-top: 3px; }
+.alt-karte.aufgedeckt .alt-ipa { display: block; color: #2e7d32; }
+.alt-karte.aufgedeckt .alt-wort { color: #1b5e20; }
+.alt-pfeil { font-size: 1.4em; color: #9e9e9e; flex-shrink: 0; }
+.alt-hinweis { font-size: 0.78em; color: #999; display: block; margin-top: 6px; }
+@media (max-width: 600px) { .alt-grid { grid-template-columns: 1fr; } }
+
+/* ── TAB 4: SÄTZE ── */
+.satz-liste { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.satz-item {
+  background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px;
+  padding: 16px 20px; cursor: pointer; transition: all 0.2s; user-select: none;
+  font-size: 1.05em; line-height: 1.6; color: #333;
+}
+.satz-item:hover { background: #eef1ff; border-color: #667eea; }
+.satz-item.aufgedeckt { background: #e8f5e9; border-color: #66bb6a; }
+.satz-item.aufgedeckt .ziel { color: #1b5e20; }
+.ziel { color: #667eea; font-weight: 700; transition: color 0.2s; }
+.satz-ipa {
+  display: none; font-size: 0.82em; color: #2e7d32;
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px solid #c8e6c9; letter-spacing: 0.02em;
+}
+.satz-item.aufgedeckt .satz-ipa { display: block; }
+.satz-tipp { font-size: 0.8em; color: #bbb; margin-top: 14px; text-align: center; font-style: italic; }
+
+/* ── TAB 5: ZUNGENBRECHER ── */
+.zb-karte {
+  background: linear-gradient(135deg, #f0f4ff, #e8ecff);
+  border: 2px solid #667eea; border-radius: 12px;
+  padding: 24px 28px; margin-bottom: 20px; cursor: pointer;
+  transition: all 0.2s; user-select: none;
+}
+.zb-karte:hover { box-shadow: 0 4px 16px rgba(102,126,234,0.25); transform: translateY(-2px); }
+.zb-karte.aufgedeckt { background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border-color: #66bb6a; }
+.zb-nr { font-size: 0.78em; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.zb-text { font-size: 1.15em; font-weight: 600; color: #333; line-height: 1.7; }
+.zb-karte.aufgedeckt .zb-text { color: #1b5e20; }
+.zb-ziel { color: #667eea; font-weight: 800; }
+.zb-karte.aufgedeckt .zb-ziel { color: #2e7d32; }
+.zb-ipa { display: none; font-size: 0.85em; color: #555; margin-top: 12px; padding-top: 12px; border-top: 1px solid #c8e6c9; line-height: 1.8; }
+.zb-karte.aufgedeckt .zb-ipa { display: block; }
+.zb-anleitung {
+  background: #fff8e1; border-left: 4px solid #f9a825;
+  border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px;
+  font-size: 0.9em; color: #5d4037; line-height: 1.6;
+}
+
+/* FOOTER */
+.author-footer {
+  text-align: center; margin-top: 40px; max-width: 1000px;
+  margin-left: auto; margin-right: auto;
+  padding: 16px; font-size: 0.8rem; color: #aaa;
+}
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+/* MOBILE */
+@media (max-width: 600px) {
+  body { padding: 8px; }
+  .nav { flex-wrap: wrap; }
+  .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
+  .nav-btn:last-child { border-right: 1px solid #ddd; }
+  .sec-inner { padding: 16px; }
+  .wort-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .zb-text { font-size: 1em; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Auslautverhärtung</h1>
+    <p>A2 – Phonetik 0001P · Aussprachetraining</p>
+    <div class="big-emoji">🎙️</div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showSection(0)">
+      <span class="nav-emoji">📖</span><span class="nav-label">Regel</span>
+    </div>
+    <div class="nav-btn" onclick="showSection(1)">
+      <span class="nav-emoji">🔤</span><span class="nav-label">Wörter</span>
+    </div>
+    <div class="nav-btn" onclick="showSection(2)">
+      <span class="nav-emoji">🔄</span><span class="nav-label">Alternation</span>
+    </div>
+    <div class="nav-btn" onclick="showSection(3)">
+      <span class="nav-emoji">💬</span><span class="nav-label">Sätze</span>
+    </div>
+    <div class="nav-btn" onclick="showSection(4)">
+      <span class="nav-emoji">🎯</span><span class="nav-label">Zungenbrecher</span>
+    </div>
+  </div>
+
+  <!-- ══ TAB 0: REGEL ══ -->
+  <div class="section active" id="sec-0">
+    <img class="tab-banner" src="https://images.pexels.com/photos/8107287/pexels-photo-8107287.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Phonetik – Aussprache">
+    <div class="sec-inner">
+      <h2>📖 Die Regel</h2>
+      <div class="hilfe-box">
+        In der deutschen Sprache gibt es eine wichtige Aussprache-Regel: am <strong>Ende eines Wortes</strong> werden stimmhafte Konsonanten stimmlos gesprochen.
+      </div>
+
+      <div class="regel-box">
+        <strong>Die Regel:</strong> Die Buchstaben <strong>b, d, g</strong> klingen am Wortende wie <strong>p, t, k</strong>.<br>
+        Das Wort <em>schreibt</em> sich mit <strong>b/d/g</strong> — <em>gesprochen</em> hört man <strong>p/t/k</strong>.
+      </div>
+
+      <table class="regel-tabelle">
+        <thead>
+          <tr>
+            <th>Buchstabe</th>
+            <th></th>
+            <th>Klang am Wortende</th>
+            <th>Beispiel</th>
+            <th>Aussprache</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="laut-von">b</span></td>
+            <td><span class="pfeil">→</span></td>
+            <td><span class="laut-zu">p</span></td>
+            <td class="beispiel-cell">Ur<em>laub</em></td>
+            <td class="ipa-cell">[ˈʊɐ̯laʊ̯<strong>p</strong>]</td>
+          </tr>
+          <tr>
+            <td><span class="laut-von">d</span></td>
+            <td><span class="pfeil">→</span></td>
+            <td><span class="laut-zu">t</span></td>
+            <td class="beispiel-cell">Hun<em>d</em></td>
+            <td class="ipa-cell">[hʊn<strong>t</strong>]</td>
+          </tr>
+          <tr>
+            <td><span class="laut-von">g</span></td>
+            <td><span class="pfeil">→</span></td>
+            <td><span class="laut-zu">k</span></td>
+            <td class="beispiel-cell">Ta<em>g</em></td>
+            <td class="ipa-cell">[taː<strong>k</strong>]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="merke-box">
+        <strong>🔑 Merkhilfe:</strong> Wenn das Wort in der Mehrzahl (Plural) ein <strong>d/g/b</strong> hat, dann gibt es eine Auslautverhärtung im Singular.<br>
+        Beispiel: Hun<strong>d</strong>e → Hun<strong>d</strong> wird [t] · Ta<strong>g</strong>e → Ta<strong>g</strong> wird [k]
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 1: WÖRTER ══ -->
+  <div class="section" id="sec-1">
+    <img class="tab-banner" src="https://images.pexels.com/photos/18512916/pexels-photo-18512916.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Wörter lernen">
+    <div class="sec-inner">
+      <h2>🔤 Wörter</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(1)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(1); resetTimer(1);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-1">00:00</span></span>
+          <span>🏆 <span id="best-1">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">Klick auf ein Wort → die Aussprache erscheint. Sprich das Wort laut nach!</div>
+
+      <!-- d → t -->
+      <div class="wort-gruppe">
+        <div class="wort-gruppe-titel"><span class="laut-von">d</span> → <span class="laut-zu">t</span></div>
+        <div class="wort-grid" id="wortgrid-1">
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🐶</span>
+            <span class="wort-text">Hund</span>
+            <span class="wort-ipa">[hʊnt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">👶</span>
+            <span class="wort-text">Kind</span>
+            <span class="wort-ipa">[kɪnt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🌙</span>
+            <span class="wort-text">Abend</span>
+            <span class="wort-ipa">[ˈaːbənt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🖼️</span>
+            <span class="wort-text">Bild</span>
+            <span class="wort-ipa">[bɪlt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🌲</span>
+            <span class="wort-text">Wald</span>
+            <span class="wort-ipa">[valt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">💰</span>
+            <span class="wort-text">Geld</span>
+            <span class="wort-ipa">[ɡɛlt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">👗</span>
+            <span class="wort-text">Kleid</span>
+            <span class="wort-ipa">[klaɪ̯t]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🎵</span>
+            <span class="wort-text">Lied</span>
+            <span class="wort-ipa">[liːt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🤝</span>
+            <span class="wort-text">Freund</span>
+            <span class="wort-ipa">[fʁɔɪ̯nt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🚲</span>
+            <span class="wort-text">Rad</span>
+            <span class="wort-ipa">[ʁaːt]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🛁</span>
+            <span class="wort-text">Bad</span>
+            <span class="wort-ipa">[baːt]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- g → k -->
+      <div class="wort-gruppe">
+        <div class="wort-gruppe-titel"><span class="laut-von">g</span> → <span class="laut-zu">k</span></div>
+        <div class="wort-grid">
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">☀️</span>
+            <span class="wort-text">Tag</span>
+            <span class="wort-ipa">[taːk]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🛤️</span>
+            <span class="wort-text">Weg</span>
+            <span class="wort-ipa">[veːk]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🚂</span>
+            <span class="wort-text">Zug</span>
+            <span class="wort-ipa">[tsuːk]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">⛰️</span>
+            <span class="wort-text">Berg</span>
+            <span class="wort-ipa">[bɛʁk]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- b → p -->
+      <div class="wort-gruppe">
+        <div class="wort-gruppe-titel"><span class="laut-von">b</span> → <span class="laut-zu">p</span></div>
+        <div class="wort-grid">
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🦹</span>
+            <span class="wort-text">Dieb</span>
+            <span class="wort-ipa">[diːp]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">🏖️</span>
+            <span class="wort-text">Urlaub</span>
+            <span class="wort-ipa">[ˈʊɐ̯laʊ̯p]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">💛</span>
+            <span class="wort-text">gelb</span>
+            <span class="wort-ipa">[ɡɛlp]</span>
+          </div>
+          <div class="wort-karte" onclick="karteToggle(this, 1)">
+            <span class="wort-emoji">½</span>
+            <span class="wort-text">halb</span>
+            <span class="wort-ipa">[halp]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 2: ALTERNATION ══ -->
+  <div class="section" id="sec-2">
+    <img class="tab-banner" src="https://images.pexels.com/photos/8386889/pexels-photo-8386889.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Wortpaare vergleichen">
+    <div class="sec-inner">
+      <h2>🔄 Alternation</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(2)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(2); resetTimer(2);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-2">00:00</span></span>
+          <span>🏆 <span id="best-2">--:--</span></span>
+        </div>
+      </div>
+      <div class="alt-erklaerung">
+        <strong>Warum ist das wichtig?</strong> Im Plural hörst du das echte <strong>d / g / b</strong> — im Singular verschwindet es.<br>
+        Klick auf ein Paar → die Aussprache erscheint. Sprich beide Formen nach!
+      </div>
+      <div class="alt-grid" id="altgrid">
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Hund</span>
+              <span class="alt-ipa">[hʊnt]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Hunde</span>
+              <span class="alt-ipa">[ˈhʊndə]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Kind</span>
+              <span class="alt-ipa">[kɪnt]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Kinder</span>
+              <span class="alt-ipa">[ˈkɪndɐ]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Tag</span>
+              <span class="alt-ipa">[taːk]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Tage</span>
+              <span class="alt-ipa">[ˈtaːɡə]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Weg</span>
+              <span class="alt-ipa">[veːk]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Wege</span>
+              <span class="alt-ipa">[ˈveːɡə]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Kleid</span>
+              <span class="alt-ipa">[klaɪ̯t]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Kleider</span>
+              <span class="alt-ipa">[ˈklaɪ̯dɐ]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Lied</span>
+              <span class="alt-ipa">[liːt]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Lieder</span>
+              <span class="alt-ipa">[ˈliːdɐ]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Zug</span>
+              <span class="alt-ipa">[tsuːk]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Züge</span>
+              <span class="alt-ipa">[ˈtsyːɡə]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Wald</span>
+              <span class="alt-ipa">[valt]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Wälder</span>
+              <span class="alt-ipa">[ˈvɛldɐ]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">Dieb</span>
+              <span class="alt-ipa">[diːp]</span>
+              <span class="alt-hinweis">Singular</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">Diebe</span>
+              <span class="alt-ipa">[ˈdiːbə]</span>
+              <span class="alt-hinweis">Plural</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-karte" onclick="altKarteToggle(this)">
+          <div class="alt-paar">
+            <div class="alt-wort-box">
+              <span class="alt-wort">halb</span>
+              <span class="alt-ipa">[halp]</span>
+              <span class="alt-hinweis">Grundform</span>
+            </div>
+            <span class="alt-pfeil">↔</span>
+            <div class="alt-wort-box">
+              <span class="alt-wort">halbe</span>
+              <span class="alt-ipa">[ˈhalbə]</span>
+              <span class="alt-hinweis">flektiert</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 3: SÄTZE ══ -->
+  <div class="section" id="sec-3">
+    <img class="tab-banner" src="https://images.pexels.com/photos/6829478/pexels-photo-6829478.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Deutsche Sätze sprechen">
+    <div class="sec-inner">
+      <h2>💬 Sätze</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(3)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(3); resetTimer(3);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-3">00:00</span></span>
+          <span>🏆 <span id="best-3">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">
+        Lies jeden Satz laut vor. Das <strong>blaue Wort</strong> enthält die Auslautverhärtung.<br>
+        Klick auf den Satz → die Aussprache erscheint.
+      </div>
+      <ul class="satz-liste" id="satzliste">
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Der <span class="ziel">Hund</span> schläft auf dem Sofa.
+          <div class="satz-ipa">Hund → [hʊn<strong>t</strong>] &nbsp;|&nbsp; das „d" klingt wie „t"</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Das <span class="ziel">Kind</span> singt ein schönes <span class="ziel">Lied</span>.
+          <div class="satz-ipa">Kind → [kɪn<strong>t</strong>] &nbsp;|&nbsp; Lied → [liː<strong>t</strong>]</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Wir fahren morgen mit dem <span class="ziel">Zug</span>.
+          <div class="satz-ipa">Zug → [tsuː<strong>k</strong>] &nbsp;|&nbsp; das „g" klingt wie „k"</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Im <span class="ziel">Urlaub</span> schläft man sehr gut.
+          <div class="satz-ipa">Urlaub → [ˈʊɐ̯laʊ̯<strong>p</strong>] &nbsp;|&nbsp; das „b" klingt wie „p"</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Er geht jeden <span class="ziel">Tag</span> denselben <span class="ziel">Weg</span>.
+          <div class="satz-ipa">Tag → [taː<strong>k</strong>] &nbsp;|&nbsp; Weg → [veː<strong>k</strong>]</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Sie trägt heute ein rotes <span class="ziel">Kleid</span>.
+          <div class="satz-ipa">Kleid → [klaɪ̯<strong>t</strong>] &nbsp;|&nbsp; das „d" klingt wie „t"</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Der <span class="ziel">Wald</span> ist am <span class="ziel">Abend</span> sehr ruhig.
+          <div class="satz-ipa">Wald → [val<strong>t</strong>] &nbsp;|&nbsp; Abend → [ˈaːbən<strong>t</strong>]</div>
+        </li>
+        <li class="satz-item" onclick="satzToggle(this, 3)">
+          Das ist ein schönes <span class="ziel">Bild</span>.
+          <div class="satz-ipa">Bild → [bɪl<strong>t</strong>] &nbsp;|&nbsp; das „d" klingt wie „t"</div>
+        </li>
+      </ul>
+      <p class="satz-tipp">Tipp: Lies zuerst ohne Hilfe — dann klick und vergleiche!</p>
+    </div>
+  </div>
+
+  <!-- ══ TAB 4: ZUNGENBRECHER ══ -->
+  <div class="section" id="sec-4">
+    <img class="tab-banner" src="https://images.pexels.com/photos/1841952/pexels-photo-1841952.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Sprechen und üben">
+    <div class="sec-inner">
+      <h2>🎯 Zungenbrecher</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="alleAufdecken(4)">Lösungen</button>
+          <button class="btn" onclick="alleZudecken(4); resetTimer(4);">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-4">00:00</span></span>
+          <span>🏆 <span id="best-4">--:--</span></span>
+        </div>
+      </div>
+      <div class="zb-anleitung">
+        Lies den Zungenbrecher <strong>langsam</strong> — dann <strong>normal</strong> — dann so <strong>schnell</strong> wie möglich.<br>
+        Die <span style="color:#667eea;font-weight:700;">blauen Wörter</span> haben Auslautverhärtung. Klick → Aussprache.
+      </div>
+
+      <div class="zb-karte" onclick="zbToggle(this, 4)">
+        <div class="zb-nr">Zungenbrecher 1</div>
+        <div class="zb-text">
+          <span class="zb-ziel">Tag</span> für <span class="zb-ziel">Tag</span> rennt der
+          <span class="zb-ziel">Hund</span> durch den <span class="zb-ziel">Wald</span>,
+          auf dem langen <span class="zb-ziel">Weg</span>.
+        </div>
+        <div class="zb-ipa">
+          Tag [taːk] · Hund [hʊnt] · Wald [valt] · Weg [veːk]<br>
+          <em>Alle „d" und „g" am Wortende klingen stimmlos!</em>
+        </div>
+      </div>
+
+      <div class="zb-karte" onclick="zbToggle(this, 4)">
+        <div class="zb-nr">Zungenbrecher 2</div>
+        <div class="zb-text">
+          Das <span class="zb-ziel">Kind</span> trägt ein
+          <span class="zb-ziel">gelb</span>es <span class="zb-ziel">Kleid</span>
+          und singt am <span class="zb-ziel">Abend</span> ein <span class="zb-ziel">Lied</span>.
+        </div>
+        <div class="zb-ipa">
+          Kind [kɪnt] · gelb [ɡɛlp] · Kleid [klaɪ̯t] · Abend [ˈaːbənt] · Lied [liːt]<br>
+          <em>Fünf Auslautverhärtungen in einem Satz!</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:FrankBurkert@fabdaf.onmicrosoft.com">FrankBurkert@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ── Navigation ── */
+function showSection(idx) {
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+  document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+}
+
+/* ── Timer ── */
+var timerIntervals = {};
+var timerSeconds   = {};
+var timerBest      = {};
+var timerStarted   = {};
+
+function timerTick(tab) {
+  timerSeconds[tab] = (timerSeconds[tab] || 0) + 1;
+  var s = timerSeconds[tab];
+  var mm = String(Math.floor(s/60)).padStart(2,'0');
+  var ss = String(s%60).padStart(2,'0');
+  var el = document.getElementById('timer-'+tab);
+  if (el) el.textContent = mm+':'+ss;
+}
+function startTimer(tab) {
+  if (timerStarted[tab]) return;
+  timerStarted[tab] = true;
+  timerSeconds[tab] = timerSeconds[tab] || 0;
+  timerIntervals[tab] = setInterval(function(){ timerTick(tab); }, 1000);
+}
+function stopTimer(tab) {
+  clearInterval(timerIntervals[tab]);
+  timerStarted[tab] = false;
+  var s = timerSeconds[tab] || 0;
+  if (!timerBest[tab] || s < timerBest[tab]) {
+    timerBest[tab] = s;
+    var mm = String(Math.floor(s/60)).padStart(2,'0');
+    var ss = String(s%60).padStart(2,'0');
+    var el = document.getElementById('best-'+tab);
+    if (el) el.textContent = mm+':'+ss;
+  }
+}
+function resetTimer(tab) {
+  clearInterval(timerIntervals[tab]);
+  timerStarted[tab] = false;
+  timerSeconds[tab] = 0;
+  var el = document.getElementById('timer-'+tab);
+  if (el) el.textContent = '00:00';
+}
+
+function checkComplete(tab) {
+  var cards = getAllCards(tab);
+  if (cards.length > 0 && cards.every(function(c){ return c.classList.contains('aufgedeckt'); })) {
+    stopTimer(tab);
+  }
+}
+function getAllCards(tab) {
+  if (tab === 1) return Array.from(document.querySelectorAll('#sec-1 .wort-karte'));
+  if (tab === 2) return Array.from(document.querySelectorAll('#sec-2 .alt-karte'));
+  if (tab === 3) return Array.from(document.querySelectorAll('#sec-3 .satz-item'));
+  if (tab === 4) return Array.from(document.querySelectorAll('#sec-4 .zb-karte'));
+  return [];
+}
+
+/* ── Karte Toggle ── */
+function karteToggle(el, tab) {
+  startTimer(tab);
+  el.classList.toggle('aufgedeckt');
+  checkComplete(tab);
+}
+function altKarteToggle(el) {
+  startTimer(2);
+  el.classList.toggle('aufgedeckt');
+  checkComplete(2);
+}
+function satzToggle(el, tab) {
+  startTimer(tab);
+  el.classList.toggle('aufgedeckt');
+  checkComplete(tab);
+}
+function zbToggle(el, tab) {
+  startTimer(tab);
+  el.classList.toggle('aufgedeckt');
+  checkComplete(tab);
+}
+
+/* ── Alle aufdecken / zudecken ── */
+function alleAufdecken(tab) {
+  getAllCards(tab).forEach(function(c){ c.classList.add('aufgedeckt'); });
+  stopTimer(tab);
+}
+function alleZudecken(tab) {
+  getAllCards(tab).forEach(function(c){ c.classList.remove('aufgedeckt'); });
+}
+</script>
+</body>
+</html>
