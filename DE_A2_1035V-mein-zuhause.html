@@ -268,13 +268,14 @@ footer {
 .author-footer a { color: #aaa; }
 .author-name { font-weight: 700; }
 .header {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white; text-align: center; padding: 30px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white; text-align: center; padding: 30px;
   border-radius: 12px 12px 0 0;
 }
-.header h1 { margin: 0; font-size: 1.5rem; }
-.header p { margin: 6px 0 0; opacity: 0.9; font-size: 0.9rem; }
-.header .big-emoji { font-size: 2.5rem; margin-top: 10px; }
+.header h1 { font-size: 2.2em; font-family: Georgia, 'Times New Roman', serif; color: white; margin: 0 0 8px 0; border: none; padding: 0; line-height: 1.2; }
+.header .subtitle, .header p { font-size: 1.1em; font-family: Georgia, 'Times New Roman', serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.header-desc { text-align: center; padding: 14px 30px; background: #f8f9ff; border-bottom: 1px solid #e9ecef; color: #666; font-size: 0.92em; font-style: italic; }
 
   .tab-banner {
     width: 100%;
@@ -304,14 +305,12 @@ footer {
 </head>
 <body>
 <div class="container">
-  <header>
-    <div class="header">
-    <h1>A2 · 1035V · Mein Zuhause</h1>
-    <p style="font-family: Georgia, serif;">A2.1 · Lektion 1035V</p>
-        <div class="big-emoji">🏠</div>
-</div>
-    <p>Wortschatz rund ums Haus und die Wohnumgebung</p>
-  </header>
+  <div class="header">
+    <h1>Mein Zuhause</h1>
+    <p class="subtitle">A2 &ndash; Lektion 1035V &middot; Wortschatz</p>
+    <div class="big-emoji">🏠</div>
+  </div>
+  <div class="header-desc">Wortschatz rund ums Haus und die Wohnumgebung</div>
 
   <nav class="nav" id="mainNav">
     <button class="nav-btn active" onclick="showSection(0)">
