@@ -67,20 +67,37 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .lt-input.ok { border-color: #4caf50; color: #2e7d32; }
 .lt-input.no { border-color: #e53935; color: #c62828; }
 
-/* Satzbau */
-.sentence-builder { margin-bottom: 22px; }
-.chips-container { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; background: #f0f0f0; border-radius: 8px; min-height: 46px; margin-bottom: 6px; }
-.chip { background: #fff; border: 2px solid #667eea; border-radius: 18px; padding: 5px 13px; font-size: .9rem; cursor: grab; user-select: none; }
-.chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
-.chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+/* Satzbau (skill-konform) */
+.satzbau-item { background: #fafbff; padding: 16px 20px; margin-bottom: 18px; border-radius: 12px; border: 1px solid #e0e0ff; }
+.satzbau-item .sb-label { font-size: 0.85em; color: #667eea; margin-bottom: 8px; font-weight: 600; }
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: white; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-top: 8px; margin-bottom: 6px; transition: all 0.2s; }
+.sentence-builder.drag-over { border-color: #667eea; background: #f0f2ff; }
+.sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
+.chip { background: #fff; border: 2px solid #667eea; color: #667eea; padding: 7px 13px; border-radius: 18px; cursor: move; font-weight: 500; font-size: 0.9rem; transition: all 0.2s; user-select: none; display: inline-block; }
+.chip:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(102,126,234,0.3); }
 .chip:active { cursor: grabbing; }
-.sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
-.sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
+.chip.correct   { background: #27ae60 !important; border-color: #27ae60 !important; color: white !important; }
+.chip.incorrect { background: #e74c3c !important; border-color: #e74c3c !important; color: white !important; }
+.sb-punkt { font-size: 1.2em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.88em; font-weight: 600; min-height: 1.2em; margin-top: 6px; }
+.satzbau-feedback.correct, .satzbau-feedback.ok { color: #27ae60; }
+.satzbau-feedback.incorrect, .satzbau-feedback.no { color: #e74c3c; }
 
-.sb-punkt { color: #333; font-size: 1rem; align-self: center; margin-left: 2px; }
-.satzbau-feedback { font-size: .85rem; min-height: 1.2em; margin-top: 4px; }
-.satzbau-feedback.ok { color: #4caf50; }
-.satzbau-feedback.no { color: #e53935; }
+/* Wortschatz (skill-konform) */
+.luecken-item { background: #f8f9ff; padding: 14px 18px; margin: 0; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ws-prompt { font-weight: 600; color: #764ba2; min-width: 200px; font-size: 0.95em; }
+.ws-fields { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; flex: 1; }
+.ws-fields input.blank { border: none; border-bottom: 2px solid #667eea; background: #fff; padding: 4px 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: all 0.2s; border-radius: 0; }
+.ws-fields input.blank:focus { border-bottom-color: #764ba2; background: #f0f7ff; }
+.ws-fields input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; }
+.ws-fields input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
+@media (max-width: 600px) {
+  .luecken-item { flex-direction: column; align-items: flex-start; }
+  .ws-prompt { min-width: 0; }
+  #wortschatz1047GContainer { grid-template-columns: 1fr !important; }
+}
 
 /* Multiple Choice */
 .mc-item { background: #f8f8ff; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
@@ -419,13 +436,13 @@ function ltShowSolutions(){document.querySelectorAll('.lt-input').forEach(functi
 
 /* ===== SATZBAU ===== */
 var satzbauData=[
-  { parts: ['Ich', 'freue', 'mich', 'über', 'das', 'Geschenk'], valid: [['Ich', 'freue', 'mich', 'über', 'das', 'Geschenk']], punct: '.' },
-  { parts: ['Er', 'ärgert', 'sich', 'über', 'das', 'Wetter'], valid: [['Er', 'ärgert', 'sich', 'über', 'das', 'Wetter']], punct: '.' },
-  { parts: ['Sie', 'hat', 'sich', 'bei', 'der', 'Firma', 'beworben'], valid: [['Sie', 'hat', 'sich', 'bei', 'der', 'Firma', 'beworben']], punct: '.' },
-  { parts: ['Wir', 'haben', 'uns', 'im', 'Wald', 'verlaufen'], valid: [['Wir', 'haben', 'uns', 'im', 'Wald', 'verlaufen']], punct: '.' },
-  { parts: ['Du', 'hast', 'dich', 'verspätet'], valid: [['Du', 'hast', 'dich', 'verspätet']], punct: '.' },
+  { parts: ['ich', 'freue', 'mich', 'über', 'das', 'Geschenk'], valid: [['ich', 'freue', 'mich', 'über', 'das', 'Geschenk']], punct: '.' },
+  { parts: ['er', 'ärgert', 'sich', 'über', 'das', 'Wetter'], valid: [['er', 'ärgert', 'sich', 'über', 'das', 'Wetter']], punct: '.' },
+  { parts: ['sie', 'hat', 'sich', 'bei', 'der', 'Firma', 'beworben'], valid: [['sie', 'hat', 'sich', 'bei', 'der', 'Firma', 'beworben']], punct: '.' },
+  { parts: ['wir', 'haben', 'uns', 'im', 'Wald', 'verlaufen'], valid: [['wir', 'haben', 'uns', 'im', 'Wald', 'verlaufen']], punct: '.' },
+  { parts: ['du', 'hast', 'dich', 'verspätet'], valid: [['du', 'hast', 'dich', 'verspätet']], punct: '.' },
   { parts: ['Lisa', 'hat', 'sich', 'erkältet'], valid: [['Lisa', 'hat', 'sich', 'erkältet']], punct: '.' },
-  { parts: ['Interessierst', 'du', 'dich', 'für', 'Kunst'], valid: [['Interessierst', 'du', 'dich', 'für', 'Kunst']], punct: '?' }
+  { parts: ['interessierst', 'du', 'dich', 'für', 'Kunst'], valid: [['interessierst', 'du', 'dich', 'für', 'Kunst']], punct: '?' }
 ];
 var sbDragged = null;
 
@@ -630,11 +647,13 @@ function initSatzbau() {
     var area = document.getElementById('satzbauContainer');
     area.innerHTML = '';
     satzbauData.forEach(function(ex, idx) {
-        var label = document.createElement('p');
-        label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
+        var item = document.createElement('div');
+        item.className = 'satzbau-item';
+
         var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
         var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
         var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;
+
         var parts = ex.parts.slice();
         for (var i = parts.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
@@ -645,23 +664,25 @@ function initSatzbau() {
         sbRegisterZone(row, idx);
 
         var btnRow = document.createElement('div');
-        btnRow.style.cssText = 'display:flex; gap:8px; margin-top:6px;';
+        btnRow.style.cssText = 'display:flex; gap:8px; margin-top:8px;';
         var solveBtn = document.createElement('button');
-        solveBtn.className = 'btn';
-        solveBtn.textContent = 'Lösen';
+        solveBtn.className = 'btn-small';
+        solveBtn.textContent = '💡 Lösen';
         solveBtn.setAttribute('data-idx', idx);
         solveBtn.addEventListener('click', function() { sbShowSolution(parseInt(this.getAttribute('data-idx'))); });
         var resetBtn = document.createElement('button');
-        resetBtn.className = 'btn';
+        resetBtn.className = 'btn-small';
         resetBtn.textContent = '↺ Neustart';
         resetBtn.setAttribute('data-idx', idx);
         resetBtn.addEventListener('click', function() { sbResetOne(parseInt(this.getAttribute('data-idx'))); });
         btnRow.appendChild(solveBtn);
         btnRow.appendChild(resetBtn);
-        area.appendChild(bank);
-        area.appendChild(row);
-        area.appendChild(fb);
-        area.appendChild(btnRow);
+
+        item.appendChild(bank);
+        item.appendChild(row);
+        item.appendChild(fb);
+        item.appendChild(btnRow);
+        area.appendChild(item);
     });
 }
 
