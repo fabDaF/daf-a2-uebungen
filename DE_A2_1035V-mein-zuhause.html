@@ -1053,12 +1053,6 @@ function timerResetOne(n) {
     }
 }
 
-function initSatzbau() {
-    var container = document.getElementById('satzbauContainer');
-    container.innerHTML = '';
-    initSatzbau();
-}
-
 // Load best times
 [2,4,5].forEach(function(n) {
     var best = localStorage.getItem(TIMER_PREFIX+'best-'+n);
