@@ -910,10 +910,107 @@ function initSatzbau() {
 function resetSatzbau() { initSatzbau(); }
 
 /* ===== NAVIGATION ===== */
+/* ===== ZUORDNUNG ===== */
+var zuordDragged = null;
+
+function colorZuordChips() {
+    ZUORD_CATS.forEach(function(cat) {
+        var zone = document.getElementById('zuord-zone-' + cat);
+        if (!zone) return;
+        zone.querySelectorAll('.chip').forEach(function(chip) {
+            chip.classList.remove('ok', 'no');
+            chip.classList.add(chip.dataset.cat === cat ? 'ok' : 'no');
+        });
+    });
+}
+
+function initZuord() {
+    var bank = document.getElementById('zuordBank');
+    var zonesEl = document.getElementById('zuordZones');
+    bank.innerHTML = '';
+    zonesEl.innerHTML = '';
+    zuordDragged = null;
+
+    // Zones aufbauen
+    ZUORD_CATS.forEach(function(cat) {
+        var zone = document.createElement('div');
+        zone.className = 'zuord-zone';
+        zone.id = 'zuord-zone-' + cat;
+        zone.dataset.cat = cat;
+        var label = document.createElement('div');
+        label.className = 'zuord-zone-label';
+        label.textContent = cat;
+        zone.appendChild(label);
+
+        zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('dragover'); });
+        zone.addEventListener('dragleave', function() { zone.classList.remove('dragover'); });
+        zone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            zone.classList.remove('dragover');
+            if (!zuordDragged) return;
+            zone.appendChild(zuordDragged);
+            zuordDragged = null;
+            colorZuordChips();
+        });
+        zone.addEventListener('click', function() {
+            var sel = document.querySelector('#sec-2 .chip.selected');
+            if (sel) { zone.appendChild(sel); sel.classList.remove('selected'); colorZuordChips(); }
+        });
+        zonesEl.appendChild(zone);
+    });
+
+    // Bank: Events
+    bank.addEventListener('dragover', function(e) { e.preventDefault(); });
+    bank.addEventListener('drop', function(e) {
+        e.preventDefault();
+        if (!zuordDragged) return;
+        bank.appendChild(zuordDragged);
+        zuordDragged = null;
+        colorZuordChips();
+    });
+    bank.addEventListener('click', function(e) {
+        if (e.target === bank) {
+            var sel = document.querySelector('#sec-2 .chip.selected');
+            if (sel) { bank.appendChild(sel); sel.classList.remove('selected'); colorZuordChips(); }
+        }
+    });
+
+    // Chips mischen und in Bank legen
+    var shuffled = ZUORD_DATA.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+    }
+    shuffled.forEach(function(item) {
+        var chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = item.text;
+        chip.dataset.cat = item.cat;
+        chip.draggable = true;
+        chip.addEventListener('dragstart', function(e) {
+            zuordDragged = chip;
+            e.dataTransfer.setData('text/plain', '');
+            setTimeout(function() { chip.style.opacity = '0.4'; }, 0);
+        });
+        chip.addEventListener('dragend', function() {
+            chip.style.opacity = '';
+            zuordDragged = null;
+            colorZuordChips();
+        });
+        chip.addEventListener('click', function() {
+            if (chip.classList.contains('selected')) { chip.classList.remove('selected'); return; }
+            document.querySelectorAll('#sec-2 .chip.selected').forEach(function(c) { c.classList.remove('selected'); });
+            chip.classList.add('selected');
+        });
+        bank.appendChild(chip);
+    });
+}
+
 function showSection(n) {
     document.querySelectorAll('.section').forEach(function(s, i) { s.classList.toggle('active', i === n); });
     document.querySelectorAll('.nav-btn').forEach(function(b, i) { b.classList.toggle('active', i === n); });
     if (n === 1) initLt();
+    if (n === 2) initZuord();
     if (n === 5) initWortschatz();
 }
 
