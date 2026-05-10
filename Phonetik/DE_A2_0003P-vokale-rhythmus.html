@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vokale &amp; Rhythmus – A2 · Phonetik 0003P</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh; padding: 20px;
+}
+.container {
+  max-width: 1000px; margin: 0 auto; background: white;
+  border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 2.2em; font-family: Georgia,'Times New Roman',serif; color: white; margin-bottom: 8px; border: none; padding: 0; }
+.header p  { font-size: 1.1em; font-family: Georgia,'Times New Roman',serif; opacity: 0.95; color: rgba(255,255,255,0.9); margin: 0; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+
+.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.nav-btn:last-child { border-right: none; }
+.nav-btn:hover { background: #e9ecef; color: #495057; }
+.nav-btn.active { background: white; color: #667eea; font-weight: 600; border-bottom: 3px solid #667eea; }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+
+.section { display: none; }
+.section.active { display: block; }
+.sec-inner { padding: 28px 30px; }
+
+.tab-banner { width: 100%; max-height: 180px; object-fit: cover; border-radius: 0; }
+@media (max-width: 600px) { .tab-banner { max-height: 120px; } }
+
+.control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding: 6px 12px; background: #f8f9fa; border-radius: 8px; }
+.btn-row { display: flex; gap: 6px; }
+.btn { background: #f5f7ff; border: 1px solid #c5cff5; border-radius: 8px; padding: 6px 16px; font-size: 0.85em; color: #667eea; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.btn:hover { background: #667eea; color: white; border-color: #667eea; }
+.timer-display { display: flex; gap: 14px; font-size: 0.82em; color: #bbb; font-variant-numeric: tabular-nums; }
+
+h2 { color: #333; font-size: 1.25em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+
+.hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
+
+/* ── REGEL ── */
+.regel-box { background: linear-gradient(135deg,#f0f4ff,#e8f0fe); border: 2px solid #c5cff5; border-radius: 10px; padding: 18px 22px; margin-bottom: 22px; font-size: 0.95em; line-height: 1.7; color: #333; }
+.regel-box strong { color: #4a148c; }
+.regel-box h3 { color: #4a148c; margin-bottom: 10px; font-size: 1.1em; }
+.regel-box p { margin-bottom: 10px; }
+.regel-tabelle { width: 100%; border-collapse: collapse; margin: 14px 0 6px 0; font-size: 0.93em; }
+.regel-tabelle th { background: #667eea; color: white; padding: 8px 12px; text-align: center; font-weight: 600; font-size: 0.92em; }
+.regel-tabelle td { padding: 8px 12px; border-bottom: 1px solid #e8e8e8; text-align: center; }
+.regel-tabelle tr:nth-child(even) td { background: #f8f9ff; }
+/* Paartabelle: linke Spalte = Marker (lila), Mitte = kurz (blau-getönt), rechts = lang (rot-getönt) */
+.regel-tabelle.paartabelle th:nth-child(2) { background: #1565c0; }
+.regel-tabelle.paartabelle th:nth-child(3) { background: #c62828; }
+.regel-tabelle.paartabelle tbody td:first-child { font-weight: 600; color: #4a148c; }
+.regel-tabelle.paartabelle tbody td:nth-child(2) { background: #eaf3fb; }
+.regel-tabelle.paartabelle tbody td:nth-child(3) { background: #fceaea; }
+.regel-tabelle.paartabelle tbody tr:nth-child(even) td:nth-child(2) { background: #dfecf7; }
+.regel-tabelle.paartabelle tbody tr:nth-child(even) td:nth-child(3) { background: #f6dcdc; }
+.ipa-gross { font-size: 1.15em; font-weight: 700; color: #880e4f; display: inline-block; background: #fce4ec; border-radius: 6px; padding: 1px 8px; margin: 0 2px; }
+.merke-box { background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-top: 18px; font-size: 0.92em; color: #5d4037; line-height: 1.6; }
+.merke-box strong { color: #e65100; }
+
+/* Farb-Code für Vokal-Funktionen */
+.v-lang { color: #c62828; font-weight: 700; }
+.v-kurz { color: #1565c0; font-weight: 700; }
+.v-schwa { color: #2e7d32; font-weight: 700; }
+.v-vokR { color: #ef6c00; font-weight: 700; }
+
+/* Mini-Legende in der Regel */
+.legende { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 14px 0 4px 0; font-size: 0.88em; }
+.legende-pkt { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: white; border-radius: 16px; border: 1.5px solid; }
+.legende-pkt .pkt { width: 12px; height: 12px; border-radius: 50%; }
+
+/* ── MULTIPLE CHOICE Pill-Buttons ── */
+.mc-item { background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+.mc-question { font-size: 1.1em; color: #333; line-height: 1.7; margin-bottom: 10px; }
+.mc-question .target { font-weight: 800; color: #4a148c; background: #f0e8ff; padding: 1px 5px; border-radius: 4px; }
+.mc-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.mc-opt { background: white; border: 1.5px solid #c5cae9; border-radius: 20px; padding: 6px 16px; font-size: 11px; cursor: pointer; color: #555; font-weight: 600; transition: all 0.15s; }
+.mc-opt:hover { background: #f0f4ff; border-color: #667eea; }
+.mc-opt.correct { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
+.mc-opt.wrong { background: #fdeaea; border-color: #e74c3c; color: #e74c3c; }
+.mc-feedback { display: none; font-size: 0.88em; color: #4a148c; margin-top: 12px; padding: 10px 14px; background: #f0f4ff; border-left: 3px solid #667eea; border-radius: 0 8px 8px 0; line-height: 1.6; }
+.mc-item.solved .mc-feedback { display: block; }
+
+/* ── LÜCKENTEXT ── */
+.luecken-item { background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; }
+.luecken-frage { font-size: 1.1em; color: #333; line-height: 1.9; }
+.luecken-frage .hint { font-size: 0.8em; color: #888; margin-left: 8px; font-style: italic; }
+input.blank { border: none; border-bottom: 2px solid #c5cae9; background: transparent; padding: 3px 6px; font-family: inherit; font-size: 1em; outline: none; transition: all 0.2s; min-width: 4ch; text-align: center; }
+input.blank:focus { border-bottom-color: #667eea; }
+input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
+.luecken-erklaerung { display: none; font-size: 0.88em; color: #4a148c; margin-top: 12px; padding: 10px 14px; background: #f0f4ff; border-left: 3px solid #667eea; border-radius: 0 8px 8px 0; line-height: 1.6; }
+.luecken-item.solved .luecken-erklaerung { display: block; }
+
+/* ── KLICK-MARKIERUNG (Schwa, Vokalisches R) ── */
+.klick-item { background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+.klick-aufgabe { font-size: 0.88em; color: #666; margin-bottom: 4px; font-style: italic; text-align: center; }
+.klick-emoji { font-size: 1.8em; text-align: center; display: block; margin: 4px 0 0 0; line-height: 1; }
+.klick-wort { font-size: 2em; font-weight: 700; color: #333; text-align: center; letter-spacing: 0.04em; line-height: 1.5; user-select: none; margin: 4px 0 10px 0; font-family: Georgia, 'Times New Roman', serif; }
+.klick-seg { display: inline-block; padding: 2px 3px; border-radius: 4px; transition: all 0.15s; border: 2px solid transparent; }
+.klick-seg.klickbar { cursor: pointer; }
+.klick-seg.klickbar:hover { background: #f0f4ff; border-color: #c5cff5; }
+.klick-seg.korrekt { background: #e8f8f0; border-color: #27ae60; color: #27ae60; cursor: default; }
+.klick-seg.falsch { background: #fdeaea; border-color: #e74c3c; color: #e74c3c; animation: zittern 0.35s; }
+@keyframes zittern { 0%,100% {transform:translateX(0)} 25%{transform:translateX(-3px)} 75%{transform:translateX(3px)} }
+.klick-status { text-align: center; font-size: 0.92em; color: #666; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.klick-status .gefunden { font-weight: 700; color: #2e7d32; }
+.klick-info { display: none; font-size: 0.9em; color: #4a148c; margin-top: 14px; padding: 12px 16px; background: #f0f4ff; border-left: 3px solid #667eea; border-radius: 0 8px 8px 0; line-height: 1.7; }
+.klick-item.solved .klick-info { display: block; }
+
+/* ── SYNTHESE (Pinsel) ── */
+.synth-toolbar { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px; background: #f0f0f8; border-radius: 10px; margin: 0 0 14px 0; align-items: center; justify-content: center; border: 1px dashed #bbb; }
+.pinsel-label { font-size: 0.85em; color: #555; margin-right: 6px; font-weight: 600; }
+.pinsel { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; border: 2px solid; background: white; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.15s; user-select: none; }
+.pinsel:hover { transform: translateY(-1px); }
+.pinsel.aktiv { box-shadow: 0 2px 8px rgba(0,0,0,0.18); transform: translateY(-1px); }
+.pinsel-dot { width: 12px; height: 12px; border-radius: 50%; }
+.p-lang { color: #c62828; border-color: #c62828; }
+.p-lang .pinsel-dot { background: #c62828; }
+.p-lang.aktiv { background: #c62828; color: white; }
+.p-kurz { color: #1565c0; border-color: #1565c0; }
+.p-kurz .pinsel-dot { background: #1565c0; }
+.p-kurz.aktiv { background: #1565c0; color: white; }
+.p-schwa { color: #2e7d32; border-color: #2e7d32; }
+.p-schwa .pinsel-dot { background: #2e7d32; }
+.p-schwa.aktiv { background: #2e7d32; color: white; }
+.p-vokR { color: #ef6c00; border-color: #ef6c00; }
+.p-vokR .pinsel-dot { background: #ef6c00; }
+.p-vokR.aktiv { background: #ef6c00; color: white; }
+.p-radier { color: #777; border-color: #999; }
+.p-radier .pinsel-dot { background: #999; }
+.p-radier.aktiv { background: #555; color: white; border-color: #555; }
+
+.synth-item { background: #f8f9ff; border: 1.5px solid #c5cff5; border-radius: 12px; padding: 20px 24px; margin-bottom: 18px; }
+.synth-aufgabe { font-size: 0.88em; color: #666; text-align: center; margin: 0 0 6px 0; font-style: italic; }
+.synth-emoji { font-size: 1.8em; text-align: center; display: block; margin: 4px 0 0 0; line-height: 1; }
+.synth-wort { font-size: 2.4em; font-weight: 700; color: #333; text-align: center; letter-spacing: 0.04em; line-height: 1.6; user-select: none; margin: 4px 0 14px 0; font-family: Georgia, 'Times New Roman', serif; }
+.synth-seg { display: inline-block; padding: 2px 4px; border-radius: 4px; transition: all 0.15s; border: 2px solid transparent; }
+.synth-seg.klickbar { cursor: pointer; }
+.synth-seg.klickbar:hover { background: #f0f4ff; border-color: #c5cff5; }
+.synth-seg[data-mark="lang"] { background: #ffebee; color: #c62828; border-color: #c62828; }
+.synth-seg[data-mark="kurz"] { background: #e3f2fd; color: #1565c0; border-color: #1565c0; }
+.synth-seg[data-mark="schwa"] { background: #e8f5e9; color: #2e7d32; border-color: #2e7d32; }
+.synth-seg[data-mark="vokR"] { background: #fff3e0; color: #ef6c00; border-color: #ef6c00; }
+.synth-seg.fehler-schimmer { animation: zittern 0.35s; }
+.synth-status { text-align: center; font-size: 0.92em; color: #666; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.synth-erklaerung { display: none; font-size: 0.95em; color: #333; margin-top: 14px; padding: 14px 18px; background: linear-gradient(135deg,#f0f4ff,#e8f0fe); border: 2px solid #c5cff5; border-radius: 10px; line-height: 1.75; }
+.synth-erklaerung strong { color: #4a148c; }
+.synth-item.solved .synth-erklaerung { display: block; }
+
+.author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
+.author-footer a { color: #aaa; }
+.author-name { font-weight: 700; }
+
+@media (max-width: 600px) {
+  body { padding: 8px; }
+  .nav { flex-wrap: wrap; }
+  .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.78em; padding: 10px 4px; border-right: 1px solid #ddd; }
+  .nav-btn:last-child { border-right: 1px solid #ddd; }
+  .nav-label { font-size: 0.72em; }
+  .sec-inner { padding: 16px; }
+  .synth-toolbar { padding: 8px; gap: 5px; }
+  .pinsel { padding: 5px 10px; font-size: 0.76em; }
+  .pinsel-label { display: none; }
+  .klick-wort { font-size: 1.6em; }
+  .synth-wort { font-size: 1.8em; }
+  .regel-tabelle { font-size: 0.82em; }
+  .regel-tabelle th, .regel-tabelle td { padding: 6px 8px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Vokale &amp; Rhythmus</h1>
+    <p>A2 – Phonetik 0003P · Aussprachetraining</p>
+    <div class="big-emoji">🎼</div>
+  </div>
+
+  <div class="nav">
+    <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">📖</span><span class="nav-label">Regel</span></div>
+    <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">⚖️</span><span class="nav-label">Lang oder kurz?</span></div>
+    <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">✍️</span><span class="nav-label">Schreibmarker</span></div>
+    <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">🌿</span><span class="nav-label">Schwa</span></div>
+    <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🔥</span><span class="nav-label">Vokal-R</span></div>
+    <div class="nav-btn" onclick="showSection(5)"><span class="nav-emoji">🎯</span><span class="nav-label">Warum hier?</span></div>
+  </div>
+
+  <!-- ══ TAB 0: REGEL ══ -->
+  <div class="section active" id="sec-0">
+    <img class="tab-banner" src="https://images.pexels.com/photos/8107287/pexels-photo-8107287.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Aussprache und Phonetik">
+    <div class="sec-inner">
+      <h2>📖 Die Regel — drei Erkenntnisse</h2>
+      <div class="hilfe-box">
+        Drei Einsichten, und du wirst jedes deutsche Wort richtig betonen können. Lies in Ruhe — die Übungen kommen in den nächsten Tabs.
+      </div>
+
+      <div class="regel-box">
+        <h3>1. Jeder Vokal existiert zweimal — kurz und lang</h3>
+        <p>Das <strong>a</strong> in <em>Mann</em> ist nicht das <strong>a</strong> in <em>Bahn</em>. Das <strong>e</strong> in <em>Bett</em> ist nicht das <strong>e</strong> in <em>Beet</em>. Aus fünf Grundvokalen werden zehn Klänge, die Bedeutung tragen:</p>
+        <table class="regel-tabelle">
+          <thead><tr><th>Vokal</th><th>kurz</th><th>lang</th></tr></thead>
+          <tbody>
+            <tr><td>a</td><td><span class="v-kurz">Stadt</span></td><td><span class="v-lang">Staat</span></td></tr>
+            <tr><td>e</td><td><span class="v-kurz">Bett</span></td><td><span class="v-lang">Beet</span></td></tr>
+            <tr><td>i</td><td><span class="v-kurz">Mitte</span></td><td><span class="v-lang">Miete</span></td></tr>
+            <tr><td>o</td><td><span class="v-kurz">Stock</span></td><td><span class="v-lang">Stoß</span></td></tr>
+            <tr><td>u</td><td><span class="v-kurz">Mutter</span></td><td><span class="v-lang">Mut</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="regel-box">
+        <h3>2. Die Schrift verrät, ob lang oder kurz</h3>
+        <p>Eine Grundregel und ein paar Zusatzmarker — mehr braucht es nicht. Die Grundregel arbeitet immer paarweise: <em>weniger</em> Konsonantenbuchstaben heißt <span class="v-lang">lang</span>, <em>mehr</em> Konsonantenbuchstaben heißt <span class="v-kurz">kurz</span>.</p>
+        <table class="regel-tabelle paartabelle">
+          <thead><tr><th>Marker</th><th><span class="v-kurz">Kurz davor</span></th><th><span class="v-lang">Lang davor</span></th></tr></thead>
+          <tbody>
+            <tr><td>Konsonantenzahl</td><td><span class="v-kurz">zwei: Mann, kalt, Hand</span></td><td><span class="v-lang">einer: Tag, Beruf, gut</span></td></tr>
+            <tr><td>s-Laut</td><td><span class="v-kurz">ss: Fluss, Wasser</span></td><td><span class="v-lang">ß: Fuß, Straße</span></td></tr>
+            <tr><td>z-Laut</td><td><span class="v-kurz">tz: Katze, sitzen</span></td><td><span class="v-lang">z: Notiz, Heizung</span></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.88em;color:#555;margin-top:10px"><strong>Eine Pointe zum ß:</strong> Es heißt nicht zufällig <em>Eszett</em> — historisch ist es eine Ligatur aus <em>s</em> + <em>z</em>, also <em>ein</em> Buchstabe. Deshalb folgt es der Ein-Konsonant-Regel: lang davor. <em>ss</em> dagegen sind zwei Buchstaben — kurz davor.</p>
+
+        <p style="margin-top:18px"><strong>Drei weitere Zeichen, die <span class="v-lang">immer</span> einen langen Vokal anzeigen</strong> — zusätzlich zur Grundregel:</p>
+        <table class="regel-tabelle">
+          <thead><tr><th>Marker</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Dehnungs-h</strong></td><td><span class="v-lang">Bahn, Mehl, Sohn</span></td></tr>
+            <tr><td><strong>ie</strong> (nur beim i)</td><td><span class="v-lang">Miete, Liebe, sieben</span></td></tr>
+            <tr><td><strong>aa, ee, oo</strong></td><td><span class="v-lang">Saal, Beet, Boot</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="regel-box">
+        <h3>3. Zwei Vokale liegen jenseits von lang und kurz</h3>
+        <p>Sie zeigen, welche Teile des Wortes <strong>unbetont</strong> sind — und erklären damit die Melodie und den Rhythmus, mit dem ein deutsches Wort gesprochen wird.</p>
+        <table class="regel-tabelle">
+          <thead><tr><th>Name</th><th>IPA</th><th>Schrift</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="v-schwa">Schwa</span></td>
+              <td><span class="ipa-gross">[ə]</span></td>
+              <td>e in -e, -el, -em<br>und in ge-, be-</td>
+              <td><span class="v-schwa">Lieb<strong>e</strong>, Mant<strong>el</strong>, <strong>ge</strong>macht, <strong>be</strong>kommen, G<strong>e</strong>müse</span></td>
+            </tr>
+            <tr>
+              <td colspan="4" style="background:#fff;text-align:left;padding:10px 14px;font-weight:600;color:#ef6c00">vokalisches R — zwei Realisierungen:</td>
+            </tr>
+            <tr>
+              <td>— als Endung</td>
+              <td><span class="ipa-gross">[ɐ]</span></td>
+              <td>-er am Wortende oder mitten in unbetonter Silbe;<br>auch in ver-, zer-</td>
+              <td><span class="v-vokR">Vat<strong>er</strong>, Mutt<strong>er</strong>, Elt<strong>er</strong>n, <strong>ver</strong>kaufen, <strong>zer</strong>reißen</span></td>
+            </tr>
+            <tr>
+              <td>— als Glide</td>
+              <td><span class="ipa-gross">[ɐ̯]</span></td>
+              <td>r am Wortende direkt hinter einem Vokal</td>
+              <td><span class="v-vokR">wi<strong>r</strong>, To<strong>r</strong>, meh<strong>r</strong>, Bie<strong>r</strong>, Uh<strong>r</strong></span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.88em;color:#555;margin-top:10px"><strong>Wichtig zu unterscheiden — die beiden Realisierungen genau:</strong> Bei <em>ver-</em> und <em>zer-</em> wird das ganze <em>-er</em> als Einheit zum vokalischen R <span class="ipa-gross">[ɐ]</span> — das e fällt komplett weg. Bei <em>er-</em> am Wortanfang (wie in <em>erzählen</em>, <em>erlauben</em>) bleibt dagegen das <em>e</em> als kurzer Vollvokal hörbar; nur das <em>r</em> wird zum Glide <span class="ipa-gross">[ɐ̯]</span>. Strukturell verhält sich <em>er-</em> also wie ein <em>-r</em> nach Vokal am Wortende — wie in <em>Bier</em>, <em>Tor</em>, <em>wir</em>.</p>
+      </div>
+
+      <div class="merke-box">
+        <strong>🔑 Die Pointe:</strong> Wenn du Schwa und vokalisches R erkennst, weißt du <em>immer</em>, wo die Betonung <em>nicht</em> liegt — und das ist im Deutschen oft schon die halbe Antwort.
+      </div>
+
+      <div class="legende">
+        <span class="legende-pkt" style="border-color:#c62828;color:#c62828"><span class="pkt" style="background:#c62828"></span>lang</span>
+        <span class="legende-pkt" style="border-color:#1565c0;color:#1565c0"><span class="pkt" style="background:#1565c0"></span>kurz</span>
+        <span class="legende-pkt" style="border-color:#2e7d32;color:#2e7d32"><span class="pkt" style="background:#2e7d32"></span>Schwa</span>
+        <span class="legende-pkt" style="border-color:#ef6c00;color:#ef6c00"><span class="pkt" style="background:#ef6c00"></span>vokalisches R</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 1: LANG ODER KURZ? ══ -->
+  <div class="section" id="sec-1">
+    <img class="tab-banner" src="https://images.pexels.com/photos/18512916/pexels-photo-18512916.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Lange und kurze Vokale">
+    <div class="sec-inner">
+      <h2>⚖️ Lang oder kurz?</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="showLoesung(1)">Lösungen</button>
+          <button class="btn" onclick="resetTab(1)">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-1">00:00</span></span>
+          <span>🏆 <span id="best-1">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">
+        Schau auf den hervorgehobenen Vokal. Wird er <span class="v-lang">lang</span> oder <span class="v-kurz">kurz</span> gesprochen? Klick auf die richtige Antwort.
+      </div>
+
+      <div id="mc-list-1"></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 2: SCHREIBMARKER ══ -->
+  <div class="section" id="sec-2">
+    <img class="tab-banner" src="https://images.pexels.com/photos/8386889/pexels-photo-8386889.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Buchstaben Schreibmarker">
+    <div class="sec-inner">
+      <h2>✍️ Schreibmarker</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="showLoesung(2)">Lösungen</button>
+          <button class="btn" onclick="resetTab(2)">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-2">00:00</span></span>
+          <span>🏆 <span id="best-2">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">
+        Wir verraten dir hier rechts in Klammern, ob der Vokal kurz oder lang ist. Daraus folgt die Schreibung: kurz → <em>ss</em> oder <em>tz</em>; lang → <em>ß</em> oder <em>z</em>.
+      </div>
+
+      <div id="luecken-list-2"></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 3: SCHWA ══ -->
+  <div class="section" id="sec-3">
+    <img class="tab-banner" src="https://images.pexels.com/photos/4144222/pexels-photo-4144222.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Schwa-Laut">
+    <div class="sec-inner">
+      <h2>🌿 Schwa erkennen</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="showLoesung(3)">Lösungen</button>
+          <button class="btn" onclick="resetTab(3)">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-3">00:00</span></span>
+          <span>🏆 <span id="best-3">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">
+        Klick auf jeden Vokal, der ein <span class="v-schwa">Schwa <span class="ipa-gross">[ə]</span></span> ist. Schwa-Stellen findest du fast immer in <strong>-e, -en, -el, -em</strong> am Ende und in <strong>ge-, be-</strong> am Anfang.
+      </div>
+
+      <div id="klick-list-3"></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 4: VOKALISCHES R ══ -->
+  <div class="section" id="sec-4">
+    <img class="tab-banner" src="https://images.pexels.com/photos/1340989/pexels-photo-1340989.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Vokalisches R">
+    <div class="sec-inner">
+      <h2>🔥 Vokalisches R erkennen</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="showLoesung(4)">Lösungen</button>
+          <button class="btn" onclick="resetTab(4)">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-4">00:00</span></span>
+          <span>🏆 <span id="best-4">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">
+        Klick auf jede Stelle, an der das r <em>nicht</em> als Konsonant klingt, sondern als kurzes, dunkles <span class="v-vokR">[ɐ]</span>. Zwei Realisierungen: <strong>-er</strong> in unbetonter Silbe (<em>Vater, Eltern</em>) sowie in <strong>ver-, zer-</strong> am Anfang — und <strong>-r</strong> direkt nach einem Vokal am Wortende (<em>wir, Bier, Tor</em>).
+      </div>
+
+      <div id="klick-list-4"></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 5: WARUM HIER? ══ -->
+  <div class="section" id="sec-5">
+    <img class="tab-banner" src="https://images.pexels.com/photos/256417/pexels-photo-256417.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Synthese und Betonung">
+    <div class="sec-inner">
+      <h2>🎯 Warum hier? Die Synthese</h2>
+      <div class="control-bar">
+        <div class="btn-row">
+          <button class="btn" onclick="resetTab(5)">Neu starten</button>
+        </div>
+        <div class="timer-display">
+          <span>⏱ <span id="timer-5">00:00</span></span>
+          <span>🏆 <span id="best-5">--:--</span></span>
+        </div>
+      </div>
+      <div class="hilfe-box">
+        Wähle einen Pinsel und färbe jeden Vokal nach seiner Funktion: <span class="v-lang">lang</span>, <span class="v-kurz">kurz</span>, <span class="v-schwa">Schwa</span> oder <span class="v-vokR">vokalisches R</span>. Wenn alle Vokale richtig markiert sind, zeigen die Farben von selbst, wo die Betonung liegen muss — sie ist immer dort, wo <span class="v-lang">rot</span> oder <span class="v-kurz">blau</span> steht.
+      </div>
+
+      <div id="synth-list-5"></div>
+    </div>
+  </div>
+
+  <div class="author-footer">
+    <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+    <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ═══════════════════════════════════════════════
+//  Navigation
+// ═══════════════════════════════════════════════
+function showSection(idx) {
+    document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+}
+
+// ═══════════════════════════════════════════════
+//  Timer pro Tab
+// ═══════════════════════════════════════════════
+var timers = {};
+function timerAutoStart(n) {
+    if (timers[n] && timers[n].running) return;
+    timers[n] = timers[n] || { sec: 0, running: false, id: null };
+    timers[n].sec = 0;
+    timers[n].running = true;
+    timers[n].id = setInterval(function(){
+        timers[n].sec++;
+        var m = Math.floor(timers[n].sec/60), s = timers[n].sec%60;
+        var el = document.getElementById('timer-'+n);
+        if (el) el.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    }, 1000);
+}
+function stopTimer(n) {
+    if (timers[n] && timers[n].id) { clearInterval(timers[n].id); timers[n].running = false; }
+    // Bestzeit-Logik
+    if (timers[n] && timers[n].sec > 0) {
+        var key = 'best-0003P-'+n;
+        var prev = parseInt(localStorage.getItem(key) || '0', 10);
+        if (!prev || timers[n].sec < prev) {
+            localStorage.setItem(key, timers[n].sec);
+            renderBest(n);
+        }
+    }
+}
+function resetTimer(n) {
+    if (timers[n] && timers[n].id) clearInterval(timers[n].id);
+    timers[n] = { sec: 0, running: false, id: null };
+    var el = document.getElementById('timer-'+n);
+    if (el) el.textContent = '00:00';
+}
+function renderBest(n) {
+    var key = 'best-0003P-'+n;
+    var prev = parseInt(localStorage.getItem(key) || '0', 10);
+    var el = document.getElementById('best-'+n);
+    if (!el) return;
+    if (!prev) { el.textContent = '--:--'; return; }
+    var m = Math.floor(prev/60), s = prev%60;
+    el.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+
+// ═══════════════════════════════════════════════
+//  TAB 1 — Lang oder kurz? (Multiple Choice)
+// ═══════════════════════════════════════════════
+var MC_1 = [
+    { wortVor:'St', target:'a', wortNach:'dt', antwort:'kurz',
+      erklaerung:'Nach dem <strong>a</strong> stehen zwei Konsonanten (<em>dt</em>). Zwei Konsonanten = kurzer Vokal davor.' },
+    { wortVor:'k', target:'a', wortNach:'lt', antwort:'kurz',
+      erklaerung:'Nach dem <strong>a</strong> stehen zwei verschiedene Konsonanten (<em>lt</em>) — die Regel gilt nicht nur für Doppelkonsonanten, sondern für jede Folge von zwei Konsonanten.' },
+    { wortVor:'M', target:'a', wortNach:'nn', antwort:'kurz',
+      erklaerung:'Doppelkonsonant <em>nn</em> nach dem <strong>a</strong> — kurzer Vokal.' },
+    { wortVor:'B', target:'a', wortNach:'hn', antwort:'lang',
+      erklaerung:'Nach dem <strong>a</strong> steht ein Dehnungs-<em>h</em>. Das stumme h verlängert den Vokal.' },
+    { wortVor:'T', target:'a', wortNach:'g', antwort:'lang',
+      erklaerung:'Nur ein Konsonant nach dem <strong>a</strong> — langer Vokal.' },
+    { wortVor:'B', target:'e', wortNach:'tt', antwort:'kurz',
+      erklaerung:'Doppelkonsonant <em>tt</em> nach dem <strong>e</strong> — kurzer Vokal.' },
+    { wortVor:'B', target:'ee', wortNach:'t', antwort:'lang',
+      erklaerung:'Doppelvokal <em>ee</em> — immer lang.' },
+    { wortVor:'M', target:'e', wortNach:'hl', antwort:'lang',
+      erklaerung:'Dehnungs-<em>h</em> nach dem <strong>e</strong> — langer Vokal.' },
+    { wortVor:'M', target:'i', wortNach:'tte', antwort:'kurz',
+      erklaerung:'Doppelkonsonant <em>tt</em> nach dem <strong>i</strong> — kurzer Vokal. Achtung: das <em>i</em> hier ist nicht <em>ie</em>!' },
+    { wortVor:'M', target:'ie', wortNach:'te', antwort:'lang',
+      erklaerung:'Die Buchstabenkombination <em>ie</em> ist <strong>immer</strong> langes i — egal wie viele Konsonanten danach kommen.' },
+    { wortVor:'St', target:'o', wortNach:'ck', antwort:'kurz',
+      erklaerung:'Die Schreibung <em>ck</em> zählt als zwei Konsonanten — kurzer Vokal davor.' },
+    { wortVor:'S', target:'o', wortNach:'hn', antwort:'lang',
+      erklaerung:'Dehnungs-<em>h</em> nach dem <strong>o</strong> — langer Vokal.' },
+    { wortVor:'M', target:'u', wortNach:'tter', antwort:'kurz',
+      erklaerung:'Doppelkonsonant <em>tt</em> nach dem <strong>u</strong> — kurzer Vokal.' },
+    { wortVor:'M', target:'u', wortNach:'t', antwort:'lang',
+      erklaerung:'Nur ein Konsonant nach dem <strong>u</strong> — langer Vokal.' },
+    { wortVor:'Flu', target:'ss', wortNach:'', antwort:'kurz',
+      erklaerung:'Bei <em>ss</em> ist der Vokal davor immer kurz. Hier das <strong>u</strong>.' },
+    { wortVor:'Fu', target:'ß', wortNach:'', antwort:'lang',
+      erklaerung:'<em>ß</em> ist als Eszett ein einzelner Buchstabe — also Ein-Konsonant-Regel: langer Vokal davor.' }
+];
+
+function renderMC1() {
+    var c = document.getElementById('mc-list-1');
+    c.innerHTML = '';
+    MC_1.forEach(function(ex, i) {
+        var item = document.createElement('div');
+        item.className = 'mc-item';
+        item.innerHTML =
+            '<div class="mc-question">'+ex.wortVor+'<span class="target">'+ex.target+'</span>'+ex.wortNach+'</div>'+
+            '<div class="mc-options">'+
+                '<span class="mc-opt" data-v="lang" onclick="mcClick(this,'+i+')">lang</span>'+
+                '<span class="mc-opt" data-v="kurz" onclick="mcClick(this,'+i+')">kurz</span>'+
+            '</div>'+
+            '<div class="mc-feedback">'+ex.erklaerung+'</div>';
+        c.appendChild(item);
+    });
+}
+
+function mcClick(opt, idx) {
+    var item = opt.closest('.mc-item');
+    if (item.classList.contains('solved')) return;
+    timerAutoStart(1);
+    var ans = opt.dataset.v;
+    if (ans === MC_1[idx].antwort) {
+        opt.classList.add('correct');
+        item.classList.add('solved');
+        // alle Geschwister-Optionen deaktivieren
+        item.querySelectorAll('.mc-opt').forEach(function(o){ o.style.pointerEvents='none'; });
+        checkMC1Fertig();
+    } else {
+        opt.classList.add('wrong');
+        setTimeout(function(){ opt.classList.remove('wrong'); }, 600);
+    }
+}
+function checkMC1Fertig() {
+    var alle = document.querySelectorAll('#mc-list-1 .mc-item');
+    var gelöst = document.querySelectorAll('#mc-list-1 .mc-item.solved');
+    if (alle.length && alle.length === gelöst.length) stopTimer(1);
+}
+
+// ═══════════════════════════════════════════════
+//  TAB 2 — Schreibmarker (Lückentext)
+// ═══════════════════════════════════════════════
+var LUECKEN_2 = [
+    // ── ss / ß ──
+    { vor:'der Flu', loesung:'ss', nach:'', hint:'(Vokal kurz)',
+      erklaerung:'Das <strong>u</strong> in <em>Fluss</em> ist kurz. Kurzer Vokal vor s-Laut → <strong>ss</strong>.' },
+    { vor:'der Fu', loesung:'ß', nach:'', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>u</strong> in <em>Fuß</em> ist lang. Langer Vokal vor s-Laut → <strong>ß</strong> (Eszett, ein Buchstabe).' },
+    { vor:'die Stra', loesung:'ß', nach:'e', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>a</strong> in <em>Straße</em> ist lang — also <em>ß</em>.' },
+    { vor:'das Wa', loesung:'ss', nach:'er', hint:'(Vokal kurz)',
+      erklaerung:'Das <strong>a</strong> in <em>Wasser</em> ist kurz — also <em>ss</em>.' },
+    { vor:'der Gru', loesung:'ß', nach:'', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>u</strong> in <em>Gruß</em> ist lang — also <em>ß</em>.' },
+    // ── tz / z ──
+    { vor:'die Ka', loesung:'tz', nach:'e', hint:'(Vokal kurz)',
+      erklaerung:'Das <strong>a</strong> in <em>Katze</em> ist kurz — also <em>tz</em>.' },
+    { vor:'die Mü', loesung:'tz', nach:'e', hint:'(Vokal kurz)',
+      erklaerung:'Das <strong>ü</strong> in <em>Mütze</em> ist kurz — also <em>tz</em>.' },
+    { vor:'du si', loesung:'tz', nach:'t', hint:'(Vokal kurz)',
+      erklaerung:'Das <strong>i</strong> in <em>du sitzt</em> ist kurz — also <em>tz</em>.' },
+    { vor:'die Noti', loesung:'z', nach:'', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>i</strong> in <em>Notiz</em> ist lang — also einfaches <em>z</em>.' },
+    { vor:'die Hei', loesung:'z', nach:'ung', hint:'(Vokal lang)',
+      erklaerung:'Der Diphthong <strong>ei</strong> in <em>Heizung</em> zählt als langer Vokal — also <em>z</em>.' },
+    // ── Dehnungs-h ──
+    { vor:'das Ja', loesung:'h', nach:'r', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>a</strong> in <em>Jahr</em> ist lang — das stumme <em>h</em> dehnt.' },
+    { vor:'das O', loesung:'h', nach:'r', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>o</strong> in <em>Ohr</em> ist lang — das stumme <em>h</em> dehnt.' },
+    { vor:'die Ba', loesung:'h', nach:'n', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>a</strong> in <em>Bahn</em> ist lang — das stumme <em>h</em> dehnt.' },
+    { vor:'der So', loesung:'h', nach:'n', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>o</strong> in <em>Sohn</em> ist lang — das stumme <em>h</em> dehnt.' },
+    // ── ie ──
+    { vor:'das L', loesung:'ie', nach:'d', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>i</strong> in <em>Lied</em> ist lang — also <em>ie</em>.' },
+    { vor:'das Z', loesung:'ie', nach:'l', hint:'(Vokal lang)',
+      erklaerung:'Das <strong>i</strong> in <em>Ziel</em> ist lang — also <em>ie</em>.' }
+];
+
+function renderLuecken2() {
+    var c = document.getElementById('luecken-list-2');
+    c.innerHTML = '';
+    LUECKEN_2.forEach(function(ex, i) {
+        var item = document.createElement('div');
+        item.className = 'luecken-item';
+        var maxLen = Math.max(ex.loesung.length, 2);
+        item.innerHTML =
+            '<div class="luecken-frage">'+
+                ex.vor+
+                '<input type="text" class="blank" data-i="'+i+'" data-ans="'+ex.loesung+'" placeholder="" style="width:'+(maxLen+2)+'ch">'+
+                ex.nach+
+                '<span class="hint">'+ex.hint+'</span>'+
+            '</div>'+
+            '<div class="luecken-erklaerung">'+ex.erklaerung+'</div>';
+        c.appendChild(item);
+    });
+    document.querySelectorAll('#luecken-list-2 input.blank').forEach(function(inp){
+        inp.addEventListener('input', function(){ luecken2Check(inp); });
+    });
+}
+function luecken2Check(inp) {
+    var val = inp.value.trim();
+    var ans = inp.dataset.ans;
+    inp.classList.remove('correct','wrong');
+    if (!val) return;
+    if (val === ans) {
+        inp.classList.add('correct');
+        inp.closest('.luecken-item').classList.add('solved');
+        timerAutoStart(2);
+        checkLuecken2Fertig();
+    } else if (ans.toLowerCase().startsWith(val.toLowerCase())) {
+        timerAutoStart(2);
+    } else {
+        inp.classList.add('wrong');
+    }
+}
+function checkLuecken2Fertig() {
+    var alle = document.querySelectorAll('#luecken-list-2 .luecken-item');
+    var gelöst = document.querySelectorAll('#luecken-list-2 .luecken-item.solved');
+    if (alle.length && alle.length === gelöst.length) stopTimer(2);
+}
+
+// ═══════════════════════════════════════════════
+//  TAB 3 — Schwa erkennen (Klick-Markierung)
+//  Datenmodell: jedes Wort hat segments mit text + typ (oder null)
+//  typ = 'schwa' bedeutet: hier IST Schwa, Lerner soll klicken
+//  typ = null   bedeutet: hier ist KEIN Schwa, Lerner soll NICHT klicken
+//  Nur Vokal-Segmente sind klickbar.
+// ═══════════════════════════════════════════════
+var KLICK_3 = [
+    // ── Schwa in -e am Ende ──
+    { emoji: '❤️',
+      segments: [
+        {t:'L', vokal:false}, {t:'ie', vokal:true, typ:'lang'},
+        {t:'b', vokal:false}, {t:'e', vokal:true, typ:'schwa'}
+      ],
+      info:'<strong>Liebe</strong>: <em>ie</em> ist langes i, das <em>e</em> am Wortende ist Schwa <span class="ipa-gross">[ə]</span>.'
+    },
+    { emoji: '👖',
+      segments: [
+        {t:'H', vokal:false}, {t:'o', vokal:true, typ:'lang'},
+        {t:'s', vokal:false}, {t:'e', vokal:true, typ:'schwa'}
+      ],
+      info:'<strong>Hose</strong>: <em>o</em> ist lang (nur ein Konsonant danach), <em>e</em> am Ende ist Schwa.'
+    },
+    { emoji: '🧀',
+      segments: [
+        {t:'K', vokal:false}, {t:'ä', vokal:true, typ:'lang'},
+        {t:'s', vokal:false}, {t:'e', vokal:true, typ:'schwa'}
+      ],
+      info:'<strong>Käse</strong>: <em>ä</em> ist lang, <em>e</em> am Ende ist Schwa.'
+    },
+    { emoji: '👜',
+      segments: [
+        {t:'T', vokal:false}, {t:'a', vokal:true, typ:'kurz'},
+        {t:'sch', vokal:false}, {t:'e', vokal:true, typ:'schwa'}
+      ],
+      info:'<strong>Tasche</strong>: <em>a</em> ist kurz (sch zählt als zwei Konsonanten), <em>e</em> am Ende ist Schwa.'
+    },
+    { emoji: '🍌',
+      segments: [
+        {t:'B', vokal:false}, {t:'a', vokal:true, typ:'kurz'},
+        {t:'n', vokal:false}, {t:'a', vokal:true, typ:'lang'},
+        {t:'n', vokal:false}, {t:'e', vokal:true, typ:'schwa'}
+      ],
+      info:'<strong>Banane</strong>: Drei Vokalstellen — das zweite <em>a</em> ist lang (Hauptbetonung), das erste <em>a</em> kurz, das <em>e</em> am Ende ist Schwa.'
+    },
+    // ── Schwa in -el ──
+    { emoji: '🧥',
+      segments: [
+        {t:'M', vokal:false}, {t:'a', vokal:true, typ:'kurz'},
+        {t:'n', vokal:false}, {t:'t', vokal:false},
+        {t:'e', vokal:true, typ:'schwa'}, {t:'l', vokal:false}
+      ],
+      info:'<strong>Mantel</strong>: <em>a</em> ist kurz (nt), <em>e</em> in -el ist Schwa.'
+    },
+    { emoji: '🍎',
+      segments: [
+        {t:'A', vokal:true, typ:'kurz'}, {t:'pf', vokal:false},
+        {t:'e', vokal:true, typ:'schwa'}, {t:'l', vokal:false}
+      ],
+      info:'<strong>Apfel</strong>: <em>A</em> ist kurz (pf zählt als zwei Konsonanten), <em>e</em> in -el ist Schwa.'
+    },
+    { emoji: '🧓',
+      segments: [
+        {t:'O', vokal:true, typ:'kurz'}, {t:'n', vokal:false},
+        {t:'k', vokal:false}, {t:'e', vokal:true, typ:'schwa'},
+        {t:'l', vokal:false}
+      ],
+      info:'<strong>Onkel</strong>: <em>O</em> ist kurz (nk = zwei Konsonanten), <em>e</em> in -el ist Schwa.'
+    },
+    { emoji: '🐦',
+      segments: [
+        {t:'V', vokal:false}, {t:'o', vokal:true, typ:'lang'},
+        {t:'g', vokal:false}, {t:'e', vokal:true, typ:'schwa'},
+        {t:'l', vokal:false}
+      ],
+      info:'<strong>Vogel</strong>: <em>o</em> ist lang, <em>e</em> in -el ist Schwa.'
+    },
+    // ── Schwa in ge-, be- ──
+    { emoji: '🛠️',
+      segments: [
+        {t:'g', vokal:false}, {t:'e', vokal:true, typ:'schwa'},
+        {t:'m', vokal:false}, {t:'a', vokal:true, typ:'kurz'},
+        {t:'ch', vokal:false}, {t:'t', vokal:false}
+      ],
+      info:'<strong>gemacht</strong>: <em>e</em> in ge- ist Schwa, <em>a</em> ist kurz.'
+    },
+    { emoji: '🎁',
+      segments: [
+        {t:'b', vokal:false}, {t:'e', vokal:true, typ:'schwa'},
+        {t:'k', vokal:false}, {t:'o', vokal:true, typ:'kurz'},
+        {t:'mm', vokal:false}, {t:'en', vokal:false}
+      ],
+      info:'<strong>bekommen</strong>: <em>e</em> in be- ist Schwa, <em>o</em> ist kurz (mm). Die Endung -en wird als silbisches n gesprochen, nicht als Schwa.'
+    },
+    // ── Mehrere Schwa-Stellen ──
+    { emoji: '🥦',
+      segments: [
+        {t:'G', vokal:false}, {t:'e', vokal:true, typ:'schwa'},
+        {t:'m', vokal:false}, {t:'ü', vokal:true, typ:'lang'},
+        {t:'s', vokal:false}, {t:'e', vokal:true, typ:'schwa'}
+      ],
+      info:'<strong>Gemüse</strong>: Zwei Schwa-Stellen — am Anfang (ge-) und am Ende (-e). Das <em>ü</em> dazwischen ist lang.'
+    }
+];
+
+function renderKlick3() {
+    var c = document.getElementById('klick-list-3');
+    c.innerHTML = '';
+    KLICK_3.forEach(function(ex, i) {
+        var anzahlSoll = ex.segments.filter(function(s){ return s.typ === 'schwa'; }).length;
+        var item = document.createElement('div');
+        item.className = 'klick-item';
+        item.dataset.soll = anzahlSoll;
+        item.dataset.gefunden = 0;
+        var wortHtml = '<div class="klick-wort">';
+        ex.segments.forEach(function(seg, si) {
+            var cls = 'klick-seg';
+            if (seg.vokal) cls += ' klickbar';
+            wortHtml += '<span class="'+cls+'" data-i="'+i+'" data-si="'+si+'" data-typ="'+(seg.typ||'')+'" onclick="klick3Click(this)">'+seg.t+'</span>';
+        });
+        wortHtml += '</div>';
+        item.innerHTML =
+            '<div class="klick-aufgabe">Klick auf alle Schwa-Stellen</div>'+
+            '<div class="klick-emoji">'+ex.emoji+'</div>'+
+            wortHtml+
+            '<div class="klick-status">Gefunden: <span class="gefunden">0</span> / '+anzahlSoll+'</div>'+
+            '<div class="klick-info">'+ex.info+'</div>';
+        c.appendChild(item);
+    });
+}
+function klick3Click(seg) {
+    var item = seg.closest('.klick-item');
+    if (seg.classList.contains('korrekt')) return;
+    timerAutoStart(3);
+    var typ = seg.dataset.typ;
+    if (typ === 'schwa') {
+        seg.classList.add('korrekt');
+        seg.classList.remove('falsch','klickbar');
+        var gef = parseInt(item.dataset.gefunden,10) + 1;
+        item.dataset.gefunden = gef;
+        item.querySelector('.gefunden').textContent = gef;
+        if (gef >= parseInt(item.dataset.soll,10)) {
+            item.classList.add('solved');
+            checkKlick3Fertig();
+        }
+    } else {
+        seg.classList.add('falsch');
+        setTimeout(function(){ seg.classList.remove('falsch'); }, 600);
+    }
+}
+function checkKlick3Fertig() {
+    var alle = document.querySelectorAll('#klick-list-3 .klick-item');
+    var gelöst = document.querySelectorAll('#klick-list-3 .klick-item.solved');
+    if (alle.length && alle.length === gelöst.length) stopTimer(3);
+}
+
+// ═══════════════════════════════════════════════
+//  TAB 4 — Vokalisches R (Klick-Markierung, analog zu TAB 3)
+// ═══════════════════════════════════════════════
+var KLICK_4 = [
+    // ── Realisierung 1: -er am Wortende ──
+    { emoji: '👨',
+      segments: [
+        {t:'V', vokal:false}, {t:'a', vokal:true, typ:'lang'},
+        {t:'t', vokal:false}, {t:'er', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Vater</strong> — Realisierung 1: <em>-er</em> am Wortende klingt als <span class="ipa-gross">[ɐ]</span>.'
+    },
+    { emoji: '👩',
+      segments: [
+        {t:'M', vokal:false}, {t:'u', vokal:true, typ:'kurz'},
+        {t:'tt', vokal:false}, {t:'er', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Mutter</strong>: <em>-er</em> am Ende → vokalisches R.'
+    },
+    { emoji: '👧',
+      segments: [
+        {t:'Schw', vokal:false}, {t:'e', vokal:true, typ:'kurz'},
+        {t:'st', vokal:false}, {t:'er', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Schwester</strong>: <em>-er</em> am Ende → vokalisches R.'
+    },
+    { emoji: '👨‍🏫',
+      segments: [
+        {t:'L', vokal:false}, {t:'e', vokal:true, typ:'lang'},
+        {t:'hr', vokal:false}, {t:'er', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Lehrer</strong>: <em>e</em> ist lang (Dehnungs-h), <em>-er</em> am Ende ist vokalisches R.'
+    },
+    { emoji: '🪟',
+      segments: [
+        {t:'F', vokal:false}, {t:'e', vokal:true, typ:'kurz'},
+        {t:'n', vokal:false}, {t:'st', vokal:false},
+        {t:'er', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Fenster</strong>: <em>e</em> ist kurz, <em>-er</em> am Ende ist vokalisches R.'
+    },
+    // ── Realisierung 1: -er- in der Wortmitte ──
+    { emoji: '👨‍👩‍👧',
+      segments: [
+        {t:'E', vokal:true, typ:'kurz'}, {t:'l', vokal:false},
+        {t:'t', vokal:false}, {t:'er', vokal:true, typ:'vokR'},
+        {t:'n', vokal:false}
+      ],
+      info:'<strong>Eltern</strong>: <em>-er-</em> in der Mitte vor einem <em>n</em> → vokalisches R.'
+    },
+    { emoji: '📅',
+      segments: [
+        {t:'g', vokal:false}, {t:'e', vokal:true, typ:'kurz'},
+        {t:'st', vokal:false}, {t:'er', vokal:true, typ:'vokR'},
+        {t:'n', vokal:false}
+      ],
+      info:'<strong>gestern</strong>: <em>e</em> ist kurz, <em>-er-</em> ist vokalisches R.'
+    },
+    // ── Realisierung 1: ver-, zer- als Präfix ──
+    { emoji: '🛒',
+      segments: [
+        {t:'v', vokal:false}, {t:'er', vokal:true, typ:'vokR'},
+        {t:'k', vokal:false}, {t:'au', vokal:true, typ:'lang'},
+        {t:'f', vokal:false}, {t:'en', vokal:false}
+      ],
+      info:'<strong>verkaufen</strong>: <em>ver-</em> ist Präfix mit vokalischem R. <em>au</em> ist Diphthong (lang). <em>-en</em> wird silbisch gesprochen.'
+    },
+    { emoji: '💥',
+      segments: [
+        {t:'z', vokal:false}, {t:'er', vokal:true, typ:'vokR'},
+        {t:'r', vokal:false}, {t:'ei', vokal:true, typ:'lang'},
+        {t:'ß', vokal:false}, {t:'en', vokal:false}
+      ],
+      info:'<strong>zerreißen</strong>: <em>zer-</em> ist Präfix mit vokalischem R. Auch das mittlere <em>r</em> bleibt Konsonant — nur das e davor wird reduziert.'
+    },
+    // ── Realisierung 2: -r als Glide nach Vokal ──
+    { emoji: '🍺',
+      segments: [
+        {t:'B', vokal:false}, {t:'ie', vokal:true, typ:'lang'},
+        {t:'r', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Bier</strong> — Realisierung 2: <em>r</em> am Ende nach langem Vokal → vokalisches R als Glide <span class="ipa-gross">[ɐ̯]</span>.'
+    },
+    { emoji: '⚽',
+      segments: [
+        {t:'T', vokal:false}, {t:'o', vokal:true, typ:'lang'},
+        {t:'r', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Tor</strong>: <em>o</em> ist lang, <em>r</em> am Ende ist vokalisches R (Glide).'
+    },
+    { emoji: '🕐',
+      segments: [
+        {t:'U', vokal:true, typ:'lang'}, {t:'h', vokal:false},
+        {t:'r', vokal:true, typ:'vokR'}
+      ],
+      info:'<strong>Uhr</strong>: <em>U</em> ist lang (Dehnungs-h), <em>r</em> am Ende ist vokalisches R.'
+    }
+];
+
+function renderKlick4() {
+    var c = document.getElementById('klick-list-4');
+    c.innerHTML = '';
+    KLICK_4.forEach(function(ex, i) {
+        var anzahlSoll = ex.segments.filter(function(s){ return s.typ === 'vokR'; }).length;
+        var item = document.createElement('div');
+        item.className = 'klick-item';
+        item.dataset.soll = anzahlSoll;
+        item.dataset.gefunden = 0;
+        var wortHtml = '<div class="klick-wort">';
+        ex.segments.forEach(function(seg, si) {
+            var cls = 'klick-seg';
+            if (seg.vokal) cls += ' klickbar';
+            wortHtml += '<span class="'+cls+'" data-i="'+i+'" data-si="'+si+'" data-typ="'+(seg.typ||'')+'" onclick="klick4Click(this)">'+seg.t+'</span>';
+        });
+        wortHtml += '</div>';
+        item.innerHTML =
+            '<div class="klick-aufgabe">Klick auf alle Stellen mit vokalischem R</div>'+
+            '<div class="klick-emoji">'+ex.emoji+'</div>'+
+            wortHtml+
+            '<div class="klick-status">Gefunden: <span class="gefunden">0</span> / '+anzahlSoll+'</div>'+
+            '<div class="klick-info">'+ex.info+'</div>';
+        c.appendChild(item);
+    });
+}
+function klick4Click(seg) {
+    var item = seg.closest('.klick-item');
+    if (seg.classList.contains('korrekt')) return;
+    timerAutoStart(4);
+    var typ = seg.dataset.typ;
+    if (typ === 'vokR') {
+        seg.classList.add('korrekt');
+        seg.classList.remove('falsch','klickbar');
+        var gef = parseInt(item.dataset.gefunden,10) + 1;
+        item.dataset.gefunden = gef;
+        item.querySelector('.gefunden').textContent = gef;
+        if (gef >= parseInt(item.dataset.soll,10)) {
+            item.classList.add('solved');
+            checkKlick4Fertig();
+        }
+    } else {
+        seg.classList.add('falsch');
+        setTimeout(function(){ seg.classList.remove('falsch'); }, 600);
+    }
+}
+function checkKlick4Fertig() {
+    var alle = document.querySelectorAll('#klick-list-4 .klick-item');
+    var gelöst = document.querySelectorAll('#klick-list-4 .klick-item.solved');
+    if (alle.length && alle.length === gelöst.length) stopTimer(4);
+}
+
+// ═══════════════════════════════════════════════
+//  TAB 5 — Synthese (Pinsel-Markierung)
+// ═══════════════════════════════════════════════
+var aktiverPinsel = 'lang';
+function setPinsel(p) {
+    aktiverPinsel = p;
+    // ALLE Toolbars (eine pro Item) synchron updaten
+    document.querySelectorAll('.synth-toolbar .pinsel').forEach(function(el){
+        el.classList.toggle('aktiv', el.classList.contains('p-'+p));
+    });
+}
+
+var SYNTH_5 = [
+    // ── Stufe 1: zwei Vokalstellen, eine reduziert ──
+    { emoji: '👖',
+      segments: [
+        {t:'H', vokal:false}, {t:'o', vokal:true, soll:'lang'},
+        {t:'s', vokal:false}, {t:'e', vokal:true, soll:'schwa'}
+      ],
+      erklaerung:'<strong>Hose</strong>: Das <span class="v-schwa">e</span> am Ende ist Schwa — unbetont. Bleibt das <span class="v-lang">o</span> als einziger Vollvokal. Es trägt die Betonung.'
+    },
+    { emoji: '👩',
+      segments: [
+        {t:'M', vokal:false}, {t:'u', vokal:true, soll:'kurz'},
+        {t:'tt', vokal:false}, {t:'er', vokal:true, soll:'vokR'}
+      ],
+      erklaerung:'<strong>Mutter</strong>: Das <span class="v-vokR">-er</span> ist vokalisches R — unbetont. Bleibt das <span class="v-kurz">u</span> (kurz wegen <em>tt</em>) — es trägt die Betonung.'
+    },
+    { emoji: '❤️',
+      segments: [
+        {t:'L', vokal:false}, {t:'ie', vokal:true, soll:'lang'},
+        {t:'b', vokal:false}, {t:'e', vokal:true, soll:'schwa'}
+      ],
+      erklaerung:'<strong>Liebe</strong>: Das <span class="v-schwa">e</span> am Ende ist Schwa — unbetont. Bleibt das <span class="v-lang">ie</span> (langes i) — es trägt die Betonung.'
+    },
+    { emoji: '👨',
+      segments: [
+        {t:'V', vokal:false}, {t:'a', vokal:true, soll:'lang'},
+        {t:'t', vokal:false}, {t:'er', vokal:true, soll:'vokR'}
+      ],
+      erklaerung:'<strong>Vater</strong>: Das <span class="v-vokR">-er</span> ist vokalisches R — unbetont. Bleibt das <span class="v-lang">a</span> (lang, ein Konsonant) — es trägt die Betonung.'
+    },
+    { emoji: '🧓',
+      segments: [
+        {t:'O', vokal:true, soll:'kurz'}, {t:'n', vokal:false},
+        {t:'k', vokal:false}, {t:'e', vokal:true, soll:'schwa'},
+        {t:'l', vokal:false}
+      ],
+      erklaerung:'<strong>Onkel</strong>: Das <span class="v-schwa">e</span> in -el ist Schwa — unbetont. Bleibt das <span class="v-kurz">O</span> (kurz, zwei Konsonanten <em>nk</em>) — es trägt die Betonung.'
+    },
+    { emoji: '🍺',
+      segments: [
+        {t:'B', vokal:false}, {t:'ie', vokal:true, soll:'lang'},
+        {t:'r', vokal:true, soll:'vokR'}
+      ],
+      erklaerung:'<strong>Bier</strong>: Das <span class="v-vokR">r</span> am Ende ist vokalisches R (Glide nach Vokal) — unbetont. Bleibt das <span class="v-lang">ie</span> — es trägt die Betonung.'
+    },
+    // ── Stufe 2: drei Vokalstellen, zwei reduziert ──
+    { emoji: '👫',
+      segments: [
+        {t:'G', vokal:false}, {t:'e', vokal:true, soll:'schwa'},
+        {t:'schw', vokal:false}, {t:'i', vokal:true, soll:'kurz'},
+        {t:'st', vokal:false}, {t:'er', vokal:true, soll:'vokR'}
+      ],
+      erklaerung:'<strong>Geschwister</strong>: Drei Vokalstellen — <span class="v-schwa">ge-</span> ist Schwa, <span class="v-vokR">-er</span> ist vokalisches R. Beide unbetont. Bleibt das <span class="v-kurz">i</span> in der Mitte (kurz wegen <em>st</em>) — es trägt die Betonung.'
+    },
+    { emoji: '🛋️',
+      segments: [
+        {t:'g', vokal:false}, {t:'e', vokal:true, soll:'schwa'},
+        {t:'m', vokal:false}, {t:'ü', vokal:true, soll:'lang'},
+        {t:'t', vokal:false}, {t:'l', vokal:false},
+        {t:'i', vokal:true, soll:'kurz'}, {t:'ch', vokal:false}
+      ],
+      erklaerung:'<strong>gemütlich</strong>: Drei Vokalstellen — <span class="v-schwa">ge-</span> ist Schwa. Bleiben das <span class="v-lang">ü</span> (lang) und das <span class="v-kurz">i</span> (kurz wegen <em>ch</em>). Die Hauptbetonung liegt auf dem <em>ü</em> — das zeigt die Lang-Markierung an.'
+    }
+];
+
+function pinselToolbarHtml() {
+    return '<div class="synth-toolbar">'+
+        '<span class="pinsel-label">Pinsel:</span>'+
+        '<span class="pinsel p-lang" onclick="setPinsel(\'lang\')"><span class="pinsel-dot"></span>lang</span>'+
+        '<span class="pinsel p-kurz" onclick="setPinsel(\'kurz\')"><span class="pinsel-dot"></span>kurz</span>'+
+        '<span class="pinsel p-schwa" onclick="setPinsel(\'schwa\')"><span class="pinsel-dot"></span>Schwa</span>'+
+        '<span class="pinsel p-vokR" onclick="setPinsel(\'vokR\')"><span class="pinsel-dot"></span>vokal. R</span>'+
+        '<span class="pinsel p-radier" onclick="setPinsel(\'radier\')"><span class="pinsel-dot"></span>radieren</span>'+
+    '</div>';
+}
+
+function renderSynth5() {
+    var c = document.getElementById('synth-list-5');
+    c.innerHTML = '';
+    SYNTH_5.forEach(function(ex, i) {
+        var anzahlSoll = ex.segments.filter(function(s){ return s.vokal; }).length;
+        var item = document.createElement('div');
+        item.className = 'synth-item';
+        item.dataset.soll = anzahlSoll;
+        item.dataset.korrekt = 0;
+        var wortHtml = '<div class="synth-wort">';
+        ex.segments.forEach(function(seg, si) {
+            var cls = 'synth-seg';
+            if (seg.vokal) cls += ' klickbar';
+            wortHtml += '<span class="'+cls+'" data-i="'+i+'" data-si="'+si+'" data-soll="'+(seg.soll||'')+'"'+
+                ' onclick="synthClick(this)">'+seg.t+'</span>';
+        });
+        wortHtml += '</div>';
+        item.innerHTML =
+            pinselToolbarHtml()+
+            '<div class="synth-aufgabe">Färbe jeden Vokal mit dem passenden Pinsel</div>'+
+            '<div class="synth-emoji">'+ex.emoji+'</div>'+
+            wortHtml+
+            '<div class="synth-status">Markiert: <span class="korrekt-count">0</span> / '+anzahlSoll+'</div>'+
+            '<div class="synth-erklaerung">'+ex.erklaerung+'</div>';
+        c.appendChild(item);
+    });
+    setPinsel('lang');
+}
+
+function synthClick(seg) {
+    var item = seg.closest('.synth-item');
+    if (item.classList.contains('solved')) return;
+    if (!seg.classList.contains('klickbar')) return;
+    timerAutoStart(5);
+
+    if (aktiverPinsel === 'radier') {
+        seg.removeAttribute('data-mark');
+        seg.classList.remove('fehler-schimmer');
+        recountSynth(item);
+        return;
+    }
+
+    var soll = seg.dataset.soll;
+    seg.setAttribute('data-mark', aktiverPinsel);
+
+    if (aktiverPinsel === soll) {
+        // Korrekt — keine extra Klasse, die data-mark-Farbe reicht
+        seg.classList.remove('fehler-schimmer');
+    } else {
+        // Falsch — kurzer Schimmer
+        seg.classList.add('fehler-schimmer');
+        setTimeout(function(){ seg.classList.remove('fehler-schimmer'); }, 400);
+    }
+    recountSynth(item);
+}
+
+function recountSynth(item) {
+    var alleVokale = item.querySelectorAll('.synth-seg.klickbar');
+    var korrekt = 0;
+    alleVokale.forEach(function(s){
+        if (s.getAttribute('data-mark') === s.dataset.soll) korrekt++;
+    });
+    item.querySelector('.korrekt-count').textContent = korrekt;
+    if (korrekt === alleVokale.length) {
+        item.classList.add('solved');
+        checkSynth5Fertig();
+    }
+}
+
+function checkSynth5Fertig() {
+    var alle = document.querySelectorAll('#synth-list-5 .synth-item');
+    var gelöst = document.querySelectorAll('#synth-list-5 .synth-item.solved');
+    if (alle.length && alle.length === gelöst.length) stopTimer(5);
+}
+
+// ═══════════════════════════════════════════════
+//  Lösung-Button & Reset-Button
+// ═══════════════════════════════════════════════
+function showLoesung(tab) {
+    if (tab === 1) {
+        document.querySelectorAll('#mc-list-1 .mc-item').forEach(function(item, idx){
+            if (item.classList.contains('solved')) return;
+            var antwort = MC_1[idx].antwort;
+            item.querySelectorAll('.mc-opt').forEach(function(opt){
+                if (opt.dataset.v === antwort) opt.classList.add('correct');
+                opt.style.pointerEvents = 'none';
+            });
+            item.classList.add('solved');
+        });
+    }
+    if (tab === 2) {
+        document.querySelectorAll('#luecken-list-2 input.blank').forEach(function(inp){
+            if (!inp.classList.contains('correct')) {
+                inp.value = inp.dataset.ans;
+                inp.classList.add('correct');
+                inp.classList.remove('wrong');
+                inp.closest('.luecken-item').classList.add('solved');
+            }
+        });
+    }
+    if (tab === 3) {
+        document.querySelectorAll('#klick-list-3 .klick-item').forEach(function(item){
+            item.querySelectorAll('.klick-seg[data-typ="schwa"]').forEach(function(s){
+                s.classList.add('korrekt');
+                s.classList.remove('klickbar');
+            });
+            item.classList.add('solved');
+        });
+    }
+    if (tab === 4) {
+        document.querySelectorAll('#klick-list-4 .klick-item').forEach(function(item){
+            item.querySelectorAll('.klick-seg[data-typ="vokR"]').forEach(function(s){
+                s.classList.add('korrekt');
+                s.classList.remove('klickbar');
+            });
+            item.classList.add('solved');
+        });
+    }
+}
+
+function resetTab(tab) {
+    resetTimer(tab);
+    if (tab === 1) renderMC1();
+    if (tab === 2) renderLuecken2();
+    if (tab === 3) renderKlick3();
+    if (tab === 4) renderKlick4();
+    if (tab === 5) renderSynth5();
+}
+
+// ═══════════════════════════════════════════════
+//  Init
+// ═══════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', function(){
+    renderMC1();
+    renderLuecken2();
+    renderKlick3();
+    renderKlick4();
+    renderSynth5();
+    [1,2,3,4,5].forEach(renderBest);
+});
+</script>
+
+</body>
+</html>
