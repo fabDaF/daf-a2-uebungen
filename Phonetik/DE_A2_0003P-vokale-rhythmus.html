@@ -43,6 +43,11 @@ body {
 
 h2 { color: #333; font-size: 1.25em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
 
+/* Header mit Titel + Untertitel (ohne dazwischen sichtbare Trennlinie) */
+.regel-header { margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+.regel-header h2 { border-bottom: none; padding-bottom: 0; margin-bottom: 6px; }
+.section-untertitel { font-size: 1em; color: #4a148c; font-style: italic; font-family: Georgia,'Times New Roman',serif; margin: 0; }
+
 .hilfe-box { background: #f0f4ff; border-left: 4px solid #667eea; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: #444; line-height: 1.6; }
 
 /* ── REGEL ── */
@@ -199,7 +204,10 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; color: #e
   <div class="section active" id="sec-0">
     <img class="tab-banner" src="https://images.pexels.com/photos/8107287/pexels-photo-8107287.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Aussprache und Phonetik">
     <div class="sec-inner">
-      <h2>📖 Die Regel — drei Erkenntnisse</h2>
+      <div class="regel-header">
+        <h2>📖 Ein Vokal ist ein Vokal ist kein Vokal</h2>
+        <p class="section-untertitel">Wie erkennt man einen Vokal?</p>
+      </div>
       <div class="hilfe-box">
         Drei Einsichten, und du wirst jedes deutsche Wort richtig betonen können. Lies in Ruhe — die Übungen kommen in den nächsten Tabs.
       </div>
