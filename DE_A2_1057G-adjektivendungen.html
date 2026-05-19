@@ -927,8 +927,10 @@ function initWORTSCHATZ_1057G(){
 function checkWORTSCHATZ_1057G(inp){
   var v=inp.value.trim(); var ans=inp.dataset.ans||''; var cs=inp.dataset.cs==='1';
   inp.classList.remove('correct','wrong'); if(!v) return;
-  var ok=cs?(v===ans):(v.toLowerCase()===ans.toLowerCase());
-  inp.classList.toggle('correct',ok); inp.classList.toggle('wrong',!ok);
+  var vv=cs?v:v.toLowerCase(); var aa=cs?ans:ans.toLowerCase();
+  if(vv===aa){ inp.classList.add('correct'); return; }
+  if(aa.indexOf(vv)===0) return; // noch im Präfix → neutral lassen
+  inp.classList.add('wrong');
 }
 function resetWORTSCHATZ_1057G(){ initWORTSCHATZ_1057G(); }
 function showWORTSCHATZ_1057GLoesung(){
