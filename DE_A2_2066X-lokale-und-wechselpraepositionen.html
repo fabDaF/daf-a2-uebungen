@@ -919,7 +919,7 @@ function buildLuecken(data, containerId) {
 
 function liveCheckLuecke(inp) {
     var ans = (inp.dataset.ans || '').toLowerCase();
-    var val = inp.value.trim().toLowerCase();
+    var val = inp.value.trim();
     inp.classList.remove('ok','no');
     if (!val) return;
     if (val === ans) { inp.classList.add('ok'); return; }
@@ -1374,7 +1374,7 @@ function showVocabLoesung() {
         if (inp.disabled) return;
         var h = inp.nextElementSibling;
         if (h && h.classList.contains('vocab-hint')) h.remove();
-        var user = (inp.dataset.field === 'art') ? inp.value.trim().toLowerCase() : inp.value.trim();
+        var user = (inp.dataset.field === 'art') ? inp.value.trim() : inp.value.trim();
         var ans  = (inp.dataset.field === 'art') ? inp.dataset.ans.toLowerCase() : inp.dataset.ans;
         if (user === ans) {
             inp.classList.remove('wrong'); inp.classList.add('correct');

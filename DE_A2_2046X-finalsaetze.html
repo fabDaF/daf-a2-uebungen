@@ -619,7 +619,7 @@ function checkTab1() {
 
   inputs.forEach(inp => {
     const answer = inp.getAttribute('data-answer');
-    const value = inp.value.trim().toLowerCase();
+    const value = inp.value.trim();
 
     if (value === answer.toLowerCase()) {
       inp.classList.add('ok');

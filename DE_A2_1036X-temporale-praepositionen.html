@@ -1034,7 +1034,7 @@ function initLt() {
     });
     document.querySelectorAll('#sec-1 .luecken-inp').forEach(function(inp) {
         inp.addEventListener('input', function() {
-            var v = inp.value.trim().toLowerCase();
+            var v = inp.value.trim();
             var a = (inp.dataset.ans || '').toLowerCase();
             inp.classList.remove('ok','no');
             if (!v) return;

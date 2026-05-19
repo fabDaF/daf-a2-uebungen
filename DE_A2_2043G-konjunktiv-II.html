@@ -411,7 +411,7 @@ function buildTab2() {
         inp.className = 'luecken-inp';
         inp.type = 'text';
         inp.placeholder = '';
-        inp.dataset.ans = item.ans.toLowerCase();
+        inp.dataset.ans = item.ans;
         inp.addEventListener('input', function() {
             timerAutoStart(2);
             const val = this.value.trim();

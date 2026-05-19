@@ -150,11 +150,9 @@
 }
 .wortbank-chip {
   background:white; border:2px solid #667eea; color:#667eea;
-  padding:5px 12px; border-radius:14px; cursor:pointer;
+  padding:5px 12px; border-radius:14px; cursor:default;
   font-weight:500; font-size:0.9em; transition:all 0.2s; user-select:none;
 }
-.wortbank-chip:hover { background:#667eea; color:white; }
-.wortbank-chip.used { opacity:0.35; text-decoration:line-through; cursor:default; pointer-events:none; }
 
 </style>
 </head>
@@ -220,7 +218,7 @@
     <p style="background:#fff8e1;border-radius:8px;padding:10px 14px;font-size:0.88rem;color:#e65100;margin-bottom:16px;">
       &#128161; Setze das passende Wort ein.
     </p>
-    <div class="wortbank-label">📋 Wortbank – klicke auf ein Wort, um es einzusetzen:</div>
+    <div class="wortbank-label">📋 Wortbank – schreibe die Wörter selbst ein:</div>
     <div class="wortbank" id="wortbank-luecken"></div>
     <ul class="luecken-list" id="luecken1"></ul>
     <div class="btn-row">
@@ -521,9 +519,7 @@ function showLueckenLoesung(idx) {
   });
   timerStop(idx);
   var fb = document.getElementById('fb' + idx);
-  if (fb) fb.innerHTML = '<span class="feedback-ok">&#128065; L\u00f6sung angezeigt.</span>';
-  updateWortbankChips();
-}
+  if (fb) fb.innerHTML = '<span class="feedback-ok">&#128065; L\u00f6sung angezeigt.</span>';}
 
 function resetLuecken(idx) {
   timerResetOne(idx);
