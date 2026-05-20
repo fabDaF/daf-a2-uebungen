@@ -986,26 +986,27 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // ─── Auto-Wortbank (universal) ───────────────────────────────────────
 (function(){
+  function getAns(inp){ return inp.dataset.ans || inp.dataset.answer || ''; }
   function ensureWortbank(){
-    var inps = document.querySelectorAll('.luecken-inp[data-ans]');
+    var allInps = document.querySelectorAll('.luecken-inp');
+    var inps = Array.prototype.filter.call(allInps, function(i){ return !!getAns(i); });
     if (inps.length < 2) return;
-    // Group by closest container, so multi-section files get one bank per visible section
-    var visibleInps = Array.prototype.filter.call(inps, function(i){
-      return i.offsetParent !== null;
-    });
+    var visibleInps = inps.filter(function(i){ return i.offsetParent !== null; });
     if (visibleInps.length < 2) return;
     var anchor = visibleInps[0].closest('.lt-section, .luecken-block, .luecken-text, .luecken-aufgabe');
     if (!anchor) anchor = visibleInps[0].parentElement;
     if (!anchor || !anchor.parentElement) return;
-    // Already inserted just above this anchor?
     var prev = anchor.previousElementSibling;
     if (prev && prev.classList && prev.classList.contains('wortbank') && prev.dataset.autoBank === '1') return;
     var seen = {}, ans = [];
     visibleInps.forEach(function(i){
-      var a = i.dataset.ans;
+      var a = getAns(i);
       if (a && !seen[a]) { seen[a] = 1; ans.push(a); }
     });
     if (ans.length < 2) return;
+    // Skip wenn alle Antworten <4 Zeichen (Endungs-Drill — Wortbank sinnlos)
+    var maxLen = Math.max.apply(null, ans.map(function(a){return a.length;}));
+    if (maxLen < 4) return;
     ans.sort(function(a,b){ return a.toLowerCase().localeCompare(b.toLowerCase(), 'de'); });
     var wb = document.createElement('div');
     wb.className = 'wortbank';
