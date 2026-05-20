@@ -42,10 +42,12 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .luecken-block { padding: 28px 30px; }
 .luecken-block h2 { font-size: 1.05em; color: #667eea; margin: 22px 0 10px; }
 .luecken-text { line-height: 2.2; font-size: 0.95em; color: #444; }
-.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; width: 120px; }
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortbank { background: #f0f4ff; padding: 12px 16px; border-radius: 8px; margin: 14px 0 18px; font-size: 0.9em; }
+.wb-chip { display: inline-block; background: white; border: 1px solid #dde3ff; border-radius: 14px; padding: 3px 10px; margin: 3px; font-size: 0.88em; color: #555; }
 .wortkasten { background: #f0f4ff; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; font-size: 0.9em; color: #444; }
 .wortkasten strong { color: #667eea; }
 
@@ -239,20 +241,21 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
                 <span class="best-time">🏆 <span id="best-1">--:--</span></span>
             </div>
         </div>
-        <div class="luecken-block">
+        <div class="wortbank"><strong>Wortbank:</strong> <span class="wb-chip">ernähren</span> <span class="wb-chip">ernährst</span> <span class="wb-chip">Ernährungsplan</span> <span class="wb-chip">Essgewohnheiten</span> <span class="wb-chip">folge</span> <span class="wb-chip">glutenfrei</span> <span class="wb-chip">haltbar</span> <span class="wb-chip">laktosefrei</span> <span class="wb-chip">vegan</span> <span class="wb-chip">vegetarisch</span> <span class="wb-chip">Vitamine</span> <span class="wb-chip">Zusatzstoffe</span></div>
+            <div class="luecken-block">
             <h2>Dialog 1: Gesunde Ernährung</h2>
             <div class="luecken-text" id="lt0">
-                <p>— Hanna, <input class="luecken-inp" data-ans="ernährst" data-idx="0" style="width:100px" placeholder=""> du dich immer noch so gesund?</p>
-                <p>— Ja, ich <input class="luecken-inp" data-ans="folge" data-idx="1" style="width:80px" placeholder=""> einem strengen <input class="luecken-inp" data-ans="Ernährungsplan" data-idx="2" style="width:140px" placeholder="">.</p>
-                <p>— Ich sollte meine <input class="luecken-inp" data-ans="Essgewohnheiten" data-idx="3" style="width:150px" placeholder=""> auch ändern. Darf ich nur noch <input class="luecken-inp" data-ans="vegetarisch" data-idx="4" style="width:110px" placeholder=""> essen?</p>
-                <p>— Nein! Aber Sarah <input class="luecken-inp" data-ans="ernähren" data-idx="5" style="width:100px" placeholder=""> sich jetzt sogar <input class="luecken-inp" data-ans="vegan" data-idx="6" style="width:70px" placeholder=""> — kein Fleisch und keine Tierprodukte.</p>
+                <p>— Hanna, <input class="luecken-inp" data-ans="ernährst" data-idx="0" placeholder=""> du dich immer noch so gesund?</p>
+                <p>— Ja, ich <input class="luecken-inp" data-ans="folge" data-idx="1" placeholder=""> einem strengen <input class="luecken-inp" data-ans="Ernährungsplan" data-idx="2" placeholder="">.</p>
+                <p>— Ich sollte meine <input class="luecken-inp" data-ans="Essgewohnheiten" data-idx="3" placeholder=""> auch ändern. Darf ich nur noch <input class="luecken-inp" data-ans="vegetarisch" data-idx="4" placeholder=""> essen?</p>
+                <p>— Nein! Aber Sarah <input class="luecken-inp" data-ans="ernähren" data-idx="5" placeholder=""> sich jetzt sogar <input class="luecken-inp" data-ans="vegan" data-idx="6" placeholder=""> — kein Fleisch und keine Tierprodukte.</p>
             </div>
             <h2>Dialog 2: Im Feinkostladen</h2>
             <div class="luecken-text" id="lt1">
-                <p>— Guten Tag! Ich suche <input class="luecken-inp" data-ans="glutenfrei" data-idx="7" style="width:100px" placeholder=""> Brot. Ich habe eine Allergie.</p>
-                <p>— Das finden Sie in der ersten Reihe. Wir haben auch <input class="luecken-inp" data-ans="laktosefrei" data-idx="8" style="width:110px" placeholder=""> Milch im Kühlregal.</p>
-                <p>— Super! Wie lange ist die Milch noch <input class="luecken-inp" data-ans="haltbar" data-idx="9" style="width:80px" placeholder="">?</p>
-                <p>— Bis Ende des Monats. Und unser Bio-Joghurt enthält keine <input class="luecken-inp" data-ans="Zusatzstoffe" data-idx="10" style="width:120px" placeholder=""> — dafür aber viele <input class="luecken-inp" data-ans="Vitamine" data-idx="11" style="width:90px" placeholder="">!</p>
+                <p>— Guten Tag! Ich suche <input class="luecken-inp" data-ans="glutenfrei" data-idx="7" placeholder=""> Brot. Ich habe eine Allergie.</p>
+                <p>— Das finden Sie in der ersten Reihe. Wir haben auch <input class="luecken-inp" data-ans="laktosefrei" data-idx="8" placeholder=""> Milch im Kühlregal.</p>
+                <p>— Super! Wie lange ist die Milch noch <input class="luecken-inp" data-ans="haltbar" data-idx="9" placeholder="">?</p>
+                <p>— Bis Ende des Monats. Und unser Bio-Joghurt enthält keine <input class="luecken-inp" data-ans="Zusatzstoffe" data-idx="10" placeholder=""> — dafür aber viele <input class="luecken-inp" data-ans="Vitamine" data-idx="11" placeholder="">!</p>
             </div>
         </div>
     </div>

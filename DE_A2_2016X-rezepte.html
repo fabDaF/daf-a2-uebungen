@@ -48,10 +48,12 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .recipe-box h3 { color: #764ba2; font-size: 1em; margin-bottom: 12px; }
 .recipe-steps { list-style: decimal; padding-left: 20px; }
 .recipe-steps li { margin-bottom: 10px; font-size: 0.92em; color: #444; line-height: 1.7; }
-.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; width: 120px; }
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortbank { background: #f0f4ff; padding: 12px 16px; border-radius: 8px; margin: 14px 0 18px; font-size: 0.9em; }
+.wb-chip { display: inline-block; background: white; border: 1px solid #dde3ff; border-radius: 14px; padding: 3px 10px; margin: 3px; font-size: 0.88em; color: #555; }
 .wortkasten { background: #f0f4ff; border-radius: 10px; padding: 12px 18px; margin-bottom: 18px; font-size: 0.9em; color: #444; line-height: 1.7; }
 .wortkasten strong { color: #667eea; }
 
@@ -215,18 +217,19 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
             </div>
         </div>
         <div class="luecken-block id="luecken-main"">
+            <div class="wortbank"><strong>Wortbank:</strong> <span class="wb-chip">Hackfleisch</span> <span class="wb-chip">hinzugegeben</span> <span class="wb-chip">Kochen</span> <span class="wb-chip">Pfeffer</span> <span class="wb-chip">reiben</span> <span class="wb-chip">Salz</span> <span class="wb-chip">Schneiden</span> <span class="wb-chip">Zwiebeln</span></div>
             <h2>Spaghetti Bolognese — Fülle die Lücken</h2>
             <div class="recipe-box">
                 <h3>🍝 Rezept: Spaghetti Bolognese</h3>
                 <ol class="recipe-steps">
-                    <li>Schneiden Sie zwei <input class="luecken-inp" data-ans="Zwiebeln" data-idx="0" style="width:90px" placeholder=""> klein.</li>
-                    <li>Braten Sie das <input class="luecken-inp" data-ans="Hackfleisch" data-idx="1" style="width:105px" placeholder=""> zusammen mit den Zwiebeln an.</li>
-                    <li>Würzen Sie das Fleisch gut mit <input class="luecken-inp" data-ans="Salz" data-idx="2" style="width:60px" placeholder=""> und <input class="luecken-inp" data-ans="Pfeffer" data-idx="3" style="width:70px" placeholder="">.</li>
-                    <li><input class="luecken-inp" data-ans="Schneiden" data-idx="4" style="width:90px" placeholder=""> Sie währenddessen die Tomaten in kleine Stücke.</li>
-                    <li>Wenn das Hackfleisch gut durchgebraten ist, werden die Tomatenstücke und Tomatensoße <input class="luecken-inp" data-ans="hinzugegeben" data-idx="5" style="width:120px" placeholder="">.</li>
+                    <li>Schneiden Sie zwei <input class="luecken-inp" data-ans="Zwiebeln" data-idx="0" placeholder=""> klein.</li>
+                    <li>Braten Sie das <input class="luecken-inp" data-ans="Hackfleisch" data-idx="1" placeholder=""> zusammen mit den Zwiebeln an.</li>
+                    <li>Würzen Sie das Fleisch gut mit <input class="luecken-inp" data-ans="Salz" data-idx="2" placeholder=""> und <input class="luecken-inp" data-ans="Pfeffer" data-idx="3" placeholder="">.</li>
+                    <li><input class="luecken-inp" data-ans="Schneiden" data-idx="4" placeholder=""> Sie währenddessen die Tomaten in kleine Stücke.</li>
+                    <li>Wenn das Hackfleisch gut durchgebraten ist, werden die Tomatenstücke und Tomatensoße <input class="luecken-inp" data-ans="hinzugegeben" data-idx="5" placeholder="">.</li>
                     <li>Lassen Sie die Soße 30 Minuten lang köcheln.</li>
-                    <li><input class="luecken-inp" data-ans="Kochen" data-idx="6" style="width:75px" placeholder=""> Sie die Spaghetti, bis sie al dente sind.</li>
-                    <li>Servieren Sie die Spaghetti mit der Soße und <input class="luecken-inp" data-ans="reiben" data-idx="7" style="width:75px" placeholder=""> Sie etwas Parmesan drüber.</li>
+                    <li><input class="luecken-inp" data-ans="Kochen" data-idx="6" placeholder=""> Sie die Spaghetti, bis sie al dente sind.</li>
+                    <li>Servieren Sie die Spaghetti mit der Soße und <input class="luecken-inp" data-ans="reiben" data-idx="7" placeholder=""> Sie etwas Parmesan drüber.</li>
                 </ol>
             </div>
         </div>
