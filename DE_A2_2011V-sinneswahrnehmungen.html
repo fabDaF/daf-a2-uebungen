@@ -55,10 +55,12 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .luecken-block { padding: 28px 30px; }
 .luecken-block h2 { font-size: 1.05em; color: #667eea; margin: 22px 0 10px; }
 .luecken-text { line-height: 2.2; font-size: 0.95em; color: #444; }
-.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; width: 120px; }
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortbank { background: #f0f4ff; padding: 12px 16px; border-radius: 8px; margin-bottom: 18px; font-size: 0.9em; }
+.wb-chip { display: inline-block; background: white; border: 1px solid #dde3ff; border-radius: 14px; padding: 3px 10px; margin: 3px; font-size: 0.88em; color: #555; }
 
 /* ── TEXT & FRAGEN ──────────────────────────────────────────────── */
 .text-block { padding: 28px 30px; }
@@ -368,36 +370,38 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
                 </div>
             </div>
 
+            <div class="wortbank"><strong>Wortbank:</strong> <span class="wb-chip">fruchtig</span> <span class="wb-chip">genießt</span> <span class="wb-chip">Geschmack</span> <span class="wb-chip">kostet</span> <span class="wb-chip">probieren</span> <span class="wb-chip">riecht</span> <span class="wb-chip">salzig</span> <span class="wb-chip">sauer</span> <span class="wb-chip">scharf</span> <span class="wb-chip">schmeckt</span> <span class="wb-chip">süß</span></div>
+
             <h2>📝 Lückentext 1 — Im Restaurant</h2>
             <p class="luecken-text">
                 Anna und Ben gehen heute ins Restaurant. Das Essen
-                <input class="luecken-inp" data-ans="riecht" placeholder="" style="width:80px">
+                <input class="luecken-inp" data-ans="riecht" placeholder="">
                 sehr lecker. Anna möchte die Suppe zuerst
-                <input class="luecken-inp" data-ans="probieren" placeholder="" style="width:100px">,
+                <input class="luecken-inp" data-ans="probieren" placeholder="">,
                 bevor sie bestellt. Ben
-                <input class="luecken-inp" data-ans="genießt" placeholder="" style="width:90px">
+                <input class="luecken-inp" data-ans="genießt" placeholder="">
                 sein Steak sehr.
                 Die Soße
-                <input class="luecken-inp" data-ans="schmeckt" placeholder="" style="width:100px">
+                <input class="luecken-inp" data-ans="schmeckt" placeholder="">
                 etwas
-                <input class="luecken-inp" data-ans="scharf" placeholder="" style="width:70px">,
+                <input class="luecken-inp" data-ans="scharf" placeholder="">,
                 aber das mag er.
             </p>
 
             <h2>📝 Lückentext 2 — Beim Kochen</h2>
             <p class="luecken-text">
                 Mia kocht heute Abend für ihre Familie. Sie
-                <input class="luecken-inp" data-ans="kostet" placeholder="" style="width:75px">
+                <input class="luecken-inp" data-ans="kostet" placeholder="">
                 die Soße und bemerkt: sie ist zu
-                <input class="luecken-inp" data-ans="salzig" placeholder="" style="width:70px">!
+                <input class="luecken-inp" data-ans="salzig" placeholder="">!
                 Sie gibt etwas Zitronensaft dazu – jetzt schmeckt sie etwas
-                <input class="luecken-inp" data-ans="sauer" placeholder="" style="width:65px">,
+                <input class="luecken-inp" data-ans="sauer" placeholder="">,
                 aber das ist besser. Zum Nachtisch macht sie ein fruchtiges Sorbet – sehr
-                <input class="luecken-inp" data-ans="süß" placeholder="" style="width:55px">
+                <input class="luecken-inp" data-ans="süß" placeholder="">
                 und
-                <input class="luecken-inp" data-ans="fruchtig" placeholder="" style="width:80px">.
+                <input class="luecken-inp" data-ans="fruchtig" placeholder="">.
                 Das ist ganz nach dem
-                <input class="luecken-inp" data-ans="geschmack" placeholder="" style="width:110px">
+                <input class="luecken-inp" data-ans="Geschmack" placeholder="">
                 ihrer Familie.
             </p>
         </div>
