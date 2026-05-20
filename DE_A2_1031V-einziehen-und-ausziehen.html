@@ -790,19 +790,19 @@ window.addEventListener('DOMContentLoaded', function() {
   } else {
     setTimeout(ensureWortbank, 250);
   }
-  // Re-run nach Tab-Switch
-  var origShow = window.showSection;
-  if (typeof origShow === 'function') {
-    window.showSection = function(){
-      origShow.apply(this, arguments);
+  // Re-run nach Tab-Switch — robust via Klick-Event auf nav-btn
+  document.addEventListener('click', function(e){
+    if (e.target && (e.target.classList.contains('nav-btn') ||
+        (e.target.closest && e.target.closest('.nav-btn')))) {
       setTimeout(ensureWortbank, 80);
-    };
-  }
-  // Re-run periodisch in den ersten 3 Sekunden (für späte JS-Renderer)
+      setTimeout(ensureWortbank, 250);
+    }
+  }, true);
+  // Re-run periodisch in den ersten 5 Sekunden (für späte JS-Renderer / lazy Tabs)
   var tries = 0;
   var iv = setInterval(function(){
     ensureWortbank();
-    if (++tries > 15) clearInterval(iv);
+    if (++tries > 25) clearInterval(iv);
   }, 200);
 })();
 
