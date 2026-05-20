@@ -51,10 +51,12 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .luecken-block h2 { font-size: 1.05em; color: #667eea; margin: 22px 0 10px; }
 .luecken-block h2:first-child { margin-top: 0; }
 .luecken-text { line-height: 2.4; font-size: 0.95em; color: #444; }
-.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; width: 120px; }
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortbank { background: #f0f4ff; padding: 12px 16px; border-radius: 8px; margin: 14px 0 18px; font-size: 0.9em; }
+.wb-chip { display: inline-block; background: white; border: 1px solid #dde3ff; border-radius: 14px; padding: 3px 10px; margin: 3px; font-size: 0.88em; color: #555; }
 .wortkasten { background: #f0f4ff; border-radius: 10px; padding: 12px 18px; margin-bottom: 18px; font-size: 0.9em; color: #444; line-height: 1.7; }
 .wortkasten strong { color: #667eea; }
 
@@ -177,19 +179,20 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
         </div>
         <div class="luecken-block id="luecken-main"">
             <h2>Was isst man in Deutschland?</h2>
+            <div class="wortbank"><strong>Wortbank:</strong> <span class="wb-chip">Auflauf</span> <span class="wb-chip">bayerisch</span> <span class="wb-chip">Bratwurst</span> <span class="wb-chip">Brezel</span> <span class="wb-chip">Currywurst</span> <span class="wb-chip">Döner</span> <span class="wb-chip">Kartoffelsalat</span> <span class="wb-chip">Käsespätzle</span> <span class="wb-chip">Pfannkuchen</span> <span class="wb-chip">Rotkohl</span> <span class="wb-chip">Sauerkraut</span> <span class="wb-chip">Weißwurst</span></div>
             <div class="luecken-text">
-                <p>1. In Bayern gibt es ein Frühstück mit <input class="luecken-inp" data-ans="Weißwurst" data-idx="0" style="width:95px" placeholder="">.</p>
-                <p>2. Wenn du in Bayern bist, solltest du eine <input class="luecken-inp" data-ans="Brezel" data-idx="1" style="width:80px" placeholder=""> mit Butter essen.</p>
-                <p>3. <input class="luecken-inp" data-ans="Käsespätzle" data-idx="2" style="width:110px" placeholder=""> schmecken am besten mit gerösteten Zwiebeln.</p>
-                <p>4. <input class="luecken-inp" data-ans="Kartoffelsalat" data-idx="3" style="width:125px" placeholder=""> kann man in fast jedem deutschen Lokal bestellen.</p>
-                <p>5. <input class="luecken-inp" data-ans="Rotkohl" data-idx="4" style="width:80px" placeholder=""> ist eine gute Gemüsebeilage.</p>
-                <p>6. Der <input class="luecken-inp" data-ans="Auflauf" data-idx="5" style="width:80px" placeholder=""> wird im Ofen gebacken.</p>
-                <p>7. Der <input class="luecken-inp" data-ans="Pfannkuchen" data-idx="6" style="width:105px" placeholder=""> ist auch bekannt als Eierkuchen.</p>
-                <p>8. Heute Abend gibt es typisch <input class="luecken-inp" data-ans="bayerisch" data-idx="7" style="width:85px" placeholder="">es Essen.</p>
-                <p>9. Ich hätte gerne eine <input class="luecken-inp" data-ans="Bratwurst" data-idx="8" style="width:90px" placeholder=""> mit Senf!</p>
-                <p>10. Probier doch mal eine <input class="luecken-inp" data-ans="Currywurst" data-idx="9" style="width:100px" placeholder="">! Die sind echt lecker!</p>
-                <p>11. Haben wir noch <input class="luecken-inp" data-ans="Sauerkraut" data-idx="10" style="width:100px" placeholder=""> im Kühlschrank?</p>
-                <p>12. Der <input class="luecken-inp" data-ans="Döner" data-idx="11" style="width:70px" placeholder=""> ist in Deutschland sehr beliebt.</p>
+                <p>1. In Bayern gibt es ein Frühstück mit <input class="luecken-inp" data-ans="Weißwurst" data-idx="0" placeholder="">.</p>
+                <p>2. Wenn du in Bayern bist, solltest du eine <input class="luecken-inp" data-ans="Brezel" data-idx="1" placeholder=""> mit Butter essen.</p>
+                <p>3. <input class="luecken-inp" data-ans="Käsespätzle" data-idx="2" placeholder=""> schmecken am besten mit gerösteten Zwiebeln.</p>
+                <p>4. <input class="luecken-inp" data-ans="Kartoffelsalat" data-idx="3" placeholder=""> kann man in fast jedem deutschen Lokal bestellen.</p>
+                <p>5. <input class="luecken-inp" data-ans="Rotkohl" data-idx="4" placeholder=""> ist eine gute Gemüsebeilage.</p>
+                <p>6. Der <input class="luecken-inp" data-ans="Auflauf" data-idx="5" placeholder=""> wird im Ofen gebacken.</p>
+                <p>7. Der <input class="luecken-inp" data-ans="Pfannkuchen" data-idx="6" placeholder=""> ist auch bekannt als Eierkuchen.</p>
+                <p>8. Heute Abend gibt es typisch <input class="luecken-inp" data-ans="bayerisch" data-idx="7" placeholder="">es Essen.</p>
+                <p>9. Ich hätte gerne eine <input class="luecken-inp" data-ans="Bratwurst" data-idx="8" placeholder=""> mit Senf!</p>
+                <p>10. Probier doch mal eine <input class="luecken-inp" data-ans="Currywurst" data-idx="9" placeholder="">! Die sind echt lecker!</p>
+                <p>11. Haben wir noch <input class="luecken-inp" data-ans="Sauerkraut" data-idx="10" placeholder=""> im Kühlschrank?</p>
+                <p>12. Der <input class="luecken-inp" data-ans="Döner" data-idx="11" placeholder=""> ist in Deutschland sehr beliebt.</p>
             </div>
         </div>
     </div>

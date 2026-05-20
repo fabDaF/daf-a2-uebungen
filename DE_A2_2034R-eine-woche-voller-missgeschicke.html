@@ -73,10 +73,12 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .luecken-block h2 { font-size: 1.05em; color: #667eea; margin: 22px 0 10px; }
 .luecken-block h2:first-child { margin-top: 0; }
 .luecken-text { line-height: 2.4; font-size: 0.95em; color: #444; background: #f8f9fa; border-radius: 10px; padding: 18px 22px; }
-.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; width: 120px; }
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortbank { background: #f0f4ff; padding: 12px 16px; border-radius: 8px; margin: 14px 0 18px; font-size: 0.9em; }
+.wb-chip { display: inline-block; background: white; border: 1px solid #dde3ff; border-radius: 14px; padding: 3px 10px; margin: 3px; font-size: 0.88em; color: #555; }
 
 /* ── CONTROL BAR ────────────────────────────────────────── */
 .control-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding: 6px 12px; background: #f8f9fa; border-radius: 8px; }
@@ -298,19 +300,20 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
                 </div>
             </div>
             <div class="hilfe-box"><strong>Aufgabe:</strong> Ergänze die fehlenden Wörter im Präteritum.</div>
+            <div class="wortbank"><strong>Wortbank:</strong> <span class="wb-chip">bekam</span> <span class="wb-chip">brachte</span> <span class="wb-chip">erzählte</span> <span class="wb-chip">ging</span> <span class="wb-chip">hinterließ</span> <span class="wb-chip">rief</span> <span class="wb-chip">schaute</span> <span class="wb-chip">schluckte</span> <span class="wb-chip">sprang</span> <span class="wb-chip">verstand</span> <span class="wb-chip">war</span> <span class="wb-chip">wartete</span></div>
             <div class="luecken-text">
-                1. Stefans Auto <input class="luecken-inp" data-ans="sprang" style="width:90px" placeholder="anspringen"> am Montag nicht an.<br><br>
-                2. Er <input class="luecken-inp" data-ans="rief" style="width:70px" placeholder="anrufen"> den Pannendienst an.<br><br>
-                3. Er <input class="luecken-inp" data-ans="wartete" style="width:90px" placeholder="warten"> eine Stunde im Regen.<br><br>
-                4. Der Friseur <input class="luecken-inp" data-ans="verstand" style="width:100px" placeholder="verstehen"> Stefan falsch.<br><br>
-                5. Stefan <input class="luecken-inp" data-ans="schaute" style="width:90px" placeholder="schauen"> entsetzt in den Spiegel.<br><br>
-                6. Der Geldautomat <input class="luecken-inp" data-ans="schluckte" style="width:100px" placeholder="schlucken"> seine Karte.<br><br>
-                7. Stefan <input class="luecken-inp" data-ans="brachte" style="width:90px" placeholder="bringen"> seinen Anzug zur Reinigung.<br><br>
-                8. Die Reinigung <input class="luecken-inp" data-ans="hinterließ" data-alts="hinterliess" style="width:110px" placeholder="hinterlassen"> einen großen Fleck.<br><br>
-                9. Stefan <input class="luecken-inp" data-ans="ging" style="width:70px" placeholder="gehen"> trotzdem zum Vorstellungsgespräch.<br><br>
-                10. Er <input class="luecken-inp" data-ans="bekam" style="width:80px" placeholder="bekommen"> die Stelle.<br><br>
-                11. Stefan <input class="luecken-inp" data-ans="erzählte" data-alts="erzaehlte" style="width:100px" placeholder="erzählen"> seinem Freund die Geschichte.<br><br>
-                12. Am Ende <input class="luecken-inp" data-ans="war" style="width:60px" placeholder="sein"> Stefan froh.
+                1. Stefans Auto <input class="luecken-inp" data-ans="sprang" placeholder="anspringen"> am Montag nicht an.<br><br>
+                2. Er <input class="luecken-inp" data-ans="rief" placeholder="anrufen"> den Pannendienst an.<br><br>
+                3. Er <input class="luecken-inp" data-ans="wartete" placeholder="warten"> eine Stunde im Regen.<br><br>
+                4. Der Friseur <input class="luecken-inp" data-ans="verstand" placeholder="verstehen"> Stefan falsch.<br><br>
+                5. Stefan <input class="luecken-inp" data-ans="schaute" placeholder="schauen"> entsetzt in den Spiegel.<br><br>
+                6. Der Geldautomat <input class="luecken-inp" data-ans="schluckte" placeholder="schlucken"> seine Karte.<br><br>
+                7. Stefan <input class="luecken-inp" data-ans="brachte" placeholder="bringen"> seinen Anzug zur Reinigung.<br><br>
+                8. Die Reinigung <input class="luecken-inp" data-ans="hinterließ" data-alts="hinterliess" placeholder="hinterlassen"> einen großen Fleck.<br><br>
+                9. Stefan <input class="luecken-inp" data-ans="ging" placeholder="gehen"> trotzdem zum Vorstellungsgespräch.<br><br>
+                10. Er <input class="luecken-inp" data-ans="bekam" placeholder="bekommen"> die Stelle.<br><br>
+                11. Stefan <input class="luecken-inp" data-ans="erzählte" data-alts="erzaehlte" placeholder="erzählen"> seinem Freund die Geschichte.<br><br>
+                12. Am Ende <input class="luecken-inp" data-ans="war" placeholder="sein"> Stefan froh.
             </div>
         </div>
     </div>
