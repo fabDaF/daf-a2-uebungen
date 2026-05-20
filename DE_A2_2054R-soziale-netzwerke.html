@@ -1381,7 +1381,7 @@ function schreibLeeren() {
     if (inps.length < 2) return;
     var visibleInps = inps.filter(function(i){ return i.offsetParent !== null; });
     if (visibleInps.length < 2) return;
-    var anchor = visibleInps[0].closest('.lt-section, .luecken-block, .luecken-text, .luecken-aufgabe');
+    var anchor = visibleInps[0].closest('.lt-section, .lt-block, .lt-text, .lt-item, .luecken-block, .luecken-text, .luecken-aufgabe, .luecken-satz');
     if (!anchor) anchor = visibleInps[0].parentElement;
     if (!anchor || !anchor.parentElement) return;
     var prev = anchor.previousElementSibling;
