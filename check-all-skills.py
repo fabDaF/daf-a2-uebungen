@@ -220,10 +220,10 @@ def check_layout(content, fname):
     else:
         warn('[L] Frank Burkert nicht im Footer')
 
-    if re.search(r'fabdaf\.onmicrosoft\.com', content, re.IGNORECASE):
-        ok('Korrekte E-Mail (fabdaf.onmicrosoft.com)')
+    if re.search(r'frankburkert-daf\.de', content, re.IGNORECASE):
+        ok('Korrekte E-Mail (frankburkert-daf.de)')
     else:
-        warn('[L] E-Mail fabdaf.onmicrosoft.com fehlt im Footer')
+        warn('[L] E-Mail frankburkert-daf.de fehlt im Footer')
 
     # Footer innerhalb container? (vor </div><!-- /container -->)
     # Einfache Heuristik: author-footer kommt vor dem letzten </div> vor <script>
