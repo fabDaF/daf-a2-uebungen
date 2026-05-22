@@ -64,7 +64,7 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 .drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
 .drop-zone .chip.correct { background: #27ae60; border-color: #27ae60; color: white; cursor: default; }
-.drop-zone .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.drop-zone .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; cursor: default; }
 @media (max-width: 600px) {
     .qa-grid { grid-template-columns: 1fr; }
     .qa-frage-cell { border-left: none; border-bottom: 2px solid #764ba2; border-radius: 8px 8px 0 0; }
@@ -144,32 +144,6 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
   font-size: 0.85rem; color: #666;
 }
 .timer-display { font-weight: 700; color: #667eea; font-size: 1rem; }
-/* ── WORTBANK ── */
-.wortbank-label { font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
-.wortbank {
-  display:flex; flex-wrap:wrap; gap:8px; padding:14px;
-  background:#f0f0f8; border-radius:10px; min-height:48px;
-  margin-bottom:18px; border:1px dashed #bbb;
-}
-.wortbank-chip {
-  background:white; border:2px solid #667eea; color:#667eea;
-  padding:5px 12px; border-radius:14px; cursor:default;
-  font-weight:500; font-size:0.9em; transition:all 0.2s; user-select:none;
-}
-
-/* ── WORTBANK ── */
-.wortbank-label { font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
-.wortbank {
-  display:flex; flex-wrap:wrap; gap:8px; padding:14px;
-  background:#f0f0f8; border-radius:10px; min-height:48px;
-  margin-bottom:18px; border:1px dashed #bbb;
-}
-.wortbank-chip {
-  background:white; border:2px solid #667eea; color:#667eea;
-  padding:5px 12px; border-radius:14px; cursor:default;
-  font-weight:500; font-size:0.9em; transition:all 0.2s; user-select:none;
-}
-
 </style>
 </head>
 <body>
@@ -279,9 +253,7 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
             <div class="hilfe-box">
                 Tippe das fehlende Wort. Das Feld wird automatisch grün, wenn du richtig liegst.
             </div>
-            <div class="wortbank-label">📋 Wortbank – schreibe die Wörter selbst ein:</div>
-    <div class="wortbank" id="wortbank-luecken"></div>
-    <div id="lueckenContainer"></div>
+            <div id="lueckenContainer"></div>
             <div class="btn-row">
                 <div class="timer-box">⏱ <span class="timer-display" id="timer-2">0:00</span> &nbsp;🏆 <span class="best-display" id="best-2">–</span></div>
                 <button class="btn btn-reset" onclick="lueckenReset()">↺ Neustart</button>
@@ -405,7 +377,7 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-        <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
+        <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
     </div>
 
 </div><!-- /container -->
@@ -875,23 +847,6 @@ window.addEventListener('DOMContentLoaded', function() {
     buildLueckentext();
     initSatzbau();
 });
-/* ═══════════════════════════════════════════════════════
-   WORTBANK
-═══════════════════════════════════════════════════════ */
-function initWortbank() {
-  var bank = document.getElementById('wortbank-luecken');
-  if (!bank) return;
-  bank.innerHTML = '';
-  var words = LUECKEN_DATA.map(function(d){ return d.ans; });
-  words = words.filter(function(w){ return w && w.trim(); });
-  for(var i=words.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=words[i];words[i]=words[j];words[j]=t;}
-  words.forEach(function(w){
-    var chip = document.createElement('span');
-    chip.className = 'wortbank-chip'; chip.textContent = w;    bank.appendChild(chip);
-  });
-}
-
-
 </script>
 </body>
 </html>

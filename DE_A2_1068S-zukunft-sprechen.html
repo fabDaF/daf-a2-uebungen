@@ -40,7 +40,7 @@ body {
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 .section { display: none; padding: 28px 30px; }
-.section.active { display: block; }
+.section.aktiv { display: block; }
 @media (max-width: 600px) {
     body { padding: 8px; }
     .nav { flex-wrap: wrap; }
@@ -146,9 +146,9 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 <div class="container">
 
   <div class="header">
+    <div class="big-emoji">🔮</div>
     <h1>Über die Zukunft sprechen</h1>
-    <p>A2 – Lektion 1068S · Sprechen</p>
-    <div class="big-emoji">🎙️</div>
+    <p style="font-family: Georgia, serif;">A2 · Lektion 1068S · Zukunft &amp; Pläne</p>
   </div>
 
   <div class="nav">
@@ -167,12 +167,10 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     <div class="nav-btn" onclick="showTab(4)">
       <span class="nav-emoji">🎭</span><span class="nav-label">Rollenspiel</span>
     </div>
-    <div class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
   </div>
 
   <!-- ===== TAB 0: AUSSPRACHE pf ===== -->
-  <div id="sec-0" class="section active">
-  <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCflIo8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+QXVzc3ByYWNoZTogcGY8L3RleHQ+PC9zdmc+" alt="sec-0">
+  <div id="sec-0" class="section aktiv">
     <h2>🔊 Aussprache: pf</h2>
 
     <div class="aussprachebox">
@@ -199,7 +197,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
         <span class="word-chip"><span class="hl">pf</span>eifen</span>
         <span class="word-chip">A<span class="hl">pf</span>el</span>
         <span class="word-chip">Kno<span class="hl">pf</span></span>
-        <span class="word-chip">käm<span class="hl">pf</span>en</span>
+        <span class="word-chip">küm<span class="hl">pf</span>en</span>
         <span class="word-chip"><span class="hl">Pf</span>licht</span>
         <span class="word-chip">em<span class="hl">pf</span>ehlen</span>
         <span class="word-chip">hü<span class="hl">pf</span>en</span>
@@ -228,7 +226,6 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 
   <!-- ===== TAB 1: REDEMITTEL ===== -->
   <div id="sec-1" class="section">
-  <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCfkqw8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+w5xiZXIgZGllIFp1a3VuZnQgc3ByZWNoZW48L3RleHQ+PC9zdmc+" alt="sec-1">
     <h2>💬 Redemittel: Zukunftspläne besprechen</h2>
     <div class="hilfe-box">
       Ziehe jede Antwort in das Feld neben die passende Frage.
@@ -252,7 +249,6 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 
   <!-- ===== TAB 2: LÜCKENTEXT ===== -->
   <div id="sec-2" class="section">
-  <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPuKcj++4jzwvdGV4dD48dGV4dCB4PSI0MDAiIHk9IjE2MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOSIgZm9udC1zdHlsZT0iaXRhbGljIj5adWt1bmZ0c3Bsw6RuZTwvdGV4dD48L3N2Zz4=" alt="sec-2">
     <h2>✏️ Lückentext: Zukunftspläne</h2>
     <div class="btn-row" style="margin-bottom:20px;">
       ⏱ <span id="timer-lt">0:00</span> &nbsp;·&nbsp;
@@ -347,7 +343,6 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 
   <!-- ===== TAB 3: SATZBAU ===== -->
   <div id="sec-3" class="section">
-  <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCfp6k8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+U8OkdHplIG9yZG5lbjwvdGV4dD48L3N2Zz4=" alt="sec-3">
     <h2>🧩 Satzbau: Zukunfts-Sätze ordnen</h2>
     <div class="btn-row" style="margin-bottom:20px;">
       ⏱ <span id="timer-sb">0:00</span> &nbsp;·&nbsp;
@@ -361,7 +356,6 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 
   <!-- ===== TAB 4: ROLLENSPIEL ===== -->
   <div id="sec-4" class="section">
-  <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCfjq08L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+QmVpIGRlciBXYWhyc2FnZXJpbjwvdGV4dD48L3N2Zz4=" alt="sec-4">
     <h2>🎭 Rollenspiel: Bei der Wahrsagerin</h2>
 
     <div class="if-dann-box">
@@ -430,23 +424,9 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     </div>
   </div>
 
-  
-  <div id="sec-5" class="section">
-    <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCflKA8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+U3ByZWNoLVdvcnRzY2hhdHo8L3RleHQ+PC9zdmc+" alt="sec-5">
-    <h2 style="text-align:center;margin:14px 0;">🔠 Wortschatz</h2>
-    <p style="font-size:.9em;color:#888;margin-bottom:14px;text-align:center;">Tippe das deutsche Wort. Bei Nomen: Artikel, Wort und Plural.</p>
-    <div class="control-bar">
-      <div class="btn-row">
-        <button class="btn" onclick="showWortschatzSprechLoesung()">Lösungen</button>
-        <button class="btn" onclick="resetWortschatzSprech()">Neu starten</button>
-      </div>
-    </div>
-    <div id="wortschatzSprechContainer" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
-  </div>
-
   <div class="author-footer">
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-    <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
+    <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
   </div>
 
 </div><!-- /container -->
@@ -455,7 +435,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 // ─── Tab-Navigation ────────────────────────────────────────────────────────
 function showTab(idx) {
     document.querySelectorAll('.section').forEach(function(s,i){
-        s.classList.toggle('active', i===idx);
+        s.classList.toggle('aktiv', i===idx);
     });
     document.querySelectorAll('.nav-btn').forEach(function(b,i){
         b.classList.toggle('active', i===idx);
@@ -683,13 +663,13 @@ function resetRM() {
 
 // ─── Satzbau ────────────────────────────────────────────────────────────────
 var satzbauData = [
-    { parts: ['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen'], valid: [['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen']], punct: '.' },
-    { parts: ['wenn', 'du', 'deine', 'Ziele', 'verfolgst', 'wirst', 'du', 'erfolgreich', 'sein'], valid: [['wenn', 'du', 'deine', 'Ziele', 'verfolgst', 'wirst', 'du', 'erfolgreich', 'sein']], punct: '.' },
-    { parts: ['Mia', 'hat', 'die', 'Vermutung', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt'], valid: [['Mia', 'hat', 'die', 'Vermutung', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt']], punct: '.' },
-    { parts: ['Leons', 'Lebensziel', 'ist', 'es', 'eine', 'gesunde', 'Familie', 'zu', 'haben'], valid: [['Leons', 'Lebensziel', 'ist', 'es', 'eine', 'gesunde', 'Familie', 'zu', 'haben']], punct: '.' },
-    { parts: ['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], valid: [['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft']], punct: '.' },
-    { parts: ['wenn', 'ich', 'eine', 'Million', 'gewinne', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen'], valid: [['wenn', 'ich', 'eine', 'Million', 'gewinne', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen']], punct: '.' },
-    { parts: ['ich', 'wünsche', 'mir', 'im', 'Ausland', 'zu', 'arbeiten'], valid: [['ich', 'wünsche', 'mir', 'im', 'Ausland', 'zu', 'arbeiten']], punct: '.' }
+    { words: ['ich', 'werde', 'bald', 'ins', 'Ausland', 'reisen'], punct: '.' },
+    { words: ['Wenn', 'du', 'deine', 'Ziele', 'verfolgst', ',', 'dann', 'wirst', 'du', 'erfolgreich', 'sein'], punct: '.' },
+    { words: ['Mia', 'hat', 'die', 'Vermutung', ',', 'dass', 'sie', 'den', 'Job', 'nicht', 'bekommt'], punct: '.' },
+    { words: ['Leons', 'Lebensziel', 'ist', 'es', ',', 'eine', 'gesunde', 'Familie', 'zu', 'haben'], punct: '.' },
+    { words: ['die', 'Wahrsagerin', 'macht', 'eine', 'Vorhersage', 'über', 'meine', 'Zukunft'], punct: '.' },
+    { words: ['Wenn', 'ich', 'eine', 'Million', 'gewinne', ',', 'dann', 'kann', 'ich', 'um', 'die', 'Welt', 'reisen'], punct: '.' },
+    { words: ['ich', 'wünsche', 'mir', ',', 'im', 'Ausland', 'zu', 'arbeiten'], punct: '.' }
 ];
 var sbInited = false;
 var sbDragged = null;
@@ -860,7 +840,7 @@ function initSatzbau() {
         fb.className='satzbau-feedback'; fb.id='sb-fb-'+idx;
         wrap.appendChild(bank); wrap.appendChild(row); wrap.appendChild(fb);
         container.appendChild(wrap);
-        var parts=ex.parts.slice();
+        var parts=ex.words.slice();
         for(var i=parts.length-1;i>0;i--){
             var j=Math.floor(Math.random()*(i+1));
             var tmp=parts[i]; parts[i]=parts[j]; parts[j]=tmp;
@@ -906,58 +886,6 @@ document.addEventListener('DOMContentLoaded', function(){
     initSort();
     initRM();
 });
-
-var WORTSCHATZ_SPRECH = [
-  {id:1, type:'p', en:'🔮 (probably)', artikel:'', de:'wahrscheinlich', plural:''},
-  {id:2, type:'p', en:'🎯 (definitely)', artikel:'', de:'bestimmt', plural:''},
-  {id:3, type:'p', en:'❓ (perhaps)', artikel:'', de:'vielleicht', plural:''},
-  {id:4, type:'n', en:'🌟 (dream)', artikel:'der', de:'Traum', plural:'Träume'},
-  {id:5, type:'n', en:'✨ (vision)', artikel:'die', de:'Vision', plural:'Visionen'},
-  {id:6, type:'n', en:'🔮 (fortune-teller)', artikel:'die', de:'Wahrsagerin', plural:'Wahrsagerinnen'},
-  {id:7, type:'n', en:'🌅 (future)', artikel:'die', de:'Zukunft', plural:'–'},
-  {id:8, type:'p', en:'🎤 (to predict)', artikel:'', de:'voraussagen', plural:''},
-  {id:9, type:'n', en:'🎯 (decision)', artikel:'die', de:'Entscheidung', plural:'Entscheidungen'},
-  {id:10, type:'p', en:'🤞 (to hope)', artikel:'', de:'hoffen', plural:''},
-  {id:11, type:'p', en:'🚀 (to dare)', artikel:'', de:'wagen', plural:''},
-  {id:12, type:'n', en:'🎓 (chance)', artikel:'die', de:'Chance', plural:'Chancen'}
-];
-
-function initWortschatzSprech(){
-  var c=document.getElementById('wortschatzSprechContainer'); if(!c) return;
-  c.innerHTML='';
-  WORTSCHATZ_SPRECH.forEach(function(w){
-    var item=document.createElement('div'); item.className='luecken-item';
-    var p=document.createElement('div'); p.className='ws-prompt'; p.textContent=w.en; item.appendChild(p);
-    var fields=document.createElement('div'); fields.className='ws-fields';
-    if(w.type==='n'){
-      var a=document.createElement('input'); a.className='blank'; a.style.width='5ch'; a.placeholder='Artikel'; a.dataset.ans=w.artikel; a.dataset.cs='0';
-      var b=document.createElement('input'); b.className='blank'; b.style.width=(Math.max(w.de.length,4)+3)+'ch'; b.placeholder='Wort'; b.dataset.ans=w.de; b.dataset.cs='1';
-      var c2=document.createElement('input'); c2.className='blank'; c2.style.width=(Math.max((w.plural||'-').length,4)+3)+'ch'; c2.placeholder='Plural'; c2.dataset.ans=w.plural||'–'; c2.dataset.cs='1';
-      if(w.plural==='–'){ c2.value='–'; c2.disabled=true; c2.classList.add('correct'); }
-      [a,b,c2].forEach(function(i){ i.addEventListener('input',function(){ wsCheckSprech(i); }); fields.appendChild(i); });
-    } else {
-      var d=document.createElement('input'); d.className='blank'; d.style.width=(Math.max(w.de.length,8)+3)+'ch'; d.placeholder='Deutsch'; d.dataset.ans=w.de; d.dataset.cs='0';
-      d.addEventListener('input',function(){ wsCheckSprech(d); }); fields.appendChild(d);
-    }
-    item.appendChild(fields); c.appendChild(item);
-  });
-}
-function wsCheckSprech(inp){
-  var v=inp.value.trim(); var ans=inp.dataset.ans||''; var cs=inp.dataset.cs==='1';
-  inp.classList.remove('correct','wrong'); if(!v) return;
-  var vv=cs?v:v.toLowerCase(); var aa=cs?ans:ans.toLowerCase();
-  if(vv===aa){ inp.classList.add('correct'); return; }
-  if(aa.indexOf(vv)===0) return; // noch im Präfix → neutral lassen
-  inp.classList.add('wrong');
-}
-function resetWortschatzSprech(){ initWortschatzSprech(); }
-function showWortschatzSprechLoesung(){
-  document.querySelectorAll('#wortschatzSprechContainer input.blank').forEach(function(i){
-    i.value=i.dataset.ans||''; i.classList.add('correct'); i.classList.remove('wrong');
-  });
-}
-
-if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initWortschatzSprech); } else { initWortschatzSprech(); }
 </script>
 </body>
 </html>

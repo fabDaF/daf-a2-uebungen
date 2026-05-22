@@ -51,12 +51,10 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .luecken-block h2 { font-size: 1.05em; color: #667eea; margin: 22px 0 10px; }
 .luecken-block h2:first-child { margin-top: 0; }
 .luecken-text { line-height: 2.4; font-size: 0.95em; color: #444; }
-.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; width: 120px; }
+.luecken-inp { border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.95em; padding: 0 4px; transition: border-color 0.2s; vertical-align: middle; }
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
-.wortbank { background: #f0f4ff; padding: 12px 16px; border-radius: 8px; margin: 14px 0 18px; font-size: 0.9em; }
-.wb-chip { display: inline-block; background: white; border: 1px solid #dde3ff; border-radius: 14px; padding: 3px 10px; margin: 3px; font-size: 0.88em; color: #555; }
 .wortkasten { background: #f0f4ff; border-radius: 10px; padding: 12px 18px; margin-bottom: 18px; font-size: 0.9em; color: #444; line-height: 1.7; }
 .wortkasten strong { color: #667eea; }
 
@@ -124,13 +122,6 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .tab-banner { width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.12); 
 .tab-banner { max-height: 120px; }
 }
-
-/* Wortkasten */
-.wort-bank { display:flex; flex-wrap:wrap; gap:8px; background:#f0f2ff; border:1px solid #c5cae9; border-radius:10px; padding:12px 14px; margin-bottom:18px; }
-.wort-bank-label { width:100%; font-size:0.78em; font-weight:700; color:#667eea; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px; }
-.wort-chip { padding:5px 14px; border-radius:20px; background:linear-gradient(135deg,#667eea,#764ba2); color:white; font-size:0.87em; font-weight:600; cursor:pointer; border:none; transition:opacity 0.2s,transform 0.12s; user-select:none; }
-.wort-chip:hover:not(.used) { transform:translateY(-2px); box-shadow:0 4px 10px rgba(102,126,234,0.35); }
-.wort-chip.used { opacity:0.22; cursor:default; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -177,22 +168,22 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
                 <span class="best-time">🏆 <span id="best-2">--:--</span></span>
             </div>
         </div>
-        <div class="luecken-block id="luecken-main"">
+        <div class="luecken-block">
+            <div class="wortkasten"><strong>Wortkasten:</strong> Brezel · Weißwurst · Käsespätzle · Kartoffelsalat · Sauerkraut · Bratwurst · Currywurst · Döner · bayerisch · Rotkohl · Auflauf · Pfannkuchen</div>
             <h2>Was isst man in Deutschland?</h2>
-            <div class="wortbank"><strong>Wortbank:</strong> <span class="wb-chip">Auflauf</span> <span class="wb-chip">bayerisch</span> <span class="wb-chip">Bratwurst</span> <span class="wb-chip">Brezel</span> <span class="wb-chip">Currywurst</span> <span class="wb-chip">Döner</span> <span class="wb-chip">Kartoffelsalat</span> <span class="wb-chip">Käsespätzle</span> <span class="wb-chip">Pfannkuchen</span> <span class="wb-chip">Rotkohl</span> <span class="wb-chip">Sauerkraut</span> <span class="wb-chip">Weißwurst</span></div>
             <div class="luecken-text">
-                <p>1. In Bayern gibt es ein Frühstück mit <input class="luecken-inp" data-ans="Weißwurst" data-idx="0" placeholder="">.</p>
-                <p>2. Wenn du in Bayern bist, solltest du eine <input class="luecken-inp" data-ans="Brezel" data-idx="1" placeholder=""> mit Butter essen.</p>
-                <p>3. <input class="luecken-inp" data-ans="Käsespätzle" data-idx="2" placeholder=""> schmecken am besten mit gerösteten Zwiebeln.</p>
-                <p>4. <input class="luecken-inp" data-ans="Kartoffelsalat" data-idx="3" placeholder=""> kann man in fast jedem deutschen Lokal bestellen.</p>
-                <p>5. <input class="luecken-inp" data-ans="Rotkohl" data-idx="4" placeholder=""> ist eine gute Gemüsebeilage.</p>
-                <p>6. Der <input class="luecken-inp" data-ans="Auflauf" data-idx="5" placeholder=""> wird im Ofen gebacken.</p>
-                <p>7. Der <input class="luecken-inp" data-ans="Pfannkuchen" data-idx="6" placeholder=""> ist auch bekannt als Eierkuchen.</p>
-                <p>8. Heute Abend gibt es typisch <input class="luecken-inp" data-ans="bayerisch" data-idx="7" placeholder="">es Essen.</p>
-                <p>9. Ich hätte gerne eine <input class="luecken-inp" data-ans="Bratwurst" data-idx="8" placeholder=""> mit Senf!</p>
-                <p>10. Probier doch mal eine <input class="luecken-inp" data-ans="Currywurst" data-idx="9" placeholder="">! Die sind echt lecker!</p>
-                <p>11. Haben wir noch <input class="luecken-inp" data-ans="Sauerkraut" data-idx="10" placeholder=""> im Kühlschrank?</p>
-                <p>12. Der <input class="luecken-inp" data-ans="Döner" data-idx="11" placeholder=""> ist in Deutschland sehr beliebt.</p>
+                <p>1. In Bayern gibt es ein Frühstück mit <input class="luecken-inp" data-ans="Weißwurst" data-idx="0" style="width:95px" placeholder="">.</p>
+                <p>2. Wenn du in Bayern bist, solltest du eine <input class="luecken-inp" data-ans="Brezel" data-idx="1" style="width:80px" placeholder=""> mit Butter essen.</p>
+                <p>3. <input class="luecken-inp" data-ans="Käsespätzle" data-idx="2" style="width:110px" placeholder=""> schmecken am besten mit gerösteten Zwiebeln.</p>
+                <p>4. <input class="luecken-inp" data-ans="Kartoffelsalat" data-idx="3" style="width:125px" placeholder=""> kann man in fast jedem deutschen Lokal bestellen.</p>
+                <p>5. <input class="luecken-inp" data-ans="Rotkohl" data-idx="4" style="width:80px" placeholder=""> ist eine gute Gemüsebeilage.</p>
+                <p>6. Der <input class="luecken-inp" data-ans="Auflauf" data-idx="5" style="width:80px" placeholder=""> wird im Ofen gebacken.</p>
+                <p>7. Der <input class="luecken-inp" data-ans="Pfannkuchen" data-idx="6" style="width:105px" placeholder=""> ist auch bekannt als Eierkuchen.</p>
+                <p>8. Heute Abend gibt es typisch <input class="luecken-inp" data-ans="bayerisch" data-idx="7" style="width:85px" placeholder="">es Essen.</p>
+                <p>9. Ich hätte gerne eine <input class="luecken-inp" data-ans="Bratwurst" data-idx="8" style="width:90px" placeholder=""> mit Senf!</p>
+                <p>10. Probier doch mal eine <input class="luecken-inp" data-ans="Currywurst" data-idx="9" style="width:100px" placeholder="">! Die sind echt lecker!</p>
+                <p>11. Haben wir noch <input class="luecken-inp" data-ans="Sauerkraut" data-idx="10" style="width:100px" placeholder=""> im Kühlschrank?</p>
+                <p>12. Der <input class="luecken-inp" data-ans="Döner" data-idx="11" style="width:70px" placeholder=""> ist in Deutschland sehr beliebt.</p>
             </div>
         </div>
     </div>
@@ -266,7 +257,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-        <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
+        <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
     </div>
 </div>
 
@@ -757,73 +748,6 @@ function highlightVocabInText() {
 }
 
 highlightVocabInText();
-
-
-// ── WORTKASTEN ──────────────────────────────────────────────────────────────
-var lkContainer = null, lkActiveInput = null;
-function buildWordBank(containerEl) {
-    if (!containerEl) return;
-    lkContainer = containerEl;
-    var inputs = Array.from(containerEl.querySelectorAll(
-        'input[data-answer], input[data-ans], input.blank, input.l-inp, input.luecken-inp'));
-    var seen = {}, words = [];
-    inputs.forEach(function(inp) {
-        var w = inp.dataset.answer || inp.dataset.ans || inp.dataset.sol || '';
-        if (w && !seen[w.toLowerCase()]) { seen[w.toLowerCase()] = true; words.push(w); }
-    });
-    if (!words.length) return;
-    for (var i = words.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var t = words[i]; words[i] = words[j]; words[j] = t;
-    }
-    var bank = document.createElement('div');
-    bank.className = 'wort-bank';
-    var lbl = document.createElement('div');
-    lbl.className = 'wort-bank-label';
-    lbl.textContent = '📦 Wortkasten – klicke ein Wort, dann das Feld';
-    bank.appendChild(lbl);
-    words.forEach(function(w) {
-        var btn = document.createElement('button');
-        btn.className = 'wort-chip'; btn.textContent = w; btn.dataset.word = w;
-        btn.addEventListener('click', function(){ insertWordFromBank(w); });
-        bank.appendChild(btn);
-    });
-    containerEl.insertBefore(bank, containerEl.firstChild);
-    containerEl.addEventListener('focusin', function(e) {
-        if (e.target.matches('input.blank,input.l-inp,input.luecken-inp,input[data-ans],input[data-answer]'))
-            lkActiveInput = e.target;
-    });
-    containerEl.addEventListener('input', function(e) {
-        if (e.target.matches('input.blank,input.l-inp,input.luecken-inp,input[data-ans],input[data-answer]'))
-            syncWordBankChips();
-    });
-}
-function syncWordBankChips() {
-    if (!lkContainer) return;
-    var bank = lkContainer.querySelector('.wort-bank');
-    if (!bank) return;
-    bank.querySelectorAll('.wort-chip').forEach(function(c){ c.classList.remove('used'); });
-    lkContainer.querySelectorAll('input.blank,input.l-inp,input.luecken-inp,input[data-ans],input[data-answer]').forEach(function(inp) {
-        var w = inp.value.trim();
-        if (w) { var c = bank.querySelector('.wort-chip[data-word="'+w+'"]'); if(c) c.classList.add('used'); }
-    });
-}
-function insertWordFromBank(w) {
-    if (!lkContainer) return;
-    var all = Array.from(lkContainer.querySelectorAll('input.blank,input.l-inp,input.luecken-inp,input[data-ans],input[data-answer]'));
-    var ok = function(i){ return !i.classList.contains('correct')&&!i.classList.contains('ok'); };
-    var t = (lkActiveInput && lkContainer.contains(lkActiveInput) && ok(lkActiveInput)) ? lkActiveInput
-          : (all.find(function(i){ return !i.value && ok(i); }) || all.find(ok));
-    if (!t) return;
-    t.value = w;
-    t.dispatchEvent(new Event('input',{bubbles:true}));
-    t.focus(); lkActiveInput = t;
-}
-// ────────────────────────────────────────────────────────────────────────────
-
-document.addEventListener('DOMContentLoaded', function(){
-  buildWordBank(document.getElementById('luecken-main'));
-});
 </script>
 </body>
 </html>

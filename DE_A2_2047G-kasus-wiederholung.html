@@ -122,20 +122,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     .nav-btn:last-child { border-right: 1px solid #ddd; }
     .kasus-table { font-size: 0.8em; }
 }
-    /* ── WORTBANK ── */
-.wortbank-label { font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
-.wortbank {
-  display:flex; flex-wrap:wrap; gap:8px; padding:14px;
-  background:#f0f0f8; border-radius:10px; min-height:48px;
-  margin-bottom:18px; border:1px dashed #bbb;
-}
-.wortbank-chip {
-  background:white; border:2px solid #667eea; color:#667eea;
-  padding:5px 12px; border-radius:14px; cursor:default;
-  font-weight:500; font-size:0.9em; transition:all 0.2s; user-select:none;
-}
-
-</style>
+    </style>
 </head>
 <body>
 
@@ -389,7 +376,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-        <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
+        <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
     </div>
 
 </div><!-- /container -->
@@ -509,23 +496,6 @@ var LUECKEN_DATA = [
 
 /* Vereinfachte Lückentext-Implementierung */
 var lueckenItems = [];
-/* ═══════════════════════════════════════════════════════
-   WORTBANK
-═══════════════════════════════════════════════════════ */
-function initWortbank() {
-  var bank = document.getElementById('wortbank-luecken');
-  if (!bank) return;
-  bank.innerHTML = '';
-  var words = LUECKEN_DATA.map(function(d){ return d.answer; });
-  for(var i=words.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=words[i];words[i]=words[j];words[j]=t;}
-  words.forEach(function(w){
-    var chip = document.createElement('span');
-    chip.className = 'wortbank-chip';
-    chip.textContent = w;
-    bank.appendChild(chip);
-  });
-}
-
 function initLuecken() {
     var c = document.getElementById('lueckenContainer');
     c.innerHTML = '';
@@ -618,7 +588,8 @@ function showLueckenLoesung() {
         inp.value = inp.dataset.ans;
         inp.classList.add('ok');
         inp.classList.remove('no');
-    });}
+    });
+}
 
 function resetLuecken() {
     lueckenItems.forEach(function(inp) {
@@ -876,61 +847,6 @@ initLuecken();
 initSatzbau();
 initQuiz();
 loadBestTimes();
-
-// ─── Auto-Wortbank (universal) ───────────────────────────────────────
-(function(){
-  function getAns(inp){ return inp.dataset.ans || inp.dataset.answer || ''; }
-  function ensureWortbank(){
-    var allInps = document.querySelectorAll('.luecken-inp');
-    var inps = Array.prototype.filter.call(allInps, function(i){ return !!getAns(i); });
-    if (inps.length < 2) return;
-    var visibleInps = inps.filter(function(i){ return i.offsetParent !== null; });
-    if (visibleInps.length < 2) return;
-    var anchor = visibleInps[0].closest('.lt-section, .lt-block, .lt-text, .lt-item, .luecken-block, .luecken-text, .luecken-aufgabe, .luecken-satz');
-    if (!anchor) anchor = visibleInps[0].parentElement;
-    if (!anchor || !anchor.parentElement) return;
-    var prev = anchor.previousElementSibling;
-    if (prev && prev.classList && prev.classList.contains('wortbank') && prev.dataset.autoBank === '1') return;
-    var seen = {}, ans = [];
-    visibleInps.forEach(function(i){
-      var a = getAns(i);
-      if (a && !seen[a]) { seen[a] = 1; ans.push(a); }
-    });
-    if (ans.length < 2) return;
-    // Skip wenn alle Antworten <4 Zeichen (Endungs-Drill — Wortbank sinnlos)
-    var maxLen = Math.max.apply(null, ans.map(function(a){return a.length;}));
-    if (maxLen < 4) return;
-    ans.sort(function(a,b){ return a.toLowerCase().localeCompare(b.toLowerCase(), 'de'); });
-    var wb = document.createElement('div');
-    wb.className = 'wortbank';
-    wb.dataset.autoBank = '1';
-    wb.innerHTML = '<strong>Wortbank:</strong> ' + ans.map(function(a){
-      return '<span class="wb-chip">' + a.replace(/</g,'&lt;') + '</span>';
-    }).join(' ');
-    anchor.parentElement.insertBefore(wb, anchor);
-  }
-  // Initial run nach DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function(){ setTimeout(ensureWortbank, 250); });
-  } else {
-    setTimeout(ensureWortbank, 250);
-  }
-  // Re-run nach Tab-Switch — robust via Klick-Event auf nav-btn
-  document.addEventListener('click', function(e){
-    if (e.target && (e.target.classList.contains('nav-btn') ||
-        (e.target.closest && e.target.closest('.nav-btn')))) {
-      setTimeout(ensureWortbank, 80);
-      setTimeout(ensureWortbank, 250);
-    }
-  }, true);
-  // Re-run periodisch in den ersten 5 Sekunden (für späte JS-Renderer / lazy Tabs)
-  var tries = 0;
-  var iv = setInterval(function(){
-    ensureWortbank();
-    if (++tries > 25) clearInterval(iv);
-  }, 200);
-})();
-
 </script>
 </body>
 </html>

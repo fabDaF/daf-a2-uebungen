@@ -56,7 +56,7 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 .drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .drop-zone.dragover { background: #e8eaff; border-color: #667eea; }
 .drop-zone .chip.correct { background: #27ae60; border-color: #27ae60; color: white; cursor: default; }
-.drop-zone .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.drop-zone .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; cursor: default; }
 @media (max-width: 600px) {
     .qa-grid { grid-template-columns: 1fr; }
     .qa-frage-cell { border-left: none; border-bottom: 2px solid #764ba2; border-radius: 8px 8px 0 0; }
@@ -71,8 +71,6 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
-.wortbank { background: #f0f4ff; padding: 12px 16px; border-radius: 8px; margin: 14px 0 18px; font-size: 0.9em; }
-.wb-chip { display: inline-block; background: white; border: 1px solid #dde3ff; border-radius: 14px; padding: 3px 10px; margin: 3px; font-size: 0.88em; color: #555; }
 
 /* Lesetext */
 .lese-text { background: #f9f9ff; border-left: 4px solid #764ba2; border-radius: 0 10px 10px 0; padding: 18px 20px; margin-bottom: 20px; line-height: 1.75; font-size: 0.95em; color: #333; }
@@ -233,9 +231,9 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
                 <p><strong>Familie Meier sucht ein neues Zuhause</strong></p>
                 <p>Familie Meier wohnt seit sieben Jahren in einer kleinen Zweizimmerwohnung in Nürnberg. Zwei Kinder, ein Hund, 58 Quadratmeter. Am Wochenende beginnt die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Wohnungssuche</span>. Herr Meier sitzt mit seinem Laptop am Küchentisch und klickt sich durch die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Anzeigen</span> auf ImmoScout. Zu teuer. Zu klein. Zu weit weg.</p>
 
-                <p>Am Sonntag finden sie es: ein Reihenhaus in Fürth, vier Zimmer, kleiner Garten. Die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Miete</span> beträgt 1.250 Euro warm. Die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Kaution</span> sind drei Monatsmieten. Herr Meier klickt auf den <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Grundriss</span> und zeigt es seiner Frau: „Schau, hier sind die Kinderzimmer, und hier unten ist eine moderne <span class=“vocab-hl" title="📖 Vokabel aus der Vorentlastung">Einbauküche</span>."</p>
+                <p>Am Sonntag finden sie es: ein Reihenhaus in Fürth, vier Zimmer, kleiner Garten. Die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Miete</span> beträgt 1.250 Euro warm. Die <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Kaution</span> sind drei Monatsmieten. Herr Meier klickt auf den <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Grundriss</span> und zeigt es seiner Frau: „Schau, hier sind die Kinderzimmer, und hier unten ist eine moderne <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Einbauküche</span>."</p>
 
-                <p>Am Mittwoch ist Besichtigung. Das Haus gefällt ihnen sofort. Es ist nicht <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">möbliert</span> — gut, sie haben eigene Möbel. Die Vermieterin, Frau Gruber, erklärt: „Die alten Mieter <span class=“vocab-hl" title="📖 Vokabel aus der Vorentlastung">ziehen</span> nächsten Monat <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">aus</span>. Sie können am ersten September <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">einziehen</span>."</p>
+                <p>Am Mittwoch ist Besichtigung. Das Haus gefällt ihnen sofort. Es ist nicht <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">möbliert</span> — gut, sie haben eigene Möbel. Die Vermieterin, Frau Gruber, erklärt: „Die alten Mieter <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">ziehen</span> nächsten Monat <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">aus</span>. Sie können am ersten September <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">einziehen</span>."</p>
 
                 <p>Ende August. Der <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Umzug</span> kostet 1.400 Euro. Zwei starke Männer von der Umzugsfirma tragen Kisten, Betten und das alte Klavier. Der Hund läuft aufgeregt zwischen den Räumen. Am Abend sitzt Familie Meier auf dem Boden im neuen Wohnzimmer, isst Pizza aus der Schachtel und trinkt Wein aus Plastikbechern.</p>
 
@@ -281,7 +279,7 @@ h3 { color: #667eea; font-size: 1.05em; margin-bottom: 10px; margin-top: 18px; }
 
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-        <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
+        <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
     </div>
 
 </div><!-- /container -->
@@ -752,61 +750,6 @@ window.addEventListener('DOMContentLoaded', function() {
     initSatzbau();
     initWortschatz();
 });
-
-// ─── Auto-Wortbank (universal) ───────────────────────────────────────
-(function(){
-  function getAns(inp){ return inp.dataset.ans || inp.dataset.answer || ''; }
-  function ensureWortbank(){
-    var allInps = document.querySelectorAll('.luecken-inp');
-    var inps = Array.prototype.filter.call(allInps, function(i){ return !!getAns(i); });
-    if (inps.length < 2) return;
-    var visibleInps = inps.filter(function(i){ return i.offsetParent !== null; });
-    if (visibleInps.length < 2) return;
-    var anchor = visibleInps[0].closest('.lt-section, .lt-block, .lt-text, .lt-item, .luecken-block, .luecken-text, .luecken-aufgabe, .luecken-satz');
-    if (!anchor) anchor = visibleInps[0].parentElement;
-    if (!anchor || !anchor.parentElement) return;
-    var prev = anchor.previousElementSibling;
-    if (prev && prev.classList && prev.classList.contains('wortbank') && prev.dataset.autoBank === '1') return;
-    var seen = {}, ans = [];
-    visibleInps.forEach(function(i){
-      var a = getAns(i);
-      if (a && !seen[a]) { seen[a] = 1; ans.push(a); }
-    });
-    if (ans.length < 2) return;
-    // Skip wenn alle Antworten <4 Zeichen (Endungs-Drill — Wortbank sinnlos)
-    var maxLen = Math.max.apply(null, ans.map(function(a){return a.length;}));
-    if (maxLen < 4) return;
-    ans.sort(function(a,b){ return a.toLowerCase().localeCompare(b.toLowerCase(), 'de'); });
-    var wb = document.createElement('div');
-    wb.className = 'wortbank';
-    wb.dataset.autoBank = '1';
-    wb.innerHTML = '<strong>Wortbank:</strong> ' + ans.map(function(a){
-      return '<span class="wb-chip">' + a.replace(/</g,'&lt;') + '</span>';
-    }).join(' ');
-    anchor.parentElement.insertBefore(wb, anchor);
-  }
-  // Initial run nach DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function(){ setTimeout(ensureWortbank, 250); });
-  } else {
-    setTimeout(ensureWortbank, 250);
-  }
-  // Re-run nach Tab-Switch — robust via Klick-Event auf nav-btn
-  document.addEventListener('click', function(e){
-    if (e.target && (e.target.classList.contains('nav-btn') ||
-        (e.target.closest && e.target.closest('.nav-btn')))) {
-      setTimeout(ensureWortbank, 80);
-      setTimeout(ensureWortbank, 250);
-    }
-  }, true);
-  // Re-run periodisch in den ersten 5 Sekunden (für späte JS-Renderer / lazy Tabs)
-  var tries = 0;
-  var iv = setInterval(function(){
-    ensureWortbank();
-    if (++tries > 25) clearInterval(iv);
-  }, 200);
-})();
-
 </script>
 </body>
 </html>

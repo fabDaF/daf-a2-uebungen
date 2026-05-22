@@ -19,7 +19,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 .section { display: none; padding: 28px 30px; }
-.section.active { display: block; }
+.section.aktiv { display: block; }
 @media (max-width: 600px) {
   body { padding: 8px; }
   .section { padding: 18px 14px; }
@@ -84,42 +84,14 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: #aaa; }
 .author-footer a { color: #aaa; }
 .author-name { font-weight: 700; }
-
-/* ===== ENTDECKEN-TAB (Skill: daf-grammatik) ===== */
-.entdeck-intro { background: #f3e5f5; border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; border-left: 5px solid #9c27b0; font-size: 0.97rem; line-height: 1.75; }
-.entdeck-intro h3 { color: #6a1b9a; margin-bottom: 10px; font-size: 1.05rem; }
-.entdeck-intro .hl-modal { color: #6a1b9a; font-weight: 700; background: #ffe9a0; padding: 1px 4px; border-radius: 3px; }
-.entdeck-intro .hl-inf { color: #d84315; font-weight: 700; }
-.mc-step { display: none; background: #fafbff; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border: 1px solid #c5cae9; }
-.mc-step.active { display: block; }
-.mc-step h4 { color: #3949ab; margin-bottom: 12px; font-size: 0.97rem; }
-.mc-options { display: flex; flex-direction: column; gap: 8px; }
-.mc-btn { padding: 9px 16px; border: 2px solid #c5cae9; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; font-size: 0.92rem; transition: all .2s; font-family: inherit; }
-.mc-btn:hover:not(:disabled) { border-color: #667eea; background: #f3f4ff; }
-.mc-btn.correct { border-color: #43a047; background: #e8f5e9; color: #2e7d32; font-weight: 700; }
-.mc-btn.wrong   { border-color: #e53935; background: #ffebee; color: #c62828; }
-.mc-btn:disabled { cursor: default; opacity: 0.7; }
-.mc-feedback { margin-top: 10px; font-size: 0.88rem; min-height: 1.3em; }
-.mc-feedback.ok  { color: #2e7d32; font-weight: 700; }
-.mc-feedback.err { color: #c62828; }
-.progress-dots { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
-.pdot { width: 14px; height: 14px; border-radius: 50%; background: #c5cae9; transition: background .3s; }
-.pdot.done { background: #667eea; }
-.regel-karte { display: none; background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 14px; padding: 22px 26px; border-left: 5px solid #3949ab; margin-top: 10px; }
-.regel-karte h3 { color: #1a237e; margin-bottom: 12px; font-size: 1.05rem; }
-.regel-karte ul { margin-left: 18px; }
-.regel-karte li { color: #333; line-height: 1.8; font-size: 0.95rem; }
-.regel-karte .rk-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 12px; border-left: 3px solid #7c4dff; font-size: 0.9rem; }
-
 </style>
 </head>
 <body>
 <div class="container">
 
   <div class="header">
-    <h1>Modalverben (Wiederholung)</h1>
-    <p>A2 – Lektion 1067G · Grammatik</p>
-    <div class="big-emoji">🔁</div>
+    <h1>1067G · Modalverben</h1>
+    <p style="font-family: Georgia, serif;">A2.1 · Grammatik · Wiederholung &amp; Vergangenheit</p>
   </div>
 
   <div class="nav">
@@ -128,81 +100,43 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <div class="nav-btn" onclick="showTab(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
     <div class="nav-btn" onclick="showTab(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
     <div class="nav-btn" onclick="showTab(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
-    <div class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
   </div>
 
   <!-- TAB 0: ENTDECKEN -->
-  <section class="section active" id="sec-0">
-      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCflI08L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+RW50ZGVja2VuOiBNb2RhbHZlcmJlbjwvdGV4dD48L3N2Zz4=" alt="sec-0">
-    <h2>📖 Entdecke die Regel selbst</h2>
-    <div class="entdeck-intro">
-      <h3>👀 Schau dir diese Sätze an:</h3>
-      <p>Ich <span class="hl-modal">kann</span> sehr gut Gitarre <span class="hl-inf">spielen</span>. — Hier <span class="hl-modal">darf</span> man nicht <span class="hl-inf">rauchen</span>.</p>
-      <p>Du <span class="hl-modal">musst</span> die Hausaufgaben <span class="hl-inf">machen</span>. — Wir <span class="hl-modal">wollen</span> heute Pizza <span class="hl-inf">essen</span>.</p>
-      <p style="margin-top:10px">Mein Chef <span class="hl-modal">soll</span> mich morgen früher <span class="hl-inf">anrufen</span>. — Ich <span class="hl-modal">möchte</span> einen Kaffee <span class="hl-inf">trinken</span>.</p>
+  <section class="section aktiv" id="tab0">
+    <div class="info-card">
+      <h3>🔍 Entdecke das Muster</h3>
+      <p>Lies die Sätze. Was fällt auf? Wie bildet man das Perfekt von Modalverben?</p>
     </div>
-    <div class="progress-dots">
-      <div class="pdot" id="pdot0"></div>
-      <div class="pdot" id="pdot1"></div>
-      <div class="pdot" id="pdot2"></div>
-      <div class="pdot" id="pdot3"></div>
+
+    <div class="info-card" style="background:#fff8e1;border-color:#ffe082;">
+      <h3>📖 Einführungstext</h3>
+      <p>„Als Kind habe ich nicht arbeiten <strong>müssen</strong>. Aber heute muss ich jeden Tag arbeiten. Aber als Kind habe ich auch nicht Auto fahren <strong>können</strong>. Heute kann ich sehr gut Auto fahren."</p>
     </div>
-    <div class="mc-step active" id="mc-step0">
-      <h4>❓ Schritt 1: Was haben „kann, darf, musst, wollen, soll, möchte“ gemeinsam?</h4>
-      <div class="mc-options">
-        <button class="mc-btn" onclick="mcCheck(0, this, false)">Es sind alles Hilfsverben (sein/haben/werden).</button>
-        <button class="mc-btn" onclick="mcCheck(0, this, true)">Es sind Modalverben — sie verändern die Bedeutung des zweiten Verbs.</button>
-        <button class="mc-btn" onclick="mcCheck(0, this, false)">Sie sind alle unregelmäßig in der Vergangenheit.</button>
-        <button class="mc-btn" onclick="mcCheck(0, this, false)">Sie haben keinen Infinitiv.</button>
-      </div>
-      <div class="mc-feedback" id="mcfb0"></div>
+
+    <div class="info-card">
+      <h3>💡 Was fällt auf?</h3>
+      <p>
+        Im Perfekt der Modalverben steht <strong>kein Partizip II</strong>!<br>
+        Stattdessen: <strong>haben</strong> (konjugiert) + Vollverb (Infinitiv) + Modalverb (Infinitiv)<br><br>
+        ❌ <del>Ich habe nicht arbeiten gemusst.</del><br>
+        ✅ Ich habe nicht arbeiten <strong>müssen</strong>.<br><br>
+        Das nennt man den <strong>Ersatzinfinitiv</strong>.
+      </p>
     </div>
-    <div class="mc-step" id="mc-step1">
-      <h4>❓ Schritt 2: Wo steht das Modalverb (kann, darf, …) im Satz?</h4>
-      <div class="mc-options">
-        <button class="mc-btn" onclick="mcCheck(1, this, false)">Am Anfang des Satzes</button>
-        <button class="mc-btn" onclick="mcCheck(1, this, true)">An Position 2 (zweite Stelle)</button>
-        <button class="mc-btn" onclick="mcCheck(1, this, false)">Am Ende des Satzes</button>
-        <button class="mc-btn" onclick="mcCheck(1, this, false)">Direkt nach dem Subjekt, egal wo</button>
-      </div>
-      <div class="mc-feedback" id="mcfb1"></div>
-    </div>
-    <div class="mc-step" id="mc-step2">
-      <h4>❓ Schritt 3: In welcher Form steht das zweite Verb (z.B. <em>spielen, rauchen, machen</em>)?</h4>
-      <div class="mc-options">
-        <button class="mc-btn" onclick="mcCheck(2, this, false)">Konjugiert (spielst, raucht, machen)</button>
-        <button class="mc-btn" onclick="mcCheck(2, this, true)">Im Infinitiv (Grundform: spielen, rauchen, machen)</button>
-        <button class="mc-btn" onclick="mcCheck(2, this, false)">Im Partizip II (gespielt, geraucht)</button>
-        <button class="mc-btn" onclick="mcCheck(2, this, false)">Mit „zu“ davor (zu spielen)</button>
-      </div>
-      <div class="mc-feedback" id="mcfb2"></div>
-    </div>
-    <div class="mc-step" id="mc-step3">
-      <h4>❓ Schritt 4: „Hier <em>darf</em> man nicht rauchen.“ — Was bedeutet <em>darf</em> hier?</h4>
-      <div class="mc-options">
-        <button class="mc-btn" onclick="mcCheck(3, this, false)">Pflicht: Man muss es tun.</button>
-        <button class="mc-btn" onclick="mcCheck(3, this, false)">Wunsch: Man möchte es tun.</button>
-        <button class="mc-btn" onclick="mcCheck(3, this, true)">Erlaubnis (verneint = Verbot): Es ist nicht erlaubt.</button>
-        <button class="mc-btn" onclick="mcCheck(3, this, false)">Fähigkeit: Man kann es nicht.</button>
-      </div>
-      <div class="mc-feedback" id="mcfb3"></div>
-    </div>
-    <div class="regel-karte" id="regelkarte">
-      <h3>✅ Die Regel: Modalverben</h3>
-      <ul>
-        <li><strong>Form:</strong> konjugiertes <span class="hl-modal">Modalverb</span> an Position 2 + <span class="hl-inf">Infinitiv</span> am Ende</li>
-        <li><strong>Bedeutungen:</strong> können (Fähigkeit) · dürfen (Erlaubnis) · müssen (Pflicht) · sollen (Auftrag) · wollen (starker Wunsch) · mögen / möchten (Wunsch)</li>
-        <li><strong>Konjugation:</strong> ich kann · du kannst · er/sie/es kann · wir können · ihr könnt · sie/Sie können (im Singular oft kein „-e“/„-t“!)</li>
-      </ul>
-      <div class="rk-example">
-        <b>Beispiele:</b> Ich <b>kann</b> gut Gitarre <b>spielen</b>. · Hier <b>darf</b> man nicht <b>rauchen</b>. · Wir <b>wollen</b> heute Pizza <b>essen</b>.
-      </div>
+
+    <div class="info-card">
+      <h3>📌 Übersicht: Wann welche Form?</h3>
+      <p>
+        <strong>Präsens</strong>: Gegenwart → Ich <em>muss</em> heute arbeiten.<br>
+        <strong>Präteritum</strong>: Erzählende Vergangenheit → Ich <em>musste</em> gestern arbeiten.<br>
+        <strong>Perfekt</strong>: Mündliche Vergangenheit → Ich habe gestern arbeiten <em>müssen</em>.
+      </p>
     </div>
   </section>
 
   <!-- TAB 1: REGEL -->
-  <section class="section" id="sec-1">
-      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCfk4s8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+UmVnZWw6IE1vZGFsdmVyYmVuPC90ZXh0Pjwvc3ZnPg==" alt="sec-1">
+  <section class="section" id="tab1">
     <div class="info-card">
       <h3>📐 Modalverben im Präsens</h3>
       <p>6 Modalverben: können · wollen · dürfen · möchten · müssen · sollen</p>
@@ -265,8 +199,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 2: LÜCKENTEXT -->
-  <section class="section" id="sec-2">
-      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPuKcj++4jzwvdGV4dD48dGV4dCB4PSI0MDAiIHk9IjE2MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOSIgZm9udC1zdHlsZT0iaXRhbGljIj5Mw7xja2VudGV4dDwvdGV4dD48L3N2Zz4=" alt="sec-2">
+  <section class="section" id="tab2">
     <div class="lt-section">
       <div class="lt-title">Teil 1 · Modalverben im Präsens</div>
       <div class="lt-row"><span class="lt-num">1.</span>
@@ -339,8 +272,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 3: SATZBAU -->
-  <section class="section" id="sec-3">
-      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCfp6k8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+U2F0emJhdTwvdGV4dD48L3N2Zz4=" alt="sec-3">
+  <section class="section" id="tab3">
     <p style="color:#555;margin-bottom:16px;">Bilde Sätze mit Modalverben — achte auf die Wortstellung!</p>
     <div id="satzbauContainer"></div>
     <div class="btn-row">
@@ -352,8 +284,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </section>
 
   <!-- TAB 4: MULTIPLE CHOICE -->
-  <section class="section" id="sec-4">
-      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCfjq88L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+TXVsdGlwbGUgQ2hvaWNlPC90ZXh0Pjwvc3ZnPg==" alt="sec-4">
+  <section class="section" id="tab4">
     <p style="color:#555;margin-bottom:16px;">Wähle die richtige Form des Modalverbs oder die richtige Zeitform.</p>
     <div id="mcContainer"></div>
     <div class="btn-row">
@@ -362,25 +293,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     </div>
   </section>
 
-  
-  <section class="section" id="sec-5">
-      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48dGV4dCB4PSI0MDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOTUiPvCflKA8L3RleHQ+PHRleHQgeD0iNDAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiIGZvbnQtc3R5bGU9Iml0YWxpYyI+V29ydHNjaGF0ejwvdGV4dD48L3N2Zz4=" alt="sec-5">
-    <div class="sec-inner">
-      <h2>🔠 Wortschatz üben</h2>
-      <p style="font-size:.9em;color:#888;margin-bottom:14px;">Tippe das deutsche Wort. Bei Nomen: Artikel, Wort und Plural.</p>
-      <div class="control-bar">
-        <div class="btn-row">
-          <button class="btn" onclick="showWortschatzModalLoesung()">Lösungen</button>
-          <button class="btn" onclick="resetWortschatzModal()">Neu starten</button>
-        </div>
-      </div>
-      <div id="wortschatzModalContainer" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
-    </div>
-  </section>
-
   <div class="author-footer">
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-    <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
+    <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
   </div>
 
 </div><!-- /container -->
@@ -388,7 +303,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <script>
 // ── TAB NAVIGATION ─────────────────────────────────────────
 function showTab(n) {
-  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===n); });
+  document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('aktiv', i===n); });
   document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
   if (n === 2) ltTimerAutoStart();
   if (n === 3) sbTimerAutoStart();
@@ -431,13 +346,13 @@ function ltShowAll(){
 
 // ── SATZBAU ─────────────────────────────────────────────────
 var satzbauData = [
-  { parts: ['ich', 'kann', 'gut', 'Gitarre', 'spielen'], valid: [['ich', 'kann', 'gut', 'Gitarre', 'spielen']], punct: '.' },
-  { parts: ['als', 'Kind', 'habe', 'ich', 'nicht', 'fernsehen', 'dürfen'], valid: [['als', 'Kind', 'habe', 'ich', 'nicht', 'fernsehen', 'dürfen']], punct: '.' },
-  { parts: ['Nina', 'hat', 'letzte', 'Woche', 'arbeiten', 'müssen'], valid: [['Nina', 'hat', 'letzte', 'Woche', 'arbeiten', 'müssen']], punct: '.' },
-  { parts: ['wir', 'sollen', 'heute', 'die', 'Küche', 'putzen'], valid: [['wir', 'sollen', 'heute', 'die', 'Küche', 'putzen']], punct: '.' },
-  { parts: ['Max', 'hat', 'ein', 'neues', 'Auto', 'kaufen', 'wollen'], valid: [['Max', 'hat', 'ein', 'neues', 'Auto', 'kaufen', 'wollen']], punct: '.' },
-  { parts: ['hier', 'darf', 'man', 'nicht', 'rauchen'], valid: [['hier', 'darf', 'man', 'nicht', 'rauchen']], punct: '.' },
-  { parts: ['Anita', 'hat', 'allein', 'zur', 'Schule', 'fahren', 'dürfen'], valid: [['Anita', 'hat', 'allein', 'zur', 'Schule', 'fahren', 'dürfen']], punct: '.' }
+  { words: ['Ich', 'kann', 'gut', 'Gitarre', 'spielen'], punct: '.' },
+  { words: ['Als', 'Kind', 'habe', 'ich', 'nicht', 'fernsehen', 'dürfen'], punct: '.' },
+  { words: ['Nina', 'hat', 'letzte', 'Woche', 'arbeiten', 'müssen'], punct: '.' },
+  { words: ['Wir', 'sollen', 'heute', 'die', 'Küche', 'putzen'], punct: '.' },
+  { words: ['Max', 'hat', 'ein', 'neues', 'Auto', 'kaufen', 'wollen'], punct: '.' },
+  { words: ['Hier', 'darf', 'man', 'nicht', 'rauchen'], punct: '.' },
+  { words: ['Anita', 'hat', 'allein', 'zur', 'Schule', 'fahren', 'dürfen'], punct: '.' }
 ];
 var sbDragged = null;
 var sbCorrect = [];
@@ -445,10 +360,10 @@ function sbMakeChip(word,orig){ var ch=document.createElement('span'); ch.classN
 function sbGetDragAfter(container,x){ var chips=Array.from(container.querySelectorAll('.chip:not(.dragging)')); return chips.reduce(function(closest,child){ var box=child.getBoundingClientRect(); var offset=x-box.left-box.width/2; if(offset<0&&offset>closest.offset) return{offset:offset,element:child}; return closest; },{offset:Number.NEGATIVE_INFINITY}).element; }
 function sbUpdateCapitalization(rowIdx){ var row=document.getElementById('sb-row-'+rowIdx); if(!row) return; row.querySelectorAll('.chip').forEach(function(ch,i){ var orig=ch.dataset.orig; ch.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig; }); }
 function sbColorRow(rowIdx,correct){ var fb=document.getElementById('sb-fb-'+rowIdx); if(fb){ fb.textContent=correct?'✅':'❌'; fb.className='satzbau-feedback '+(correct?'ok':'no'); } }
-function sbCheckAuto(rowIdx){ var row=document.getElementById('sb-row-'+rowIdx); if(!row) return; var placed=Array.from(row.querySelectorAll('.chip')).map(function(ch){ return ch.dataset.orig; }); var data=satzbauData[rowIdx]; var expected=data.parts; if(placed.length===0){ sbColorRow(rowIdx,false); return; } var ok=placed.length===expected.length; if(ok){ for(var i=0;i<placed.length;i++){ var p=placed[i].charAt(0).toUpperCase()+placed[i].slice(1); var ex=expected[i].charAt(0).toUpperCase()+expected[i].slice(1); if(p!==ex){ok=false;break;} } } sbColorRow(rowIdx,ok); if(ok) sbCorrect[rowIdx]=true; if(sbCorrect.filter(Boolean).length===satzbauData.length) sbTimerStop(); }
+function sbCheckAuto(rowIdx){ var row=document.getElementById('sb-row-'+rowIdx); if(!row) return; var placed=Array.from(row.querySelectorAll('.chip')).map(function(ch){ return ch.dataset.orig; }); var data=satzbauData[rowIdx]; var expected=data.words; if(placed.length===0){ sbColorRow(rowIdx,false); return; } var ok=placed.length===expected.length; if(ok){ for(var i=0;i<placed.length;i++){ var p=placed[i].charAt(0).toUpperCase()+placed[i].slice(1); var ex=expected[i].charAt(0).toUpperCase()+expected[i].slice(1); if(p!==ex){ok=false;break;} } } sbColorRow(rowIdx,ok); if(ok) sbCorrect[rowIdx]=true; if(sbCorrect.filter(Boolean).length===satzbauData.length) sbTimerStop(); }
 function sbRegisterZone(zone,rowIdx){ zone.addEventListener('dragover',function(e){ e.preventDefault(); zone.classList.add('drag-over'); var cursor=zone.querySelector('.sb-insert-cursor'); if(!cursor){cursor=document.createElement('span');cursor.className='sb-insert-cursor';} var afterEl=sbGetDragAfter(zone,e.clientX); if(afterEl) zone.insertBefore(cursor,afterEl); else zone.appendChild(cursor); }); zone.addEventListener('dragleave',function(){ zone.classList.remove('drag-over'); var c=zone.querySelector('.sb-insert-cursor'); if(c) c.remove(); }); zone.addEventListener('drop',function(e){ e.preventDefault(); zone.classList.remove('drag-over'); var cursor=zone.querySelector('.sb-insert-cursor'); if(!sbDragged){if(cursor) cursor.remove(); return;} if(cursor) zone.insertBefore(sbDragged,cursor); else zone.appendChild(sbDragged); if(cursor) cursor.remove(); sbDragged.classList.add('sb-placed'); sbDragged=null; sbUpdateCapitalization(rowIdx); setTimeout(function(){ sbCheckAuto(rowIdx); },500); }); var bank=document.getElementById('sb-bank-'+rowIdx); bank.addEventListener('dragover',function(e){ e.preventDefault(); }); bank.addEventListener('drop',function(e){ e.preventDefault(); if(!sbDragged) return; sbDragged.classList.remove('sb-placed'); bank.appendChild(sbDragged); sbDragged=null; sbUpdateCapitalization(rowIdx); setTimeout(function(){ sbCheckAuto(rowIdx); },500); }); }
-function sbShowSolution(){ satzbauData.forEach(function(data,rowIdx){ var bank=document.getElementById('sb-bank-'+rowIdx); var row=document.getElementById('sb-row-'+rowIdx); if(!bank||!row) return; bank.innerHTML=''; row.innerHTML=''; data.parts.forEach(function(word,i){ var ch=sbMakeChip(i===0?word.charAt(0).toUpperCase()+word.slice(1):word,word); ch.classList.add('sb-placed'); row.appendChild(ch); }); var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt); sbColorRow(rowIdx,true); sbCorrect[rowIdx]=true; }); sbTimerStop(); }
-function sbBuild(){ var container=document.getElementById('satzbauContainer'); container.innerHTML=''; sbCorrect=new Array(satzbauData.length).fill(false); satzbauData.forEach(function(data,rowIdx){ var shuffled=data.parts.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;} var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>'; var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx; shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); }); wrap.appendChild(bank); var row=document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx; var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt); wrap.appendChild(row); var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+rowIdx; wrap.appendChild(fb); container.appendChild(wrap); sbRegisterZone(row,rowIdx); }); }
+function sbShowSolution(){ satzbauData.forEach(function(data,rowIdx){ var bank=document.getElementById('sb-bank-'+rowIdx); var row=document.getElementById('sb-row-'+rowIdx); if(!bank||!row) return; bank.innerHTML=''; row.innerHTML=''; data.words.forEach(function(word,i){ var ch=sbMakeChip(i===0?word.charAt(0).toUpperCase()+word.slice(1):word,word); ch.classList.add('sb-placed'); row.appendChild(ch); }); var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt); sbColorRow(rowIdx,true); sbCorrect[rowIdx]=true; }); sbTimerStop(); }
+function sbBuild(){ var container=document.getElementById('satzbauContainer'); container.innerHTML=''; sbCorrect=new Array(satzbauData.length).fill(false); satzbauData.forEach(function(data,rowIdx){ var shuffled=data.words.slice(); for(var i=shuffled.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=shuffled[i];shuffled[i]=shuffled[j];shuffled[j]=tmp;} var wrap=document.createElement('div'); wrap.className='sentence-builder'; wrap.innerHTML='<div class="sb-label">Satz '+(rowIdx+1)+'</div>'; var bank=document.createElement('div'); bank.className='chips-container'; bank.id='sb-bank-'+rowIdx; shuffled.forEach(function(word){ bank.appendChild(sbMakeChip(word,word)); }); wrap.appendChild(bank); var row=document.createElement('div'); row.className='sb-zone'; row.id='sb-row-'+rowIdx; var pt=document.createElement('span'); pt.className='sb-punkt'; pt.textContent=data.punct; row.appendChild(pt); wrap.appendChild(row); var fb=document.createElement('div'); fb.className='satzbau-feedback'; fb.id='sb-fb-'+rowIdx; wrap.appendChild(fb); container.appendChild(wrap); sbRegisterZone(row,rowIdx); }); }
 
 // ── MULTIPLE CHOICE ─────────────────────────────────────────
 var MC_DATA = [
@@ -458,10 +373,7 @@ var MC_DATA = [
   { q: 'Nina hat letzte Woche arbeiten ___. (Perfekt)', opts: ['gemusst', 'musste', 'müssen', 'muss'], ans: 2 },
   { q: 'Hier ___ man nicht rauchen. (Verbot)', opts: ['muss', 'darf', 'soll', 'will'], ans: 1 },
   { q: '___ du schon Auto fahren? (Fähigkeit)', opts: ['Darfst', 'Kannst', 'Musst', 'Sollst'], ans: 1 },
-  { q: 'Max hat ein Auto kaufen ___. (Perfekt von „wollen“)', opts: ['gewollt', 'wollen', 'wollte', 'will'], ans: 1 },
-  { q: 'Mein Chef ___, dass ich morgen früher komme. (Wunsch des Chefs)', opts: ['kann', 'darf', 'will', 'muss'], ans: 2 },
-  { q: 'Du ___ den Arzt fragen, wenn du dir nicht sicher bist. (Empfehlung)', opts: ['darfst', 'sollst', 'musst', 'kannst'], ans: 1 },
-  { q: 'Mit fünfzehn ___ man in Deutschland noch keinen Alkohol trinken. (Verbot)', opts: ['will', 'muss', 'darf', 'soll'], ans: 2 }
+  { q: 'Max hat ein Auto kaufen ___. (Perfekt von „wollen“)', opts: ['gewollt', 'wollen', 'wollte', 'will'], ans: 1 }
 ];
 var mcAnswered = [];
 function mcBuild(){ var container=document.getElementById('mcContainer'); container.innerHTML=''; mcAnswered=new Array(MC_DATA.length).fill(false); MC_DATA.forEach(function(item,idx){ var div=document.createElement('div'); div.className='mc-item'; var q=document.createElement('div'); q.className='mc-question'; q.textContent=(idx+1)+'. '+item.q; div.appendChild(q); var opts=document.createElement('div'); opts.className='mc-options'; item.opts.forEach(function(opt,oi){ var btn=document.createElement('button'); btn.className='mc-opt'; btn.textContent=opt; btn.addEventListener('click',function(){ if(mcAnswered[idx]) return; mcAnswered[idx]=true; opts.querySelectorAll('.mc-opt').forEach(function(b,bi){ if(bi===item.ans) b.classList.add('correct'); else b.classList.add('wrong'); }); if(oi===item.ans) btn.classList.remove('wrong'); }); opts.appendChild(btn); }); div.appendChild(opts); container.appendChild(div); }); }
@@ -487,98 +399,6 @@ function getSbCursor(zone, x) {
 })();
 
 function initSatzbau() { typeof sbBuild=="function" ? sbBuild() : typeof buildSb=="function" ? buildSb() : null; }
-
-var WORTSCHATZ_MODAL = [
-  {id:1, type:'p', en:'✅ (must / have to)', artikel:'', de:'müssen', plural:''},
-  {id:2, type:'p', en:'💪 (can / be able to)', artikel:'', de:'können', plural:''},
-  {id:3, type:'p', en:'🟢 (be allowed to)', artikel:'', de:'dürfen', plural:''},
-  {id:4, type:'p', en:'📋 (should / be supposed to)', artikel:'', de:'sollen', plural:''},
-  {id:5, type:'p', en:'🎯 (want to)', artikel:'', de:'wollen', plural:''},
-  {id:6, type:'p', en:'❤️ (like / would like)', artikel:'', de:'mögen', plural:''},
-  {id:7, type:'n', en:'⚠️ (duty / obligation)', artikel:'die', de:'Pflicht', plural:'Pflichten'},
-  {id:8, type:'n', en:'✋ (permission)', artikel:'die', de:'Erlaubnis', plural:'Erlaubnisse'},
-  {id:9, type:'n', en:'💡 (possibility)', artikel:'die', de:'Möglichkeit', plural:'Möglichkeiten'},
-  {id:10, type:'n', en:'🚫 (prohibition)', artikel:'das', de:'Verbot', plural:'Verbote'},
-  {id:11, type:'n', en:'🤝 (advice)', artikel:'der', de:'Rat', plural:'Ratschläge'},
-  {id:12, type:'n', en:'🎓 (ability)', artikel:'die', de:'Fähigkeit', plural:'Fähigkeiten'}
-];
-
-function initWortschatzModal(){
-  var c=document.getElementById('wortschatzModalContainer');
-  if(!c) return;
-  c.innerHTML='';
-  WORTSCHATZ_MODAL.forEach(function(w){
-    var item=document.createElement('div'); item.className='luecken-item';
-    var p=document.createElement('div'); p.className='ws-prompt';
-    p.textContent=w.en; item.appendChild(p);
-    var fields=document.createElement('div'); fields.className='ws-fields';
-    if(w.type==='n'){
-      var a=document.createElement('input'); a.className='blank'; a.style.width='5ch'; a.placeholder='Artikel'; a.dataset.ans=w.artikel; a.dataset.cs='0';
-      var b=document.createElement('input'); b.className='blank'; b.style.width=(Math.max(w.de.length,4)+3)+'ch'; b.placeholder='Wort'; b.dataset.ans=w.de; b.dataset.cs='1';
-      var c2=document.createElement('input'); c2.className='blank'; c2.style.width=(Math.max((w.plural||'-').length,4)+3)+'ch'; c2.placeholder='Plural'; c2.dataset.ans=w.plural||'–'; c2.dataset.cs='1';
-      if(w.plural==='–'){ c2.value='–'; c2.disabled=true; c2.classList.add('correct'); }
-      [a,b,c2].forEach(function(i){ i.addEventListener('input',function(){ wsCheckModal(i); }); fields.appendChild(i); });
-    } else {
-      var d=document.createElement('input'); d.className='blank'; d.style.width=(Math.max(w.de.length,8)+3)+'ch'; d.placeholder='Deutsch'; d.dataset.ans=w.de; d.dataset.cs='0';
-      d.addEventListener('input',function(){ wsCheckModal(d); }); fields.appendChild(d);
-    }
-    item.appendChild(fields); c.appendChild(item);
-  });
-}
-function wsCheckModal(inp){
-  var v=inp.value.trim(); var ans=inp.dataset.ans||'';
-  var cs=inp.dataset.cs==='1';
-  inp.classList.remove('correct','wrong');
-  if(!v) return;
-  var vv=cs?v:v.toLowerCase(); var aa=cs?ans:ans.toLowerCase();
-
-  if(vv===aa){ inp.classList.add('correct'); return; }
-
-  if(aa.indexOf(vv)===0) return; // noch im Präfix → neutral lassen
-
-  inp.classList.add('wrong');
-}
-function resetWortschatzModal(){ initWortschatzModal(); }
-function showWortschatzModalLoesung(){
-  document.querySelectorAll('#wortschatzModalContainer input.blank').forEach(function(i){
-    i.value=i.dataset.ans||'';
-    i.classList.add('correct'); i.classList.remove('wrong');
-  });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initWortschatzModal);
-} else { initWortschatzModal(); }
-
-// ===== MC-CHECK (Skill: daf-grammatik) =====
-var mcDone = [false, false, false, false];
-function mcCheck(step, btn, correct) {
-    var btns = btn.parentElement.querySelectorAll('.mc-btn');
-    btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
-    var fb = document.getElementById('mcfb' + step);
-    if (correct) {
-        btn.classList.add('correct');
-        fb.textContent = '✓ Richtig! Weiter zum nächsten Schritt.';
-        fb.className = 'mc-feedback ok';
-        mcDone[step] = true;
-        document.getElementById('pdot' + step).classList.add('done');
-        setTimeout(function() {
-            var next = document.getElementById('mc-step' + (step + 1));
-            if (next) { next.classList.add('active'); }
-            else { document.getElementById('regelkarte').style.display = 'block'; }
-        }, 700);
-    } else {
-        btn.classList.add('wrong');
-        fb.textContent = '✗ Nicht ganz — schau nochmal in die Beispielsätze.';
-        fb.className = 'mc-feedback err';
-        setTimeout(function() {
-            btns.forEach(function(b) { b.disabled = false; b.classList.remove('wrong','correct'); });
-            fb.textContent = '';
-            fb.className = 'mc-feedback';
-        }, 1400);
-    }
-}
-
 </script>
 </body>
 </html>

@@ -137,33 +137,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
     margin-bottom: 18px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
-  /* ── WORTBANK ── */
-.wortbank-label { font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
-.wortbank {
-  display:flex; flex-wrap:wrap; gap:8px; padding:14px;
-  background:#f0f0f8; border-radius:10px; min-height:48px;
-  margin-bottom:18px; border:1px dashed #bbb;
-}
-.wortbank-chip {
-  background:white; border:2px solid #667eea; color:#667eea;
-  padding:5px 12px; border-radius:14px; cursor:default;
-  font-weight:500; font-size:0.9em; transition:all 0.2s; user-select:none;
-}
-
-/* ── WORTBANK ── */
-.wortbank-label { font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
-.wortbank {
-  display:flex; flex-wrap:wrap; gap:8px; padding:14px;
-  background:#f0f0f8; border-radius:10px; min-height:48px;
-  margin-bottom:18px; border:1px dashed #bbb;
-}
-.wortbank-chip {
-  background:white; border:2px solid #667eea; color:#667eea;
-  padding:5px 12px; border-radius:14px; cursor:default;
-  font-weight:500; font-size:0.9em; transition:all 0.2s; user-select:none;
-}
-
-</style>
+  </style>
 </head>
 <body>
 
@@ -322,9 +296,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
                 <button class="btn btn-primary" onclick="loesungLuecken()">💡 Lösungen</button>
             </div>
             <div class="hilfe-box">Setze die richtige Form des Dativs ein.</div>
-            <div class="wortbank-label">📋 Wortbank – schreibe die Wörter selbst ein:</div>
-    <div class="wortbank" id="wortbank-luecken"></div>
-    <div id="lueckenContainer"></div>
+            <div id="lueckenContainer"></div>
         </div>
     </div><!-- /sec-2 -->
 
@@ -359,7 +331,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-        <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
+        <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
     </div>
 
 </div><!-- /container -->
@@ -473,7 +445,6 @@ function liveCheckBlank(inp) {
     if (val === ans) { inp.classList.add('correct'); timerAutoStart(2); checkLueckenOk(); return; }
     if (ans.indexOf(val) === 0) { timerAutoStart(2); return; }
     inp.classList.add('wrong');
-  initWortbank();
 }
 function checkLueckenOk() {
     var inputs = document.querySelectorAll('#lueckenContainer input.blank');
@@ -696,24 +667,6 @@ function initMC() {
 // INIT
 // ═════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() { loadBestTimes(); });
-/* ═══════════════════════════════════════════════════════
-   WORTBANK
-═══════════════════════════════════════════════════════ */
-function initWortbank() {
-  var bank = document.getElementById('wortbank-luecken');
-  if (!bank) return;
-  bank.innerHTML = '';
-  var words = LUECKEN_DATA.map(function(d){ return d.ans; });
-  words = words.filter(function(w){ return w && w.trim(); });
-  for(var i=words.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=words[i];words[i]=words[j];words[j]=t;}
-  words.forEach(function(w){
-    var chip = document.createElement('span');
-    chip.className = 'wortbank-chip'; chip.textContent = w;
-    bank.appendChild(chip);
-  });
-}
-
-
 </script>
 </body>
 </html>
