@@ -549,7 +549,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
 
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-        <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
+        <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a>
     </div>
 
 </div><!-- /container -->
@@ -1067,7 +1067,7 @@ function resetWortschatz() {
 var SCHREIB_NAME_KEY      = 'schreibwerkstatt_A2_1064R_name';
 var SCHREIB_KEY_PREFIX    = 'schreibwerkstatt_A2_1064R_';
 var SCHREIB_SENT_PREFIX   = 'schreibwerkstatt_A2_1064R_sent_';
-var FORMSUBMIT_ENDPOINT   = 'https://formsubmit.co/ajax/unterricht@fabdaf.onmicrosoft.com';
+var FORMSUBMIT_ENDPOINT   = 'https://formsubmit.co/ajax/unterricht@frankburkert-daf.de';
 var SCHREIB_LEKTION       = 'A2 – Lektion 1064R · Pläne für die Zukunft';
 var SCHREIB_MIN_CHARS     = 8;
 
@@ -1206,7 +1206,7 @@ function schreibSendenEinzeln(nr) {
         var subjectEnc = encodeURIComponent(subject);
         var bodyEnc = encodeURIComponent('Name: ' + schreibAktuellerName() + '\n\n' + message);
         st.classList.add('error');
-        st.innerHTML = '✗ Versand fehlgeschlagen — <a href="mailto:unterricht@fabdaf.onmicrosoft.com?subject=' + subjectEnc + '&body=' + bodyEnc + '" style="color:#c62828;font-weight:700;">stattdessen per Mail-Programm</a>';
+        st.innerHTML = '✗ Versand fehlgeschlagen — <a href="mailto:unterricht@frankburkert-daf.de?subject=' + subjectEnc + '&body=' + bodyEnc + '" style="color:#c62828;font-weight:700;">stattdessen per Mail-Programm</a>';
       }
     }
   );
@@ -1253,7 +1253,7 @@ function schreibSendenAlleNochOffenen() {
     function () {
       btn.disabled = false;
       btn.innerHTML = '📨 Alle noch nicht gesendeten Antworten schicken';
-      schreibStatusZeigen('error', '✗ Direkter Versand nicht möglich. Bitte einzeln pro Karte versuchen oder „In Zwischenablage" verwenden.');
+      schreibStatusZeigen('error', '✗ Direkter Versand nicht möglich. Bitte einzeln pro Karte versuchen oder „In Zwischenablage“ verwenden.');
     }
   );
 }
