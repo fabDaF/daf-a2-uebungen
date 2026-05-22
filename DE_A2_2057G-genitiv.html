@@ -97,6 +97,47 @@ input.blank.wrong { border-color: #e74c3c; background: #ffebee; }
   .nav-btn:last-child { border-right: 1px solid #ddd; }
   .zuordnung-categories { grid-template-columns: 1fr; }
 }
+
+/* ===== Schreibwerkstatt — Niveau-flexibel ===== */
+.schreib-aufgabe-karte { background: #f8f9ff; padding: 16px 18px; margin-bottom: 16px; border-radius: 10px; border-left: 4px solid #667eea; transition: all 0.25s; }
+.schreib-aufgabe-karte.gesendet { background: #f1f8e9; border-left-color: #689f38; }
+.schreib-aufgabe-nr { display: inline-block; background: #667eea; color: white; font-weight: 700; font-size: 0.85em; padding: 2px 10px; border-radius: 12px; margin-right: 8px; vertical-align: middle; }
+.schreib-aufgabe-karte.gesendet .schreib-aufgabe-nr { background: #689f38; }
+.schreib-aufgabe-titel { font-weight: 700; color: #4a148c; font-size: 1.0em; vertical-align: middle; }
+.schreib-aufgabe-karte.gesendet .schreib-aufgabe-titel { color: #33691e; }
+.schreib-aufgabe-frage { color: #555; font-size: 0.92em; line-height: 1.5; margin: 8px 0 8px 0; }
+.schreib-beispiel { font-size: 0.85em; color: #888; font-style: italic; margin-bottom: 8px; padding-left: 12px; border-left: 2px solid #e0e4ff; }
+.schreib-mini-textarea { width: 100%; min-height: 350px; border: 1.5px solid #c5cff5; border-radius: 8px; padding: 10px 12px; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 0.95em; line-height: 1.6; color: #1a1a1a; resize: vertical; outline: none; transition: border-color 0.2s; background: #fefefe; }
+.schreib-mini-textarea:focus { border-color: #667eea; box-shadow: 0 0 0 2px rgba(102,126,234,0.15); }
+.schreib-mini-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; flex-wrap: wrap; gap: 10px; }
+.schreib-mini-meta { font-size: 0.82em; color: #888; }
+.schreib-mini-meta strong { color: #667eea; font-weight: 700; }
+.schreib-mini-status { font-size: 0.82em; color: #689f38; font-weight: 600; }
+.schreib-mini-status.error { color: #c62828; }
+.schreib-mini-btn { padding: 7px 14px; border-radius: 6px; border: 1.5px solid #667eea; background: white; color: #667eea; font-size: 0.83em; font-weight: 600; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.schreib-mini-btn:hover:not(:disabled) { background: #667eea; color: white; box-shadow: 0 2px 6px rgba(102,126,234,0.3); }
+.schreib-mini-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.schreib-mini-btn.gesendet { border-color: #689f38; color: #689f38; background: #f1f8e9; }
+.schreib-mini-btn.gesendet:hover:not(:disabled) { background: #689f38; color: white; }
+.schreib-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; padding-top: 18px; border-top: 1px solid #e0e4ff; }
+.schreib-btn { padding: 10px 20px; border-radius: 8px; border: none; font-size: 0.95em; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.schreib-btn-primary { background: #667eea; color: white; }
+.schreib-btn-primary:hover:not(:disabled) { background: #5568d3; box-shadow: 0 4px 12px rgba(102,126,234,0.35); transform: translateY(-1px); }
+.schreib-btn-primary:disabled { background: #c5cff5; cursor: not-allowed; }
+.schreib-btn-ghost { background: transparent; color: #667eea; border: 1.5px solid #c5cff5; }
+.schreib-btn-ghost:hover { background: #f5f7ff; border-color: #667eea; }
+.schreib-status { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 0.92em; line-height: 1.5; display: none; }
+.schreib-status.success { display: block; background: #e8f5e9; border-left: 4px solid #27ae60; color: #1b5e20; }
+.schreib-status.error { display: block; background: #ffebee; border-left: 4px solid #e74c3c; color: #b71c1c; }
+.schreib-status.info { display: block; background: #e3f2fd; border-left: 4px solid #2196f3; color: #0d47a1; }
+.schreib-name { width: 100%; max-width: 320px; padding: 10px 14px; border: 1.5px solid #c5cff5; border-radius: 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: border-color 0.2s; margin-bottom: 12px; }
+.schreib-name:focus { border-color: #667eea; }
+.schreib-label { display: block; font-size: 0.88em; color: #555; margin-bottom: 6px; font-weight: 600; }
+.schreib-name-box { background: #fffaf0; border: 1.5px solid #ffd699; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+.schreib-name-box .schreib-label { color: #b15c00; }
+.schreib-name.schreib-name-error { border-color: #c62828; box-shadow: 0 0 0 2px rgba(198,40,40,0.15); animation: schreib-name-shake 0.4s; }
+@keyframes schreib-name-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+
 </style>
 </head>
 <body>
@@ -113,6 +154,7 @@ input.blank.wrong { border-color: #e74c3c; background: #ffebee; }
         <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
         <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
         <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🎯</span><span class="nav-label">Multiple Choice</span></div>
+        <div class="nav-btn" onclick="showSection(5)"><span class="nav-emoji">📨</span><span class="nav-label">Schreibwerkstatt</span></div>
     </div>
 
     <div class="section active" id="sec-0">
@@ -238,6 +280,79 @@ input.blank.wrong { border-color: #e74c3c; background: #ffebee; }
         </div>
     </div>
 
+    <div class="section" id="sec-schreib">
+      <img class="tab-banner" src="https://images.pexels.com/photos/733856/pexels-photo-733856.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Notizbuch und Stift, bereit zum Schreiben">
+      <div class="section-title">📨 Schreibwerkstatt</div>
+      <div class="section-sub">Fünf kleine Schreibaufgaben, bei denen du den Genitiv (des Mannes, der Frau, der Kinder) aktiv übst. Jede Aufgabe verlangt diese Struktur — nimm sie als Trainingseinheit.</div>
+
+      <div class="hilfe-box">
+        Schreiben ist das beste Training. Nimm dir Zeit für eine, zwei oder alle fünf Aufgaben. <strong>Jede Antwort kannst du einzeln an Frank schicken</strong> — du musst nicht alle bearbeiten. Wenn du den Sammelbutton am Ende benutzt, gehen alle noch nicht gesendeten Antworten in einer Mail.
+      </div>
+
+      <div class="schreib-name-box">
+        <label class="schreib-label" for="sw-name">Dein Name (Pflicht — damit Frank weiß, wer geschrieben hat):</label>
+        <input type="text" id="sw-name" class="schreib-name" placeholder="z. B. Maria Lopez" required>
+      </div>
+
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">1</span><span class="schreib-aufgabe-titel">Eine Sache aus deiner Familie</span>
+        <div class="schreib-aufgabe-frage">Beschreib eine Sache mit Genitiv — z.B. „das Auto meines Bruders".</div>
+        <div class="schreib-beispiel">Beispiel: „Das Haus meiner Eltern ist nicht groß, aber sehr gemütlich. Im Wohnzimmer steht das alte Klavier meiner Großmutter."</div>
+        <textarea class="schreib-mini-textarea" data-aufgabe="1" data-titel="Eine Sache aus deiner Familie"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-1">0</strong> <span class="schreib-mini-status" id="sw-status-1"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-1" onclick="schreibSendenEinzeln(1)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">2</span><span class="schreib-aufgabe-titel">Drei Genitiv-Sätze</span>
+        <div class="schreib-aufgabe-frage">Schreib drei kurze Sätze mit Genitiv.</div>
+        <div class="schreib-beispiel">Beispiel: „Der Hund des Nachbarn bellt oft. Die Mutter meiner Freundin kommt aus Polen. Das Auto unserer Firma ist alt."</div>
+        <textarea class="schreib-mini-textarea" data-aufgabe="2" data-titel="Drei Genitiv-Sätze"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-2">0</strong> <span class="schreib-mini-status" id="sw-status-2"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-2" onclick="schreibSendenEinzeln(2)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">3</span><span class="schreib-aufgabe-titel">Frage mit „Wessen?"</span>
+        <div class="schreib-aufgabe-frage">Stell zwei Fragen mit „Wessen?".</div>
+        <div class="schreib-beispiel">Beispiel: „Wessen Buch liegt da auf dem Stuhl? Wessen Idee war das eigentlich?"</div>
+        <textarea class="schreib-mini-textarea" data-aufgabe="3" data-titel="Frage mit „Wessen?""></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-3">0</strong> <span class="schreib-mini-status" id="sw-status-3"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-3" onclick="schreibSendenEinzeln(3)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">4</span><span class="schreib-aufgabe-titel">Vier feste Wendungen mit Genitiv</span>
+        <div class="schreib-aufgabe-frage">Schreib vier Sätze mit Wendungen wie „während der Woche", „statt des Kaffees", „trotz des Regens".</div>
+        <div class="schreib-beispiel">Beispiel: „Während der Woche arbeite ich. Statt des Kaffees nehme ich heute Tee. Trotz des Regens gehen wir spazieren. Wegen der Hitze blieb ich zu Hause."</div>
+        <textarea class="schreib-mini-textarea" data-aufgabe="4" data-titel="Vier feste Wendungen mit Genitiv"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-4">0</strong> <span class="schreib-mini-status" id="sw-status-4"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-4" onclick="schreibSendenEinzeln(4)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">5</span><span class="schreib-aufgabe-titel">Mini-Dialog: Mit Genitiv</span>
+        <div class="schreib-aufgabe-frage">Schreib einen Dialog mit Genitiv-Konstruktionen.</div>
+        <div class="schreib-beispiel">Beispiel: „— Wessen Mantel liegt auf dem Stuhl? — Es ist der Mantel meines Bruders. — Und die Tasche? — Die gehört der Freundin meiner Mutter."</div>
+        <textarea class="schreib-mini-textarea" data-aufgabe="5" data-titel="Mini-Dialog: Mit Genitiv"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-5">0</strong> <span class="schreib-mini-status" id="sw-status-5"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-5" onclick="schreibSendenEinzeln(5)">📨 An Frank senden</button>
+        </div>
+      </div>
+
+      <div class="schreib-actions">
+        <button class="schreib-btn schreib-btn-primary" id="sw-btn-all" onclick="schreibSendenAlleNochOffenen()">📨 Alle noch nicht gesendeten Antworten schicken</button>
+        <button class="schreib-btn schreib-btn-ghost" onclick="schreibKopieren()">📋 In Zwischenablage</button>
+        <button class="schreib-btn schreib-btn-ghost" onclick="schreibLeeren()">🗑️ Alles zurücksetzen</button>
+      </div>
+      <div class="schreib-status" id="sw-status"></div>
+    </div>
+
     <div class="author-footer">
         <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
         <a href="mailto:unterricht@fabdaf.onmicrosoft.com">unterricht@fabdaf.onmicrosoft.com</a>
@@ -245,7 +360,253 @@ input.blank.wrong { border-color: #e74c3c; background: #ffebee; }
 </div><!-- /container -->
 
 <script>
-var TIMER_PREFIX='DE_A2_2057G_';var timerStarted=[false,false,false,false,false];var timerRunning=[false,false,false,false,false];var timerSeconds=[0,0,0,0,0];var timerIntervals=[null,null,null,null,null];function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerSeconds[n]++;var el=document.getElementById('timer-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);},1000);}function timerStop(n){if(!timerRunning[n])return;clearInterval(timerIntervals[n]);timerRunning[n]=false;var best=parseInt(localStorage.getItem(TIMER_PREFIX+n)||'999999');if(timerSeconds[n]>0&&timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+n,timerSeconds[n]);var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);}}function timerResetOne(n){clearInterval(timerIntervals[n]);timerRunning[n]=false;timerStarted[n]=false;timerSeconds[n]=0;var el=document.getElementById('timer-'+n);if(el)el.textContent='00:00';}function fmtTime(s){var m=Math.floor(s/60);var sec=s%60;return(m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;}function loadBestTimes(){for(var i=1;i<=4;i++){var v=localStorage.getItem(TIMER_PREFIX+i);if(v){var el=document.getElementById('best-'+i);if(el)el.textContent=fmtTime(parseInt(v));}}}var mcDone=[false,false,false,false];function mcCheck(step,btn,correct){var btns=btn.parentElement.querySelectorAll('.mc-btn');btns.forEach(function(b){b.disabled=true;b.classList.remove('correct','wrong');});var fb=document.getElementById('mcfb'+step);if(correct){btn.classList.add('correct');fb.textContent='\u2713 Richtig!';fb.className='mc-feedback ok';mcDone[step]=true;document.getElementById('pdot'+step).classList.add('done');setTimeout(function(){var next=document.getElementById('mc-step'+(step+1));if(next){next.classList.add('active');}else{document.getElementById('regelkarte').style.display='block';}},700);}else{btn.classList.add('wrong');fb.textContent='\u2717 Nicht ganz.';fb.className='mc-feedback err';setTimeout(function(){btns.forEach(function(b){b.disabled=false;b.classList.remove('wrong','correct');});fb.textContent='';fb.className='mc-feedback';},1400);}}function showSection(idx){var sections=document.querySelectorAll('.section');var buttons=document.querySelectorAll('.nav-btn');sections.forEach(function(s){s.classList.remove('active');});buttons.forEach(function(b){b.classList.remove('active');});sections[idx].classList.add('active');buttons[idx].classList.add('active');}var draggedChip=null;function allowDrop(e){e.preventDefault();}function dropZuo(e,zone){e.preventDefault();if(!draggedChip)return;zone.appendChild(draggedChip);draggedChip=null;colorAllZuordnungChips();timerAutoStart(1);}function colorZuordnungChip(chip){var zone=chip.closest('.drop-zone');if(zone){chip.classList.remove('correct','wrong');chip.classList.add(chip.dataset.cat===zone.dataset.cat?'correct':'wrong');}else{chip.classList.remove('correct','wrong');}}function colorAllZuordnungChips(){document.querySelectorAll('#sec-1 .chip').forEach(function(chip){colorZuordnungChip(chip);});checkZuordnungAllOk();}function checkZuordnungAllOk(){var chips=document.querySelectorAll('#sec-1 .chip');var allOk=chips.length>0&&Array.from(chips).every(function(c){return c.classList.contains('correct');});if(allOk)timerStop(1);}var zuordnungData=[{text:'des Mannes',cat:'maskulin'},{text:'des Bruders',cat:'maskulin'},{text:'des Vaters',cat:'maskulin'},{text:'der Frau',cat:'feminin'},{text:'der Mutter',cat:'feminin'},{text:'der Sängerin',cat:'feminin'},{text:'des Kindes',cat:'neutrum'},{text:'des Mädchens',cat:'neutrum'},{text:'des Hauses',cat:'neutrum'},{text:'der Kinder',cat:'plural'},{text:'der Schüler',cat:'plural'},{text:'der Absolventen',cat:'plural'}];function initZuordnung(){var bank=document.getElementById('chip-bank-1');bank.innerHTML='';zuordnungData.forEach(function(item){var chip=document.createElement('div');chip.className='chip';chip.textContent=item.text;chip.dataset.cat=item.cat;chip.draggable=true;chip.addEventListener('dragstart',function(e){draggedChip=chip;e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){draggedChip=null;colorAllZuordnungChips();});bank.appendChild(chip);});}function showZuordnungLoesung(){var zones=document.querySelectorAll('#sec-1 .drop-zone');var bank=document.getElementById('chip-bank-1');var chips=Array.from(bank.querySelectorAll('.chip')).concat(Array.from(document.querySelectorAll('#sec-1 .drop-zone .chip')));zones.forEach(function(zone){while(zone.children.length>1){zone.removeChild(zone.lastChild);}});bank.innerHTML='';chips.forEach(function(chip){bank.appendChild(chip);});zuordnungData.forEach(function(item){var zone=document.getElementById('zone-'+item.cat);var chip=Array.from(document.querySelectorAll('#sec-1 .chip')).find(function(c){return c.textContent===item.text;});if(chip&&zone){zone.appendChild(chip);}});colorAllZuordnungChips();}function resetZuordnung(){initZuordnung();}var lueckenData=[{satz:'Das Kleid ___ (das Mädchen) ist sehr bunt.',ans:'des Mädchens'},{satz:'Maria ist sich ___ (die Hilfe) bewusst.',ans:'der Hilfe'},{satz:'Die Farbe ___ (die Hose) gefällt mir nicht.',ans:'der Hose'},{satz:'___ (Alex) Buch ist interessant.',ans:'Alex\''},{satz:'Die Hand ___ (der Mann) ist gebrochen.',ans:'des Mannes'},{satz:'Die Mütter ___ (die Kinder) sind alle gekommen.',ans:'der Kinder'},{satz:'Die Stimme ___ (die Sängerin) ist sehr schön.',ans:'der Sängerin'},{satz:'Ich sehe das Auto ___ (der Mann).',ans:'des Mannes'},{satz:'Die Tasche ___ (die Frau) ist aus Leder.',ans:'der Frau'},{satz:'Die Bücher ___ (die Schüler) sind interessant.',ans:'der Schüler'},{satz:'Die Bäume ___ (der Garten) sind alle grün.',ans:'des Gartens'},{satz:'Das Wasser ___ (der See) ist klar.',ans:'des Sees'}];function initLuecken(){var container=document.getElementById('luecken-container');container.innerHTML='';lueckenData.forEach(function(item,idx){var div=document.createElement('div');div.className='luecken-item';var inp=document.createElement('input');inp.type='text';inp.className='blank';inp.placeholder='';inp.style.width='120px';inp.dataset.answer=item.ans;inp.setAttribute('autocomplete','off');inp.addEventListener('input',function(){timerAutoStart(2);liveCheck(inp);checkLueckenAllOk();});var before=item.satz.indexOf('___');var part1=item.satz.substring(0,before);var part2=item.satz.substring(before+3);div.innerHTML='<span class="number">'+(idx+1)+'</span>'+part1;div.appendChild(inp);var span2=document.createElement('span');span2.textContent=part2;div.appendChild(span2);container.appendChild(div);});}function lcLower(s){var r='';for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);r+=(c>=65&&c<=90)?String.fromCharCode(c+32):(c===196)?'ä':(c===214)?'ö':(c===220)?'ü':s.charAt(i);}return r;}function liveCheck(inp){var ans=inp.dataset.answer||'';var val=inp.value.trim();var fc=ans.charCodeAt(0);var caseSensitive=(fc>=65&&fc<=90)||(fc===196||fc===214||fc===220);var cmpVal=caseSensitive?val:lcLower(val);var cmpAns=caseSensitive?ans:lcLower(ans);inp.classList.remove('correct','wrong');if(!cmpVal)return;if(cmpVal===cmpAns){inp.classList.add('correct');checkLueckenAllOk();return;}if(cmpAns.indexOf(cmpVal)===0)return;inp.classList.add('wrong');}function checkLueckenAllOk(){var inputs=document.querySelectorAll('#sec-2 input.blank');var allOk=inputs.length>0&&Array.from(inputs).every(function(i){return i.classList.contains('correct');});if(allOk)timerStop(2);}function showLueckenLoesung(){document.querySelectorAll('#sec-2 input.blank').forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.add('correct');inp.classList.remove('wrong');});timerStop(2);}function resetLuecken(){initLuecken();}var satzbauData=[{parts:['wegen','des','Wetters','gehe','ich','nicht','nach','draußen'],valid:[['wegen','des','Wetters','gehe','ich','nicht','nach','draußen']],punct:'.'},{parts:['gehst','du','zu','Annas','Geburtstag'],valid:[['gehst','du','zu','Annas','Geburtstag']],punct:'?'},{parts:['trotz','deiner','Argumente','sehe','ich','das','anders'],valid:[['trotz','deiner','Argumente','sehe','ich','das','anders']],punct:'.'},{parts:['das','ist','der','Stuhl','meines','Bruders'],valid:[['das','ist','der','Stuhl','meines','Bruders']],punct:'.'},{parts:['die','Zeugnisse','der','Absolventen','liegen','im','Sekretariat','bereit'],valid:[['die','Zeugnisse','der','Absolventen','liegen','im','Sekretariat','bereit']],punct:'.'},{parts:['die','Arbeit','des','Mannes','ist','wirklich','interessant'],valid:[['die','Arbeit','des','Mannes','ist','wirklich','interessant']],punct:'.'},{parts:['der','Kindergarten','meines','Sohnes','liegt','in','der','Nähe'],valid:[['der','Kindergarten','meines','Sohnes','liegt','in','der','Nähe']],punct:'.'},{parts:['ich','bin','mir','meines','Fehlers','bewusst'],valid:[['ich','bin','mir','meines','Fehlers','bewusst']],punct:'.'}];var sbDragged=null;function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}function sbUpdateCapitalization(row){var chips=Array.from(row.querySelectorAll('.chip'));chips.forEach(function(c,i){var orig=c.dataset.orig;if(orig===','||orig===';')return;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();if(isProper){c.textContent=orig;}else{c.textContent=(i===0)?sbCapitalize(orig):orig;}});}function sbMakeChip(word){var chip=document.createElement('div');chip.className=(word===','||word===';')?'chip punct-chip':'chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;chip.addEventListener('dragstart',function(e){sbDragged=chip;timerAutoStart(3);e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){sbDragged=null;});return chip;}function sbRegisterZone(zone,idx){zone.addEventListener('dragover',function(e){e.preventDefault();if(!sbDragged)return;});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged)return;zone.appendChild(sbDragged);sbDragged=null;var row=document.getElementById('sb-row-'+idx);sbUpdateCapitalization(row);sbCheckAuto(idx);});} function sbColorRow(idx){var row=document.getElementById('sb-row-'+idx);var chips=Array.from(row.querySelectorAll('.chip'));var order=chips.map(function(c){return c.dataset.orig;});var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});var existing=row.querySelector('.sb-punkt');if(existing)existing.parentNode.removeChild(existing);if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}return ok;}function sbCheckAuto(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var fb=document.getElementById('sb-fb-'+idx);if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}setTimeout(function(){timerAutoStart(3);var ok=sbColorRow(idx);if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='\u2713 Korrekt!';sbCheckAllDone();}else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='\u2717 Falsche Reihenfolge!';}},500);}function sbCheckAllDone(){var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});if(allOk)timerStop(3);}function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var solution=satzbauData[idx].valid[0];var allChips={};Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCapitalize(word):word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});setTimeout(function(){sbCheckAuto(idx);},100);}function sbResetOne(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);row.classList.remove('correct','incorrect');var parts=satzbauData[idx].parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});}function initSatzbau(){var container=document.getElementById('satzbauContainer');container.innerHTML='';satzbauData.forEach(function(ex,idx){var item=document.createElement('div');item.className='satzbau-item';var lbl=document.createElement('div');lbl.className='sb-label';lbl.textContent='Satz '+(idx+1);item.appendChild(lbl);var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;var parts=ex.parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});sbRegisterZone(bank,idx);sbRegisterZone(row,idx);var btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:8px;margin-top:6px;';var solveBtn=document.createElement('button');solveBtn.className='btn';solveBtn.textContent='Lösen';solveBtn.setAttribute('data-idx',idx);solveBtn.addEventListener('click',function(){sbShowSolution(parseInt(this.getAttribute('data-idx')));});var resetBtn=document.createElement('button');resetBtn.className='btn';resetBtn.textContent='↺ Neustart';resetBtn.setAttribute('data-idx',idx);resetBtn.addEventListener('click',function(){sbResetOne(parseInt(this.getAttribute('data-idx')));});btnRow.appendChild(solveBtn);btnRow.appendChild(resetBtn);item.appendChild(bank);item.appendChild(row);item.appendChild(fb);item.appendChild(btnRow);container.appendChild(item);});} function sbShowAll(){satzbauData.forEach(function(_,idx){sbShowSolution(idx);});}function resetSatzbau(){initSatzbau();}var mcData=[{satz:'Ich helfe dem Mann.',correct:'Dativ'},{satz:'Die Arbeit des Mannes ist interessant.',correct:'Genitiv'},{satz:'Er dankt der Lehrerin.',correct:'Dativ'},{satz:'Wegen des Regens bleiben wir zu Hause.',correct:'Genitiv'},{satz:'Ich gebe dem Kind ein Buch.',correct:'Dativ'},{satz:'Trotz der Kälte gehen wir spazieren.',correct:'Genitiv'},{satz:'Das Auto meines Bruders ist rot.',correct:'Genitiv'},{satz:'Er folgt dem Hund.',correct:'Dativ'},{satz:'Während des Sommers reise ich viel.',correct:'Genitiv'},{satz:'Ich schicke meiner Schwester einen Brief.',correct:'Dativ'}];var mcAnswers=[null,null,null,null,null,null,null,null,null,null];function initMC(){var container=document.getElementById('mc-container');container.innerHTML='';mcData.forEach(function(item,idx){var div=document.createElement('div');div.className='mc-exercise';var q=document.createElement('div');q.className='mc-question';q.textContent=item.satz;div.appendChild(q);var opts=document.createElement('div');opts.className='mc-opts';['Genitiv','Dativ'].forEach(function(opt){var btn=document.createElement('button');btn.className='mc-opt';btn.textContent=opt;btn.setAttribute('data-idx',idx);btn.addEventListener('click',function(){mcAnswerClick(idx,opt,btn);});opts.appendChild(btn);});div.appendChild(opts);container.appendChild(div);});}function mcAnswerClick(idx,opt,btn){timerAutoStart(4);var isCorrect=opt===mcData[idx].correct;btn.classList.add(isCorrect?'correct':'wrong');mcAnswers[idx]=opt;var allAnswered=mcAnswers.every(function(a){return a!==null;});if(allAnswered){var allCorrect=mcAnswers.every(function(a,i){return a===mcData[i].correct;});if(allCorrect)timerStop(4);}}function resetMC(){mcAnswers=[null,null,null,null,null,null,null,null,null,null];initMC();}window.addEventListener('DOMContentLoaded',function(){initZuordnung();initLuecken();initSatzbau();initMC();loadBestTimes();});
+var TIMER_PREFIX='DE_A2_2057G_';var timerStarted=[false,false,false,false,false];var timerRunning=[false,false,false,false,false];var timerSeconds=[0,0,0,0,0];var timerIntervals=[null,null,null,null,null];function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerSeconds[n]++;var el=document.getElementById('timer-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);},1000);}function timerStop(n){if(!timerRunning[n])return;clearInterval(timerIntervals[n]);timerRunning[n]=false;var best=parseInt(localStorage.getItem(TIMER_PREFIX+n)||'999999');if(timerSeconds[n]>0&&timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+n,timerSeconds[n]);var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);}}function timerResetOne(n){clearInterval(timerIntervals[n]);timerRunning[n]=false;timerStarted[n]=false;timerSeconds[n]=0;var el=document.getElementById('timer-'+n);if(el)el.textContent='00:00';}function fmtTime(s){var m=Math.floor(s/60);var sec=s%60;return(m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;}function loadBestTimes(){for(var i=1;i<=4;i++){var v=localStorage.getItem(TIMER_PREFIX+i);if(v){var el=document.getElementById('best-'+i);if(el)el.textContent=fmtTime(parseInt(v));}}}var mcDone=[false,false,false,false];function mcCheck(step,btn,correct){var btns=btn.parentElement.querySelectorAll('.mc-btn');btns.forEach(function(b){b.disabled=true;b.classList.remove('correct','wrong');});var fb=document.getElementById('mcfb'+step);if(correct){btn.classList.add('correct');fb.textContent='\u2713 Richtig!';fb.className='mc-feedback ok';mcDone[step]=true;document.getElementById('pdot'+step).classList.add('done');setTimeout(function(){var next=document.getElementById('mc-step'+(step+1));if(next){next.classList.add('active');}else{document.getElementById('regelkarte').style.display='block';}},700);}else{btn.classList.add('wrong');fb.textContent='\u2717 Nicht ganz.';fb.className='mc-feedback err';setTimeout(function(){btns.forEach(function(b){b.disabled=false;b.classList.remove('wrong','correct');});fb.textContent='';fb.className='mc-feedback';},1400);}}function showSection(idx){var sections=document.querySelectorAll('.section');var buttons=document.querySelectorAll('.nav-btn');sections.forEach(function(s){s.classList.remove('active');});buttons.forEach(function(b){b.classList.remove('active');});sections[idx].classList.add('active');buttons[idx].classList.add('active');}var draggedChip=null;function allowDrop(e){e.preventDefault();}function dropZuo(e,zone){e.preventDefault();if(!draggedChip)return;zone.appendChild(draggedChip);draggedChip=null;colorAllZuordnungChips();timerAutoStart(1);}function colorZuordnungChip(chip){var zone=chip.closest('.drop-zone');if(zone){chip.classList.remove('correct','wrong');chip.classList.add(chip.dataset.cat===zone.dataset.cat?'correct':'wrong');}else{chip.classList.remove('correct','wrong');}}function colorAllZuordnungChips(){document.querySelectorAll('#sec-1 .chip').forEach(function(chip){colorZuordnungChip(chip);});checkZuordnungAllOk();}function checkZuordnungAllOk(){var chips=document.querySelectorAll('#sec-1 .chip');var allOk=chips.length>0&&Array.from(chips).every(function(c){return c.classList.contains('correct');});if(allOk)timerStop(1);}var zuordnungData=[{text:'des Mannes',cat:'maskulin'},{text:'des Bruders',cat:'maskulin'},{text:'des Vaters',cat:'maskulin'},{text:'der Frau',cat:'feminin'},{text:'der Mutter',cat:'feminin'},{text:'der Sängerin',cat:'feminin'},{text:'des Kindes',cat:'neutrum'},{text:'des Mädchens',cat:'neutrum'},{text:'des Hauses',cat:'neutrum'},{text:'der Kinder',cat:'plural'},{text:'der Schüler',cat:'plural'},{text:'der Absolventen',cat:'plural'}];function initZuordnung(){var bank=document.getElementById('chip-bank-1');bank.innerHTML='';zuordnungData.forEach(function(item){var chip=document.createElement('div');chip.className='chip';chip.textContent=item.text;chip.dataset.cat=item.cat;chip.draggable=true;chip.addEventListener('dragstart',function(e){draggedChip=chip;e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){draggedChip=null;colorAllZuordnungChips();});bank.appendChild(chip);});}function showZuordnungLoesung(){var zones=document.querySelectorAll('#sec-1 .drop-zone');var bank=document.getElementById('chip-bank-1');var chips=Array.from(bank.querySelectorAll('.chip')).concat(Array.from(document.querySelectorAll('#sec-1 .drop-zone .chip')));zones.forEach(function(zone){while(zone.children.length>1){zone.removeChild(zone.lastChild);}});bank.innerHTML='';chips.forEach(function(chip){bank.appendChild(chip);});zuordnungData.forEach(function(item){var zone=document.getElementById('zone-'+item.cat);var chip=Array.from(document.querySelectorAll('#sec-1 .chip')).find(function(c){return c.textContent===item.text;});if(chip&&zone){zone.appendChild(chip);}});colorAllZuordnungChips();}function resetZuordnung(){initZuordnung();}var lueckenData=[{satz:'Das Kleid ___ (das Mädchen) ist sehr bunt.',ans:'des Mädchens'},{satz:'Maria ist sich ___ (die Hilfe) bewusst.',ans:'der Hilfe'},{satz:'Die Farbe ___ (die Hose) gefällt mir nicht.',ans:'der Hose'},{satz:'___ (Alex) Buch ist interessant.',ans:'Alex\''},{satz:'Die Hand ___ (der Mann) ist gebrochen.',ans:'des Mannes'},{satz:'Die Mütter ___ (die Kinder) sind alle gekommen.',ans:'der Kinder'},{satz:'Die Stimme ___ (die Sängerin) ist sehr schön.',ans:'der Sängerin'},{satz:'Ich sehe das Auto ___ (der Mann).',ans:'des Mannes'},{satz:'Die Tasche ___ (die Frau) ist aus Leder.',ans:'der Frau'},{satz:'Die Bücher ___ (die Schüler) sind interessant.',ans:'der Schüler'},{satz:'Die Bäume ___ (der Garten) sind alle grün.',ans:'des Gartens'},{satz:'Das Wasser ___ (der See) ist klar.',ans:'des Sees'}];function initLuecken(){var container=document.getElementById('luecken-container');container.innerHTML='';lueckenData.forEach(function(item,idx){var div=document.createElement('div');div.className='luecken-item';var inp=document.createElement('input');inp.type='text';inp.className='blank';inp.placeholder='';inp.style.width='120px';inp.dataset.answer=item.ans;inp.setAttribute('autocomplete','off');inp.addEventListener('input',function(){timerAutoStart(2);liveCheck(inp);checkLueckenAllOk();});var before=item.satz.indexOf('___');var part1=item.satz.substring(0,before);var part2=item.satz.substring(before+3);div.innerHTML='<span class="number">'+(idx+1)+'</span>'+part1;div.appendChild(inp);var span2=document.createElement('span');span2.textContent=part2;div.appendChild(span2);container.appendChild(div);});}function lcLower(s){var r='';for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);r+=(c>=65&&c<=90)?String.fromCharCode(c+32):(c===196)?'ä':(c===214)?'ö':(c===220)?'ü':s.charAt(i);}return r;}function liveCheck(inp){var ans=inp.dataset.answer||'';var val=inp.value.trim();var fc=ans.charCodeAt(0);var caseSensitive=(fc>=65&&fc<=90)||(fc===196||fc===214||fc===220);var cmpVal=caseSensitive?val:lcLower(val);var cmpAns=caseSensitive?ans:lcLower(ans);inp.classList.remove('correct','wrong');if(!cmpVal)return;if(cmpVal===cmpAns){inp.classList.add('correct');checkLueckenAllOk();return;}if(cmpAns.indexOf(cmpVal)===0)return;inp.classList.add('wrong');}function checkLueckenAllOk(){var inputs=document.querySelectorAll('#sec-2 input.blank');var allOk=inputs.length>0&&Array.from(inputs).every(function(i){return i.classList.contains('correct');});if(allOk)timerStop(2);}function showLueckenLoesung(){document.querySelectorAll('#sec-2 input.blank').forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.add('correct');inp.classList.remove('wrong');});timerStop(2);}function resetLuecken(){initLuecken();}var satzbauData=[{parts:['wegen','des','Wetters','gehe','ich','nicht','nach','draußen'],valid:[['wegen','des','Wetters','gehe','ich','nicht','nach','draußen']],punct:'.'},{parts:['gehst','du','zu','Annas','Geburtstag'],valid:[['gehst','du','zu','Annas','Geburtstag']],punct:'?'},{parts:['trotz','deiner','Argumente','sehe','ich','das','anders'],valid:[['trotz','deiner','Argumente','sehe','ich','das','anders']],punct:'.'},{parts:['das','ist','der','Stuhl','meines','Bruders'],valid:[['das','ist','der','Stuhl','meines','Bruders']],punct:'.'},{parts:['die','Zeugnisse','der','Absolventen','liegen','im','Sekretariat','bereit'],valid:[['die','Zeugnisse','der','Absolventen','liegen','im','Sekretariat','bereit']],punct:'.'},{parts:['die','Arbeit','des','Mannes','ist','wirklich','interessant'],valid:[['die','Arbeit','des','Mannes','ist','wirklich','interessant']],punct:'.'},{parts:['der','Kindergarten','meines','Sohnes','liegt','in','der','Nähe'],valid:[['der','Kindergarten','meines','Sohnes','liegt','in','der','Nähe']],punct:'.'},{parts:['ich','bin','mir','meines','Fehlers','bewusst'],valid:[['ich','bin','mir','meines','Fehlers','bewusst']],punct:'.'}];var sbDragged=null;function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}function sbUpdateCapitalization(row){var chips=Array.from(row.querySelectorAll('.chip'));chips.forEach(function(c,i){var orig=c.dataset.orig;if(orig===','||orig===';')return;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();if(isProper){c.textContent=orig;}else{c.textContent=(i===0)?sbCapitalize(orig):orig;}});}function sbMakeChip(word){var chip=document.createElement('div');chip.className=(word===','||word===';')?'chip punct-chip':'chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;chip.addEventListener('dragstart',function(e){sbDragged=chip;timerAutoStart(3);e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){sbDragged=null;});return chip;}function sbRegisterZone(zone,idx){zone.addEventListener('dragover',function(e){e.preventDefault();if(!sbDragged)return;});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged)return;zone.appendChild(sbDragged);sbDragged=null;var row=document.getElementById('sb-row-'+idx);sbUpdateCapitalization(row);sbCheckAuto(idx);});} function sbColorRow(idx){var row=document.getElementById('sb-row-'+idx);var chips=Array.from(row.querySelectorAll('.chip'));var order=chips.map(function(c){return c.dataset.orig;});var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});var existing=row.querySelector('.sb-punkt');if(existing)existing.parentNode.removeChild(existing);if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}return ok;}function sbCheckAuto(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var fb=document.getElementById('sb-fb-'+idx);if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}setTimeout(function(){timerAutoStart(3);var ok=sbColorRow(idx);if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='\u2713 Korrekt!';sbCheckAllDone();}else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='\u2717 Falsche Reihenfolge!';}},500);}function sbCheckAllDone(){var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});if(allOk)timerStop(3);}function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var solution=satzbauData[idx].valid[0];var allChips={};Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCapitalize(word):word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});setTimeout(function(){sbCheckAuto(idx);},100);}function sbResetOne(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);row.classList.remove('correct','incorrect');var parts=satzbauData[idx].parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});}function initSatzbau(){var container=document.getElementById('satzbauContainer');container.innerHTML='';satzbauData.forEach(function(ex,idx){var item=document.createElement('div');item.className='satzbau-item';var lbl=document.createElement('div');lbl.className='sb-label';lbl.textContent='Satz '+(idx+1);item.appendChild(lbl);var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;var parts=ex.parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});sbRegisterZone(bank,idx);sbRegisterZone(row,idx);var btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:8px;margin-top:6px;';var solveBtn=document.createElement('button');solveBtn.className='btn';solveBtn.textContent='Lösen';solveBtn.setAttribute('data-idx',idx);solveBtn.addEventListener('click',function(){sbShowSolution(parseInt(this.getAttribute('data-idx')));});var resetBtn=document.createElement('button');resetBtn.className='btn';resetBtn.textContent='↺ Neustart';resetBtn.setAttribute('data-idx',idx);resetBtn.addEventListener('click',function(){sbResetOne(parseInt(this.getAttribute('data-idx')));});btnRow.appendChild(solveBtn);btnRow.appendChild(resetBtn);item.appendChild(bank);item.appendChild(row);item.appendChild(fb);item.appendChild(btnRow);container.appendChild(item);});} function sbShowAll(){satzbauData.forEach(function(_,idx){sbShowSolution(idx);});}function resetSatzbau(){initSatzbau();}var mcData=[{satz:'Ich helfe dem Mann.',correct:'Dativ'},{satz:'Die Arbeit des Mannes ist interessant.',correct:'Genitiv'},{satz:'Er dankt der Lehrerin.',correct:'Dativ'},{satz:'Wegen des Regens bleiben wir zu Hause.',correct:'Genitiv'},{satz:'Ich gebe dem Kind ein Buch.',correct:'Dativ'},{satz:'Trotz der Kälte gehen wir spazieren.',correct:'Genitiv'},{satz:'Das Auto meines Bruders ist rot.',correct:'Genitiv'},{satz:'Er folgt dem Hund.',correct:'Dativ'},{satz:'Während des Sommers reise ich viel.',correct:'Genitiv'},{satz:'Ich schicke meiner Schwester einen Brief.',correct:'Dativ'}];var mcAnswers=[null,null,null,null,null,null,null,null,null,null];function initMC(){var container=document.getElementById('mc-container');container.innerHTML='';mcData.forEach(function(item,idx){var div=document.createElement('div');div.className='mc-exercise';var q=document.createElement('div');q.className='mc-question';q.textContent=item.satz;div.appendChild(q);var opts=document.createElement('div');opts.className='mc-opts';['Genitiv','Dativ'].forEach(function(opt){var btn=document.createElement('button');btn.className='mc-opt';btn.textContent=opt;btn.setAttribute('data-idx',idx);btn.addEventListener('click',function(){mcAnswerClick(idx,opt,btn);});opts.appendChild(btn);});div.appendChild(opts);container.appendChild(div);});}function mcAnswerClick(idx,opt,btn){timerAutoStart(4);var isCorrect=opt===mcData[idx].correct;btn.classList.add(isCorrect?'correct':'wrong');mcAnswers[idx]=opt;var allAnswered=mcAnswers.every(function(a){return a!==null;});if(allAnswered){var allCorrect=mcAnswers.every(function(a,i){return a===mcData[i].correct;});if(allCorrect)timerStop(4);}}function resetMC(){mcAnswers=[null,null,null,null,null,null,null,null,null,null];initMC();}window.addEventListener('DOMContentLoaded',function(){initZuordnung();initLuecken();initSatzbau();initMC();loadBestTimes();
+initSchreibwerkstatt();});
+
+/* ===== SCHREIBWERKSTATT (A2) =================================== */
+var SCHREIB_NAME_KEY      = 'schreibwerkstatt_A2_2057G_name';
+var SCHREIB_KEY_PREFIX    = 'schreibwerkstatt_A2_2057G_';
+var SCHREIB_SENT_PREFIX   = 'schreibwerkstatt_A2_2057G_sent_';
+var FORMSUBMIT_ENDPOINT   = 'https://formsubmit.co/ajax/unterricht@frankburkert-daf.de';
+var SCHREIB_LEKTION       = 'A2 – Lektion 2057G · Genitiv';
+var SCHREIB_MIN_CHARS     = 8;
+
+function initSchreibwerkstatt() {
+  var nameInp = document.getElementById('sw-name');
+  if (nameInp) {
+    var savedName = localStorage.getItem(SCHREIB_NAME_KEY);
+    if (savedName) nameInp.value = savedName;
+    nameInp.addEventListener('input', function () {
+      localStorage.setItem(SCHREIB_NAME_KEY, nameInp.value);
+    });
+  }
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    var saved = localStorage.getItem(SCHREIB_KEY_PREFIX + nr);
+    if (saved) ta.value = saved;
+    schreibUpdateCount(ta);
+    var sentInfo = localStorage.getItem(SCHREIB_SENT_PREFIX + nr);
+    if (sentInfo) schreibKarteAlsGesendetMarkieren(nr, sentInfo, true);
+    ta.addEventListener('input', function () {
+      schreibUpdateCount(ta);
+      localStorage.setItem(SCHREIB_KEY_PREFIX + nr, ta.value);
+      var btn = document.getElementById('sw-send-' + nr);
+      if (btn && btn.classList.contains('gesendet')) {
+        btn.classList.remove('gesendet');
+        btn.innerHTML = '📨 Erneut senden';
+      }
+      var st = document.getElementById('sw-status-' + nr);
+      if (st && st.classList.contains('error')) {
+        st.classList.remove('error');
+        st.textContent = '';
+      }
+    });
+  });
+}
+
+function schreibUpdateCount(ta) {
+  var nr = ta.dataset.aufgabe;
+  var text = ta.value.trim();
+  var words = text ? text.split(/\s+/).filter(function (w) { return w.length > 0; }).length : 0;
+  var wc = document.querySelector('.wc-' + nr);
+  if (wc) wc.textContent = words;
+}
+
+function schreibKarteAlsGesendetMarkieren(nr, info, beimLaden) {
+  var ta = document.querySelector('.schreib-mini-textarea[data-aufgabe="' + nr + '"]');
+  var karte = ta && ta.closest('.schreib-aufgabe-karte');
+  if (karte) karte.classList.add('gesendet');
+  var btn = document.getElementById('sw-send-' + nr);
+  if (btn) {
+    btn.classList.add('gesendet');
+    btn.innerHTML = beimLaden ? '✓ schon gesendet · erneut senden' : '✓ gesendet · erneut senden';
+  }
+  var status = document.getElementById('sw-status-' + nr);
+  if (status) { status.classList.remove('error'); status.textContent = '✓ ' + info; }
+}
+
+function schreibStatusZeigen(typ, text) {
+  var box = document.getElementById('sw-status');
+  if (!box) return;
+  box.className = 'schreib-status ' + typ;
+  box.innerHTML = text;
+}
+
+function schreibAktuellerName() {
+  var nameInp = document.getElementById('sw-name');
+  return (nameInp && nameInp.value || '').trim();
+}
+
+function schreibNamePflicht() {
+  var name = schreibAktuellerName();
+  if (!name) {
+    var nameInp = document.getElementById('sw-name');
+    if (nameInp) {
+      nameInp.classList.add('schreib-name-error');
+      try { nameInp.focus(); nameInp.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+      setTimeout(function () { nameInp.classList.remove('schreib-name-error'); }, 3000);
+    }
+    return false;
+  }
+  return true;
+}
+
+function schreibPostFormsubmit(subject, message, onOk, onErr) {
+  return fetch(FORMSUBMIT_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      name: schreibAktuellerName(),
+      _subject: subject,
+      _template: 'box',
+      _captcha: 'false',
+      lektion: SCHREIB_LEKTION,
+      message: message
+    })
+  })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(onOk)
+    .catch(onErr);
+}
+
+function schreibSendenEinzeln(nr) {
+  var ta = document.querySelector('.schreib-mini-textarea[data-aufgabe="' + nr + '"]');
+  var btn = document.getElementById('sw-send-' + nr);
+  if (!ta || !btn) return;
+  if (!schreibNamePflicht()) {
+    var stN = document.getElementById('sw-status-' + nr);
+    if (stN) { stN.classList.add('error'); stN.textContent = 'Bitte zuerst deinen Namen oben eintragen.'; }
+    return;
+  }
+  var text = ta.value.trim();
+  if (text.length < SCHREIB_MIN_CHARS) {
+    var st = document.getElementById('sw-status-' + nr);
+    if (st) { st.classList.add('error'); st.textContent = 'noch zu kurz — schreib bitte etwas mehr'; }
+    return;
+  }
+  var titel = ta.dataset.titel || ('Aufgabe ' + nr);
+  var subject = 'A2 2057G · Aufgabe ' + nr + ' · ' + titel + ' · ' + schreibAktuellerName();
+  var message = '=== Aufgabe ' + nr + ': ' + titel + ' ===\n\n' + text;
+  btn.disabled = true;
+  var origLabel = btn.innerHTML;
+  btn.innerHTML = '⏳ Wird gesendet …';
+
+  schreibPostFormsubmit(subject, message,
+    function () {
+      btn.disabled = false;
+      var jetzt = new Date();
+      var info = 'gesendet um ' + String(jetzt.getHours()).padStart(2, '0') + ':' + String(jetzt.getMinutes()).padStart(2, '0');
+      localStorage.setItem(SCHREIB_SENT_PREFIX + nr, info);
+      schreibKarteAlsGesendetMarkieren(nr, info, false);
+    },
+    function () {
+      btn.disabled = false; btn.innerHTML = origLabel;
+      var st = document.getElementById('sw-status-' + nr);
+      if (st) {
+        var subjectEnc = encodeURIComponent(subject);
+        var bodyEnc = encodeURIComponent('Name: ' + schreibAktuellerName() + '\n\n' + message);
+        st.classList.add('error');
+        st.innerHTML = '✗ Versand fehlgeschlagen — <a href="mailto:unterricht@frankburkert-daf.de?subject=' + subjectEnc + '&body=' + bodyEnc + '" style="color:#c62828;font-weight:700;">stattdessen per Mail-Programm</a>';
+      }
+    }
+  );
+}
+
+function schreibSendenAlleNochOffenen() {
+  var btn = document.getElementById('sw-btn-all');
+  if (!schreibNamePflicht()) {
+    schreibStatusZeigen('error', '✗ Bitte zuerst deinen Namen oben eintragen.');
+    return;
+  }
+  var offene = [];
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    var text = ta.value.trim();
+    var sent = localStorage.getItem(SCHREIB_SENT_PREFIX + nr);
+    if (text.length >= SCHREIB_MIN_CHARS && !sent) offene.push({ nr: nr, ta: ta, text: text });
+  });
+  if (offene.length === 0) {
+    schreibStatusZeigen('info', 'ℹ Es gibt nichts Neues zu senden — alle Antworten sind entweder leer/sehr kurz oder bereits gesendet.');
+    return;
+  }
+  var teile = offene.map(function (o) {
+    var titel = o.ta.dataset.titel || ('Aufgabe ' + o.nr);
+    return '=== Aufgabe ' + o.nr + ': ' + titel + ' ===\n\n' + o.text;
+  });
+  var subject = 'A2 2057G · ' + offene.length + ' Antworten · ' + schreibAktuellerName();
+  var message = teile.join('\n\n');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Wird gesendet …';
+  schreibStatusZeigen('info', '⏳ ' + offene.length + ' Antworten werden übermittelt …');
+  schreibPostFormsubmit(subject, message,
+    function () {
+      btn.disabled = false;
+      btn.innerHTML = '📨 Alle noch nicht gesendeten Antworten schicken';
+      var jetzt = new Date();
+      var info = 'gesendet um ' + String(jetzt.getHours()).padStart(2, '0') + ':' + String(jetzt.getMinutes()).padStart(2, '0');
+      offene.forEach(function (o) {
+        localStorage.setItem(SCHREIB_SENT_PREFIX + o.nr, info);
+        schreibKarteAlsGesendetMarkieren(o.nr, info, false);
+      });
+      schreibStatusZeigen('success', '✓ <strong>' + offene.length + ' Antworten übermittelt.</strong> Frank meldet sich.');
+    },
+    function () {
+      btn.disabled = false;
+      btn.innerHTML = '📨 Alle noch nicht gesendeten Antworten schicken';
+      schreibStatusZeigen('error', '✗ Direkter Versand nicht möglich. Bitte einzeln pro Karte versuchen oder „In Zwischenablage" verwenden.');
+    }
+  );
+}
+
+function schreibKopieren() {
+  var teile = [];
+  teile.push('Lektion: ' + SCHREIB_LEKTION);
+  teile.push('Name: ' + (schreibAktuellerName() || '(kein Name)'));
+  teile.push('');
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    var text = ta.value.trim();
+    if (text.length >= SCHREIB_MIN_CHARS) {
+      var titel = ta.dataset.titel || ('Aufgabe ' + nr);
+      teile.push('=== Aufgabe ' + nr + ': ' + titel + ' ===');
+      teile.push(text);
+      teile.push('');
+    }
+  });
+  if (teile.length <= 3) {
+    schreibStatusZeigen('info', 'ℹ Noch nichts zum Kopieren — schreib mindestens eine Antwort.');
+    return;
+  }
+  var alles = teile.join('\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(alles).then(
+      function () { schreibStatusZeigen('success', '✓ In Zwischenablage kopiert. Du kannst es jetzt in deine Mail einfügen.'); },
+      function () { schreibStatusZeigen('error', '✗ Kopieren fehlgeschlagen. Bitte den Text manuell markieren.'); }
+    );
+  } else {
+    schreibStatusZeigen('error', '✗ Dein Browser unterstützt das automatische Kopieren nicht.');
+  }
+}
+
+function schreibLeeren() {
+  if (!confirm('Wirklich ALLE Antworten zurücksetzen? Auch die schon gesendeten Markierungen werden entfernt.')) return;
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    ta.value = '';
+    localStorage.removeItem(SCHREIB_KEY_PREFIX + nr);
+    localStorage.removeItem(SCHREIB_SENT_PREFIX + nr);
+    schreibUpdateCount(ta);
+    var karte = ta.closest('.schreib-aufgabe-karte');
+    if (karte) karte.classList.remove('gesendet');
+    var btn = document.getElementById('sw-send-' + nr);
+    if (btn) { btn.classList.remove('gesendet'); btn.innerHTML = '📨 An Frank senden'; }
+    var st = document.getElementById('sw-status-' + nr);
+    if (st) { st.className = 'schreib-mini-status'; st.textContent = ''; }
+  });
+  schreibStatusZeigen('info', 'ℹ Alle Antworten zurückgesetzt.');
+}
+/* ===== Ende Schreibwerkstatt =================================== */
+
 </script>
 </body>
 </html>
