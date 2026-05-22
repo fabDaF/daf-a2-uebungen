@@ -226,7 +226,6 @@ table.ap-table tr:nth-child(even) td { background: #f8f7ff; }
     <p style="font-size:.88em;color:#888;margin-bottom:12px;">Ordne die Antworten den Fragen zu!</p>
     <div id="qaContainer1"></div>
     <div class="btn-row">
-      <button class="btn" onclick="checkQa1()">🔍 Prüfen</button>
       <button class="btn secondary" onclick="resetQa1()">↺ Neu</button>
     </div>
     <div id="qaFeedback1" style="margin-top:10px;font-size:.9em;"></div>
@@ -513,12 +512,19 @@ function initQa1() {
 }
 
 function colorQa1() {
+  var correct = 0;
   document.querySelectorAll('#qaContainer1 .drop-zone').forEach(function(zone) {
-    var chips = zone.querySelectorAll('.chip');
-    chips.forEach(function(chip) {
+    zone.querySelectorAll('.chip').forEach(function(chip) {
       chip.classList.remove('ok', 'no');
+      if (chip.dataset.ans === zone.dataset.ans) { chip.classList.add('ok'); correct++; }
+      else chip.classList.add('no');
     });
   });
+  var fb = document.getElementById('qaFeedback1');
+  if (fb) {
+    fb.textContent = correct + ' von ' + QA1_DATA.length + ' korrekt.';
+    fb.style.color = correct === QA1_DATA.length ? '#27ae60' : '#e74c3c';
+  }
 }
 
 function checkQa1() {

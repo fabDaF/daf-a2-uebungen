@@ -240,7 +240,6 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     <p style="font-size:.88em;color:#888;margin-bottom:14px;">Ordne die Antworten den Fragen zu!</p>
     <div id="qaContainer"></div>
     <div class="btn-row">
-      <button class="btn" onclick="checkQa()">🔍 Prüfen</button>
       <button class="btn secondary" onclick="resetQa()">↺ Neu</button>
     </div>
     <div id="qaFeedback" style="margin-top:10px;font-size:.9em;"></div>
@@ -551,10 +550,11 @@ function initQa() {
       e.preventDefault();
       if (!draggedChip) return;
       zone.appendChild(draggedChip); draggedChip = null;
+      checkQa();
     });
     zone.addEventListener('click', function() {
       var sel = document.querySelector('#sec-1 .chip.selected');
-      if (sel) { zone.appendChild(sel); sel.classList.remove('selected'); }
+      if (sel) { zone.appendChild(sel); sel.classList.remove('selected'); checkQa(); }
     });
     grid.appendChild(zone);
   });

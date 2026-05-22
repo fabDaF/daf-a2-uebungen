@@ -456,7 +456,6 @@ function showTab(idx) {
     navBtns.forEach(function(b) { b.classList.remove('active'); });
     if (sections[idx]) sections[idx].classList.add('active');
     if (navBtns[idx]) navBtns[idx].classList.add('active');
-}
     if (idx === 2) timerAutoStart(2);
     if (idx === 3) timerAutoStart(3);
     if (idx === 4) timerAutoStart(4);

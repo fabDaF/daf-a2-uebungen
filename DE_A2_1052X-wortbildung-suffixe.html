@@ -359,7 +359,6 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
     <div class="zuord-bank" id="zuordBank"></div>
     <div class="zuord-grid" id="zuordGrid"></div>
     <div class="btn-row">
-      <button class="btn" onclick="checkZuord()">🔍 Prüfen</button>
       <button class="btn secondary" onclick="resetZuord()">↺ Neu</button>
     </div>
     <div id="zuordFeedback" style="margin-top:10px;font-size:.9em;"></div>
@@ -641,10 +640,11 @@ function initZuord() {
       e.preventDefault();
       if (!draggedZuord) return;
       drop.appendChild(draggedZuord); draggedZuord = null;
+      checkZuord();
     });
     drop.addEventListener('click', function() {
       var sel = document.querySelector('#sec-2 .z-chip.selected');
-      if (sel) { drop.appendChild(sel); sel.classList.remove('selected'); }
+      if (sel) { drop.appendChild(sel); sel.classList.remove('selected'); checkZuord(); }
     });
     catDiv.appendChild(head); catDiv.appendChild(drop);
     grid.appendChild(catDiv);

@@ -88,7 +88,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 
 /* ── WORTSCHATZ ─────────────────────────────────────────────────── */
 /* WORTSCHATZ */
-.vocab-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.luecken-item { background: #f8f9ff; padding: 14px 18px; margin-bottom: 12px; border-radius: 10px; border-left: 4px solid #667eea; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .vocab-en { font-weight: 600; color: #764ba2; min-width: 140px; font-size: 0.95em; }
 .vocab-arrow { color: #ccc; font-size: 1.2em; }
 .vocab-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -100,7 +100,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .vocab-inputs input.wort { width: 130px; }
 .vocab-inputs input.plural { width: 140px; }
 .vocab-hint { color: #27ae60; font-weight: 600; font-size: 0.8em; margin-left: 6px; }
-@media (max-width: 600px) { .vocab-item { flex-direction: column; align-items: flex-start; } }
+@media (max-width: 600px) { .luecken-item { flex-direction: column; align-items: flex-start; } }
 .art { width: 70px; }
 
 /* ── TIMER ──────────────────────────────────────────────────────── */
@@ -595,7 +595,7 @@ function showSection(idx) {
     document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
     if (idx === 1 && !qaInited) initQa();
     if (idx === 4 && !sbInitialized) { initSatzbau(); sbInitialized = true; }
-    if (idx === 6 && !wsInitialized) { initVocab();
+    if (idx === 6 && !wsInitialized) { initWortschatz();
 initSchreibwerkstatt(); wsInitialized = true; }
     if (idx === 3) initRF();
 }
@@ -1039,13 +1039,13 @@ var WORTSCHATZ = [
     { id:18, type:"n", en:"vegetarian (person)", artikel:"der", de:"Vegetarier", plural:"Vegetarier" },
 ];
 
-function initVocab() {
+function initWortschatz() {
     var container = document.getElementById('vocabContainer');
     container.innerHTML = '';
     var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
     shuffled.forEach(function(item) {
         var div = document.createElement('div');
-        div.className = 'vocab-item';
+        div.className = 'luecken-item';
         var en = document.createElement('span');
         en.className = 'vocab-en';
         en.textContent = item.en;
@@ -1063,7 +1063,7 @@ function initVocab() {
             artInp.dataset.answer = item.artikel;
             artInp.dataset.field = 'art';
             artInp.onfocus = function() { timerAutoStart(5); };
-            artInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            artInp.oninput = function() { wortschatzCheck(this); checkWortschatzAllOk(); };
             inputs.appendChild(artInp);
             var wordInp = document.createElement('input');
             wordInp.className = 'wort';
@@ -1071,7 +1071,7 @@ function initVocab() {
             wordInp.dataset.answer = item.de;
             wordInp.dataset.field = 'wort';
             wordInp.onfocus = function() { timerAutoStart(5); };
-            wordInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            wordInp.oninput = function() { wortschatzCheck(this); checkWortschatzAllOk(); };
             inputs.appendChild(wordInp);
             if (item.plural !== '—') {
                 var pluralInp = document.createElement('input');
@@ -1080,7 +1080,7 @@ function initVocab() {
                 pluralInp.dataset.answer = item.plural;
                 pluralInp.dataset.field = 'plural';
                 pluralInp.onfocus = function() { timerAutoStart(5); };
-                pluralInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+                pluralInp.oninput = function() { wortschatzCheck(this); checkWortschatzAllOk(); };
                 inputs.appendChild(pluralInp);
             }
         } else {
@@ -1091,7 +1091,7 @@ function initVocab() {
             deInp.dataset.answer = item.de;
             deInp.dataset.field = 'wort';
             deInp.onfocus = function() { timerAutoStart(5); };
-            deInp.oninput = function() { vocabLiveCheck(this); checkVocabAllDone(); };
+            deInp.oninput = function() { wortschatzCheck(this); checkWortschatzAllOk(); };
             inputs.appendChild(deInp);
         }
         div.appendChild(inputs);
@@ -1099,7 +1099,7 @@ function initVocab() {
     });
 }
 
-function vocabLiveCheck(inp) {
+function wortschatzCheck(inp) {
     var user = inp.value;
     var answer = inp.dataset.answer;
     var field = inp.dataset.field;
@@ -1112,7 +1112,7 @@ function vocabLiveCheck(inp) {
     else { inp.classList.add('wrong'); }
 }
 
-function checkVocabAllDone() {
+function checkWortschatzAllOk() {
     var inputs = document.querySelectorAll('#sec-5 .vocab-inputs input');
     if (inputs.length === 0) return;
     var allCorrect = true;
@@ -1150,7 +1150,7 @@ function resetVocab() {
     });
 }
 
-initVocab();
+initWortschatz();
 
 // ===== VOKABEL-HIGHLIGHTING IM LESETEXT =====
 function highlightVocabInText() {
