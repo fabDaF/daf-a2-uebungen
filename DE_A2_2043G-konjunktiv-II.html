@@ -450,13 +450,13 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 // ──────────────────────────────────────────────────────────────────
 
 function showTab(idx) {
-    document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-    document.getElementById('sec' + idx).classList.add('active');
-    if (typeof event !== 'undefined' && event && event.target) {
-        var btn = event.target.closest('.nav-btn');
-        if (btn) btn.classList.add('active');
-    }
+    var sections = document.querySelectorAll('.section');
+    var navBtns  = document.querySelectorAll('.nav-btn');
+    sections.forEach(function(s) { s.classList.remove('active'); });
+    navBtns.forEach(function(b) { b.classList.remove('active'); });
+    if (sections[idx]) sections[idx].classList.add('active');
+    if (navBtns[idx]) navBtns[idx].classList.add('active');
+}
     if (idx === 2) timerAutoStart(2);
     if (idx === 3) timerAutoStart(3);
     if (idx === 4) timerAutoStart(4);

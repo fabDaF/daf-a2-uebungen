@@ -481,7 +481,7 @@ function showTab(n) {
     secs.forEach(function(s) { s.classList.remove('active'); });
     var navBtns = document.querySelectorAll('.nav-btn');
     navBtns.forEach(function(b) { b.classList.remove('active'); });
-    document.getElementById('sec' + n).classList.add('active');
+    (document.querySelectorAll('.section')[n] || {classList:{add:function(){}}}).classList.add('active');
     navBtns[n].classList.add('active');
     currentTab = n;
     if (n === 4) initSatzbau();

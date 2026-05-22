@@ -582,7 +582,7 @@ var MC_QUESTIONS = [{"q": "Was geh\u00f6rt in einen Lebenslauf?", "opts": ["Pers
 
 function showSection(idx) {
     document.querySelectorAll('.section').forEach(function(el) { el.classList.remove('active'); });
-    document.getElementById('sec'+idx).classList.add('active');
+    (document.querySelectorAll('.section')[idx] || {classList:{add:function(){}}}).classList.add('active');
     document.querySelectorAll('.nav-btn').forEach(function(btn, i) {
         btn.classList.toggle('active', i === idx);
     });

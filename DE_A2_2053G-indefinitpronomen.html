@@ -642,7 +642,7 @@ function showTab(n) {
     navBtns.forEach(function(b) { b.classList.remove('active'); });
 
     // Activate current section and nav button
-    document.getElementById('sec' + n).classList.add('active');
+    (document.querySelectorAll('.section')[n] || {classList:{add:function(){}}}).classList.add('active');
     navBtns[n].classList.add('active');
 
     currentTab = n;
