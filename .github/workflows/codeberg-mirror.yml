@@ -1,5 +1,20 @@
 name: Mirror to Codeberg
 
+# Spiegelt jeden Push (Branches + Tags) nach codeberg.org/fabbuLos/<repo>.
+# Lebensversicherung gegen einseitige GitHub-Account-Sperre.
+#
+# Voraussetzungen (einmalig in Repo-Settings -> Secrets):
+#   CODEBERG_USERNAME  -> fabbuLos
+#   CODEBERG_TOKEN     -> PAT mit write:repository-Scope
+#
+# Robustheit: 5 Versuche mit progressivem Backoff (30s, 60s, 90s, 120s, 150s).
+# Codeberg gibt unter Last gelegentlich HTTP 504 zurueck; ein einzelner
+# 504-Glitch soll keine Notification ausloesen, solange irgendein Versuch
+# innerhalb von ~10 Minuten gruen wird.
+#
+# Wird der ${REPO_NAME} dynamisch aus github.repository abgeleitet, damit
+# dieselbe Datei in jedem Repo unveraendert eingesetzt werden kann.
+
 on:
   push:
     branches: ['**']
@@ -14,19 +29,53 @@ concurrency:
 jobs:
   mirror:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Mirror to Codeberg
         env:
           CB_USER: ${{ secrets.CODEBERG_USERNAME }}
           CB_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
         run: |
+          set -u
           if [ -z "$CB_USER" ] || [ -z "$CB_TOKEN" ]; then
             echo "::error::Secrets CODEBERG_USERNAME und CODEBERG_TOKEN fehlen"
             exit 1
           fi
+
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d/ -f2)
+          CB_URL="https://${CB_USER}:${CB_TOKEN}@codeberg.org/${CB_USER}/${REPO_NAME}.git"
+
+          echo "::group::Mirror-Clone aus GitHub"
           git clone --mirror "https://github.com/${{ github.repository }}.git" work
           cd work
-          CB_URL="https://${CB_USER}:${CB_TOKEN}@codeberg.org/${CB_USER}/${REPO_NAME}.git"
-          git push --mirror "$CB_URL"
-          git push --force "$CB_URL" main:pages
+          echo "::endgroup::"
+
+          # Retry-Helper: fuehrt $@ bis zu 5x aus, mit Backoff 30/60/90/120/150s.
+          # Erfolg = Exit 0 nach einem geglueckten Versuch. Misserfolg = Exit 1 nach 5.
+          retry_push() {
+            local label="$1"; shift
+            local delay
+            for attempt in 1 2 3 4 5; do
+              echo "::group::${label} (Versuch ${attempt}/5)"
+              if "$@"; then
+                echo "::endgroup::"
+                echo "${label}: Versuch ${attempt} erfolgreich."
+                return 0
+              fi
+              echo "::endgroup::"
+              if [ "$attempt" -lt 5 ]; then
+                delay=$((attempt * 30))
+                echo "::warning::${label} schlug fehl (Versuch ${attempt}/5) — warte ${delay}s und versuche erneut."
+                sleep "$delay"
+              fi
+            done
+            echo "::error::${label} schlug nach 5 Versuchen fehl. Wahrscheinlich Codeberg-Ausfall — naechster Push triggert neuen Mirror-Lauf."
+            return 1
+          }
+
+          # Refs spiegeln (Branches, Tags, deletes).
+          retry_push "git push --mirror" git push --mirror "$CB_URL"
+
+          # Pages-Branch separat fortschreiben — Codeberg Pages liest aus refs/heads/pages.
+          # Force, weil Pages immer dem aktuellen main folgen darf.
+          retry_push "git push pages-branch" git push --force "$CB_URL" main:pages
