@@ -403,10 +403,9 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 <script>
 // ===== TAB NAVIGATION =====
 function showTab(n, btn) {
-  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('aktiv'); });
+  document.querySelectorAll('.section').forEach(function(s, i) { s.classList.toggle('aktiv', i === n); });
   document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
-  document.getElementById('sec-' + n).classList.add('aktiv');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
 }
 
 // ===== SHUFFLE =====
@@ -661,14 +660,14 @@ function resetRf() { initRf(); }
 
 // ===== SATZBAU =====
 var satzbauData = [
-  { parts: ['Die', 'Mannschaft', 'gewinnt', 'das', 'Finale'], valid: [['Die', 'Mannschaft', 'gewinnt', 'das', 'Finale']], punct: '.' },
+  { parts: ['die', 'Mannschaft', 'gewinnt', 'das', 'Finale'], valid: [['die', 'Mannschaft', 'gewinnt', 'das', 'Finale']], punct: '.' },
   { parts: ['Oscar', 'trainiert', 'jeden', 'Tag', 'professionell'], valid: [['Oscar', 'trainiert', 'jeden', 'Tag', 'professionell']], punct: '.' },
-  { parts: ['Er', 'nimmt', 'allein', 'an', 'den', 'Wettkämpfen', 'teil'], valid: [['Er', 'nimmt', 'allein', 'an', 'den', 'Wettkämpfen', 'teil']], punct: '.' },
-  { parts: ['Die', 'Fans', 'feiern', 'den', 'Sieg', 'ihrer', 'Mannschaft'], valid: [['Die', 'Fans', 'feiern', 'den', 'Sieg', 'ihrer', 'Mannschaft']], punct: '.' },
-  { parts: ['Sie', 'bekommt', 'eine', 'Goldmedaille', 'für', 'den', 'ersten', 'Platz'], valid: [['Sie', 'bekommt', 'eine', 'Goldmedaille', 'für', 'den', 'ersten', 'Platz']], punct: '.' },
-  { parts: ['Das', 'Team', 'hat', 'dreimal', 'pro', 'Woche', 'Training'], valid: [['Das', 'Team', 'hat', 'dreimal', 'pro', 'Woche', 'Training']], punct: '.' },
-  { parts: ['Wir', 'nehmen', 'am', 'Wettkampf', 'teil'], valid: [['Wir', 'nehmen', 'am', 'Wettkampf', 'teil']], punct: '.' },
-  { parts: ['Leider', 'hat', 'die', 'Mannschaft', 'das', 'Spiel', 'verloren'], valid: [['Leider', 'hat', 'die', 'Mannschaft', 'das', 'Spiel', 'verloren']], punct: '.' }
+  { parts: ['er', 'nimmt', 'allein', 'an', 'den', 'Wettkämpfen', 'teil'], valid: [['er', 'nimmt', 'allein', 'an', 'den', 'Wettkämpfen', 'teil']], punct: '.' },
+  { parts: ['die', 'Fans', 'feiern', 'den', 'Sieg', 'ihrer', 'Mannschaft'], valid: [['die', 'Fans', 'feiern', 'den', 'Sieg', 'ihrer', 'Mannschaft']], punct: '.' },
+  { parts: ['sie', 'bekommt', 'eine', 'Goldmedaille', 'für', 'den', 'ersten', 'Platz'], valid: [['sie', 'bekommt', 'eine', 'Goldmedaille', 'für', 'den', 'ersten', 'Platz']], punct: '.' },
+  { parts: ['das', 'Team', 'hat', 'dreimal', 'pro', 'Woche', 'Training'], valid: [['das', 'Team', 'hat', 'dreimal', 'pro', 'Woche', 'Training']], punct: '.' },
+  { parts: ['wir', 'nehmen', 'am', 'Wettkampf', 'teil'], valid: [['wir', 'nehmen', 'am', 'Wettkampf', 'teil']], punct: '.' },
+  { parts: ['leider', 'hat', 'die', 'Mannschaft', 'das', 'Spiel', 'verloren'], valid: [['leider', 'hat', 'die', 'Mannschaft', 'das', 'Spiel', 'verloren']], punct: '.' }
 ];
 
 var sbDragged = null;
@@ -710,11 +709,12 @@ function sbUpdateCapitalization(row) {
     });
 }
 
-function sbMakeChip(word) {
+function sbMakeChip(word, idx) {
     var chip = document.createElement('div');
     chip.className = 'chip';
     chip.textContent = word;
     chip.dataset.orig = word;
+    chip.dataset.sbIdx = String(idx);
     chip.draggable = true;
 
     chip.addEventListener('dragstart', function(e) {
@@ -735,6 +735,7 @@ function sbRegisterZone(zone, idx) {
     zone.addEventListener('dragover', function(e) {
         e.preventDefault();
         if (!sbDragged) return;
+        if (sbDragged.dataset.sbIdx !== String(idx)) return;
         var cursor = getSbCursor();
         var before = getSbInsertPos(zone, e.clientX);
         if (before) zone.insertBefore(cursor, before);
@@ -751,6 +752,11 @@ function sbRegisterZone(zone, idx) {
     zone.addEventListener('drop', function(e) {
         e.preventDefault();
         if (!sbDragged) return;
+        if (sbDragged.dataset.sbIdx !== String(idx)) {
+            var c0 = document.getElementById('sb-insert-cursor');
+            if (c0 && c0.parentNode) c0.parentNode.removeChild(c0);
+            return;
+        }
         var cursor = document.getElementById('sb-insert-cursor');
         if (cursor && cursor.parentNode === zone) {
             zone.insertBefore(sbDragged, cursor);
@@ -867,7 +873,7 @@ function sbResetOne(idx) {
     var j = Math.floor(Math.random() * (i + 1));
     var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
   }
-  parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+  parts.forEach(function(word) { bank.appendChild(sbMakeChip(word, idx)); });
 }
 
 function initSatzbau() {
@@ -884,7 +890,7 @@ function initSatzbau() {
             var j = Math.floor(Math.random() * (i + 1));
             var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
         }
-        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+        parts.forEach(function(word) { bank.appendChild(sbMakeChip(word, idx)); });
         sbRegisterZone(bank, idx);
         sbRegisterZone(row, idx);
 
