@@ -100,7 +100,10 @@ table.gram td:first-child { font-weight: 700; color: #4a148c; text-align: left; 
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
 
 /* ===== SATZBAU ===== */
-.sentence-builder { margin-bottom: 22px; }
+.satzbau-item { background: #fafbff; border: 1px solid #e0e7ff; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: #fff; border: 2px dashed #ccc; border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct   { border-color: #27ae60; background: #f0fff4; }
+.sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
 .chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f0f0f8; border-radius: 10px; min-height: 50px; border: 1px dashed #bbb; margin-bottom: 8px; }
 .sb-zone { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 2px dashed #c5cae9; border-radius: 10px; min-height: 48px; background: #fafbff; transition: background .2s; align-items: center; }
 .sb-zone.dragover { background: #e8eaff; border-color: #667eea; }
@@ -438,7 +441,7 @@ table.gram td:first-child { font-weight: 700; color: #4a148c; text-align: left; 
     </div>
   </section>
 
-    <section class="section" id="sec-schreib">
+    <section class="section" id="sec-5">
       <img class="tab-banner" src="https://images.pexels.com/photos/733856/pexels-photo-733856.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Notizbuch und Stift, bereit zum Schreiben">
       <div class="section-title">📨 Schreibwerkstatt</div>
       <div class="section-sub">Fünf kleine Schreibaufgaben, bei denen du die der-Wörter (dieser, jeder, welcher) und ein-Wörter (kein, mein, dein, sein) aktiv übst. Jede Aufgabe verlangt diese Struktur — nimm sie als Trainingseinheit.</div>
@@ -585,7 +588,6 @@ function timerResetOne(n) {
   var el = document.getElementById('t'+n); if (el) el.textContent = '0:00';
   if (n === 2) initLt();
   if (n === 3) initSatzbau();
-initSchreibwerkstatt();
 }
 (function() {
   [2,3].forEach(function(n) {
@@ -846,8 +848,7 @@ function initSatzbau() {
     var area = document.getElementById('satzbauContainer');
     area.innerHTML = '';
     satzbauData.forEach(function(ex, idx) {
-        var label = document.createElement('p');
-        label.style.cssText = 'font-weight:600;color:#4a148c;margin:16px 0 8px;';
+        var item = document.createElement('div'); item.className = 'satzbau-item';
         var bank = document.createElement('div'); bank.className = 'chips-container'; bank.id = 'sb-bank-' + idx;
         var row  = document.createElement('div'); row.className = 'sentence-builder'; row.id = 'sb-row-' + idx;
         var fb   = document.createElement('div'); fb.className = 'satzbau-feedback';  fb.id = 'sb-fb-' + idx;
@@ -874,10 +875,11 @@ function initSatzbau() {
         resetBtn.addEventListener('click', function() { sbResetOne(parseInt(this.getAttribute('data-idx'))); });
         btnRow.appendChild(solveBtn);
         btnRow.appendChild(resetBtn);
-        area.appendChild(bank);
-        area.appendChild(row);
-        area.appendChild(fb);
-        area.appendChild(btnRow);
+        item.appendChild(bank);
+        item.appendChild(row);
+        item.appendChild(fb);
+        item.appendChild(btnRow);
+        area.appendChild(item);
     });
 }
 
@@ -922,6 +924,7 @@ function resetMc() { initMc(); }
 initLt();
 initSatzbau();
 initMc();
+initSchreibwerkstatt();
 
 /* ===== SCHREIBWERKSTATT (A2) =================================== */
 var SCHREIB_NAME_KEY      = 'schreibwerkstatt_A2_1053G_name';
