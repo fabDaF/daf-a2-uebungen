@@ -59,6 +59,10 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .luecken-inp:focus { border-bottom-color: #667eea; }
 .luecken-inp.ok { border-bottom-color: #27ae60; color: #27ae60; font-weight: 700; }
 .luecken-inp.no { border-bottom-color: #e74c3c; color: #e74c3c; }
+.wortbank-label { font-weight:700; color:#667eea; font-size:0.85em; margin:14px 0 8px; }
+.wortbank { display:flex; flex-wrap:wrap; gap:8px; padding:14px; background:#f0f0f8; border-radius:10px; min-height:48px; margin:0 0 18px; border:1px dashed #bbb; }
+.wortbank-chip { background:white; border:2px solid #667eea; color:#667eea; padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
+.wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
 
 /* ── TEXT & FRAGEN ──────────────────────────────────────────────── */
 .text-block { padding: 28px 30px; }
@@ -410,6 +414,10 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
                 </div>
             </div>
 
+            <div class="wortbank-label">🔤 Wortbank – die richtigen Wörter, in zufälliger Reihenfolge.<br>
+              Tipp sie selbst in die Lücken — achte auf Groß- und Kleinschreibung.</div>
+            <div class="wortbank" id="wortbank-luecken"></div>
+
             <h2>📝 Lückentext 1 — Im Restaurant</h2>
             <p class="luecken-text">
                 Anna und Ben gehen heute ins Restaurant. Das Essen
@@ -439,7 +447,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
                 und
                 <input class="luecken-inp" data-ans="fruchtig" placeholder="" style="width:80px">.
                 Das ist ganz nach dem
-                <input class="luecken-inp" data-ans="geschmack" placeholder="" style="width:110px">
+                <input class="luecken-inp" data-ans="Geschmack" placeholder="" style="width:110px">
                 ihrer Familie.
             </p>
         </div>
@@ -501,9 +509,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">1</span><span class="schreib-aufgabe-titel">Dein Lieblingsduft</span>
-        <div class="schreib-aufgabe-frage">Welcher Geruch erinnert dich an etwas Schönes? Zwei oder drei Sätze.</div>
-        <div class="schreib-beispiel">Beispiel: „Der Geruch von frischem Brot erinnert mich an meine Oma. Sie hat jeden Sonntag Brötchen gebacken.“</div>
-        <textarea class="schreib-mini-textarea" data-aufgabe="1" data-titel="Dein Lieblingsduft"></textarea>
+        <div class="schreib-aufgabe-frage">Welcher Geruch erinnert dich an etwas Schönes? Zwei oder drei Sätze.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="1" data-titel="Dein Lieblingsduft"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-1">0</strong> <span class="schreib-mini-status" id="sw-status-1"></span></span>
           <button class="schreib-mini-btn" id="sw-send-1" onclick="schreibSendenEinzeln(1)">📨 An Frank senden</button>
@@ -511,9 +517,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
       </div>
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">2</span><span class="schreib-aufgabe-titel">Geräusche um dich herum</span>
-        <div class="schreib-aufgabe-frage">Welche Geräusche hörst du gerade? Zwei Sätze.</div>
-        <div class="schreib-beispiel">Beispiel: „Draußen höre ich Autos und Stimmen. In der Wohnung tickt nur die Uhr in der Küche.“</div>
-        <textarea class="schreib-mini-textarea" data-aufgabe="2" data-titel="Geräusche um dich herum"></textarea>
+        <div class="schreib-aufgabe-frage">Welche Geräusche hörst du gerade? Zwei Sätze.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="2" data-titel="Geräusche um dich herum"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-2">0</strong> <span class="schreib-mini-status" id="sw-status-2"></span></span>
           <button class="schreib-mini-btn" id="sw-send-2" onclick="schreibSendenEinzeln(2)">📨 An Frank senden</button>
@@ -521,9 +525,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
       </div>
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">3</span><span class="schreib-aufgabe-titel">Eine Frage über Sinne</span>
-        <div class="schreib-aufgabe-frage">Stell jemandem zwei Fragen über seine Sinneswahrnehmungen.</div>
-        <div class="schreib-beispiel">Beispiel: „Welches Essen schmeckt dir am besten? Welche Musik hörst du, wenn du traurig bist?“</div>
-        <textarea class="schreib-mini-textarea" data-aufgabe="3" data-titel="Eine Frage über Sinne"></textarea>
+        <div class="schreib-aufgabe-frage">Stell jemandem zwei Fragen über seine Sinneswahrnehmungen.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="3" data-titel="Eine Frage über Sinne"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-3">0</strong> <span class="schreib-mini-status" id="sw-status-3"></span></span>
           <button class="schreib-mini-btn" id="sw-send-3" onclick="schreibSendenEinzeln(3)">📨 An Frank senden</button>
@@ -531,9 +533,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
       </div>
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">4</span><span class="schreib-aufgabe-titel">Vier Sinne, vier Erinnerungen</span>
-        <div class="schreib-aufgabe-frage">Nenne zu vier Sinnen je eine schöne Erinnerung.</div>
-        <div class="schreib-beispiel">Beispiel: „Sehen: das Meer in Griechenland. Hören: das Lachen meiner Mutter. Riechen: frischer Kaffee am Sonntag. Schmecken: Schokolade als Kind.“</div>
-        <textarea class="schreib-mini-textarea" data-aufgabe="4" data-titel="Vier Sinne, vier Erinnerungen"></textarea>
+        <div class="schreib-aufgabe-frage">Nenne zu vier Sinnen je eine schöne Erinnerung.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="4" data-titel="Vier Sinne, vier Erinnerungen"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-4">0</strong> <span class="schreib-mini-status" id="sw-status-4"></span></span>
           <button class="schreib-mini-btn" id="sw-send-4" onclick="schreibSendenEinzeln(4)">📨 An Frank senden</button>
@@ -541,9 +541,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
       </div>
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">5</span><span class="schreib-aufgabe-titel">Mini-Dialog: Geht es dir gut?</span>
-        <div class="schreib-aufgabe-frage">Schreib einen kurzen Dialog, in dem du nach Geruch oder Geschmack fragst.</div>
-        <div class="schreib-beispiel">Beispiel: „— Was riecht denn da so gut? — Ich backe einen Apfelkuchen. — Schmeckt der so gut wie er riecht? — Probier mal, gleich ist er fertig.“</div>
-        <textarea class="schreib-mini-textarea" data-aufgabe="5" data-titel="Mini-Dialog: Geht es dir gut?"></textarea>
+        <div class="schreib-aufgabe-frage">Schreib einen kurzen Dialog, in dem du nach Geruch oder Geschmack fragst.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="5" data-titel="Mini-Dialog: Geht es dir gut?"></textarea>
         <div class="schreib-mini-footer">
           <span class="schreib-mini-meta">Wörter: <strong class="wc-5">0</strong> <span class="schreib-mini-status" id="sw-status-5"></span></span>
           <button class="schreib-mini-btn" id="sw-send-5" onclick="schreibSendenEinzeln(5)">📨 An Frank senden</button>
@@ -597,6 +595,7 @@ function showSection(idx) {
     if (idx === 4 && !sbInitialized) { initSatzbau(); sbInitialized = true; }
     if (idx === 6 && !wsInitialized) { initWortschatz();
 initSchreibwerkstatt(); wsInitialized = true; }
+    if (idx === 2) initWortbank();
     if (idx === 3) initRF();
 }
 
@@ -666,29 +665,30 @@ document.addEventListener('DOMContentLoaded', function(){
 // ══════════════════════════════════════════════════════════════════
 function liveCheckLuecke(inp) {
     timerAutoStart(2);
-    var val = inp.value.trim();
+    var val = inp.value;
     var ans = (inp.dataset.ans || '');
     inp.classList.remove('ok','no');
-    if (!val) return;
-    if (val === ans) {
+    if (val === ans && val !== '') {
         inp.classList.add('ok');
         var alle = document.querySelectorAll('#sec-2 .luecken-inp');
         var allOk = Array.from(alle).every(function(i){ return i.classList.contains('ok'); });
         if (allOk) timerStop(2);
-        return;
+    } else if (val !== '' && !ans.startsWith(val)) {
+        inp.classList.add('no');
     }
-    if (ans.startsWith(val)) return;
-    inp.classList.add('no');
+    updateWortbankChips();
 }
 function setupLuecken() {
     document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){
         inp.addEventListener('input', function(){ liveCheckLuecke(inp); });
     });
+    initWortbank();
 }
 function resetLuecken() {
     document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){
         inp.value = ''; inp.classList.remove('ok','no');
     });
+    initWortbank();
 }
 function showLueckenLoesungen() {
     document.querySelectorAll('#sec-2 .luecken-inp').forEach(function(inp){
@@ -696,20 +696,48 @@ function showLueckenLoesungen() {
         inp.value = ans;
         inp.classList.remove('no'); inp.classList.add('ok');
     });
+    updateWortbankChips();
+}
+function initWortbank() {
+    var bank = document.getElementById('wortbank-luecken');
+    if (!bank) return;
+    bank.innerHTML = '';
+    var words = Array.from(document.querySelectorAll('#sec-2 .luecken-inp')).map(function(i){ return i.dataset.ans || ''; });
+    for (var i = words.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = words[i]; words[i] = words[j]; words[j] = t;
+    }
+    words.forEach(function(w){
+        var chip = document.createElement('span');
+        chip.className = 'wortbank-chip';
+        chip.textContent = w;
+        bank.appendChild(chip);
+    });
+}
+function updateWortbankChips() {
+    var bank = document.getElementById('wortbank-luecken');
+    if (!bank) return;
+    var solved = Array.from(document.querySelectorAll('#sec-2 .luecken-inp.ok')).map(function(i){ return i.value; });
+    var remaining = solved.slice();
+    Array.from(bank.querySelectorAll('.wortbank-chip')).forEach(function(chip){
+        var idx = remaining.indexOf(chip.textContent);
+        if (idx >= 0) { chip.classList.add('used'); remaining.splice(idx, 1); }
+        else { chip.classList.remove('used'); }
+    });
 }
 
 // ══════════════════════════════════════════════════════════════════
 // RICHTIG / FALSCH
 // ══════════════════════════════════════════════════════════════════
 var RF_DATA = [
-    { stmt: 'Die Person möchte kein Fleisch essen.', correct: true },
-    { stmt: 'Die Person hat eine Milchallergie.', correct: false },
-    { stmt: 'Die Person mag scharfes Essen.', correct: false },
-    { stmt: 'Die Person möchte Gemüse süß-sauer probieren.', correct: true },
-    { stmt: 'Tom kauft jeden Samstag auf dem Markt ein.', correct: true },
-    { stmt: 'Die Erdbeeren riechen bitter.', correct: false },
-    { stmt: 'Der Käse schmeckt Tom nicht.', correct: false },
-    { stmt: 'Tom kauft eine Portion für das Abendessen.', correct: true },
+    { stmt: 'Leonie ist Vegetarierin.', correct: false },
+    { stmt: 'Leonie möchte heute Abend etwas Neues essen.', correct: true },
+    { stmt: 'Der Kellner empfiehlt ein äthiopisches Gericht.', correct: true },
+    { stmt: 'Leonie kennt den Geruch des Gerichts gut.', correct: false },
+    { stmt: 'Zuerst schmeckt das Essen süß, dann scharf.', correct: true },
+    { stmt: 'Der Joghurt schmeckt salzig.', correct: false },
+    { stmt: 'Am Ende bleibt ein leicht bitterer Nachgeschmack.', correct: true },
+    { stmt: 'Die Portion ist klein.', correct: false },
 ];
 var rfInited = false;
 function initRF() {
