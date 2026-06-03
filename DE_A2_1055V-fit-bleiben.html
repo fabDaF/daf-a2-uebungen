@@ -536,7 +536,7 @@ function loadBests(){
 function showTab(n, btn){
   document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('aktiv'); });
   document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
-  document.getElementById('sec-'+n).classList.add('aktiv');
+  document.querySelectorAll('.section')[n].classList.add('aktiv');
   btn.classList.add('active');
 }
 
