@@ -645,7 +645,7 @@ function initLueckentext() {
         inp.id = 'lt-inp-' + i;
         inp.addEventListener('input', function(e) {
             ltTimerAutoStart = true;
-            initTimer(0);
+            initTimer(3);
             ltCheckLive(parseInt(this.id.split('-')[2]));
         });
         item.appendChild(p);
@@ -688,6 +688,21 @@ function ltShowAll() {
         ltCheckLive(i);
     }
 }
+
+/* ===== TIMER-SYSTEM (wiederhergestellt) ===== */
+var TIMER_PREFIX = 'a2-1064r-';
+var timers = {};
+function initTimer(tabIdx){ if(timers[tabIdx])return; timers[tabIdx]={startTime:Date.now(),intervalId:null}; updateTimer(tabIdx); timers[tabIdx].intervalId=setInterval(function(){updateTimer(tabIdx);},100); }
+function updateTimer(tabIdx){ var elapsed=Math.floor((Date.now()-timers[tabIdx].startTime)/1000); var min=Math.floor(elapsed/60); var sec=elapsed%60; var display=min+':'+(sec<10?'0':'')+sec; var displayId=['timer-lt','timer-2','timer-3','timer-lt','timer-4','timer-ws'][tabIdx]; var elem=document.getElementById(displayId); if(elem) elem.textContent=display; }
+function timerAutoStart(tabIdx){ if(!timers[tabIdx]) initTimer(tabIdx); }
+function timerStop(tabIdx){ if(timers[tabIdx]){ clearInterval(timers[tabIdx].intervalId); var elapsed=Math.floor((Date.now()-timers[tabIdx].startTime)/1000); saveBestTime(tabIdx,elapsed); timers[tabIdx]=null; } }
+function timerResetOne(tabIdx){ if(timers[tabIdx]){ clearInterval(timers[tabIdx].intervalId); timers[tabIdx]=null; } var displayId=['timer-lt','timer-2','timer-3','timer-lt','timer-4','timer-ws'][tabIdx]; var elem=document.getElementById(displayId); if(elem) elem.textContent='0:00'; }
+function saveBestTime(tabIdx,elapsed){ var key=TIMER_PREFIX+'best-'+tabIdx; var best=localStorage.getItem(key); if(!best||parseInt(best)>elapsed){ localStorage.setItem(key,elapsed); updateBestDisplay(tabIdx,elapsed); } else { updateBestDisplay(tabIdx,parseInt(best)); } }
+function updateBestDisplay(tabIdx,seconds){ var min=Math.floor(seconds/60); var sec=seconds%60; var display=min+':'+(sec<10?'0':'')+sec; var bestId=['best-lt','best-2','best-3','best-lt','best-4','best-ws'][tabIdx]; var elem=document.getElementById(bestId); if(elem) elem.textContent=display; }
+function sbTimerStop(tabIdx){ timerStop(tabIdx); }
+function wsTimerResetOne(){ timerResetOne(5); wsTimerAutoStart=false; resetWortschatz(); }
+function wsShowAll(){ showWortschatzLoesung(); }
+document.addEventListener('DOMContentLoaded', function(){ [3,4,5].forEach(function(n){ var b=localStorage.getItem(TIMER_PREFIX+'best-'+n); if(b!==null) updateBestDisplay(n, parseInt(b)); }); });
 
 function ltTimerResetOne() {
     timerResetOne(3);

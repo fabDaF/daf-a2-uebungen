@@ -1052,13 +1052,13 @@ function initWortschatz(){
             artInp.className = 'blank'; artInp.type = 'text';
             artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
             artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
-            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            artInp.oninput = function() { wortschatzCheck(this); wsTimerStart(); checkWortschatzAllOk(); };
             fields.appendChild(artInp);
             var wordInp = document.createElement('input');
             wordInp.className = 'blank'; wordInp.type = 'text';
             wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
             wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
-            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            wordInp.oninput = function() { wortschatzCheck(this); wsTimerStart(); checkWortschatzAllOk(); };
             fields.appendChild(wordInp);
             var plInp = document.createElement('input');
             plInp.className = 'blank'; plInp.type = 'text';
@@ -1069,7 +1069,7 @@ function initWortschatz(){
                 plInp.classList.add('correct'); plInp.style.opacity = '0.6';
                 plInp.title = 'Dieses Wort hat keinen Plural';
             } else {
-                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+                plInp.oninput = function() { wortschatzCheck(this); wsTimerStart(); checkWortschatzAllOk(); };
             }
             fields.appendChild(plInp);
         } else {
@@ -1077,7 +1077,7 @@ function initWortschatz(){
             inp.className = 'blank'; inp.type = 'text';
             inp.placeholder = 'Deutsch'; inp.style.width = '220px';
             inp.dataset.answer = item.de; inp.dataset.field = 'word';
-            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(4); checkWortschatzAllOk(); };
+            inp.oninput = function() { wortschatzCheck(this); wsTimerStart(); checkWortschatzAllOk(); };
             fields.appendChild(inp);
         }
         row.appendChild(fields);
@@ -1097,10 +1097,10 @@ function wortschatzCheck(inp){
 function checkWortschatzAllOk(){
     var inputs = document.querySelectorAll('#tab4 input.blank');
     var allOk = inputs.length > 0 && Array.from(inputs).every(function(i){ return i.disabled || i.classList.contains('correct'); });
-    if (allOk) timerStop(4);
+    if (allOk) timerStop(timers.ws);
 }
 function showWortschatzLoesung(){
-    timerStop(4);
+    timerStop(timers.ws);
     document.querySelectorAll('#tab4 input.blank').forEach(function(inp){
         inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong');
     });

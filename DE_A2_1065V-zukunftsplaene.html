@@ -653,10 +653,10 @@ var wortschatzInited = false;
 function initWortschatz(){
     if (wortschatzInited) return;
     wortschatzInited = true;
-    timerReset(5);
+    wsTimerReset();
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
-    WORTSCHATZ.forEach(function(item) {
+    WS_DATA.forEach(function(item) {
         var row = document.createElement('div');
         row.className = 'luecken-item';
         row.style.marginBottom = '0';
@@ -671,13 +671,13 @@ function initWortschatz(){
             artInp.className = 'blank'; artInp.type = 'text';
             artInp.placeholder = 'Artikel'; artInp.style.width = '70px';
             artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
-            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            artInp.oninput = function() { wortschatzCheck(this); wsTimerAutoStart(); checkWortschatzAllOk(); };
             fields.appendChild(artInp);
             var wordInp = document.createElement('input');
             wordInp.className = 'blank'; wordInp.type = 'text';
             wordInp.placeholder = 'Wort'; wordInp.style.width = '160px';
             wordInp.dataset.answer = item.de; wordInp.dataset.field = 'word';
-            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            wordInp.oninput = function() { wortschatzCheck(this); wsTimerAutoStart(); checkWortschatzAllOk(); };
             fields.appendChild(wordInp);
             var plInp = document.createElement('input');
             plInp.className = 'blank'; plInp.type = 'text';
@@ -688,7 +688,7 @@ function initWortschatz(){
                 plInp.classList.add('correct'); plInp.style.opacity = '0.6';
                 plInp.title = 'Dieses Wort hat keinen Plural';
             } else {
-                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+                plInp.oninput = function() { wortschatzCheck(this); wsTimerAutoStart(); checkWortschatzAllOk(); };
             }
             fields.appendChild(plInp);
         } else {
@@ -696,7 +696,7 @@ function initWortschatz(){
             inp.className = 'blank'; inp.type = 'text';
             inp.placeholder = 'Deutsch'; inp.style.width = '220px';
             inp.dataset.answer = item.de; inp.dataset.field = 'word';
-            inp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            inp.oninput = function() { wortschatzCheck(this); wsTimerAutoStart(); checkWortschatzAllOk(); };
             fields.appendChild(inp);
         }
         row.appendChild(fields);
@@ -720,9 +720,6 @@ initSchreibwerkstatt(); wsTimerReset(); }
   rfBuild();
   sbBuild();
 })();
-</script>
-</body>
-</html>
 
 
 /* ===== SCHREIBWERKSTATT (A2) =================================== */
