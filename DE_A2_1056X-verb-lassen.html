@@ -330,7 +330,7 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
         Danach <input class="luecken-inp" id="lt1" data-ans="lässt" placeholder=""> sie sich vom Friseur die Haare schneiden.
         Nachmittags <input class="luecken-inp" id="lt2" data-ans="lässt" placeholder=""> sie das Auto waschen.
         Abends <input class="luecken-inp" id="lt3" data-ans="lässt" placeholder=""> sie von einem Koch das Abendessen kochen.
-        Mia <input class="luecken-inp" id="lt4" data-ans="lässt" placeholder=""> nie etwas selbst machen!
+        Mia macht nie etwas selbst — sie <input class="luecken-inp" id="lt4" data-ans="lässt" placeholder=""> einfach alles für sich machen!
       </div>
     </div>
 
@@ -613,6 +613,130 @@ initSchreibwerkstatt();
     timerResetOne(4);
 }
 
+
+// ===== TIMER-SYSTEM =====
+var TIMER_PREFIX   = 'a2-1056x-';
+var timerStarted   = [false,false,false,false,false,false];
+var timerRunning   = [false,false,false,false,false,false];
+var timerSeconds   = [0,0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null,null];
+function timerFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function timerAutoStart(n){
+  if(timerStarted[n]) return;
+  timerStarted[n]=true; timerRunning[n]=true;
+  timerIntervals[n]=setInterval(function(){
+    if(!timerRunning[n]) return;
+    timerSeconds[n]++;
+    var el=document.getElementById('t'+n);
+    if(el) el.textContent=timerFmt(timerSeconds[n]);
+  },1000);
+}
+function timerStop(n){
+  if(!timerRunning[n]) return;
+  timerRunning[n]=false;
+  var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'99999');
+  if(timerSeconds[n]<best){
+    best=timerSeconds[n];
+    localStorage.setItem(TIMER_PREFIX+'best-'+n,best);
+    var el=document.getElementById('b'+n);
+    if(el) el.textContent=timerFmt(best);
+  }
+}
+function timerResetOne(n){
+  clearInterval(timerIntervals[n]);
+  timerStarted[n]=false; timerRunning[n]=false; timerSeconds[n]=0;
+  var el=document.getElementById('t'+n); if(el) el.textContent='0:00';
+  if(n===1) resetLt();
+}
+function loadBests(){
+  [1,3,4].forEach(function(n){
+    var v=localStorage.getItem(TIMER_PREFIX+'best-'+n);
+    var el=document.getElementById('b'+n);
+    if(v&&el) el.textContent=timerFmt(parseInt(v));
+  });
+}
+
+// ===== LÜCKENTEXT (Tab 1) =====
+var LT_COUNT = 13;
+function initLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=''; el.classList.remove('ok','no'); }
+  }
+}
+function resetLt(){ initLt(); }
+function checkLtInput(el){
+  var ans=el.dataset.ans; var val=el.value.trim();
+  if(val===ans){ el.classList.add('ok'); el.classList.remove('no'); }
+  else if(ans.indexOf(val)===0 && val.length>0){ el.classList.remove('ok','no'); }
+  else if(val.length>0){ el.classList.add('no'); el.classList.remove('ok'); }
+  else { el.classList.remove('ok','no'); }
+  checkLtAll();
+}
+function checkLtAll(){
+  var all=true;
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el&&!el.classList.contains('ok')) all=false;
+  }
+  if(all) timerStop(1);
+}
+function showLt(){
+  for(var i=0;i<LT_COUNT;i++){
+    var el=document.getElementById('lt'+i);
+    if(el){ el.value=el.dataset.ans; el.classList.add('ok'); el.classList.remove('no'); }
+  }
+  timerStop(1);
+}
+
+// ===== ZUORDNUNG (Tab 2) =====
+var zuordDragged = null;
+function initZuord(){
+  var bank=document.getElementById('zuordBank');
+  var catsBox=document.getElementById('zuordCats');
+  var score=document.getElementById('zuordScore');
+  if(!bank||!catsBox) return;
+  bank.innerHTML=''; catsBox.innerHTML=''; if(score) score.textContent='';
+  var cats=[];
+  ZUORD_DATA.forEach(function(d){ if(cats.indexOf(d.cat)<0) cats.push(d.cat); });
+  var items=ZUORD_DATA.slice();
+  for(var i=items.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=items[i];items[i]=items[j];items[j]=t; }
+  items.forEach(function(d){
+    var chip=document.createElement('div');
+    chip.className='zuord-chip'; chip.textContent=d.sent; chip.draggable=true;
+    chip.dataset.cat=d.cat;
+    chip.addEventListener('dragstart',function(e){ zuordDragged=chip; e.dataTransfer.effectAllowed='move'; });
+    chip.addEventListener('dragend',function(){ zuordDragged=null; });
+    bank.appendChild(chip);
+  });
+  cats.forEach(function(c){
+    var col=document.createElement('div'); col.className='zuord-col';
+    var head=document.createElement('div'); head.className='zuord-col-header'; head.textContent=c;
+    var drop=document.createElement('div'); drop.className='zuord-drop'; drop.dataset.cat=c;
+    drop.addEventListener('dragover',function(e){ e.preventDefault(); drop.classList.add('dragover'); });
+    drop.addEventListener('dragleave',function(){ drop.classList.remove('dragover'); });
+    drop.addEventListener('drop',function(e){
+      e.preventDefault(); drop.classList.remove('dragover');
+      if(!zuordDragged) return;
+      drop.appendChild(zuordDragged);
+      var correct=zuordDragged.dataset.cat===drop.dataset.cat;
+      zuordDragged.classList.toggle('ok',correct);
+      zuordDragged.classList.toggle('no',!correct);
+      zuordDragged=null;
+      zuordScoreUpdate();
+    });
+    col.appendChild(head); col.appendChild(drop);
+    catsBox.appendChild(col);
+  });
+}
+function zuordScoreUpdate(){
+  var ok=document.querySelectorAll('#zuordCats .zuord-chip.ok').length;
+  var total=ZUORD_DATA.length;
+  var score=document.getElementById('zuordScore');
+  if(!score) return;
+  score.textContent=(ok===total)?('✓ Alles richtig! ('+ok+'/'+total+')'):(ok+'/'+total+' richtig');
+}
+function resetZuord(){ initZuord(); }
 
 // ===== NAVIGATION =====
 function showTab(n) {
