@@ -1088,36 +1088,106 @@ function resetLuecken() {
 
 // ===== TAB 4: MULTIPLE CHOICE =====
 var MC_DATA = [
-    { q: "Warum ist Alex am Sonntagmorgen müde?",
-      opts: ["Er arbeitete die ganze Nacht.", "Er war gestern auf einer Hochzeit.", "Er schlief schlecht.", "Er lernte lange Deutsch."],
-      correct: 1 },
-    { q: "Wann begann die Hochzeit von Petra und Jens?",
-      opts: ["Um 12 Uhr", "Um 14 Uhr", "Um 15 Uhr", "Um 16 Uhr"],
-      correct: 2 },
-    { q: "Wer reservierte für Alex einen Platz?",
-      opts: ["Gwyneth", "Tina", "Petra", "Louise"],
-      correct: 3 },
-    { q: "Seit wie vielen Jahren sind Gwyneth und Max zusammen?",
-      opts: ["Seit drei Jahren", "Seit fünf Jahren", "Seit sieben Jahren", "Seit zehn Jahren"],
-      correct: 2 },
-    { q: "Warum war Tina allein auf der Hochzeit?",
-      opts: ["Ihr Freund war krank.", "Paul und Tina trennten sich.", "Paul war im Ausland.", "Tina hatte keinen Freund."],
-      correct: 1 },
-    { q: "Warum weinte Louise in der Kirche?",
-      opts: ["Sie war traurig.", "Sie war vor Freude bewegt.", "Sie war nervös.", "Sie war müde."],
-      correct: 1 },
-    { q: "Was rief Alex an der Bar?",
-      opts: ['„Auf die Freundschaft!“', '„Auf die Ehe!“', '„Auf das Brautpaar!“', '„Auf den Tanz!“'],
-      correct: 2 },
-    { q: "Was fragte Alex Louise auf der Tanzfläche?",
-      opts: ["Er fragte, ob sie Sekt möchte.", "Er fragte, ob sie nach Hause fahren will.", "Er fragte, ob sie mit ihm tanzen möchte.", "Er fragte, ob sie glücklich ist."],
-      correct: 2 },
-    { q: "Wie lange tanzten Alex und Louise?",
-      opts: ["Bis Mitternacht", "Bis 3 Uhr morgens", "Bis 5 Uhr morgens", "Bis zum Morgengrauen"],
-      correct: 2 },
-    { q: "Wie fühlten sich die Freunde am Ende?",
-      opts: ["Müde und traurig", "Glücklich und zufrieden", "Nervös und aufgeregt", "Verletzt und allein"],
-      correct: 1 }
+  {
+    "q": "Warum ist Alex am Sonntagmorgen müde?",
+    "opts": [
+      "Er schlief schlecht.",
+      "Er lernte lange Deutsch.",
+      "Er war gestern auf einer Hochzeit.",
+      "Er arbeitete die ganze Nacht."
+    ],
+    "correct": 2
+  },
+  {
+    "q": "Wann begann die Hochzeit von Petra und Jens?",
+    "opts": [
+      "Um 16 Uhr",
+      "Um 15 Uhr",
+      "Um 14 Uhr",
+      "Um 12 Uhr"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Wer reservierte für Alex einen Platz?",
+    "opts": [
+      "Louise",
+      "Petra",
+      "Gwyneth",
+      "Tina"
+    ],
+    "correct": 0
+  },
+  {
+    "q": "Seit wie vielen Jahren sind Gwyneth und Max zusammen?",
+    "opts": [
+      "Seit zehn Jahren",
+      "Seit sieben Jahren",
+      "Seit drei Jahren",
+      "Seit fünf Jahren"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Warum war Tina allein auf der Hochzeit?",
+    "opts": [
+      "Ihr Freund war krank.",
+      "Paul war im Ausland.",
+      "Paul und Tina trennten sich.",
+      "Tina hatte keinen Freund."
+    ],
+    "correct": 2
+  },
+  {
+    "q": "Warum weinte Louise in der Kirche?",
+    "opts": [
+      "Sie war müde.",
+      "Sie war traurig.",
+      "Sie war nervös.",
+      "Sie war vor Freude bewegt."
+    ],
+    "correct": 3
+  },
+  {
+    "q": "Was rief Alex an der Bar?",
+    "opts": [
+      "„Auf den Tanz!“",
+      "„Auf das Brautpaar!“",
+      "„Auf die Ehe!“",
+      "„Auf die Freundschaft!“"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Was fragte Alex Louise auf der Tanzfläche?",
+    "opts": [
+      "Er fragte, ob sie nach Hause fahren will.",
+      "Er fragte, ob sie glücklich ist.",
+      "Er fragte, ob sie mit ihm tanzen möchte.",
+      "Er fragte, ob sie Sekt möchte."
+    ],
+    "correct": 2
+  },
+  {
+    "q": "Wie lange tanzten Alex und Louise?",
+    "opts": [
+      "Bis zum Morgengrauen",
+      "Bis Mitternacht",
+      "Bis 5 Uhr morgens",
+      "Bis 3 Uhr morgens"
+    ],
+    "correct": 2
+  },
+  {
+    "q": "Wie fühlten sich die Freunde am Ende?",
+    "opts": [
+      "Müde und traurig",
+      "Verletzt und allein",
+      "Glücklich und zufrieden",
+      "Nervös und aufgeregt"
+    ],
+    "correct": 2
+  }
 ];
 
 function initMC() {

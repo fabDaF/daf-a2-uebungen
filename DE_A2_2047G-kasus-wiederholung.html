@@ -874,18 +874,120 @@ function sbSolveAll() { satzbauData.forEach(function(_, i) { sbShowSolution(i); 
 
 /* ═══════════════════ QUIZ (Tab 4) ═══════════════════ */
 var QUIZ_DATA = [
-    { q: 'Ich sehe <strong>den alten Mann</strong>.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Akkusativ' },
-    { q: '<strong>Die Kinder</strong> spielen im Garten.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Nominativ' },
-    { q: 'Ich helfe <strong>meiner Mutter</strong>.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Dativ' },
-    { q: 'Das ist das Auto <strong>meines Vaters</strong>.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Genitiv' },
-    { q: 'Sie geht <strong>ohne ihren Bruder</strong> zur Schule.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Akkusativ' },
-    { q: 'Er wohnt <strong>bei seiner Tante</strong>.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Dativ' },
-    { q: 'Die Farbe <strong>des roten Tisches</strong> gefällt mir.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Genitiv' },
-    { q: '<strong>Ein junger Mann</strong> steht an der Tür.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Nominativ' },
-    { q: 'Sie schreibt <strong>dem Professor</strong> eine E-Mail.', opts: ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv'], ans: 'Dativ' },
-    { q: 'Ich stelle die Blumen <strong>auf den Tisch</strong>. — Welcher Kasus nach „auf“?', opts: ['Dativ (Ort)', 'Akkusativ (Richtung)'], ans: 'Akkusativ (Richtung)' },
-    { q: 'Die Blumen stehen <strong>auf dem Tisch</strong>. — Welcher Kasus nach „auf“?', opts: ['Dativ (Ort)', 'Akkusativ (Richtung)'], ans: 'Dativ (Ort)' },
-    { q: 'Er hängt das Bild <strong>an die Wand</strong>. — Welcher Kasus nach „an“?', opts: ['Dativ (Ort)', 'Akkusativ (Richtung)'], ans: 'Akkusativ (Richtung)' }
+  {
+    "q": "Ich sehe <strong>den alten Mann</strong>.",
+    "opts": [
+      "Genitiv",
+      "Dativ",
+      "Nominativ",
+      "Akkusativ"
+    ],
+    "ans": "Akkusativ"
+  },
+  {
+    "q": "<strong>Die Kinder</strong> spielen im Garten.",
+    "opts": [
+      "Nominativ",
+      "Dativ",
+      "Genitiv",
+      "Akkusativ"
+    ],
+    "ans": "Nominativ"
+  },
+  {
+    "q": "Ich helfe <strong>meiner Mutter</strong>.",
+    "opts": [
+      "Genitiv",
+      "Akkusativ",
+      "Nominativ",
+      "Dativ"
+    ],
+    "ans": "Dativ"
+  },
+  {
+    "q": "Das ist das Auto <strong>meines Vaters</strong>.",
+    "opts": [
+      "Dativ",
+      "Akkusativ",
+      "Nominativ",
+      "Genitiv"
+    ],
+    "ans": "Genitiv"
+  },
+  {
+    "q": "Sie geht <strong>ohne ihren Bruder</strong> zur Schule.",
+    "opts": [
+      "Nominativ",
+      "Dativ",
+      "Akkusativ",
+      "Genitiv"
+    ],
+    "ans": "Akkusativ"
+  },
+  {
+    "q": "Er wohnt <strong>bei seiner Tante</strong>.",
+    "opts": [
+      "Genitiv",
+      "Dativ",
+      "Akkusativ",
+      "Nominativ"
+    ],
+    "ans": "Dativ"
+  },
+  {
+    "q": "Die Farbe <strong>des roten Tisches</strong> gefällt mir.",
+    "opts": [
+      "Dativ",
+      "Akkusativ",
+      "Genitiv",
+      "Nominativ"
+    ],
+    "ans": "Genitiv"
+  },
+  {
+    "q": "<strong>Ein junger Mann</strong> steht an der Tür.",
+    "opts": [
+      "Dativ",
+      "Genitiv",
+      "Akkusativ",
+      "Nominativ"
+    ],
+    "ans": "Nominativ"
+  },
+  {
+    "q": "Sie schreibt <strong>dem Professor</strong> eine E-Mail.",
+    "opts": [
+      "Akkusativ",
+      "Dativ",
+      "Genitiv",
+      "Nominativ"
+    ],
+    "ans": "Dativ"
+  },
+  {
+    "q": "Ich stelle die Blumen <strong>auf den Tisch</strong>. — Welcher Kasus nach „auf“?",
+    "opts": [
+      "Dativ (Ort)",
+      "Akkusativ (Richtung)"
+    ],
+    "ans": "Akkusativ (Richtung)"
+  },
+  {
+    "q": "Die Blumen stehen <strong>auf dem Tisch</strong>. — Welcher Kasus nach „auf“?",
+    "opts": [
+      "Dativ (Ort)",
+      "Akkusativ (Richtung)"
+    ],
+    "ans": "Dativ (Ort)"
+  },
+  {
+    "q": "Er hängt das Bild <strong>an die Wand</strong>. — Welcher Kasus nach „an“?",
+    "opts": [
+      "Akkusativ (Richtung)",
+      "Dativ (Ort)"
+    ],
+    "ans": "Akkusativ (Richtung)"
+  }
 ];
 
 function initQuiz() {

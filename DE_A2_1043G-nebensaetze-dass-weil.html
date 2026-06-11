@@ -803,13 +803,67 @@ function initSatzbau() {
 
 /* ===== MULTIPLE CHOICE ===== */
 var MC_DATA = [
-  { q: 'Welche Subjunktion passt? Ich gehe nach Hause, ___ es schon spät ist.', opts: ['weil', 'dass'], ans: 'weil' },
-  { q: 'Welche Subjunktion passt? Ich glaube, ___ du Recht hast.', opts: ['weil', 'dass'], ans: 'dass' },
-  { q: 'Wo steht das Verb im Nebensatz?', opts: ['am Anfang', 'am Ende', 'in der Mitte'], ans: 'am Ende' },
-  { q: 'Was drückt <em>weil</em> aus?', opts: ['einen Grund', 'eine Meinung', 'eine Zeit'], ans: 'einen Grund' },
-  { q: 'Was drückt <em>dass</em> aus?', opts: ['einen Grund', 'eine Meinung/einen Gedanken', 'eine Zeit'], ans: 'eine Meinung/einen Gedanken' },
-  { q: 'Welcher Satz ist richtig?', opts: ['Ich glaube, dass er kommt morgen.', 'Ich glaube, dass er morgen kommt.', 'Ich glaube, dass morgen kommt er.'], ans: 'Ich glaube, dass er morgen kommt.' },
-  { q: 'Welcher Satz ist richtig?', opts: ['Weil er müde ist, er geht schlafen.', 'Weil er müde ist, geht er schlafen.', 'Er geht schlafen weil er ist müde.'], ans: 'Weil er müde ist, geht er schlafen.' }
+  {
+    "q": "Welche Subjunktion passt? Ich gehe nach Hause, ___ es schon spät ist.",
+    "opts": [
+      "weil",
+      "dass"
+    ],
+    "ans": "weil"
+  },
+  {
+    "q": "Welche Subjunktion passt? Ich glaube, ___ du Recht hast.",
+    "opts": [
+      "dass",
+      "weil"
+    ],
+    "ans": "dass"
+  },
+  {
+    "q": "Wo steht das Verb im Nebensatz?",
+    "opts": [
+      "am Anfang",
+      "in der Mitte",
+      "am Ende"
+    ],
+    "ans": "am Ende"
+  },
+  {
+    "q": "Was drückt <em>weil</em> aus?",
+    "opts": [
+      "eine Zeit",
+      "eine Meinung",
+      "einen Grund"
+    ],
+    "ans": "einen Grund"
+  },
+  {
+    "q": "Was drückt <em>dass</em> aus?",
+    "opts": [
+      "einen Grund",
+      "eine Zeit",
+      "eine Meinung/einen Gedanken"
+    ],
+    "ans": "eine Meinung/einen Gedanken"
+  },
+  {
+    "q": "Welcher Satz ist richtig?",
+    "opts": [
+      "Ich glaube, dass morgen kommt er.",
+      "Ich glaube, dass er morgen kommt.",
+      "Ich glaube, dass er kommt morgen."
+    ],
+    "ans": "Ich glaube, dass er morgen kommt."
+  },
+  {
+    "q": "Welcher Satz ist richtig?",
+    "opts": [
+      "Er geht schlafen weil er ist müde.",
+      "Weil er müde ist, er geht schlafen.",
+      "Weil er müde ist, geht er schlafen."
+    ],
+    "ans": "Weil er müde ist, geht er schlafen."
+  }
 ];
 function initMc() {
   var cont = document.getElementById('mcContainer');

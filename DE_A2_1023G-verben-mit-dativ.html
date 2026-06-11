@@ -743,16 +743,106 @@ function initSatzbau(){
 // ═════════════════════════════════════════════════
 var mcBuilt = false;
 var MC_DATA = [
-    { satz: 'Der Kuchen schmeckt ___ (das Kind) wunderbar.', opts: ['das Kind','dem Kind','den Kindes','der Kind'], correct: 'dem Kind' },
-    { satz: 'Er hilft ___ (seine Kollegin) tatkräftig.', opts: ['seine Kollegin','seinen Kollegin','seiner Kollegin','ihr Kollegin'], correct: 'seiner Kollegin' },
-    { satz: 'Sie schickt ___ (der Chef) die Unterlagen.', opts: ['der Chef','den Chef','dem Chef','des Chefs'], correct: 'dem Chef' },
-    { satz: 'Das Gehalt gefällt ___ (er) gut.', opts: ['er','ihn','ihm','sein'], correct: 'ihm' },
-    { satz: 'Martin schenkt ___ (seine Chefin) Blumen.', opts: ['seine Chefin','seiner Chefin','seinem Chefin','ihn'], correct: 'seiner Chefin' },
-    { satz: 'Ich glaube ___ (du) nicht.', opts: ['dich','du','dir','dein'], correct: 'dir' },
-    { satz: 'Wir gratulieren ___ (sie, Sing.) zum neuen Job.', opts: ['sie','ihr','ihn','ihm'], correct: 'ihr' },
-    { satz: 'Das Büro gehört ___ (der Arbeitgeber).', opts: ['den Arbeitgeber','der Arbeitgeber','dem Arbeitgeber','des Arbeitgebers'], correct: 'dem Arbeitgeber' },
-    { satz: 'Sie zeigt ___ (er) das neue Büro.', opts: ['er','ihn','ihm','sein'], correct: 'ihm' },
-    { satz: 'Die Stelle passt ___ (sie, Pl.) ideal.', opts: ['sie','ihnen','ihre','ihr'], correct: 'ihnen' }
+  {
+    "satz": "Der Kuchen schmeckt ___ (das Kind) wunderbar.",
+    "opts": [
+      "der Kind",
+      "den Kindes",
+      "dem Kind",
+      "das Kind"
+    ],
+    "correct": "dem Kind"
+  },
+  {
+    "satz": "Er hilft ___ (seine Kollegin) tatkräftig.",
+    "opts": [
+      "seiner Kollegin",
+      "seine Kollegin",
+      "seinen Kollegin",
+      "ihr Kollegin"
+    ],
+    "correct": "seiner Kollegin"
+  },
+  {
+    "satz": "Sie schickt ___ (der Chef) die Unterlagen.",
+    "opts": [
+      "dem Chef",
+      "der Chef",
+      "des Chefs",
+      "den Chef"
+    ],
+    "correct": "dem Chef"
+  },
+  {
+    "satz": "Das Gehalt gefällt ___ (er) gut.",
+    "opts": [
+      "er",
+      "ihn",
+      "sein",
+      "ihm"
+    ],
+    "correct": "ihm"
+  },
+  {
+    "satz": "Martin schenkt ___ (seine Chefin) Blumen.",
+    "opts": [
+      "seine Chefin",
+      "seinem Chefin",
+      "seiner Chefin",
+      "ihn"
+    ],
+    "correct": "seiner Chefin"
+  },
+  {
+    "satz": "Ich glaube ___ (du) nicht.",
+    "opts": [
+      "du",
+      "dein",
+      "dich",
+      "dir"
+    ],
+    "correct": "dir"
+  },
+  {
+    "satz": "Wir gratulieren ___ (sie, Sing.) zum neuen Job.",
+    "opts": [
+      "ihm",
+      "ihn",
+      "sie",
+      "ihr"
+    ],
+    "correct": "ihr"
+  },
+  {
+    "satz": "Das Büro gehört ___ (der Arbeitgeber).",
+    "opts": [
+      "dem Arbeitgeber",
+      "des Arbeitgebers",
+      "der Arbeitgeber",
+      "den Arbeitgeber"
+    ],
+    "correct": "dem Arbeitgeber"
+  },
+  {
+    "satz": "Sie zeigt ___ (er) das neue Büro.",
+    "opts": [
+      "sein",
+      "er",
+      "ihn",
+      "ihm"
+    ],
+    "correct": "ihm"
+  },
+  {
+    "satz": "Die Stelle passt ___ (sie, Pl.) ideal.",
+    "opts": [
+      "ihre",
+      "ihnen",
+      "sie",
+      "ihr"
+    ],
+    "correct": "ihnen"
+  }
 ];
 function initMC() {
     var c = document.getElementById('mcContainer');

@@ -496,76 +496,106 @@ function resetLuecken() {
 
 // ===== MC DATA =====
 const MC_DATA = [
-    {
-        q: "Was ist Thomas von Beruf?",
-        opts: ["Lehrer", "Schriftsteller", "Informatiker", "Journalist"],
-        correct: 1
-    },
-    {
-        q: "Wie lange schreibt Thomas schon Geschichten?",
-        opts: ["Seit zehn Jahren", "Seit zwanzig Jahren", "Seit dreißig Jahren", "Seit fünfzig Jahren"],
-        correct: 2
-    },
-    {
-        q: "Was hat die KI in zehn Sekunden geschrieben?",
-        opts: ["Einen Brief", "Ein Gedicht", "Eine Geschichte", "Ein Buch"],
-        correct: 2
-    },
-    {
-        q: "Was hat in der KI-Geschichte gefehlt?",
-        opts: ["Das Ende", "Ein überraschender, menschlicher Moment", "Die Hauptfigur", "Der Titel"],
-        correct: 1
-    },
-    {
-        q: "Was studiert Thomas' Tochter Lena?",
-        opts: ["Literatur", "Medizin", "Informatik", "Psychologie"],
-        correct: 2
-    },
-    {
-        q: 'Warum findet Thomas es \u201Efast lustig\u201C, arbeitslos zu werden?',
-        opts: [
-            "Weil er Humor mag",
-            "Weil er auch vorher nicht viel Geld verdient hat",
-            "Weil er schon in Rente ist",
-            "Weil seine Tochter genug Geld hat"
-        ],
-        correct: 1
-    },
-    {
-        q: "Was sagt Thomas' Großvater über Werkzeuge?",
-        opts: [
-            "Werkzeuge sind immer gefährlich",
-            "Werkzeuge sind nicht gut oder schlecht – es kommt auf den Benutzer an",
-            "Werkzeuge machen das Leben einfacher",
-            "Man braucht keine Werkzeuge"
-        ],
-        correct: 1
-    },
-    {
-        q: "Was ist laut Thomas der Unterschied zwischen ihm und der KI?",
-        opts: [
-            "Die KI schreibt schneller",
-            "Die KI hat mehr Wörter",
-            "Die KI hat keine Tränen – sie kann nicht fühlen",
-            "Die KI braucht keinen Computer"
-        ],
-        correct: 2
-    },
-    {
-        q: "Womit vergleicht Thomas das Schreiben?",
-        opts: ["Mit Kochen", "Mit Atmen", "Mit Schlafen", "Mit Singen"],
-        correct: 1
-    },
-    {
-        q: "Warum schreibt Thomas diesen Brief an die Maschine?",
-        opts: [
-            "Weil er wütend auf die KI ist",
-            "Weil er die KI verstehen will – oder weil Schreiben das Einzige ist, was er kann",
-            "Weil seine Tochter ihn gebeten hat",
-            "Weil er einen neuen Job sucht"
-        ],
-        correct: 1
-    }
+  {
+    "q": "Was ist Thomas von Beruf?",
+    "opts": [
+      "Journalist",
+      "Schriftsteller",
+      "Informatiker",
+      "Lehrer"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Wie lange schreibt Thomas schon Geschichten?",
+    "opts": [
+      "Seit fünfzig Jahren",
+      "Seit zehn Jahren",
+      "Seit dreißig Jahren",
+      "Seit zwanzig Jahren"
+    ],
+    "correct": 2
+  },
+  {
+    "q": "Was hat die KI in zehn Sekunden geschrieben?",
+    "opts": [
+      "Einen Brief",
+      "Ein Buch",
+      "Ein Gedicht",
+      "Eine Geschichte"
+    ],
+    "correct": 3
+  },
+  {
+    "q": "Was hat in der KI-Geschichte gefehlt?",
+    "opts": [
+      "Der Titel",
+      "Ein überraschender, menschlicher Moment",
+      "Das Ende",
+      "Die Hauptfigur"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Was studiert Thomas' Tochter Lena?",
+    "opts": [
+      "Psychologie",
+      "Literatur",
+      "Medizin",
+      "Informatik"
+    ],
+    "correct": 3
+  },
+  {
+    "q": "Warum findet Thomas es „fast lustig“, arbeitslos zu werden?",
+    "opts": [
+      "Weil er Humor mag",
+      "Weil seine Tochter genug Geld hat",
+      "Weil er auch vorher nicht viel Geld verdient hat",
+      "Weil er schon in Rente ist"
+    ],
+    "correct": 2
+  },
+  {
+    "q": "Was sagt Thomas' Großvater über Werkzeuge?",
+    "opts": [
+      "Man braucht keine Werkzeuge",
+      "Werkzeuge sind nicht gut oder schlecht – es kommt auf den Benutzer an",
+      "Werkzeuge machen das Leben einfacher",
+      "Werkzeuge sind immer gefährlich"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Was ist laut Thomas der Unterschied zwischen ihm und der KI?",
+    "opts": [
+      "Die KI hat keine Tränen – sie kann nicht fühlen",
+      "Die KI schreibt schneller",
+      "Die KI braucht keinen Computer",
+      "Die KI hat mehr Wörter"
+    ],
+    "correct": 0
+  },
+  {
+    "q": "Womit vergleicht Thomas das Schreiben?",
+    "opts": [
+      "Mit Singen",
+      "Mit Atmen",
+      "Mit Kochen",
+      "Mit Schlafen"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Warum schreibt Thomas diesen Brief an die Maschine?",
+    "opts": [
+      "Weil er einen neuen Job sucht",
+      "Weil seine Tochter ihn gebeten hat",
+      "Weil er wütend auf die KI ist",
+      "Weil er die KI verstehen will – oder weil Schreiben das Einzige ist, was er kann"
+    ],
+    "correct": 3
+  }
 ];
 
 let mcSelected = {};

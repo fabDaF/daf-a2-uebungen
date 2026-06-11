@@ -777,13 +777,75 @@ function initSatzbau() {
 
 /* ===== MULTIPLE CHOICE ===== */
 var MC_DATA=[
-  {q:'Welches Reflexivpronomen passt? Ich freue ___ über den Kuchen.',opts:['mich','dich','sich','uns'],ans:'mich'},
-  {q:'Welches Reflexivpronomen passt? Er ärgert ___ über das Wetter.',opts:['mich','sich','dich','euch'],ans:'sich'},
-  {q:'Welches Reflexivpronomen passt? Wir haben ___ im Wald verirrt.',opts:['sich','uns','euch','mich'],ans:'uns'},
-  {q:'Welches Reflexivpronomen passt? Ihr ärgert ___ über die Hunde.',opts:['sich','uns','euch','mich'],ans:'euch'},
-  {q:'Was bedeutet "sich bewerben"?',opts:['to be late','to apply for a job','to get lost','to rest'],ans:'to apply for a job'},
-  {q:'Was bedeutet "sich erkälten"?',opts:['to get annoyed','to catch a cold','to get lost','to rest'],ans:'to catch a cold'},
-  {q:'Was ist korrekt?',opts:['Er bewerbt sich.','Er bewirbt sich.','Er bewerben sich.'],ans:'Er bewirbt sich.'}
+  {
+    "q": "Welches Reflexivpronomen passt? Ich freue ___ über den Kuchen.",
+    "opts": [
+      "uns",
+      "mich",
+      "dich",
+      "sich"
+    ],
+    "ans": "mich"
+  },
+  {
+    "q": "Welches Reflexivpronomen passt? Er ärgert ___ über das Wetter.",
+    "opts": [
+      "sich",
+      "mich",
+      "dich",
+      "euch"
+    ],
+    "ans": "sich"
+  },
+  {
+    "q": "Welches Reflexivpronomen passt? Wir haben ___ im Wald verirrt.",
+    "opts": [
+      "euch",
+      "uns",
+      "mich",
+      "sich"
+    ],
+    "ans": "uns"
+  },
+  {
+    "q": "Welches Reflexivpronomen passt? Ihr ärgert ___ über die Hunde.",
+    "opts": [
+      "mich",
+      "sich",
+      "uns",
+      "euch"
+    ],
+    "ans": "euch"
+  },
+  {
+    "q": "Was bedeutet \"sich bewerben\"?",
+    "opts": [
+      "to rest",
+      "to be late",
+      "to get lost",
+      "to apply for a job"
+    ],
+    "ans": "to apply for a job"
+  },
+  {
+    "q": "Was bedeutet \"sich erkälten\"?",
+    "opts": [
+      "to catch a cold",
+      "to rest",
+      "to get lost",
+      "to get annoyed"
+    ],
+    "ans": "to catch a cold"
+  },
+  {
+    "q": "Was ist korrekt?",
+    "opts": [
+      "Er bewerben sich.",
+      "Er bewerbt sich.",
+      "Er bewirbt sich."
+    ],
+    "ans": "Er bewirbt sich."
+  }
 ];
 function initMc(){
   var cont=document.getElementById('mcContainer');cont.innerHTML='';

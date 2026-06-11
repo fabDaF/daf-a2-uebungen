@@ -1051,18 +1051,126 @@ function resetSatzbau() { initSatzbau(); }
 
 /* ===== Tab 4: Fragewörter (MC) ===== */
 var MC_DATA = [
-    { q: 'Lisa wartet auf ihren Freund.', opts: ['Auf wen', 'Worauf', 'Wofür', 'Mit wem'], ans: 'Auf wen' },
-    { q: 'Ich denke an meine Prüfung.', opts: ['An wen', 'Woran', 'Worüber', 'Wovon'], ans: 'Woran' },
-    { q: 'Er lacht über seinen Lehrer.', opts: ['Worüber', 'Über wen', 'Für wen', 'Wovon'], ans: 'Über wen' },
-    { q: 'Wir träumen von einem neuen Auto.', opts: ['Von wem', 'Wovon', 'Worauf', 'Womit'], ans: 'Wovon' },
-    { q: 'Sie erinnert sich an ihre Großmutter.', opts: ['Woran', 'An wen', 'Auf wen', 'Für wen'], ans: 'An wen' },
-    { q: 'Ich danke dir für das Geschenk.', opts: ['Für wen', 'Wofür', 'Womit', 'Worauf'], ans: 'Wofür' },
-    { q: 'Max trifft sich mit seinem Bruder.', opts: ['Womit', 'Mit wem', 'Von wem', 'Worüber'], ans: 'Mit wem' },
-    { q: 'Sie bereitet sich auf die Reise vor.', opts: ['Auf wen', 'Worauf', 'Wofür', 'Womit'], ans: 'Worauf' },
-    { q: 'Er beginnt mit der Arbeit.', opts: ['Womit', 'Mit wem', 'Wovon', 'Worauf'], ans: 'Womit' },
-    { q: 'Ich achte auf das Wetter.', opts: ['Auf wen', 'Worauf', 'Woran', 'Wofür'], ans: 'Worauf' },
-    { q: 'Lisa denkt an Jack.', opts: ['Woran', 'An wen', 'Für wen', 'Von wem'], ans: 'An wen' },
-    { q: 'Wir sprechen über den Film.', opts: ['Über wen', 'Worüber', 'Wovon', 'Womit'], ans: 'Worüber' }
+  {
+    "q": "Lisa wartet auf ihren Freund.",
+    "opts": [
+      "Mit wem",
+      "Auf wen",
+      "Wofür",
+      "Worauf"
+    ],
+    "ans": "Auf wen"
+  },
+  {
+    "q": "Ich denke an meine Prüfung.",
+    "opts": [
+      "Worüber",
+      "Wovon",
+      "Woran",
+      "An wen"
+    ],
+    "ans": "Woran"
+  },
+  {
+    "q": "Er lacht über seinen Lehrer.",
+    "opts": [
+      "Über wen",
+      "Für wen",
+      "Worüber",
+      "Wovon"
+    ],
+    "ans": "Über wen"
+  },
+  {
+    "q": "Wir träumen von einem neuen Auto.",
+    "opts": [
+      "Wovon",
+      "Worauf",
+      "Von wem",
+      "Womit"
+    ],
+    "ans": "Wovon"
+  },
+  {
+    "q": "Sie erinnert sich an ihre Großmutter.",
+    "opts": [
+      "Für wen",
+      "An wen",
+      "Woran",
+      "Auf wen"
+    ],
+    "ans": "An wen"
+  },
+  {
+    "q": "Ich danke dir für das Geschenk.",
+    "opts": [
+      "Worauf",
+      "Womit",
+      "Für wen",
+      "Wofür"
+    ],
+    "ans": "Wofür"
+  },
+  {
+    "q": "Max trifft sich mit seinem Bruder.",
+    "opts": [
+      "Womit",
+      "Mit wem",
+      "Worüber",
+      "Von wem"
+    ],
+    "ans": "Mit wem"
+  },
+  {
+    "q": "Sie bereitet sich auf die Reise vor.",
+    "opts": [
+      "Worauf",
+      "Womit",
+      "Wofür",
+      "Auf wen"
+    ],
+    "ans": "Worauf"
+  },
+  {
+    "q": "Er beginnt mit der Arbeit.",
+    "opts": [
+      "Mit wem",
+      "Womit",
+      "Worauf",
+      "Wovon"
+    ],
+    "ans": "Womit"
+  },
+  {
+    "q": "Ich achte auf das Wetter.",
+    "opts": [
+      "Worauf",
+      "Auf wen",
+      "Wofür",
+      "Woran"
+    ],
+    "ans": "Worauf"
+  },
+  {
+    "q": "Lisa denkt an Jack.",
+    "opts": [
+      "An wen",
+      "Für wen",
+      "Von wem",
+      "Woran"
+    ],
+    "ans": "An wen"
+  },
+  {
+    "q": "Wir sprechen über den Film.",
+    "opts": [
+      "Wovon",
+      "Über wen",
+      "Worüber",
+      "Womit"
+    ],
+    "ans": "Worüber"
+  }
 ];
 
 function initMcTab() {

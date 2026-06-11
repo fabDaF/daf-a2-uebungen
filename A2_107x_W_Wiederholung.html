@@ -361,10 +361,42 @@ function showTab(n) {
 
 // ─── MC FORMELL/INFORMELL ─────────────────────────────────────
 var MC_DATA = [
-  { q: 'Wie beginnt ein formeller Brief?', options: ['Liebe Anna,', 'Sehr geehrte Damen und Herren,', 'Hey, wie geht\'s?'], correct: 1 },
-  { q: 'Was bedeutet: „Ich würde mich freuen, wenn Sie…“?', options: ['Informell — an einen Freund', 'Formell — höfliche Bitte', 'Umgangssprache'], correct: 1 },
-  { q: 'Wie endet ein informeller Brief?', options: ['Mit freundlichen Grüßen,', 'Hochachtungsvoll,', 'Liebe Grüße,'], correct: 2 },
-  { q: 'Man schreibt „Sie“ (groß) in einem Brief an …?', options: ['einen guten Freund', 'einen unbekannten Empfänger / Chef', 'ein Kind'], correct: 1 }
+  {
+    "q": "Wie beginnt ein formeller Brief?",
+    "options": [
+      "Sehr geehrte Damen und Herren,",
+      "Hey, wie geht's?",
+      "Liebe Anna,"
+    ],
+    "correct": 0
+  },
+  {
+    "q": "Was bedeutet: „Ich würde mich freuen, wenn Sie…“?",
+    "options": [
+      "Formell — höfliche Bitte",
+      "Umgangssprache",
+      "Informell — an einen Freund"
+    ],
+    "correct": 0
+  },
+  {
+    "q": "Wie endet ein informeller Brief?",
+    "options": [
+      "Hochachtungsvoll,",
+      "Liebe Grüße,",
+      "Mit freundlichen Grüßen,"
+    ],
+    "correct": 1
+  },
+  {
+    "q": "Man schreibt „Sie“ (groß) in einem Brief an …?",
+    "options": [
+      "einen guten Freund",
+      "einen unbekannten Empfänger / Chef",
+      "ein Kind"
+    ],
+    "correct": 1
+  }
 ];
 
 function renderMC() {

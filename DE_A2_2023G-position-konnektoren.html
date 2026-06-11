@@ -958,16 +958,111 @@ function resetSatzbau() { initSatzbau(); }
    MULTIPLE CHOICE (Tab 4) — Richtig/Falsch + Konnektor-Wahl
    ═══════════════════════════════════════════════════════════════ */
 var MC_DATA = [
-    { id:1, q:'Wenn ich meinen Bus verpasse, komme ich zu spät zum Flughafen.', opts:['Richtig','Falsch'], correct:0, explain:'Korrekt: „wenn“ + Verb am Ende → Nebensatz vor Hauptsatz → Inversion.' },
-    { id:2, q:'Ich weiß nicht, wenn ich rechtzeitig am Flughafen bin.', opts:['Richtig','Falsch'], correct:1, explain:'Falsch: Hier muss „ob“ stehen (indirekte Ja/Nein-Frage), nicht „wenn“.' },
-    { id:3, q:'Ich frage mich, ob wir den Flieger noch schaffen.', opts:['Richtig','Falsch'], correct:0, explain:'Korrekt: „ob“ leitet eine indirekte Frage ein, Verb am Ende.' },
-    { id:4, q:'Ob sich das Museum lohnt, würde mich interessieren.', opts:['Richtig','Falsch'], correct:0, explain:'Korrekt: Nebensatz mit „ob“ vor dem Hauptsatz, Verb an Position 2.' },
-    { id:5, q:'Ich freue mich, ob du kommst.', opts:['Richtig','Falsch'], correct:1, explain:'Falsch: „sich freuen“ braucht „dass“ (kein Zweifel), nicht „ob“.' },
-    { id:6, q:'Welcher Konnektor passt? — Es regnet stark, ___ nehme ich einen Regenschirm mit.', opts:['weil','deshalb','dass'], correct:1, explain:'„deshalb“ verbindet zwei Hauptsätze (Folge). Verb an Position 2.' },
-    { id:7, q:'Welcher Konnektor passt? — Ich bin glücklich, ___ ich morgen in den Urlaub fahre.', opts:['deshalb','ob','weil'], correct:2, explain:'„weil“ leitet einen Nebensatz ein (Grund). Verb am Ende.' },
-    { id:8, q:'Welcher Konnektor passt? — ___ er ein Kind war, reiste er oft mit seinen Eltern.', opts:['Wenn','Als','Weil'], correct:1, explain:'„als“ für einmaliges Ereignis in der Vergangenheit.' },
-    { id:9, q:'Welcher Konnektor passt? — Ich möchte wissen, ___ das Hotel ein Schwimmbad hat.', opts:['dass','ob','weil'], correct:1, explain:'„ob“ für eine indirekte Ja/Nein-Frage (Unsicherheit).' },
-    { id:10, q:'Welcher Konnektor passt? — ___ das Wetter morgen gut ist, gehen wir wandern.', opts:['Als','Wenn','Deshalb'], correct:1, explain:'„wenn“ für Bedingung/Zukunft. Verb am Ende im Nebensatz.' }
+  {
+    "id": 1,
+    "q": "Wenn ich meinen Bus verpasse, komme ich zu spät zum Flughafen.",
+    "opts": [
+      "Falsch",
+      "Richtig"
+    ],
+    "correct": 1,
+    "explain": "Korrekt: „wenn“ + Verb am Ende → Nebensatz vor Hauptsatz → Inversion."
+  },
+  {
+    "id": 2,
+    "q": "Ich weiß nicht, wenn ich rechtzeitig am Flughafen bin.",
+    "opts": [
+      "Falsch",
+      "Richtig"
+    ],
+    "correct": 0,
+    "explain": "Falsch: Hier muss „ob“ stehen (indirekte Ja/Nein-Frage), nicht „wenn“."
+  },
+  {
+    "id": 3,
+    "q": "Ich frage mich, ob wir den Flieger noch schaffen.",
+    "opts": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correct": 0,
+    "explain": "Korrekt: „ob“ leitet eine indirekte Frage ein, Verb am Ende."
+  },
+  {
+    "id": 4,
+    "q": "Ob sich das Museum lohnt, würde mich interessieren.",
+    "opts": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correct": 0,
+    "explain": "Korrekt: Nebensatz mit „ob“ vor dem Hauptsatz, Verb an Position 2."
+  },
+  {
+    "id": 5,
+    "q": "Ich freue mich, ob du kommst.",
+    "opts": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correct": 1,
+    "explain": "Falsch: „sich freuen“ braucht „dass“ (kein Zweifel), nicht „ob“."
+  },
+  {
+    "id": 6,
+    "q": "Welcher Konnektor passt? — Es regnet stark, ___ nehme ich einen Regenschirm mit.",
+    "opts": [
+      "dass",
+      "deshalb",
+      "weil"
+    ],
+    "correct": 1,
+    "explain": "„deshalb“ verbindet zwei Hauptsätze (Folge). Verb an Position 2."
+  },
+  {
+    "id": 7,
+    "q": "Welcher Konnektor passt? — Ich bin glücklich, ___ ich morgen in den Urlaub fahre.",
+    "opts": [
+      "weil",
+      "ob",
+      "deshalb"
+    ],
+    "correct": 0,
+    "explain": "„weil“ leitet einen Nebensatz ein (Grund). Verb am Ende."
+  },
+  {
+    "id": 8,
+    "q": "Welcher Konnektor passt? — ___ er ein Kind war, reiste er oft mit seinen Eltern.",
+    "opts": [
+      "Wenn",
+      "Weil",
+      "Als"
+    ],
+    "correct": 2,
+    "explain": "„als“ für einmaliges Ereignis in der Vergangenheit."
+  },
+  {
+    "id": 9,
+    "q": "Welcher Konnektor passt? — Ich möchte wissen, ___ das Hotel ein Schwimmbad hat.",
+    "opts": [
+      "weil",
+      "dass",
+      "ob"
+    ],
+    "correct": 2,
+    "explain": "„ob“ für eine indirekte Ja/Nein-Frage (Unsicherheit)."
+  },
+  {
+    "id": 10,
+    "q": "Welcher Konnektor passt? — ___ das Wetter morgen gut ist, gehen wir wandern.",
+    "opts": [
+      "Als",
+      "Deshalb",
+      "Wenn"
+    ],
+    "correct": 2,
+    "explain": "„wenn“ für Bedingung/Zukunft. Verb am Ende im Nebensatz."
+  }
 ];
 
 function initMcExercises() {

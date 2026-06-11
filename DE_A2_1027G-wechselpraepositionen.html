@@ -561,16 +561,106 @@ function initSatzbau(){var container=document.getElementById('satzbauContainer')
 // MULTIPLE CHOICE
 // ══════════════════════════════════════
 var MC_DATA=[
-    {satz:'Das Sofa steht ___ Fenster.',opts:['neben','neben dem','neben den','neben der'],correct:'neben dem'},
-    {satz:'Ich stelle das Sofa ___ Fenster.',opts:['neben dem','neben das','neben den','neben der'],correct:'neben das'},
-    {satz:'Das Buch liegt ___ Bett.',opts:['auf dem','auf das','auf den','auf der'],correct:'auf dem'},
-    {satz:'Er legt das Buch ___ Bett.',opts:['auf das','auf dem','auf den','auf der'],correct:'auf das'},
-    {satz:'Die Lampe hängt ___ Decke.',opts:['an der','an die','an dem','an das'],correct:'an der'},
-    {satz:'Wir hängen die Lampe ___ Decke.',opts:['an die','an der','an dem','an das'],correct:'an die'},
-    {satz:'Er sitzt ___ Büro.',opts:['im','in das','in den','in der'],correct:'im'},
-    {satz:'Sie geht ___ Büro.',opts:['ins','in dem','im','in der'],correct:'ins'},
-    {satz:'Der Hund liegt ___ Sofa.',opts:['unter dem','unter das','unter den','unter der'],correct:'unter dem'},
-    {satz:'Der Hund läuft ___ Sofa.',opts:['unter das','unter dem','unter den','unter der'],correct:'unter das'}
+  {
+    "satz": "Das Sofa steht ___ Fenster.",
+    "opts": [
+      "neben der",
+      "neben den",
+      "neben dem",
+      "neben"
+    ],
+    "correct": "neben dem"
+  },
+  {
+    "satz": "Ich stelle das Sofa ___ Fenster.",
+    "opts": [
+      "neben dem",
+      "neben den",
+      "neben das",
+      "neben der"
+    ],
+    "correct": "neben das"
+  },
+  {
+    "satz": "Das Buch liegt ___ Bett.",
+    "opts": [
+      "auf den",
+      "auf dem",
+      "auf der",
+      "auf das"
+    ],
+    "correct": "auf dem"
+  },
+  {
+    "satz": "Er legt das Buch ___ Bett.",
+    "opts": [
+      "auf den",
+      "auf der",
+      "auf das",
+      "auf dem"
+    ],
+    "correct": "auf das"
+  },
+  {
+    "satz": "Die Lampe hängt ___ Decke.",
+    "opts": [
+      "an das",
+      "an dem",
+      "an die",
+      "an der"
+    ],
+    "correct": "an der"
+  },
+  {
+    "satz": "Wir hängen die Lampe ___ Decke.",
+    "opts": [
+      "an dem",
+      "an das",
+      "an der",
+      "an die"
+    ],
+    "correct": "an die"
+  },
+  {
+    "satz": "Er sitzt ___ Büro.",
+    "opts": [
+      "im",
+      "in der",
+      "in das",
+      "in den"
+    ],
+    "correct": "im"
+  },
+  {
+    "satz": "Sie geht ___ Büro.",
+    "opts": [
+      "ins",
+      "in der",
+      "in dem",
+      "im"
+    ],
+    "correct": "ins"
+  },
+  {
+    "satz": "Der Hund liegt ___ Sofa.",
+    "opts": [
+      "unter den",
+      "unter das",
+      "unter dem",
+      "unter der"
+    ],
+    "correct": "unter dem"
+  },
+  {
+    "satz": "Der Hund läuft ___ Sofa.",
+    "opts": [
+      "unter das",
+      "unter dem",
+      "unter der",
+      "unter den"
+    ],
+    "correct": "unter das"
+  }
 ];
 function initMC(){var c=document.getElementById('mcContainer');c.innerHTML='';MC_DATA.forEach(function(item,i){var div=document.createElement('div');div.className='mc-aufgabe';div.innerHTML='<p><span style="background:#f0ecff;color:#4a148c;padding:2px 8px;border-radius:10px;font-size:0.8em;font-weight:700;margin-right:8px;">'+(i+1)+'</span>'+item.satz+'</p>'+'<div class="mc-choices" id="mc-choices-'+i+'"></div>'+'<div class="mc-fb" id="mc-fb-'+i+'"></div>';c.appendChild(div);var shuffled=item.opts.slice().sort(function(){return Math.random()-0.5;});shuffled.forEach(function(opt){var btn=document.createElement('button');btn.className='mc-choice';btn.textContent=opt;btn.onclick=function(){var btns=document.querySelectorAll('#mc-choices-'+i+' .mc-choice');btns.forEach(function(b){b.disabled=true;b.classList.remove('ok','no');});var fb=document.getElementById('mc-fb-'+i);if(opt===item.correct){btn.classList.add('ok');fb.className='mc-fb ok';fb.textContent='✓ Richtig!';}else{btn.classList.add('no');fb.className='mc-fb no';fb.textContent='✗ Falsch. Richtig: '+item.correct;}};document.getElementById('mc-choices-'+i).appendChild(btn);});});}
 

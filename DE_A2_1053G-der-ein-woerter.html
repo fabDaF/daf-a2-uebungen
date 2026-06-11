@@ -896,13 +896,76 @@ function initSatzbau() {
 
 // ===== MULTIPLE CHOICE =====
 var MC_DATA = [
-  { q: '___ Auto gehört dir?', opts: ['Welches', 'Dieses', 'Jenes', 'Manches'], ans: 'Welches' },
-  { q: 'Mir gehört ___ Auto dort hinten.', opts: ['welches', 'dieses', 'jenes', 'manches'], ans: 'jenes' },
-  { q: 'Ich mag ___ Kuchen nicht.', opts: ['diesen', 'dieser', 'dieses', 'diesem'], ans: 'diesen' },
-  { q: '___ Gast bekommt ein Stück Kuchen.', opts: ['Jeder', 'Jeden', 'Jedem', 'Jedes'], ans: 'Jeder' },
-  { q: 'Wem gehören die Bücher? – Sie gehören ___ Schülern.', opts: ['alle', 'allen', 'aller', 'allem'], ans: 'allen' },
-  { q: '___ Frauen mögen diesen Film. (= nur ein paar)', opts: ['Alle', 'Manche', 'Jede', 'Welche'], ans: 'Manche' },
-  { q: 'In ___ Wochen haben wir dreimal Training. (= nur manchmal)', opts: ['jedem', 'manchen', 'allen', 'welchen'], ans: 'manchen' }
+  {
+    "q": "___ Auto gehört dir?",
+    "opts": [
+      "Dieses",
+      "Welches",
+      "Jenes",
+      "Manches"
+    ],
+    "ans": "Welches"
+  },
+  {
+    "q": "Mir gehört ___ Auto dort hinten.",
+    "opts": [
+      "welches",
+      "jenes",
+      "dieses",
+      "manches"
+    ],
+    "ans": "jenes"
+  },
+  {
+    "q": "Ich mag ___ Kuchen nicht.",
+    "opts": [
+      "dieser",
+      "diesen",
+      "dieses",
+      "diesem"
+    ],
+    "ans": "diesen"
+  },
+  {
+    "q": "___ Gast bekommt ein Stück Kuchen.",
+    "opts": [
+      "Jedes",
+      "Jeder",
+      "Jeden",
+      "Jedem"
+    ],
+    "ans": "Jeder"
+  },
+  {
+    "q": "Wem gehören die Bücher? – Sie gehören ___ Schülern.",
+    "opts": [
+      "aller",
+      "allen",
+      "alle",
+      "allem"
+    ],
+    "ans": "allen"
+  },
+  {
+    "q": "___ Frauen mögen diesen Film. (= nur ein paar)",
+    "opts": [
+      "Welche",
+      "Jede",
+      "Manche",
+      "Alle"
+    ],
+    "ans": "Manche"
+  },
+  {
+    "q": "In ___ Wochen haben wir dreimal Training. (= nur manchmal)",
+    "opts": [
+      "welchen",
+      "jedem",
+      "manchen",
+      "allen"
+    ],
+    "ans": "manchen"
+  }
 ];
 
 function initMc() {

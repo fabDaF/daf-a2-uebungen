@@ -643,13 +643,76 @@ function sbBuild(){
 
 // ── MULTIPLE CHOICE ─────────────────────────────────────────
 var MC_DATA = [
-  { q: 'Kim ___ morgen früh aufstehen.', opts: ['wirt', 'wird', 'werdet', 'werd'], ans: 1 },
-  { q: 'Ihr werdet nächstes Jahr nicht in den Urlaub ___.', opts: ['fahren können', 'können fahren', 'könnt fahren', 'fahren könnt'], ans: 0 },
-  { q: 'Du wirst ab Juli wieder ___.', opts: ['arbeitest', 'arbeitst', 'arbeiten', 'arbeiten wirst'], ans: 2 },
-  { q: 'Ich ___ morgen lange arbeiten müssen.', opts: ['werden', 'wirden', 'wirde', 'werde'], ans: 3 },
-  { q: 'Es ist schon spät. Die Kinder ___ bestimmt schon im Bett sein.', opts: ['wirt', 'wird', 'werden', 'werdet'], ans: 2 },
-  { q: 'Nina sieht so glücklich aus. Sie ___ wohl frisch verliebt sein.', opts: ['werde', 'wirst', 'wird', 'werden'], ans: 2 },
-  { q: 'Ich werde ab jetzt immer pünktlich ___. (Ich verspreche es!)', opts: ['kommen', 'komme', 'kommt', 'kommst'], ans: 0 }
+  {
+    "q": "Kim ___ morgen früh aufstehen.",
+    "opts": [
+      "werd",
+      "wirt",
+      "werdet",
+      "wird"
+    ],
+    "ans": 3
+  },
+  {
+    "q": "Ihr werdet nächstes Jahr nicht in den Urlaub ___.",
+    "opts": [
+      "können fahren",
+      "fahren könnt",
+      "fahren können",
+      "könnt fahren"
+    ],
+    "ans": 2
+  },
+  {
+    "q": "Du wirst ab Juli wieder ___.",
+    "opts": [
+      "arbeiten wirst",
+      "arbeitst",
+      "arbeiten",
+      "arbeitest"
+    ],
+    "ans": 2
+  },
+  {
+    "q": "Ich ___ morgen lange arbeiten müssen.",
+    "opts": [
+      "werden",
+      "wirden",
+      "werde",
+      "wirde"
+    ],
+    "ans": 2
+  },
+  {
+    "q": "Es ist schon spät. Die Kinder ___ bestimmt schon im Bett sein.",
+    "opts": [
+      "werdet",
+      "wird",
+      "werden",
+      "wirt"
+    ],
+    "ans": 2
+  },
+  {
+    "q": "Nina sieht so glücklich aus. Sie ___ wohl frisch verliebt sein.",
+    "opts": [
+      "wird",
+      "wirst",
+      "werden",
+      "werde"
+    ],
+    "ans": 0
+  },
+  {
+    "q": "Ich werde ab jetzt immer pünktlich ___. (Ich verspreche es!)",
+    "opts": [
+      "kommst",
+      "kommt",
+      "komme",
+      "kommen"
+    ],
+    "ans": 3
+  }
 ];
 var mcAnswered = [];
 function mcBuild(){

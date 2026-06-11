@@ -979,16 +979,116 @@ function resetSatzbau() { initSatzbau(); }
    MULTIPLE CHOICE (Tab 4)
    ═══════════════════════════════════════════════════════════════ */
 var MC_DATA = [
-    { id:1, q:'Welche Frage passt? — Das Hotel ist <b>hier</b>.', opts:['Wo?','Wohin?','Woher?'], correct:0, explain:'“hier" beschreibt einen Ort → Wo?' },
-    { id:2, q:'Welche Frage passt? — Ich gehe <b>dorthin</b>.', opts:['Wo?','Wohin?','Woher?'], correct:1, explain:'“dorthin" beschreibt eine Richtung → Wohin?' },
-    { id:3, q:'Welche Frage passt? — Er kommt <b>von dort</b>.', opts:['Wo?','Wohin?','Woher?'], correct:2, explain:'“von dort" beschreibt den Ausgangspunkt → Woher?' },
-    { id:4, q:'Welches Adverb passt? — Komm bitte ___! (in das Haus)', opts:['hinaus','herein','dorthin'], correct:1, explain:'“herein" = zum Sprecher, in etwas hinein.' },
-    { id:5, q:'Welches Adverb passt? — Geh bitte ___! (aus dem Haus)', opts:['herein','hierher','hinaus'], correct:2, explain:'“hinaus" = vom Sprecher weg, aus etwas heraus.' },
-    { id:6, q:'Was ist richtig? — Wo gehst du ___?', opts:['her','hin','dort'], correct:1, explain:'“gehen" = vom Sprecher weg → “hin".' },
-    { id:7, q:'Was ist richtig? — Wo kommst du ___?', opts:['hin','her','dorthin'], correct:1, explain:'“kommen" = zum Sprecher → “her".' },
-    { id:8, q:'Was passt? — Die Kinder kommen ___ herein.', opts:['von draußen','nach drinnen','dorthin'], correct:0, explain:'“von draußen" = Woher? Die Kinder kommen von draußen.' },
-    { id:9, q:'Was passt? — Die Rezeption ist ___.', opts:['dorthin','vorne links','von hier'], correct:1, explain:'“vorne links" beschreibt eine Position → Wo?' },
-    { id:10, q:'Was ist der Unterschied zwischen “hin" und “her"?', opts:['kein Unterschied','hin = zum Sprecher, her = weg','hin = weg vom Sprecher, her = zum Sprecher'], correct:2, explain:'“hin" = vom Sprecher weg, “her" = zum Sprecher.' }
+  {
+    "id": 1,
+    "q": "Welche Frage passt? — Das Hotel ist <b>hier</b>.",
+    "opts": [
+      "Wohin?",
+      "Woher?",
+      "Wo?"
+    ],
+    "correct": 2,
+    "explain": "“hier\" beschreibt einen Ort → Wo?"
+  },
+  {
+    "id": 2,
+    "q": "Welche Frage passt? — Ich gehe <b>dorthin</b>.",
+    "opts": [
+      "Wohin?",
+      "Wo?",
+      "Woher?"
+    ],
+    "correct": 0,
+    "explain": "“dorthin\" beschreibt eine Richtung → Wohin?"
+  },
+  {
+    "id": 3,
+    "q": "Welche Frage passt? — Er kommt <b>von dort</b>.",
+    "opts": [
+      "Wo?",
+      "Woher?",
+      "Wohin?"
+    ],
+    "correct": 1,
+    "explain": "“von dort\" beschreibt den Ausgangspunkt → Woher?"
+  },
+  {
+    "id": 4,
+    "q": "Welches Adverb passt? — Komm bitte ___! (in das Haus)",
+    "opts": [
+      "hinaus",
+      "dorthin",
+      "herein"
+    ],
+    "correct": 2,
+    "explain": "“herein\" = zum Sprecher, in etwas hinein."
+  },
+  {
+    "id": 5,
+    "q": "Welches Adverb passt? — Geh bitte ___! (aus dem Haus)",
+    "opts": [
+      "hinaus",
+      "herein",
+      "hierher"
+    ],
+    "correct": 0,
+    "explain": "“hinaus\" = vom Sprecher weg, aus etwas heraus."
+  },
+  {
+    "id": 6,
+    "q": "Was ist richtig? — Wo gehst du ___?",
+    "opts": [
+      "hin",
+      "her",
+      "dort"
+    ],
+    "correct": 0,
+    "explain": "“gehen\" = vom Sprecher weg → “hin\"."
+  },
+  {
+    "id": 7,
+    "q": "Was ist richtig? — Wo kommst du ___?",
+    "opts": [
+      "hin",
+      "her",
+      "dorthin"
+    ],
+    "correct": 1,
+    "explain": "“kommen\" = zum Sprecher → “her\"."
+  },
+  {
+    "id": 8,
+    "q": "Was passt? — Die Kinder kommen ___ herein.",
+    "opts": [
+      "von draußen",
+      "nach drinnen",
+      "dorthin"
+    ],
+    "correct": 0,
+    "explain": "“von draußen\" = Woher? Die Kinder kommen von draußen."
+  },
+  {
+    "id": 9,
+    "q": "Was passt? — Die Rezeption ist ___.",
+    "opts": [
+      "von hier",
+      "dorthin",
+      "vorne links"
+    ],
+    "correct": 2,
+    "explain": "“vorne links\" beschreibt eine Position → Wo?"
+  },
+  {
+    "id": 10,
+    "q": "Was ist der Unterschied zwischen “hin\" und “her\"?",
+    "opts": [
+      "hin = zum Sprecher, her = weg",
+      "kein Unterschied",
+      "hin = weg vom Sprecher, her = zum Sprecher"
+    ],
+    "correct": 2,
+    "explain": "“hin\" = vom Sprecher weg, “her\" = zum Sprecher."
+  }
 ];
 
 function initMcExercises() {
