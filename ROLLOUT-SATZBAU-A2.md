@@ -94,8 +94,31 @@ valid-Arrays mit.
   verbot und A2-Kommasatz-Quote (`--strict-quote` macht die Quote hart).
   Erstlauf gegen Bestand: 284 Längenverstöße (253 einfach, 31 Komma) + 88
   Quote-Warnungen.
-- **Offen:** Vorstufe 0 (15 Sonderfälle migrieren), Schritt 3 (Batch pro
-  Einheit), Schritt 4–7.
+- **Schritt 3 angefangen:** `DE_A2_1011V-meine-freunde.html` komplett auf
+  Spec gebracht und als **Referenzimplementierung** committet (Engine +
+  CSS + Daten + JSDOM-Test grün, `--strict-quote` bestanden). Vorlage für
+  den Batch.
+- **NEUE Voraussetzung entdeckt (Komma-Engine-Lücke):** Die 93 kanonischen
+  Dateien zerfallen in **zwei Engine-Generationen**:
+  - **Gen-B (35 Dateien):** Chip-Klasse `.sb-chip`, `sbMakeChip` setzt
+    `punct-chip` für `','`/`';'`, CSS vorhanden → komma-fähig.
+  - **Gen-A (58 Dateien, u. a. 1011V):** Chip-Klasse `.chip`, **kein**
+    Komma-Support — `sbMakeChip` kennt `punct-chip` nicht, CSS fehlt.
+    Komma-Sätze sind hier nicht darstellbar, bis die Engine nachgerüstet
+    ist. **Das ist der eigentliche Grund, warum A2 die Kommasatz-Quote
+    nirgends erfüllt.**
+  - Minimal-Patch pro Gen-A-Datei (an 1011V verifiziert, zwei chirurgische
+    Eingriffe): (1) in `sbMakeChip` nach `chip.className='chip';` einfügen
+    `if(word===','||word===';')chip.classList.add('punct-chip');`; (2) CSS
+    `.chip.punct-chip{…}` + `.chip.punct-chip.correct/.incorrect` +
+    `.sentence-builder .chip.punct-chip{margin-left:-6px;}` direkt nach
+    `.chip.selected`. Capitalization-Logik (`i===0`) verträgt Kommas bereits.
+  - **TODO:** Diesen Minimal-Patch als idempotenten Patcher
+    (`scripts/satzbau_komma_engine.py`) bauen und über die 58 Gen-A-Dateien
+    laufen lassen, BEVOR deren Kommasatz-Quote hergestellt wird. Gen-B
+    braucht keinen Engine-Patch, nur Daten.
+- **Offen:** Engine-Patcher (58 Gen-A), Vorstufe 0 (15 Sonderfälle),
+  Schritt 3 Rest (101x ff.), Schritt 4–7.
 
 ## Randbefunde (beim Rollout miterledigen)
 
