@@ -1177,7 +1177,7 @@ document.addEventListener('DOMContentLoaded', function(){
   window.__fbWortbankInit = true;
 
   var ANSWER_KEYS = ["ans", "answer", "sol", "solution", "correct", "loesung", "b"];
-  var GAP_CLASS_RE = /(^|\s)(luecken-inp|luecke-inp|luecke-input|luecken-text|luecken-person|luecke-satz|blank|gap-input|gap)(\s|$)/;
+  var GAP_CLASS_RE = /(^|\s)(luecken-inp|luecke-inp|luecke-input|luecken-text|luecken-person|luecke-satz|lt-inp|blank|gap-input|gap)(\s|$)/;
 
   function answerOf(inp) {
     var d = inp.dataset || {};
