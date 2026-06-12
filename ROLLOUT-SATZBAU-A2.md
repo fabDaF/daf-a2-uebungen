@@ -13,8 +13,7 @@ nachgezogen ist.
 | Niveau | Wörter | Modus |
 |---|---|---|
 | A1 | 5–9 | freier Bau, nur einfache Hauptsätze und Fragen, KEINE Kommasätze |
-| A2 einfache Sätze | 6–10 | freier Bau |
-| A2 Kommasätze | 9–14 (14 hart) | **Hybrid:** bis 10 Wörter freier Bau, ab 11 Wörtern geführter Gerüst-Modus (`geruest_patch.js`) |
+| A2 | 6–14 (14 hart) | **geführter Gerüst-Modus** (wie B1+, `geruest_patch.js`) — NICHT freier Bau. Einfache Sätze UND Kommasätze, alle im Gerüst. Korrigiert 2026-06-12 nach Franks B2-Referenz (1011X): A2-Satzbau soll wie B2 aussehen, mit festen Ankern + gestrichelten Leerfeldern. |
 
 Satzzeichen-Chips zählen nicht mit. Zu kurze Sätze mit Zeit-/Ortsangaben
 verlängern, nie künstlich aufblähen.
