@@ -65,6 +65,10 @@ body {
 .chip { background: white; border: 2px solid #667eea; color: #667eea; border-radius: 20px; padding: 5px 12px; cursor: pointer; font-size: 0.85em; display: inline-block; white-space: normal; user-select: none; transition: background .15s, color .15s; }
 .chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.drop-zone .chip.punct-chip, .sentence-builder .chip.punct-chip { margin-left: -6px; }
 .chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
 .chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
 .drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
@@ -450,14 +454,14 @@ var RF_DATA = [
 ];
 
 var satzbauData = [
-  { parts: ['Ich', 'habe', 'vor', 'nächstes', 'Jahr', 'nach', 'Australien', 'zu', 'fliegen'], valid: [['Ich', 'habe', 'vor', 'nächstes', 'Jahr', 'nach', 'Australien', 'zu', 'fliegen']], punct: '.' },
-  { parts: ['Lea', 'wünscht', 'sich', 'eine', 'erfolgreiche', 'Schauspielerin', 'zu', 'werden'], valid: [['Lea', 'wünscht', 'sich', 'eine', 'erfolgreiche', 'Schauspielerin', 'zu', 'werden']], punct: '.' },
-  { parts: ['Er', 'hofft', 'als', 'Manager', 'viel', 'Geld', 'zu', 'verdienen'], valid: [['Er', 'hofft', 'als', 'Manager', 'viel', 'Geld', 'zu', 'verdienen']], punct: '.' },
-  { parts: ['Mein', 'Ziel', 'ist', 'es', 'mein', 'Studium', 'erfolgreich', 'zu', 'beenden'], valid: [['Mein', 'Ziel', 'ist', 'es', 'mein', 'Studium', 'erfolgreich', 'zu', 'beenden']], punct: '.' },
-  { parts: ['Vielleicht', 'arbeitet', 'er', 'nächstes', 'Jahr', 'im', 'Ausland'], valid: [['Vielleicht', 'arbeitet', 'er', 'nächstes', 'Jahr', 'im', 'Ausland']], punct: '.' },
-  { parts: ['Ich', 'möchte', 'alle', 'meine', 'Pläne', 'in', 'die', 'Tat', 'umsetzen'], valid: [['Ich', 'möchte', 'alle', 'meine', 'Pläne', 'in', 'die', 'Tat', 'umsetzen']], punct: '.' },
-  { parts: ['Wahrscheinlich', 'kann', 'er', 'sein', 'Studium', 'bald', 'abschließen'], valid: [['Wahrscheinlich', 'kann', 'er', 'sein', 'Studium', 'bald', 'abschließen']], punct: '.' },
-  { parts: ['Sie', 'verspricht', 'ihm', 'mit', 'Lea', 'nach', 'Australien', 'zu', 'fliegen'], valid: [['Sie', 'verspricht', 'ihm', 'mit', 'Lea', 'nach', 'Australien', 'zu', 'fliegen']], punct: '.' }
+  { parts: ['ich', 'habe', 'vor', ',', 'nächstes', 'Jahr', 'nach', 'Australien', 'zu', 'fliegen'], valid: [['ich', 'habe', 'vor', ',', 'nächstes', 'Jahr', 'nach', 'Australien', 'zu', 'fliegen']], punct: '.' },
+  { parts: ['Lea', 'wünscht', 'sich', ',', 'eines', 'Tages', 'eine', 'erfolgreiche', 'Schauspielerin', 'zu', 'werden'], valid: [['Lea', 'wünscht', 'sich', ',', 'eines', 'Tages', 'eine', 'erfolgreiche', 'Schauspielerin', 'zu', 'werden']], punct: '.' },
+  { parts: ['er', 'hofft', ',', 'als', 'Manager', 'eines', 'Tages', 'viel', 'Geld', 'zu', 'verdienen'], valid: [['er', 'hofft', ',', 'als', 'Manager', 'eines', 'Tages', 'viel', 'Geld', 'zu', 'verdienen']], punct: '.' },
+  { parts: ['mein', 'Ziel', 'ist', 'es', ',', 'mein', 'Studium', 'erfolgreich', 'zu', 'beenden'], valid: [['mein', 'Ziel', 'ist', 'es', ',', 'mein', 'Studium', 'erfolgreich', 'zu', 'beenden']], punct: '.' },
+  { parts: ['welche', 'Pläne', 'hast', 'du', 'für', 'die', 'Zukunft'], valid: [['welche', 'Pläne', 'hast', 'du', 'für', 'die', 'Zukunft']], punct: '?' },
+  { parts: ['ich', 'möchte', 'alle', 'meine', 'Pläne', 'in', 'die', 'Tat', 'umsetzen'], valid: [['ich', 'möchte', 'alle', 'meine', 'Pläne', 'in', 'die', 'Tat', 'umsetzen']], punct: '.' },
+  { parts: ['vielleicht', 'arbeitet', 'er', 'nächstes', 'Jahr', 'im', 'Ausland'], valid: [['vielleicht', 'arbeitet', 'er', 'nächstes', 'Jahr', 'im', 'Ausland']], punct: '.' },
+  { parts: ['sie', 'verspricht', 'ihm', ',', 'mit', 'Lea', 'nach', 'Australien', 'zu', 'fliegen'], valid: [['sie', 'verspricht', 'ihm', ',', 'mit', 'Lea', 'nach', 'Australien', 'zu', 'fliegen']], punct: '.' }
 ];
 
 var WORTSCHATZ = [
@@ -703,6 +707,7 @@ function sbUpdateCapitalization(row) {
 function sbMakeChip(word) {
     var chip = document.createElement('div');
     chip.className = 'chip';
+    if(word===','||word===';')chip.classList.add('punct-chip');
     chip.textContent = word;
     chip.dataset.orig = word;
     chip.draggable = true;
