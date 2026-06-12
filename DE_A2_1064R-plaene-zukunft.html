@@ -1440,7 +1440,7 @@ function schreibLeeren() {
   window.__fbWortbankInit = true;
 
   var ANSWER_KEYS = ["ans", "answer", "sol", "solution", "correct", "loesung", "b"];
-  var GAP_CLASS_RE = /(^|\s)(luecken-inp|luecke-inp|luecke-input|blank|gap-input|gap)(\s|$)/;
+  var GAP_CLASS_RE = /(^|\s)(luecken-inp|luecke-inp|luecke-input|lt-inp|blank|gap-input|gap)(\s|$)/;
 
   function answerOf(inp) {
     var d = inp.dataset || {};
@@ -1454,6 +1454,7 @@ function schreibLeeren() {
   function isGapInput(inp) {
     if (inp.tagName !== "INPUT") return false;
     if (!GAP_CLASS_RE.test(inp.className || "")) return false;
+    if (inp.dataset && inp.dataset.field) return false;  // Wortschatz-Felder ausschliessen
     // Wortschatz-Felder ausschließen (eigene Section, aber defensiv)
     var id = inp.id || "";
     if (/^ws[-_]/.test(id)) return false;
