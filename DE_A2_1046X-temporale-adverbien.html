@@ -70,6 +70,10 @@ p { line-height: 1.7; color: #333; margin-bottom: 10px; }
 .chip:active { cursor: grabbing; }
   .chip.correct { background: #e8f5e9 !important; border-color: #43a047 !important; color: #2e7d32 !important; }
   .chip.incorrect { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c !important; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .sb-zone { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px; min-height: 46px; background: #fafafa; border: 2px dashed #aaa; border-radius: 8px; position: relative; }
 .sb-zone.drag-over { background: #ede7f6; border-color: #667eea; }
 .sb-insert-cursor { width: 3px; background: #667eea; border-radius: 2px; align-self: stretch; pointer-events: none; }
@@ -455,7 +459,7 @@ var satzbauData=[
   {words:['Abends','entspannt','sie','zuhause'],punct:'.'}
 ];
 var sbDragged=null;
-function sbMakeChip(word,orig){var c=document.createElement('div');c.className='chip';c.textContent=word;c.dataset.orig=orig;c.draggable=true;c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});return c;}
+function sbMakeChip(word,orig){var c=document.createElement('div');c.className='chip'; if(word===','||word===';')c.classList.add('punct-chip');c.textContent=word;c.dataset.orig=orig;c.draggable=true;c.addEventListener('dragstart',function(e){sbDragged=c;e.dataTransfer.effectAllowed='move';});c.addEventListener('dragend',function(){sbDragged=null;document.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});});return c;}
 function sbRegisterZone(zone,rowIdx){zone.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';var cursor=zone.querySelector('.sb-insert-cursor');if(!cursor){cursor=document.createElement('div');cursor.className='sb-insert-cursor';cursor.style.height='28px';}var after=null;var children=Array.from(zone.children).filter(function(c){return!c.classList.contains('sb-insert-cursor')&&!c.classList.contains('sb-punkt');});for(var i=0;i<children.length;i++){var r=children[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){after=children[i];break;}}if(after)zone.insertBefore(cursor,after);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(cursor,p);else zone.appendChild(cursor);}zone.classList.add('drag-over');});zone.addEventListener('dragleave',function(e){if(!zone.contains(e.relatedTarget)){zone.classList.remove('drag-over');zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});}});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('drag-over');var cursor=zone.querySelector('.sb-insert-cursor');if(sbDragged){if(cursor)zone.insertBefore(sbDragged,cursor);else{var p=zone.querySelector('.sb-punkt');if(p)zone.insertBefore(sbDragged,p);else zone.appendChild(sbDragged);}}zone.querySelectorAll('.sb-insert-cursor').forEach(function(x){x.remove();});sbUpdateCapitalization(zone);setTimeout(function(){sbCheckAuto(rowIdx);},500);});}
 function sbColorRow(zone,ok){zone.querySelectorAll('.chip').forEach(function(c){c.style.background=ok?'#e8f5e9':ok===false?'#ffebee':'#fff';c.style.borderColor=ok?'#4caf50':ok===false?'#e53935':'#667eea';});}
 function sbUpdateCapitalization(zone){Array.from(zone.querySelectorAll('.chip')).forEach(function(c,i){var orig=c.dataset.orig;c.textContent=i===0?orig.charAt(0).toUpperCase()+orig.slice(1):orig;});}

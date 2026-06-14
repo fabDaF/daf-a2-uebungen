@@ -87,6 +87,10 @@ h3 { font-size: 1em; color: #555; margin: 18px 0 10px; }
 .chip { background: #667eea; color: white; border-radius: 20px; padding: 6px 14px; cursor: grab; font-size: .88em; user-select: none; white-space: nowrap; }
 .chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .sb-chip.ok { background: #27ae60; }
 .sb-chip.no { background: #e74c3c; }
 .sb-punkt { font-weight: 700; color: #4a148c; font-size: 1.1em; padding: 0 4px; align-self: center; }
@@ -732,7 +736,7 @@ function sbUpdateCapitalization(row) {
 
 function sbMakeChip(word) {
     var chip = document.createElement('div');
-    chip.className = 'chip';
+    chip.className = 'chip'; if(word===','||word===';')chip.classList.add('punct-chip');
     chip.textContent = word;
     chip.dataset.orig = word;
     chip.draggable = true;

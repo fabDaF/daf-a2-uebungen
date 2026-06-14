@@ -82,6 +82,7 @@ body { font-family: Georgia, 'Times New Roman', serif; background: linear-gradie
 .chip.punct-chip { background: #f8f8f8; border: 2px solid #667eea; padding: 8px 16px; color: #333; font-weight: 700; font-size: 1.3em; min-width: 18px; text-align: center; cursor: move; }
 .chip.punct-chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 
 /* ── SATZBAU ────────────────────────────────────────────────── */
 .chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
@@ -506,7 +507,7 @@ function sbUpdateCapitalization(row) {
     });
 }
 function sbMakeChip(word) {
-    var chip = document.createElement('div'); chip.className = 'chip'; chip.textContent = word; chip.dataset.orig = word; chip.draggable = true;
+    var chip = document.createElement('div'); chip.className = 'chip'; if(word===','||word===';')chip.classList.add('punct-chip'); chip.textContent = word; chip.dataset.orig = word; chip.draggable = true;
     chip.addEventListener('dragstart', function(e) { sbDragged = chip;
         timerAutoStart(3); e.dataTransfer.setData('text/plain', ''); setTimeout(function() { chip.style.opacity = '0.4'; }, 0); });
     chip.addEventListener('dragend', function() { chip.style.opacity = ''; sbDragged = null; var c = document.getElementById('sb-insert-cursor'); if (c && c.parentNode) c.parentNode.removeChild(c); });

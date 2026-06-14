@@ -290,6 +290,10 @@
 .chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: #f8f8f8; border-radius: 10px; min-height: 60px; margin-bottom: 10px; }
 .sentence-builder { background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; min-height: 60px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
 .satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
 .satzbau-feedback.correct { color: #27ae60; }
@@ -1307,7 +1311,7 @@ function sbUpdateCapitalization(row) {
 
 function sbMakeChip(word) {
     var chip = document.createElement('div');
-    chip.className = 'chip';
+    chip.className = 'chip'; if(word===','||word===';')chip.classList.add('punct-chip');
     chip.textContent = word;
     chip.dataset.orig = word;
     chip.draggable = true;

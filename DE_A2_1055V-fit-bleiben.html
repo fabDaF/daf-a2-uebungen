@@ -66,6 +66,10 @@ body {
 .chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 .chip.selected { background: #667eea; color: white; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .chip.ok { background: #e8f8f0; border-color: #27ae60; color: #27ae60; }
 .chip.no { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
 .drop-zone { min-height: 52px; border-radius: 10px; border: 2px dashed #c5cae9; padding: 8px 10px; background: #fafbff; transition: background .2s; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
@@ -729,7 +733,7 @@ function sbUpdateCapitalization(row) {
 
 function sbMakeChip(word) {
     var chip = document.createElement('div');
-    chip.className = 'chip';
+    chip.className = 'chip'; if(word===','||word===';')chip.classList.add('punct-chip');
     chip.textContent = word;
     chip.dataset.orig = word;
     chip.draggable = true;

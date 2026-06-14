@@ -67,6 +67,10 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
 .chip.selected { outline: 3px solid #667eea; outline-offset: 2px; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .zuordnung-zones { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .zone-box { background: #f8f9ff; border-radius: 10px; padding: 16px; border: 1.5px solid #dde3ff; }
 .zone-title { font-weight: 700; color: white; margin-bottom: 10px; font-size: 1.0em; text-align: center; padding: 8px; border-radius: 8px; }

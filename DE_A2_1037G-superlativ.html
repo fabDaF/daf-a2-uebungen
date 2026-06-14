@@ -133,6 +133,10 @@ body {
     user-select: none; transition: background .15s, color .15s;
 }
 .chip.selected { background: #667eea; color: white; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .chip.correct { background: #e8f5e9 !important; border-color: #43a047 !important; color: #2e7d32 !important; }
 .chip.incorrect { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c !important; }
 .sb-punkt { font-weight: 700; color: #4a148c; align-self: center; margin-left: 2px; }
@@ -634,7 +638,7 @@ function getSbCursor(zone, x) {
 }
 function sbMakeChip(word, orig) {
     var c = document.createElement('div');
-    c.className = 'chip'; c.textContent = word; c.dataset.orig = orig;
+    c.className = 'chip'; if(word===','||word===';')c.classList.add('punct-chip'); c.textContent = word; c.dataset.orig = orig;
     c.draggable = true;
     c.addEventListener('dragstart', function(e){ sbDragged = c; e.dataTransfer.setData('text/plain',''); });
     c.addEventListener('dragend', function(){ sbDragged = null; });

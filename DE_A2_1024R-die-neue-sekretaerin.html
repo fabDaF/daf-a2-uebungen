@@ -94,6 +94,10 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .satzbau-feedback.incorrect { color: #e74c3c; }
 .chips-container .chip, .sentence-builder .chip { padding: 7px 14px; border-radius: 20px; background: white; border: 2px solid #667eea; color: #3d37a8; cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; display: inline-block; white-space: nowrap; transition: all .15s; }
 .chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: #27ae60; border-color: #27ae60; color: white; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: white; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .chips-container .chip:active, .sentence-builder .chip:active { cursor: grabbing; transform: scale(1.04); }
 .chips-container .chip.correct, .sentence-builder .chip.correct { background: #27ae60; border-color: #27ae60; color: white; }
 .chips-container .chip.wrong,   .sentence-builder .chip.wrong   { background: #e74c3c; border-color: #e74c3c; color: white; }
@@ -635,7 +639,7 @@ function sbUpdateCapitalization(row) {
 }
 function sbMakeChip(word) {
     var chip = document.createElement('div');
-    chip.className='chip'; chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
+    chip.className='chip'; if(word===','||word===';')chip.classList.add('punct-chip'); chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
     chip.addEventListener('dragstart', function(e){ sbDragged=chip; e.dataTransfer.setData('text/plain',''); setTimeout(function(){ chip.style.opacity='0.4'; },0); });
     chip.addEventListener('dragend', function(){ chip.style.opacity=''; sbDragged=null; var c=document.getElementById('sb-insert-cursor'); if(c&&c.parentNode) c.parentNode.removeChild(c); });
     return chip;
