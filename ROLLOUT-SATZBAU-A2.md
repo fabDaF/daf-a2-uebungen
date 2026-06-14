@@ -112,12 +112,20 @@ valid-Arrays mit.
     `.chip.punct-chip{…}` + `.chip.punct-chip.correct/.incorrect` +
     `.sentence-builder .chip.punct-chip{margin-left:-6px;}` direkt nach
     `.chip.selected`. Capitalization-Logik (`i===0`) verträgt Kommas bereits.
-  - **TODO:** Diesen Minimal-Patch als idempotenten Patcher
-    (`scripts/satzbau_komma_engine.py`) bauen und über die 58 Gen-A-Dateien
-    laufen lassen, BEVOR deren Kommasatz-Quote hergestellt wird. Gen-B
-    braucht keinen Engine-Patch, nur Daten.
-- **Offen:** Engine-Patcher (58 Gen-A), Vorstufe 0 (15 Sonderfälle),
-  Schritt 3 Rest (101x ff.), Schritt 4–7.
+  - **ERLEDIGT 2026-06-14:** Patcher `scripts/satzbau_komma_engine.py` gebaut
+    (idempotent, var-aware für `chip`/`c`, patcht nur den `sbMakeChip`-Körper
+    — nie Q&A-/Kategorie-Chips —, CSS-Anker-Fallback
+    `.selected→.incorrect→.wrong→.correct`) und über alle Gen-A-Satzbau-
+    Dateien gelaufen. Saubere Neu-Klassifikation per `sbMakeChip`+`satzbauData`
+    ergab **54** echte Gen-A-Dateien ohne Komma-JS (nicht 58 — die Differenz
+    waren Q&A-only-Dateien und Sonderfälle ohne kanonischen Satzbau). 5 davon
+    hatten ein vorbestehendes, unvollständiges punct-chip-CSS (margin-Regel
+    fehlte) → gezielt ergänzt. Verifikation: JSDOM-Funktionstest 54/54
+    (`sbMakeChip(',')`→`.punct-chip`, Wort→kein punct-chip), Syntax-Check aller
+    Script-Blöcke grün, Diff gegen HEAD trägt ausschließlich punct-chip-Zeilen.
+    Gen-B (1 Datei) braucht keinen Engine-Patch.
+- **Offen:** Vorstufe 0 (15 Sonderfälle), Schritt 3 Rest (101x ff. Daten auf
+  Staffel + Kommasatz-Quote), Schritt 4–7.
 
 ## Randbefunde (beim Rollout miterledigen)
 
