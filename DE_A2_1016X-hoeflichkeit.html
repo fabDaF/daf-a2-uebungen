@@ -929,31 +929,12 @@ function zeigeLoesung2() {
    TAB 3 — SATZBAU (nach satzbau-drag-drop Skill)
 ══════════════════════════════════════════════════════════════════════════ */
 var satzbauData = [
-    {
-        parts: ['ich', 'möchte', 'mich', 'entschuldigen'],
-        valid: [['ich', 'möchte', 'mich', 'entschuldigen']],
-        punct: '.'
-    },
-    {
-        parts: ['könnten', 'Sie', 'mir', 'bitte', 'helfen'],
-        valid: [['könnten', 'Sie', 'mir', 'bitte', 'helfen']],
-        punct: '?'
-    },
-    {
-        parts: ['er', 'hält', 'ihr', 'die', 'Tür', 'auf'],
-        valid: [['er', 'hält', 'ihr', 'die', 'Tür', 'auf']],
-        punct: '.'
-    },
-    {
-        parts: ['wir', 'siezen', 'unsere', 'Lehrerin'],
-        valid: [['wir', 'siezen', 'unsere', 'Lehrerin']],
-        punct: '.'
-    },
-    {
-        parts: ['die', 'beiden', 'sind', 'Freunde', 'und', 'duzen', 'sich'],
-        valid: [['die', 'beiden', 'sind', 'Freunde', 'und', 'duzen', 'sich']],
-        punct: '.'
-    }
+  { parts: ['ich', 'möchte', 'mich', 'bei', 'Ihnen', 'herzlich', 'entschuldigen'], valid: [['ich', 'möchte', 'mich', 'bei', 'Ihnen', 'herzlich', 'entschuldigen']], punct: '.' },
+  { parts: ['könnten', 'Sie', 'mir', 'bitte', 'kurz', 'helfen'], valid: [['könnten', 'Sie', 'mir', 'bitte', 'kurz', 'helfen']], punct: '?' },
+  { parts: ['er', 'ist', 'sehr', 'höflich', ',', 'aber', 'manchmal', 'kommt', 'er', 'zu', 'spät'], valid: [['er', 'ist', 'sehr', 'höflich', ',', 'aber', 'manchmal', 'kommt', 'er', 'zu', 'spät']], punct: '.' },
+  { parts: ['wir', 'siezen', 'unsere', 'neue', 'Lehrerin', 'immer'], valid: [['wir', 'siezen', 'unsere', 'neue', 'Lehrerin', 'immer']], punct: '.' },
+  { parts: ['die', 'beiden', 'duzen', 'sich', ',', 'denn', 'sie', 'sind', 'gute', 'Freunde'], valid: [['die', 'beiden', 'duzen', 'sich', ',', 'denn', 'sie', 'sind', 'gute', 'Freunde']], punct: '.' },
+  { parts: ['er', 'hält', 'ihr', 'höflich', 'die', 'schwere', 'Tür', 'auf'], valid: [['er', 'hält', 'ihr', 'höflich', 'die', 'schwere', 'Tür', 'auf']], punct: '.' }
 ];
 
 var sbDragged = null;

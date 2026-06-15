@@ -946,13 +946,13 @@ function uebungInit() {
    SATZBAU (Tab 5)
 ══════════════════════════════════════════════════════════ */
 var satzbauData = [
-  { parts: ['heute', 'fahre', 'ich', 'nach', 'Hause'],           valid: [['heute', 'fahre', 'ich', 'nach', 'Hause'], ['ich', 'fahre', 'heute', 'nach', 'Hause']],           punct: '.' },
-  { parts: ['das', 'Brautpaar', 'war', 'überglücklich'],         valid: [['das', 'Brautpaar', 'war', 'überglücklich']],         punct: '.' },
+  { parts: ['heute', 'fahre', 'ich', 'mit', 'dem', 'Auto', 'nach', 'Hause'], valid: [['heute', 'fahre', 'ich', 'mit', 'dem', 'Auto', 'nach', 'Hause'], ['ich', 'fahre', 'heute', 'mit', 'dem', 'Auto', 'nach', 'Hause']], punct: '.' },
+  { parts: ['das', 'Brautpaar', 'war', 'müde', ',', 'aber', 'alle', 'Gäste', 'tanzten', 'weiter'], valid: [['das', 'Brautpaar', 'war', 'müde', ',', 'aber', 'alle', 'Gäste', 'tanzten', 'weiter']], punct: '.' },
   { parts: ['wir', 'haben', 'uns', 'auf', 'einer', 'Hochzeit', 'kennengelernt'], valid: [['wir', 'haben', 'uns', 'auf', 'einer', 'Hochzeit', 'kennengelernt']], punct: '.' },
-  { parts: ['wie', 'lange', 'seid', 'ihr', 'zusammen'],          valid: [['wie', 'lange', 'seid', 'ihr', 'zusammen']],          punct: '?' },
-  { parts: ['das', 'Feuerwerk', 'war', 'sehr', 'beeindruckend'], valid: [['das', 'Feuerwerk', 'war', 'sehr', 'beeindruckend']], punct: '.' },
-  { parts: ['Tina', 'freut', 'sich', 'über', 'die', 'Einladung'], valid: [['Tina', 'freut', 'sich', 'über', 'die', 'Einladung']], punct: '.' },
-  { parts: ['unser', 'erstes', 'Date', 'war', 'wunderschön'],    valid: [['unser', 'erstes', 'Date', 'war', 'wunderschön']],    punct: '.' },
+  { parts: ['wie', 'lange', 'seid', 'ihr', 'eigentlich', 'schon', 'zusammen'], valid: [['wie', 'lange', 'seid', 'ihr', 'eigentlich', 'schon', 'zusammen']], punct: '?' },
+  { parts: ['das', 'Feuerwerk', 'war', 'wunderschön', ',', 'denn', 'der', 'Himmel', 'war', 'klar'], valid: [['das', 'Feuerwerk', 'war', 'wunderschön', ',', 'denn', 'der', 'Himmel', 'war', 'klar']], punct: '.' },
+  { parts: ['Tina', 'freut', 'sich', 'sehr', 'über', 'die', 'schöne', 'Einladung'], valid: [['Tina', 'freut', 'sich', 'sehr', 'über', 'die', 'schöne', 'Einladung']], punct: '.' },
+  { parts: ['unser', 'erstes', 'Date', 'war', 'wirklich', 'wunderschön'], valid: [['unser', 'erstes', 'Date', 'war', 'wirklich', 'wunderschön']], punct: '.' }
 ];
 
 var sbDragged = null;
