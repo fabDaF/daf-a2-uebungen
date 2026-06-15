@@ -680,13 +680,13 @@ function checkRF(i, btn, answer) {
 // ══════════════════════════════════════
 var sbDragged = null;
 var satzbauData = [
-    { parts:['Georg','arbeitet','in','der','Buchhaltung'], valid:[['Georg','arbeitet','in','der','Buchhaltung']], punct:'.' },
-    { parts:['er','verdient','gut'], valid:[['er','verdient','gut']], punct:'.' },
-    { parts:['sie','hat','heute','gekündigt'], valid:[['sie','hat','heute','gekündigt']], punct:'.' },
-    { parts:['ich','bin','fleißig','und','motiviert'], valid:[['ich','bin','fleißig','und','motiviert']], punct:'.' },
-    { parts:['er','überlegt','zu','kündigen'], valid:[['er','überlegt','zu','kündigen']], punct:'.' },
-    { parts:['wann','geht','er','in','den','Ruhestand'], valid:[['wann','geht','er','in','den','Ruhestand']], punct:'?' },
-    { parts:['sie','hat','eine','Absage','erhalten'], valid:[['sie','hat','eine','Absage','erhalten']], punct:'.' }
+  { parts: ['Georg', 'arbeitet', 'seit', 'Jahren', 'in', 'der', 'Buchhaltung'], valid: [['Georg', 'arbeitet', 'seit', 'Jahren', 'in', 'der', 'Buchhaltung']], punct: '.' },
+  { parts: ['er', 'verdient', 'sehr', 'gut', ',', 'denn', 'er', 'ist', 'ein', 'guter', 'Mitarbeiter'], valid: [['er', 'verdient', 'sehr', 'gut', ',', 'denn', 'er', 'ist', 'ein', 'guter', 'Mitarbeiter']], punct: '.' },
+  { parts: ['sie', 'hat', 'heute', 'gekündigt', ',', 'aber', 'sie', 'sucht', 'schon', 'eine', 'neue', 'Stelle'], valid: [['sie', 'hat', 'heute', 'gekündigt', ',', 'aber', 'sie', 'sucht', 'schon', 'eine', 'neue', 'Stelle']], punct: '.' },
+  { parts: ['ich', 'bin', 'sehr', 'fleißig', 'und', 'immer', 'motiviert'], valid: [['ich', 'bin', 'sehr', 'fleißig', 'und', 'immer', 'motiviert']], punct: '.' },
+  { parts: ['er', 'überlegt', 'schon', 'lange', 'zu', 'kündigen'], valid: [['er', 'überlegt', 'schon', 'lange', 'zu', 'kündigen']], punct: '.' },
+  { parts: ['wann', 'geht', 'er', 'endlich', 'in', 'den', 'Ruhestand'], valid: [['wann', 'geht', 'er', 'endlich', 'in', 'den', 'Ruhestand']], punct: '?' },
+  { parts: ['leider', 'hat', 'sie', 'eine', 'Absage', 'erhalten'], valid: [['leider', 'hat', 'sie', 'eine', 'Absage', 'erhalten']], punct: '.' }
 ];
 function getSbCursor(){var c=document.getElementById('sb-insert-cursor');if(!c){c=document.createElement('div');c.id='sb-insert-cursor';c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';}return c;}
 function getSbInsertPos(zone,clientX){var chips=Array.from(zone.querySelectorAll('.chip'));for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}return null;}

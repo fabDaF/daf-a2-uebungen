@@ -614,13 +614,13 @@ function loesungLuecken() {
 var sbBuilt = false;
 var sbDragged = null;
 var satzbauData = [
-    { parts: ['er', 'hilft', 'seinem', 'Kollegen', 'tatkräftig'], valid: [['er', 'hilft', 'seinem', 'Kollegen', 'tatkräftig']], punct: '.' },
-    { parts: ['das', 'Gehalt', 'gefällt', 'ihr', 'sehr', 'gut'], valid: [['das', 'Gehalt', 'gefällt', 'ihr', 'sehr', 'gut']], punct: '.' },
-    { parts: ['sie', 'dankt', 'dem', 'Arbeitgeber', 'herzlich'], valid: [['sie', 'dankt', 'dem', 'Arbeitgeber', 'herzlich']], punct: '.' },
-    { parts: ['ich', 'wünsche', 'dir', 'viel', 'Erfolg'], valid: [['ich', 'wünsche', 'dir', 'viel', 'Erfolg']], punct: '.' },
-    { parts: ['Martin', 'schenkt', 'seiner', 'Chefin', 'einen', 'Blumenstrauß'], valid: [['Martin', 'schenkt', 'seiner', 'Chefin', 'einen', 'Blumenstrauß']], punct: '.' },
-    { parts: ['sie', 'schickt', 'dem', 'Arbeitgeber', 'ihre', 'Unterlagen'], valid: [['sie', 'schickt', 'dem', 'Arbeitgeber', 'ihre', 'Unterlagen']], punct: '.' },
-    { parts: ['wir', 'gratulieren', 'ihr', 'zum', 'neuen', 'Job'], valid: [['wir', 'gratulieren', 'ihr', 'zum', 'neuen', 'Job']], punct: '.' }
+  { parts: ['er', 'hilft', 'seinem', 'Kollegen', 'jeden', 'Tag', 'tatkräftig'], valid: [['er', 'hilft', 'seinem', 'Kollegen', 'jeden', 'Tag', 'tatkräftig']], punct: '.' },
+  { parts: ['das', 'Gehalt', 'gefällt', 'ihr', 'sehr', 'gut'], valid: [['das', 'Gehalt', 'gefällt', 'ihr', 'sehr', 'gut']], punct: '.' },
+  { parts: ['sie', 'dankt', 'dem', 'Arbeitgeber', 'herzlich', ',', 'aber', 'sie', 'nimmt', 'die', 'Stelle', 'nicht'], valid: [['sie', 'dankt', 'dem', 'Arbeitgeber', 'herzlich', ',', 'aber', 'sie', 'nimmt', 'die', 'Stelle', 'nicht']], punct: '.' },
+  { parts: ['wem', 'schenkt', 'Martin', 'heute', 'den', 'Blumenstrauß'], valid: [['wem', 'schenkt', 'Martin', 'heute', 'den', 'Blumenstrauß']], punct: '?' },
+  { parts: ['wir', 'gratulieren', 'ihr', 'zum', 'neuen', 'Job', ',', 'denn', 'sie', 'hat', 'es', 'verdient'], valid: [['wir', 'gratulieren', 'ihr', 'zum', 'neuen', 'Job', ',', 'denn', 'sie', 'hat', 'es', 'verdient']], punct: '.' },
+  { parts: ['ich', 'wünsche', 'dir', 'von', 'Herzen', 'viel', 'Erfolg'], valid: [['ich', 'wünsche', 'dir', 'von', 'Herzen', 'viel', 'Erfolg']], punct: '.' },
+  { parts: ['sie', 'schickt', 'dem', 'Arbeitgeber', 'ihre', 'Unterlagen'], valid: [['sie', 'schickt', 'dem', 'Arbeitgeber', 'ihre', 'Unterlagen']], punct: '.' }
 ];
 function getSbCursor() {
     var c=document.getElementById('sb-insert-cursor');

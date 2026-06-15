@@ -522,14 +522,14 @@ function loesungLuecken(){document.querySelectorAll('#lueckenContainer input.bla
 // SATZBAU
 // ══════════════════════════════════════
 var sbDragged=null;
-var satzbauData=[
-    {parts:['das','Glas','steht','auf','dem','Tisch'],valid:[['das','Glas','steht','auf','dem','Tisch']],punct:'.'},
-    {parts:['ich','stelle','das','Glas','auf','den','Tisch'],valid:[['ich','stelle','das','Glas','auf','den','Tisch']],punct:'.'},
-    {parts:['das','Bild','hängt','an','der','Wand'],valid:[['das','Bild','hängt','an','der','Wand']],punct:'.'},
-    {parts:['er','legt','das','Buch','auf','das','Regal'],valid:[['er','legt','das','Buch','auf','das','Regal']],punct:'.'},
-    {parts:['sie','setzt','sich','auf','den','Stuhl'],valid:[['sie','setzt','sich','auf','den','Stuhl']],punct:'.'},
-    {parts:['Mia','stellt','das','Sofa','neben','das','Fenster'],valid:[['Mia','stellt','das','Sofa','neben','das','Fenster']],punct:'.'},
-    {parts:['wo','liegt','das','Handy'],valid:[['wo','liegt','das','Handy']],punct:'?'}
+var satzbauData = [
+  { parts: ['das', 'Glas', 'steht', 'auf', 'dem', 'Tisch'], valid: [['das', 'Glas', 'steht', 'auf', 'dem', 'Tisch']], punct: '.' },
+  { parts: ['ich', 'stelle', 'das', 'Glas', 'auf', 'den', 'Tisch'], valid: [['ich', 'stelle', 'das', 'Glas', 'auf', 'den', 'Tisch']], punct: '.' },
+  { parts: ['das', 'Bild', 'hängt', 'an', 'der', 'Wand', ',', 'aber', 'es', 'hängt', 'etwas', 'schief'], valid: [['das', 'Bild', 'hängt', 'an', 'der', 'Wand', ',', 'aber', 'es', 'hängt', 'etwas', 'schief']], punct: '.' },
+  { parts: ['er', 'legt', 'das', 'dicke', 'Buch', 'auf', 'das', 'Regal'], valid: [['er', 'legt', 'das', 'dicke', 'Buch', 'auf', 'das', 'Regal']], punct: '.' },
+  { parts: ['sie', 'setzt', 'sich', 'auf', 'den', 'Stuhl', ',', 'denn', 'sie', 'ist', 'sehr', 'müde'], valid: [['sie', 'setzt', 'sich', 'auf', 'den', 'Stuhl', ',', 'denn', 'sie', 'ist', 'sehr', 'müde']], punct: '.' },
+  { parts: ['Mia', 'stellt', 'das', 'Sofa', 'neben', 'das', 'große', 'Fenster'], valid: [['Mia', 'stellt', 'das', 'Sofa', 'neben', 'das', 'große', 'Fenster']], punct: '.' },
+  { parts: ['wo', 'liegt', 'das', 'Handy', 'von', 'Mia'], valid: [['wo', 'liegt', 'das', 'Handy', 'von', 'Mia']], punct: '?' }
 ];
 function getSbCursor(){var c=document.getElementById('sb-insert-cursor');if(!c){c=document.createElement('div');c.id='sb-insert-cursor';c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';}return c;}
 function getSbInsertPos(zone,clientX){var chips=Array.from(zone.querySelectorAll('.chip'));for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}return null;}

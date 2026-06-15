@@ -870,41 +870,13 @@ var sbInitialized = false;
 var sbDragged = null;
 
 var satzbauData = [
-    {
-        parts: ['er', 'arbeitet', 'in', 'einem', 'modernen', 'Büro'],
-        valid: [['er', 'arbeitet', 'in', 'einem', 'modernen', 'Büro']],
-        punct: '.'
-    },
-    {
-        parts: ['sie', 'hat', 'eine', 'neue', 'Stelle', 'bekommen'],
-        valid: [['sie', 'hat', 'eine', 'neue', 'Stelle', 'bekommen']],
-        punct: '.'
-    },
-    {
-        parts: ['Tom', 'macht', 'jeden', 'Abend', 'Überstunden'],
-        valid: [['Tom', 'macht', 'jeden', 'Abend', 'Überstunden']],
-        punct: '.'
-    },
-    {
-        parts: ['sein', 'Arbeitgeber', 'zahlt', 'ein', 'gutes', 'Gehalt'],
-        valid: [['sein', 'Arbeitgeber', 'zahlt', 'ein', 'gutes', 'Gehalt']],
-        punct: '.'
-    },
-    {
-        parts: ['er', 'überlegt', 'zu', 'kündigen'],
-        valid: [['er', 'überlegt', 'zu', 'kündigen']],
-        punct: '.'
-    },
-    {
-        parts: ['das', 'Team', 'entwickelt', 'neue', 'Software'],
-        valid: [['das', 'Team', 'entwickelt', 'neue', 'Software']],
-        punct: '.'
-    },
-    {
-        parts: ['sie', 'sitzt', 'am', 'Schreibtisch', 'und', 'hat', 'Stress'],
-        valid: [['sie', 'sitzt', 'am', 'Schreibtisch', 'und', 'hat', 'Stress']],
-        punct: '.'
-    }
+  { parts: ['er', 'arbeitet', 'in', 'einem', 'modernen', 'Büro'], valid: [['er', 'arbeitet', 'in', 'einem', 'modernen', 'Büro']], punct: '.' },
+  { parts: ['sie', 'hat', 'eine', 'gute', 'neue', 'Stelle', 'bekommen'], valid: [['sie', 'hat', 'eine', 'gute', 'neue', 'Stelle', 'bekommen']], punct: '.' },
+  { parts: ['Tom', 'macht', 'jeden', 'Abend', 'Überstunden', ',', 'aber', 'er', 'bekommt', 'mehr', 'Geld'], valid: [['Tom', 'macht', 'jeden', 'Abend', 'Überstunden', ',', 'aber', 'er', 'bekommt', 'mehr', 'Geld']], punct: '.' },
+  { parts: ['sein', 'Arbeitgeber', 'zahlt', 'ein', 'gutes', 'Gehalt', ',', 'denn', 'die', 'Firma', 'läuft', 'gut'], valid: [['sein', 'Arbeitgeber', 'zahlt', 'ein', 'gutes', 'Gehalt', ',', 'denn', 'die', 'Firma', 'läuft', 'gut']], punct: '.' },
+  { parts: ['warum', 'überlegt', 'er', 'jetzt', 'zu', 'kündigen'], valid: [['warum', 'überlegt', 'er', 'jetzt', 'zu', 'kündigen']], punct: '?' },
+  { parts: ['das', 'Team', 'entwickelt', 'jeden', 'Tag', 'neue', 'Software'], valid: [['das', 'Team', 'entwickelt', 'jeden', 'Tag', 'neue', 'Software']], punct: '.' },
+  { parts: ['sie', 'sitzt', 'am', 'Schreibtisch', 'und', 'hat', 'viel', 'Stress'], valid: [['sie', 'sitzt', 'am', 'Schreibtisch', 'und', 'hat', 'viel', 'Stress']], punct: '.' }
 ];
 
 function getSbCursor() {

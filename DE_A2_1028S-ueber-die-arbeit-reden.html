@@ -636,13 +636,13 @@ function lueckenLoesungen() {
 var sbDragged = null;
 
 var satzbauData = [
-    { parts:['ich','habe','mich','beworben'], valid:[['ich','habe','mich','beworben']], punct:'.' },
-    { parts:['ich','wurde','zum','Vorstellungsgespräch','eingeladen'], valid:[['ich','wurde','zum','Vorstellungsgespräch','eingeladen']], punct:'.' },
-    { parts:['meine','Stärke','ist','Teamarbeit'], valid:[['meine','Stärke','ist','Teamarbeit']], punct:'.' },
-    { parts:['kannst','du','Herrn','Franz','anrufen'], valid:[['kannst','du','Herrn','Franz','anrufen']], punct:'?' },
-    { parts:['sie','ist','heute','nicht','im','Büro'], valid:[['sie','ist','heute','nicht','im','Büro']], punct:'.' },
-    { parts:['ich','bin','motiviert','und','fleißig'], valid:[['ich','bin','motiviert','und','fleißig']], punct:'.' },
-    { parts:['wie','kann','ich','Ihnen','weiterhelfen'], valid:[['wie','kann','ich','Ihnen','weiterhelfen']], punct:'?' }
+  { parts: ['ich', 'habe', 'mich', 'um', 'die', 'Stelle', 'beworben'], valid: [['ich', 'habe', 'mich', 'um', 'die', 'Stelle', 'beworben']], punct: '.' },
+  { parts: ['ich', 'wurde', 'zum', 'Vorstellungsgespräch', 'eingeladen', ',', 'denn', 'mein', 'Lebenslauf', 'ist', 'gut'], valid: [['ich', 'wurde', 'zum', 'Vorstellungsgespräch', 'eingeladen', ',', 'denn', 'mein', 'Lebenslauf', 'ist', 'gut']], punct: '.' },
+  { parts: ['meine', 'größte', 'Stärke', 'ist', 'die', 'Teamarbeit'], valid: [['meine', 'größte', 'Stärke', 'ist', 'die', 'Teamarbeit']], punct: '.' },
+  { parts: ['kannst', 'du', 'bitte', 'Herrn', 'Franz', 'anrufen'], valid: [['kannst', 'du', 'bitte', 'Herrn', 'Franz', 'anrufen']], punct: '?' },
+  { parts: ['sie', 'ist', 'heute', 'nicht', 'im', 'Büro', ',', 'aber', 'sie', 'liest', 'ihre', 'Mails'], valid: [['sie', 'ist', 'heute', 'nicht', 'im', 'Büro', ',', 'aber', 'sie', 'liest', 'ihre', 'Mails']], punct: '.' },
+  { parts: ['ich', 'bin', 'sehr', 'motiviert', 'und', 'immer', 'fleißig'], valid: [['ich', 'bin', 'sehr', 'motiviert', 'und', 'immer', 'fleißig']], punct: '.' },
+  { parts: ['wie', 'kann', 'ich', 'Ihnen', 'heute', 'weiterhelfen'], valid: [['wie', 'kann', 'ich', 'Ihnen', 'heute', 'weiterhelfen']], punct: '?' }
 ];
 
 function getSbCursor() {

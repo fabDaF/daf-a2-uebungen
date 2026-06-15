@@ -693,13 +693,13 @@ function initQa2() {
 var sbInit = false;
 var sbDragged = null;
 var satzbauData = [
-    { parts: ['Jonas', 'bewirbt', 'sich', 'um', 'eine', 'Stelle'], valid: [['Jonas', 'bewirbt', 'sich', 'um', 'eine', 'Stelle']], punct: '.' },
-    { parts: ['er', 'hat', 'eine', 'Bewerbung', 'geschickt'], valid: [['er', 'hat', 'eine', 'Bewerbung', 'geschickt']], punct: '.' },
-    { parts: ['das', 'Vorstellungsgespräch', 'ist', 'gut', 'gelaufen'], valid: [['das', 'Vorstellungsgespräch', 'ist', 'gut', 'gelaufen']], punct: '.' },
-    { parts: ['er', 'kennt', 'sich', 'mit', 'Computern', 'aus'], valid: [['er', 'kennt', 'sich', 'mit', 'Computern', 'aus']], punct: '.' },
-    { parts: ['sein', 'Lebenslauf', 'erfüllt', 'alle', 'Anforderungen'], valid: [['sein', 'Lebenslauf', 'erfüllt', 'alle', 'Anforderungen']], punct: '.' },
-    { parts: ['sie', 'wurde', 'sofort', 'eingestellt'], valid: [['sie', 'wurde', 'sofort', 'eingestellt']], punct: '.' },
-    { parts: ['die', 'Stellenanzeige', 'klingt', 'sehr', 'interessant'], valid: [['die', 'Stellenanzeige', 'klingt', 'sehr', 'interessant']], punct: '.' }
+  { parts: ['Jonas', 'bewirbt', 'sich', 'um', 'eine', 'neue', 'Stelle'], valid: [['Jonas', 'bewirbt', 'sich', 'um', 'eine', 'neue', 'Stelle']], punct: '.' },
+  { parts: ['er', 'hat', 'gestern', 'eine', 'Bewerbung', 'geschickt'], valid: [['er', 'hat', 'gestern', 'eine', 'Bewerbung', 'geschickt']], punct: '.' },
+  { parts: ['das', 'Vorstellungsgespräch', 'ist', 'gut', 'gelaufen', ',', 'aber', 'er', 'ist', 'noch', 'nervös'], valid: [['das', 'Vorstellungsgespräch', 'ist', 'gut', 'gelaufen', ',', 'aber', 'er', 'ist', 'noch', 'nervös']], punct: '.' },
+  { parts: ['er', 'kennt', 'sich', 'gut', 'mit', 'Computern', 'aus'], valid: [['er', 'kennt', 'sich', 'gut', 'mit', 'Computern', 'aus']], punct: '.' },
+  { parts: ['sein', 'Lebenslauf', 'erfüllt', 'alle', 'Anforderungen', ',', 'denn', 'er', 'hat', 'viel', 'Erfahrung'], valid: [['sein', 'Lebenslauf', 'erfüllt', 'alle', 'Anforderungen', ',', 'denn', 'er', 'hat', 'viel', 'Erfahrung']], punct: '.' },
+  { parts: ['wann', 'wurde', 'sie', 'für', 'die', 'Stelle', 'eingestellt'], valid: [['wann', 'wurde', 'sie', 'für', 'die', 'Stelle', 'eingestellt']], punct: '?' },
+  { parts: ['die', 'Stellenanzeige', 'klingt', 'wirklich', 'sehr', 'interessant'], valid: [['die', 'Stellenanzeige', 'klingt', 'wirklich', 'sehr', 'interessant']], punct: '.' }
 ];
 
 function getSbCursor() {

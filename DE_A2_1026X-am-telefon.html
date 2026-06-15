@@ -455,14 +455,14 @@ function qaShowSolution(){var bank=document.getElementById('qaBank');var drops=d
 // TAB 3: SATZBAU
 // ══════════════════════════════════════
 var sbDragged=null;
-var satzbauData=[
-    {parts:['Guten','Tag','hier','ist','Anna','Schmidt'],valid:[['Guten','Tag','hier','ist','Anna','Schmidt']],punct:'.'},
-    {parts:['ist','Frau','Gruber','da'],valid:[['ist','Frau','Gruber','da']],punct:'?'},
-    {parts:['die','Leitung','ist','besetzt'],valid:[['die','Leitung','ist','besetzt']],punct:'.'},
-    {parts:['könnte','sie','mich','bitte','zurückrufen'],valid:[['könnte','sie','mich','bitte','zurückrufen']],punct:'?'},
-    {parts:['wie','kann','ich','Ihnen','weiterhelfen'],valid:[['wie','kann','ich','Ihnen','weiterhelfen']],punct:'?'},
-    {parts:['er','hat','mich','gestern','angerufen'],valid:[['er','hat','mich','gestern','angerufen']],punct:'.'},
-    {parts:['vielen','Dank','Auf','Wiederhören'],valid:[['vielen','Dank','Auf','Wiederhören']],punct:'!'}
+var satzbauData = [
+  { parts: ['hier', 'ist', 'Anna', 'Schmidt', 'von', 'der', 'Firma', 'Müller'], valid: [['hier', 'ist', 'Anna', 'Schmidt', 'von', 'der', 'Firma', 'Müller']], punct: '.' },
+  { parts: ['ist', 'Frau', 'Gruber', 'gerade', 'im', 'Büro'], valid: [['ist', 'Frau', 'Gruber', 'gerade', 'im', 'Büro']], punct: '?' },
+  { parts: ['die', 'Leitung', 'ist', 'gerade', 'besetzt', ',', 'aber', 'ich', 'verbinde', 'Sie', 'später'], valid: [['die', 'Leitung', 'ist', 'gerade', 'besetzt', ',', 'aber', 'ich', 'verbinde', 'Sie', 'später']], punct: '.' },
+  { parts: ['könnte', 'sie', 'mich', 'bitte', 'später', 'zurückrufen'], valid: [['könnte', 'sie', 'mich', 'bitte', 'später', 'zurückrufen']], punct: '?' },
+  { parts: ['ich', 'rufe', 'später', 'noch', 'einmal', 'an', ',', 'denn', 'es', 'ist', 'wichtig'], valid: [['ich', 'rufe', 'später', 'noch', 'einmal', 'an', ',', 'denn', 'es', 'ist', 'wichtig']], punct: '.' },
+  { parts: ['er', 'hat', 'mich', 'gestern', 'im', 'Büro', 'angerufen'], valid: [['er', 'hat', 'mich', 'gestern', 'im', 'Büro', 'angerufen']], punct: '.' },
+  { parts: ['vielen', 'Dank', 'für', 'das', 'Gespräch', 'und', 'auf', 'Wiederhören'], valid: [['vielen', 'Dank', 'für', 'das', 'Gespräch', 'und', 'auf', 'Wiederhören']], punct: '.' }
 ];
 function getSbCursor(){var c=document.getElementById('sb-insert-cursor');if(!c){c=document.createElement('div');c.id='sb-insert-cursor';c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;';}return c;}
 function getSbInsertPos(zone,clientX){var chips=Array.from(zone.querySelectorAll('.chip'));for(var i=0;i<chips.length;i++){var r=chips[i].getBoundingClientRect();if(clientX<r.left+r.width/2)return chips[i];}return null;}

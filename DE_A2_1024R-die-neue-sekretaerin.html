@@ -609,13 +609,13 @@ function loesungLuecken() {
 // ═══════════════════════════════════════
 var sbDragged = null;
 var satzbauData = [
-    { parts: ['Tim', 'ist', 'Anwalt'], valid: [['Tim', 'ist', 'Anwalt']], punct: '.' },
-    { parts: ['die', 'Firma', 'gehört', 'ihm'], valid: [['die', 'Firma', 'gehört', 'ihm']], punct: '.' },
-    { parts: ['er', 'pendelt', 'jeden', 'Tag', 'zwischen', 'zu', 'Hause', 'und', 'Berlin'], valid: [['er', 'pendelt', 'jeden', 'Tag', 'zwischen', 'zu', 'Hause', 'und', 'Berlin']], punct: '.' },
-    { parts: ['Tim', 'braucht', 'mehr', 'Angestellte'], valid: [['Tim', 'braucht', 'mehr', 'Angestellte']], punct: '.' },
-    { parts: ['35', 'Personen', 'haben', 'sich', 'beworben'], valid: [['35', 'Personen', 'haben', 'sich', 'beworben']], punct: '.' },
-    { parts: ['die', 'Bewerbungen', 'gefallen', 'ihm'], valid: [['die', 'Bewerbungen', 'gefallen', 'ihm']], punct: '.' },
-    { parts: ['Tim', 'möchte', 'acht', 'Personen', 'einladen'], valid: [['Tim', 'möchte', 'acht', 'Personen', 'einladen']], punct: '.' }
+  { parts: ['Tim', 'ist', 'Anwalt', 'und', 'hat', 'eine', 'Firma'], valid: [['Tim', 'ist', 'Anwalt', 'und', 'hat', 'eine', 'Firma']], punct: '.' },
+  { parts: ['die', 'Firma', 'gehört', 'ihm', ',', 'denn', 'er', 'hat', 'sie', 'selbst', 'gegründet'], valid: [['die', 'Firma', 'gehört', 'ihm', ',', 'denn', 'er', 'hat', 'sie', 'selbst', 'gegründet']], punct: '.' },
+  { parts: ['er', 'pendelt', 'jeden', 'Tag', 'zwischen', 'Hamburg', 'und', 'Berlin'], valid: [['er', 'pendelt', 'jeden', 'Tag', 'zwischen', 'Hamburg', 'und', 'Berlin']], punct: '.' },
+  { parts: ['Tim', 'braucht', 'mehr', 'Angestellte', ',', 'aber', 'er', 'findet', 'keine', 'guten', 'Leute'], valid: [['Tim', 'braucht', 'mehr', 'Angestellte', ',', 'aber', 'er', 'findet', 'keine', 'guten', 'Leute']], punct: '.' },
+  { parts: ['viele', 'Personen', 'haben', 'sich', 'auf', 'die', 'Stelle', 'beworben'], valid: [['viele', 'Personen', 'haben', 'sich', 'auf', 'die', 'Stelle', 'beworben']], punct: '.' },
+  { parts: ['wie', 'viele', 'Personen', 'möchte', 'Tim', 'einladen'], valid: [['wie', 'viele', 'Personen', 'möchte', 'Tim', 'einladen']], punct: '?' },
+  { parts: ['die', 'meisten', 'Bewerbungen', 'gefallen', 'ihm', 'sehr', 'gut'], valid: [['die', 'meisten', 'Bewerbungen', 'gefallen', 'ihm', 'sehr', 'gut']], punct: '.' }
 ];
 
 function getSbCursor() {
