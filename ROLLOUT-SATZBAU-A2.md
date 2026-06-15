@@ -113,7 +113,21 @@ valid-Arrays mit.
   Varianten. `--strict-quote` + JSDOM grün. Didaktische Anker: Dativ-Frage
   „wem" in 1023G (Verben mit Dativ); Telefon-Grußformeln in 1026X bewusst
   ohne Konnektor-Komma (würden den 9–14-W-Kommakorridor verfehlen). Zahl-Chip
-  „35" in 1024R durch „viele" ersetzt. Gerüst (Schritt 4) weiterhin offen.
+  „35" in 1024R durch „viele" ersetzt.
+- **Schritt 3+4 ZUSAMMENGEFÜHRT (Frank 2026-06-14): Daten und Gerüst sind EIN
+  Schritt, nie getrennt ausliefern.** Freier Bau ist kein auslieferbarer
+  Zwischenzustand für A2. `geruest_patch.js` um eine **Konnektoren-Sperre**
+  erweitert (und/oder/aber/denn/sondern/weil/dass/wenn/… nie Anker — Zielform
+  gehört in die Bank). Gerüst-Modus nachgezogen für **101x + 102x** (16
+  Dateien) und direkt mitgebaut für **103x**. daf-satzbau-Skill aktualisiert
+  (A2 = Gerüst, „Zweites Versprechen" Daten+Gerüst untrennbar, Konnektoren-
+  Sperre) und als .skill zur Installation übergeben.
+- **Schritt 3+4 — Einheit 103x ERLEDIGT 2026-06-14:** 1031V–1038S (Wohnen)
+  Daten auf Staffel + Quote UND Gerüst in einem Schwung. Komparativ/Superlativ-
+  Vergleiche (als/wie), Zahlen ausgeschrieben (achthundert statt 865 etc.).
+  7/7 Sätze pro Datei konvertiert, 0 Konnektor-Anker, `--strict-quote` + JSDOM
+  grün.
+- **Offen:** Einheiten 104x–107x (A2.1) + 201x–206x (A2.2), je Daten+Gerüst.
 - **NEUE Voraussetzung entdeckt (Komma-Engine-Lücke):** Die 93 kanonischen
   Dateien zerfallen in **zwei Engine-Generationen**:
   - **Gen-B (35 Dateien):** Chip-Klasse `.sb-chip`, `sbMakeChip` setzt
