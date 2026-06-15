@@ -108,6 +108,12 @@ valid-Arrays mit.
   wurde durch eine PQP-Frage ersetzt. **1014R:** parts-Quote-Stil von ASCII-
   Doppel- auf einfache Anführungszeichen normalisiert (Kanon). Gerüst-Modus
   (Schritt 4) für 101x noch offen — bewusst getrennt gehalten.
+- **Schritt 3 — Einheit 102x ERLEDIGT 2026-06-14:** 1021V–1028S (Arbeitswelt/
+  Bewerbungen) auf Staffel, je ≥2 Kommasätze (aber/denn) + Frage, valid-
+  Varianten. `--strict-quote` + JSDOM grün. Didaktische Anker: Dativ-Frage
+  „wem" in 1023G (Verben mit Dativ); Telefon-Grußformeln in 1026X bewusst
+  ohne Konnektor-Komma (würden den 9–14-W-Kommakorridor verfehlen). Zahl-Chip
+  „35" in 1024R durch „viele" ersetzt. Gerüst (Schritt 4) weiterhin offen.
 - **NEUE Voraussetzung entdeckt (Komma-Engine-Lücke):** Die 93 kanonischen
   Dateien zerfallen in **zwei Engine-Generationen**:
   - **Gen-B (35 Dateien):** Chip-Klasse `.sb-chip`, `sbMakeChip` setzt
