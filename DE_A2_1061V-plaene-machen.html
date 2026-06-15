@@ -1537,12 +1537,13 @@ function schreibLeeren() {
 
 </script>
 
+
 <script>
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
   var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
-  var SBGAP = [{"i":0,"row":["_","_","_","_","nächstes","Jahr","_","Australien","_","_"],"parts":["ich","habe","vor",",","nach","zu","fliegen"]},{"i":1,"row":["_","_","_","_","eines","Tages","_","erfolgreiche","Malerin","_","_"],"parts":["Lea","wünscht","sich",",","eine","zu","werden"]},{"i":2,"row":["_","_","_","als","_","eines","Tages","_","Geld","_","_"],"parts":["er","hofft",",","Manager","viel","zu","verdienen"]},{"i":3,"row":["_","_","_","es","_","_","Studium","erfolgreich","_","_"],"parts":["mein","Ziel","ist",",","mein","zu","beenden"]},{"i":4,"row":["_","_","_","du","_","_","Zukunft"],"parts":["welche","Pläne","hast","für","die"]},{"i":5,"row":["_","_","_","meine","_","in","die","_","_"],"parts":["ich","möchte","alle","Pläne","Tat","umsetzen"]},{"i":6,"row":["_","_","_","nächstes","_","_","Ausland"],"parts":["vielleicht","arbeitet","er","Jahr","im"]},{"i":7,"row":["_","_","_","ihre","_","bald","_","Australien","_","_"],"parts":["Mira","verspricht",",","Freundin","in","zu","besuchen"]}];
+  var SBGAP = [{"i":0,"row":["_","_","_","_","nächstes","Jahr","_","Australien","_","_"],"parts":["ich","habe","vor",",","nach","zu","fliegen"]},{"i":1,"row":["_","_","_","_","eines","Tages","_","erfolgreiche","Malerin","_","_"],"parts":["Lea","wünscht","sich",",","eine","zu","werden"]},{"i":2,"row":["_","_","_","_","Manager","eines","_","viel","Geld","_","_"],"parts":["er","hofft",",","als","Tages","zu","verdienen"]},{"i":3,"row":["_","_","_","es","_","_","Studium","erfolgreich","_","_"],"parts":["mein","Ziel","ist",",","mein","zu","beenden"]},{"i":4,"row":["_","_","_","du","_","_","Zukunft"],"parts":["welche","Pläne","hast","für","die"]},{"i":5,"row":["_","_","_","meine","_","in","die","_","_"],"parts":["ich","möchte","alle","Pläne","Tat","umsetzen"]},{"i":6,"row":["_","_","_","nächstes","_","_","Ausland"],"parts":["vielleicht","arbeitet","er","Jahr","im"]},{"i":7,"row":["_","_","_","ihre","_","bald","_","Australien","_","_"],"parts":["Mira","verspricht",",","Freundin","in","zu","besuchen"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;
     if (typeof ex.valid[0] === "string") ex.valid = [ex.valid];
