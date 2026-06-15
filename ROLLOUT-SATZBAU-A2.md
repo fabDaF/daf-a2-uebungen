@@ -97,6 +97,17 @@ valid-Arrays mit.
   Spec gebracht und als **Referenzimplementierung** committet (Engine +
   CSS + Daten + JSDOM-Test grün, `--strict-quote` bestanden). Vorlage für
   den Batch.
+- **Schritt 3 — Einheit 101x ERLEDIGT 2026-06-14:** 1012X–1018S auf Staffel
+  gebracht (alle Sätze 6–14 W), je Datei ≥2 Kommasätze + 1 Frage, valid-
+  Varianten wo Vorfeld flexibel. `--strict-quote` grün, JSDOM-Erstlade +
+  Komma-Engine grün. Einheit 101x nutzt nur koordinierende Konnektoren
+  (und/oder/aber/denn/sondern) — Kommasätze als „HS, aber/denn HS". Sonder-
+  fall **1013G (Plusquamperfekt):** behält die temporalen Nebensätze
+  nachdem/bevor (das ist der Grammatikfokus = de-facto-Einführungslektion
+  dieser Strukturen), der progressionswidrige weil-Satz (weil erst ab 1043)
+  wurde durch eine PQP-Frage ersetzt. **1014R:** parts-Quote-Stil von ASCII-
+  Doppel- auf einfache Anführungszeichen normalisiert (Kanon). Gerüst-Modus
+  (Schritt 4) für 101x noch offen — bewusst getrennt gehalten.
 - **NEUE Voraussetzung entdeckt (Komma-Engine-Lücke):** Die 93 kanonischen
   Dateien zerfallen in **zwei Engine-Generationen**:
   - **Gen-B (35 Dateien):** Chip-Klasse `.sb-chip`, `sbMakeChip` setzt
