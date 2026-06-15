@@ -691,7 +691,7 @@ var satzbauData = [
   { parts: ['er', 'verdient', 'sehr', 'gut', ',', 'denn', 'er', 'ist', 'ein', 'guter', 'Mitarbeiter'], valid: [['er', 'verdient', 'sehr', 'gut', ',', 'denn', 'er', 'ist', 'ein', 'guter', 'Mitarbeiter']], punct: '.' },
   { parts: ['sie', 'hat', 'heute', 'gekündigt', ',', 'aber', 'sie', 'sucht', 'schon', 'eine', 'neue', 'Stelle'], valid: [['sie', 'hat', 'heute', 'gekündigt', ',', 'aber', 'sie', 'sucht', 'schon', 'eine', 'neue', 'Stelle']], punct: '.' },
   { parts: ['ich', 'bin', 'sehr', 'fleißig', 'und', 'immer', 'motiviert'], valid: [['ich', 'bin', 'sehr', 'fleißig', 'und', 'immer', 'motiviert']], punct: '.' },
-  { parts: ['er', 'überlegt', 'schon', 'lange', 'zu', 'kündigen'], valid: [['er', 'überlegt', 'schon', 'lange', 'zu', 'kündigen']], punct: '.' },
+  { parts: ['er', 'denkt', 'schon', 'lange', 'über', 'eine', 'Kündigung', 'nach'], valid: [['er', 'denkt', 'schon', 'lange', 'über', 'eine', 'Kündigung', 'nach']], punct: '.' },
   { parts: ['wann', 'geht', 'er', 'endlich', 'in', 'den', 'Ruhestand'], valid: [['wann', 'geht', 'er', 'endlich', 'in', 'den', 'Ruhestand']], punct: '?' },
   { parts: ['leider', 'hat', 'sie', 'eine', 'Absage', 'erhalten'], valid: [['leider', 'hat', 'sie', 'eine', 'Absage', 'erhalten']], punct: '.' }
 ];
@@ -1368,12 +1368,14 @@ function schreibLeeren() {
 
 </script>
 
+
+
 <script>
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
   var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
-  var SBGAP = [{"i":0,"row":["_","_","_","Jahren","_","_","Buchhaltung"],"parts":["Georg","arbeitet","seit","in","der"]},{"i":1,"row":["_","_","_","gut","_","_","er","_","_","guter","Mitarbeiter"],"parts":["er","verdient","sehr",",","denn","ist","ein"]},{"i":2,"row":["_","_","_","_","_","_","sie","_","schon","_","neue","Stelle"],"parts":["sie","hat","heute","gekündigt",",","aber","sucht","eine"]},{"i":3,"row":["_","_","_","fleißig","_","immer","_"],"parts":["ich","bin","sehr","und","motiviert"]},{"i":5,"row":["_","_","_","endlich","_","_","Ruhestand"],"parts":["wann","geht","er","in","den"]},{"i":6,"row":["_","_","_","eine","Absage","_"],"parts":["leider","hat","sie","erhalten"]}];
+  var SBGAP = [{"i":0,"row":["_","_","_","Jahren","_","_","Buchhaltung"],"parts":["Georg","arbeitet","seit","in","der"]},{"i":1,"row":["_","_","_","gut","_","_","er","_","_","guter","Mitarbeiter"],"parts":["er","verdient","sehr",",","denn","ist","ein"]},{"i":2,"row":["_","_","_","_","_","_","sie","_","schon","_","neue","Stelle"],"parts":["sie","hat","heute","gekündigt",",","aber","sucht","eine"]},{"i":3,"row":["_","_","_","fleißig","_","immer","_"],"parts":["ich","bin","sehr","und","motiviert"]},{"i":4,"row":["_","_","_","lange","_","eine","Kündigung","_"],"parts":["er","denkt","schon","über","nach"]},{"i":5,"row":["_","_","_","endlich","_","_","Ruhestand"],"parts":["wann","geht","er","in","den"]},{"i":6,"row":["_","_","_","eine","Absage","_"],"parts":["leider","hat","sie","erhalten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;
     if (typeof ex.valid[0] === "string") ex.valid = [ex.valid];
