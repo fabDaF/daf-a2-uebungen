@@ -127,7 +127,22 @@ valid-Arrays mit.
   Vergleiche (als/wie), Zahlen ausgeschrieben (achthundert statt 865 etc.).
   7/7 Sätze pro Datei konvertiert, 0 Konnektor-Anker, `--strict-quote` + JSDOM
   grün.
-- **Offen:** Einheiten 104x–107x (A2.1) + 201x–206x (A2.2), je Daten+Gerüst.
+- **ALLE KANONISCHEN EINHEITEN ERLEDIGT 2026-06-15:** 104x, 105x, 106x
+  (A2.1) + 201x, 202x, 203x, 204x-kanonisch (2041V/2047G/2048S), 205x, 206x
+  (A2.2) — alle Daten auf Staffel + Kommasatz-Quote UND Gerüst in einem
+  Schwung, parts==valid konsistent, JSDOM-Erstlade grün. Konnektoren-
+  Progression beachtet (deshalb/darum ab 2023, als ab 2033, damit ab 2046).
+  Zahlen ausgeschrieben, Caps korrigiert, Wortstellungsfehler behoben.
+  Patcher-Verbesserung: NOTVERB um flektierte Artikel/Adjektive/Adverbien
+  (-en/-t) erweitert, damit kurze Sätze nicht fälschlich aus dem Gerüst
+  fallen. Vereinzelt bleiben kurze Mittel-Sätze (6 W, viele Verben/Partikeln)
+  additiv im freien Bau — nie an Position 0.
+- **Lückentext-Ästhetik 2026-06-15:** `.luecken-text` projektweit auf
+  Serifenschrift + einheitliches Lese-Panel umgestellt (34 Dateien);
+  `.luecken-text` in `check_serif.py` aufgenommen.
+- **NUR NOCH OFFEN — Vorstufe-0-Sonderfälle (9 Dateien, andere Datenstruktur,
+  brauchen Schema-Migration):** A2.1: 1042X, 1046X (words- statt parts/valid),
+  1071W, 1072S; A2.2: 2042X, 2043G (satzbau3-Exaktmatch), 2044R, 2045V, 2046X.
 - **NEUE Voraussetzung entdeckt (Komma-Engine-Lücke):** Die 93 kanonischen
   Dateien zerfallen in **zwei Engine-Generationen**:
   - **Gen-B (35 Dateien):** Chip-Klasse `.sb-chip`, `sbMakeChip` setzt
