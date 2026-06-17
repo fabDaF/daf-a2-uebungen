@@ -153,6 +153,16 @@ valid-Arrays mit.
   Satzbau-Tab-Neubau** (eigenes JS entfernen, kanonisches Drag+Gerüst-Pattern
   einsetzen) — eigenes, sorgfältiges Paket, am besten in frischem Kontext
   (kaputter Tab = Unterrichts-Risiko).
+- **2043G Tab-Neubau ERLEDIGT 2026-06-15 (Pilot):** eigenes satzbau3/click-JS
+  durch kanonisches Drag+Gerüst (aus 1013G) ersetzt; Konjunktiv-II-Sätze auf
+  Staffel+Quote, 6/7 geführt, Syntax/Konsistenz/Erstlade grün, live. Weg
+  dokumentiert in Memory `reference_satzbau-tab-neubau.md`.
+- **NOCH OFFEN — 4 Tab-Neubauten mit JE EIGENER Infrastruktur (nicht uniform!):**
+  2042X (`SATZBAU_DATA` chips-Struktur), 2044R (`SENTENCE_DATA`/words),
+  2045V (`var words`), 2046X (Sätze als `data-correct` in hardcodierten HTML-
+  Chips + eigene Timer `startTimer`/`switchTab` statt timerAutoStart/showSection).
+  Jede braucht individuelle Anpassung des Pilot-Wegs (Timer-Index/Funktionsnamen,
+  Daten-Ort, Container). In frischem Kontext einzeln sauber bauen.
 - **NEUE Voraussetzung entdeckt (Komma-Engine-Lücke):** Die 93 kanonischen
   Dateien zerfallen in **zwei Engine-Generationen**:
   - **Gen-B (35 Dateien):** Chip-Klasse `.sb-chip`, `sbMakeChip` setzt
