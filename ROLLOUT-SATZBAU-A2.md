@@ -140,9 +140,19 @@ valid-Arrays mit.
 - **Lückentext-Ästhetik 2026-06-15:** `.luecken-text` projektweit auf
   Serifenschrift + einheitliches Lese-Panel umgestellt (34 Dateien);
   `.luecken-text` in `check_serif.py` aufgenommen.
-- **NUR NOCH OFFEN — Vorstufe-0-Sonderfälle (9 Dateien, andere Datenstruktur,
-  brauchen Schema-Migration):** A2.1: 1042X, 1046X (words- statt parts/valid),
-  1071W, 1072S; A2.2: 2042X, 2043G (satzbau3-Exaktmatch), 2044R, 2045V, 2046X.
+- **Vorstufe-0-Sonderfälle — 4 von 9 ERLEDIGT 2026-06-15:** 1042X + 1046X
+  (waren längst kanonisch parts/valid, nur Gerüst fehlte → gepatcht); 1071W +
+  1072S (words-Struktur → JS `.words`→`.parts`, parts/valid, Staffel+Quote,
+  Gerüst). Alle 4 live, JSDOM-Erstlade grün.
+- **NUR NOCH OFFEN — 5 Sonderfälle mit EIGENEM, nicht-kanonischem Satzbau-JS
+  (click-basiert, Exaktstring-Vergleich gegen `.correct`/`words`, KEINE
+  sbMakeChip/sbRegisterZone/initSatzbau):** 2042X (`SATZBAU_DATA` chips-Struktur),
+  2043G (`satzbau3` parts/correct, click + sb-bank/sb-row), 2044R
+  (`SENTENCE_DATA`/`words`), 2045V (`var words`, kein Satzbau-Container),
+  2046X (builder-/`.correct`). Diese brauchen je einen **vollständigen
+  Satzbau-Tab-Neubau** (eigenes JS entfernen, kanonisches Drag+Gerüst-Pattern
+  einsetzen) — eigenes, sorgfältiges Paket, am besten in frischem Kontext
+  (kaputter Tab = Unterrichts-Risiko).
 - **NEUE Voraussetzung entdeckt (Komma-Engine-Lücke):** Die 93 kanonischen
   Dateien zerfallen in **zwei Engine-Generationen**:
   - **Gen-B (35 Dateien):** Chip-Klasse `.sb-chip`, `sbMakeChip` setzt
