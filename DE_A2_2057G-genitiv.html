@@ -156,6 +156,13 @@ input.blank.wrong { border-color: #e74c3c; background: #ffebee; }
 .schreib-fb-btn-prim { background: #667eea; color: white; }
 .schreib-fb-btn-prim:hover { background: #4f63c2; color: white; }
 .schreib-fb-hilfe { color: #6c6c6c; font-size: 0.86em; font-style: italic; margin-top: 4px; }
+
+/* ── Gerüst-Modus (B1+): sichtbare Lücken + feste Anker ── */
+.sb-gap { display:inline-flex; align-items:center; justify-content:center; min-width:66px; min-height:38px; padding:2px 6px; border:2px dashed #b9a7f0; border-radius:20px; background:#faf8ff; }
+.sb-gap.drag-over { border-color:#e67e22; background:#fff5ec; }
+.sb-gap .chip { margin:0; }
+.chip.sb-locked { background:#eef0ff; border-style:solid; border-color:#c3c9f5; color:#555; cursor:default; }
+.chip.sb-locked.correct { background:#27ae60; border-color:#27ae60; color:#fff; }
 </style>
 </head>
 <body>
@@ -369,7 +376,15 @@ input.blank.wrong { border-color: #e74c3c; background: #ffebee; }
 </div><!-- /container -->
 
 <script>
-var TIMER_PREFIX='DE_A2_2057G_';var timerStarted=[false,false,false,false,false];var timerRunning=[false,false,false,false,false];var timerSeconds=[0,0,0,0,0];var timerIntervals=[null,null,null,null,null];function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerSeconds[n]++;var el=document.getElementById('timer-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);},1000);}function timerStop(n){if(!timerRunning[n])return;clearInterval(timerIntervals[n]);timerRunning[n]=false;var best=parseInt(localStorage.getItem(TIMER_PREFIX+n)||'999999');if(timerSeconds[n]>0&&timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+n,timerSeconds[n]);var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);}}function timerResetOne(n){clearInterval(timerIntervals[n]);timerRunning[n]=false;timerStarted[n]=false;timerSeconds[n]=0;var el=document.getElementById('timer-'+n);if(el)el.textContent='00:00';}function fmtTime(s){var m=Math.floor(s/60);var sec=s%60;return(m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;}function loadBestTimes(){for(var i=1;i<=4;i++){var v=localStorage.getItem(TIMER_PREFIX+i);if(v){var el=document.getElementById('best-'+i);if(el)el.textContent=fmtTime(parseInt(v));}}}var mcDone=[false,false,false,false];function mcCheck(step,btn,correct){var btns=btn.parentElement.querySelectorAll('.mc-btn');btns.forEach(function(b){b.disabled=true;b.classList.remove('correct','wrong');});var fb=document.getElementById('mcfb'+step);if(correct){btn.classList.add('correct');fb.textContent='\u2713 Richtig!';fb.className='mc-feedback ok';mcDone[step]=true;document.getElementById('pdot'+step).classList.add('done');setTimeout(function(){var next=document.getElementById('mc-step'+(step+1));if(next){next.classList.add('active');}else{document.getElementById('regelkarte').style.display='block';}},700);}else{btn.classList.add('wrong');fb.textContent='\u2717 Nicht ganz.';fb.className='mc-feedback err';setTimeout(function(){btns.forEach(function(b){b.disabled=false;b.classList.remove('wrong','correct');});fb.textContent='';fb.className='mc-feedback';},1400);}}function showSection(idx){var sections=document.querySelectorAll('.section');var buttons=document.querySelectorAll('.nav-btn');sections.forEach(function(s){s.classList.remove('active');});buttons.forEach(function(b){b.classList.remove('active');});sections[idx].classList.add('active');buttons[idx].classList.add('active');}var draggedChip=null;function allowDrop(e){e.preventDefault();}function dropZuo(e,zone){e.preventDefault();if(!draggedChip)return;zone.appendChild(draggedChip);draggedChip=null;colorAllZuordnungChips();timerAutoStart(1);}function colorZuordnungChip(chip){var zone=chip.closest('.drop-zone');if(zone){chip.classList.remove('correct','wrong');chip.classList.add(chip.dataset.cat===zone.dataset.cat?'correct':'wrong');}else{chip.classList.remove('correct','wrong');}}function colorAllZuordnungChips(){document.querySelectorAll('#sec-1 .chip').forEach(function(chip){colorZuordnungChip(chip);});checkZuordnungAllOk();}function checkZuordnungAllOk(){var chips=document.querySelectorAll('#sec-1 .chip');var allOk=chips.length>0&&Array.from(chips).every(function(c){return c.classList.contains('correct');});if(allOk)timerStop(1);}var zuordnungData=[{text:'des Mannes',cat:'maskulin'},{text:'des Bruders',cat:'maskulin'},{text:'des Vaters',cat:'maskulin'},{text:'der Frau',cat:'feminin'},{text:'der Mutter',cat:'feminin'},{text:'der Sängerin',cat:'feminin'},{text:'des Kindes',cat:'neutrum'},{text:'des Mädchens',cat:'neutrum'},{text:'des Hauses',cat:'neutrum'},{text:'der Kinder',cat:'plural'},{text:'der Schüler',cat:'plural'},{text:'der Absolventen',cat:'plural'}];function initZuordnung(){var bank=document.getElementById('chip-bank-1');bank.innerHTML='';zuordnungData.forEach(function(item){var chip=document.createElement('div');chip.className='chip';chip.textContent=item.text;chip.dataset.cat=item.cat;chip.draggable=true;chip.addEventListener('dragstart',function(e){draggedChip=chip;e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){draggedChip=null;colorAllZuordnungChips();});bank.appendChild(chip);});}function showZuordnungLoesung(){var zones=document.querySelectorAll('#sec-1 .drop-zone');var bank=document.getElementById('chip-bank-1');var chips=Array.from(bank.querySelectorAll('.chip')).concat(Array.from(document.querySelectorAll('#sec-1 .drop-zone .chip')));zones.forEach(function(zone){while(zone.children.length>1){zone.removeChild(zone.lastChild);}});bank.innerHTML='';chips.forEach(function(chip){bank.appendChild(chip);});zuordnungData.forEach(function(item){var zone=document.getElementById('zone-'+item.cat);var chip=Array.from(document.querySelectorAll('#sec-1 .chip')).find(function(c){return c.textContent===item.text;});if(chip&&zone){zone.appendChild(chip);}});colorAllZuordnungChips();}function resetZuordnung(){initZuordnung();}var lueckenData=[{satz:'Das Kleid ___ (das Mädchen) ist sehr bunt.',ans:'des Mädchens'},{satz:'Maria ist sich ___ (die Hilfe) bewusst.',ans:'der Hilfe'},{satz:'Die Farbe ___ (die Hose) gefällt mir nicht.',ans:'der Hose'},{satz:'___ (Alex) Buch ist interessant.',ans:'Alex\''},{satz:'Die Hand ___ (der Mann) ist gebrochen.',ans:'des Mannes'},{satz:'Die Mütter ___ (die Kinder) sind alle gekommen.',ans:'der Kinder'},{satz:'Die Stimme ___ (die Sängerin) ist sehr schön.',ans:'der Sängerin'},{satz:'Ich sehe das Auto ___ (der Mann).',ans:'des Mannes'},{satz:'Die Tasche ___ (die Frau) ist aus Leder.',ans:'der Frau'},{satz:'Die Bücher ___ (die Schüler) sind interessant.',ans:'der Schüler'},{satz:'Die Bäume ___ (der Garten) sind alle grün.',ans:'des Gartens'},{satz:'Das Wasser ___ (der See) ist klar.',ans:'des Sees'}];function initLuecken(){var container=document.getElementById('luecken-container');container.innerHTML='';lueckenData.forEach(function(item,idx){var div=document.createElement('div');div.className='luecken-item';var inp=document.createElement('input');inp.type='text';inp.className='blank';inp.placeholder='';inp.style.width='120px';inp.dataset.answer=item.ans;inp.setAttribute('autocomplete','off');inp.addEventListener('input',function(){timerAutoStart(2);liveCheck(inp);checkLueckenAllOk();});var before=item.satz.indexOf('___');var part1=item.satz.substring(0,before);var part2=item.satz.substring(before+3);div.innerHTML='<span class="number">'+(idx+1)+'</span>'+part1;div.appendChild(inp);var span2=document.createElement('span');span2.textContent=part2;div.appendChild(span2);container.appendChild(div);});}function lcLower(s){var r='';for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);r+=(c>=65&&c<=90)?String.fromCharCode(c+32):(c===196)?'ä':(c===214)?'ö':(c===220)?'ü':s.charAt(i);}return r;}function liveCheck(inp){var ans=inp.dataset.answer||'';var val=inp.value.trim();var fc=ans.charCodeAt(0);var caseSensitive=(fc>=65&&fc<=90)||(fc===196||fc===214||fc===220);var cmpVal=caseSensitive?val:lcLower(val);var cmpAns=caseSensitive?ans:lcLower(ans);inp.classList.remove('correct','wrong');if(!cmpVal)return;if(cmpVal===cmpAns){inp.classList.add('correct');checkLueckenAllOk();return;}if(cmpAns.indexOf(cmpVal)===0)return;inp.classList.add('wrong');}function checkLueckenAllOk(){var inputs=document.querySelectorAll('#sec-2 input.blank');var allOk=inputs.length>0&&Array.from(inputs).every(function(i){return i.classList.contains('correct');});if(allOk)timerStop(2);}function showLueckenLoesung(){document.querySelectorAll('#sec-2 input.blank').forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.add('correct');inp.classList.remove('wrong');});timerStop(2);}function resetLuecken(){initLuecken();}var satzbauData=[{parts:['wegen','des','Wetters','gehe','ich','nicht','nach','draußen'],valid:[['wegen','des','Wetters','gehe','ich','nicht','nach','draußen']],punct:'.'},{parts:['gehst','du','zu','Annas','Geburtstag'],valid:[['gehst','du','zu','Annas','Geburtstag']],punct:'?'},{parts:['trotz','deiner','Argumente','sehe','ich','das','anders'],valid:[['trotz','deiner','Argumente','sehe','ich','das','anders']],punct:'.'},{parts:['das','ist','der','Stuhl','meines','Bruders'],valid:[['das','ist','der','Stuhl','meines','Bruders']],punct:'.'},{parts:['die','Zeugnisse','der','Absolventen','liegen','im','Sekretariat','bereit'],valid:[['die','Zeugnisse','der','Absolventen','liegen','im','Sekretariat','bereit']],punct:'.'},{parts:['die','Arbeit','des','Mannes','ist','wirklich','interessant'],valid:[['die','Arbeit','des','Mannes','ist','wirklich','interessant']],punct:'.'},{parts:['der','Kindergarten','meines','Sohnes','liegt','in','der','Nähe'],valid:[['der','Kindergarten','meines','Sohnes','liegt','in','der','Nähe']],punct:'.'},{parts:['ich','bin','mir','meines','Fehlers','bewusst'],valid:[['ich','bin','mir','meines','Fehlers','bewusst']],punct:'.'}];var sbDragged=null;function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}function sbUpdateCapitalization(row){var chips=Array.from(row.querySelectorAll('.chip'));chips.forEach(function(c,i){var orig=c.dataset.orig;if(orig===','||orig===';')return;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();if(isProper){c.textContent=orig;}else{c.textContent=(i===0)?sbCapitalize(orig):orig;}});}function sbMakeChip(word){var chip=document.createElement('div');chip.className=(word===','||word===';')?'chip punct-chip':'chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;chip.addEventListener('dragstart',function(e){sbDragged=chip;timerAutoStart(3);e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){sbDragged=null;});return chip;}function sbRegisterZone(zone,idx){zone.addEventListener('dragover',function(e){e.preventDefault();if(!sbDragged)return;});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged)return;zone.appendChild(sbDragged);sbDragged=null;var row=document.getElementById('sb-row-'+idx);sbUpdateCapitalization(row);sbCheckAuto(idx);});} function sbColorRow(idx){var row=document.getElementById('sb-row-'+idx);var chips=Array.from(row.querySelectorAll('.chip'));var order=chips.map(function(c){return c.dataset.orig;});var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});var existing=row.querySelector('.sb-punkt');if(existing)existing.parentNode.removeChild(existing);if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}return ok;}function sbCheckAuto(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var fb=document.getElementById('sb-fb-'+idx);if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}setTimeout(function(){timerAutoStart(3);var ok=sbColorRow(idx);if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='\u2713 Korrekt!';sbCheckAllDone();}else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='\u2717 Falsche Reihenfolge!';}},500);}function sbCheckAllDone(){var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});if(allOk)timerStop(3);}function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var solution=satzbauData[idx].valid[0];var allChips={};Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCapitalize(word):word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});setTimeout(function(){sbCheckAuto(idx);},100);}function sbResetOne(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);row.classList.remove('correct','incorrect');var parts=satzbauData[idx].parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});}function initSatzbau(){var container=document.getElementById('satzbauContainer');container.innerHTML='';satzbauData.forEach(function(ex,idx){var item=document.createElement('div');item.className='satzbau-item';var lbl=document.createElement('div');lbl.className='sb-label';lbl.textContent='Satz '+(idx+1);item.appendChild(lbl);var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;var parts=ex.parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});sbRegisterZone(bank,idx);sbRegisterZone(row,idx);var btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:8px;margin-top:6px;';var solveBtn=document.createElement('button');solveBtn.className='btn';solveBtn.textContent='Lösen';solveBtn.setAttribute('data-idx',idx);solveBtn.addEventListener('click',function(){sbShowSolution(parseInt(this.getAttribute('data-idx')));});var resetBtn=document.createElement('button');resetBtn.className='btn';resetBtn.textContent='↺ Neustart';resetBtn.setAttribute('data-idx',idx);resetBtn.addEventListener('click',function(){sbResetOne(parseInt(this.getAttribute('data-idx')));});btnRow.appendChild(solveBtn);btnRow.appendChild(resetBtn);item.appendChild(bank);item.appendChild(row);item.appendChild(fb);item.appendChild(btnRow);container.appendChild(item);});} function sbShowAll(){satzbauData.forEach(function(_,idx){sbShowSolution(idx);});}function resetSatzbau(){initSatzbau();}var mcData=[{satz:'Ich helfe dem Mann.',correct:'Dativ'},{satz:'Die Arbeit des Mannes ist interessant.',correct:'Genitiv'},{satz:'Er dankt der Lehrerin.',correct:'Dativ'},{satz:'Wegen des Regens bleiben wir zu Hause.',correct:'Genitiv'},{satz:'Ich gebe dem Kind ein Buch.',correct:'Dativ'},{satz:'Trotz der Kälte gehen wir spazieren.',correct:'Genitiv'},{satz:'Das Auto meines Bruders ist rot.',correct:'Genitiv'},{satz:'Er folgt dem Hund.',correct:'Dativ'},{satz:'Während des Sommers reise ich viel.',correct:'Genitiv'},{satz:'Ich schicke meiner Schwester einen Brief.',correct:'Dativ'}];var mcAnswers=[null,null,null,null,null,null,null,null,null,null];function initMC(){var container=document.getElementById('mc-container');container.innerHTML='';mcData.forEach(function(item,idx){var div=document.createElement('div');div.className='mc-exercise';var q=document.createElement('div');q.className='mc-question';q.textContent=item.satz;div.appendChild(q);var opts=document.createElement('div');opts.className='mc-opts';['Genitiv','Dativ'].forEach(function(opt){var btn=document.createElement('button');btn.className='mc-opt';btn.textContent=opt;btn.setAttribute('data-idx',idx);btn.addEventListener('click',function(){mcAnswerClick(idx,opt,btn);});opts.appendChild(btn);});div.appendChild(opts);container.appendChild(div);});}function mcAnswerClick(idx,opt,btn){timerAutoStart(4);var isCorrect=opt===mcData[idx].correct;btn.classList.add(isCorrect?'correct':'wrong');mcAnswers[idx]=opt;var allAnswered=mcAnswers.every(function(a){return a!==null;});if(allAnswered){var allCorrect=mcAnswers.every(function(a,i){return a===mcData[i].correct;});if(allCorrect)timerStop(4);}}function resetMC(){mcAnswers=[null,null,null,null,null,null,null,null,null,null];initMC();}window.addEventListener('DOMContentLoaded',function(){initZuordnung();initLuecken();initSatzbau();initMC();loadBestTimes();
+var TIMER_PREFIX='DE_A2_2057G_';var timerStarted=[false,false,false,false,false];var timerRunning=[false,false,false,false,false];var timerSeconds=[0,0,0,0,0];var timerIntervals=[null,null,null,null,null];function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerSeconds[n]++;var el=document.getElementById('timer-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);},1000);}function timerStop(n){if(!timerRunning[n])return;clearInterval(timerIntervals[n]);timerRunning[n]=false;var best=parseInt(localStorage.getItem(TIMER_PREFIX+n)||'999999');if(timerSeconds[n]>0&&timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+n,timerSeconds[n]);var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);}}function timerResetOne(n){clearInterval(timerIntervals[n]);timerRunning[n]=false;timerStarted[n]=false;timerSeconds[n]=0;var el=document.getElementById('timer-'+n);if(el)el.textContent='00:00';}function fmtTime(s){var m=Math.floor(s/60);var sec=s%60;return(m<10?'0':'')+m+':'+(sec<10?'0':'')+sec;}function loadBestTimes(){for(var i=1;i<=4;i++){var v=localStorage.getItem(TIMER_PREFIX+i);if(v){var el=document.getElementById('best-'+i);if(el)el.textContent=fmtTime(parseInt(v));}}}var mcDone=[false,false,false,false];function mcCheck(step,btn,correct){var btns=btn.parentElement.querySelectorAll('.mc-btn');btns.forEach(function(b){b.disabled=true;b.classList.remove('correct','wrong');});var fb=document.getElementById('mcfb'+step);if(correct){btn.classList.add('correct');fb.textContent='\u2713 Richtig!';fb.className='mc-feedback ok';mcDone[step]=true;document.getElementById('pdot'+step).classList.add('done');setTimeout(function(){var next=document.getElementById('mc-step'+(step+1));if(next){next.classList.add('active');}else{document.getElementById('regelkarte').style.display='block';}},700);}else{btn.classList.add('wrong');fb.textContent='\u2717 Nicht ganz.';fb.className='mc-feedback err';setTimeout(function(){btns.forEach(function(b){b.disabled=false;b.classList.remove('wrong','correct');});fb.textContent='';fb.className='mc-feedback';},1400);}}function showSection(idx){var sections=document.querySelectorAll('.section');var buttons=document.querySelectorAll('.nav-btn');sections.forEach(function(s){s.classList.remove('active');});buttons.forEach(function(b){b.classList.remove('active');});sections[idx].classList.add('active');buttons[idx].classList.add('active');}var draggedChip=null;function allowDrop(e){e.preventDefault();}function dropZuo(e,zone){e.preventDefault();if(!draggedChip)return;zone.appendChild(draggedChip);draggedChip=null;colorAllZuordnungChips();timerAutoStart(1);}function colorZuordnungChip(chip){var zone=chip.closest('.drop-zone');if(zone){chip.classList.remove('correct','wrong');chip.classList.add(chip.dataset.cat===zone.dataset.cat?'correct':'wrong');}else{chip.classList.remove('correct','wrong');}}function colorAllZuordnungChips(){document.querySelectorAll('#sec-1 .chip').forEach(function(chip){colorZuordnungChip(chip);});checkZuordnungAllOk();}function checkZuordnungAllOk(){var chips=document.querySelectorAll('#sec-1 .chip');var allOk=chips.length>0&&Array.from(chips).every(function(c){return c.classList.contains('correct');});if(allOk)timerStop(1);}var zuordnungData=[{text:'des Mannes',cat:'maskulin'},{text:'des Bruders',cat:'maskulin'},{text:'des Vaters',cat:'maskulin'},{text:'der Frau',cat:'feminin'},{text:'der Mutter',cat:'feminin'},{text:'der Sängerin',cat:'feminin'},{text:'des Kindes',cat:'neutrum'},{text:'des Mädchens',cat:'neutrum'},{text:'des Hauses',cat:'neutrum'},{text:'der Kinder',cat:'plural'},{text:'der Schüler',cat:'plural'},{text:'der Absolventen',cat:'plural'}];function initZuordnung(){var bank=document.getElementById('chip-bank-1');bank.innerHTML='';zuordnungData.forEach(function(item){var chip=document.createElement('div');chip.className='chip';chip.textContent=item.text;chip.dataset.cat=item.cat;chip.draggable=true;chip.addEventListener('dragstart',function(e){draggedChip=chip;e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){draggedChip=null;colorAllZuordnungChips();});bank.appendChild(chip);});}function showZuordnungLoesung(){var zones=document.querySelectorAll('#sec-1 .drop-zone');var bank=document.getElementById('chip-bank-1');var chips=Array.from(bank.querySelectorAll('.chip')).concat(Array.from(document.querySelectorAll('#sec-1 .drop-zone .chip')));zones.forEach(function(zone){while(zone.children.length>1){zone.removeChild(zone.lastChild);}});bank.innerHTML='';chips.forEach(function(chip){bank.appendChild(chip);});zuordnungData.forEach(function(item){var zone=document.getElementById('zone-'+item.cat);var chip=Array.from(document.querySelectorAll('#sec-1 .chip')).find(function(c){return c.textContent===item.text;});if(chip&&zone){zone.appendChild(chip);}});colorAllZuordnungChips();}function resetZuordnung(){initZuordnung();}var lueckenData=[{satz:'Das Kleid ___ (das Mädchen) ist sehr bunt.',ans:'des Mädchens'},{satz:'Maria ist sich ___ (die Hilfe) bewusst.',ans:'der Hilfe'},{satz:'Die Farbe ___ (die Hose) gefällt mir nicht.',ans:'der Hose'},{satz:'___ (Alex) Buch ist interessant.',ans:'Alex\''},{satz:'Die Hand ___ (der Mann) ist gebrochen.',ans:'des Mannes'},{satz:'Die Mütter ___ (die Kinder) sind alle gekommen.',ans:'der Kinder'},{satz:'Die Stimme ___ (die Sängerin) ist sehr schön.',ans:'der Sängerin'},{satz:'Ich sehe das Auto ___ (der Mann).',ans:'des Mannes'},{satz:'Die Tasche ___ (die Frau) ist aus Leder.',ans:'der Frau'},{satz:'Die Bücher ___ (die Schüler) sind interessant.',ans:'der Schüler'},{satz:'Die Bäume ___ (der Garten) sind alle grün.',ans:'des Gartens'},{satz:'Das Wasser ___ (der See) ist klar.',ans:'des Sees'}];function initLuecken(){var container=document.getElementById('luecken-container');container.innerHTML='';lueckenData.forEach(function(item,idx){var div=document.createElement('div');div.className='luecken-item';var inp=document.createElement('input');inp.type='text';inp.className='blank';inp.placeholder='';inp.style.width='120px';inp.dataset.answer=item.ans;inp.setAttribute('autocomplete','off');inp.addEventListener('input',function(){timerAutoStart(2);liveCheck(inp);checkLueckenAllOk();});var before=item.satz.indexOf('___');var part1=item.satz.substring(0,before);var part2=item.satz.substring(before+3);div.innerHTML='<span class="number">'+(idx+1)+'</span>'+part1;div.appendChild(inp);var span2=document.createElement('span');span2.textContent=part2;div.appendChild(span2);container.appendChild(div);});}function lcLower(s){var r='';for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);r+=(c>=65&&c<=90)?String.fromCharCode(c+32):(c===196)?'ä':(c===214)?'ö':(c===220)?'ü':s.charAt(i);}return r;}function liveCheck(inp){var ans=inp.dataset.answer||'';var val=inp.value.trim();var fc=ans.charCodeAt(0);var caseSensitive=(fc>=65&&fc<=90)||(fc===196||fc===214||fc===220);var cmpVal=caseSensitive?val:lcLower(val);var cmpAns=caseSensitive?ans:lcLower(ans);inp.classList.remove('correct','wrong');if(!cmpVal)return;if(cmpVal===cmpAns){inp.classList.add('correct');checkLueckenAllOk();return;}if(cmpAns.indexOf(cmpVal)===0)return;inp.classList.add('wrong');}function checkLueckenAllOk(){var inputs=document.querySelectorAll('#sec-2 input.blank');var allOk=inputs.length>0&&Array.from(inputs).every(function(i){return i.classList.contains('correct');});if(allOk)timerStop(2);}function showLueckenLoesung(){document.querySelectorAll('#sec-2 input.blank').forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.add('correct');inp.classList.remove('wrong');});timerStop(2);}function resetLuecken(){initLuecken();}var satzbauData = [
+  { parts: ['wegen', 'des', 'schlechten', 'Wetters', 'bleibe', 'ich', 'heute', 'zuhause'], valid: [['wegen', 'des', 'schlechten', 'Wetters', 'bleibe', 'ich', 'heute', 'zuhause']], punct: '.' },
+  { parts: ['gehst', 'du', 'am', 'Samstag', 'zu', 'Annas', 'großem', 'Geburtstag'], valid: [['gehst', 'du', 'am', 'Samstag', 'zu', 'Annas', 'großem', 'Geburtstag']], punct: '?' },
+  { parts: ['trotz', 'deiner', 'Argumente', 'sehe', 'ich', 'das', 'anders', ',', 'weil', 'ich', 'es', 'besser', 'weiß'], valid: [['trotz', 'deiner', 'Argumente', 'sehe', 'ich', 'das', 'anders', ',', 'weil', 'ich', 'es', 'besser', 'weiß']], punct: '.' },
+  { parts: ['das', 'ist', 'der', 'bequeme', 'Stuhl', 'meines', 'Bruders'], valid: [['das', 'ist', 'der', 'bequeme', 'Stuhl', 'meines', 'Bruders']], punct: '.' },
+  { parts: ['die', 'Arbeit', 'des', 'Mannes', 'ist', 'interessant', ',', 'denn', 'sie', 'ist', 'kreativ'], valid: [['die', 'Arbeit', 'des', 'Mannes', 'ist', 'interessant', ',', 'denn', 'sie', 'ist', 'kreativ']], punct: '.' },
+  { parts: ['der', 'Kindergarten', 'meines', 'Sohnes', 'liegt', 'ganz', 'in', 'der', 'Nähe'], valid: [['der', 'Kindergarten', 'meines', 'Sohnes', 'liegt', 'ganz', 'in', 'der', 'Nähe']], punct: '.' },
+  { parts: ['ich', 'bin', 'mir', 'meines', 'großen', 'Fehlers', 'bewusst'], valid: [['ich', 'bin', 'mir', 'meines', 'großen', 'Fehlers', 'bewusst']], punct: '.' }
+];var sbDragged=null;function sbCapitalize(str){return str.charAt(0).toUpperCase()+str.slice(1);}function sbUpdateCapitalization(row){var chips=Array.from(row.querySelectorAll('.chip'));chips.forEach(function(c,i){var orig=c.dataset.orig;if(orig===','||orig===';')return;var isProper=orig.charAt(0)===orig.charAt(0).toUpperCase()&&orig.charAt(0)!==orig.charAt(0).toLowerCase();if(isProper){c.textContent=orig;}else{c.textContent=(i===0)?sbCapitalize(orig):orig;}});}function sbMakeChip(word){var chip=document.createElement('div');chip.className=(word===','||word===';')?'chip punct-chip':'chip';chip.textContent=word;chip.dataset.orig=word;chip.draggable=true;chip.addEventListener('dragstart',function(e){sbDragged=chip;timerAutoStart(3);e.dataTransfer.setData('text/plain','');});chip.addEventListener('dragend',function(){sbDragged=null;});return chip;}function sbRegisterZone(zone,idx){zone.addEventListener('dragover',function(e){e.preventDefault();if(!sbDragged)return;});zone.addEventListener('drop',function(e){e.preventDefault();if(!sbDragged)return;zone.appendChild(sbDragged);sbDragged=null;var row=document.getElementById('sb-row-'+idx);sbUpdateCapitalization(row);sbCheckAuto(idx);});} function sbColorRow(idx){var row=document.getElementById('sb-row-'+idx);var chips=Array.from(row.querySelectorAll('.chip'));var order=chips.map(function(c){return c.dataset.orig;});var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});var existing=row.querySelector('.sb-punkt');if(existing)existing.parentNode.removeChild(existing);if(ok){var punkt=document.createElement('span');punkt.className='sb-punkt';punkt.textContent=satzbauData[idx].punct||'.';row.appendChild(punkt);}return ok;}function sbCheckAuto(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var fb=document.getElementById('sb-fb-'+idx);if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}setTimeout(function(){timerAutoStart(3);var ok=sbColorRow(idx);if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='\u2713 Korrekt!';sbCheckAllDone();}else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='\u2717 Falsche Reihenfolge!';}},500);}function sbCheckAllDone(){var allOk=satzbauData.every(function(_,i){var row=document.getElementById('sb-row-'+i);return row&&row.classList.contains('correct');});if(allOk)timerStop(3);}function sbShowSolution(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);var solution=satzbauData[idx].valid[0];var allChips={};Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});Array.from(row.querySelectorAll('.chip')).forEach(function(c){allChips[c.dataset.orig]=c;});while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);solution.forEach(function(word,i){var chip=allChips[word];if(chip){chip.textContent=(i===0)?sbCapitalize(word):word;chip.classList.remove('correct','incorrect');row.appendChild(chip);}});setTimeout(function(){sbCheckAuto(idx);},100);}function sbResetOne(idx){var bank=document.getElementById('sb-bank-'+idx);var row=document.getElementById('sb-row-'+idx);while(bank.firstChild)bank.removeChild(bank.firstChild);while(row.firstChild)row.removeChild(row.firstChild);row.classList.remove('correct','incorrect');var parts=satzbauData[idx].parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});}function initSatzbau(){var container=document.getElementById('satzbauContainer');container.innerHTML='';satzbauData.forEach(function(ex,idx){var item=document.createElement('div');item.className='satzbau-item';var lbl=document.createElement('div');lbl.className='sb-label';lbl.textContent='Satz '+(idx+1);item.appendChild(lbl);var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;var parts=ex.parts.slice();for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}parts.forEach(function(word){bank.appendChild(sbMakeChip(word));});sbRegisterZone(bank,idx);sbRegisterZone(row,idx);var btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:8px;margin-top:6px;';var solveBtn=document.createElement('button');solveBtn.className='btn';solveBtn.textContent='Lösen';solveBtn.setAttribute('data-idx',idx);solveBtn.addEventListener('click',function(){sbShowSolution(parseInt(this.getAttribute('data-idx')));});var resetBtn=document.createElement('button');resetBtn.className='btn';resetBtn.textContent='↺ Neustart';resetBtn.setAttribute('data-idx',idx);resetBtn.addEventListener('click',function(){sbResetOne(parseInt(this.getAttribute('data-idx')));});btnRow.appendChild(solveBtn);btnRow.appendChild(resetBtn);item.appendChild(bank);item.appendChild(row);item.appendChild(fb);item.appendChild(btnRow);container.appendChild(item);});} function sbShowAll(){satzbauData.forEach(function(_,idx){sbShowSolution(idx);});}function resetSatzbau(){initSatzbau();}var mcData=[{satz:'Ich helfe dem Mann.',correct:'Dativ'},{satz:'Die Arbeit des Mannes ist interessant.',correct:'Genitiv'},{satz:'Er dankt der Lehrerin.',correct:'Dativ'},{satz:'Wegen des Regens bleiben wir zu Hause.',correct:'Genitiv'},{satz:'Ich gebe dem Kind ein Buch.',correct:'Dativ'},{satz:'Trotz der Kälte gehen wir spazieren.',correct:'Genitiv'},{satz:'Das Auto meines Bruders ist rot.',correct:'Genitiv'},{satz:'Er folgt dem Hund.',correct:'Dativ'},{satz:'Während des Sommers reise ich viel.',correct:'Genitiv'},{satz:'Ich schicke meiner Schwester einen Brief.',correct:'Dativ'}];var mcAnswers=[null,null,null,null,null,null,null,null,null,null];function initMC(){var container=document.getElementById('mc-container');container.innerHTML='';mcData.forEach(function(item,idx){var div=document.createElement('div');div.className='mc-exercise';var q=document.createElement('div');q.className='mc-question';q.textContent=item.satz;div.appendChild(q);var opts=document.createElement('div');opts.className='mc-opts';['Genitiv','Dativ'].forEach(function(opt){var btn=document.createElement('button');btn.className='mc-opt';btn.textContent=opt;btn.setAttribute('data-idx',idx);btn.addEventListener('click',function(){mcAnswerClick(idx,opt,btn);});opts.appendChild(btn);});div.appendChild(opts);container.appendChild(div);});}function mcAnswerClick(idx,opt,btn){timerAutoStart(4);var isCorrect=opt===mcData[idx].correct;btn.classList.add(isCorrect?'correct':'wrong');mcAnswers[idx]=opt;var allAnswered=mcAnswers.every(function(a){return a!==null;});if(allAnswered){var allCorrect=mcAnswers.every(function(a,i){return a===mcData[i].correct;});if(allCorrect)timerStop(4);}}function resetMC(){mcAnswers=[null,null,null,null,null,null,null,null,null,null];initMC();}window.addEventListener('DOMContentLoaded',function(){initZuordnung();initLuecken();initSatzbau();initMC();loadBestTimes();
 initSchreibwerkstatt();});
 
 /* ===== SCHREIBWERKSTATT (A2) =================================== */
@@ -905,6 +920,212 @@ function schreibLeeren() {
   });
 })();
 
+</script>
+
+<script>
+/* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
+   hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
+(function(){
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var SBGAP = [{"i":0,"row":["_","_","_","Wetters","_","ich","_","zuhause"],"parts":["wegen","des","schlechten","bleibe","heute"]},{"i":1,"row":["_","_","_","Samstag","_","_","großem","Geburtstag"],"parts":["gehst","du","am","zu","Annas"]},{"i":2,"row":["_","_","Argumente","_","_","das","_","_","_","ich","_","_","weiß"],"parts":["trotz","deiner","sehe","ich","anders",",","weil","es","besser"]},{"i":3,"row":["_","_","_","bequeme","_","_","Bruders"],"parts":["das","ist","der","Stuhl","meines"]},{"i":4,"row":["_","_","_","Mannes","_","_","_","_","sie","_","kreativ"],"parts":["die","Arbeit","des","ist","interessant",",","denn","ist"]},{"i":5,"row":["_","_","_","Sohnes","_","_","in","_","Nähe"],"parts":["der","Kindergarten","meines","liegt","ganz","der"]},{"i":6,"row":["_","_","_","meines","_","Fehlers","_"],"parts":["ich","bin","mir","großen","bewusst"]}];
+  SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
+    ex.row = g.row; ex.parts = g.parts;
+    if (typeof ex.valid[0] === "string") ex.valid = [ex.valid];
+  });
+  if (typeof window.sbDragged === "undefined") window.sbDragged = null;
+  function bankEl(i){ return document.getElementById(CFG.bank + i); }
+  function rowEl(i){ return document.getElementById(CFG.row + i); }
+  function fbEl(i){ return document.getElementById(CFG.fb + i); }
+  function cap(w){ return w.charAt(0).toUpperCase() + w.slice(1); }
+  function positions(row){ return Array.from(row.children).filter(function(n){ return n.classList.contains("sb-gap") || n.classList.contains("chip"); }); }
+  function chipOf(pos){ return pos.classList.contains("sb-gap") ? pos.querySelector(".chip") : pos; }
+  function updateCaps(row){ if (!CFG.caps) return;
+    positions(row).forEach(function(pos,i){ var c = chipOf(pos); if (!c) return;
+      var o = c.dataset.orig;
+      var proper = o.charAt(0) === o.charAt(0).toUpperCase() && o.charAt(0) !== o.charAt(0).toLowerCase();
+      c.textContent = proper ? o : (i === 0 ? cap(o) : o); });
+  }
+  function sequence(i){ var row = rowEl(i), seq = [], complete = true;
+    positions(row).forEach(function(pos){ var c = chipOf(pos); if (c) seq.push(c.dataset.orig); else complete = false; });
+    return { seq: seq, complete: complete }; }
+  function clearMarks(i){ var row = rowEl(i);
+    row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("correct","incorrect"); });
+    row.classList.remove("correct","incorrect");
+    var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p); }
+  function afterChange(i){
+    var row = rowEl(i); updateCaps(row);
+    var fb = fbEl(i), info = sequence(i);
+    if (!info.complete){ clearMarks(i); if (fb){ fb.textContent=""; fb.className="satzbau-feedback"; } return; }
+    setTimeout(function(){
+      if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
+      var fresh = sequence(i);
+      var ok = satzbauData[i].valid.some(function(v){ return JSON.stringify(v) === JSON.stringify(fresh.seq); });
+      var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p);
+      if (ok){
+        row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("incorrect"); c.classList.add("correct"); });
+        var punkt = document.createElement("span"); punkt.className = "sb-punkt";
+        punkt.textContent = satzbauData[i].punct || "."; row.appendChild(punkt);
+        row.classList.add("correct"); row.classList.remove("incorrect");
+        if (fb){ fb.className = "satzbau-feedback correct"; fb.textContent = "✓ Korrekt!"; }
+        if (typeof sbCheckAllDone === "function") sbCheckAllDone();
+      } else {
+        row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("correct","incorrect"); });
+        row.querySelectorAll(".sb-gap .chip").forEach(function(c){ c.classList.add("incorrect"); });
+        row.classList.add("incorrect"); row.classList.remove("correct");
+        if (fb){ fb.className = "satzbau-feedback incorrect"; fb.textContent = "✗ Noch nicht richtig – verschiebe die Wörter!"; }
+      }
+    }, 450);
+  }
+  /* Geführter Modus (B1, 2026-06-10): Sofort-Feedback pro Chip-Platzierung.
+     Richtig (konsistent mit mind. einer valid-Reihenfolge) -> grün + fixiert.
+     Falsch -> rot + Rücksprung in die Bank nach 800 ms. */
+  function toBank(i, chip){
+    chip.textContent = chip.dataset.orig;  // Kleinschreibung wiederherstellen — Bank darf den Satzanfang nicht verraten
+    bankEl(i).appendChild(chip);
+  }
+  function consistent(i){
+    var pos = positions(rowEl(i));
+    var v = satzbauData[i].valid;
+    return v.some(function(o){
+      for (var k = 0; k < pos.length; k++){ var c = chipOf(pos[k]); if (c && c.dataset.orig !== o[k]) return false; }
+      return true; });
+  }
+  function finishRow(i){
+    var row = rowEl(i), fb = fbEl(i);
+    var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p);
+    var punkt = document.createElement("span"); punkt.className = "sb-punkt";
+    punkt.textContent = satzbauData[i].punct || "."; row.appendChild(punkt);
+    row.classList.add("correct"); row.classList.remove("incorrect");
+    if (fb){ fb.className = "satzbau-feedback correct"; fb.textContent = "✓ Korrekt!"; }
+    if (typeof sbCheckAllDone === "function") sbCheckAllDone();
+  }
+  function placeJudge(i, chip){
+    if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
+    var row = rowEl(i); updateCaps(row);
+    var fb = fbEl(i);
+    if (consistent(i)){
+      chip.classList.remove("incorrect"); chip.classList.add("correct");
+      chip.dataset.fixed = "1"; chip.draggable = false;
+      if (sequence(i).complete){ finishRow(i); }
+      else if (fb){ fb.className = "satzbau-feedback"; fb.textContent = ""; }
+    } else {
+      chip.classList.add("incorrect");
+      if (fb){ fb.className = "satzbau-feedback incorrect"; fb.textContent = "✗ Das passt hier nicht!"; }
+      setTimeout(function(){
+        chip.classList.remove("incorrect");
+        if (!chip.dataset.fixed && chip.closest(".sb-gap")) toBank(i, chip);
+        updateCaps(rowEl(i));
+        if (fb && /incorrect/.test(fb.className)){ fb.className = "satzbau-feedback"; fb.textContent = ""; }
+      }, 800);
+    }
+  }
+  function makeChip(word, i){
+    var chip = document.createElement("div");
+    var isPunct = [",",".","!","?",";",":"].indexOf(word) !== -1;
+    chip.className = "chip" + (isPunct ? " punct-chip" : ""); chip.textContent = word; chip.draggable = true;
+    chip.dataset.orig = word; chip.dataset.word = word; chip.dataset.sbIdx = String(i);
+    chip.addEventListener("dragstart", function(e){ if (chip.dataset.fixed){ e.preventDefault(); return; } window.sbDragged = chip; if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab); e.dataTransfer.effectAllowed = "move"; });
+    if (CFG.click) chip.addEventListener("click", function(){
+      if (chip.dataset.fixed) return;
+      if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
+      var inSlot = chip.closest(".sb-gap");
+      if (inSlot){ toBank(i, chip); updateCaps(rowEl(i)); return; }
+      var free = Array.from(rowEl(i).querySelectorAll(".sb-gap")).find(function(s){ return !s.querySelector(".chip"); });
+      if (free){ free.appendChild(chip); placeJudge(i, chip); }
+    });
+    return chip;
+  }
+  function makeLocked(word){
+    var chip = document.createElement("div");
+    chip.className = "chip sb-locked"; chip.textContent = word;
+    chip.dataset.orig = word; chip.dataset.word = word; chip.dataset.locked = "1";
+    return chip;
+  }
+  function makeSlot(i){
+    var slot = document.createElement("div"); slot.className = "sb-gap";
+    slot.addEventListener("dragover", function(e){ e.preventDefault(); if (window.sbDragged) slot.classList.add("drag-over"); });
+    slot.addEventListener("dragleave", function(){ slot.classList.remove("drag-over"); });
+    slot.addEventListener("drop", function(e){
+      e.preventDefault(); slot.classList.remove("drag-over");
+      var d = window.sbDragged; if (!d || d.dataset.sbIdx !== String(i) || d.dataset.locked || d.dataset.fixed) return;
+      if (slot.querySelector(".chip")) return;  // Lücke schon belegt
+      slot.appendChild(d); window.sbDragged = null; placeJudge(i, d);
+    });
+    return slot;
+  }
+  function registerBank(bank, i){
+    bank.addEventListener("dragover", function(e){ e.preventDefault(); });
+    bank.addEventListener("drop", function(e){
+      e.preventDefault(); var d = window.sbDragged;
+      if (!d || d.dataset.sbIdx !== String(i) || d.dataset.locked || d.dataset.fixed) return;
+      toBank(i, d); window.sbDragged = null; updateCaps(rowEl(i));
+    });
+  }
+  function freshEl(id){ var el = document.getElementById(id); if (!el) return null;
+    var c = el.cloneNode(false); el.parentNode.replaceChild(c, el); return c; }
+  function rebuild(i){
+    var ex = satzbauData[i]; if (!ex || !ex.row) return;
+    var bank = freshEl(CFG.bank + i), row = freshEl(CFG.row + i);
+    if (!bank || !row) return;
+    var fb = fbEl(i); if (fb){ fb.textContent = ""; fb.className = "satzbau-feedback"; }
+    var mov = ex.parts.slice();
+    for (var k = mov.length - 1; k > 0; k--){ var j = Math.floor(Math.random()*(k+1)); var t = mov[k]; mov[k] = mov[j]; mov[j] = t; }
+    mov.forEach(function(w){ bank.appendChild(makeChip(w, i)); });
+    ex.row.forEach(function(tok){ row.appendChild(tok === "_" ? makeSlot(i) : makeLocked(tok)); });
+    registerBank(bank, i);
+    ensureButtons(i);
+  }
+  function rebuildAll(){ satzbauData.forEach(function(ex,i){ if (ex.row) rebuild(i); }); }
+  function showSol(i){
+    rebuild(i);
+    var row = rowEl(i), bank = bankEl(i), sol = satzbauData[i].valid[0];
+    var pool = Array.from(bank.querySelectorAll(".chip"));
+    positions(row).forEach(function(pos,k){
+      if (!pos.classList.contains("sb-gap")) return;
+      var ix = pool.findIndex(function(c){ return c.dataset.orig === sol[k]; });
+      if (ix >= 0){ while (pos.firstChild) pos.removeChild(pos.firstChild); pos.appendChild(pool[ix]); pool.splice(ix,1); }
+    });
+    row.querySelectorAll(".sb-gap .chip").forEach(function(c){ c.classList.add("correct"); c.dataset.fixed = "1"; c.draggable = false; });
+    updateCaps(row);
+    finishRow(i);
+  }
+  function ensureButtons(i){
+    if (document.getElementById("sb-btns-" + i)) return;
+    var anchor = fbEl(i) || rowEl(i); if (!anchor) return;
+    var item = (anchor.closest ? anchor.closest(".satzbau-item") : null) || anchor.parentNode;
+    if (item && [].some.call(item.querySelectorAll("button"), function(b){
+      return /(Lösen|Lösung|Neustart)/.test(b.textContent); })) return;  // native Buttons vorhanden
+    var box = document.createElement("div");
+    box.id = "sb-btns-" + i;
+    box.style.cssText = "display:flex;gap:8px;margin:6px 0 14px 0;";
+    var b1 = document.createElement("button"); b1.type = "button"; b1.className = "btn"; b1.textContent = "Lösen";
+    b1.addEventListener("click", function(){ showSol(i); });
+    var b2 = document.createElement("button"); b2.type = "button"; b2.className = "btn"; b2.textContent = "↺ Neustart";
+    b2.addEventListener("click", function(){ rebuild(i); });
+    box.appendChild(b1); box.appendChild(b2);
+    anchor.parentNode.insertBefore(box, anchor.nextSibling);
+  }
+  ["initSatzbau","buildSatzbau"].forEach(function(fn){
+    if (typeof window[fn] === "function"){ var o = window[fn];
+      window[fn] = function(){ o.apply(this, arguments); rebuildAll(); }; }
+  });
+  if (typeof window.sbReset === "function" && window.sbReset.length === 0){
+    var orall = window.sbReset;
+    window.sbReset = function(){ orall.apply(this, arguments); rebuildAll(); };
+  }
+  if (typeof window.sbResetOne === "function"){
+    var orst = window.sbResetOne;
+    window.sbResetOne = function(i){ if (satzbauData[i] && satzbauData[i].row){ rebuild(i); return; } orst.apply(this, arguments); };
+  }
+  if (typeof window.sbShowSolution === "function"){
+    var osol = window.sbShowSolution;
+    window.sbShowSolution = function(i){ if (satzbauData[i] && satzbauData[i].row){ showSol(i); return; } osol.apply(this, arguments); };
+  }
+  /* Bugfix 2026-06-10: bei leerer Row (Free-Build) zusätzlich die Bank prüfen,
+     sonst baut sich das Gerüst beim Erstladen nie auf (nur nach Neustart). */
+  var pRow = rowEl(0), pBank = bankEl(0);
+  if ((pRow && pRow.children.length) || (pBank && pBank.children.length)) rebuildAll();
+})();
 </script>
 </body>
 </html>
