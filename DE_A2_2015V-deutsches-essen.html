@@ -1430,10 +1430,11 @@ input.blank.wrong{border-bottom-color:#e74c3c;background:#fdeaea;color:#e74c3c;}
 <script id="fb-lt-engine">
 /* Block-scoped §7-Lückentext-Engine — datei-agnostisch (LUECKENTEXT-SKILL-SPEC v1.0) */
 (function(){
-  function bank(){return document.querySelector('.wortbank');}
-  function tab(){var b=bank();return b?b.closest('.section,.sec'):null;}
-  function inputs(){return document.querySelectorAll('input.blank');}
-  function ltIdx(){var t=tab();if(!t)return -1;return Array.prototype.indexOf.call(document.querySelectorAll('.section,.sec'),t);}
+  function gapContainer(){var f=document.querySelector('input.blank');if(!f)return null;return f.closest('.luecken-text,.luecken-block,.lt-block,.recipe-box,.luecken-aufgabe,.lueckentext')||f.parentElement;}
+  function tab(){var b=document.querySelector('.wortbank')||gapContainer();if(!b)return null;var t=b.closest('.section,.sec,[id^="sec"]');if(t)return t;var e=b;while(e&&e.parentElement&&!e.parentElement.classList.contains('container')&&e.parentElement!==document.body){e=e.parentElement;}return e;}
+  function inputs(){var t=tab();return (t||document).querySelectorAll('input.blank');}
+  function bank(){var b=document.querySelector('.wortbank');if(b)return b;var c=gapContainer();if(!c)return null;b=document.createElement('div');b.className='wortbank';(c.parentNode||c).insertBefore(b,c);return b;}
+  function ltIdx(){var t=tab();if(!t)return -1;return Array.prototype.indexOf.call(document.querySelectorAll('.section,.sec,[id^="sec"]'),t);}
   function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
   window.ltUpdateChips=function(){var bk=bank();if(!bk)return;var sv=[];inputs().forEach(function(i){if(i.classList.contains('correct'))sv.push(i.value);});var rem=sv.slice();bk.querySelectorAll('.wortbank-chip').forEach(function(c){var k=rem.indexOf(c.textContent);if(k>=0){c.classList.add('used');rem.splice(k,1);}else c.classList.remove('used');});};
   window.ltInitWortbank=function(){var bk=bank();if(!bk)return;var w=[];inputs().forEach(function(i){w.push(i.dataset.answer);});bk.innerHTML='';shuffle(w.slice()).forEach(function(x){var c=document.createElement('span');c.className='wortbank-chip';c.textContent=x;bk.appendChild(c);});ltUpdateChips();};
@@ -1443,7 +1444,7 @@ input.blank.wrong{border-bottom-color:#e74c3c;background:#fdeaea;color:#e74c3c;}
   function rebindButtons(){var t=tab();if(!t)return;t.querySelectorAll('button').forEach(function(b){var x=(b.textContent||'').toLowerCase();if(x.indexOf('lösung')>=0||x.indexOf('loesung')>=0){b.onclick=function(e){if(e)e.preventDefault();ltShowLoesung();};}else if(x.indexOf('neu start')>=0||x.indexOf('reset')>=0||x.indexOf('zurück')>=0||x.indexOf('neu ')>=0){b.onclick=function(){ltReset();};}});}
   function wire(){inputs().forEach(function(inp){if(inp.dataset.ltWired)return;inp.dataset.ltWired='1';inp.style.width=(((inp.dataset.answer||'').length)+4)+'ch';inp.placeholder='';inp.addEventListener('input',function(){ltLiveCheck(inp);});});rebindButtons();ltInitWortbank();}
   document.querySelectorAll('.nav-btn').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){if(window.ltInitWortbank)ltInitWortbank();},0);});});
-  if(window.showTab){var _o=window.showTab;window.showTab=function(n){_o(n);if(window.ltInitWortbank)ltInitWortbank();};}
+  ['showTab','showSection','showSec'].forEach(function(fn){if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r=_o.apply(this,arguments);if(window.ltInitWortbank)ltInitWortbank();return r;};}});
   if(document.readyState!=='loading')wire();else document.addEventListener('DOMContentLoaded',wire);
 })();
 </script>

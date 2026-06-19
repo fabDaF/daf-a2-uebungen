@@ -1780,11 +1780,11 @@ input.blank.wrong{border-bottom-color:#e74c3c;background:#fdeaea;color:#e74c3c;}
 <script id="fb-lt-engine">
 /* Block-scoped §7-Lückentext-Engine — datei-agnostisch (LUECKENTEXT-SKILL-SPEC v1.0) */
 (function(){
-  function inputs(){return document.querySelectorAll('input.blank');}
   function gapContainer(){var f=document.querySelector('input.blank');if(!f)return null;return f.closest('.luecken-text,.luecken-block,.lt-block,.recipe-box,.luecken-aufgabe,.lueckentext')||f.parentElement;}
+  function tab(){var b=document.querySelector('.wortbank')||gapContainer();if(!b)return null;var t=b.closest('.section,.sec,[id^="sec"]');if(t)return t;var e=b;while(e&&e.parentElement&&!e.parentElement.classList.contains('container')&&e.parentElement!==document.body){e=e.parentElement;}return e;}
+  function inputs(){var t=tab();return (t||document).querySelectorAll('input.blank');}
   function bank(){var b=document.querySelector('.wortbank');if(b)return b;var c=gapContainer();if(!c)return null;b=document.createElement('div');b.className='wortbank';(c.parentNode||c).insertBefore(b,c);return b;}
-  function tab(){var b=document.querySelector('.wortbank')||gapContainer();if(!b)return null;var t=b.closest('.section,.sec');if(t)return t;var e=b;while(e&&e.parentElement&&!e.parentElement.classList.contains('container')&&e.parentElement!==document.body){e=e.parentElement;}return e;}
-  function ltIdx(){var t=tab();if(!t)return -1;return Array.prototype.indexOf.call(document.querySelectorAll('.section,.sec'),t);}
+  function ltIdx(){var t=tab();if(!t)return -1;return Array.prototype.indexOf.call(document.querySelectorAll('.section,.sec,[id^="sec"]'),t);}
   function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
   window.ltUpdateChips=function(){var bk=bank();if(!bk)return;var sv=[];inputs().forEach(function(i){if(i.classList.contains('correct'))sv.push(i.value);});var rem=sv.slice();bk.querySelectorAll('.wortbank-chip').forEach(function(c){var k=rem.indexOf(c.textContent);if(k>=0){c.classList.add('used');rem.splice(k,1);}else c.classList.remove('used');});};
   window.ltInitWortbank=function(){var bk=bank();if(!bk)return;var w=[];inputs().forEach(function(i){w.push(i.dataset.answer);});bk.innerHTML='';shuffle(w.slice()).forEach(function(x){var c=document.createElement('span');c.className='wortbank-chip';c.textContent=x;bk.appendChild(c);});ltUpdateChips();};
