@@ -165,27 +165,6 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .schreib-fb-btn-prim { background: #667eea; color: white; }
 .schreib-fb-btn-prim:hover { background: #4f63c2; color: white; }
 .schreib-fb-hilfe { color: #6c6c6c; font-size: 0.86em; font-style: italic; margin-top: 4px; }
-.satzbau-item { margin-bottom:18px; }
-
-/* ── Gerüst-Modus (B1+): sichtbare Lücken + feste Anker ── */
-.sb-gap { display:inline-flex; align-items:center; justify-content:center; min-width:66px; min-height:38px; padding:2px 6px; border:2px dashed #b9a7f0; border-radius:20px; background:#faf8ff; }
-.sb-gap.drag-over { border-color:#e67e22; background:#fff5ec; }
-.sb-gap .chip { margin:0; }
-.chip.sb-locked { background:#eef0ff; border-style:solid; border-color:#c3c9f5; color:#555; cursor:default; }
-.chip.sb-locked.correct { background:#27ae60; border-color:#27ae60; color:#fff; }
-
-/* FB-WORTBANK-SHUFFLE — gemischte Grundform-Wortbank */
-.fb-wb-label{font-weight:700;color:#667eea;font-size:0.85em;margin:0 0 8px;}
-.fb-wb-chips{display:flex;flex-wrap:wrap;gap:8px;}
-.fb-wb-chip{background:#fff;border:2px solid #667eea;color:#667eea;padding:5px 12px;border-radius:14px;font-weight:500;font-size:0.9em;user-select:none;}
-
-/* FB-SCHREIB-PAD: Schreibwerkstatt-Inhalt einruecken, Banner randlos */
-#sec-schreib { padding: 28px 30px; }
-#sec-schreib > .tab-banner { width: calc(100% + 60px); max-width: none; margin: -28px -30px 18px; }
-@media (max-width: 600px) {
-  #sec-schreib { padding: 18px 16px; }
-  #sec-schreib > .tab-banner { width: calc(100% + 32px); margin: -18px -16px 14px; }
-}
 </style>
 </head>
 <body>
@@ -300,15 +279,156 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
     <div class="control-bar">
       <div class="btn-row">
-        <button class="btn" onclick="showAnswersTab2()">💡 Lösungen</button>
-        <button class="btn" onclick="resetTab2()">↺ Neustart</button>
+        <button class="btn" onclick="checkTab2()">Lösen</button>
       </div>
       <div class="timer-display">
         <span>⏱ Timer:</span>
         <span id="timer-2">00:00</span>
       </div>
     </div>
-    <div id="satzbauContainer"></div>
+    <div class="sb-item">
+      <div class="sb-item-title">1. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-0">
+        <div class="chip" draggable="true" data-word="Ich">Ich</div>
+        <div class="chip" draggable="true" data-word="lerne">lerne</div>
+        <div class="chip" draggable="true" data-word="Deutsch">Deutsch</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="damit">damit</div>
+        <div class="chip" draggable="true" data-word="ich">ich</div>
+        <div class="chip" draggable="true" data-word="in">in</div>
+        <div class="chip" draggable="true" data-word="Deutschland">Deutschland</div>
+        <div class="chip" draggable="true" data-word="arbeiten">arbeiten</div>
+        <div class="chip" draggable="true" data-word="kann">kann</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-0" data-correct="Ich lerne Deutsch, damit ich in Deutschland arbeiten kann."></div>
+      <div class="satzbau-feedback" id="feedback-2-0"></div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-item-title">2. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-1">
+        <div class="chip" draggable="true" data-word="Sie">Sie</div>
+        <div class="chip" draggable="true" data-word="spart">spart</div>
+        <div class="chip" draggable="true" data-word="Geld">Geld</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="um">um</div>
+        <div class="chip" draggable="true" data-word="ein">ein</div>
+        <div class="chip" draggable="true" data-word="Auto">Auto</div>
+        <div class="chip" draggable="true" data-word="zu">zu</div>
+        <div class="chip" draggable="true" data-word="kaufen">kaufen</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-1" data-correct="Sie spart Geld, um ein Auto zu kaufen."></div>
+      <div class="satzbau-feedback" id="feedback-2-1"></div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-item-title">3. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-2">
+        <div class="chip" draggable="true" data-word="Er">Er</div>
+        <div class="chip" draggable="true" data-word="steht">steht</div>
+        <div class="chip" draggable="true" data-word="früh">früh</div>
+        <div class="chip" draggable="true" data-word="auf">auf</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="um">um</div>
+        <div class="chip" draggable="true" data-word="pünktlich">pünktlich</div>
+        <div class="chip" draggable="true" data-word="zu">zu</div>
+        <div class="chip" draggable="true" data-word="sein">sein</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-2" data-correct="Er steht früh auf, um pünktlich zu sein."></div>
+      <div class="satzbau-feedback" id="feedback-2-2"></div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-item-title">4. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-3">
+        <div class="chip" draggable="true" data-word="Die">Die</div>
+        <div class="chip" draggable="true" data-word="Eltern">Eltern</div>
+        <div class="chip" draggable="true" data-word="arbeiten">arbeiten</div>
+        <div class="chip" draggable="true" data-word="hart">hart</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="damit">damit</div>
+        <div class="chip" draggable="true" data-word="die">die</div>
+        <div class="chip" draggable="true" data-word="Kinder">Kinder</div>
+        <div class="chip" draggable="true" data-word="studieren">studieren</div>
+        <div class="chip" draggable="true" data-word="können">können</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-3" data-correct="Die Eltern arbeiten hart, damit die Kinder studieren können."></div>
+      <div class="satzbau-feedback" id="feedback-2-3"></div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-item-title">5. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-4">
+        <div class="chip" draggable="true" data-word="Ich">Ich</div>
+        <div class="chip" draggable="true" data-word="mache">mache</div>
+        <div class="chip" draggable="true" data-word="Sport">Sport</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="um">um</div>
+        <div class="chip" draggable="true" data-word="fit">fit</div>
+        <div class="chip" draggable="true" data-word="zu">zu</div>
+        <div class="chip" draggable="true" data-word="bleiben">bleiben</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-4" data-correct="Ich mache Sport, um fit zu bleiben."></div>
+      <div class="satzbau-feedback" id="feedback-2-4"></div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-item-title">6. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-5">
+        <div class="chip" draggable="true" data-word="Sie">Sie</div>
+        <div class="chip" draggable="true" data-word="kocht">kocht</div>
+        <div class="chip" draggable="true" data-word="jeden">jeden</div>
+        <div class="chip" draggable="true" data-word="Tag">Tag</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="damit">damit</div>
+        <div class="chip" draggable="true" data-word="die">die</div>
+        <div class="chip" draggable="true" data-word="Familie">Familie</div>
+        <div class="chip" draggable="true" data-word="gesund">gesund</div>
+        <div class="chip" draggable="true" data-word="isst">isst</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-5" data-correct="Sie kocht jeden Tag, damit die Familie gesund isst."></div>
+      <div class="satzbau-feedback" id="feedback-2-5"></div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-item-title">7. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-6">
+        <div class="chip" draggable="true" data-word="Wir">Wir</div>
+        <div class="chip" draggable="true" data-word="fahren">fahren</div>
+        <div class="chip" draggable="true" data-word="nach">nach</div>
+        <div class="chip" draggable="true" data-word="Berlin">Berlin</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="um">um</div>
+        <div class="chip" draggable="true" data-word="die">die</div>
+        <div class="chip" draggable="true" data-word="Stadt">Stadt</div>
+        <div class="chip" draggable="true" data-word="zu">zu</div>
+        <div class="chip" draggable="true" data-word="besichtigen">besichtigen</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-6" data-correct="Wir fahren nach Berlin, um die Stadt zu besichtigen."></div>
+      <div class="satzbau-feedback" id="feedback-2-6"></div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-item-title">8. Ordne die Wörter:</div>
+      <div class="chips-container" id="chips-2-7">
+        <div class="chip" draggable="true" data-word="Er">Er</div>
+        <div class="chip" draggable="true" data-word="ruft">ruft</div>
+        <div class="chip" draggable="true" data-word="seine">seine</div>
+        <div class="chip" draggable="true" data-word="Mutter">Mutter</div>
+        <div class="chip" draggable="true" data-word="an">an</div>
+        <div class="chip punct-chip" draggable="true" data-word=",">,</div>
+        <div class="chip" draggable="true" data-word="damit">damit</div>
+        <div class="chip" draggable="true" data-word="sie">sie</div>
+        <div class="chip" draggable="true" data-word="sich">sich</div>
+        <div class="chip" draggable="true" data-word="keine">keine</div>
+        <div class="chip" draggable="true" data-word="Sorgen">Sorgen</div>
+        <div class="chip" draggable="true" data-word="macht">macht</div>
+        <div class="chip punct-chip" draggable="true" data-word=".">.</div>
+      </div>
+      <div class="sentence-builder" id="builder-2-7" data-correct="Er ruft seine Mutter an, damit sie sich keine Sorgen macht."></div>
+      <div class="satzbau-feedback" id="feedback-2-7"></div>
+    </div>
+  </div>
 
   <!-- TAB 3: MULTIPLE CHOICE -->
   <div class="section" id="sec3">
@@ -471,18 +591,6 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <!-- /container -->
 
 <script>
-var satzbauData = [
-  { parts: ['ich', 'lerne', 'Deutsch', ',', 'damit', 'ich', 'in', 'Deutschland', 'arbeiten', 'kann'], valid: [['ich', 'lerne', 'Deutsch', ',', 'damit', 'ich', 'in', 'Deutschland', 'arbeiten', 'kann']], punct: '.' },
-  { parts: ['sie', 'spart', 'fleißig', 'Geld', ',', 'um', 'ein', 'neues', 'Auto', 'zu', 'kaufen'], valid: [['sie', 'spart', 'fleißig', 'Geld', ',', 'um', 'ein', 'neues', 'Auto', 'zu', 'kaufen']], punct: '.' },
-  { parts: ['er', 'steht', 'jeden', 'Morgen', 'früh', 'auf', ',', 'um', 'pünktlich', 'zur', 'Arbeit', 'zu', 'sein'], valid: [['er', 'steht', 'jeden', 'Morgen', 'früh', 'auf', ',', 'um', 'pünktlich', 'zur', 'Arbeit', 'zu', 'sein']], punct: '.' },
-  { parts: ['die', 'Eltern', 'arbeiten', 'hart', ',', 'damit', 'die', 'Kinder', 'studieren', 'können'], valid: [['die', 'Eltern', 'arbeiten', 'hart', ',', 'damit', 'die', 'Kinder', 'studieren', 'können']], punct: '.' },
-  { parts: ['ich', 'mache', 'jeden', 'Tag', 'Sport', ',', 'um', 'fit', 'und', 'gesund', 'zu', 'bleiben'], valid: [['ich', 'mache', 'jeden', 'Tag', 'Sport', ',', 'um', 'fit', 'und', 'gesund', 'zu', 'bleiben']], punct: '.' },
-  { parts: ['sie', 'kocht', 'jeden', 'Tag', ',', 'damit', 'die', 'Familie', 'gesund', 'isst'], valid: [['sie', 'kocht', 'jeden', 'Tag', ',', 'damit', 'die', 'Familie', 'gesund', 'isst']], punct: '.' },
-  { parts: ['wir', 'fahren', 'nach', 'Berlin', ',', 'um', 'die', 'Stadt', 'zu', 'besichtigen'], valid: [['wir', 'fahren', 'nach', 'Berlin', ',', 'um', 'die', 'Stadt', 'zu', 'besichtigen']], punct: '.' },
-  { parts: ['er', 'ruft', 'seine', 'Mutter', 'an', ',', 'damit', 'sie', 'sich', 'keine', 'Sorgen', 'macht'], valid: [['er', 'ruft', 'seine', 'Mutter', 'an', ',', 'damit', 'sie', 'sich', 'keine', 'Sorgen', 'macht']], punct: '.' },
-];
-</script>
-<script>
 let currentTab = 0;
 
 function switchTab(idx) {
@@ -520,108 +628,9 @@ function checkTab1() {
 }
 
 // TAB 2: SATZBAU (simplified - visual only)
-function checkTab2() { /* replaced by canonical Satzbau */ }
-
-// ── Satzbau kanonisch (family B) ──────────────────────────────────
-var sbDragged = null;
-function timerAutoStart(n) { startTimer('timer-' + n); }
-function timerStop(n) { /* this file's timer has no stop function */ }
-
-function getSbCursor() {
-  var c = document.getElementById('sb-insert-cursor');
-  if (!c) { c = document.createElement('div'); c.id = 'sb-insert-cursor'; c.style.cssText = 'width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;'; }
-  return c;
+function checkTab2() {
+  alert('Ziehe die Wörter in die richtige Reihenfolge!');
 }
-function getSbInsertPos(zone, clientX) {
-  var chips = Array.from(zone.querySelectorAll('.chip'));
-  for (var i = 0; i < chips.length; i++) { var r = chips[i].getBoundingClientRect(); if (clientX < r.left + r.width / 2) return chips[i]; }
-  return null;
-}
-function sbCapitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
-function sbUpdateCapitalization(row) {
-  Array.from(row.querySelectorAll('.chip')).forEach(function(c, i) {
-    var orig = c.dataset.orig; if (orig === ',' || orig === ';') return;
-    var isProper = orig.charAt(0) === orig.charAt(0).toUpperCase() && orig.charAt(0) !== orig.charAt(0).toLowerCase();
-    c.textContent = isProper ? orig : (i === 0 ? sbCapitalize(orig) : orig);
-  });
-}
-function sbMakeChip(word) {
-  var chip = document.createElement('div'); chip.className = 'chip';
-  if (word === ',' || word === ';') chip.classList.add('punct-chip');
-  chip.textContent = word; chip.dataset.orig = word; chip.draggable = true;
-  chip.addEventListener('dragstart', function(e) { sbDragged = chip; e.dataTransfer.setData('text/plain',''); setTimeout(function(){ chip.style.opacity='0.4'; },0); });
-  chip.addEventListener('dragend', function() { chip.style.opacity=''; sbDragged=null; var c=document.getElementById('sb-insert-cursor'); if(c&&c.parentNode)c.parentNode.removeChild(c); });
-  return chip;
-}
-function sbRegisterZone(zone, idx) {
-  zone.addEventListener('dragover', function(e) { e.preventDefault(); if(!sbDragged)return; var cursor=getSbCursor(); var before=getSbInsertPos(zone,e.clientX); if(before)zone.insertBefore(cursor,before);else zone.appendChild(cursor); });
-  zone.addEventListener('dragleave', function(e) { if(!zone.contains(e.relatedTarget)){var c=document.getElementById('sb-insert-cursor');if(c&&c.parentNode===zone)zone.removeChild(c);} });
-  zone.addEventListener('drop', function(e) { e.preventDefault(); if(!sbDragged)return; var cursor=document.getElementById('sb-insert-cursor'); if(cursor&&cursor.parentNode===zone){zone.insertBefore(sbDragged,cursor);zone.removeChild(cursor);}else{zone.appendChild(sbDragged);} sbDragged=null; sbUpdateCapitalization(document.getElementById('sb-row-'+idx)); sbCheckAuto(idx); });
-}
-function sbColorRow(idx) {
-  var row=document.getElementById('sb-row-'+idx); var chips=Array.from(row.querySelectorAll('.chip'));
-  var order=chips.map(function(c){return c.dataset.orig;});
-  var ok=satzbauData[idx].valid.some(function(v){return JSON.stringify(v)===JSON.stringify(order);});
-  chips.forEach(function(c){c.classList.remove('correct','incorrect');c.classList.add(ok?'correct':'incorrect');});
-  var ex=row.querySelector('.sb-punkt');if(ex)ex.parentNode.removeChild(ex);
-  if(ok){var p=document.createElement('span');p.className='sb-punkt';p.textContent=satzbauData[idx].punct||'.';row.appendChild(p);}
-  return ok;
-}
-function sbCheckAuto(idx) {
-  var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx);
-  if(bank.querySelectorAll('.chip').length>0){row.querySelectorAll('.chip').forEach(function(c){c.classList.remove('correct','incorrect');});row.classList.remove('correct','incorrect');fb.textContent='';return;}
-  setTimeout(function(){
-    timerAutoStart(2);
-    var ok=sbColorRow(idx);
-    if(ok){row.classList.add('correct');row.classList.remove('incorrect');fb.className='satzbau-feedback correct';fb.textContent='✓ Korrekt!';sbCheckAllDone();}
-    else{row.classList.add('incorrect');row.classList.remove('correct');fb.className='satzbau-feedback incorrect';fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!';}
-  },500);
-}
-function sbCheckAllDone() {
-  var allOk=satzbauData.every(function(_,i){var r=document.getElementById('sb-row-'+i);return r&&r.classList.contains('correct');});
-  if(allOk)timerStop(2);
-}
-function sbShowSolution(idx) {
-  var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx);
-  var sol=satzbauData[idx].valid[0],allC={};
-  Array.from(bank.querySelectorAll('.chip')).forEach(function(c){allC[c.dataset.orig]=c;});
-  Array.from(row.querySelectorAll('.chip')).forEach(function(c){allC[c.dataset.orig]=c;});
-  while(bank.firstChild)bank.removeChild(bank.firstChild);
-  while(row.firstChild)row.removeChild(row.firstChild);
-  sol.forEach(function(w,i){var c=allC[w];if(c){if(w!==','&&w!==';')c.textContent=(i===0)?sbCapitalize(w):w;c.classList.remove('correct','incorrect');row.appendChild(c);}});
-  fb.textContent=''; setTimeout(function(){sbCheckAuto(idx);},100);
-}
-function initSatzbau() {
-  var container=document.getElementById('satzbauContainer'); container.innerHTML='';
-  satzbauData.forEach(function(ex,idx){
-    var item=document.createElement('div');item.className='satzbau-item';
-    var bank=document.createElement('div');bank.className='chips-container';bank.id='sb-bank-'+idx;
-    var row=document.createElement('div');row.className='sentence-builder';row.id='sb-row-'+idx;
-    var fb=document.createElement('div');fb.className='satzbau-feedback';fb.id='sb-fb-'+idx;
-    var parts=ex.parts.slice();
-    for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}
-    parts.forEach(function(w){bank.appendChild(sbMakeChip(w));});
-    sbRegisterZone(bank,idx);sbRegisterZone(row,idx);
-    var br=document.createElement('div');br.style.cssText='display:flex;gap:8px;margin-top:6px;';
-    var sb=document.createElement('button');sb.className='btn';sb.textContent='Lösen';sb.setAttribute('data-idx',idx);sb.addEventListener('click',function(){sbShowSolution(parseInt(this.getAttribute('data-idx')));});
-    var rb=document.createElement('button');rb.className='btn';rb.textContent='↺';rb.setAttribute('data-idx',idx);rb.addEventListener('click',function(){sbResetOne(parseInt(this.getAttribute('data-idx')));});
-    br.appendChild(sb);br.appendChild(rb);
-    item.appendChild(bank);item.appendChild(row);item.appendChild(fb);item.appendChild(br);
-    container.appendChild(item);
-  });
-}
-function sbResetOne(idx) {
-  var bank=document.getElementById('sb-bank-'+idx),row=document.getElementById('sb-row-'+idx),fb=document.getElementById('sb-fb-'+idx);
-  while(bank.firstChild)bank.removeChild(bank.firstChild);
-  while(row.firstChild)row.removeChild(row.firstChild);
-  row.classList.remove('correct','incorrect');fb.textContent='';fb.className='satzbau-feedback';
-  var ex2=row.querySelector('.sb-punkt');if(ex2)ex2.parentNode.removeChild(ex2);
-  var parts=satzbauData[idx].parts.slice();
-  for(var i=parts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=parts[i];parts[i]=parts[j];parts[j]=tmp;}
-  parts.forEach(function(w){bank.appendChild(sbMakeChip(w));});
-}
-function showAnswersTab2() { satzbauData.forEach(function(_,i){sbShowSolution(i);}); }
-function resetTab2() { initSatzbau(); }
 
 // TAB 3: MULTIPLE CHOICE
 let mcAnswers = {};
@@ -680,7 +689,7 @@ function startTimer(timerId) {
 document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
   btn.addEventListener('click', () => {
     if (idx === 1) startTimer('timer-1');
-    if (idx === 2) { if (document.getElementById('satzbauContainer') && !document.getElementById('satzbauContainer').hasChildNodes()) initSatzbau(); }
+    if (idx === 2) startTimer('timer-2');
     if (idx === 3) startTimer('timer-3');
   });
 });
@@ -1004,287 +1013,6 @@ function schreibLeeren() {
   schreibStatusZeigen('info', 'ℹ Alle Antworten zurückgesetzt.');
 }
 /* ===== Ende Schreibwerkstatt =================================== */
-
-</script>
-
-<script>
-/* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
-   hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
-(function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":2};
-  var SBGAP = [{"i":0,"row":["_","_","Deutsch","_","_","_","in","Deutschland","_","_"],"parts":["ich","lerne",",","damit","ich","arbeiten","kann"]},{"i":1,"row":["_","_","_","Geld","_","_","_","neues","Auto","_","_"],"parts":["sie","spart","fleißig",",","um","ein","zu","kaufen"]},{"i":2,"row":["_","_","_","Morgen","früh","_","_","_","_","zur","Arbeit","_","_"],"parts":["er","steht","jeden","auf",",","um","pünktlich","zu","sein"]},{"i":3,"row":["_","_","_","_","_","_","die","Kinder","_","_"],"parts":["die","Eltern","arbeiten","hart",",","damit","studieren","können"]},{"i":4,"row":["_","_","_","Tag","Sport","_","_","fit","_","gesund","_","_"],"parts":["ich","mache","jeden",",","um","und","zu","bleiben"]},{"i":5,"row":["_","_","_","Tag","_","_","_","Familie","gesund","_"],"parts":["sie","kocht","jeden",",","damit","die","isst"]},{"i":6,"row":["_","_","_","Berlin","_","_","die","Stadt","_","_"],"parts":["wir","fahren","nach",",","um","zu","besichtigen"]},{"i":7,"row":["_","_","_","Mutter","_","_","_","sie","_","keine","Sorgen","_"],"parts":["er","ruft","seine","an",",","damit","sich","macht"]}];
-  SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
-    ex.row = g.row; ex.parts = g.parts;
-    if (typeof ex.valid[0] === "string") ex.valid = [ex.valid];
-  });
-  if (typeof window.sbDragged === "undefined") window.sbDragged = null;
-  function bankEl(i){ return document.getElementById(CFG.bank + i); }
-  function rowEl(i){ return document.getElementById(CFG.row + i); }
-  function fbEl(i){ return document.getElementById(CFG.fb + i); }
-  function cap(w){ return w.charAt(0).toUpperCase() + w.slice(1); }
-  function positions(row){ return Array.from(row.children).filter(function(n){ return n.classList.contains("sb-gap") || n.classList.contains("chip"); }); }
-  function chipOf(pos){ return pos.classList.contains("sb-gap") ? pos.querySelector(".chip") : pos; }
-  function updateCaps(row){ if (!CFG.caps) return;
-    positions(row).forEach(function(pos,i){ var c = chipOf(pos); if (!c) return;
-      var o = c.dataset.orig;
-      var proper = o.charAt(0) === o.charAt(0).toUpperCase() && o.charAt(0) !== o.charAt(0).toLowerCase();
-      c.textContent = proper ? o : (i === 0 ? cap(o) : o); });
-  }
-  function sequence(i){ var row = rowEl(i), seq = [], complete = true;
-    positions(row).forEach(function(pos){ var c = chipOf(pos); if (c) seq.push(c.dataset.orig); else complete = false; });
-    return { seq: seq, complete: complete }; }
-  function clearMarks(i){ var row = rowEl(i);
-    row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("correct","incorrect"); });
-    row.classList.remove("correct","incorrect");
-    var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p); }
-  function afterChange(i){
-    var row = rowEl(i); updateCaps(row);
-    var fb = fbEl(i), info = sequence(i);
-    if (!info.complete){ clearMarks(i); if (fb){ fb.textContent=""; fb.className="satzbau-feedback"; } return; }
-    setTimeout(function(){
-      if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
-      var fresh = sequence(i);
-      var ok = satzbauData[i].valid.some(function(v){ return JSON.stringify(v) === JSON.stringify(fresh.seq); });
-      var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p);
-      if (ok){
-        row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("incorrect"); c.classList.add("correct"); });
-        var punkt = document.createElement("span"); punkt.className = "sb-punkt";
-        punkt.textContent = satzbauData[i].punct || "."; row.appendChild(punkt);
-        row.classList.add("correct"); row.classList.remove("incorrect");
-        if (fb){ fb.className = "satzbau-feedback correct"; fb.textContent = "✓ Korrekt!"; }
-        if (typeof sbCheckAllDone === "function") sbCheckAllDone();
-      } else {
-        row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("correct","incorrect"); });
-        row.querySelectorAll(".sb-gap .chip").forEach(function(c){ c.classList.add("incorrect"); });
-        row.classList.add("incorrect"); row.classList.remove("correct");
-        if (fb){ fb.className = "satzbau-feedback incorrect"; fb.textContent = "✗ Noch nicht richtig – verschiebe die Wörter!"; }
-      }
-    }, 450);
-  }
-  /* Geführter Modus (B1, 2026-06-10): Sofort-Feedback pro Chip-Platzierung.
-     Richtig (konsistent mit mind. einer valid-Reihenfolge) -> grün + fixiert.
-     Falsch -> rot + Rücksprung in die Bank nach 800 ms. */
-  function toBank(i, chip){
-    chip.textContent = chip.dataset.orig;  // Kleinschreibung wiederherstellen — Bank darf den Satzanfang nicht verraten
-    bankEl(i).appendChild(chip);
-  }
-  function consistent(i){
-    var pos = positions(rowEl(i));
-    var v = satzbauData[i].valid;
-    return v.some(function(o){
-      for (var k = 0; k < pos.length; k++){ var c = chipOf(pos[k]); if (c && c.dataset.orig !== o[k]) return false; }
-      return true; });
-  }
-  function finishRow(i){
-    var row = rowEl(i), fb = fbEl(i);
-    var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p);
-    var punkt = document.createElement("span"); punkt.className = "sb-punkt";
-    punkt.textContent = satzbauData[i].punct || "."; row.appendChild(punkt);
-    row.classList.add("correct"); row.classList.remove("incorrect");
-    if (fb){ fb.className = "satzbau-feedback correct"; fb.textContent = "✓ Korrekt!"; }
-    if (typeof sbCheckAllDone === "function") sbCheckAllDone();
-  }
-  function placeJudge(i, chip){
-    if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
-    var row = rowEl(i); updateCaps(row);
-    var fb = fbEl(i);
-    if (consistent(i)){
-      chip.classList.remove("incorrect"); chip.classList.add("correct");
-      chip.dataset.fixed = "1"; chip.draggable = false;
-      if (sequence(i).complete){ finishRow(i); }
-      else if (fb){ fb.className = "satzbau-feedback"; fb.textContent = ""; }
-    } else {
-      chip.classList.add("incorrect");
-      if (fb){ fb.className = "satzbau-feedback incorrect"; fb.textContent = "✗ Das passt hier nicht!"; }
-      setTimeout(function(){
-        chip.classList.remove("incorrect");
-        if (!chip.dataset.fixed && chip.closest(".sb-gap")) toBank(i, chip);
-        updateCaps(rowEl(i));
-        if (fb && /incorrect/.test(fb.className)){ fb.className = "satzbau-feedback"; fb.textContent = ""; }
-      }, 800);
-    }
-  }
-  function makeChip(word, i){
-    var chip = document.createElement("div");
-    var isPunct = [",",".","!","?",";",":"].indexOf(word) !== -1;
-    chip.className = "chip" + (isPunct ? " punct-chip" : ""); chip.textContent = word; chip.draggable = true;
-    chip.dataset.orig = word; chip.dataset.word = word; chip.dataset.sbIdx = String(i);
-    chip.addEventListener("dragstart", function(e){ if (chip.dataset.fixed){ e.preventDefault(); return; } window.sbDragged = chip; if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab); e.dataTransfer.effectAllowed = "move"; });
-    if (CFG.click) chip.addEventListener("click", function(){
-      if (chip.dataset.fixed) return;
-      if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
-      var inSlot = chip.closest(".sb-gap");
-      if (inSlot){ toBank(i, chip); updateCaps(rowEl(i)); return; }
-      var free = Array.from(rowEl(i).querySelectorAll(".sb-gap")).find(function(s){ return !s.querySelector(".chip"); });
-      if (free){ free.appendChild(chip); placeJudge(i, chip); }
-    });
-    return chip;
-  }
-  function makeLocked(word){
-    var chip = document.createElement("div");
-    chip.className = "chip sb-locked"; chip.textContent = word;
-    chip.dataset.orig = word; chip.dataset.word = word; chip.dataset.locked = "1";
-    return chip;
-  }
-  function makeSlot(i){
-    var slot = document.createElement("div"); slot.className = "sb-gap";
-    slot.addEventListener("dragover", function(e){ e.preventDefault(); if (window.sbDragged) slot.classList.add("drag-over"); });
-    slot.addEventListener("dragleave", function(){ slot.classList.remove("drag-over"); });
-    slot.addEventListener("drop", function(e){
-      e.preventDefault(); slot.classList.remove("drag-over");
-      var d = window.sbDragged; if (!d || d.dataset.sbIdx !== String(i) || d.dataset.locked || d.dataset.fixed) return;
-      if (slot.querySelector(".chip")) return;  // Lücke schon belegt
-      slot.appendChild(d); window.sbDragged = null; placeJudge(i, d);
-    });
-    return slot;
-  }
-  function registerBank(bank, i){
-    bank.addEventListener("dragover", function(e){ e.preventDefault(); });
-    bank.addEventListener("drop", function(e){
-      e.preventDefault(); var d = window.sbDragged;
-      if (!d || d.dataset.sbIdx !== String(i) || d.dataset.locked || d.dataset.fixed) return;
-      toBank(i, d); window.sbDragged = null; updateCaps(rowEl(i));
-    });
-  }
-  function freshEl(id){ var el = document.getElementById(id); if (!el) return null;
-    var c = el.cloneNode(false); el.parentNode.replaceChild(c, el); return c; }
-  function rebuild(i){
-    var ex = satzbauData[i]; if (!ex || !ex.row) return;
-    var bank = freshEl(CFG.bank + i), row = freshEl(CFG.row + i);
-    if (!bank || !row) return;
-    var fb = fbEl(i); if (fb){ fb.textContent = ""; fb.className = "satzbau-feedback"; }
-    var mov = ex.parts.slice();
-    for (var k = mov.length - 1; k > 0; k--){ var j = Math.floor(Math.random()*(k+1)); var t = mov[k]; mov[k] = mov[j]; mov[j] = t; }
-    mov.forEach(function(w){ bank.appendChild(makeChip(w, i)); });
-    ex.row.forEach(function(tok){ row.appendChild(tok === "_" ? makeSlot(i) : makeLocked(tok)); });
-    registerBank(bank, i);
-    ensureButtons(i);
-  }
-  function rebuildAll(){ satzbauData.forEach(function(ex,i){ if (ex.row) rebuild(i); }); }
-  function showSol(i){
-    rebuild(i);
-    var row = rowEl(i), bank = bankEl(i), sol = satzbauData[i].valid[0];
-    var pool = Array.from(bank.querySelectorAll(".chip"));
-    positions(row).forEach(function(pos,k){
-      if (!pos.classList.contains("sb-gap")) return;
-      var ix = pool.findIndex(function(c){ return c.dataset.orig === sol[k]; });
-      if (ix >= 0){ while (pos.firstChild) pos.removeChild(pos.firstChild); pos.appendChild(pool[ix]); pool.splice(ix,1); }
-    });
-    row.querySelectorAll(".sb-gap .chip").forEach(function(c){ c.classList.add("correct"); c.dataset.fixed = "1"; c.draggable = false; });
-    updateCaps(row);
-    finishRow(i);
-  }
-  function ensureButtons(i){
-    if (document.getElementById("sb-btns-" + i)) return;
-    var anchor = fbEl(i) || rowEl(i); if (!anchor) return;
-    var item = (anchor.closest ? anchor.closest(".satzbau-item") : null) || anchor.parentNode;
-    if (item && [].some.call(item.querySelectorAll("button"), function(b){
-      return /(Lösen|Lösung|Neustart)/.test(b.textContent); })) return;  // native Buttons vorhanden
-    var box = document.createElement("div");
-    box.id = "sb-btns-" + i;
-    box.style.cssText = "display:flex;gap:8px;margin:6px 0 14px 0;";
-    var b1 = document.createElement("button"); b1.type = "button"; b1.className = "btn"; b1.textContent = "Lösen";
-    b1.addEventListener("click", function(){ showSol(i); });
-    var b2 = document.createElement("button"); b2.type = "button"; b2.className = "btn"; b2.textContent = "↺ Neustart";
-    b2.addEventListener("click", function(){ rebuild(i); });
-    box.appendChild(b1); box.appendChild(b2);
-    anchor.parentNode.insertBefore(box, anchor.nextSibling);
-  }
-  ["initSatzbau","buildSatzbau"].forEach(function(fn){
-    if (typeof window[fn] === "function"){ var o = window[fn];
-      window[fn] = function(){ o.apply(this, arguments); rebuildAll(); }; }
-  });
-  if (typeof window.sbReset === "function" && window.sbReset.length === 0){
-    var orall = window.sbReset;
-    window.sbReset = function(){ orall.apply(this, arguments); rebuildAll(); };
-  }
-  if (typeof window.sbResetOne === "function"){
-    var orst = window.sbResetOne;
-    window.sbResetOne = function(i){ if (satzbauData[i] && satzbauData[i].row){ rebuild(i); return; } orst.apply(this, arguments); };
-  }
-  if (typeof window.sbShowSolution === "function"){
-    var osol = window.sbShowSolution;
-    window.sbShowSolution = function(i){ if (satzbauData[i] && satzbauData[i].row){ showSol(i); return; } osol.apply(this, arguments); };
-  }
-  /* Bugfix 2026-06-10: bei leerer Row (Free-Build) zusätzlich die Bank prüfen,
-     sonst baut sich das Gerüst beim Erstladen nie auf (nur nach Neustart). */
-  var pRow = rowEl(0), pBank = bankEl(0);
-  if ((pRow && pRow.children.length) || (pBank && pBank.children.length)) rebuildAll();
-})();
-</script>
-
-<script>
-/* FB-WORTBANK-SHUFFLE — mischt eine vorhandene statische Wortbox bei jedem Laden
-   und Tabwechsel. Anwendungsfall: Grammatik-/Deklinations-Lückentexte, deren Wortbank
-   bewusst die GRUNDFORM zeigt (Infinitiv / Nominativ / Grundform des Adjektivs) — der
-   Lerner konjugiert bzw. dekliniert selbst in der Lücke. Die Wörter bleiben exakt
-   erhalten; nur ihre Reihenfolge wird zufällig. Kein .used-Feedback (die angezeigte
-   Grundform ist absichtlich NICHT die Lücken-Lösung). Idempotent. */
-(function () {
-  "use strict";
-  if (window.__fbWbShuffle) return;
-  window.__fbWbShuffle = true;
-
-  function shuffle(a) {
-    for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
-  }
-
-  function process(box) {
-    if (!box.classList.contains("fb-wb-shuffled-init")) {
-      var strong = box.querySelector("strong");
-      var label = strong ? strong.textContent.trim() : "Wortbank:";
-      var words = [];
-      var spans = box.querySelectorAll("span");
-      if (spans.length) {
-        words = Array.prototype.map.call(spans, function (s) { return s.textContent.trim(); })
-                     .filter(function (w) { return w; });
-      } else {
-        var txt = box.textContent || "";
-        if (strong) txt = txt.replace(strong.textContent, "");
-        words = txt.split(/[·•,]|\n/).map(function (w) { return w.trim(); })
-                   .filter(function (w) { return w; });
-      }
-      box.setAttribute("data-fb-words", JSON.stringify(words));
-      box.setAttribute("data-fb-label", label);
-      box.classList.add("fb-wb-shuffled-init");
-    }
-    var words = JSON.parse(box.getAttribute("data-fb-words") || "[]");
-    var label = box.getAttribute("data-fb-label") || "Wortbank:";
-    if (!words.length) return;
-    box.innerHTML = "";
-    var lab = document.createElement("div");
-    lab.className = "fb-wb-label";
-    lab.textContent = label;
-    box.appendChild(lab);
-    var row = document.createElement("div");
-    row.className = "fb-wb-chips";
-    shuffle(words.slice()).forEach(function (w) {
-      var chip = document.createElement("span");
-      chip.className = "fb-wb-chip";
-      chip.textContent = w;            // KEIN click-Handler — nicht klickbar
-      row.appendChild(chip);
-    });
-    box.appendChild(row);
-  }
-
-  function run() {
-    var boxes = document.querySelectorAll(".wortkasten:not(.fb-wortbank), .wortbank:not(.fb-wortbank)");
-    Array.prototype.forEach.call(boxes, process);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function () { setTimeout(run, 0); });
-  } else {
-    setTimeout(run, 0);
-  }
-  document.addEventListener("click", function (e) {
-    if (e.target && e.target.closest && e.target.closest(".nav-btn")) setTimeout(run, 120);
-  });
-})();
 
 </script>
 </body>
