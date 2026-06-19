@@ -1022,7 +1022,7 @@ function initWortschatz() {
         inputs.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;';
         if (item.type === 'n') {
             var artInp = document.createElement('input');
-            artInp.className = 'blank art'; artInp.placeholder = 'der/die/das'; artInp.style.width = '80px';
+            artInp.className = 'blank art'; artInp.placeholder = 'Artikel'; artInp.style.width = '80px';
             artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
             artInp.setAttribute('autocomplete','off'); artInp.setAttribute('spellcheck','false');
             artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
