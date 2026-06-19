@@ -392,28 +392,28 @@ input.blank.wrong   { border-bottom-color: #e74c3c; background: #fdeaea; color: 
             <h3 style="color:#764ba2;margin:20px 0 10px 0;font-size:1.05em;">📝 Lückentext 1 — Wörter einsetzen</h3>
             <p class="luecken-text">
                 Jonas ist
-                <input class="luecken-inp" data-ans="arbeitslos" placeholder="" style="width:120px">.
+                <input class="blank" data-answer="arbeitslos" placeholder="">.
                 Er liest eine
-                <input class="luecken-inp" data-ans="Stellenanzeige" placeholder="" style="width:140px">
+                <input class="blank" data-answer="Stellenanzeige" placeholder="">
                 und schreibt eine
-                <input class="luecken-inp" data-ans="Bewerbung" placeholder="" style="width:120px">.
+                <input class="blank" data-answer="Bewerbung" placeholder="">.
                 Er hofft, dass er
-                <input class="luecken-inp" data-ans="eingestellt" placeholder="" style="width:120px">
+                <input class="blank" data-answer="eingestellt" placeholder="">
                 wird.
             </p>
 
             <h3 style="color:#764ba2;margin:20px 0 10px 0;font-size:1.05em;">📝 Lückentext 2 — Jonas als Sekretär</h3>
             <p class="luecken-text">
                 Heute hat Jonas ein
-                <input class="luecken-inp" data-ans="Vorstellungsgespräch" placeholder="" style="width:190px">.
+                <input class="blank" data-answer="Vorstellungsgespräch" placeholder="">.
                 Er
-                <input class="luecken-inp" data-ans="bewirbt" placeholder="" style="width:90px">
+                <input class="blank" data-answer="bewirbt" placeholder="">
                 sich um eine Stelle als Sekretär. Er
-                <input class="luecken-inp" data-ans="kennt" placeholder="" style="width:80px">
+                <input class="blank" data-answer="kennt" placeholder="">
                 sich gut mit Computern
-                <input class="luecken-inp" data-ans="aus" placeholder="" style="width:50px">.
+                <input class="blank" data-answer="aus" placeholder="">.
                 Sein
-                <input class="luecken-inp" data-ans="Lebenslauf" placeholder="" style="width:110px">
+                <input class="blank" data-answer="Lebenslauf" placeholder="">
                 ist sehr gut.
             </p>
         </div>
@@ -1707,6 +1707,38 @@ function schreibLeeren() {
      sonst baut sich das Gerüst beim Erstladen nie auf (nur nach Neustart). */
   var pRow = rowEl(0), pBank = bankEl(0);
   if ((pRow && pRow.children.length) || (pBank && pBank.children.length)) rebuildAll();
+})();
+</script>
+<style id="fb-lt-style">
+/* §7-Lückentext (LUECKENTEXT-SKILL-SPEC v1.0) */
+.wortbank-label{font-weight:700;color:#667eea;font-size:.85em;margin-bottom:8px;}
+.wortbank{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#f0f0f8;border-radius:10px;min-height:48px;margin-bottom:18px;border:1px dashed #bbb;}
+.wortbank-chip{background:#fff;border:2px solid #667eea;color:#667eea;padding:5px 12px;border-radius:14px;font-weight:500;font-size:.9em;user-select:none;}
+.wortbank-chip.used{opacity:.35;text-decoration:line-through;}
+input.blank{border:none;border-bottom:2px solid #c5cae9;background:transparent;padding:3px 6px;font-family:inherit;font-size:.95em;outline:none;transition:all .2s;min-width:4ch;text-align:center;vertical-align:middle;}
+input.blank:focus{border-bottom-color:#667eea;}
+input.blank.correct{border-bottom-color:#27ae60;background:#e8f8f0;color:#27ae60;font-weight:700;}
+input.blank.wrong{border-bottom-color:#e74c3c;background:#fdeaea;color:#e74c3c;}
+</style>
+<script id="fb-lt-engine">
+/* Block-scoped §7-Lückentext-Engine — datei-agnostisch (LUECKENTEXT-SKILL-SPEC v1.0) */
+(function(){
+  function inputs(){return document.querySelectorAll('input.blank');}
+  function gapContainer(){var f=document.querySelector('input.blank');if(!f)return null;return f.closest('.luecken-text,.luecken-block,.lt-block,.recipe-box,.luecken-aufgabe,.lueckentext')||f.parentElement;}
+  function bank(){var b=document.querySelector('.wortbank');if(b)return b;var c=gapContainer();if(!c)return null;b=document.createElement('div');b.className='wortbank';(c.parentNode||c).insertBefore(b,c);return b;}
+  function tab(){var b=document.querySelector('.wortbank')||gapContainer();if(!b)return null;var t=b.closest('.section,.sec');if(t)return t;var e=b;while(e&&e.parentElement&&!e.parentElement.classList.contains('container')&&e.parentElement!==document.body){e=e.parentElement;}return e;}
+  function ltIdx(){var t=tab();if(!t)return -1;return Array.prototype.indexOf.call(document.querySelectorAll('.section,.sec'),t);}
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  window.ltUpdateChips=function(){var bk=bank();if(!bk)return;var sv=[];inputs().forEach(function(i){if(i.classList.contains('correct'))sv.push(i.value);});var rem=sv.slice();bk.querySelectorAll('.wortbank-chip').forEach(function(c){var k=rem.indexOf(c.textContent);if(k>=0){c.classList.add('used');rem.splice(k,1);}else c.classList.remove('used');});};
+  window.ltInitWortbank=function(){var bk=bank();if(!bk)return;var w=[];inputs().forEach(function(i){w.push(i.dataset.answer);});bk.innerHTML='';shuffle(w.slice()).forEach(function(x){var c=document.createElement('span');c.className='wortbank-chip';c.textContent=x;bk.appendChild(c);});ltUpdateChips();};
+  window.ltLiveCheck=function(inp){var idx=ltIdx();if(window.timerAutoStart&&idx>=0)timerAutoStart(idx);var v=inp.value,a=inp.dataset.answer;inp.classList.remove('correct','wrong');if(v){if(v===a)inp.classList.add('correct');else if(a.indexOf(v)!==0)inp.classList.add('wrong');}ltUpdateChips();var all=inputs(),done=all.length>0;all.forEach(function(i){if(!i.classList.contains('correct'))done=false;});if(done&&window.timerStop&&idx>=0)timerStop(idx);};
+  window.ltShowLoesung=function(){inputs().forEach(function(i){i.value=i.dataset.answer;i.classList.remove('wrong');i.classList.add('correct');});ltUpdateChips();var idx=ltIdx();if(window.timerStop&&idx>=0)timerStop(idx);};
+  window.ltReset=function(){inputs().forEach(function(i){i.value='';i.classList.remove('correct','wrong');});ltInitWortbank();};
+  function rebindButtons(){var t=tab();if(!t)return;t.querySelectorAll('button').forEach(function(b){var x=(b.textContent||'').toLowerCase();if(x.indexOf('lösung')>=0||x.indexOf('loesung')>=0){b.onclick=function(e){if(e)e.preventDefault();ltShowLoesung();};}else if(x.indexOf('neu start')>=0||x.indexOf('reset')>=0||x.indexOf('zurück')>=0||x.indexOf('neu ')>=0){b.onclick=function(){ltReset();};}});}
+  function wire(){inputs().forEach(function(inp){if(inp.dataset.ltWired)return;inp.dataset.ltWired='1';inp.style.width=(((inp.dataset.answer||'').length)+4)+'ch';inp.placeholder='';inp.addEventListener('input',function(){ltLiveCheck(inp);});});rebindButtons();ltInitWortbank();}
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){if(window.ltInitWortbank)ltInitWortbank();},0);});});
+  ['showTab','showSection','showSec'].forEach(function(fn){if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r=_o.apply(this,arguments);if(window.ltInitWortbank)ltInitWortbank();return r;};}});
+  if(document.readyState!=='loading')wire();else document.addEventListener('DOMContentLoaded',wire);
 })();
 </script>
 </body>

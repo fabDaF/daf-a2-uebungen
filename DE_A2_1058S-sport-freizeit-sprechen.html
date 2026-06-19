@@ -289,29 +289,29 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
     <div class="lt-block">
       <h3>Freds Sport-Routine</h3>
       <div class="lt-text">
-        Fred macht viel Sport, weil er fit <input class="luecken-inp" id="lt0" data-ans="bleiben" placeholder=""> möchte.
-        Er <input class="luecken-inp" id="lt1" data-ans="trainiert" placeholder=""> immer abends im Fitnessstudio.
-        Außerdem achtet Fred auf eine <input class="luecken-inp" id="lt2" data-ans="gesunde" placeholder=""> Ernährung.
-        Nach der Arbeit und dem Training <input class="luecken-inp" id="lt3" data-ans="erholt" placeholder=""> Fred sich auf dem Sofa.
+        Fred macht viel Sport, weil er fit <input class="blank" data-answer="bleiben" placeholder=""> möchte.
+        Er <input class="blank" data-answer="trainiert" placeholder=""> immer abends im Fitnessstudio.
+        Außerdem achtet Fred auf eine <input class="blank" data-answer="gesunde" placeholder=""> Ernährung.
+        Nach der Arbeit und dem Training <input class="blank" data-answer="erholt" placeholder=""> Fred sich auf dem Sofa.
       </div>
     </div>
     <div class="lt-block">
       <h3>Lisas freier Tag</h3>
       <div class="lt-text">
-        Nachdem Lisa alle Aufgaben <input class="luecken-inp" id="lt4" data-ans="erledigt" placeholder=""> hat, kann sie sich erholen.
-        Sie <input class="luecken-inp" id="lt5" data-ans="lässt" placeholder=""> sich massieren.
-        Danach <input class="luecken-inp" id="lt6" data-ans="lässt" placeholder=""> sie sich die Nägel lackieren.
-        Max <input class="luecken-inp" id="lt7" data-ans="mag" placeholder=""> jedes Obst, aber nicht jedes <input class="luecken-inp" id="lt8" data-ans="Gemüse" placeholder="">.
-        Nur <input class="luecken-inp" id="lt9" data-ans="manches" placeholder=""> Gemüse schmeckt ihm gut.
+        Nachdem Lisa alle Aufgaben <input class="blank" data-answer="erledigt" placeholder=""> hat, kann sie sich erholen.
+        Sie <input class="blank" data-answer="lässt" placeholder=""> sich massieren.
+        Danach <input class="blank" data-answer="lässt" placeholder=""> sie sich die Nägel lackieren.
+        Max <input class="blank" data-answer="mag" placeholder=""> jedes Obst, aber nicht jedes <input class="blank" data-answer="Gemüse" placeholder="">.
+        Nur <input class="blank" data-answer="manches" placeholder=""> Gemüse schmeckt ihm gut.
       </div>
     </div>
     <div class="lt-block">
       <h3>Aussprache: f, v, w</h3>
       <div class="lt-text">
-        <strong>f</strong> und <strong>v</strong> sprechen wir in deutschen Wörtern beide wie <input class="luecken-inp" id="lt10" data-ans="f" placeholder=""> aus.
-        Das Wort <em>Vater</em> klingt wie <input class="luecken-inp" id="lt11" data-ans="Fater" placeholder="">.
-        Das <strong>w</strong> ist weicher und <input class="luecken-inp" id="lt12" data-ans="stimmhaft" placeholder="">.
-        Bei Fremdwörtern wie <em>Universität</em> spricht man das <strong>v</strong> wie <input class="luecken-inp" id="lt13" data-ans="w" placeholder=""> aus.
+        <strong>f</strong> und <strong>v</strong> sprechen wir in deutschen Wörtern beide wie <input class="blank" data-answer="f" placeholder=""> aus.
+        Das Wort <em>Vater</em> klingt wie <input class="blank" data-answer="Fater" placeholder="">.
+        Das <strong>w</strong> ist weicher und <input class="blank" data-answer="stimmhaft" placeholder="">.
+        Bei Fremdwörtern wie <em>Universität</em> spricht man das <strong>v</strong> wie <input class="blank" data-answer="w" placeholder=""> aus.
       </div>
     </div>
   </section>
@@ -1256,6 +1256,38 @@ document.addEventListener('DOMContentLoaded', function(){
      sonst baut sich das Gerüst beim Erstladen nie auf (nur nach Neustart). */
   var pRow = rowEl(0), pBank = bankEl(0);
   if ((pRow && pRow.children.length) || (pBank && pBank.children.length)) rebuildAll();
+})();
+</script>
+<style id="fb-lt-style">
+/* §7-Lückentext (LUECKENTEXT-SKILL-SPEC v1.0) */
+.wortbank-label{font-weight:700;color:#667eea;font-size:.85em;margin-bottom:8px;}
+.wortbank{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#f0f0f8;border-radius:10px;min-height:48px;margin-bottom:18px;border:1px dashed #bbb;}
+.wortbank-chip{background:#fff;border:2px solid #667eea;color:#667eea;padding:5px 12px;border-radius:14px;font-weight:500;font-size:.9em;user-select:none;}
+.wortbank-chip.used{opacity:.35;text-decoration:line-through;}
+input.blank{border:none;border-bottom:2px solid #c5cae9;background:transparent;padding:3px 6px;font-family:inherit;font-size:.95em;outline:none;transition:all .2s;min-width:4ch;text-align:center;vertical-align:middle;}
+input.blank:focus{border-bottom-color:#667eea;}
+input.blank.correct{border-bottom-color:#27ae60;background:#e8f8f0;color:#27ae60;font-weight:700;}
+input.blank.wrong{border-bottom-color:#e74c3c;background:#fdeaea;color:#e74c3c;}
+</style>
+<script id="fb-lt-engine">
+/* Block-scoped §7-Lückentext-Engine — datei-agnostisch (LUECKENTEXT-SKILL-SPEC v1.0) */
+(function(){
+  function inputs(){return document.querySelectorAll('input.blank');}
+  function gapContainer(){var f=document.querySelector('input.blank');if(!f)return null;return f.closest('.luecken-text,.luecken-block,.lt-block,.recipe-box,.luecken-aufgabe,.lueckentext')||f.parentElement;}
+  function bank(){var b=document.querySelector('.wortbank');if(b)return b;var c=gapContainer();if(!c)return null;b=document.createElement('div');b.className='wortbank';(c.parentNode||c).insertBefore(b,c);return b;}
+  function tab(){var b=document.querySelector('.wortbank')||gapContainer();if(!b)return null;var t=b.closest('.section,.sec');if(t)return t;var e=b;while(e&&e.parentElement&&!e.parentElement.classList.contains('container')&&e.parentElement!==document.body){e=e.parentElement;}return e;}
+  function ltIdx(){var t=tab();if(!t)return -1;return Array.prototype.indexOf.call(document.querySelectorAll('.section,.sec'),t);}
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  window.ltUpdateChips=function(){var bk=bank();if(!bk)return;var sv=[];inputs().forEach(function(i){if(i.classList.contains('correct'))sv.push(i.value);});var rem=sv.slice();bk.querySelectorAll('.wortbank-chip').forEach(function(c){var k=rem.indexOf(c.textContent);if(k>=0){c.classList.add('used');rem.splice(k,1);}else c.classList.remove('used');});};
+  window.ltInitWortbank=function(){var bk=bank();if(!bk)return;var w=[];inputs().forEach(function(i){w.push(i.dataset.answer);});bk.innerHTML='';shuffle(w.slice()).forEach(function(x){var c=document.createElement('span');c.className='wortbank-chip';c.textContent=x;bk.appendChild(c);});ltUpdateChips();};
+  window.ltLiveCheck=function(inp){var idx=ltIdx();if(window.timerAutoStart&&idx>=0)timerAutoStart(idx);var v=inp.value,a=inp.dataset.answer;inp.classList.remove('correct','wrong');if(v){if(v===a)inp.classList.add('correct');else if(a.indexOf(v)!==0)inp.classList.add('wrong');}ltUpdateChips();var all=inputs(),done=all.length>0;all.forEach(function(i){if(!i.classList.contains('correct'))done=false;});if(done&&window.timerStop&&idx>=0)timerStop(idx);};
+  window.ltShowLoesung=function(){inputs().forEach(function(i){i.value=i.dataset.answer;i.classList.remove('wrong');i.classList.add('correct');});ltUpdateChips();var idx=ltIdx();if(window.timerStop&&idx>=0)timerStop(idx);};
+  window.ltReset=function(){inputs().forEach(function(i){i.value='';i.classList.remove('correct','wrong');});ltInitWortbank();};
+  function rebindButtons(){var t=tab();if(!t)return;t.querySelectorAll('button').forEach(function(b){var x=(b.textContent||'').toLowerCase();if(x.indexOf('lösung')>=0||x.indexOf('loesung')>=0){b.onclick=function(e){if(e)e.preventDefault();ltShowLoesung();};}else if(x.indexOf('neu start')>=0||x.indexOf('reset')>=0||x.indexOf('zurück')>=0||x.indexOf('neu ')>=0){b.onclick=function(){ltReset();};}});}
+  function wire(){inputs().forEach(function(inp){if(inp.dataset.ltWired)return;inp.dataset.ltWired='1';inp.style.width=(((inp.dataset.answer||'').length)+4)+'ch';inp.placeholder='';inp.addEventListener('input',function(){ltLiveCheck(inp);});});rebindButtons();ltInitWortbank();}
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){if(window.ltInitWortbank)ltInitWortbank();},0);});});
+  ['showTab','showSection','showSec'].forEach(function(fn){if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r=_o.apply(this,arguments);if(window.ltInitWortbank)ltInitWortbank();return r;};}});
+  if(document.readyState!=='loading')wire();else document.addEventListener('DOMContentLoaded',wire);
 })();
 </script>
 </body>
