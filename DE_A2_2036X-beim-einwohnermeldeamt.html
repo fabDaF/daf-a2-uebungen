@@ -218,6 +218,14 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .wortbank-chip.used{opacity:0.35;text-decoration:line-through;}
 input.correct{border-bottom:2px solid #27ae60 !important;background:#e8f8f0 !important;color:#27ae60 !important;font-weight:700;}
 input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !important;color:#e74c3c !important;}
+
+/* FB-SCHREIB-PAD: Schreibwerkstatt-Inhalt einruecken, Banner randlos */
+#sec-schreib { padding: 28px 30px; }
+#sec-schreib > .tab-banner { width: calc(100% + 60px); max-width: none; margin: -28px -30px 18px; }
+@media (max-width: 600px) {
+  #sec-schreib { padding: 18px 16px; }
+  #sec-schreib > .tab-banner { width: calc(100% + 32px); margin: -18px -16px 14px; }
+}
 </style>
 </head>
 <body>
