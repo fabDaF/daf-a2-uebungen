@@ -77,7 +77,10 @@ input.blank.wrong { border-color: #e74c3c; background: #ffebee; }
 .sentence-builder.correct { border-color: #27ae60; background: #f0fff4; }
 .sentence-builder.incorrect { border-color: #e74c3c; background: #fff5f5; }
 .sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
-.punct-chip { background: transparent; border: none; color: #333; font-weight: 700; cursor: default; padding: 8px 4px; }
+.chip.punct-chip { background: #f8f8f8; color: #333; font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct { background: #27ae60; border-color: #27ae60; color: #fff; }
+.chip.punct-chip.incorrect { background: #e74c3c; border-color: #e74c3c; color: #fff; }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
 .satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
 .satzbau-feedback.correct { color: #27ae60; }
 .satzbau-feedback.incorrect { color: #e74c3c; }
