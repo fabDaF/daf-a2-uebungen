@@ -414,7 +414,7 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
                 </div>
             </div>
             <div class="hilfe-box">Ergänze den richtigen Artikel (Dativ oder Akkusativ) bzw. das passende Wort.</div>
-            <div class="wortbank-label">🔤 Wortbank – die richtigen Artikel, in zufälliger Reihenfolge.<br>Tipp sie selbst in die Lücken — achte auf Groß- und Kleinschreibung.</div>
+            <div class="wortbank-label">🔤 Wortbank – die gesuchten Wörter (Artikel und Verben im Infinitiv), in zufälliger Reihenfolge.<br>Die Verben noch passend konjugieren. Tipp selbst in die Lücken — achte auf Groß- und Kleinschreibung.</div>
             <div class="wortbank" id="wortbank-luecken"></div>
             <div id="lueckenContainer"></div>
         </div>
@@ -583,11 +583,14 @@ var LUECKEN_DATA=[
 function liveCheckLuecke(inp){var val=inp.value;var ans=inp.dataset.answer;inp.classList.remove('correct','wrong');if(!val)return;if(val===ans){inp.classList.add('correct');timerAutoStart(2);updateWortbankChips();checkLueckenOk();return;}if(ans.indexOf(val)===0){timerAutoStart(2);return;}inp.classList.add('wrong');}
 function checkLueckenOk(){var inputs=document.querySelectorAll('#lueckenContainer input.blank');if(Array.from(inputs).every(function(i){return i.classList.contains('correct');}))timerStop(2);}
 function buildLuecken(){var c=document.getElementById('lueckenContainer');LUECKEN_DATA.forEach(function(item,i){var div=document.createElement('div');div.className='luecken-satz';div.innerHTML=item.vor+'<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="">'+item.nach;c.appendChild(div);var inp=div.querySelector('input.blank');inp.addEventListener('input',function(){liveCheckLuecke(inp);});});initWortbank();}
-// Wortbank (daf-kern §7): zeigt nur die Artikel-Antworten; konjugierte Verbformen
-// (stellt/steht) bleiben unsichtbar (G-Datei-Regel "keine konjugierte Zielform").
+// Wortbank (daf-kern §7 + daf-grammatik Infinitiv-Wortkasten): Artikel als Vollform,
+// Verben als Infinitiv (stellen/stehen) — die konjugierte Zielform bleibt unsichtbar,
+// der Lerner muss selbst konjugieren. So ist jede Lücke gestützt.
 var ARTIKEL_SET={der:1,die:1,das:1,dem:1,den:1};
-function initWortbank(){var bank=document.getElementById('wortbank-luecken');if(!bank)return;bank.innerHTML='';var words=LUECKEN_DATA.map(function(d){return d.ans;}).filter(function(a){return ARTIKEL_SET[a];});for(var i=words.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=words[i];words[i]=words[j];words[j]=t;}words.forEach(function(w){var chip=document.createElement('span');chip.className='wortbank-chip';chip.textContent=w;bank.appendChild(chip);});}
-function updateWortbankChips(){var bank=document.getElementById('wortbank-luecken');if(!bank)return;var solved=Array.prototype.slice.call(document.querySelectorAll('#lueckenContainer input.blank.correct')).map(function(i){return i.value;});var remaining=solved.slice();Array.prototype.slice.call(bank.querySelectorAll('.wortbank-chip')).forEach(function(chip){var idx=remaining.indexOf(chip.textContent);if(idx>=0){chip.classList.add('used');remaining.splice(idx,1);}else{chip.classList.remove('used');}});}
+var VERB_INF={stellt:'stellen',steht:'stehen'};
+function bankWord(ans){return ARTIKEL_SET[ans]?ans:(VERB_INF[ans]||ans);}
+function initWortbank(){var bank=document.getElementById('wortbank-luecken');if(!bank)return;bank.innerHTML='';var words=LUECKEN_DATA.map(function(d){return bankWord(d.ans);});for(var i=words.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=words[i];words[i]=words[j];words[j]=t;}words.forEach(function(w){var chip=document.createElement('span');chip.className='wortbank-chip';chip.textContent=w;bank.appendChild(chip);});}
+function updateWortbankChips(){var bank=document.getElementById('wortbank-luecken');if(!bank)return;var solved=Array.prototype.slice.call(document.querySelectorAll('#lueckenContainer input.blank.correct')).map(function(i){return bankWord(i.dataset.answer);});var remaining=solved.slice();Array.prototype.slice.call(bank.querySelectorAll('.wortbank-chip')).forEach(function(chip){var idx=remaining.indexOf(chip.textContent);if(idx>=0){chip.classList.add('used');remaining.splice(idx,1);}else{chip.classList.remove('used');}});}
 function resetLuecken(){timerResetOne(2);document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){inp.value='';inp.classList.remove('correct','wrong');});initWortbank();}
 function loesungLuecken(){document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){var ans=inp.dataset.answer;inp.value=ans;inp.classList.remove('wrong');inp.classList.add('correct');});updateWortbankChips();}
 
