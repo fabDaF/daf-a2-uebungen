@@ -231,6 +231,8 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 .wortbank-chip.used{opacity:0.35;text-decoration:line-through;}
 input.correct{border-bottom:2px solid #27ae60 !important;background:#e8f8f0 !important;color:#27ae60 !important;font-weight:700;}
 input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !important;color:#e74c3c !important;}
+/* FB-SCHREIB-LAST */
+.nav-btn.schreib-last{order:99;}
 </style>
 </head>
 <body>
@@ -256,7 +258,7 @@ input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !impor
     <button class="nav-btn" onclick="showTab(4,this)">
       <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
     </button>
-    <button class="nav-btn" onclick="showTab(5,this)"><span class="nav-emoji">📨</span><span class="nav-label">Schreibwerkstatt</span></button>
+    <button class="nav-btn schreib-last" onclick="showTab(5,this)"><span class="nav-emoji">📨</span><span class="nav-label">Schreibwerkstatt</span></button>
         <button class="nav-btn" onclick="showTab(6,this)">
       <span class="nav-emoji">🏷️</span><span class="nav-label">Genus</span>
     </button>
