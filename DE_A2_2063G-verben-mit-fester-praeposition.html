@@ -279,7 +279,6 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
             <h2>🔍 Entdecken</h2>
 
             <div class="entdeck-intro">
-                <h3>Lies die Sätze und achte auf die markierten Wörter:</h3>
                 <p>1. Ich <span class="hl">warte auf</span> den Bus.</p>
                 <p>2. Lisa <span class="hl">denkt an</span> ihren Urlaub.</p>
                 <p>3. Wir <span class="hl">lachen über</span> den Witz.</p>
@@ -1742,8 +1741,7 @@ function schreibLeeren() {
     wrap.className = "fb-wortbank-wrap";
     var label = document.createElement("div");
     label.className = "fb-wortbank-label";
-    label.innerHTML = "🔤 Wortbank – die richtigen Wörter, in zufälliger Reihenfolge.<br>" +
-      "Tipp sie selbst in die Lücken — achte auf Groß- und Kleinschreibung.";
+    label.innerHTML = "🔤 Wortbank – die richtigen Wörter, in zufälliger Reihenfolge.";
     bank = document.createElement("div");
     bank.className = "fb-wortbank";
     wrap.appendChild(label);
