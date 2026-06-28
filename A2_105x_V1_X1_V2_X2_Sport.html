@@ -50,12 +50,7 @@
 
   /* Zuordnung */
   .zuordnung-area { display: flex; flex-direction: column; gap: 16px; }
-  .word-bank {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    padding: 14px; background: #f3f4f9;
-    border-radius: 10px; min-height: 52px;
-    border: 2px dashed #b2dfdb;
-  }
+  
   .chip {
     padding: 6px 13px; background: #11998e; color: #fff;
     border-radius: 20px; cursor: grab;
@@ -168,7 +163,7 @@
 .satzbau-feedback.correct { color: #2e7d32; }
 .satzbau-feedback.incorrect { color: #c62828; }
 /* ── WORTBANK ── */
-.wortbank-label { font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
+.wortbank-label {display:none; font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
 .wortbank {
   display:flex; flex-wrap:wrap; gap:8px; padding:14px;
   background:#f0f0f8; border-radius:10px; min-height:48px;
