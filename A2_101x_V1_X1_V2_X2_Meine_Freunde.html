@@ -10,10 +10,23 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
 h1 { text-align: center; color: #333; margin-bottom: 4px; font-size: 1.5em; }
 .subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.95em; }
-.nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; justify-content: center; }
-.nav-btn { padding: 10px 16px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 0.85em; border: 2px solid #e0e0e0; background: white; color: #555; transition: all 0.2s; user-select: none; }
-.nav-btn:hover { border-color: #667eea; color: #667eea; }
-.nav-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-color: transparent; }
+/* ===== NAV (Variante C: Aktiv-Pille) ===== */
+.nav {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  background: #eef0fb; padding: 6px;
+  border-bottom: 2px solid #e9ecef;
+}
+.nav-btn {
+  flex: 1 1 auto; min-width: 64px; padding: 12px 8px;
+  border: none; background: none; cursor: pointer;
+  font-weight: 500; color: #666; transition: all 0.2s; border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.nav-btn:hover { background: #e1e5fb; color: #667eea; }
+.nav-btn.active { background: #fff; color: #667eea; font-weight: 700; box-shadow: 0 1px 4px rgba(102,126,234,.25); }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+
 .section { display: none; }
 .section.active { display: block; }
 h2 { color: #333; font-size: 1.15em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
@@ -80,7 +93,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
 @media (max-width: 600px) {
     .container { padding: 18px 14px; }
     .zuordnung-categories { grid-template-columns: 1fr; }
-    .nav-btn { font-size: 0.78em; padding: 8px 12px; }
+    
     .luecken-item { background: #f8f9ff; padding: 14px 18px; border-radius: 10px; border-left: 4px solid #667eea; }
 }
 
@@ -309,7 +322,6 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
         <div class="genus-kategorien"><div class="genus-kat kat-der"><div class="kat-title">der</div><div class="genus-drop" id="drop-der" data-cat="der"></div></div><div class="genus-kat kat-die"><div class="kat-title">die</div><div class="genus-drop" id="drop-die" data-cat="die"></div></div><div class="genus-kat kat-das"><div class="kat-title">das</div><div class="genus-drop" id="drop-das" data-cat="das"></div></div><div class="genus-kat kat-pl"><div class="kat-title">Plural</div><div class="genus-drop" id="drop-pl" data-cat="pl"></div></div></div>
         <div id="genusFeedback" style="margin-top:14px;font-weight:600;"></div>
     </div>
-
 
     <!-- ===== TAB 5: WORTSCHATZ ===== -->
     <div class="section" id="sec-5">
@@ -1298,9 +1310,6 @@ function showGenusLoesung(){
 function resetGenus(){ initGenus(); genusTimerReset(); }
 (function(){ initGenus(); })();
 </script>
-
-
-
 
 <!-- FB-JUMPTOP -->
 <button class="fb-jumptop" id="fbJumpTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Nach oben springen" aria-label="Nach oben springen">↑ Nach oben</button>

@@ -10,11 +10,23 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
 h1 { text-align: center; color: #333; margin-bottom: 4px; font-size: 1.5em; }
 .subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.95em; }
-.nav { display: flex; flex-wrap: nowrap; background: #f8f9fa; border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
-.nav-btn { flex: 1; padding: 14px 10px; text-align: center; cursor: pointer; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; transition: all 0.3s; font-size: 0.92em; font-weight: 500; color: #666; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.nav-btn:last-child { border-right: none; }
-.nav-btn:hover { background: #e8ecff; color: #667eea; }
-.nav-btn.active { background: white; color: #667eea; font-weight: 700; border-bottom: 3px solid #667eea; }
+/* ===== NAV (Variante C: Aktiv-Pille) ===== */
+.nav {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  background: #eef0fb; padding: 6px;
+  border-bottom: 2px solid #e9ecef;
+}
+.nav-btn {
+  flex: 1 1 auto; min-width: 64px; padding: 12px 8px;
+  border: none; background: none; cursor: pointer;
+  font-weight: 500; color: #666; transition: all 0.2s; border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.nav-btn:hover { background: #e1e5fb; color: #667eea; }
+.nav-btn.active { background: #fff; color: #667eea; font-weight: 700; box-shadow: 0 1px 4px rgba(102,126,234,.25); }
+.nav-emoji { font-size: 1.3em; line-height: 1.2; }
+.nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
+
 .section { display: none; }
 .section.active { display: block; }
 h2 { color: #333; font-size: 1.15em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
@@ -84,12 +96,11 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
 
 /* Responsive */
 @media (max-width: 600px) {
-    .nav { flex-wrap: wrap; }
-    .nav-btn { flex: 1 1 33%; min-width: 0; font-size: 0.8em; padding: 10px 6px; border-right: 1px solid #ddd; }
-    .nav-btn:last-child { border-right: 1px solid #ddd; }
+
+    
     .container { padding: 18px 14px; }
     .zuordnung-categories, .wp-categories { grid-template-columns: 1fr; }
-    .nav-btn { font-size: 0.78em; padding: 8px 12px; }
+    
 }
 
 /* Author Footer */
@@ -384,7 +395,6 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
         </div>
     </div>
 
-    
     <!-- ===== TAB: GENUS ===== -->
     <div class="section" id="sec-genus">
         <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJHZW51cyDigJQgZGVyLCBkaWUsIGRhcyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVkNmZjMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YTRhOTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIyMjAiIGZpbGw9InVybCgjYmcpIi8+CgoKICA8IS0tIEtpY2tlcjoga2xlaW5lLCBnZXNwZXJydGUgVmVyc2FsaWVuIC0tPgogIDx0ZXh0IHg9IjUwMCIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInU2Vnb2UgVUknLCBzeXN0ZW0tdWksIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjYwMCIgbGV0dGVyLXNwYWNpbmc9IjciIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC43OCI+R0VOVVMmIzE2MDsmIzE2MDsmIzE4MzsmIzE2MDsmIzE2MDtBUlRJS0VMIEJFU1RJTU1FTjwvdGV4dD4KCiAgPCEtLSBIYXVwdHplaWxlOiBydWhpZ2UgU2VyaWYgLS0+CiAgPHRleHQgeD0iMzIwIiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iNjYiIGZpbGw9IiNmZmZmZmYiPmRlcjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjE0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsICdUaW1lcyBOZXcgUm9tYW4nLCBzZXJpZiIgZm9udC1zaXplPSI2NiIgZmlsbD0iI2ZmZmZmZiI+ZGllPC90ZXh0PgogIDx0ZXh0IHg9IjY4MCIgeT0iMTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjY2IiBmaWxsPSIjZmZmZmZmIj5kYXM8L3RleHQ+CgogIDwhLS0gZGV6ZW50ZSBGYXJiYWt6ZW50ZSB1bnRlciBqZWRlbSBBcnRpa2VsIC0tPgogIDxyZWN0IHg9IjI4OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzdlYTJlNiIvPgogIDxyZWN0IHg9IjQ2OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2Q5OGNhZSIvPgogIDxyZWN0IHg9IjY0OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzg2Y2JhYiIvPgo8L3N2Zz4K" alt="Genus üben — der, die, das">
@@ -607,7 +617,6 @@ function makeChipZuordnung(data, bankId, chipPrefix, catSelector, timerIdx) {
     });
 }
 
-
 // ── Direct-Feedback für Zuordnungs-Chips ─────────────────────────────────
 function colorZuordnungChip(chip) {
     var parent = chip.parentElement;
@@ -791,8 +800,6 @@ function resetLuecken(cssClass) {
 /* ============================================================
    SATZBAU
    ============================================================ */
-
-
 
 // ===== SATZBAU (neu: satzbau-drag-drop Pattern) =====
 var sbDragged = null;
@@ -994,7 +1001,6 @@ function resetSatzbau() {
     });
     initSatzbau();
 }
-
 
 /* ============================================================
    FRAGEN ZUM LESETEXT
