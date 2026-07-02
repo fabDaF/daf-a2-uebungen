@@ -37,8 +37,8 @@
 
   
 
-  .tab { display: none; padding: 28px 32px; }
-  .tab.active { display: block; }
+  .section { display: none; padding: 28px 32px; }
+  .section.active { display: block; }
 
   /* Timer */
   .timer-bar {
@@ -184,6 +184,39 @@
 .fb-jumptop.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .fb-jumptop:hover { background: rgba(118, 75, 162, 0.40); color: #241048; box-shadow: 0 10px 32px rgba(102,126,234,0.50), inset 0 1px 0 rgba(255,255,255,0.65); }
 @media (max-width: 600px) { .fb-jumptop { bottom: 18px; right: 16px; padding: 12px 18px; font-size: 0.95em; } }
+/* ===== GENUS-TAB ===== */
+.genus-pool { display:flex; flex-wrap:wrap; gap:10px; padding:16px; background:#f0f0f8; border:1px dashed #bbb; border-radius:10px; min-height:60px; margin-bottom:18px; }
+.genus-chip { background:#fff; border:2px solid #667eea; color:#333; padding:8px 14px; border-radius:14px; font-weight:600; font-size:0.95em; cursor:grab; user-select:none; }
+.genus-chip.dragging { opacity:0.5; }
+.genus-chip.selected { outline:3px solid #f39c12; }
+.genus-chip.correct { border-color:#2e7d32; background:#e8f5e9; color:#1b5e20; }
+.genus-chip.wrong { border-color:#c62828; background:#ffebee; color:#b71c1c; }
+.genus-kategorien { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.genus-kat { background:#fafaff; border-radius:10px; padding:10px; border-top:4px solid #999; }
+.genus-kat.kat-der { border-top-color:#1565c0; }
+.genus-kat.kat-die { border-top-color:#ad1457; }
+.genus-kat.kat-das { border-top-color:#1b5e20; }
+.genus-kat.kat-pl  { border-top-color:#5e35b1; }
+.kat-title { text-align:center; font-weight:700; margin-bottom:8px; font-size:1.05em; }
+.kat-der .kat-title { color:#1565c0; } .kat-die .kat-title { color:#ad1457; } .kat-das .kat-title { color:#1b5e20; } .kat-pl .kat-title { color:#5e35b1; }
+.genus-drop { min-height:90px; background:#fff; border:2px dashed #ccc; border-radius:8px; padding:8px; display:flex; flex-direction:column; gap:6px; }
+.genus-drop.dragover { border-color:#667eea; background:#eef1ff; }
+@media (max-width:600px){ .genus-kategorien { grid-template-columns:repeat(2,1fr); } }
+
+/* FB-LT-STORY-CSS */
+/* FB-LT-STORY-CSS — kanonische CSS des Story-Lückentexts (EINE Quelle der Wahrheit).
+   Vom Produzenten scripts/inject_lt.py eingespielt. Nicht pro Datei von Hand kopieren. */
+.luecken-story { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 2.1; color: #2c2c2c; text-align: justify; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 18px 22px; }
+.luecken-story p { margin: 0 0 14px; }
+.luecken-story p:last-child { margin-bottom: 0; }
+.luecken-story input.blank { font-family: Georgia, 'Times New Roman', serif; border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-size: 1em; color: #2c2c2c; text-align: center; padding: 1px 4px; min-width: 4ch; transition: all .2s; }
+.luecken-story input.blank:focus { border-bottom-color: #667eea; }
+.luecken-story input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+.luecken-story input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
+.wortbank { display:flex; flex-wrap:wrap; gap:8px; padding:14px; background:#f0f0f8; border-radius:10px; min-height:48px; margin-bottom:18px; border:1px dashed #bbb; }
+.wortbank-chip { background:white; border:2px solid #667eea; color:#667eea; padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
+.wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
+
 </style>
 </head>
 <body>
@@ -195,16 +228,15 @@
   </div>
 
   <div class="nav">
-    <button class="nav-btn active" onclick="showTab(0)">1. Briefe vergleichen</button>
-    <button class="nav-btn" onclick="showTab(1)">2. Brief-Lückentext</button>
-    <button class="nav-btn" onclick="showTab(2)">3. Gefühle</button>
-    <button class="nav-btn" onclick="showTab(3)">4. Freizeit-Lückentext</button>
-    <button class="nav-btn" onclick="showTab(4)">5. Satzbau</button>
-    <button class="nav-btn" onclick="showTab(5)">6. Wortschatz</button>
+    <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">✉️</span><span class="nav-label">Briefe</span></div>
+    <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+    <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+    <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">🏷️</span><span class="nav-label">Genus</span></div>
+        <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
   </div>
 
   <!-- TAB 0: BRIEFE VERGLEICHEN -->
-  <div class="tab active" id="tab0">
+  <div class="section active" id="sec-0">
     <h2 style="color:#0f3460;margin-bottom:16px;">&#9993; Formell vs. Informell — Briefe schreiben</h2>
 
     <table class="gram-table">
@@ -262,55 +294,32 @@
     <div id="mc-formell"></div>
   </div>
 
-  <!-- TAB 1: BRIEF LÜCKENTEXT -->
-  <div class="tab" id="tab1">
+  <!-- TAB 1: LÜCKENTEXT (Brief + Gefühle + Freizeit, FB-LT-STORY) -->
+  <div class="section" id="sec-1">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td1">0:00</span><span class="timer-best" id="tb1">Bestzeit: &mdash;</span></div>
-    <h2 style="color:#0f3460;margin-bottom:16px;">Brief schreiben &mdash; L&uuml;ckentext</h2>
-    <p style="background:#e8eaf6;border-radius:8px;padding:10px 14px;font-size:0.88rem;color:#0f3460;margin-bottom:16px;">
-      &#128161; Setze das passende Wort ein — achte auf formell / informell!
-    </p>
-    <div class="wortbank-label">📋 Wortbank</div>
+    <h2 style="color:#0f3460;margin-bottom:16px;">Brief, Gef&uuml;hle &amp; Freizeit &mdash; L&uuml;ckentext</h2>
     <div class="wortbank" id="wortbank-luecken"></div>
-    <ul class="luecken-list" id="luecken1"></ul>
-    <div class="btn-row">
-      <button onclick="showLueckenLoesung(1)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">&#128065; L&ouml;sung</button>
-      <button onclick="resetLuecken(1)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
+    <div id="lueckenContainer" class="luecken-story">
+      <p><input class="blank" data-answer="Liebe"> Sarah,</p>
+
+      <p>wie geht es <input class="blank" data-answer="dir">? Ich wollte dir schreiben, weil ich am <input class="blank" data-answer="Wochenende"> viel vorhabe.</p>
+
+      <p>Am Samstagabend gehen wir <input class="blank" data-answer="tanzen"> — ich bin schon ein bisschen <input class="blank" data-answer="nervös">, weil ich lange nicht mehr auf einer Party war!</p>
+
+      <p>Am Sonntag gehen wir vielleicht ins <input class="blank" data-answer="Kino">, aber wir müssen noch eine <input class="blank" data-answer="Entscheidung"> treffen, welchen Film wir sehen wollen. Danach möchte ich mich nur noch <input class="blank" data-answer="entspannt"> zu Hause hinlegen.</p>
+
+      <p>Ich bin sehr <input class="blank" data-answer="zufrieden"> mit meinen Plänen für dieses Wochenende!</p>
+
+      <p><input class="blank" data-answer="Liebe Grüße">,<br>Anna</p>
     </div>
-    <div id="fb1" style="margin-top:12px;font-size:0.95rem;"></div>
+    <div class="btn-row">
+      <button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">👁 Lösung</button>
+      <button onclick="fbLtReset()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
+    </div>
   </div>
 
-  <!-- TAB 2: GEFÜHLE -->
-  <div class="tab" id="tab2">
-    <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td2">0:00</span><span class="timer-best" id="tb2">Bestzeit: &mdash;</span></div>
-    <h2 style="color:#0f3460;margin-bottom:16px;">Gef&uuml;hle &mdash; L&uuml;ckentext</h2>
-    <p style="background:#e8eaf6;border-radius:8px;padding:10px 14px;font-size:0.88rem;color:#0f3460;margin-bottom:16px;">
-      &#128161; Setze das richtige Gefühlswort ein: <em>traurig · wütend · nervös · zufrieden · glücklich · enttäuscht · neidisch · entspannt</em>
-    </p>
-    <ul class="luecken-list" id="luecken2"></ul>
-    <div class="btn-row">
-      <button onclick="showLueckenLoesung(2)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">&#128065; L&ouml;sung</button>
-      <button onclick="resetLuecken(2)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
-    </div>
-    <div id="fb2" style="margin-top:12px;font-size:0.95rem;"></div>
-  </div>
-
-  <!-- TAB 3: FREIZEIT LÜCKENTEXT -->
-  <div class="tab" id="tab3">
-    <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td3">0:00</span><span class="timer-best" id="tb3">Bestzeit: &mdash;</span></div>
-    <h2 style="color:#0f3460;margin-bottom:16px;">Freizeit &amp; Pl&auml;ne &mdash; L&uuml;ckentext</h2>
-    <p style="background:#e8eaf6;border-radius:8px;padding:10px 14px;font-size:0.88rem;color:#0f3460;margin-bottom:16px;">
-      &#128161; Setze das passende Wort ein.
-    </p>
-    <ul class="luecken-list" id="luecken3"></ul>
-    <div class="btn-row">
-      <button onclick="showLueckenLoesung(3)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">&#128065; L&ouml;sung</button>
-      <button onclick="resetLuecken(3)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
-    </div>
-    <div id="fb3" style="margin-top:12px;font-size:0.95rem;"></div>
-  </div>
-
-  <!-- TAB 4: SATZBAU -->
-  <div class="tab" id="tab4">
+  <!-- TAB 2: SATZBAU -->
+  <div class="section" id="sec-2">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td4">0:00</span><span class="timer-best" id="tb4">Bestzeit: &mdash;</span></div>
     <h2 style="color:#0f3460;margin-bottom:16px;">Satzbau &mdash; Briefe &amp; Pl&auml;ne</h2>
     <div class="satzbau-area" id="satzbau4"></div>
@@ -318,9 +327,19 @@
       <button onclick="resetSatzbau(4)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
     </div>
   </div>
+    <!-- ===== TAB: GENUS ===== -->
+    <div class="section" id="sec-genus">
+        <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJHZW51cyDigJQgZGVyLCBkaWUsIGRhcyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVkNmZjMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YTRhOTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIyMjAiIGZpbGw9InVybCgjYmcpIi8+CgoKICA8IS0tIEtpY2tlcjoga2xlaW5lLCBnZXNwZXJydGUgVmVyc2FsaWVuIC0tPgogIDx0ZXh0IHg9IjUwMCIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInU2Vnb2UgVUknLCBzeXN0ZW0tdWksIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjYwMCIgbGV0dGVyLXNwYWNpbmc9IjciIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC43OCI+R0VOVVMmIzE2MDsmIzE2MDsmIzE4MzsmIzE2MDsmIzE2MDtBUlRJS0VMIEJFU1RJTU1FTjwvdGV4dD4KCiAgPCEtLSBIYXVwdHplaWxlOiBydWhpZ2UgU2VyaWYgLS0+CiAgPHRleHQgeD0iMzIwIiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iNjYiIGZpbGw9IiNmZmZmZmYiPmRlcjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjE0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsICdUaW1lcyBOZXcgUm9tYW4nLCBzZXJpZiIgZm9udC1zaXplPSI2NiIgZmlsbD0iI2ZmZmZmZiI+ZGllPC90ZXh0PgogIDx0ZXh0IHg9IjY4MCIgeT0iMTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjY2IiBmaWxsPSIjZmZmZmZmIj5kYXM8L3RleHQ+CgogIDwhLS0gZGV6ZW50ZSBGYXJiYWt6ZW50ZSB1bnRlciBqZWRlbSBBcnRpa2VsIC0tPgogIDxyZWN0IHg9IjI4OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzdlYTJlNiIvPgogIDxyZWN0IHg9IjQ2OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2Q5OGNhZSIvPgogIDxyZWN0IHg9IjY0OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzg2Y2JhYiIvPgo8L3N2Zz4K" alt="Genus üben — der, die, das">
+        <h2>🏷️ Genus</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:6px 12px;background:#f8f9fa;border-radius:8px;"><div style="display:flex;gap:6px;"><button onclick="showGenusLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div><div style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:#888;font-variant-numeric:tabular-nums;"><span>⏱ <span id="timer-6">00:00</span></span><span>🏆 <span id="best-6">--:--</span></span></div></div>
+        <div class="genus-pool" id="genusPool"></div>
+        <div class="genus-kategorien"><div class="genus-kat kat-der"><div class="kat-title">der</div><div class="genus-drop" id="drop-der" data-cat="der"></div></div><div class="genus-kat kat-die"><div class="kat-title">die</div><div class="genus-drop" id="drop-die" data-cat="die"></div></div><div class="genus-kat kat-das"><div class="kat-title">das</div><div class="genus-drop" id="drop-das" data-cat="das"></div></div><div class="genus-kat kat-pl"><div class="kat-title">Plural</div><div class="genus-drop" id="drop-pl" data-cat="pl"></div></div></div>
+        <div id="genusFeedback" style="margin-top:14px;font-weight:600;"></div>
+    </div>
 
-  <!-- TAB 5: WORTSCHATZ -->
-  <div class="tab" id="tab5">
+
+  <!-- TAB 3: WORTSCHATZ -->
+  <div class="section" id="sec-3">
     <h2 style="color:#0f3460;margin-bottom:18px;">🔠 Wortschatz-Training</h2>
     <div class="help-box">
       <strong>Aufgabe:</strong> Übersetze die Wörter ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
@@ -385,11 +404,9 @@ function loadBestTimes() {
   }
 }
 
-function showTab(n) {
-  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
-  document.getElementById('tab' + n).classList.add('active');
-  document.querySelectorAll('.nav-btn')[n].classList.add('active');
+function showSection(n) {
+  document.querySelectorAll('.section').forEach(function(s, i) { s.classList.toggle('active', i === n); });
+  document.querySelectorAll('.nav-btn').forEach(function(b, i) { b.classList.toggle('active', i === n); });
   loadBestTimes();
 }
 
@@ -563,14 +580,14 @@ function resetLuecken(idx) {
 
 // ─── SATZBAU ─────────────────────────────────────────────────
 var SATZBAU = [
-  { hint: 'Formeller Brief: Anrede', parts: ['Sehr','geehrte','Damen','und','Herren'], valid: [ ['Sehr','geehrte','Damen','und','Herren'] },
-  { hint: 'Informeller Brief: Anrede', parts: ['Liebe','Sarah','wie','geht','es','dir'], valid: [ ['Liebe','Sarah','wie','geht','es','dir'] },
-  { hint: 'Formell: höfliche Bitte', parts: ['Könnten','Sie','mir','bitte','mitteilen','ob'], valid: [ ['Könnten','Sie','mir','bitte','mitteilen','ob'] },
-  { hint: 'Gefühl + weil-Satz', parts: ['Er','ist','nervös','weil','er','ein','Gespräch','hat'], valid: [ ['Er','ist','nervös','weil','er','ein','Gespräch','hat'] },
-  { hint: 'Freizeitaktivität: Verabredung', parts: ['Möchtest','du','mit','mir','tanzen','gehen'], valid: [ ['Möchtest','du','mit','mir','tanzen','gehen'] },
-  { hint: 'Zukunftsplan mit Futur I', parts: ['In','Zukunft','werde','ich','mehr','Sport','machen'], valid: [ ['In','Zukunft','werde','ich','mehr','Sport','machen'] },
-  { hint: 'Entscheidung treffen', parts: ['Wir','müssen','eine','Entscheidung','treffen'], valid: [ ['Wir','müssen','eine','Entscheidung','treffen'] },
-  { hint: 'Wunsch ausdrücken', parts: ['Sie','wünscht','sich','ein','glückliches','Leben'], valid: [ ['Sie','wünscht','sich','ein','glückliches','Leben'] }
+  { hint: 'Formeller Brief: Anrede', parts: ['Sehr','geehrte','Damen','und','Herren'], valid: [ ['Sehr','geehrte','Damen','und','Herren'] ] },
+  { hint: 'Informeller Brief: Anrede', parts: ['Liebe','Sarah','wie','geht','es','dir'], valid: [ ['Liebe','Sarah','wie','geht','es','dir'] ] },
+  { hint: 'Formell: höfliche Bitte', parts: ['Könnten','Sie','mir','bitte','mitteilen','ob'], valid: [ ['Könnten','Sie','mir','bitte','mitteilen','ob'] ] },
+  { hint: 'Gefühl + weil-Satz', parts: ['Er','ist','nervös','weil','er','ein','Gespräch','hat'], valid: [ ['Er','ist','nervös','weil','er','ein','Gespräch','hat'] ] },
+  { hint: 'Freizeitaktivität: Verabredung', parts: ['Möchtest','du','mit','mir','tanzen','gehen'], valid: [ ['Möchtest','du','mit','mir','tanzen','gehen'] ] },
+  { hint: 'Zukunftsplan mit Futur I', parts: ['In','Zukunft','werde','ich','mehr','Sport','machen'], valid: [ ['In','Zukunft','werde','ich','mehr','Sport','machen'] ] },
+  { hint: 'Entscheidung treffen', parts: ['Wir','müssen','eine','Entscheidung','treffen'], valid: [ ['Wir','müssen','eine','Entscheidung','treffen'] ] },
+  { hint: 'Wunsch ausdrücken', parts: ['Sie','wünscht','sich','ein','glückliches','Leben'], valid: [ ['Sie','wünscht','sich','ein','glückliches','Leben'] ] }
 ];
 
 // ===== SATZBAU (neu: satzbau-drag-drop Pattern) =====
@@ -856,29 +873,14 @@ function checkVocabAllOk() {
 }
 
 function showVocabLoesung() {
-  document.querySelectorAll('#tab5 .vocab-inputs input').forEach(function(inp) {
-    var field = inp.dataset.field;
-    var user = (field==='art') ? inp.value.trim() : inp.value.trim();
-    var answer = (field==='art') ? inp.dataset.answer : inp.dataset.answer;
-    var hint = inp.nextElementSibling;
-    if (hint && hint.classList.contains('vocab-hint')) hint.remove();
-    if (user === answer) { inp.classList.remove('wrong'); inp.classList.add('correct'); }
-    else {
-      inp.classList.add('wrong');
-      var h = document.createElement('span');
-      h.className = 'vocab-hint'; h.textContent = inp.dataset.answer;
-      inp.insertAdjacentElement('afterend', h);
-    }
+  document.querySelectorAll('#wortschatzContainer input.blank').forEach(function(inp) {
+    inp.value = inp.dataset.answer;
+    inp.classList.remove('wrong'); inp.classList.add('correct');
   });
   timerStop(5);
 }
 
 function resetVocab() {
-  document.querySelectorAll('#tab5 .vocab-inputs input').forEach(function(inp) {
-    inp.value = ''; inp.classList.remove('correct', 'wrong');
-    var hint = inp.nextElementSibling;
-    if (hint && hint.classList.contains('vocab-hint')) hint.remove();
-  });
   timerResetOne(5);
   initVocab();
 }
@@ -886,9 +888,6 @@ function resetVocab() {
 // ─── INIT ────────────────────────────────────────────────────
 window.onload = function() {
   renderMC();
-  renderLuecken(1);
-  renderLuecken(2);
-  renderLuecken(3);
   initSatzbau(4);
   initVocab();
   loadBestTimes();
@@ -981,6 +980,247 @@ function checkWortschatzAllOk() {
   setTimeout(toggle, 80);
 })();
 </script>
+<script>
+/* ========== TAB: GENUS (injiziert) ========== */
+var GENUS_DATA = [
+  { word: "Brief", cat: "der" },
+  { word: "Vermieter", cat: "der" },
+  { word: "Mieter", cat: "der" },
+  { word: "Wettkampf", cat: "der" },
+  { word: "Wunsch", cat: "der" },
+  { word: "Balkon", cat: "der" },
+  { word: "Wohnung", cat: "die" },
+  { word: "Miete", cat: "die" },
+  { word: "Anzeige", cat: "die" },
+  { word: "Entscheidung", cat: "die" },
+  { word: "Überraschung", cat: "die" },
+  { word: "Zukunft", cat: "die" },
+  { word: "Lebensziel", cat: "das" },
+  { word: "Konzert", cat: "das" },
+  { word: "Wochenende", cat: "das" },
+  { word: "Gespräch", cat: "das" },
+  { word: "Kino", cat: "das" },
+  { word: "Gefühl", cat: "das" },
+  { word: "Briefe", cat: "pl" },
+  { word: "Wohnungen", cat: "pl" },
+  { word: "Anzeigen", cat: "pl" },
+  { word: "Entscheidungen", cat: "pl" },
+  { word: "Wünsche", cat: "pl" },
+  { word: "Grüße", cat: "pl" }
+];
+var GENUS_TIMER = 6;
+var draggedGenus = null, selectedGenus = null;
+var genusSec = 0, genusInt = null;
+function genusFmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function genusTimerStart(){ if(genusInt) return; genusInt=setInterval(function(){ genusSec++; var el=document.getElementById('timer-'+GENUS_TIMER); if(el) el.textContent=genusFmt(genusSec); },1000); }
+function genusTimerStop(){ if(genusInt){ clearInterval(genusInt); genusInt=null; } var b=document.getElementById('best-'+GENUS_TIMER); if(b){ var pv=/^\d\d:\d\d$/.test(b.textContent)?parseInt(b.textContent.slice(0,2))*60+parseInt(b.textContent.slice(3)):1e9; if(genusSec<pv) b.textContent=genusFmt(genusSec); } }
+function genusTimerReset(){ if(genusInt){ clearInterval(genusInt); genusInt=null; } genusSec=0; var el=document.getElementById('timer-'+GENUS_TIMER); if(el) el.textContent='00:00'; }
+function shuffleGenus(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function createGenusChip(d){
+  var chip=document.createElement('div');
+  chip.className='genus-chip'; chip.draggable=true; chip.dataset.cat=d.cat; chip.textContent=d.word;
+  chip.addEventListener('dragstart',function(e){ genusTimerStart(); draggedGenus=chip; chip.classList.add('dragging'); e.dataTransfer.setData('text/plain',''); });
+  chip.addEventListener('dragend',function(){ chip.classList.remove('dragging'); });
+  chip.addEventListener('click',function(){
+    if(selectedGenus===chip){ chip.classList.remove('selected'); selectedGenus=null; return; }
+    if(selectedGenus) selectedGenus.classList.remove('selected');
+    selectedGenus=chip; chip.classList.add('selected'); genusTimerStart();
+  });
+  return chip;
+}
+function initGenus(){
+  var pool=document.getElementById('genusPool'); if(!pool) return;
+  pool.innerHTML='';
+  ['der','die','das','pl'].forEach(function(c){ var z=document.getElementById('drop-'+c); if(z) z.innerHTML=''; });
+  var fb=document.getElementById('genusFeedback'); if(fb) fb.textContent='';
+  shuffleGenus(GENUS_DATA).forEach(function(d){ pool.appendChild(createGenusChip(d)); });
+  document.querySelectorAll('#sec-genus .genus-drop').forEach(function(zone){
+    zone.addEventListener('dragover',function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+    zone.addEventListener('dragleave',function(){ zone.classList.remove('dragover'); });
+    zone.addEventListener('drop',function(e){ e.preventDefault(); zone.classList.remove('dragover'); if(!draggedGenus) return; zone.appendChild(draggedGenus); checkGenusChip(draggedGenus, zone.dataset.cat); draggedGenus=null; updateGenusFeedback(); });
+    zone.addEventListener('click',function(){ if(!selectedGenus) return; zone.appendChild(selectedGenus); checkGenusChip(selectedGenus, zone.dataset.cat); selectedGenus.classList.remove('selected'); selectedGenus=null; updateGenusFeedback(); });
+  });
+  pool.addEventListener('dragover',function(e){ e.preventDefault(); });
+  pool.addEventListener('drop',function(e){ e.preventDefault(); if(draggedGenus){ pool.appendChild(draggedGenus); draggedGenus.classList.remove('correct','wrong'); draggedGenus=null; updateGenusFeedback(); } });
+}
+function checkGenusChip(chip,cat){
+  var ok=chip.dataset.cat===cat;
+  chip.classList.toggle('correct',ok); chip.classList.toggle('wrong',!ok);
+  if(!ok){ setTimeout(function(){ chip.classList.remove('wrong'); document.getElementById('genusPool').appendChild(chip); updateGenusFeedback(); },900); }
+}
+function updateGenusFeedback(){
+  var platziert=document.querySelectorAll('#sec-genus .genus-drop .genus-chip').length;
+  var richtig=document.querySelectorAll('#sec-genus .genus-drop .genus-chip.correct').length;
+  var fb=document.getElementById('genusFeedback'); if(!fb) return;
+  if(platziert===0){ fb.textContent=''; return; }
+  fb.textContent=richtig+' von '+GENUS_DATA.length+' richtig zugeordnet.';
+  fb.style.color=(richtig===GENUS_DATA.length)?'#2e7d32':'#555';
+  if(richtig===GENUS_DATA.length) genusTimerStop();
+}
+function showGenusLoesung(){
+  Array.from(document.querySelectorAll('#sec-genus .genus-chip')).forEach(function(chip){
+    var z=document.getElementById('drop-'+chip.dataset.cat);
+    if(z){ z.appendChild(chip); chip.classList.remove('wrong'); chip.classList.add('correct'); }
+  });
+  updateGenusFeedback();
+}
+function resetGenus(){ initGenus(); genusTimerReset(); }
+(function(){ initGenus(); })();
+</script>
 
+
+
+<!-- FB-LT-STORY-ENGINE -->
+<script>
+/* ============================================================================
+   FB-LT-STORY — kanonische Lückentext-Engine (EINE Quelle der Wahrheit)
+   ----------------------------------------------------------------------------
+   Mit Frank abgenommen 2026-06-30 (Piloten 1057X Heimweh, 3065G Adjektivdeklination).
+   Diese Datei ist die EINZIGE Quelle der mechanischen Lückentext-Logik. Der
+   Produzent scripts/inject_lt.py spielt sie (plus die CSS unten) in jede Lektion
+   ein — NIE von Hand pro Datei kopieren (sonst driften die Engines, genau der
+   Fehler, den wir abschaffen).
+
+   Kanonische Form:
+     · zusammenhängende STORY (Serif-Fließtext, Inline-Lücken), KEINE Nummern;
+     · GENAU 10 Lücken;  · §7-Wortbank (gemischt, nicht klickbar, .used);
+     · case-sensitiv, kein Prüfen-Button (nur Live-Feedback);
+     · Variante erkennt sich SELBST:
+         - hat eine Lücke data-base  → Grammatik (G): Wortbank zeigt die GRUNDFORM
+           (data-base), die Zielform (data-answer) ist nie sichtbar;
+         - sonst                     → Wortschatz (V/R/X): Wortbank zeigt die
+           Vollform (= data-answer).
+     · .used streicht den Chip der getroffenen Lücke durch (G: per data-base) —
+       Fortschrittsanzeige, verrät die Zielform nicht (Frank bestätigt 2026-06-30).
+
+   Markup-Vertrag (vom Produzenten erzeugt, vom Gate check_lueckentext.py geprüft):
+     <div class="wortbank" id="wortbank-luecken"></div>
+     <div id="lueckenContainer" class="luecken-story">
+       <p>… <input class="blank" data-answer="ZIELFORM" [data-base="GRUNDFORM"]> …</p>
+     </div>
+
+   Timer-Anbindung: die Engine ruft generische Hooks window.fbLtTimerStart()/
+   fbLtTimerStop(); der Produzent verdrahtet sie pro Datei auf den richtigen
+   Tab-Index (timerAutoStart(N)/timerStop(N)). Fehlen die Hooks, läuft die Engine
+   ohne Timer weiter.
+   ============================================================================ */
+
+/* ---- KANONISCHE CSS (vom Produzenten mit eingespielt) -----------------------
+.luecken-story { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 2.1; color: #2c2c2c; text-align: justify; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 18px 22px; }
+.luecken-story p { margin: 0 0 14px; }
+.luecken-story p:last-child { margin-bottom: 0; }
+.luecken-story input.blank { font-family: Georgia, 'Times New Roman', serif; border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-size: 1em; color: #2c2c2c; text-align: center; padding: 1px 4px; min-width: 4ch; transition: all .2s; }
+.luecken-story input.blank:focus { border-bottom-color: #667eea; }
+.luecken-story input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+.luecken-story input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
+.wortbank { display:flex; flex-wrap:wrap; gap:8px; padding:14px; background:#f0f0f8; border-radius:10px; min-height:48px; margin-bottom:18px; border:1px dashed #bbb; }
+.wortbank-chip { background:white; border:2px solid #667eea; color:#667eea; padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
+.wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
+---------------------------------------------------------------------------- */
+
+(function () {
+  "use strict";
+  if (window.__fbLtStory) return;
+  window.__fbLtStory = true;
+
+  function gaps() {
+    return Array.prototype.slice.call(
+      document.querySelectorAll('#lueckenContainer input.blank'));
+  }
+  // Wortbank-Wort einer Lücke: Grundform (G) falls vorhanden, sonst Vollform.
+  function wordOf(i) {
+    return i.getAttribute('data-base') || i.getAttribute('data-answer') || '';
+  }
+  function shuffle(a) {
+    for (var k = a.length - 1; k > 0; k--) {
+      var j = Math.floor(Math.random() * (k + 1));
+      var t = a[k]; a[k] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function update() {
+    var bank = document.getElementById('wortbank-luecken');
+    if (!bank) return;
+    var rem = gaps().filter(function (i) { return i.classList.contains('correct'); })
+                    .map(wordOf);
+    Array.prototype.slice.call(bank.querySelectorAll('.wortbank-chip')).forEach(function (c) {
+      var idx = rem.indexOf(c.textContent);
+      if (idx >= 0) { c.classList.add('used'); rem.splice(idx, 1); }
+      else { c.classList.remove('used'); }
+    });
+  }
+
+  function done() {
+    var gg = gaps();
+    if (gg.length && gg.every(function (i) { return i.classList.contains('correct'); })
+        && typeof window.fbLtTimerStop === 'function') window.fbLtTimerStop();
+  }
+
+  function live(i) {
+    var ans = i.getAttribute('data-answer'), val = i.value;   // case-sensitive, kein trim
+    i.classList.remove('correct', 'wrong');
+    if (val) {
+      if (val === ans) i.classList.add('correct');
+      else if (ans.indexOf(val) !== 0) i.classList.add('wrong');
+      if (typeof window.fbLtTimerStart === 'function') window.fbLtTimerStart();
+    }
+    update();
+    done();
+  }
+
+  function build() {
+    var bank = document.getElementById('wortbank-luecken');
+    if (!bank) return;
+    var gg = gaps();
+    if (!gg.length) return;
+    gg.forEach(function (i) {
+      var a = i.getAttribute('data-answer') || '', b = i.getAttribute('data-base') || '';
+      i.placeholder = '';
+      i.style.width = (Math.max(a.length, b.length) + 3) + 'ch';
+      if (!i.__fbWired) {
+        i.__fbWired = true;
+        i.addEventListener('input', function () { live(i); });
+      }
+    });
+    var seen = {}, words = [];
+    gg.forEach(function (i) { var w = wordOf(i); if (w && !seen[w]) { seen[w] = true; words.push(w); } });
+    bank.innerHTML = '';
+    shuffle(words).forEach(function (w) {
+      var c = document.createElement('span');
+      c.className = 'wortbank-chip';
+      c.textContent = w;
+      bank.appendChild(c);
+    });
+    update();
+  }
+
+  // Öffentliche Hooks für die Steuer-Buttons (Produzent verdrahtet onclick darauf).
+  window.fbLtBuild = build;
+  window.fbLtShowLoesung = function () {
+    gaps().forEach(function (i) {
+      i.value = i.getAttribute('data-answer');
+      i.classList.add('correct'); i.classList.remove('wrong');
+    });
+    update();
+    if (typeof window.fbLtTimerStop === 'function') window.fbLtTimerStop();
+  };
+  window.fbLtReset = function () {
+    gaps().forEach(function (i) { i.value = ''; i.classList.remove('correct', 'wrong'); });
+    build();
+  };
+
+  function run() { build(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+  // Beim Wechsel auf den Lückentext-Tab neu aufbauen (mischt die Wortbank).
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('.nav-btn')) setTimeout(build, 80);
+  });
+})();
+
+</script>
+
+<!-- FB-LT-STORY-HOOKS --><script>window.fbLtTimerStart=function(){if(typeof timerAutoStart==='function')timerAutoStart(1);};window.fbLtTimerStop=function(){if(typeof timerStop==='function')timerStop(1);};</script>
 </body>
 </html>
