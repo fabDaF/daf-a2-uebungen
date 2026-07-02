@@ -1,4 +1,38 @@
-# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 5)
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 6)
+
+## In dieser Fortsetzung (6) fertiggestellt — 3 Dateien (Einheit 104x weiter)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1042X-die-meinung-sagen.html` | `9d10d24` | **Schwerwiegender echter Bug gefunden und behoben:** `showTab(n)` suchte Sections per `document.getElementById('tab-'+i)` (nicht positional wie `showSection`) — aber die Schreibwerkstatt-Section hatte die universelle ID `sec-schreib`, die NIE zum `tab-N`-Muster passt. Folge: der Schreiben-Tab war seit Erstellung der Datei komplett unsichtbar, egal welcher Nav-Button geklickt wurde (`.section{display:none}` Default, nie `.active` gesetzt). Fix: `showTab` auf die kanonische positionale `querySelectorAll('.section').forEach`-Logik umgestellt (wie überall sonst). Zusätzlich `initSchreibwerkstatt()` steckte unconditional in der geteilten `timerResetOne()` — jeder Tab-Reset (Satzbau, Wortschatz) hängte bei jedem Klick einen weiteren `input`-Listener an. `swInit`-Guard ergänzt. Neues Muster in Memory: `feedback_showtab-id-lookup-bug.md`. Lückentext: 11→10 Lücken (Familienstreit-Story, dass-Sätze). |
+| `DE_A2_1043G-nebensaetze-dass-weil.html` | `9bbb48b` | Gleicher `showTab`-Dispatcher, aber hier passten alle IDs zufällig zum `tab-N`-Muster — **kein Bug**, nur Standard-Reorder nötig. Wichtige Ergänzung zur showTab-ID-Erkenntnis: weil ID-basiert statt positional, muss ein Reorder hier durch **ID-Umbenennung** erfolgen (Genus: `tab-6`→`tab-5`, Schreiben: `tab-5`→`tab-6`), NICHT durch reines DOM-Verschieben — eine reine DOM-Verschiebung hätte keinerlei Effekt gehabt. Die FB-SCHREIB-PAD-CSS-Regel (`#tab-N{padding:...}`) muss beim ID-Rename synchron mitgezogen werden, sonst meldet `check_schreib_pad.py` erneut „kein Padding" (trat auf, gefixt). 11→10 Lücken (Bene-Story dass/weil, Grundform-Wortbank). |
+| `DE_A2_1044R-das-erste-date.html` | `90eece8` | **Zweiter Fund desselben schweren showTab-Bugs** (id `sec-schreib` matchte nie `tab-N`) — hier zusätzlich verschärft durch eine kollidierende ID-Situation: die Wortschatz-Section trug bereits `id="tab-5"`, während die Genus-Section `id="tab-7"` hatte und `tab-6` nirgends existierte — drei ID-Umbenennungen gleichzeitig nötig (Genus 7→5, Wortschatz 5→6, Schreiben sec-schreib→7) per Platzhalter-Technik, um Kollisionen zu vermeiden. Alle abhängigen Selektoren (`#tab-5 input`, `#tab-7 .genus-drop` etc.) mussten mitgezogen werden. Alex/Louise-Date-Story, 11→10 Lücken. |
+
+Alle Commits: Repo `daf-a2-uebungen`, Branch `main`. Einheit 104x (Stadtleben/Meinung/
+Nebensätze/Date) läuft: 1038S, 1041V–1044R fertig, 1045V offen.
+
+## Neue Erkenntnisse dieser Fortsetzung (6) (jetzt Teil der Checkliste)
+
+1. **`showTab(n)` mit ID-Lookup (`getElementById('tab-'+i)`) statt Positions-Lookup
+   ist eine wiederkehrende, potenziell SCHWERWIEGENDE Bug-Quelle** — wenn auch nur
+   eine einzige Section-ID nicht dem `tab-N`-Muster folgt (klassischerweise
+   `sec-schreib`, die universelle Schreibwerkstatt-ID), wird dieser Tab
+   dauerhaft NIE angezeigt, ganz ohne Fehlermeldung. Zweimal in dieser
+   Fortsetzung gefunden (1042X, 1044R), beide Male seit Dateierstellung
+   kaputt. Kein Check-Skript erkennt das — nur Browser-Klick-Verifikation
+   mit `getBoundingClientRect().height` nach echtem `.click()`. Memory:
+   `feedback_showtab-id-lookup-bug.md`.
+2. **Reorder bei ID-basiertem `showTab` braucht ID-Umbenennung, nicht
+   DOM-Verschiebung.** Wenn IDs konsistent `tab-N` folgen, bewirkt reines
+   Verschieben der DOM-Blöcke nichts — das Nav-`onclick="showTab(n)"` sucht
+   immer noch nach der alten ID. Bei Kollisionsgefahr (Ziel-ID bereits
+   vergeben) IMMER die etablierte Platzhalter-Technik nutzen (TMP-Präfix,
+   dann in zwei Schritten remappen).
+3. **FB-SCHREIB-PAD-CSS-Regeln (`#tab-N{padding:...}`) hängen an der
+   Section-ID, nicht an der Position** — bei jedem ID-Rename mitziehen,
+   sonst wird `check_schreib_pad.py` grundlos rot.
+
+## Frühere Fortsetzung (5) — zur Erinnerung
 
 ## In dieser Fortsetzung (5) fertiggestellt — 5 Dateien (Einheit 103x komplett + 104x begonnen)
 
@@ -293,9 +327,9 @@ scheitert.
 
 ## Nächste Dateien (angekündigt, noch offen)
 
-1. `DE_A2_1042X-die-meinung-sagen.html`
-2. `DE_A2_1043G-nebensaetze-dass-weil.html`
-3. `DE_A2_1044R-das-erste-date.html`
+1. `DE_A2_1045V-kunst-und-kultur.html`
+2. `DE_A2_1046X-temporale-adverbien.html`
+3. `DE_A2_1047G-reflexive-verben.html`
 
 Danach chronologisch weiter durch `htmlS/A2.1/DE_A2_10*` und `DE_A2_20*` bis
 `DE_A2_2068S...`. Exakter Restzählstand zu Beginn des nächsten Threads:
