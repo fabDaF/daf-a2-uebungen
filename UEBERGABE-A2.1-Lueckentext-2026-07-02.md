@@ -1,3 +1,16 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 16)
+
+## In dieser Fortsetzung (16) fertiggestellt — 1 Datei
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2013G-indirekte-rede.html` | `d90d9e6` | Kein Dispatcher-Bug (rein positional). 6 nummerierte Einzelsätze (dass/ob + Verb, 12 Blanks) zur Umfrage-Story verschmolzen (12→10 Blanks, 6 distinkte Grundformen: dass/ob/haben/mögen/können/laufen — genuines kleines Set). **Eigener Fehler + Selbstkorrektur:** beim Entfernen des toten Alt-JS traf `next(...)`-Suche nach dem Kommentar „TAB 1 — LÜCKENTEXT" zunächst den GLEICHNAMIGEN HTML-Kommentar weiter oben in der Datei statt den JS-Kommentar — löschte dadurch versehentlich 245 Zeilen echten Inhalt zwischen beiden Fundstellen. Bemerkt durch `git diff --stat` (245 Deletions für eine erwartete ~12-Zeilen-Löschung), sofort per `git show HEAD:datei > datei` zurückgesetzt und mit eindeutigeren Ankern neu gemacht. **Neue Regel:** Kommentar-Textsuche als alleiniger Lösch-Anker ist unsicher, wenn derselbe Text auch als HTML-Kommentar vorkommt — bei Doppel-Treffern immer `grep -n` auf Eindeutigkeit prüfen, dann per Zeilennummer statt Text-Match arbeiten; nach jeder größeren Lösch-Operation `git diff --stat` als Plausibilitätscheck (erwartete Zeilenzahl ≈ tatsächliche?).
+
+**Nächste Datei: `DE_A2_2014R-ein-neuer-ernaehrungsplan.html`** (dann 2015V,
+2016X, 2017G, 2018S — Rest von Einheit 201x, danach 202x… durch bis 206x).
+
+## Frühere Fortsetzung (15) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 15)
 
 ## In dieser Fortsetzung (15) fertiggestellt — 2 Dateien (20xx-Serie begonnen)
