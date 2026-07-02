@@ -1,3 +1,36 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 20)
+
+## In dieser Fortsetzung (20) fertiggestellt — 8 Dateien (Einheit 204x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2041V-die-ausbildung.html` | `a0b1481` | 12 nummerierte Bildungsweg-Einzelsätze (Kindergarten…Fortbildung) zur Maria-Bildungsweg-Story verschmolzen (12→10 Blanks/10 Lemmata, Unterricht/Schulzeit bewusst fallengelassen). 3-Wege-Tail-Reorder (Genus+Wortschatz+Schreib) diesmal fehlerfrei im ersten Anlauf. Totes `liveCheck`/`showLueckenLoesung`/`resetLuecken`-Fragment entfernt. |
+| `DE_A2_2042X-einen-lebenslauf-schreiben.html` | `ffa556a` | 12 nummerierte Bewerbungs-Einzelsätze zur Frau-Nowak-Story verschmolzen (12→10 Blanks/10 Lemmata, Arbeitsplatz fallengelassen). inject_lt.py Hook-Autodetect scheiterte (`showSection(1); timerAutoStart(1)`-Inline-Pattern) → Hook manuell nachgetragen. Totes `liveCheck`-Fragment + Reset-Button entfernt, Tail reordered (einfacher 2-Block-Swap). |
+| `DE_A2_2043G-konjunktiv-II.html` | `1990e7d` | 11 nummerierte Konjunktiv-II-Einzelsätze (würde/hätte/wäre/könnte, 4 distinkte Lemmata) zur Lisa/Tom-Traum-Dialog-Story verschmolzen (11→10 Blanks, Grundform-Variante). Totes `luecken2`-Array/`buildTab2`/`showAnswersTab2`/`resetTab2` entfernt, Tail reordered (2-Block-Swap, fehlerfrei). |
+| `DE_A2_2044R-hermines-geschichte.html` | `e456220` | Bereits kohärente Ein-Personen-Story (Hermine, 10 Blanks exakt) — nur Entnummerierung nötig (Realschulabschluss/Freien/Schnuppertag/Vorlesungen/Ausbildung/Medizinstudium/unsicher/entscheiden/Rat/Monat). **Echter Dispatcher-Bug gefunden+behoben:** `data-section`-Klick-Handler hatte `sectionNum===5` fest an Wortschatz+Schreibwerkstatt-Init gekoppelt (Alt-Position) — nach Reorder auf `sectionNum===6`(Wortschatz)/`===7`(Schreib) mit One-Time-Guard aufgeteilt. Totes `GAP_ANSWERS`/`checkGaps`/`resetGaps` entfernt. |
+| `DE_A2_2045V-meine-biografie.html` | `463ef95` | Statischer Lückentext OHNE echte Interaktivität (`.gap-answer`-Div zeigte Antwort immer sichtbar direkt unter dem Satz!) — 12 Sätze zur Frau-Keller-Biografie-Story verschmolzen (12→10 Blanks/10 Lemmata, „zu" als schwacher Gap fallengelassen). **Zweiter echter Dispatcher-Bug (showTab-ID-Lookup-Bug, bereits in Memory dokumentiert):** `getElementById('tab'+tabIndex)` bei IDs, die dem Nummernschema NICHT folgten (`tab7`=Genus, `tab5`=Wortschatz, `sec-schreib`=Schreib) — nach Reorder wären alle drei Tabs tot gewesen. Fix: IDs auf `tab5`(Genus)/`tab6`(Wortschatz)/`tab7`(Schreib) umbenannt, alle CSS-/JS-Referenzen mitgezogen (Temp-Platzhalter-Technik gegen Kollisionen). |
+| `DE_A2_2046X-finalsaetze.html` | `804b3fd` | 12 nummerierte Finalsatz-Einzelsätze (damit/um zu, binäres Set) zur Sven-Ziele-Story verschmolzen (12→10 Blanks/2 Lemmata, 5+5 balanciert). Kein `timerAutoStart`/`timerStop` vorhanden (nur visueller `startTimer(timerId)`-String-Timer) → No-op-Hooks manuell ergänzt. Totes `checkTab1`/`checkTab2`(Alert-Stub) entfernt, Tail reordered (2-Block-Swap). |
+| `DE_A2_2047G-kasus-wiederholung.html` | `899a4d9` | Bereits reichhaltiger Au-pair-Brief (Anna, ~21 Kasus-Endungs-Lücken über LUECKEN_DATA-Array) — auf genau 10 Blanks kuratiert (e/em/en/ie, 4 Lemmata), Rest als fertigen Fließtext eingebettet (nicht mehr interaktiv). Totes `LUECKEN_DATA`/`initLuecken`/`lueckenLiveCheck`/`checkLueckenAllOk`/`showLueckenLoesung`/`resetLuecken` (kompletter Alt-Mechanismus) entfernt, Tail reordered (2-Block-Swap). |
+| `DE_A2_2048S-mein-werdegang.html` | `681e14d` | 6 Lückentext-Items (7 Sätze, bereits alle 10 Wortbank-Wörter distinkt) zur Werdegang-Story verschmolzen (10→10 Blanks, reine Prosa-Verschmelzung ohne Kürzung). Totes `liveCheck`/`showLueckenLoesung`/`resetLuecken`-Fragment entfernt. S-Datei, Genus korrekt schon letzter Tab, kein Reorder nötig. |
+
+**Einheit 204x (Die Ausbildung bis Mein Werdegang, 2041V–2048S) ist komplett
+fertig.**
+
+**Zwei echte Dispatcher-Bugs in dieser Fortsetzung gefunden und behoben**
+(nicht durch die 9 Check-Skripte erkennbar, nur durch Browser-Klick-Test):
+2044R hatte einen `sectionNum===5`-Init-Koppel-Bug (Wortschatz+Schreib-Init an
+die ALTE Schreib-Position gebunden), 2045V hatte den bereits dokumentierten
+`showTab`-ID-Lookup-Bug (`getElementById('tab'+idx)` bei nicht-numerischen IDs
+wie `sec-schreib`). Beide wären durch den reinen DOM-Reorder unbemerkt komplett
+unerreichbar geworden — **nach jedem 3-Wege-Reorder zwingend PER BROWSER jeden
+neuen Tab-Index einzeln anklicken und auf tatsächlich sichtbaren Inhalt prüfen,
+nicht nur auf grüne Check-Skripte vertrauen.**
+
+**Nächste Einheit: 205x** (`DE_A2_2051V...html` bis `2058S`), danach
+206x — Rest des A2.1-Backlogs.
+
+## Frühere Fortsetzung (19) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 19)
 
 ## In dieser Fortsetzung (19) fertiggestellt — 8 Dateien (Einheit 203x ABGESCHLOSSEN)
