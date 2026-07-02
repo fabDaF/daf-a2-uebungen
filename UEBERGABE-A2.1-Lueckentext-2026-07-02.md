@@ -1,4 +1,37 @@
-# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 6)
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 7)
+
+## In dieser Fortsetzung (7) fertiggestellt — 3 Dateien (Einheit 104x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1045V-kunst-und-kultur.html` | `2afa266` | Dritter showTab-ID-Lookup-Bug-Fund (Genus 6→4… nein: Genus 7→5? — siehe genaue Zuordnung im Commit). Lückentext war schon fast Story-Form (Kino-Familie), nur 2 Blöcke zu 1 verschmolzen, 10 Blanks bereits exakt getroffen. |
+| `DE_A2_1046X-temporale-adverbien.html` | `40b81c6` | Vierter showTab-ID-Lookup-Bug-Fund. Lina-Tagesablauf-Story, 11→10 Lücken, bewusste Doppelung „abends"/„Abends" als zwei separate Blanks (case-sensitiv unterschiedlich, matcht Wortbank-Dedup korrekt als 2 Chips). |
+| `DE_A2_1047G-reflexive-verben.html` | `d59f2dd` | G-Datei ohne ID-Bug (IDs bereits konsistent `tab-N`) — nur Standard-Reorder. Jonas-Brief-Story für Reflexivpronomen (mich/dich/sich/uns/euch), 11→10 Lücken, Grundform-Wortbank (data-base = data-answer, da Reflexivpronomen keine eigene Grundform haben). |
+| `DE_A2_1048S-kulturelle-interessen.html` | `7a9b4ab` | **Sauberste Architektur bisher** (`showTab(n, btn)` mit explizitem Button-Argument, `sec-N`-IDs konsistent zu Nav-Index) — kein ID-Lookup-Bug. Dafür anderer Fund: die ALTE Lückentext-JS war schon vor meinem Edit kaputt — `liveCheckLt()` las `inp.dataset.ans`, aber die Inputs hatten `data-answer` gesetzt (Mismatch → `undefined`), UND `LT2_IDS` referenzierte `id="lt0..lt10"`, die auf den Inputs gar nicht existierten (`getElementById` immer `null`). Live-Feedback, Timer-Start und Lösungen-Button waren dadurch komplett wirkungslos — hinfällig geworden durch die kanonische Ersetzung, aber bemerkenswert als eigenständiger Fund. Theater/Tagesablauf-Story, 11→10 Lücken. Vierte Bestätigung: S-Dateien haben keinen Schreibwerkstatt-Tab (1018S, 1028S, 1038S, 1048S).
+
+**Einheit 104x (Meinung/Nebensätze/Date/Kunst/Adverbien/Reflexiv/Kultur,
+1041V–1048S) ist damit komplett fertig — alle 8 Dateien.** Alle Commits: Repo
+`daf-a2-uebungen`, Branch `main`.
+
+## Neue Erkenntnisse dieser Fortsetzung (7)
+
+1. **Nicht jede Datei mit `showTab`-Dispatcher hat den ID-Lookup-Bug** —
+   1043G und 1047G (beide G-Dateien) hatten bereits konsistente `tab-N`-IDs
+   und brauchten nur den Standard-Reorder. Insgesamt in dieser Session
+   4 von 8 Einheit-104x-Dateien vom schweren Bug betroffen (1042X, 1044R,
+   1045V, 1046X) — kein Vorhersagemuster nach Dateityp, IMMER prüfen.
+2. **1048S zeigt eine dritte, sauberere `showTab`-Architektur**
+   (`showTab(n, btn)` mit explizitem Button-Argument statt Index-Suche für
+   den Button, `sec-N`-IDs matchen den Nav-Index konsistent) — als Vorbild
+   für künftige Dateien, falls Frank irgendwann eine Vereinheitlichung
+   wünscht.
+3. **Nicht jeder Lückentext-Altcode ist nur „unkanonisch" — manche sind
+   bereits funktional tot** (1048S: `dataset.ans` vs. `data-answer`-Mismatch
+   + fehlende Input-IDs). Bei der Konvertierung immer kurz sichten, ob der
+   Altcode überhaupt lief — falls nicht, ist die Konvertierung ein Bugfix,
+   nicht nur eine Kanonisierung.
+
+## Frühere Fortsetzung (6) — zur Erinnerung
 
 ## In dieser Fortsetzung (6) fertiggestellt — 3 Dateien (Einheit 104x weiter)
 
@@ -327,9 +360,8 @@ scheitert.
 
 ## Nächste Dateien (angekündigt, noch offen)
 
-1. `DE_A2_1045V-kunst-und-kultur.html`
-2. `DE_A2_1046X-temporale-adverbien.html`
-3. `DE_A2_1047G-reflexive-verben.html`
+Einheit 104x komplett. Weiter mit Einheit 105x (nächste Dateien im
+Verzeichnis nach 1048S, per `ls htmlS/A2.1/DE_A2_105*` ermitteln).
 
 Danach chronologisch weiter durch `htmlS/A2.1/DE_A2_10*` und `DE_A2_20*` bis
 `DE_A2_2068S...`. Exakter Restzählstand zu Beginn des nächsten Threads:
