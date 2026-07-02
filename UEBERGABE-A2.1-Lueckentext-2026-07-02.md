@@ -1,3 +1,27 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 14)
+
+## In dieser Fortsetzung (14) fertiggestellt — 2 Dateien (Einheit 107x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1071W-einen-brief-schreiben.html` | `73c9bb3` | **Neuer Bug-Typ: doppelte Schreibwerkstatt.** W-Dateien haben zusätzlich zur kanonischen 📨 Schreibwerkstatt (5 Mikroaufgaben) einen EIGENEN nativen 📝-Tab mit lektionsspezifischen Schreibvorlagen (Brief an Freundin, E-Mail an Vermieter) — beide trugen denselben Namen „Schreibwerkstatt" und dieselbe `schreib-last`-Klasse. Fix: nativer Tab umbenannt auf „Schreibaufgaben" (matcht seine eigene `<h2>`), `schreib-last` nur bei der kanonischen 📨-Instanz belassen, DOM-Reorder Genus→kanonisches Schreiben ans Ende. **Eigener Fehler dabei:** automatisiertes Block-Swap-Skript (naive „erstes `</div>` nach Öffnung"-Suche) hat die Sections falsch geschnitten und Inhalte verschachtelt — beim Verifizieren sofort aufgefallen (Aufgaben-Karten lagen außerhalb jeder Section), manuell mit präzisen Zeilen-Ankern rekonstruiert. Lückentext: 3 disjunkte Themenblöcke (Vermieter-Brief/Stress-Brief/Wohnungsvokabular) zur Alex-Doppelbrief-Story verschmolzen (18→10 distinkte Wörter). |
+| `DE_A2_1072S-eine-unterhaltung.html` | `c8040ac` | S-Datei (kein Schreiben-Tab, Genus korrekt schon letzter Tab). Drei disjunkte Themenblöcke (Gefühle/Freizeitaktivitäten/Zukunftspläne) zur Jonas-Bewerbungsgespräch-Story verschmolzen (18→10 distinkte Wörter: nervös/neidisch/tanzen/Konzert/Lebensziel/Entscheidung/wütend/optimistisch/planen/glücklich). Timer nutzt String-Keys (`timerStart('lt')`), dritter Fall dieses Musters in dieser Session (nach 1068S, 1071W). |
+
+**Einheit 107x (Brief schreiben, Unterhaltung, 1071W–1072S) ist komplett
+fertig.**
+
+**Neue Lektion aus dem Swap-Fehler bei 1071W:** Beim Verschieben von
+DOM-Blöcken per Skript IMMER exakte, eindeutige Zeilen-Anker verwenden
+(volle öffnende/schließende Tags mit ID, nicht bloß „erstes `</div>` nach
+X") und das Ergebnis sofort per `grep`+visueller Kontrolle verifizieren,
+bevor injiziert/committet wird — verschachtelte Divs mit mehreren
+`</div>` auf gleicher Ebene lassen naive Suchen leicht fehlschlagen.
+
+**Nächste Einheit: 108x** (danach 20xx…). Backlog-Stand: A2.1 hat noch
+etwa 40 Dateien mit Lückentext-Tab offen (108x + gesamte 20xx-Serie).
+
+## Frühere Fortsetzung (13) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 13)
 
 ## In dieser Fortsetzung (13) fertiggestellt — 3 Dateien (Einheit 106x ABGESCHLOSSEN)
