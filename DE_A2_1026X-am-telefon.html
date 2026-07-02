@@ -453,7 +453,6 @@ var lueckenBuilt=false, qaBuilt=false, sbBuilt=false, wsBuilt=false, swInit=fals
 function showSection(idx){
     document.querySelectorAll('.section').forEach(function(s,i){s.classList.toggle('active',i===idx);});
     document.querySelectorAll('.nav-btn').forEach(function(b,i){b.classList.toggle('active',i===idx);});
-    if(idx===1&&!lueckenBuilt){buildLuecken();lueckenBuilt=true;}
     if(idx===2&&!qaBuilt){qaInit();qaBuilt=true;}
     if(idx===3&&!sbBuilt){initSatzbau();sbBuilt=true;}
     if(idx===5){initWortschatz();}
@@ -502,19 +501,6 @@ var VOCAB=[
 // ══════════════════════════════════════
 // TAB 1: LÜCKENTEXT
 // ══════════════════════════════════════
-var LT1=[
-    {vor:'Hallo, ',nach:' ist Heike Lehmann.',ans:'hier',size:60},
-    {vor:'Wie kann ich Ihnen ',nach:'?',ans:'weiterhelfen',size:130},
-    {vor:'Er wird Sie dann ',nach:'.',ans:'zurückrufen',size:130},
-    {vor:'Vielen Dank für Ihre Hilfe! ',nach:'!',ans:'auf wiederhören',size:170},
-    {vor:'Ist Frau Gruber ',nach:'?',ans:'da',size:40},
-    {vor:'Die Leitung ist ',nach:'.',ans:'besetzt',size:90},
-    {vor:'Das Telefon ',nach:'.',ans:'klingelt',size:90},
-    {vor:'Sie hat eine ',nach:' bekommen.',ans:'Sprachnachricht',size:160}
-];
-function liveCheckLuecke(inp){var val=inp.value.trim();var ans=inp.dataset.answer;inp.classList.remove('correct','wrong');if(!val)return;if(val===ans){inp.classList.add('correct');timerAutoStart(1);checkLueckenOk();return;}if(ans.indexOf(val)===0){timerAutoStart(1);return;}inp.classList.add('wrong');}
-function checkLueckenOk(){var inputs=document.querySelectorAll('#lueckenContainer input.blank');if(Array.from(inputs).every(function(i){return i.classList.contains('correct');}))timerStop(1);}
-function buildLuecken(){var c=document.getElementById('lueckenContainer');LT1.forEach(function(item,i){var div=document.createElement('div');div.className='luecken-satz';div.innerHTML='<span class="luecken-num">'+(i+1)+'</span>'+item.vor+'<input class="blank" data-answer="'+item.ans+'" style="width:'+item.size+'px" placeholder="">'+item.nach;c.appendChild(div);var inp=div.querySelector('input.blank');inp.addEventListener('input',function(){liveCheckLuecke(inp);});});}
 function resetLuecken(){timerResetOne(1);document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){inp.value='';inp.classList.remove('correct','wrong');});}
 function loesungLuecken(){document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.remove('wrong');inp.classList.add('correct');});}
 
