@@ -1,4 +1,15 @@
-# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 7)
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 8)
+
+## In dieser Fortsetzung (8) fertiggestellt — 1 Datei (Einheit 105x begonnen)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1052X-wortbildung-suffixe.html` | `0c16982` | **Fünfter, ungewöhnlichster showTab-ID-Lookup-Bug-Fund:** Nav-Button „Schreibwerkstatt" (showTab(4)) zeigte tatsächlich den Wortschatz-Inhalt (id="sec-4" war fälschlich auf dem Wortschatz-Tab), während die echte Schreibwerkstatt-Section die Fremd-ID `sec-schreib` trug und von KEINEM Button erreichbar war; Button „Wortschatz" (showTab(5)) zeigte auf ein nicht existierendes `sec-5` → toter Tab (JS-Fehler bei jedem Klick). Zusätzlich lag die Tab-Reihenfolge komplett verkehrt (Schreiben→Wortschatz→Genus statt kanonisch Genus→Wortschatz→Schreiben) und wurde nur kosmetisch per `order:99` kaschiert. Fix: alle drei Blöcke (Genus/Wortschatz/Schreiben) im DOM in kanonischer Reihenfolge neu angeordnet, IDs sec-4/5/6 konsistent zur Nav neu vergeben, alle zugehörigen JS-Selektoren (#sec-4/#sec-6-Referenzen, timerAutoStart/timerStop/timerResetOne-Indizes) und die CSS-Padding-Regel (#sec-schreib→#sec-6) mitgezogen, Timer-Arrays von 5 auf 6 Elemente erweitert. Lückentext war komplett unkanonisch (13 durchnummerierte Einzelsätze in 3 Themenblöcken, tote Alt-JS mit `dataset.ans`/`id="lt0..12"`-Mismatch — nie funktionsfähig) → als 10-Lücken-Story neu geschrieben (Tennis-Rivalen Louis/Paul, alle 11 Suffixe aus der Übersichtstabelle bis auf -chen/-lein abgedeckt, Wortschatz-Variante). `inject_lt.py` erkannte den Lückentext-Tab-Index nicht automatisch (Nav-Regex erwartet `showTab(N)` ohne zweites Argument, Datei nutzt `showTab(N,this)`) → Timer-Hooks manuell nachgetragen. Browser-verifiziert: alle 7 Tabs zeigen korrekten Inhalt mit realer Höhe, Wortbank 10 Chips, Live-Check/Lösungen/Reset funktionieren.
+
+**Nächste Datei: `DE_A2_1053G-der-ein-woerter.html`** (G-Datei, danach 1054R, 1055V,
+1056X, 1057G, 1058S — Rest von Einheit 105x, dann 106x…).
+
+## Frühere Fortsetzung (7) — zur Erinnerung
 
 ## In dieser Fortsetzung (7) fertiggestellt — 3 Dateien (Einheit 104x ABGESCHLOSSEN)
 
