@@ -1,3 +1,28 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 15)
+
+## In dieser Fortsetzung (15) fertiggestellt — 2 Dateien (20xx-Serie begonnen)
+
+Kein 108x vorhanden — nach 1072S geht es direkt mit der 20xx-Serie weiter.
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2011V-sinneswahrnehmungen.html` | `d7acc5b` | Positional Dispatch, Tail-Reihenfolge falsch (Schreib vor Genus/Wortschatz) → Reorder. **Zweiter unabhängiger Dispatcher-Bug:** `if(idx===6) initWortschatz()` feuerte an der Genus-Position statt an Wortschatz (war bei idx7) — durch Reorder automatisch korrekt geworden (Wortschatz jetzt selbst bei idx6). Bereits vorhandener eigener Wortbank-Mechanismus (`initWortbank`, `.luecken-inp`) komplett durch kanonische Engine ersetzt, alter toter Code entfernt (inkl. `setupLuecken()`-Aufruf in DOMContentLoaded). Zwei Themenblöcke (Restaurant/Kochen) zur Anna+Ben+Mia-Story verschmolzen (11→10 Wörter). |
+| `DE_A2_2012X-im-feinkostladen.html` | `d83af91` | Kein Dispatcher-Bug (rein positional, keine index-Bedingungen). Zwei Dialoge (Ernährung/Feinkostladen) zur Hanna+Sarah-Story verschmolzen (12→10 Wörter). **Grammatikfehler im Original gefunden und korrigiert:** „Aber Sarah *ernähren* sich" (falsche Personalform) → „ernährt" (3. Person Singular korrekt). |
+
+**Wichtige Lektion aus dem Reorder-Fehler bei 2012X (in dieser Fortsetzung
+sofort selbst bemerkt und korrigiert, bevor committet wurde):** Beim
+Vertauschen zweier Blöcke mit einem Swap-Skript ist die Zielreihenfolge
+genau zu verifizieren — ein erster Versuch vertauschte Schreib/Genus in
+der falschen Richtung (Ergebnis: Genus→Schreib→Wortschatz statt
+Genus→Wortschatz→Schreib). Sofort per `grep 'class="section'` auf die
+tatsächliche DOM-Reihenfolge geprüft, dann korrigiert. Diese
+Verifikation gehört zwingend vor jeden Browser-Test.
+
+**Nächste Datei: `DE_A2_2013G-indirekte-rede.html`** (dann 2014R, 2015V,
+2016X, 2017G, 2018S — Rest von Einheit 201x, danach 202x… durch bis 206x).
+
+## Frühere Fortsetzung (14) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 14)
 
 ## In dieser Fortsetzung (14) fertiggestellt — 2 Dateien (Einheit 107x ABGESCHLOSSEN)
