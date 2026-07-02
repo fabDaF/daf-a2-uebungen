@@ -1,3 +1,22 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 10)
+
+## In dieser Fortsetzung (10) fertiggestellt — 3 Dateien (Einheit 105x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1056X-verb-lassen.html` | `be6a780` | Kein ID-Lookup-Bug (positional `toggle('aktiv', i===n)`-Dispatch), nur Tail-Reihenfolge falsch (Schreiben→Wortschatz→Genus) → Nav+DOM-Reorder. Lückentext: reiner Einzelverb-Drill (lassen: lässt/lassen/gelassen + von/vom) — Grundform-Variante, Wortbank zeigt nur 2 Chips (lassen, von) und das ist laut aktualisierter Regel korrekt (< 10 verfügbare Lemmata). Story: Mia lässt sich alles machen (Präsens/Perfekt/von+Dativ vereint). |
+| `DE_A2_1057G-adjektivendungen.html` | `410a5ad` | **Siebter showTab-ID-Lookup-Bug:** Nav „Schreibwerkstatt" zeigte auf nicht-existentes `sec-5`, echte Schreib-Section hieß `sec-schreib` (nie erreichbar); Genus lag korrekt auf `sec-6`. Fix: Genus↔Schreiben-IDs getauscht (Genus→sec-5, Schreiben→sec-6), CSS-Padding-Regel + Genus-JS-Selektoren mitgezogen. Lückentext: Adjektivendungen sind reine Suffixe (e/en/es/er/em, kein Lemma-Konzept) → Wortschatz-Variante mit `data-answer` = nackte Endung, 5 distinkte Chips (naturgemäß klein, Endungs-Inventar ist begrenzt). Story: Nina beim Einkaufen/Sport/Kochen, alle 3 Adjektivdeklinations-Kontexte (bestimmt/unbestimmt/Nullartikel) aus dem Original erhalten. |
+| `DE_A2_1058S-sport-freizeit-sprechen.html` | `030bf74` | S-Datei ohne Schreiben-Tab (bestätigt, wie 1018S/1028S/1038S/1048S). Aktive **konkurrierende Alt-Engine `FB-LT-V1`** gefunden und von `inject_lt.py` sauber entfernt (inkl. eines CSS-Kommentars mit demselben String, der den Gate-Check sonst fälschlich blockiert hätte). Lückentext bestand aus 3 unzusammenhängenden Themen (Fred/Lisa/Aussprache f-v-w) — Aussprache-Block gestrichen (Dopplung zum eigenen „Aussprache"-Tab 0), Fred+Lisa zu einer Story verschmolzen (10 Blanks, 9 distinkte Wörter, „lässt" bewusst 2× wie im Original). Browser-Test durch parallele Fremd-Session mit Tab-ID-Kollisionen erschwert (Tab-IDs wurden zwischenzeitlich von einer anderen Cowork-Session auf github.com-Tabs umgebogen) — nach `get_current_tab()`-Neuermittlung erfolgreich verifiziert.
+
+**Einheit 105x (Sport/Wortbildung/der-ein-Wörter/neue Sportart/fit bleiben/
+lassen/Adjektivendungen/Sprechen, 1051V–1058S) ist damit komplett fertig — alle
+8 Dateien.**
+
+**Nächste Einheit: 106x** (danach 107x, 108x, dann 20xx…). Backlog-Stand nach
+dieser Fortsetzung: 59 A2-Dateien (von 110 mit Lückentext-Tab).
+
+## Frühere Fortsetzung (9) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 9)
 
 ## In dieser Fortsetzung (9) fertiggestellt — 2 Dateien + 1 Nachkorrektur
