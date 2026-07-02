@@ -1,3 +1,26 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 18)
+
+## In dieser Fortsetzung (18) fertiggestellt — 8 Dateien (Einheit 202x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2021V-reisen-und-sehenswuerdigkeiten.html` | `2542e87` | Original war bereits eine kohärente Berlin-Reise-Story mit 12 Blanks (nur 2 zu viel) — auf 10 gekürzt (lohnt/ausgefallen entfernt), reine Trimm- + Markup-Migration. Totes `liveCheck`/Buttons entfernt, Tail reordered. |
+| `DE_A2_2022X-mein-letzter-urlaub.html` | `17ec4aa` | Präpositionen-Drill (11 Einzelsätze, Familie Meier Weltreise) zu 2 Absätzen verschmolzen (11→10 Blanks: für/Bei/von/bis/In/um/Nach/Auf/durch/Im). Totes `liveCheck`/`showLueckenLoesung`/`resetLuecken`-Fragment entfernt, Tail reordered. |
+| `DE_A2_2023G-position-konnektoren.html` | `5463791` | 12 nummerierte Konnektor-Einzelsätze (dass/weil/wenn/als/ob/deshalb/darum/deswegen/denn — kleines Set) zur Erste-Flugreise-Story verschmolzen (12→10 Blanks/9 Lemmata, „als" bewusst 2×). Grundform nicht nötig (Funktionswörter ohne Konjugation, wie 1015G-Präzedenzfall). Totes `LUECKEN_DATA`/`initLuecken`-Fragment entfernt, Tail reordered (kein Wortschatz-Tab). |
+| `DE_A2_2024R-mein-bester-urlaub.html` | `f9df920` | Original war bereits eine kohärente Alex/Louise/Nils-Story (New-York-Trip) mit 11 Blanks — auf 10 gekürzt („Heute" entblankt), reine Trimm- + Markup-Migration. Totes `liveCheck`-Fragment entfernt, Tail reordered. |
+| `DE_A2_2025V-gespraeche-im-hotel.html` | `291101d` | 12 nummerierte Hotel-Wortschatz-Einzelsätze zur „Familie plant Sommerurlaub"-Story verschmolzen (12→10 Blanks). **Swap-Richtungsfehler selbst bemerkt und korrigiert** (Genus→Schreib→Wortschatz statt Genus→Wortschatz→Schreib) — sofort per `grep 'class="section'` erkannt, `git show HEAD:datei > datei` zurückgesetzt, korrekt neu gemacht. Totes `liveCheck`-Fragment entfernt. |
+| `DE_A2_2026X-versteh-mich-nicht-falsch.html` | `abc2eb0` | 12 nummerierte Kommunikations-Einzelsätze zur Bernd/Missverständnis-Story verschmolzen (12→10 Blanks). Totes `liveCheck`-Fragment entfernt, Tail reordered. |
+| `DE_A2_2027G-lokal-direktionaladverbien.html` | `5a572f3` | **Größter Selbstfehler dieser Fortsetzung:** Nach dem Story-Umbau wurde versucht, ASCII-Anführungszeichen per BLINDEM `content.replace('hin"','hin"')`-Fragment auf „…"-Schluss zu fixen — traf dabei identische Teilstrings in einem völlig unabhängigen MC_DATA-Quiz-Datenblock weiter unten in der Datei und zerstörte dort mehrere JS-String-Literale (Syntax-Fehler, vom Node-Parse-Check gefangen). Datei komplett per `git show HEAD:datei > datei` zurückgesetzt, kompletter Umbau (Reorder + Story mit korrekt direkt geschriebenen „…"-Zeichen + Dead-Code-Entfernung) fehlerfrei neu gemacht. **Neue Dauerregel gespeichert** (`feedback_blind-quote-replace-gefahr.md`): Anführungszeichen immer direkt korrekt in neuen Text schreiben, nie nachträglich mit kurzen Fragmenten global ersetzen. 12 Konnektor-Einzelsätze (Direktionaladverbien, kleines Set) zur Kinder/Garten-Story verschmolzen (12→10 Blanks/9 Lemmata, „hin" bewusst 2×). |
+| `DE_A2_2028S-erzaehl-von-deinen-reisen.html` | `2337a9c` | 12 nummerierte Kreta-Reise-Einzelsätze verschmolzen (12→10 Blanks: Österreich und Eis bewusst fallengelassen, um beim Griechenland-Thema zu bleiben). Totes `liveCheck`/`resetLuecken`-Fragment entfernt. S-Datei, Genus korrekt schon letzter Tab, kein Reorder nötig. |
+
+**Einheit 202x (Reisen und Sehenswürdigkeiten bis Erzähl von deinen Reisen,
+2021V–2028S) ist komplett fertig.**
+
+**Nächste Einheit: 203x** (`DE_A2_2031V-dienstleistungen-erwerben.html` bis
+`2038S`), danach 204x…206x — Rest des A2.1-Backlogs.
+
+## Frühere Fortsetzung (17) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 17)
 
 ## In dieser Fortsetzung (17) fertiggestellt — 5 Dateien (Einheit 201x ABGESCHLOSSEN)
