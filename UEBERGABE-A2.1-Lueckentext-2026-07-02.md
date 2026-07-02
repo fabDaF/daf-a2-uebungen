@@ -1,3 +1,32 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 19)
+
+## In dieser Fortsetzung (19) fertiggestellt — 8 Dateien (Einheit 203x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2031V-dienstleistungen-erwerben.html` | `4b90460` | 12 nummerierte Dienstleistungs-Einzelsätze zur „arbeitsreicher Tag"-Story verschmolzen (12→10 Blanks: Friseur/Termin/vereinbart/Postbote/Gärtner/Bürgeramt/Auskunft/Hotel/reserviert/Rezeption — Bankangestellter/Beamte fallengelassen). Totes `liveCheck`-Fragment entfernt, Tail reordered (tab5-Muster). |
+| `DE_A2_2032X-was-soll-ich-anziehen.html` | `7a48349` | 12 nummerierte Komparativ-Einzelsätze zum Anja/Lisa-Kaufhaus-Dialog verschmolzen (12→10 Blanks, Grundform-Variante: schöner/mehr/länger/kurz/auffällig/größer/neuer/eleganter/teurer/wärmer). **Anführungszeichen-Fehler diesmal korrekt behoben** (Lehre aus 2027G angewendet): 5 ASCII-Schluss-Treffer nach Erstentwurf, aber per vollständigem eindeutigem Block-Replace (nicht per kurzem Fragment) sauber gefixt, 0 Kollateralschäden. Totes `liveCheck`-Fragment entfernt, Tail reordered. |
+| `DE_A2_2033G-praeteritum.html` | `cc6bfef` | 12 nummerierte Präteritum-Konjugationssätze (11 distinkte Verben) zur Gästeabend-Story verschmolzen (12→10 Blanks, Grundform-Variante: hatte/kaufte/kamen/kochten/spielten/brachte/musste/war/dachte/konnte — bewusst dialogfrei, um Anführungszeichen-Risiko zu vermeiden). Totes `liveCheck`-Fragment entfernt, Tail reordered (kein Wortschatz-Tab). |
+| `DE_A2_2034R-eine-woche-voller-missgeschicke.html` | `430421e` | Original war bereits durchgehend eine Ein-Personen-Erzählung (Stefan) über alle 12 Sätze — nur Entnummerierung + Prosa-Umwandlung nötig, Grundform-Variante (10 Blanks: sprang/rief/wartete/verstand/schaute/schluckte/brachte/hinterließ/ging/bekam). Totes `liveCheck`/`showLueckenLoesung`/`resetLuecken`-Fragment entfernt, Tail reordered (sec5-Muster). |
+| `DE_A2_2035V-das-geld.html` | `0b91bb6` | 12 nummerierte Geld/Bank-Einzelsätze (Text A/B gesplittet) zur Lisa-Geldmanagement-Story verschmolzen (12→10 Blanks: Girokonto/EC-Karte/abheben/Bargeld/sparen/Aktien/Börse/Investition/Kredit/Schulden). **Swap-Richtungsfehler wiederholt** (identisches Muster wie 2025V: Genus→Schreib→Wortschatz statt Genus→Wortschatz→Schreib) — sofort per `grep 'class="section'` erkannt, `git show HEAD:datei > datei` zurückgesetzt, korrekt neu gemacht. Totes `liveCheck`-Fragment entfernt. |
+| `DE_A2_2036X-beim-einwohnermeldeamt.html` | `8ef6f90` | 12 nummerierte Bürokratie-Einzelsätze (Text A/B gesplittet) zur Meral-Einbürgerung-Story verschmolzen (12→10 Blanks: Staatsbürgerin/Einwohnermeldeamt/Einbürgerung/Formular/Personalausweis/Passfoto/Adresse/Antrag/unterschreiben/abgelehnt). Totes `liveCheck`-Fragment entfernt, Tail reordered (sec4+timer-6-Muster). |
+| `DE_A2_2037G-modalpartikeln.html` | `f0918ca` | 12 nummerierte Modalpartikel-Einzelsätze mit Funktionshinweisen (8 distinkte Partikel) zum Lisa/Tom-Dialog verschmolzen (12→10 Blanks/8 Lemmata, „ja"/„mal" bewusst je 2×). Anführungszeichen diesmal von Anfang an korrekt geschrieben (Lehre aus 2027G konsequent angewendet, 0 Kollateralschäden). Totes `liveCheck`-Fragment entfernt, Tail reordered (einfacher 2-Block-Swap, kein Wortschatz-Tab, fehlerfrei). |
+| `DE_A2_2038S-unterhaltung-kleidung-dienstleistungen.html` | `3b507cc` | 9 nummerierte Präteritum-Einzelsätze (bereits eine kohärente Jubiläumsfeier-Erzählung, nur Entnummerierung + Prosa nötig) zu 2 Absätzen verschmolzen (11→10 Blanks, Grundform-Variante: sein/haben/geben/treffen/können/müssen, 6 distinkte Lemmata). Tote Lösungen/Neustart-Buttons + `liveCheck`/`showLueckenLoesung`/`resetLuecken`-Fragmente entfernt. S-Datei, Genus korrekt schon letzter Tab, kein Reorder nötig. |
+
+**Einheit 203x (Dienstleistungen erwerben bis Unterhaltung über Kleidung und
+Dienstleistungen, 2031V–2038S) ist komplett fertig.**
+
+**Bestätigtes Fehlermuster:** Der 3-Wege-Tail-Reorder (Genus+Wortschatz+Schreib)
+bleibt fehleranfälliger für Swap-Richtungsfehler (2025V, 2035V) als der
+einfache 2-Wege-Reorder ohne Wortschatz-Tab (2023G, 2027G, 2033G, 2037G — dort
+bisher 0 Fehler). Bei Dateien mit Wortschatz-Tab nach dem Swap IMMER sofort
+`grep 'class="section'` zur Richtungsverifikation, bevor weitergemacht wird.
+
+**Nächste Einheit: 204x** (`DE_A2_2041V...html` bis `2048S`), danach
+205x…206x — Rest des A2.1-Backlogs.
+
+## Frühere Fortsetzung (18) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 18)
 
 ## In dieser Fortsetzung (18) fertiggestellt — 8 Dateien (Einheit 202x ABGESCHLOSSEN)
