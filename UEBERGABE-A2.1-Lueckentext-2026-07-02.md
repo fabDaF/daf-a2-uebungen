@@ -1,4 +1,43 @@
-# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 4)
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 5)
+
+## In dieser Fortsetzung (5) fertiggestellt — 5 Dateien (Einheit 103x komplett + 104x begonnen)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1034R-die-neue-wohnung.html` | `f13f7c2` | Gleicher `initSchreibwerkstatt()`-Fehlplatzierungs-Bug wie 1032X/1033G, hier über eine verunglückte `arguments[0]===6`-Bedingung plus unconditional Aufruf — `swInit`-Guard + korrekter Dispatch-Index. LT1(5)+LT2(5)=10 Items (Louises Wohnung) waren bereits exakt 10 — nur zu 2 Absätzen verschmolzen, kein Item weggelassen. |
+| `DE_A2_1035V-mein-zuhause.html` | `39e4ac9` | Nicht-kanonische `<button class="nav-btn">`-Tags + gemischte `<section>`/`<div>`-Tab-Architektur (daf-kern §1 verletzt, aber `check_nav.py` prüft nur CSS-Pattern, nicht Tag-Name) — als Out-of-Scope belassen. LT1(6)+LT2(5)=11 zu Familie-Ludwig-Hausstory mit 10 Lücken (1 Item „Tor" weggelassen). Gleicher Dispatch-Fix (`swInit`). |
+| `DE_A2_1036X-temporale-praepositionen.html` | `9f527e7` | **Neues Muster: LT1+LT2+LT3-Dreifachcontainer** (8+6+5=19 Items, alle seit/vor/ab/bis/nach-Sätze). Zu EINER Story mit 10 Lücken verschmolzen, bewusst mit Wiederholungen (seit×3, vor×2, ab×2, bis×2, nach×1) — Wortbank dedupliziert korrekt auf 5 Chips (bestätigt bekanntes Muster `feedback_lueckentext-binaer-grammatik-wortbank`). **Pre-existing Dispatch-Index-Bug gefunden:** `if (n === 4) initWortschatz();` zeigte schon VOR meinen Edits auf den falschen (damals falsch platzierten) Tab. Reset-Button rief nur `timerResetOne(1)` ohne Input-Löschung — durch echte `resetLuecken()`-Funktion ersetzt. |
+| `DE_A2_1037G-superlativ.html` | `2dcc5de` | **Einheit 103x damit komplett.** LT1(6)+LT2(7)=13 Superlativ-Items zu Georg/Mia/Paul/Nina/Maria-Story (10 Lücken, `data-base`=Grundform). Wichtig: die kanonische FB-LT-STORY-Engine exponiert `window.fbLtShowLoesung()`/`window.fbLtReset()` — eigene `showLtSolution()`/`resetLuecken()`-Funktionen sind NICHT nötig und kollidieren nicht, aber die Buttons müssen auf die `window.fbLt*`-Hooks zeigen, sonst tut „Lösungen" nichts (im ersten Anlauf übersehen, durch Browser-Test aufgedeckt). |
+| `DE_A2_1038S-ueber-die-wohnung-reden.html` | `dc12312` | **Einheit 104x begonnen.** S-Datei — hat KEINEN Schreibwerkstatt-Tab (wie 1018S/1028S, drittes Vorkommen). LT1(5)+LT2(5)=10 (Marina/„Ich"-Umzugssätze, seit/vor/bis/ab/Nach) zu 1 zweiabsätziger Story verschmolzen, bewusste Wiederholung wie 1036X, Wortbank dedupliziert auf 5 Chips. |
+| `DE_A2_1041V-stadtleben.html` | `8b4c580` | LT1(6)+LT2(5)=11 Items (Lea/Amsterdam + Sonja/Münster) zu 10-Lücken-Story verschmolzen (1 Item „Parks" als Beinah-Dublette von „Park" weggelassen, „Markt" bewusst zweimal für beide Städte behalten). Genus/Wortschatz/Schreiben-Reorder mit vollem Timer-Swap (GENUS_TIMER 6→5, Wortschatz-Timer 5→6 inkl. aller `timerAutoStart/Stop/ResetOne`-Aufrufe in `initWortschatz()`). `initSchreibwerkstatt()` lief unconditional bei jedem Tab-Klick (fügte bei jedem Klick einen weiteren `input`-Listener hinzu) — `swInit`-Guard ergänzt. |
+
+Alle Commits: Repo `daf-a2-uebungen`, Branch `main`. **Einheit 103x (Wohnen/Umzug,
+1031V–1037G) ist damit komplett fertig.** Einheit 104x (Stadtleben) begonnen:
+1038S+1041V fertig, 1042X offen.
+
+## Neue Erkenntnisse dieser Fortsetzung (5) (jetzt Teil der Checkliste)
+
+1. **FB-LT-STORY-Engine exponiert `window.fbLtShowLoesung()`/`window.fbLtReset()`
+   als öffentliche Hooks** — die Steuer-Buttons müssen exakt darauf zeigen
+   (`onclick="window.fbLtShowLoesung()"` / `onclick="timerResetOne(N);window.fbLtReset()"`).
+   Eigene `showLtSolution()`/`resetLuecken()`-Funktionen sind überflüssig und
+   verstecken den Bug (Button tut nichts), weil `inject_lt.py` sie nicht
+   automatisch verdrahtet — nach jedem Umbau per Browser-Klick verifizieren,
+   nicht nur per Check-Skript.
+2. **LT1+LT2(+LT3)-Doppel-/Dreifachcontainer bleibt das häufigste Altmuster**
+   in Einheit 103x/104x — immer zu EINER Story mit exakt 10 Lücken
+   verschmelzen, bewusste Wiederholungen (Präpositionen mit kleinem
+   Wortschatz) sind erlaubt, echte Bedeutungsdubletten (Park/Parks) werden
+   weggelassen.
+3. **`initSchreibwerkstatt()`-Fehlplatzierung ist ein wiederkehrender,
+   echter Funktionsbug** (jetzt 5× gefunden: 1032X, 1033G, 1034R, 1035V,
+   1041V) — Standardfix: `var swInit = false;` + Gate im Dispatch auf den
+   korrekten finalen Schreiben-Index.
+4. **S-Dateien ohne Schreibwerkstatt-Tab jetzt 3× bestätigt** (1018S, 1028S,
+   1038S) — konsistentes Muster, kein Einzelfall. Bleibt eigenes
+   Arbeitspaket (`project_a21-s-dateien-ohne-schreiben-2026-07-02.md`).
+
+## Frühere Fortsetzung (4) — zur Erinnerung
 
 ## In dieser Fortsetzung (4) fertiggestellt — 6 Dateien (Einheit 102x komplett + 103x begonnen)
 
@@ -254,9 +293,9 @@ scheitert.
 
 ## Nächste Dateien (angekündigt, noch offen)
 
-1. `DE_A2_1034R-die-neue-wohnung.html`
-2. `DE_A2_1035V-mein-zuhause.html`
-3. `DE_A2_1036X-temporale-praepositionen.html`
+1. `DE_A2_1042X-die-meinung-sagen.html`
+2. `DE_A2_1043G-nebensaetze-dass-weil.html`
+3. `DE_A2_1044R-das-erste-date.html`
 
 Danach chronologisch weiter durch `htmlS/A2.1/DE_A2_10*` und `DE_A2_20*` bis
 `DE_A2_2068S...`. Exakter Restzählstand zu Beginn des nächsten Threads:
