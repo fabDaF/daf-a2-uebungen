@@ -37,8 +37,8 @@
 
   
 
-  .tab { display: none; padding: 28px 32px; }
-  .tab.active { display: block; }
+  .section { display: none; padding: 28px 32px; }
+  .section.active { display: block; }
 
   /* Timer Bar */
   .timer-bar {
@@ -235,17 +235,17 @@
   </div>
 
   <div class="nav">
-    <button class="nav-btn active" onclick="showTab(0)">1. Entdeckung</button>
-    <button class="nav-btn" onclick="showTab(2)">2. Lückentext <em>dass/weil</em></button>
-    <button class="nav-btn" onclick="showTab(3)">3. Grammatik</button>
-    <button class="nav-btn" onclick="showTab(4)">4. Reflexive Verben</button>
-    <button class="nav-btn" onclick="showTab(5)">5. Satzbau</button>
-    <button class="nav-btn" onclick="showTab(6)">6. Lesetext</button>
-        <button class="nav-btn" onclick="showTab(7)">🏷️ Genus</button>
+    <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">&#128161;</span><span class="nav-label">Entdeckung</span></div>
+    <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">&#9999;&#65039;</span><span class="nav-label">Lückentext</span></div>
+    <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">&#128202;</span><span class="nav-label">Grammatik</span></div>
+    <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">&#128260;</span><span class="nav-label">Reflexive Verben</span></div>
+    <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">&#129513;</span><span class="nav-label">Satzbau</span></div>
+    <div class="nav-btn" onclick="showSection(5)"><span class="nav-emoji">&#128214;</span><span class="nav-label">Lesetext</span></div>
+    <div class="nav-btn" onclick="showSection(6)"><span class="nav-emoji">&#127991;&#65039;</span><span class="nav-label">Genus</span></div>
   </div>
 
   <!-- TAB 0: ENTDECKUNGS-TAB -->
-  <div class="tab active" id="tab0">
+  <div class="section active" id="sec-0">
     <h2 style="color:#3949ab;margin-bottom:20px;">&#128161; Nebensätze entdecken</h2>
 
     <div class="progress-dots">
@@ -308,7 +308,7 @@
   </div>
 
   <!-- TAB 2: LÜCKENTEXT DASS/WEIL (UMSTELLÜBUNG) -->
-  <div class="tab" id="tab2">
+  <div class="section" id="sec-1">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td2">0:00</span><span class="timer-best" id="tb2">Bestzeit: &mdash;</span></div>
     <h2 style="color:#3949ab;margin-bottom:16px;"><em>dass</em> und <em>weil</em> &mdash; L&uuml;ckentext</h2>
     <p style="background:#e8eaf6;border-radius:8px;padding:10px 14px;font-size:0.88rem;color:#3949ab;margin-bottom:16px;">
@@ -333,7 +333,7 @@
   </div>
 
   <!-- TAB 3: GRAMMATIK -->
-  <div class="tab" id="tab3">
+  <div class="section" id="sec-2">
     <h2 style="color:#3949ab;margin-bottom:16px;">&#128202; Grammatik: Nebensätze mit <em>dass</em> und <em>weil</em></h2>
 
     <div class="gram-box" style="border-left-color:#1565c0;">
@@ -386,7 +386,7 @@
   </div>
 
   <!-- TAB 4: REFLEXIVE VERBEN -->
-  <div class="tab" id="tab4">
+  <div class="section" id="sec-3">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td4">0:00</span><span class="timer-best" id="tb4">Bestzeit: &mdash;</span></div>
     <h2 style="color:#3949ab;margin-bottom:16px;">Reflexive Verben &mdash; L&uuml;ckentext</h2>
     <ul class="luecken-list" id="luecken4"></ul>
@@ -398,7 +398,7 @@
   </div>
 
   <!-- TAB 5: SATZBAU -->
-  <div class="tab" id="tab5">
+  <div class="section" id="sec-4">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td5">0:00</span><span class="timer-best" id="tb5">Bestzeit: &mdash;</span></div>
     <h2 style="color:#3949ab;margin-bottom:16px;">Satzbau &mdash; Nebens&auml;tze &amp; Reflexive Verben</h2>
     <div class="satzbau-area" id="satzbau5"></div>
@@ -408,7 +408,7 @@
   </div>
 
   <!-- TAB 6: LESETEXT "Das erste Date" -->
-  <div class="tab" id="tab6">
+  <div class="section" id="sec-5">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td6">0:00</span><span class="timer-best" id="tb6">Bestzeit: &mdash;</span></div>
 
     <div class="lesetext-box">
@@ -466,7 +466,7 @@
     <div id="fb6" style="margin-top:12px;font-size:0.95rem;"></div>
   </div>
     <!-- ===== TAB: GENUS ===== -->
-    <div class="tab" id="tab7">
+    <div class="section" id="sec-6">
         <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJHZW51cyDigJQgZGVyLCBkaWUsIGRhcyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVkNmZjMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YTRhOTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIyMjAiIGZpbGw9InVybCgjYmcpIi8+CgoKICA8IS0tIEtpY2tlcjoga2xlaW5lLCBnZXNwZXJydGUgVmVyc2FsaWVuIC0tPgogIDx0ZXh0IHg9IjUwMCIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInU2Vnb2UgVUknLCBzeXN0ZW0tdWksIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjYwMCIgbGV0dGVyLXNwYWNpbmc9IjciIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC43OCI+R0VOVVMmIzE2MDsmIzE2MDsmIzE4MzsmIzE2MDsmIzE2MDtBUlRJS0VMIEJFU1RJTU1FTjwvdGV4dD4KCiAgPCEtLSBIYXVwdHplaWxlOiBydWhpZ2UgU2VyaWYgLS0+CiAgPHRleHQgeD0iMzIwIiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iNjYiIGZpbGw9IiNmZmZmZmYiPmRlcjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjE0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsICdUaW1lcyBOZXcgUm9tYW4nLCBzZXJpZiIgZm9udC1zaXplPSI2NiIgZmlsbD0iI2ZmZmZmZiI+ZGllPC90ZXh0PgogIDx0ZXh0IHg9IjY4MCIgeT0iMTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjY2IiBmaWxsPSIjZmZmZmZmIj5kYXM8L3RleHQ+CgogIDwhLS0gZGV6ZW50ZSBGYXJiYWt6ZW50ZSB1bnRlciBqZWRlbSBBcnRpa2VsIC0tPgogIDxyZWN0IHg9IjI4OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzdlYTJlNiIvPgogIDxyZWN0IHg9IjQ2OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2Q5OGNhZSIvPgogIDxyZWN0IHg9IjY0OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzg2Y2JhYiIvPgo8L3N2Zz4K" alt="Genus üben — der, die, das">
         <h2>🏷️ Genus</h2>
         <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:6px 12px;background:#f8f9fa;border-radius:8px;"><div style="display:flex;gap:6px;"><button onclick="showGenusLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div><div style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:#888;font-variant-numeric:tabular-nums;"><span>⏱ <span id="timer-6">00:00</span></span><span>🏆 <span id="best-6">--:--</span></span></div></div>
@@ -533,15 +533,9 @@ function loadBestTimes() {
   }
 }
 
-function showTab(n) {
-  var tabs = document.querySelectorAll('.tab');
-  var btns = document.querySelectorAll('.nav-btn');
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove('active');
-    btns[i].classList.remove('active');
-  }
-  document.getElementById('tab' + n).classList.add('active');
-  btns[n].classList.add('active');
+function showSection(n) {
+  document.querySelectorAll('.section').forEach(function(s, i) { s.classList.toggle('active', i === n); });
+  document.querySelectorAll('.nav-btn').forEach(function(b, i) { b.classList.toggle('active', i === n); });
   loadBestTimes();
 }
 
@@ -1191,7 +1185,7 @@ function initGenus(){
   ['der','die','das','pl'].forEach(function(c){ var z=document.getElementById('drop-'+c); if(z) z.innerHTML=''; });
   var fb=document.getElementById('genusFeedback'); if(fb) fb.textContent='';
   shuffleGenus(GENUS_DATA).forEach(function(d){ pool.appendChild(createGenusChip(d)); });
-  document.querySelectorAll('#tab7 .genus-drop').forEach(function(zone){
+  document.querySelectorAll('#sec-6 .genus-drop').forEach(function(zone){
     zone.addEventListener('dragover',function(e){ e.preventDefault(); zone.classList.add('dragover'); });
     zone.addEventListener('dragleave',function(){ zone.classList.remove('dragover'); });
     zone.addEventListener('drop',function(e){ e.preventDefault(); zone.classList.remove('dragover'); if(!draggedGenus) return; zone.appendChild(draggedGenus); checkGenusChip(draggedGenus, zone.dataset.cat); draggedGenus=null; updateGenusFeedback(); });
@@ -1206,8 +1200,8 @@ function checkGenusChip(chip,cat){
   if(!ok){ setTimeout(function(){ chip.classList.remove('wrong'); document.getElementById('genusPool').appendChild(chip); updateGenusFeedback(); },900); }
 }
 function updateGenusFeedback(){
-  var platziert=document.querySelectorAll('#tab7 .genus-drop .genus-chip').length;
-  var richtig=document.querySelectorAll('#tab7 .genus-drop .genus-chip.correct').length;
+  var platziert=document.querySelectorAll('#sec-6 .genus-drop .genus-chip').length;
+  var richtig=document.querySelectorAll('#sec-6 .genus-drop .genus-chip.correct').length;
   var fb=document.getElementById('genusFeedback'); if(!fb) return;
   if(platziert===0){ fb.textContent=''; return; }
   fb.textContent=richtig+' von '+GENUS_DATA.length+' richtig zugeordnet.';
@@ -1215,7 +1209,7 @@ function updateGenusFeedback(){
   if(richtig===GENUS_DATA.length) genusTimerStop();
 }
 function showGenusLoesung(){
-  Array.from(document.querySelectorAll('#tab7 .genus-chip')).forEach(function(chip){
+  Array.from(document.querySelectorAll('#sec-6 .genus-chip')).forEach(function(chip){
     var z=document.getElementById('drop-'+chip.dataset.cat);
     if(z){ z.appendChild(chip); chip.classList.remove('wrong'); chip.classList.add('correct'); }
   });
