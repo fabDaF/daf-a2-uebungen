@@ -1,4 +1,49 @@
-# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 3)
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 4)
+
+## In dieser Fortsetzung (4) fertiggestellt — 6 Dateien (Einheit 102x komplett + 103x begonnen)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1025V-die-firma.html` | `76c6edc` | Sauberer Fall, Anker-Lektion aus Fortsetzung 3 direkt angewendet — DOM-Move mit präzisem Anker klappte im ersten Anlauf. Ulrike/Petra/Georg-Bürostory (10 Lücken). |
+| `DE_A2_1026X-am-telefon.html` | `9d6828d` (+Fix in `9d6828d`) | **Neue Bug-Klasse entdeckt:** `inject_lt.py` erkennt nur seine BEKANNTEN Alt-Engines (FB-WORTBANK-MODULE, FB-LT-V1) und meldet trotzdem „Alt-Engine entfernt", auch wenn ein unbekanntes Eigenformat (`var LT1=[...]` + `function buildLuecken()`) unangetastet samt Dispatch-Aufruf liegen bleibt. Laufzeit-Folge: die alte Funktion lief beim Tab-Öffnen und hängte 8 weitere Inputs an die 10 neuen — 18 statt 10 Lücken, obwohl alle 9 Check-Skripte (die nur die Quelle statisch prüfen) grün waren. Nur der Browser-Test hat es aufgedeckt. Memory: `feedback_inject-lt-erkennt-nur-bekannte-altformate.md`. |
+| — (Diagnose-Vorfall, kein Datei-Fix) | — | **Root-Cause für „showSection ist undefined"-Fehldiagnose gefunden:** Control_Chrome `execute_javascript` läuft in einer isolierten JS-Welt — Funktionen/Variablen der echten Seite sind dort nicht sichtbar, auch nicht nach eigenem Script-Insert. DOM-Mutationen sind aber geteilt. Ab sofort: Tab-Wechsel/Init IMMER per echtem `.click()` auf `.nav-btn`, NIE per direktem Funktionsaufruf aus `execute_javascript`. Memory: `feedback_control-chrome-isolierte-js-welt.md`. |
+| `DE_A2_1027G-wechselpraepositionen.html` | `85e270f` | G-Datei ohne Wortschatz-Tab (nur Genus+Schreiben am Ende) — einfacherer Reorder (nur 2 Tabs tauschen). Wechselpräpositionen (Wo?/Wohin?) als Nina-Zimmer-Story, `data-base`=Nominativ-Artikel bzw. Infinitiv. |
+| `DE_A2_1028S-ueber-die-arbeit-reden.html` | `e4da3e5` | S-Datei — **hat KEINEN Schreibwerkstatt-Tab** (wie 1018S). Kein Reorder nötig, nur Lückentext kanonisiert (Jonas-Telefonat+Bewerbung-Story). Fehlender Schreiben-Tab als eigenes Arbeitspaket vermerkt: `project_a21-s-dateien-ohne-schreiben-2026-07-02.md`. |
+| `DE_A2_1031V-einziehen-und-ausziehen.html` | `83e2c12` | **Neues Muster: LT1+LT2-Doppelcontainer** (`luecken1`/`luecken2`, zwei separate Arrays, 6+5=11 Lücken) zu EINER Selma-Umzugsstory mit exakt 10 Lücken verschmolzen (1 Item bewusst weggelassen). `initSchreibwerkstatt()` lief bei jedem Tab-Klick unconditional — `swInit`-Guard ergänzt. |
+| `DE_A2_1032X-wo-und-wohin.html` | `8932919` | Gleiches LT1+LT2-Muster (8+5=13→10). **Echter Funktions-Bug gefunden:** `initSchreibwerkstatt()` war fälschlich INNERHALB von `resetWortschatz()` verdrahtet — der Schreiben-Tab wurde nie beim Laden initialisiert (Name-Feld/gespeicherte Texte blieben leer), nur nach einem Wortschatz-Reset-Klick. Herausgelöst und korrekt in `DOMContentLoaded` verschoben. |
+| `DE_A2_1033G-komparativ.html` | `58f24f2` | Gleicher `initSchreibwerkstatt()`-Fehlplatzierungs-Bug wie 1032X, diesmal in `sbResetAll()` (Satzbau-Reset) versteckt — gleicher Fix. LT1+LT2 (6+7=13) zu Georg/Philip/Bernd/Louisa/Maria-Vergleichsstory mit 10 Lücken (Grundform-Wortbank). |
+
+Alle Commits: Repo `daf-a2-uebungen`, Branch `main`. **Einheit 102x (Arbeitswelt,
+1021V–1028S) ist damit komplett fertig.** Einheit 103x (Wohnen/Umzug) begonnen:
+1031V–1033G fertig, 1034R offen.
+
+## Neue Erkenntnisse dieser Fortsetzung (jetzt Teil der Checkliste)
+
+1. **`inject_lt.py`-Meldung „Alt-Engine entfernt" ist kein Beweis, dass wirklich
+   ALLES Alte weg ist.** Nach jedem Lauf zusätzlich grep-Kontrolle:
+   `grep -n 'var LT1\|var LT2\|LUECKEN_DATA\|function buildLuecken'` — Reste
+   (Datenarray + Build-Funktion + Dispatch-Aufruf) müssen manuell entfernt
+   werden, sonst laufen alte und neue Lücken parallel und die Blank-Zahl
+   verdoppelt sich zur Laufzeit unbemerkt von den Check-Skripten.
+2. **Tab-Wechsel/Init in Control_Chrome IMMER per echtem `.click()` auf
+   `.nav-btn[n]` testen, NIE per direktem Funktionsaufruf** (`showSection(n)`
+   o. Ä.) aus `execute_javascript` — die Ausführung läuft in einer isolierten
+   JS-Welt, in der Seiten-Funktionen als `undefined` erscheinen, obwohl sie im
+   echten Skript einwandfrei existieren. DOM-Zustand danach ganz normal per
+   Selektoren/`getBoundingClientRect()`/Input-Werten abfragen — das ist geteilt.
+3. **LT1+LT2-Doppelcontainer-Muster** (zwei getrennte Datenarrays mit zwei
+   Lücken-Containern in einem Tab, meist über zwei `<h3>`-Unterüberschriften)
+   ist in Einheit 103x häufig. Immer zu EINER verbundenen Story mit exakt 10
+   Lücken verschmelzen — bei mehr als 10 Items gezielt die am wenigsten
+   zentralen weglassen (nicht künstlich pressen).
+4. **Vor dem Entfernen von `buildLuecken()`/`resetXxx()`/Dispatch-Calls immer
+   auf versehentlich mit-eingebettete `initSchreibwerkstatt()`-Aufrufe achten**
+   — in dieser Fortsetzung zweimal gefunden (1032X in `resetWortschatz()`,
+   1033G in `sbResetAll()`), beide Male ein echter Funktionsbug: der
+   Schreibwerkstatt-Tab wurde nie beim Laden initialisiert. Immer sauber in
+   `DOMContentLoaded` (oder den regulären Dispatch) verschieben.
+
+## Frühere Fortsetzung (3) — zur Erinnerung
 
 ## In dieser Fortsetzung (3) fertiggestellt — 3 neue Dateien + 1 Fix
 
@@ -209,9 +254,9 @@ scheitert.
 
 ## Nächste Dateien (angekündigt, noch offen)
 
-1. `DE_A2_1025V-die-firma.html`
-2. `DE_A2_1026X-am-telefon.html`
-3. `DE_A2_1027G-wechselpraepositionen.html`
+1. `DE_A2_1034R-die-neue-wohnung.html`
+2. `DE_A2_1035V-mein-zuhause.html`
+3. `DE_A2_1036X-temporale-praepositionen.html`
 
 Danach chronologisch weiter durch `htmlS/A2.1/DE_A2_10*` und `DE_A2_20*` bis
 `DE_A2_2068S...`. Exakter Restzählstand zu Beginn des nächsten Threads:
