@@ -1,3 +1,36 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 21)
+
+## In dieser Fortsetzung (21) fertiggestellt — 8 Dateien (Einheit 205x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2051V-technologie.html` | `36677e4` | Zwei getrennte Technik-Wortgruppen (LUECKE_A 5 Items, LUECKE_B 8 Items, Glühbirne/Anschluss doppelt) zur Herrn-Baumann-Heimwerker-Story verschmolzen (13 Vorkommen/11 distinkt → 10, Motor fallengelassen). Split-Blank-Muster für „innovativ"+„en" beibehalten. Totes `LUECKE_A`/`LUECKE_B`/`buildLuecken`/`liveCheck`/`resetLuecken` inkl. Init-Call entfernt (andere Inits im Chain unberührt gelassen, per Browser verifiziert). 3-Wege-Tail-Reorder fehlerfrei im ersten Anlauf. |
+| `DE_A2_2052X-email-schreiben.html` | `99a76a0` | Zweiteiliger E-Mail-Wortschatz-Drill (Part A formell 7 Items, Part B informell 8 Items, 15 total) zur Herrn-Ahmadi-E-Mail-Story verschmolzen (15→10 Blanks/10 Lemmata). Anführungszeichen von Anfang an korrekt gesetzt. **Fortuitous Fix:** vorbestehender `idx===5`-Bug (an ALTE Genus-Position gekoppelt) wurde durch den geplanten Reorder automatisch korrekt (Wortschatz landet zufällig auf neuer Position 5) — per Browser verifiziert. |
+| `DE_A2_2053G-indefinitpronomen.html` | `075bbe1` | Dreiteiliger Indefinitpronomen-Drill (Teil A/B/C, 23 Lücken/15 Sätze, 7 distinkte Lemmata: etwas/nichts/man/jemand/niemand/alle/manche — genuin kleines geschlossenes Set) zur Familienfeier-Story verschmolzen (10 Blanks, Grundform-Variante). **Echter Dispatcher-Bug gefunden+behoben:** `data-section`-Handler hatte `initSchreibwerkstatt()` fest an `n===4`(Satzbau) gekoppelt statt an die neue Schreib-Position — auf `n===6` mit One-Time-Guard (`window.__fbSchreibInit`) korrigiert. 2-Block-Tail-Swap (kein Wortschatz-Tab) fehlerfrei. |
+| `DE_A2_2054R-soziale-netzwerke.html` | `b0b13b5` | 10 bereits isolierte, aber alle-distinkten Social-Media-Vokabelsätze (Milliarden/Sprachnachrichten/24/Videos/Shorts/Stand/Anmeldung/Daten/Fake News/Freundschaften) zur Lisa-Story verschmolzen. Reiner Prosa-Merge ohne Kürzung (10→10). 3-Wege-Tail-Reorder fehlerfrei. |
+| `DE_A2_2055V-medien.html` | `69f81b3` | Fernseh-/Medien-Wortschatz-Drill (LUECKE_A/B, 13 Items/13 distinkte Lemmata) zur Fernsehabend-Story verschmolzen (13→10, schalte/veröffentlicht/einschalten fallengelassen). `resetLuecken` wurde nach Button-Entfernung selbst tot und mitentfernt (Nachziehen der Dead-Code-Kaskade). 3-Wege-Tail-Reorder fehlerfrei. |
+| `DE_A2_2056X-auf-dem-laufenden-bleiben.html` | `503a1ce` | Zweiteiliger Diskussions-/Gesellschaftsprobleme-Drill (Teil A 5 Items inkl. 1 Split-Answer, Teil B 5 Items inkl. 1 Split-Answer, 12 Blanks/10 distinkte Lemmata nach Split-Auflösung „herumredet") zur Diskussionsabend-Story verschmolzen (12→10). **Echter Dispatcher-Bug gefunden+behoben:** `initSchreibwerkstatt()` lief bei JEDEM Tab-Wechsel unconditional (Duplicate-Listener-Risiko) — auf `idx===6`-Guard mit One-Time-Flag korrigiert (idx===5 Wortschatz-Init blieb durch Zufall bereits korrekt). 3-Wege-Tail-Reorder (Rotation Schreib→Genus→Wortschatz zu Genus→Wortschatz→Schreib) fehlerfrei. |
+| `DE_A2_2057G-genitiv.html` | `e347b00` | 12 nummerierte Genitiv-Formen-Sätze (11 distinkt, „des Mannes" doppelt, Eigenname „Alex'" bewusst fallengelassen) zur Park-Nachmittag-Story verschmolzen (12→10, Grundform-Variante mit Nominativ-Basisform je Genitiv-NP). Kein Dispatcher-Bug (rein positional, keine Index-Conditionals betroffen). 2-Block-Tail-Swap (kein Wortschatz-Tab) fehlerfrei. |
+| `DE_A2_2058S-medien-und-technologie.html` | `ec5532b` | 10 bereits distinkte, nummerierte Technik-Sätze zur zusammenhängenden Story verschmolzen (10→10, reiner Prosa-Merge). S-Datei, Genus bereits letzter Tab, kein Reorder nötig. Statisches `.hilfe-box`-Intro entfernt (canonical FB-LT-STORY braucht keine Extra-Anleitung). |
+
+**Einheit 205x (Technologie bis Medien und Technologie, 2051V–2058S) ist
+komplett fertig.**
+
+**Zwei weitere echte Dispatcher-Bugs gefunden und behoben** (wieder nur durch
+Browser-Klick-Test, nicht durch die 9 Check-Skripte): 2053G hatte
+`initSchreibwerkstatt()` an die ALTE Satzbau-Position gekoppelt, 2056X rief
+`initSchreibwerkstatt()` bei JEDEM Tab-Wechsel unconditional auf (Duplicate-
+Listener-Risiko bei jedem Klick). Beide nach demselben Muster gefixt: Guard
+`idx===<neue Schreib-Position> && !window.__fbSchreibInit`. Der 3-Wege-Tail-
+Reorder bleibt in dieser Fortsetzung durchgängig fehlerfrei (0 Swap-Richtungs-
+Fehler über 2051V/2054V/2055V/2056X — Genus-Wortschatz-Schreib-Verifikation
+per grep VOR jeder Nav-Btn-Änderung zahlt sich aus).
+
+**Nächste Einheit: 206x** (`DE_A2_2061V...html` bis `2068S`), danach ist der
+gesamte A2.1-Lückentext-Backlog fertig.
+
+## Frühere Fortsetzung (20) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 20)
 
 ## In dieser Fortsetzung (20) fertiggestellt — 8 Dateien (Einheit 204x ABGESCHLOSSEN)
