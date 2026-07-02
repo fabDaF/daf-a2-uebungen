@@ -1,3 +1,23 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 17)
+
+## In dieser Fortsetzung (17) fertiggestellt — 5 Dateien (Einheit 201x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2014R-ein-neuer-ernaehrungsplan.html` | `14ba561` | Original war bereits eine kohärente Story (Alex+Louise) mit genau 10 Blanks, passend zu einem statischen Wortkasten — reine Markup-Migration (`luecken-inp`/`data-ans` → `blank`/`data-answer`), kein inhaltlicher Umbau nötig. Außerhalb des Scopes belassen: ein Alt-Bug auf dem Richtig/Falsch-Tab (toter Button referenziert `.luecken-inp`) und die ungewöhnliche Genus-Section-ID `id="timer-5"` (self-konsistent referenziert, Umbenennung wäre reiner Churn). Standard-Timer-Signatur bestätigt. |
+| `DE_A2_2015V-deutsches-essen.html` | `ec370f3` | 12 isolierte Einzelsätze (Familienausflug, deutsches Essen) zur Sonntagsausflug-Story verschmolzen (12→10 distinkte Wörter: Weißwurst/Brezel/Käsespätzle/Kartoffelsalat/Rotkohl/Pfannkuchen/Bratwurst/Currywurst/Sauerkraut/Döner). Totes `liveCheck`/`.luecken-inp`-Listener-Fragment entfernt. Standard-Timer, Tail reordered. |
+| `DE_A2_2016X-rezepte.html` | `14ce6a0` | Nummeriertes `<ol><li>`-Rezept (gegen die No-Numbering-Regel) in fließende Prosa umgewandelt: Lisa kocht Spaghetti Bolognese, 3. Person erzählt (8→10 Blanks: Zwiebeln/Hackfleisch/würzt/Pfeffer/schneidet/hinzugegeben/köcheln/kocht/serviert/reibt). Vorbestehender toter Listener gefunden (Datei nutzte nie `.luecken-inp`, Selector lief immer ins Leere) — als totes Gepäck entfernt, unabhängig von den eigenen Änderungen. Standard-Timer, Tail reordered. |
+| `DE_A2_2017G-passiv.html` | `7224cc5` | Restaurant-Küchen-Story (Passiv/werden), Grundform-Variante, 3 distinkte Lemmata (werden/servieren/decken — genuines kleines Set, korrekt). Totes `/* LÜCKENTEXT */`-JS-Fragment sauber entfernt (diesmal ohne Text-Match-Kollision, da Eindeutigkeit vorher per `grep -n` geprüft). `initGenus()` ist IIFE-self-invoked, kein Dispatcher-Bug. DOM-Block-Swap diesmal fehlerfrei im ersten Anlauf (exakte Zeilen-Anker über `schreib-status`-Marker verifiziert, wie in den Vorgänger-Dateien etabliert). |
+| `DE_A2_2018S-eine-unterhaltung-ueber-essen.html` | `a6f1dd5` | Zwei disjunkte Rezept-Blöcke (Kuchen backen / Hähnchen süß-sauer, 23 Blanks) zur Festessen-Story bei Familie Meier verschmolzen (23→10 distinkte Wörter: werden/vorgeheizt/geschlagen/hinzugefügt/gebacken/angebraten/gewürzt/gegeben/gebracht/serviert). Tote Lösungen/Neustart-Buttons (referenzierten nie existente `.luecken-inp`-Klasse) sowie totes `liveCheck`/`normalise`-JS-Fragment entfernt. S-Datei, kein Schreiben-Tab, Genus korrekt schon letzter Tab, kein Reorder nötig. Standard-Timer-Signatur bestätigt. |
+
+**Einheit 201x (Sinneswahrnehmungen bis Unterhaltung über Essen, 2011V–2018S)
+ist komplett fertig.**
+
+**Nächste Einheit: 202x** (`DE_A2_2021V-reisen-und-sehenswuerdigkeiten.html`
+bis `2028S`), danach 203x…206x — Rest des A2.1-Backlogs.
+
+## Frühere Fortsetzung (16) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 16)
 
 ## In dieser Fortsetzung (16) fertiggestellt — 1 Datei
