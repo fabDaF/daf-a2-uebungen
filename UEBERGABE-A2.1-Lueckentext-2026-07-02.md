@@ -1,3 +1,17 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 12)
+
+## In dieser Fortsetzung (12) fertiggestellt — 2 Dateien (Einheit 106x, 3/6)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1063G-futur-I.html` | `29e0c7f` | Kein ID-Bug. **Sonderfall:** eigenes standalone-Timer-System (`ltStarted/ltRunning/ltSecs/ltInterval` + `ltTimerAutoStart()/ltTimerStop()/ltTimerReset()`), passt nicht zur `inject_lt.py`-Standard-Hook-Signatur → manuell ersetzt. Grundform-Variante (Futur I), 16→6 distinkte Lemmata (werden/gehen/trinken/anrufen/müssen/Prognose — genuines kleines Set, kein Verstoß gegen die 10-Lemmata-Regel). Story: Silvester-Zukunftsprognosen einer Familie. Tail-Reorder mitgemacht. |
+| `DE_A2_1064R-plaene-zukunft.html` | `37df804` | Kein ID-Bug (positional `toggle('active', i===idx)`-Dispatch), aber **Original-Lückentext war JS-generiert** (nicht statisches HTML) — `initLueckentext()` baute 12 durchnummerierte Sätze aus einem `ltAnswers`-Array dynamisch ins DOM. Zu Story umgeschrieben (Hermine/Alex/Annika, Berufswunsch Krankenschwester vs. Ärztin), 12→10 distinkte Wörter (Nichte/Pizzeria/beendet/fliegen/Praktikum/Krankenschwester/Ärztin/studieren/Hoffnung/Gehalt — „beenden"-Dopplung und „Kino" gestrichen). Toter Alt-Code (`initLueckentext`, `ltCheckLive`, `ltCheckAllLt`, `ltShowAll`, `ltTimerResetOne`, `ltAnswers`, `ltTimerAutoStart`) vollständig entfernt. **Zweiter, unabhängiger Bug gefunden:** Dispatcher hatte `if(idx===6\|\|arguments[0]===6) initWortschatz()` UND zusätzlich `if(idx===5) initWortschatz()` — nach Tail-Reorder korrekt auf nur noch `if(idx===6) initWortschatz()` reduziert (Wortschatz liegt jetzt an Position 6). **Wichtige Verfahrens-Erinnerung für künftige Sessions:** `safe-commit.sh` MUSS aus dem jeweiligen Unter-Repo-Verzeichnis (hier `htmlS/A2.1`) mit relativem Dateinamen aufgerufen werden — ein versehentlicher Aufruf aus dem `fabDaF`-Root beim ersten Versuch hätte die Datei fälschlich ins B2-Root-Repo (`daf-b2-uebungen`) committet; sofort per Revert-Commit (`e92897e`, B2-Repo) rückgängig gemacht, dann korrekt im A2-Repo committet. |
+
+**Nächste Datei: `DE_A2_1065V-zukunftsplaene.html`** (dann 1066X, 1067G, 1068S
+— Rest von Einheit 106x, danach 107x, 108x, 20xx…).
+
+## Frühere Fortsetzung (11) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 11)
 
 ## In dieser Fortsetzung (11) fertiggestellt — 2 Dateien (Einheit 106x begonnen)
