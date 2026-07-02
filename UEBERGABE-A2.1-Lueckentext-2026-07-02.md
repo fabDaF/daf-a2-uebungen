@@ -1,3 +1,17 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 11)
+
+## In dieser Fortsetzung (11) fertiggestellt — 2 Dateien (Einheit 106x begonnen)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1061V-plaene-machen.html` | `4252062` | Kein ID-Bug (positional Dispatch via `querySelectorAll('.section')[n]`), nur Tail-Reihenfolge falsch → Reorder. Lückentext: Lea+Rico-Zukunftspläne-Texte (12 Blanks, 2 Themenblöcke) zu einer Story verschmolzen, auf 10 distinkte Wörter gekürzt (Absicht/Plan/wünscht sich/Ziel/verspricht/Wahrscheinlich/hoffentlich/hofft/Vielleicht/Tat), Pointe ergänzt (Rico bleibt am Ende bei Lea in Australien). |
+| `DE_A2_1062X-wenn-dann.html` | `f1f03bb` | Kein ID-Bug (positional Dispatch). **Wichtiger Sonderfall:** Datei nutzt ein eigenes `timers.{lt,sb,ws}`-Objektsystem (`timerStart(t)`/`timerStop(t)` mit Timer-OBJEKT statt Index) statt der üblichen `timerAutoStart(n)`-Arrays — `inject_lt.py`s automatische Hook-Generierung (`timerAutoStart(N)`) passt hier NICHT zur Signatur und wurde manuell durch `window.fbLtTimerStart=function(){ltTimerStart();}` / `window.fbLtTimerStop=function(){timerStop(timers.lt);}` ersetzt. Lückentext bestand aus 21 durchnummerierten Einzelsätzen (wenn/dann-Konnektoren + 5 Vokabelwörter Frist/verwerfen/Ziele/einteilen/„in Kürze") — Vokabelwörter werden bereits in Übersicht- UND Wortschatz-Tab gelehrt (verifiziert), daher im Lückentext bewusst NUR auf wenn/dann fokussiert: Story über eine Abschiedsparty, bei der 5 Freunde reihum ihre Wenn-dann-Pläne erzählen (10 Blanks, 2 distinkte Wörter — korrekt, da genuines binäres Konnektor-Paar). Beim Reorder zusätzlich `if(n===4) wsTimerStart()` auf `n===5` korrigiert (Wortschatz-Position verschoben).
+
+**Nächste Datei: `DE_A2_1063G-futur-I.html`** (dann 1064R, 1065V, 1066X, 1067G,
+1068S — Rest von Einheit 106x, danach 107x, 108x, 20xx…).
+
+## Frühere Fortsetzung (10) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 10)
 
 ## In dieser Fortsetzung (10) fertiggestellt — 3 Dateien (Einheit 105x ABGESCHLOSSEN)
