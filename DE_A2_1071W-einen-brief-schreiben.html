@@ -205,14 +205,7 @@ h2 { font-size: 1.15em; color: #4a148c; margin-bottom: 16px; }
 @media (max-width: 600px) {
   #sec-schreib { padding: 18px 16px; }
   #sec-schreib > .tab-banner { width: calc(100% + 32px); margin: -18px -16px 14px; }
-}
-/* FB-LT-V1 — Wortbank + Feedback (LUECKENTEXT-SKILL-SPEC v1.0) */
-.wortbank{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#f0f0f8;border-radius:10px;min-height:48px;margin:8px 0 18px;border:1px dashed #bbb;}
-.wortbank-chip{background:#fff;border:2px solid #667eea;color:#667eea;padding:5px 12px;border-radius:14px;font-weight:500;font-size:0.9em;user-select:none;}
-.wortbank-chip.used{opacity:0.35;text-decoration:line-through;}
-input.correct{border-bottom:2px solid #27ae60 !important;background:#e8f8f0 !important;color:#27ae60 !important;font-weight:700;}
-input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !important;color:#e74c3c !important;}
-/* FB-SCHREIB-LAST */
+}/* FB-SCHREIB-LAST */
 .nav-btn.schreib-last{order:99;}
 </style>
 </head>
@@ -238,11 +231,11 @@ input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !impor
     <div class="nav-btn" onclick="showTab(3)">
       <span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span>
     </div>
-    <div class="nav-btn schreib-last" onclick="showTab(4)">
-      <span class="nav-emoji">📝</span><span class="nav-label">Schreibwerkstatt</span>
+    <div class="nav-btn" onclick="showTab(4)">
+      <span class="nav-emoji">📝</span><span class="nav-label">Schreibaufgaben</span>
     </div>
-        <div class="nav-btn schreib-last" onclick="showTab(5)"><span class="nav-emoji">📨</span><span class="nav-label">Schreibwerkstatt</span></div>
-        <div class="nav-btn" onclick="showTab(6)"><span class="nav-emoji">🏷️</span><span class="nav-label">Genus</span></div>
+        <div class="nav-btn" onclick="showTab(5)"><span class="nav-emoji">🏷️</span><span class="nav-label">Genus</span></div>
+        <div class="nav-btn schreib-last" onclick="showTab(6)"><span class="nav-emoji">📨</span><span class="nav-label">Schreibwerkstatt</span></div>
   </div>
 
   <!-- ===== TAB 0: BRIEFE VERSTEHEN ===== -->
@@ -342,76 +335,14 @@ input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !impor
     <div class="btn-row" style="margin-bottom:20px;">
       ⏱ <span id="timer-lt">0:00</span> &nbsp;·&nbsp;
       🏆 <span id="best-lt">–</span> &nbsp;·&nbsp;
-      <button class="btn reset-btn" onclick="resetLT()">↺ Neustart</button>
+      <button style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;font-weight:600;" onclick="window.fbLtReset()">↺ Neustart</button>
       &nbsp;·&nbsp;
-      <button class="btn" onclick="showLTSolution()">💡 Lösungen</button>
+      <button style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;font-weight:600;" onclick="window.fbLtShowLoesung()">💡 Lösungen</button>
     </div>
-
-    <div class="wortbank"></div>
-            <div class="lt-block">
-      <h3>Teil 1 — E-Mail an den Vermieter</h3>
-      
-      <div class="brief-vorlage">
-        Sehr
-        <input class="blank" data-answer="geehrter" placeholder="">
-        Herr Althaus,<br><br>
-        ich habe Ihre
-        <input class="blank" data-answer="Anzeige" placeholder="">
-        in der Zeitung gesehen. Ist die Wohnung bereits
-        <input class="blank" data-answer="möbliert" placeholder="">?
-        Wie hoch sind die
-        <input class="blank" data-answer="Nebenkosten" placeholder="">?
-        Gibt es Kinder in der
-        <input class="blank" data-answer="Nachbarschaft" placeholder="">?<br><br>
-        Mit
-        <input class="blank" data-answer="freundlichen" placeholder="">
-        Grüßen<br>
-        Alex Hahn
-      </div>
-    </div>
-
-    <div class="lt-block">
-      <h3>Teil 2 — Informeller Brief über Stress</h3>
-      
-      <div class="brief-vorlage">
-        Liebe Alexandra,<br><br>
-        wie
-        <input class="blank" data-answer="geht" placeholder="">
-        es dir? Mir geht es
-        <input class="blank" data-answer="gut" placeholder="">.
-        Ich werde bald mit Yoga anfangen. Das wird bestimmt gegen den
-        <input class="blank" data-answer="Stress" placeholder="">
-        helfen. Ich habe im Moment zu viel
-        <input class="blank" data-answer="Arbeit" placeholder="">.
-        Wenn ich eine Diät
-        <input class="blank" data-answer="mache" placeholder="">,
-        dann nehme ich vielleicht etwas
-        <input class="blank" data-answer="ab" placeholder="">.<br><br>
-        Liebe Grüße<br>
-        Petra
-      </div>
-    </div>
-
-    <div class="lt-block">
-      <h3>Teil 3 — Wohnungsvokabular</h3>
-      
-      <div class="lt-text">
-        Ich habe Ihre Anzeige gesehen. Ist die Wohnung
-        <input class="blank" data-answer="möbliert" placeholder="">?
-        Wann werden die jetzigen Mieter
-        <input class="blank" data-answer="ausziehen" placeholder="">?
-        Kann ich die
-        <input class="blank" data-answer="Einbauküche" placeholder="">
-        übernehmen?
-        Ich werde die
-        <input class="blank" data-answer="Kaution" placeholder="">
-        am 30. September überweisen.
-        Wie hoch sind die
-        <input class="blank" data-answer="Nebenkosten" placeholder="">?
-        Ich werde eine
-        <input class="blank" data-answer="Garage" placeholder="">
-        brauchen.
-      </div>
+    <div class="wortbank" id="wortbank-luecken"></div>
+    <div id="lueckenContainer" class="luecken-story">
+      <p>Alex setzt sich abends hin, um zwei Briefe zu schreiben. Zuerst schreibt er an seinen zukünftigen Vermieter: „Sehr <input class="blank" data-answer="geehrter"> Herr Althaus, ich habe Ihre <input class="blank" data-answer="Anzeige"> in der Zeitung gesehen und interessiere mich sehr für die Wohnung. Ist sie bereits <input class="blank" data-answer="möbliert">? Wie hoch sind die <input class="blank" data-answer="Nebenkosten">, und gibt es Kinder in der <input class="blank" data-answer="Nachbarschaft">? Außerdem würde ich gern wissen, wann die jetzigen Mieter <input class="blank" data-answer="ausziehen"> und ob eine <input class="blank" data-answer="Garage"> zur Wohnung gehört. Die <input class="blank" data-answer="Kaution"> kann ich Ihnen selbstverständlich sofort überweisen. Mit <input class="blank" data-answer="freundlichen"> Grüßen, Alex Hahn.“</p>
+      <p>Danach schreibt Alex noch schnell eine Nachricht an seine Freundin Petra, weil der bevorstehende Umzug ihm gerade ziemlich viel <input class="blank" data-answer="Stress"> bereitet.</p>
     </div>
   </div>
 
@@ -482,6 +413,15 @@ input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !impor
       <span class="vorlage-leer">__________________</span>
     </div>
   </div>
+    <!-- ===== TAB: GENUS ===== -->
+    <div class="section" id="sec-genus">
+        <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJHZW51cyDigJQgZGVyLCBkaWUsIGRhcyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVkNmZjMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YTRhOTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIyMjAiIGZpbGw9InVybCgjYmcpIi8+CgoKICA8IS0tIEtpY2tlcjoga2xlaW5lLCBnZXNwZXJydGUgVmVyc2FsaWVuIC0tPgogIDx0ZXh0IHg9IjUwMCIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInU2Vnb2UgVUknLCBzeXN0ZW0tdWksIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjYwMCIgbGV0dGVyLXNwYWNpbmc9IjciIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC43OCI+R0VOVVMmIzE2MDsmIzE2MDsmIzE4MzsmIzE2MDsmIzE2MDtBUlRJS0VMIEJFU1RJTU1FTjwvdGV4dD4KCiAgPCEtLSBIYXVwdHplaWxlOiBydWhpZ2UgU2VyaWYgLS0+CiAgPHRleHQgeD0iMzIwIiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iNjYiIGZpbGw9IiNmZmZmZmYiPmRlcjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjE0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsICdUaW1lcyBOZXcgUm9tYW4nLCBzZXJpZiIgZm9udC1zaXplPSI2NiIgZmlsbD0iI2ZmZmZmZiI+ZGllPC90ZXh0PgogIDx0ZXh0IHg9IjY4MCIgeT0iMTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjY2IiBmaWxsPSIjZmZmZmZmIj5kYXM8L3RleHQ+CgogIDwhLS0gZGV6ZW50ZSBGYXJiYWt6ZW50ZSB1bnRlciBqZWRlbSBBcnRpa2VsIC0tPgogIDxyZWN0IHg9IjI4OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzdlYTJlNiIvPgogIDxyZWN0IHg9IjQ2OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2Q5OGNhZSIvPgogIDxyZWN0IHg9IjY0OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzg2Y2JhYiIvPgo8L3N2Zz4K" alt="Genus üben — der, die, das">
+        <h2>🏷️ Genus</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:6px 12px;background:#f8f9fa;border-radius:8px;"><div style="display:flex;gap:6px;"><button onclick="showGenusLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div><div style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:#888;font-variant-numeric:tabular-nums;"><span>⏱ <span id="timer-6">00:00</span></span><span>🏆 <span id="best-6">--:--</span></span></div></div>
+        <div class="genus-pool" id="genusPool"></div>
+        <div class="genus-kategorien"><div class="genus-kat kat-der"><div class="kat-title">der</div><div class="genus-drop" id="drop-der" data-cat="der"></div></div><div class="genus-kat kat-die"><div class="kat-title">die</div><div class="genus-drop" id="drop-die" data-cat="die"></div></div><div class="genus-kat kat-das"><div class="kat-title">das</div><div class="genus-drop" id="drop-das" data-cat="das"></div></div><div class="genus-kat kat-pl"><div class="kat-title">Plural</div><div class="genus-drop" id="drop-pl" data-cat="pl"></div></div></div>
+        <div id="genusFeedback" style="margin-top:14px;font-weight:600;"></div>
+    </div>
 
     <div class="section" id="sec-schreib">
       <img class="tab-banner" style="object-position:top" src="https://images.pexels.com/photos/733856/pexels-photo-733856.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Notizbuch und Stift, bereit zum Schreiben">
@@ -490,7 +430,6 @@ input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !impor
         <label class="schreib-label" for="sw-name">Dein Name (Pflicht — damit ich weiß, wer geschrieben hat):</label>
         <input type="text" id="sw-name" class="schreib-name" placeholder="z. B. Maria Lopez" required>
       </div>
-
       <div class="schreib-aufgabe-karte">
         <span class="schreib-aufgabe-nr">1</span><span class="schreib-aufgabe-titel">Eine freundliche Anrede</span>
         <div class="schreib-aufgabe-frage">Schreib drei verschiedene Anreden — eine formelle, eine semi-formelle und eine informelle.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="1" data-titel="Eine freundliche Anrede"></textarea>
@@ -540,15 +479,6 @@ input.wrong{border-bottom:2px solid #e74c3c !important;background:#fdeaea !impor
       <div class="schreib-status" id="sw-status"></div>
     </div>
 
-    <!-- ===== TAB: GENUS ===== -->
-    <div class="section" id="sec-genus">
-        <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJHZW51cyDigJQgZGVyLCBkaWUsIGRhcyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVkNmZjMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YTRhOTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIyMjAiIGZpbGw9InVybCgjYmcpIi8+CgoKICA8IS0tIEtpY2tlcjoga2xlaW5lLCBnZXNwZXJydGUgVmVyc2FsaWVuIC0tPgogIDx0ZXh0IHg9IjUwMCIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInU2Vnb2UgVUknLCBzeXN0ZW0tdWksIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjYwMCIgbGV0dGVyLXNwYWNpbmc9IjciIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC43OCI+R0VOVVMmIzE2MDsmIzE2MDsmIzE4MzsmIzE2MDsmIzE2MDtBUlRJS0VMIEJFU1RJTU1FTjwvdGV4dD4KCiAgPCEtLSBIYXVwdHplaWxlOiBydWhpZ2UgU2VyaWYgLS0+CiAgPHRleHQgeD0iMzIwIiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iNjYiIGZpbGw9IiNmZmZmZmYiPmRlcjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjE0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsICdUaW1lcyBOZXcgUm9tYW4nLCBzZXJpZiIgZm9udC1zaXplPSI2NiIgZmlsbD0iI2ZmZmZmZiI+ZGllPC90ZXh0PgogIDx0ZXh0IHg9IjY4MCIgeT0iMTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjY2IiBmaWxsPSIjZmZmZmZmIj5kYXM8L3RleHQ+CgogIDwhLS0gZGV6ZW50ZSBGYXJiYWt6ZW50ZSB1bnRlciBqZWRlbSBBcnRpa2VsIC0tPgogIDxyZWN0IHg9IjI4OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzdlYTJlNiIvPgogIDxyZWN0IHg9IjQ2OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2Q5OGNhZSIvPgogIDxyZWN0IHg9IjY0OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzg2Y2JhYiIvPgo8L3N2Zz4K" alt="Genus üben — der, die, das">
-        <h2>🏷️ Genus</h2>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:6px 12px;background:#f8f9fa;border-radius:8px;"><div style="display:flex;gap:6px;"><button onclick="showGenusLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div><div style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:#888;font-variant-numeric:tabular-nums;"><span>⏱ <span id="timer-6">00:00</span></span><span>🏆 <span id="best-6">--:--</span></span></div></div>
-        <div class="genus-pool" id="genusPool"></div>
-        <div class="genus-kategorien"><div class="genus-kat kat-der"><div class="kat-title">der</div><div class="genus-drop" id="drop-der" data-cat="der"></div></div><div class="genus-kat kat-die"><div class="kat-title">die</div><div class="genus-drop" id="drop-die" data-cat="die"></div></div><div class="genus-kat kat-das"><div class="kat-title">das</div><div class="genus-drop" id="drop-das" data-cat="das"></div></div><div class="genus-kat kat-pl"><div class="kat-title">Plural</div><div class="genus-drop" id="drop-pl" data-cat="pl"></div></div></div>
-        <div id="genusFeedback" style="margin-top:14px;font-weight:600;"></div>
-    </div>
 <div class="author-footer">
     <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
     <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a> &middot;
@@ -611,46 +541,6 @@ function timerReset(k) {
     timerStop(k); timers[k].secs = 0; timers[k].elTime.textContent = '0:00';
 }
 
-// ─── Live-Feedback Lückentext ──────────────────────────────────────────────
-var LT_COUNT = 18;
-var ltStarted = false;
-function liveCheck(inp) {
-    if (!ltStarted) { timerStart('lt'); ltStarted = true; }
-    var val = inp.value.trim();
-    var ans = inp.dataset.ans;
-    if (val === '') {
-        inp.classList.remove('ok','no');
-    } else if (val === ans) {
-        inp.classList.add('ok'); inp.classList.remove('no');
-        checkAllLT();
-    } else if (ans.toLowerCase().startsWith(val.toLowerCase()) && val.length > 0) {
-        inp.classList.remove('ok','no');
-    } else {
-        inp.classList.add('no'); inp.classList.remove('ok');
-    }
-}
-function checkAllLT() {
-    var allOk = true;
-    for (var i=0; i<LT_COUNT; i++) {
-        var el = document.getElementById('lt'+i);
-        if (!el || !el.classList.contains('ok')) { allOk = false; break; }
-    }
-    if (allOk) timerStop('lt');
-}
-function resetLT() {
-    timerReset('lt'); ltStarted = false;
-    for (var i=0; i<LT_COUNT; i++) {
-        var el = document.getElementById('lt'+i);
-        if (el) { el.value = ''; el.classList.remove('ok','no'); }
-    }
-}
-function showLTSolution() {
-    timerStop('lt');
-    for (var i=0; i<LT_COUNT; i++) {
-        var el = document.getElementById('lt'+i);
-        if (el) { el.value = el.dataset.ans; el.classList.add('ok'); el.classList.remove('no'); }
-    }
-}
 
 // ─── Zuordnung ─────────────────────────────────────────────────────────────
 var ZUORD_ITEMS = [
@@ -1508,6 +1398,21 @@ input.blank.wrong{border-bottom-color:#e74c3c;background:#fdeaea;color:#e74c3c;}
 .fb-jumptop.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .fb-jumptop:hover { background: rgba(118, 75, 162, 0.40); color: #241048; box-shadow: 0 10px 32px rgba(102,126,234,0.50), inset 0 1px 0 rgba(255,255,255,0.65); }
 @media (max-width: 600px) { .fb-jumptop { bottom: 18px; right: 16px; padding: 12px 18px; font-size: 0.95em; } }
+
+/* FB-LT-STORY-CSS */
+/* FB-LT-STORY-CSS — kanonische CSS des Story-Lückentexts (EINE Quelle der Wahrheit).
+   Vom Produzenten scripts/inject_lt.py eingespielt. Nicht pro Datei von Hand kopieren. */
+.luecken-story { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 2.1; color: #2c2c2c; text-align: justify; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 18px 22px; }
+.luecken-story p { margin: 0 0 14px; }
+.luecken-story p:last-child { margin-bottom: 0; }
+.luecken-story input.blank { font-family: Georgia, 'Times New Roman', serif; border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-size: 1em; color: #2c2c2c; text-align: center; padding: 1px 4px; min-width: 4ch; transition: all .2s; }
+.luecken-story input.blank:focus { border-bottom-color: #667eea; }
+.luecken-story input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+.luecken-story input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
+.wortbank { display:flex; flex-wrap:wrap; gap:8px; padding:14px; background:#f0f0f8; border-radius:10px; min-height:48px; margin-bottom:18px; border:1px dashed #bbb; }
+.wortbank-chip { background:white; border:2px solid #667eea; color:#667eea; padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
+.wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
+
 </style>
 <script>
 /* ========== TAB: GENUS (injiziert) ========== */
@@ -1597,109 +1502,7 @@ function resetGenus(){ initGenus(); genusTimerReset(); }
 (function(){ initGenus(); })();
 </script>
 
-<script>
-/* FB-LT-V1 — kanonischer Vokabel-Lückentext nach LUECKENTEXT-SKILL-SPEC v1.0.
-   NUR für Wortschatz-Lücken (V/R/X): die Wortbank zeigt die Vollformen (= Antworten).
-   NICHT in G-Dateien einsetzen (dort gilt der Grundform-/Infinitiv-Wortkasten).
-   Selbst-installierend, idempotent. Liest die Antworten aus den vorhandenen Lücken-
-   Inputs (data-ans/answer), rendert eine gemischte, nicht-klickbare Wortbank mit
-   .used-Durchstreichen, setzt ch-Breite, entfernt Anweisungs-/Altboxen, verdrahtet
-   case-sensitives Live-Feedback. */
-(function () {
-  "use strict";
-  if (window.__fbLtV1) return;
-  window.__fbLtV1 = true;
 
-  var GAP = /(^|\s)(luecken-inp|gap-inp|luecke-inp|lt-input|gap-input|blank)(\s|$)/;
-  function ansOf(i) { var d = i.dataset || {}; return d.ans || d.answer || d.loesung || d.sol || ""; }
-  function isGap(i) { return i.tagName === "INPUT" && GAP.test(i.className || "") && ansOf(i) !== ""; }
-  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-
-  function isTrainer(n) {
-    // Wortschatz-/Genus-Trainingstab: NIE eine Lückentext-Wortbank einbauen — sonst
-    // stünden die Vokabel-/Genus-Lösungen als Chips da (zerstört die Tippübung).
-    if (n.querySelector("input.art, input.wort, input[data-field], #wortschatzContainer")) return true;
-    var h = n.querySelector(".section-title, h2, h3, .tab-title");
-    if (h && /wortschatz|genus/i.test(h.textContent || "")) return true;
-    // Nav-Button-Label des zugehörigen Tabs prüfen. WICHTIG: auf die Top-Level-
-    // .section abbilden (Gaps liegen oft in verschachtelten .tab-content-Leafs),
-    // und im NARROW .section-Index zählen — der allein deckt sich mit der Nav-Reihe.
-    var top = (n.closest && n.closest(".section")) || n;
-    var secs = Array.prototype.slice.call(document.querySelectorAll(".section"));
-    var navs = document.querySelectorAll(".nav-btn");
-    var idx = secs.indexOf(top);
-    if (idx >= 0 && navs[idx] && /wortschatz|genus/i.test(navs[idx].textContent || "")) return true;
-    return false;
-  }
-  function sections() {
-    var out = [], nodes = document.querySelectorAll(".section, .tab, .tab-content, .sec, .tab-pane");
-    Array.prototype.forEach.call(nodes, function (n) {
-      if (n.querySelector(".section, .tab, .tab-content, .sec, .tab-pane")) return;
-      if (isTrainer(n)) return;
-      var gaps = Array.prototype.filter.call(n.querySelectorAll("input"), isGap);
-      if (gaps.length >= 2) out.push(n);
-    });
-    return out;
-  }
-  function removeClutter(sec) {
-    Array.prototype.forEach.call(sec.querySelectorAll(".hilfe-box, .wortkasten, .wortbank-label"), function (w) {
-      if (!w.classList.contains("fb-lt-bank")) w.remove();
-    });
-  }
-  function ensureBank(sec) {
-    var bank = sec.querySelector(".wortbank");
-    if (bank) { bank.classList.add("fb-lt-bank"); return bank; }
-    bank = document.createElement("div");
-    bank.className = "wortbank fb-lt-bank";
-    var host = sec.querySelector(".sec-inner") || sec;
-    var gaps = Array.prototype.filter.call(host.querySelectorAll("input"), isGap), anchor = null;
-    if (gaps.length) { var n = gaps[0]; while (n && n.parentNode !== host) n = n.parentNode; anchor = n; }
-    if (anchor) host.insertBefore(bank, anchor); else host.insertBefore(bank, host.firstChild);
-    return bank;
-  }
-  function updateUsed(sec, bank) {
-    var solved = Array.prototype.filter.call(sec.querySelectorAll("input"), function (i) { return isGap(i) && i.value === ansOf(i); }).map(function (i) { return i.value; });
-    var rem = solved.slice();
-    Array.prototype.forEach.call(bank.querySelectorAll(".wortbank-chip"), function (c) {
-      var k = rem.indexOf(c.textContent);
-      if (k >= 0) { c.classList.add("used"); rem.splice(k, 1); } else c.classList.remove("used");
-    });
-  }
-  function live(i, sec, bank) {
-    var val = i.value, ans = ansOf(i);
-    i.classList.remove("correct", "wrong", "ok", "no");
-    if (val) { if (val === ans) i.classList.add("correct"); else if (!ans.startsWith(val)) i.classList.add("wrong"); }
-    updateUsed(sec, bank);
-  }
-  function build() {
-    sections().forEach(function (sec) {
-      var gaps = Array.prototype.filter.call(sec.querySelectorAll("input"), isGap);
-      if (gaps.length < 2) return;
-      removeClutter(sec);
-      var bank = ensureBank(sec);
-      var answers = gaps.map(ansOf);
-      var sig = answers.slice().sort().join("|");
-      if (bank.getAttribute("data-sig") !== sig) {
-        bank.setAttribute("data-sig", sig);
-        bank.innerHTML = "";
-        shuffle(answers.slice()).forEach(function (w) {
-          var c = document.createElement("span"); c.className = "wortbank-chip"; c.textContent = w; bank.appendChild(c);
-        });
-      }
-      gaps.forEach(function (i) {
-        i.placeholder = "";
-        i.style.width = (ansOf(i).length + 4) + "ch";
-        if (!i.__fbWired) { i.__fbWired = true; i.addEventListener("input", function () { live(i, sec, bank); }); }
-      });
-      updateUsed(sec, bank);
-    });
-  }
-  function run() { setTimeout(build, 0); setTimeout(build, 150); }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run); else run();
-  document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest(".nav-btn")) setTimeout(build, 150); });
-})();
-
-</script>
 
 <!-- FB-JUMPTOP -->
 <button class="fb-jumptop" id="fbJumpTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Nach oben springen" aria-label="Nach oben springen">↑ Nach oben</button>
@@ -1718,5 +1521,158 @@ function resetGenus(){ initGenus(); genusTimerReset(); }
 })();
 </script>
 
+
+<!-- FB-LT-STORY-ENGINE -->
+<script>
+/* ============================================================================
+   FB-LT-STORY — kanonische Lückentext-Engine (EINE Quelle der Wahrheit)
+   ----------------------------------------------------------------------------
+   Mit Frank abgenommen 2026-06-30 (Piloten 1057X Heimweh, 3065G Adjektivdeklination).
+   Diese Datei ist die EINZIGE Quelle der mechanischen Lückentext-Logik. Der
+   Produzent scripts/inject_lt.py spielt sie (plus die CSS unten) in jede Lektion
+   ein — NIE von Hand pro Datei kopieren (sonst driften die Engines, genau der
+   Fehler, den wir abschaffen).
+
+   Kanonische Form:
+     · zusammenhängende STORY (Serif-Fließtext, Inline-Lücken), KEINE Nummern;
+     · GENAU 10 Lücken;  · §7-Wortbank (gemischt, nicht klickbar, .used);
+     · case-sensitiv, kein Prüfen-Button (nur Live-Feedback);
+     · Variante erkennt sich SELBST:
+         - hat eine Lücke data-base  → Grammatik (G): Wortbank zeigt die GRUNDFORM
+           (data-base), die Zielform (data-answer) ist nie sichtbar;
+         - sonst                     → Wortschatz (V/R/X): Wortbank zeigt die
+           Vollform (= data-answer).
+     · .used streicht den Chip der getroffenen Lücke durch (G: per data-base) —
+       Fortschrittsanzeige, verrät die Zielform nicht (Frank bestätigt 2026-06-30).
+
+   Markup-Vertrag (vom Produzenten erzeugt, vom Gate check_lueckentext.py geprüft):
+     <div class="wortbank" id="wortbank-luecken"></div>
+     <div id="lueckenContainer" class="luecken-story">
+       <p>… <input class="blank" data-answer="ZIELFORM" [data-base="GRUNDFORM"]> …</p>
+     </div>
+
+   Timer-Anbindung: die Engine ruft generische Hooks window.fbLtTimerStart()/
+   fbLtTimerStop(); der Produzent verdrahtet sie pro Datei auf den richtigen
+   Tab-Index (timerAutoStart(N)/timerStop(N)). Fehlen die Hooks, läuft die Engine
+   ohne Timer weiter.
+   ============================================================================ */
+
+/* ---- KANONISCHE CSS (vom Produzenten mit eingespielt) -----------------------
+.luecken-story { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 2.1; color: #2c2c2c; text-align: justify; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 18px 22px; }
+.luecken-story p { margin: 0 0 14px; }
+.luecken-story p:last-child { margin-bottom: 0; }
+.luecken-story input.blank { font-family: Georgia, 'Times New Roman', serif; border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-size: 1em; color: #2c2c2c; text-align: center; padding: 1px 4px; min-width: 4ch; transition: all .2s; }
+.luecken-story input.blank:focus { border-bottom-color: #667eea; }
+.luecken-story input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
+.luecken-story input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
+.wortbank { display:flex; flex-wrap:wrap; gap:8px; padding:14px; background:#f0f0f8; border-radius:10px; min-height:48px; margin-bottom:18px; border:1px dashed #bbb; }
+.wortbank-chip { background:white; border:2px solid #667eea; color:#667eea; padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
+.wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
+---------------------------------------------------------------------------- */
+
+(function () {
+  "use strict";
+  if (window.__fbLtStory) return;
+  window.__fbLtStory = true;
+
+  function gaps() {
+    return Array.prototype.slice.call(
+      document.querySelectorAll('#lueckenContainer input.blank'));
+  }
+  // Wortbank-Wort einer Lücke: Grundform (G) falls vorhanden, sonst Vollform.
+  function wordOf(i) {
+    return i.getAttribute('data-base') || i.getAttribute('data-answer') || '';
+  }
+  function shuffle(a) {
+    for (var k = a.length - 1; k > 0; k--) {
+      var j = Math.floor(Math.random() * (k + 1));
+      var t = a[k]; a[k] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function update() {
+    var bank = document.getElementById('wortbank-luecken');
+    if (!bank) return;
+    var rem = gaps().filter(function (i) { return i.classList.contains('correct'); })
+                    .map(wordOf);
+    Array.prototype.slice.call(bank.querySelectorAll('.wortbank-chip')).forEach(function (c) {
+      var idx = rem.indexOf(c.textContent);
+      if (idx >= 0) { c.classList.add('used'); rem.splice(idx, 1); }
+      else { c.classList.remove('used'); }
+    });
+  }
+
+  function done() {
+    var gg = gaps();
+    if (gg.length && gg.every(function (i) { return i.classList.contains('correct'); })
+        && typeof window.fbLtTimerStop === 'function') window.fbLtTimerStop();
+  }
+
+  function live(i) {
+    var ans = i.getAttribute('data-answer'), val = i.value;   // case-sensitive, kein trim
+    i.classList.remove('correct', 'wrong');
+    if (val) {
+      if (val === ans) i.classList.add('correct');
+      else if (ans.indexOf(val) !== 0) i.classList.add('wrong');
+      if (typeof window.fbLtTimerStart === 'function') window.fbLtTimerStart();
+    }
+    update();
+    done();
+  }
+
+  function build() {
+    var bank = document.getElementById('wortbank-luecken');
+    if (!bank) return;
+    var gg = gaps();
+    if (!gg.length) return;
+    gg.forEach(function (i) {
+      var a = i.getAttribute('data-answer') || '', b = i.getAttribute('data-base') || '';
+      i.placeholder = '';
+      i.style.width = (Math.max(a.length, b.length) + 3) + 'ch';
+      if (!i.__fbWired) {
+        i.__fbWired = true;
+        i.addEventListener('input', function () { live(i); });
+      }
+    });
+    var seen = {}, words = [];
+    gg.forEach(function (i) { var w = wordOf(i); if (w && !seen[w]) { seen[w] = true; words.push(w); } });
+    bank.innerHTML = '';
+    shuffle(words).forEach(function (w) {
+      var c = document.createElement('span');
+      c.className = 'wortbank-chip';
+      c.textContent = w;
+      bank.appendChild(c);
+    });
+    update();
+  }
+
+  // Öffentliche Hooks für die Steuer-Buttons (Produzent verdrahtet onclick darauf).
+  window.fbLtBuild = build;
+  window.fbLtShowLoesung = function () {
+    gaps().forEach(function (i) {
+      i.value = i.getAttribute('data-answer');
+      i.classList.add('correct'); i.classList.remove('wrong');
+    });
+    update();
+    if (typeof window.fbLtTimerStop === 'function') window.fbLtTimerStop();
+  };
+  window.fbLtReset = function () {
+    gaps().forEach(function (i) { i.value = ''; i.classList.remove('correct', 'wrong'); });
+    build();
+  };
+
+  function run() { build(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+  // Beim Wechsel auf den Lückentext-Tab neu aufbauen (mischt die Wortbank).
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('.nav-btn')) setTimeout(build, 80);
+  });
+})();
+
+</script>
+
+<!-- FB-LT-STORY-HOOKS --><script>window.fbLtTimerStart=function(){if(typeof timerStart==='function')timerStart('lt');};window.fbLtTimerStop=function(){if(typeof timerStop==='function')timerStop('lt');};</script>
 </body>
 </html>
