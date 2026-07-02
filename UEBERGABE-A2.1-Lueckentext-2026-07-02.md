@@ -1,4 +1,41 @@
-# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 2)
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 3)
+
+## In dieser Fortsetzung (3) fertiggestellt — 3 neue Dateien + 1 Fix
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1021V-die-arbeitswelt.html` (Fix) | `f705e13` | Frank meldete hässliche graue Browser-Default-Buttons im Lückentext-Tab — meine eigenen neu geschriebenen `<button onclick="fbLtReset()">` hatten KEIN Styling. `inject_lt.py` rührt Steuerbuttons nicht an; beim manuellen Story-Umbau IMMER den kanonischen Pill-Stil inline setzen. Siehe Memory `feedback_lueckentext-buttons-immer-pill-stil.md`. |
+| `DE_A2_1022X-bewerbungen.html` | `3c5ffa1` | Gleicher Schreib-last-Reorder-Bug wie 1021V (Schreibwerkstatt vor Genus/Wortschatz trotz Klasse); Genus/Wortschatz-Timer-IDs (4↔5) vertauscht synchron zur neuen Position; Lückentext war schon 9 Vollwort-Lücken über 2 Überschriften — zu 1 Jonas-Bewerbungs-Story verschmolzen + 1 Lücke (`Chef`) ergänzt für exakt 10. |
+| `DE_A2_1023G-verben-mit-dativ.html` | `3c5ffa1` | G-Datei mit **Grundform-Variante** (`data-base`): 12 isolierte Dativ-Verb-Sätze mit sichtbarem Nominativ-Hinweis `(sein Kollege →)` inline — architektonisch inkompatibel mit der Wortbank-basierten Grundform-Anzeige. Zu 1 Mark/Nina/Tom-Büro-Story mit 10 Lücken umgebaut (`data-answer`=Dativform, `data-base`=Grundform), inline-Hinweise entfernt. Genus/Schreibwerkstatt waren hier NUR vertauscht (kein Wortschatz-Tab in dieser Datei) — einfacherer Fall, Lückentext/Satzbau/MC-Dispatch-Indizes blieben unverändert. |
+| `DE_A2_1024R-die-neue-sekretaerin.html` | `f9fb38f` | **Wichtiger Vorfall:** beim DOM-Move ist der Such-Anker `'author-footer'` fälschlich auf die CSS-Regel `.author-footer{...}` (nicht das HTML-`<div>`) angeschlagen — Block landete an falscher Stelle. Vor Commit bemerkt (`grep -n 'class="section'`-Kontrolle), sauber zurückgesetzt (`git show HEAD:DATEI.html > /tmp/x.html`, dann `cp` — NICHT `git checkout`, das scheitert an `.git/index.lock` in der Sandbox) und mit präzisem `<div class="author-footer">`-Anker neu gemacht. Neue Regel gespeichert: `feedback_dom-move-anchor-css-kollision.md`. Danach: Schreib-last-Reorder + Wortschatz-Timer-Index-Sync (auch `timerAutoStart(5)`-Aufrufe INNERHALB der Wortschatz-Funktionen mussten auf `(6)` geändert werden, nicht nur die sichtbare `id="timer-N"` — zwei getrennte Stellen!); 10 isolierte Lesetext-Lückensätze über „Tim" (Alex' Bruder) zu 1 Story verschmolzen. |
+
+Alle Commits: Repo `daf-a2-uebungen`, Branch `main`.
+
+## Neue Erkenntnisse dieser Fortsetzung (jetzt Teil der Checkliste)
+
+1. **Timer-Index-Doppelverdrahtung.** Wenn Genus/Wortschatz beim Reorder die Position
+   tauschen, gibt es oft ZWEI Stellen mit dem alten Index: die sichtbare
+   `id="timer-N"`/`id="best-N"` UND interne `timerAutoStart(N)`/`timerStop(N)`/
+   `timerResetOne(N)`-Aufrufe in den Tab-eigenen JS-Funktionen (z. B. bei jedem
+   Wortschatz-Input-Feld). Beide müssen synchron umbenannt werden — sonst startet
+   der Timer, zeigt aber nie etwas an (oder umgekehrt).
+2. **DOM-Move-Anker müssen die volle Tag-Öffnung matchen**, nie den bloßen
+   Klassennamen (`'<div class="author-footer">'` statt `'author-footer'`) — sonst
+   Kollision mit der gleichnamigen CSS-Regel weiter oben in der Datei. Nach jedem
+   Move: `grep -n 'class="section\|<!-- ===== TAB: GENUS\|<div class="author-footer">\|/container -->' DATEI.html`
+   zur visuellen Reihenfolge-Kontrolle, BEVOR `inject_lt.py` läuft.
+3. **G-Dateien mit sichtbarem Grundform-Hinweis inline** (z. B. `(sein Kollege →)`
+   neben der Lücke) sind ein Signal für „inkompatibles Altformat" — beim Umbau auf
+   FB-LT-STORY den Hinweis komplett entfernen, die Grundform wandert stattdessen
+   automatisch in die Wortbank (Engine übernimmt das via `data-base`).
+4. **Sichere Wiederherstellung bei verunglücktem Edit:** `git checkout -- DATEI`
+   kann in der Cowork-Sandbox an einem fremden/stale `.git/index.lock` scheitern
+   (Fehler „Unable to create index.lock … Another git process seems to be
+   running"). Zuverlässiger Weg: `git show HEAD:DATEI.html > /tmp/x.html` dann
+   `cp /tmp/x.html DATEI.html` (umgeht den Index komplett) und mit
+   `diff /tmp/x.html DATEI.html` verifizieren (Exit 0 = identisch).
+
+## Frühere Fortsetzung (2) — zur Erinnerung
 
 ## Auftrag
 
@@ -172,9 +209,9 @@ scheitert.
 
 ## Nächste Dateien (angekündigt, noch offen)
 
-1. `DE_A2_1022X-bewerbungen.html`
-2. `DE_A2_1023G-verben-mit-dativ.html`
-3. `DE_A2_1024R-die-neue-sekretaerin.html`
+1. `DE_A2_1025V-die-firma.html`
+2. `DE_A2_1026X-am-telefon.html`
+3. `DE_A2_1027G-wechselpraepositionen.html`
 
 Danach chronologisch weiter durch `htmlS/A2.1/DE_A2_10*` und `DE_A2_20*` bis
 `DE_A2_2068S...`. Exakter Restzählstand zu Beginn des nächsten Threads:
