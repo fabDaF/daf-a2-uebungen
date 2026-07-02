@@ -1,3 +1,30 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 13)
+
+## In dieser Fortsetzung (13) fertiggestellt — 3 Dateien (Einheit 106x ABGESCHLOSSEN)
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1066X-genus-adjektive.html` | `d8822cc` | **Zweiter unabhängiger Dispatcher-Bug in derselben Datei:** `if(idx===4) initWortschatz()` feuerte an der Schreiben-Position statt an der echten Wortschatz-Position (6 vor Reorder, 5 danach) — nach Tail-Reorder korrigiert. Adjektivendungen (X-Datei, aber reine Suffixe ohne Lemma-Konzept) → Wortschatz-Variante mit nackter Endung als `data-answer`, 5 distinkte Chips (es/e/en/er/n — Endungs-Inventar ist naturgemäß klein). Erster Versuch hatte 11 Blanks (Regel-Verstoß, GENAU 10 Pflicht) — durch `check_lueckentext.py` sofort aufgefallen, korrigiert (Duplikat „alt" durch „einer alten Dame" ersetzt). |
+| `DE_A2_1067G-modalverben.html` | `6a0f8cb` | Kein ID-Bug, nur Tail-Reihenfolge falsch (Schreiben vor Genus, kein Wortschatz-Tab in dieser Datei) → Nav+DOM-Reorder. Grundform-Variante, alle 6 deutschen Modalverben abgedeckt (können/mögen/müssen/dürfen/wollen/sollen — genuines abgeschlossenes 6er-Set, kein Verstoß). Ersatzinfinitiv-Sätze (Perfekt) elegant integriert, da Ersatzinfinitiv = Grundform = Zielform. Drei disjunkte Themenblöcke (Präsens/Perfekt/Verneinung) zur Familie-Klein-Samstag-Story verschmolzen, Verneinungs-Drill („nicht") gestrichen (eigenständiges Grammatikthema, nicht Teil der Modalverb-Story). Eigene ASCII-Anführungszeichen im ersten Entwurf gefunden und auf „…" korrigiert (`check_quotes.py`). |
+| `DE_A2_1068S-zukunft-sprechen.html` | `101850a` | S-Datei (kein Schreiben-Tab, wie üblich bei S). **Aktive konkurrierende `FB-LT-V1`-Engine** gefunden und entfernt (wie 1058S). Drei disjunkte Themenblöcke (Marco/Pia/Corinna/Mia-Lebensziele, Wenn-dann-Grammatik, Anna-Wahrsagerin — teils wortidentisch mit 1064R/1065V, da Wiederholungslektion der ganzen Einheit) zu einer Story verschmolzen: Wenn-dann-Grammatikblock komplett gestrichen (eigenes Thema, bereits in 1062X behandelt), 18→10 distinkte Wörter (hofft/Lebensziel/wünscht/verfolgt/einteilen/aufgeregt/wahrsagen/Vorhersage/optimistisch/Überraschung). Eigener Timer nutzt String-Keys (`timerStart('lt')` statt numerischem Index) — dritte Variante eines nicht-standard-kompatiblen Timersystems, Hook manuell angepasst. |
+
+**Einheit 106x (Pläne machen/wenn-dann/Futur I/Pläne-Zukunft/Zukunftspläne/
+Genus-Adjektive/Modalverben/Zukunft sprechen, 1061V–1068S) ist komplett fertig
+— alle 8 Dateien.**
+
+**Wichtige Verfahrens-Erinnerung (aus dieser Fortsetzung, gilt fortan
+IMMER):** `safe-commit.sh` MUSS aus dem Ziel-Unterrepo-Verzeichnis heraus
+aufgerufen werden (hier `htmlS/A2.1`), NIE aus dem `fabDaF`-Root mit einem
+Unterrepo-relativen Pfad — sonst landet der Commit im falschen Repo
+(`daf-b2-uebungen` statt `daf-a2-uebungen`). Bei 1064R passiert und per
+Revert-Commit (`e92897e` im B2-Repo) sofort korrigiert; seitdem vor jedem
+`safe-commit.sh`-Aufruf `pwd` + `git remote -v` geprüft.
+
+**Nächste Einheit: 107x** (`DE_A2_1071W-einen-brief-schreiben.html`,
+`DE_A2_1072S-eine-unterhaltung.html` — nur 2 Dateien, dann 108x, dann 20xx…).
+
+## Frühere Fortsetzung (12) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 12)
 
 ## In dieser Fortsetzung (12) fertiggestellt — 2 Dateien (Einheit 106x, 3/6)
