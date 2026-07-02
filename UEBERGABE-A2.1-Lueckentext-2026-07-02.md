@@ -1,4 +1,27 @@
-# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 8)
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 9)
+
+## In dieser Fortsetzung (9) fertiggestellt — 2 Dateien + 1 Nachkorrektur
+
+**WICHTIGE REGEL-PRÄZISIERUNG (Frank live gemeldet, 1053G):** Bei Grammatikpunkten
+mit ≥10 verfügbaren Lemmata (aus der Regel-/Übersichtstabelle der Datei selbst
+ablesen) MÜSSEN alle 10 Lückentext-Blanks auf 10 DISTINKTE Lemmata gehen — keine
+Wiederholung aus Bequemlichkeit, sonst zeigt die Wortbank nur 6-7 Chips statt 10
+und wirkt kaputt. Nur bei echter binärer/kleiner Auswahl (<10 mögliche Lemmata,
+z.B. es/das) ist Wiederholung unvermeidbar und kein Fehler. Memory aktualisiert:
+`feedback_lueckentext-binaer-grammatik-wortbank.md`. 1053G nachkorrigiert
+(`8aa390c`): Story auf 10 distinkte der-/ein-Wörter umgeschrieben. Satzbau-Sorge
+("kein Gerüst") war ein Fehlalarm — Screenshot bestätigte intaktes Gerüst
+(Anker+Lücken sauber getrennt), vermutlich Browser-Cache bei Frank.
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_1054R-eine-neue-sportart.html` | `3509d25` | Kein ID-Lookup-Bug (IDs sec-0..sec-7 konsistent zur Nav), nur verkehrte Tail-Reihenfolge (Schreiben→Wortschatz→Genus statt Genus→Wortschatz→Schreiben) — reines Nav+DOM-Reorder. Lückentext-Rohstoff war schon eine fast fertige Alex-Story (12 Blanks) → auf exakt 10 distinkte Wörter gekürzt (Stadion/verloren/trainiert/Fitnessstudio/Gewichte/werfen/fangen/Teamsport/Poster/Fußballtraining), Pointe (Alex entdeckt Fußball-Poster) erhalten. Gleich mit 10 distinkten Wörtern gebaut (Lehre aus 1053G sofort angewendet).
+| `DE_A2_1055V-fit-bleiben.html` | `3a7c7fb` | **Sechste showTab-Architektur-Variante:** `document.querySelectorAll('.section')[n]` — rein POSITIONAL, IDs (`sec-schreib`, `sec-genus`, `sec-5`) sind nur Namen ohne Bedeutung für den Dispatch. Kein Bug (Positionen stimmten), aber Tail-Reihenfolge verkehrt (Schreiben→Genus→Wortschatz) → DOM-Blöcke physisch in Genus→Wortschatz→Schreiben-Reihenfolge umsortiert, Nav-`showTab(n)`-Nummern auf die NEUEN Positionen (5/6/7) angepasst — bei positionalem Dispatch zählt nur die Reihenfolge, nicht der ID-Name. Lückentext: „Maria bleibt fit"-Story von 14 auf 10 distinkte Wörter gekürzt (stressig/Stress/vermeiden/Yoga/fit/gesunde/Fett/abnehmen/Diät/Fitnessstudio), Pointe ergänzt (fühlt sich besser, obwohl Waage sich kaum bewegt — bewusst gewichtsneutrale Botschaft).
+
+**Nächste Datei: `DE_A2_1056X-verb-lassen.html`** (dann 1057G, 1058S — Rest von
+Einheit 105x, danach 106x…).
+
+## Frühere Fortsetzung (8) — zur Erinnerung
 
 ## In dieser Fortsetzung (8) fertiggestellt — 1 Datei (Einheit 105x begonnen)
 
