@@ -1,3 +1,35 @@
+# Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-03 (Fortsetzung 22 — BACKLOG KOMPLETT ABGESCHLOSSEN)
+
+## In dieser Fortsetzung (22) fertiggestellt — 5 Dateien (Einheit 206x ABGESCHLOSSEN + Sonderfall)
+
+**Der gesamte A2.1-Lückentext-Backlog ist damit fertig.** Repo-weiter Scan
+(`python3 scripts/check_lueckentext.py`, gefiltert auf A2.1) bestätigt: 110
+kanonische Dateien, 0 Backlog, 0 fehlerhaft.
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `DE_A2_2064R-in-der-natur.html` | `5af6083` | 12 nummerierte Camping-Sätze (Alex/Louise-Wanderausflug) zur zusammenhängenden Story verschmolzen (12→10, Tierarten/Wellnesshotel fallengelassen). Vorbestehender ASCII-Anführungszeichenfehler im Original-Lesetext korrigiert (curly „…" statt echtem deutschen „…"). Kein Dispatcher-Bug (rein positional). 3-Wege-Tail-Reorder fehlerfrei. |
+| `DE_A2_2065V-umwelt-und-tiere.html` | `83c7dfc` | 10 bereits distinkte, nummerierte Umwelt-/Tier-Sätze (Tierart/Erwärmung/Dürre/Umweltverschmutzung/Dschungel/Aussterben/Fußabdruck/Artensterben/Regenzeit/Umwelt) zur Mira-Naturschutzgebiet-Story verschmolzen (reiner Prosa-Merge, 10→10). Kein Dispatcher-Bug. 3-Wege-Tail-Reorder fehlerfrei (dabei stray `<!-- FOOTER -->`-Debris-Kommentar mitentfernt). |
+| `DE_A2_2066X-lokale-und-wechselpraepositionen.html` | `88a2450` | Dreiteiliger Präpositionen-Drill (Teil A 12 lokale Präpositionen, Teil B/C Wechselpräpositionen-Kasusendungen der/die/den/dem) — Wechselpräpositionen-Kasusübung bleibt redundant im separaten Zuordnung-Tab (sec-1) erhalten, daher Lückentext auf Teil A fokussiert: 10 von 12 distinkten lokalen Präpositionen (durch/entlang/gegen/bei/nach/um/gegenüber/innerhalb/außerhalb/aus, ab/bis fallengelassen) zur Sofie-Spaziergang-Story verschmolzen. Kein Dispatcher-Bug. 3-Wege-Tail-Reorder fehlerfrei. |
+| `DE_A2_2067G-adjektivendungen.html` | `b77882a` | Dreiteiliger Adjektivendungen-Drill (Teil A/B/C, genuin kleines geschlossenes Set: nur 5 mögliche Endungen e/en/er/es/em) zur Mann-im-Park-Spaziergang-Story verschmolzen (10 Blanks/5 distinkte Endungen — alle 5 Formen mindestens einmal abgedeckt). Kein Dispatcher-Bug. 3-Wege-Tail-Reorder fehlerfrei. |
+| `DE_A2_2068S-ueber-die-natur-sprechen.html` | `4156130` | Zwei separate Kurztexte (Wald-Morgen 6 Items, See-Nachmittag 6 Items inkl. 1 totem `spiegeln`-Wortbank-Eintrag ohne Verwendung) zu EINER Wanderungs-Story verschmolzen (12→10, klar fallengelassen). S-Datei, Genus bereits letzter Tab. **Eigener Fehler selbst gefunden+behoben:** beim ersten Ersetzen der control-bar fehlte eine schließende `</div>` (sec-inner blieb offen) — durch Grep-Nachkontrolle der Div-Struktur sofort bemerkt und korrigiert, vor jedem weiteren Schritt verifiziert. |
+
+**Sonderfall außerhalb der 20xx-Nummerierung:**
+
+| Datei | Commit | Kernfunde |
+|---|---|---|
+| `brief-an-eine-maschine.html` | `d82bac9` | Beim abschließenden Full-Repo-Scan entdeckt (nicht Teil der Einheit-206x-Liste, sondern eine eigenständige Spezialdatei zum Thema Schreiben/KI). 6 isolierte nummerierte Sätze (11 distinkte Wörter) zu einem Brief-Monolog eines Vaters an eine KI verschmolzen (11→10, „logisch" fallengelassen). Hatte einen `✔ Prüfen`-Button (kanonisch verboten) — mit control-bar komplett entfernt. Kein Dispatcher-Bug. Kein Tail-Reorder nötig (keine Wortschatz-/Schreib-Tabs in dieser Datei). |
+
+**Alle 5+1 Dateien durchliefen den vollen 9-Check + Browser-Verifikations-
+Workflow (10 Blanks, distinkte Wortbank-Chips, Live-Feedback korrekt/falsch,
+alle Tail-Tabs rendern) vor dem Commit.** Keine neuen Dispatcher-Bugs in
+dieser Fortsetzung gefunden (206x-Dateien waren alle bereits sauber
+verdrahtet) — lediglich ein eigener Struktur-Fehler (fehlende `</div>` in
+2068S) wurde selbst durch Nachkontrolle entdeckt und korrigiert, bevor er
+committet wurde.
+
+## Frühere Fortsetzung (21) — zur Erinnerung
+
 # Übergabe: A2.1-Lückentext-Kanonisierung — Stand 2026-07-02 (Fortsetzung 21)
 
 ## In dieser Fortsetzung (21) fertiggestellt — 8 Dateien (Einheit 205x ABGESCHLOSSEN)
