@@ -469,8 +469,8 @@ footer {
     <div class="btn-row">
       <span class="timer-display" id="timer-2">⏱ 0:00</span>
       <span class="best-display" id="best-2">🏆 –</span>
-      <button class="btn-sm" onclick="timerResetOne(2)">↺ Neustart</button>
-      <button class="btn-sm" onclick="showLtSolution()">💡 Lösungen</button>
+      <button onclick="fbLtReset(); timerResetOne(2);" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
+      <button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button>
     </div>
     <div class="wortbank" id="wortbank-luecken"></div>
     <div id="lueckenContainer" class="luecken-story">
