@@ -196,12 +196,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- ===== TAB 0: V1 BEWERBUNG ZUORDNUNG ===== -->
     <div class="section active" id="sec-0">
         <h2>&#128188; Bewerbung: Positiv oder negativ f&uuml;r die Stelle?</h2>
-        <div class="help-box">
-            <strong>Aufgabe:</strong> Ordne zu: Was ist <em>gut</em> f&uuml;r eine Bewerbung, was ist <em>schlecht</em>?<br>
-            &#128313; <strong>sich bewerben</strong> = to apply &middot; <strong>eingestellt werden</strong> = to be hired<br>
-            &#128313; <strong>arbeitslos</strong> = unemployed &middot; <strong>k&uuml;ndigen</strong> = to quit<br>
-            &#128313; <strong>die Bewerbung einreichen</strong> = to submit an application
-        </div>
+
         <div class="zuordnung-categories">
             <div class="zuordnung-cat" data-cat="gut" ondrop="dropBew(event)" ondragover="allowDrop(event)">
                 <div class="zuordnung-cat-title">&#128994; Gut f&uuml;r die Bewerbung</div>
@@ -249,11 +244,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- ===== TAB 2: V2 TELEFON ZUORDNUNG ===== -->
     <div class="section" id="sec-2">
         <h2>&#128222; Am Telefon: Was sagt man?</h2>
-        <div class="help-box">
-            <strong>Aufgabe:</strong> Ordne zu: Wer sagt das &mdash; Anrufer oder Empf&auml;nger?<br>
-            &#128313; <strong>Anrufer</strong> = die Person, die anruft<br>
-            &#128313; <strong>Empf&auml;nger</strong> = die Person, die den Anruf entgegennimmt
-        </div>
+
         <div class="zuordnung-categories">
             <div class="zuordnung-cat" data-cat="anrufer" ondrop="dropTel(event)" ondragover="allowDrop(event)">
                 <div class="zuordnung-cat-title">&#128241; Anrufer</div>
@@ -276,11 +267,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- ===== TAB 4: SATZBAU ===== -->
     <div class="section" id="sec-4">
         <h2>&#129513; Satzbau</h2>
-        <div class="help-box">
-            <strong>Tipp:</strong> Bringe die Satzteile in die richtige Reihenfolge!<br>
-            &#128313; Das Verb steht auf Position 2.<br>
-            &#128313; Reflexive Verben: <strong>sich bewerben &middot; sich auskennen</strong>
-        </div>
+
         <div id="satzbauContainer"></div>
         <div class="btn-row">
             <button onclick="showWortschatzLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button>
@@ -304,9 +291,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- ===== TAB 5: WORTSCHATZ ===== -->
     <div class="section" id="sec-5">
         <h2>&#128260; Wortschatz</h2>
-        <div class="help-box">
-            <strong>Aufgabe:</strong> &Uuml;bersetze ins Deutsche. Bei Nomen: Artikel + Wort + Plural!
-        </div>
+
         <div id="wortschatzContainer"></div>
         <div class="btn-row">
             <button onclick="showWortschatzLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button>

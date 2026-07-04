@@ -186,9 +186,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- TAB 0: Umzug-Vokabular Zuordnung -->
     <div class="section active" id="sec0">
         <h2>&#127968; Umzug-Vokabular – Wo geh&ouml;rt es hin?</h2>
-        <div class="help-box">
-            Ordne die W&ouml;rter den richtigen Kategorien zu: <strong>Wohnungssuche</strong> (vor dem Umzug) oder <strong>Umzug</strong> (beim/nach dem Umzug).
-        </div>
+
         <div class="zuordnung-categories" id="umzug-cats">
             <div class="zuordnung-cat" id="umzug-suche" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'umzug-bank')" onclick="clickCat(event,'umzug-bank')">
                 <div class="zuordnung-cat-title">&#128270; Wohnungssuche</div>
@@ -236,9 +234,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- TAB 2: Zuhause Zuordnung drinnen/draußen -->
     <div class="section" id="sec2">
         <h2>&#127748; Zuhause – drinnen oder drau&szlig;en?</h2>
-        <div class="help-box">
-            Ordne die W&ouml;rter zu: Was ist <strong>drinnen</strong> (im Geb&auml;ude) und was ist <strong>drau&szlig;en</strong>?
-        </div>
+
         <div class="zuordnung-categories" id="zuhause-cats">
             <div class="zuordnung-cat" id="zh-drinnen" ondragover="event.preventDefault()" ondrop="dropGeneric(event,'zuhause-bank')" onclick="clickCat(event,'zuhause-bank')">
                 <div class="zuordnung-cat-title">&#127968; drinnen</div>
@@ -283,9 +279,7 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- TAB 5: Wortschatz -->
     <div class="section" id="sec5">
         <h2>&#128218; Wortschatz &uuml;ben</h2>
-        <div class="help-box">
-            Tippe die deutsche &Uuml;bersetzung. Bei Nomen: <strong>Artikel &middot; Wort &middot; Plural</strong>
-        </div>
+
         <div id="wortschatzContainer" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
         <div class="btn-row">
             <button onclick="showVocabLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button>
