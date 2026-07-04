@@ -432,6 +432,16 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
 .wortbank-chip { background:white; border:2px solid #667eea; color:#667eea; padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
 .wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
 
+
+/* FB-WORTSCHATZ-KANON-CSS — skill-konforme Karten-Optik, NUR im Wortschatz-Tab (überschreibt abweichende Datei-CSS, Lückentext bleibt unberührt) */
+#wortschatzContainer{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+#wortschatzContainer .luecken-item,#wortschatzContainer .luecke-item{background:#f8f9ff;border:1px solid #dde3ff;border-left:4px solid #667eea;border-radius:10px;padding:12px 16px;margin:0;display:block;}
+#wortschatzContainer .luecken-item>div:first-child,#wortschatzContainer .luecke-item>div:first-child,#wortschatzContainer .ws-en{font-weight:700;color:#667eea;margin-bottom:8px;font-size:1.05em;}
+#wortschatzContainer input.blank{border:none;border-bottom:2px solid #667eea;border-radius:0;background:#fff;padding:4px 6px;outline:none;font-family:inherit;font-size:0.95em;}
+#wortschatzContainer input.blank:focus{border-bottom-color:#764ba2;}
+#wortschatzContainer input.blank.correct{border-bottom-color:#27ae60;background:#e8f8f0;}
+#wortschatzContainer input.blank.wrong{border-bottom-color:#e74c3c;background:#fdeaea;}
+@media(max-width:640px){#wortschatzContainer{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -693,10 +703,11 @@ input.blank.wrong   { border-color: #e74c3c; background: #ffebee; }
       <span>🏆 <span class="best-display" id="best-4">–</span></span>
     </div>
     <div class="btn-row">
-      <button onclick="wsReset()">↺ Neustart</button>
+      <button onclick="resetWortschatz()">↺ Neustart</button>
     </div>
 
-    <div class="vocab-grid" id="vocabContainer"></div>
+    <div style="display:flex;gap:8px;margin:0 0 14px;"><button onclick="showWortschatzLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetWortschatz()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div>
+<div id="wortschatzContainer"></div>
 
   </div>
 </div>
@@ -1351,21 +1362,53 @@ var WS_DATA = [
   { en: 'blue', de: 'blau', img: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gIcSUNDX1BST0ZJTEUAAQEAAAIMbGNtcwIQAABtbnRyUkdCIFhZWiAH3AABABkAAwApADlhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApkZXNjAAAA/AAAAF5jcHJ0AAABXAAAAAt3dHB0AAABaAAAABRia3B0AAABfAAAABRyWFlaAAABkAAAABRnWFlaAAABpAAAABRiWFlaAAABuAAAABRyVFJDAAABzAAAAEBnVFJDAAABzAAAAEBiVFJDAAABzAAAAEBkZXNjAAAAAAAAAANjMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0ZXh0AAAAAElYAABYWVogAAAAAAAA9tYAAQAAAADTLVhZWiAAAAAAAAADFgAAAzMAAAKkWFlaIAAAAAAAAG+iAAA49QAAA5BYWVogAAAAAAAAYpkAALeFAAAY2lhZWiAAAAAAAAAkoAAAD4QAALbPY3VydgAAAAAAAAAaAAAAywHJA2MFkghrC/YQPxVRGzQh8SmQMhg7kkYFUXdd7WtwegWJsZp8rGm/fdPD6TD////bAIQABQYGBwkHCgsLCg0ODQ4NExIQEBITHRUWFRYVHSsbIBsbIBsrJi4mIyYuJkQ2MDA2RE9CP0JPX1VVX3hyeJyc0gEFBgYHCQcKCwsKDQ4NDg0TEhAQEhMdFRYVFhUdKxsgGxsgGysmLiYjJi4mRDYwMDZET0I/Qk9fVVVfeHJ4nJzS/8IAEQgBLAGQAwEiAAIRAQMRAf/EADIAAAMBAQEBAAAAAAAAAAAAAAABAgMEBQYBAQEBAQEBAQAAAAAAAAAAAAABAgQDBwj/2gAMAwEAAhADEAAAAPkCj9G/DpKIkoJKCSgkoJLQihJKCSgQwRRJJQS6CSgkokl0ElBJTSSnEFhJaSXQSUCGRkUa1JQSUElBJQSUEuhJKCSiJLCHQklhDoJKBDIQwTBAGIYIbiShJLCSxIdBJRGQ3rUjZJQIYIYIYIYIYIYIbSSiJKZDoJLElWRJQS2CG0ljENktkS2CGIiiEMTIo3uSiJKCSgkoEMJbBFCIZCGCGySgQ2klESUCGIhskoJbEQ3ElMh0JJQS6IkoMRm9oYIYJshDEQ2SUElBLYiG4koJbZJQklMkoiSgQ2klAhuJKEkoEUElOSSgksOco3uSgksILIh0ElAihJKCSgQyENktiJUCKZDokkpkOiSSmSUEuhJKIkpklCS6IkoTmbPT1lsEUElkkFhJTILIh0JJTIdBJQS6JJKCXQSU0kokkoEUElOSSgkpklEklAigkppzFPfrBYSU0gsiHQSU0h0ElBJREuhJKCSgl0ElEiKCSmklESWEliQ7Igtmbskh2zM1IzNQ4xnr6IoklsENklCIoJKIksIdNILCCyIdhDpkFuILcQaMyejjJ6uXJ63LznSS876XNcldLl5n0ua530POud9JNeKaPr5s1o0zNBM3bM3bjM0ZkauMjVmL1cuJuS4vdy4HQ5ec6XNc51E1zvpc1zPpc1zV0POud9DmsH0POud9Dmud9BLg9xcXsS5GrlyNiPCOh9nFzrpZzHSJzvocvOdJLzvoc1zPoZzPocc73qa5zocuB0Oa530EuD3JcToFxrUzrM2FyejjM1cuT0cub0cuT0ZkauMno4yNWZPUjyH0HTOd9BHOdDTne5GJs1xexLi9WmJsSZPUXI1IyeoZPUjM1FzejjJ6kuZq4yejXJ6uMjaowrZ5uB0VLzPoZzV0OXne7jB7OXyDU6bkbCZGrMTYjF6tMjVrktSZyegmZqGRqGT1cYvYMXtUYHQ5ed9Lzed71Lz1s4xrV51maVGT1c1i9ql53u0530OXnfQ5cDoceEbPrzibNcDZyYm4YPoIwOhxznS45jpZzPoccx0hgbuMDdmD2cYm7lwe7jB71LzvoeWD6HLz1uS4vZxi9iXF7OMHs4xerMXq48R9L6t8r6nHK+py8r6iOY6ROZ9DjnOgMDoccz6Q5jrJOV9TjlOoTmfQ4530EuD3cYm1Rg93HO+hxzvdxzvdxgbswezjF6hkauTI1Z5T6H79nOdFRyvpccx01HK+ok5n0Cc76CTA3ZgdBGC6GnOdDjmOkZ530OOd7uTB7Mwe6jI2Zib1LzHU8uV9TOU63LyPqccj6yXlroZzvcjynu/fr530OOd7uMDdyc76EmBuJi9iMXsJg9nJg9gxN6k5jqacr6nLzPpeXM+kjA6HLzvdnO93GB0OXnfQ45n0uXmOpxynW15H1uXkXaR4ptXR7YHQ45zpZynWHKdZJyPqDmOojmfSRznQ053vUc50uOWukk530VLzHS5eZ9Ll5q6Kl5X1OOV9TzrmfS5eZ9Ll5n0uXmOol5nuznfQ5rA6HL4NaPsZPRyZGxJibMxeoZmzjF7EuL2IwrVplWrzcXs4wrUXJ7OXF7EuT1Jc6us3M0cudaOazejmsnq4yehLmaBDsWSrmszQl//EABwQAQADAQEAAwAAAAAAAAAAABEAEDAgQBJQkP/aAAgBAQABAgH9SwAD2gWHxAgAAeYgAAAAAAAAUHQAAAAAAAAAQxAAAAAAAAAADYsAAAAAAADsLMwAAIAAGJoQAAAAMACzYAAADsgHlAADoAA4MwAAAAOAAAAAMAgAAAHIAAAAFAAAQAAACAAAAAAABRwQAAAAAAAAAAAAAAACgAA4AAAALAAAwAAoAAAAhQAAAUAAAAAAAAAAAAAAAAAAAAAAAAEAAAgEAAAAAAAAAAAAIAAAAAABAAAAAACAEAAAAAAAAAAAAAAAAAAKAAAoAAAAAAAAAoAAAAAALAAgAFAAfZ//xAAUEAEAAAAAAAAAAAAAAAAAAACg/9oACAEBAAM/AW2f/8QAIBABAQADAQEAAgMBAAAAAAAAEQABECAwQCFxUFGBYf/aAAgBAQABPxA0RERERERERERHkRERERHJERERHwERERERER4ERERHkaNmjZEREeBERER6kREREcEREREREREREexEaI0REREcH0EREREREREeBHzkREREeh4EdEREREREREeJoiPAiOyIjZ7EREaNkRo7NEREeRGiPU8CIiIiI5IiOSOyPMiIiIiOSIjkiIiI4OiIiIiI0eBEdERERHBEREaIiIjxIiI7IiIiOTREaIiODREaI8CIiIiIjkiNGiI5IiIiOSIiIiI2aIiIiIiIiIjgiIiOSIjREREREREaIiIiIiOjRGjZEbIiIiIiIiIiIiIjgiIiNHJERGiIiIiIiIiIiIiI0REdEREbNERERERERERERERERYynOxTCHRyREREREREREREcAxGI/wCSntMP6jH9X6S74IiIiIiIiIiIiIiNCWn6WIrHDix5ARjoAzGdFERERnZjQuB+nDx8LAADQiIiIixjkcfhovIC49wAAIiIiIiIiIjQiLH4fQAAAAiLGIiNMQiNCIiIiIiPIAYx4gBEREREaERERERERpjHYGNvHIDEREREcgRGhERERERERHmAmNBiMX4v8iI0OARERERERERERERGfEAMRi/y/MZjMuB+mwiI0IiIiIiI9wCYRiIjMveAAIiIiI2HoAgRiIiM/AAACPIAHqCAfQAAIAjQiI0NuP47AAA8AAACPB4IxERKXkVhCIjyABERERHYBGZcvjr8QjQjPoCAjzABauxrMP4IIAAAAKfHPxwAAHkADgGIbHxzGMPYAAvXgA9gA58ABwF8D/8AjkDkFPV+PBjRj+BP/wDw48OAR5AwjgL6fAAACPgAAAhwCMR2AdgEdgGzRGiNERoiIjFjGIxGNmIxGO8aNEYiNEcGi//EABkRAQEBAQEBAAAAAAAAAAAAABIRIAAQMP/aAAgBAgEBAgDy9bbbbbbbbbb1vlttttubb9LbbcXF3b19tt8ttuLbc23y2229bbc2222222222222222223rbbbbbbbbbbakri22221JJNttW2pJJJNtJJJKpJNJJJJJW2221JJJK2222pJJJW2222pJJJVJNJJJJtJJJJJJJJNtJJNttJJJJJJJtpJJJJJJtttJJJJJJttJJNttJtttJpttttpJKq1JJJK222223/8QAFxEBAQEBAAAAAAAAAAAAAAAAAWAwcP/aAAgBAgEDPwDrZIM8RDl//8QAHREBAQACAwEBAQAAAAAAAAAAERIBEwADIBACMP/aAAgBAwEBAgDy8fiqqqq8VVVVXwqrxVVVVV8Kqv8ABVVVVVVVVVfiqqqvlVVVVVVVVVVVVVVVVVVVVePhVVV8AY/GvVjq1Y6tYfAkmI169WvHXjrx1469cTIa9evXrx169eOuIiJkAA4Ea4iZkAADgEzMyBIZwAEzMzIEzIABMzMyEgAH2IiJmZmZAAAACZmZmZkAAJmIiIkAACZmZmSZmYiICYiImZmYiIjXr169ca8dczMzMzMRERMzMzMzM//EAB8RAQEAAgIBBQAAAAAAAAAAAAEAECBAYTACIVBgcP/aAAgBAwEDPwD9XcN6pu8dXWXVmZmZ8Jp7eQwcA4Z9edCPgThmpg3IjBGCIx//2Q==' }
 ];
 
-function wortschatzCheck(inp) {
-  var val = inp.value.trim();
-  var ans = inp.dataset.answer || '';
-  inp.classList.remove('correct','wrong');
-  if (val.length === 0) return;
-  if (val === ans) {
-    inp.classList.add('correct');
-    inp.closest('.vocab-card').classList.add('correct-card');
-  } else if (ans.indexOf(val) === 0) {
-    /* Präfix ok */
-  } else {
-    inp.classList.add('wrong');
-  }
-  wsUpdateScore();
+/* FB-WORTSCHATZ-KANON — deterministisch, schema-adaptiv (inject_wortschatz.py) */
+function initWortschatz(){
+  var c=document.getElementById("wortschatzContainer"); if(!c) return; c.innerHTML="";
+  WS_DATA.forEach(function(item){
+    var artikel=(item.artikel!==undefined)?item.artikel:(item.art||"");
+    var de=(item.de!==undefined)?item.de:(item.wort||item.word||"");
+    var plural=(item.plural!==undefined)?item.plural:(item.pl||"");
+    var en=(item.en!==undefined)?item.en:(item.prompt||item.frage||"");
+    var type=item.type||(artikel?"n":"p");
+    var row=document.createElement("div"); row.className="luecken-item"; row.style.marginBottom="0";
+    var p=document.createElement("div"); p.style.cssText="font-weight:600;color:#667eea;margin-bottom:6px;font-size:1.05em;"; p.textContent=en; row.appendChild(p);
+    var fl=document.createElement("div"); fl.style.cssText="display:flex;gap:8px;flex-wrap:wrap;align-items:center;";
+    function mk(ph,w,ans,fld){var i=document.createElement("input");i.className="blank";i.type="text";i.placeholder=ph;i.style.width=w;i.dataset.answer=ans;i.dataset.field=fld;i.oninput=function(){wortschatzCheck(this);if(typeof timerAutoStart==="function")timerAutoStart(4);checkWortschatzAllOk();};return i;}
+    if(type==="n"){
+      fl.appendChild(mk("Artikel","70px",artikel,"art"));
+      fl.appendChild(mk("Wort","160px",de,"word"));
+      var pl=mk("Plural","140px",plural,"plural");
+      if(plural==="\u2013"||plural===""||plural==="-"){pl.value="\u2013";pl.disabled=true;pl.dataset.answer="\u2013";pl.classList.add("correct");pl.style.opacity="0.6";pl.title="Dieses Wort hat keinen Plural";pl.oninput=null;}
+      fl.appendChild(pl);
+    } else { fl.appendChild(mk("Deutsch","220px",de,"word")); }
+    row.appendChild(fl); c.appendChild(row);
+  });
 }
+function wortschatzCheck(inp){
+  var u=inp.value,a=inp.dataset.answer,f=inp.dataset.field; inp.classList.remove("correct","wrong"); if(!u) return;
+  var cu=(f==="art")?u.toLowerCase().trim():u.trim(); var ca=(f==="art")?(a||"").toLowerCase():a;
+  if(cu===ca) inp.classList.add("correct"); else if(ca.indexOf(cu)===0){} else inp.classList.add("wrong");
+}
+function checkWortschatzAllOk(){
+  var ins=document.querySelectorAll("#sec-4 input.blank");
+  var ok=ins.length>0 && Array.from(ins).every(function(i){return i.disabled||i.classList.contains("correct");});
+  if(ok){try{if(typeof timerStop==="function") timerStop(4);}catch(e){}}
+}
+function showWortschatzLoesung(){
+  try{if(typeof timerStop==="function") timerStop(4);}catch(e){}
+  document.querySelectorAll("#sec-4 input.blank").forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.add("correct");inp.classList.remove("wrong");});
+}
+function resetWortschatz(){
+  document.querySelectorAll("#sec-4 input.blank").forEach(function(inp){if(!inp.disabled){inp.value="";inp.classList.remove("correct","wrong");}});
+  try{if(typeof timerResetOne==="function") timerResetOne(4);}catch(e){}
+}
+try{window.initWortschatz=initWortschatz;window.wortschatzCheck=wortschatzCheck;window.checkWortschatzAllOk=checkWortschatzAllOk;window.showWortschatzLoesung=showWortschatzLoesung;window.resetWortschatz=resetWortschatz;}catch(e){}
+
+initWortschatz();
+
+
+
 function wsShowHint(inp) {
   inp.value = inp.dataset.answer;
   inp.classList.add('correct');
