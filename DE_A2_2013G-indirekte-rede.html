@@ -1134,7 +1134,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","die","_","heute","_","schwierig","_"],"parts":["ich","weiß",",","dass","Aufgabe","sehr","ist"]},{"i":1,"row":["_","_","_","_","er","_","sehr","gut","_","_"],"parts":["er","sagt",",","dass","wirklich","kochen","kann"]},{"i":2,"row":["_","_","_","_","_","_","er","gerne","Bananen","_"],"parts":["kannst","du","mir","sagen",",","ob","mag"]},{"i":3,"row":["_","_","_","_","_","du","dich","_","ungesund","_"],"parts":["ich","glaube","wirklich",",","dass","zu","ernährst"]},{"i":4,"row":["_","_","_","_","_","er","noch","_","im","Kühlschrank","_"],"parts":["du","fragst","mich",",","ob","Gemüse","hat"]},{"i":5,"row":["_","_","_","_","im","_","keine","_","Filme","_"],"parts":["sie","meinen",",","dass","Kino","guten","laufen"]},{"i":6,"row":["_","_","_","_","_","ich","_","viel","_","treibe"],"parts":["ich","sagte","ihm",",","dass","regelmäßig","Sport"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

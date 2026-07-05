@@ -1398,7 +1398,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","zwei","_","_","Berlin"],"parts":["ich","wohne","seit","Jahren","in"]},{"i":1,"row":["_","_","_","zwei","_","_","Berlin","_","_","_","ich","_","Hamburg"],"parts":["ich","bin","vor","Jahren","nach","gezogen",",","aber","vermisse"]},{"i":2,"row":["_","_","Monat","_","_","_","Hamburg"],"parts":["ab","nächstem","arbeite","ich","in"]},{"i":3,"row":["_","_","_","du","_","noch","_"],"parts":["wie","lange","musst","heute","arbeiten"]},{"i":4,"row":["_","_","Arbeit","_","ich","_","Hause","_","_","_","_","müde"],"parts":["nach","der","gehe","nach",",","denn","ich","bin"]},{"i":5,"row":["_","_","_","dem","Urlaub","_","_","München"],"parts":["wir","fahren","nach","direkt","nach"]},{"i":6,"row":["_","_","_","drei","_","in","_","Innenstadt"],"parts":["sie","wohnt","seit","Jahren","der"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

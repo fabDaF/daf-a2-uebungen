@@ -1134,7 +1134,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","dem","Tisch"],"parts":["das","Buch","liegt","auf"]},{"i":1,"row":["_","_","_","Buch","_","den","_","Tisch"],"parts":["ich","lege","das","auf","großen"]},{"i":2,"row":["_","_","_","dem","Stuhl","_","_","er","_","gleich","_","_"],"parts":["Max","sitzt","auf",",","aber","steht","wieder","auf"]},{"i":3,"row":["_","_","_","Bahnhof","_","_","Stadt"],"parts":["wo","ist","der","in","dieser"]},{"i":4,"row":["_","_","_","_","_","_","dann","links","_"],"parts":["gehen","Sie","geradeaus","und","biegen","Sie","ab"]},{"i":5,"row":["_","_","_","_","_","_","_","_","es","_","sehr","groß"],"parts":["das","Krankenhaus","ist","leicht","zu","finden",",","denn","ist"]},{"i":6,"row":["_","_","_","am","_","_","Straße"],"parts":["der","Bahnhof","ist","Ende","der"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

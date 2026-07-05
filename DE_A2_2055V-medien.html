@@ -1295,7 +1295,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","Abend","_","_","Abendnachrichten"],"parts":["ich","schaue","jeden","die","wichtigen"]},{"i":1,"row":["_","_","_","gut","_","_","_","viel","Talent","_"],"parts":["der","Schauspieler","spielt",",","weil","er","hat"]},{"i":2,"row":["_","_","_","du","_","am","_"],"parts":["welchen","Sender","schaust","eigentlich","liebsten"]},{"i":3,"row":["_","_","Sendung","_","_","_","Abend"],"parts":["die","spannende","beginnt","heute","am"]},{"i":4,"row":["_","_","Folge","_","toll","_","_","_","Geschichte","_","spannend"],"parts":["die","neue","war",",","denn","die","war"]},{"i":5,"row":["_","_","_","oft","_","den","Medien","_","_"],"parts":["die","Promis","sind","in","zu","sehen"]},{"i":6,"row":["_","_","_","Beitrag","_","Twitter","_"],"parts":["er","hat","den","auf","veröffentlicht"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

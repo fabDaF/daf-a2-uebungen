@@ -1337,7 +1337,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","Armut","_","großes","Problem"],"parts":["meiner","Meinung","nach","ist","ein"]},{"i":1,"row":["_","_","_","_","man","andere","immer","_","_","_"],"parts":["ich","finde",",","dass","ausreden","lassen","sollte"]},{"i":2,"row":["_","_","Sie","_","_","_","ständig"],"parts":["bitte","unterbrechen","mich","jetzt","nicht"]},{"i":3,"row":["_","_","_","den","_","_","Mietpreise"],"parts":["warum","steigen","in","Großstädten","die"]},{"i":4,"row":["_","_","_","den","_","Brei","_","_","_","er","unsicher","_"],"parts":["er","redet","um","heißen","herum",",","weil","ist"]},{"i":5,"row":["_","_","_","_","_","_","die","Chancengleichheit","wichtig","_"],"parts":["ich","bin","fest","überzeugt",",","dass","ist"]},{"i":6,"row":["_","_","_","einer","_","immer","_"],"parts":["wir","sollten","in","Gesellschaft","zusammenhalten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

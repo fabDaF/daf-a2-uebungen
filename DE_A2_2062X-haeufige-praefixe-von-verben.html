@@ -1444,7 +1444,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","Lisa","_","früh","_","_"],"parts":["ich","rufe","morgen","wieder","an"]},{"i":1,"row":["_","_","_","Schuhe","_","_","_","sie","_","klein","_"],"parts":["Lisa","schickt","die","zurück",",","weil","zu","sind"]},{"i":3,"row":["_","_","_","heute","_","_","Pizza"],"parts":["ich","bestelle","uns","eine","große"]},{"i":4,"row":["_","_","_","Freundin","_","_","_","sie","_","_","Problem"],"parts":["Naomi","hört","ihrer","zu",",","denn","hat","ein"]},{"i":6,"row":["_","_","_","neuen","Schuhe","_","_"],"parts":["ich","möchte","die","wieder","zurückschicken"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

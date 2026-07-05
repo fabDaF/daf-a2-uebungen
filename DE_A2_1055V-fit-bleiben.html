@@ -1307,7 +1307,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","_","_","mehr","Sport","_"],"parts":["ich","möchte","fit","bleiben","und","treiben"]},{"i":1,"row":["_","_","_","_","Stress","_","_","sie","gesund","_","_"],"parts":["Maria","vermeidet","jetzt","bewusst",",","weil","bleiben","möchte"]},{"i":2,"row":["_","_","_","sie","_","Entspannungsübungen"],"parts":["beim","Yoga","macht","viele"]},{"i":3,"row":["_","_","_","_","eine","_","Ernährung"],"parts":["achtest","du","auch","auf","gesunde"]},{"i":4,"row":["_","_","_","ungesund","_","_","_","_","viel","Fett"],"parts":["Fast","Food","ist",",","denn","es","hat"]},{"i":5,"row":["_","_","_","einer","_","langsam","_"],"parts":["sie","möchte","mit","Diät","abnehmen"]},{"i":6,"row":["_","_","_","pro","_","_","Laufen"],"parts":["er","geht","dreimal","Woche","zum"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

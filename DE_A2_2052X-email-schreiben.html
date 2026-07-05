@@ -1349,7 +1349,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","Ihnen","_","eine","_","E-Mail","_"],"parts":["ich","möchte","heute","wichtige","schicken"]},{"i":1,"row":["_","_","_","bitte","_","kurze","Nachricht","_"],"parts":["kannst","du","mir","eine","hinterlassen"]},{"i":2,"row":["_","_","_","Sie","_","_","Unterlagen"],"parts":["im","Anhang","finden","alle","wichtigen"]},{"i":3,"row":["_","_","_","Foto","_","Facebook","_","_","_","es","schön","_"],"parts":["ich","lade","das","auf","hoch",",","weil","ist"]},{"i":4,"row":["_","_","Sie","_","_","_","nicht"],"parts":["bitte","verschicken","diese","private","E-Mail"]},{"i":5,"row":["_","_","_","Freundin","_","_","_","_","ihre","Fotos"],"parts":["Maria","folgt","ihrer",",","denn","sie","mag"]},{"i":6,"row":["_","_","_","neuen","_","gern","_"],"parts":["ich","möchte","der","Gruppe","beitreten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

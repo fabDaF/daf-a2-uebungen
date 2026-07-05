@@ -791,7 +791,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","Wetters","_","ich","_","zuhause"],"parts":["wegen","des","schlechten","bleibe","heute"]},{"i":1,"row":["_","_","_","Samstag","_","_","großem","Geburtstag"],"parts":["gehst","du","am","zu","Annas"]},{"i":2,"row":["_","_","Argumente","_","_","das","_","_","_","ich","_","_","weiß"],"parts":["trotz","deiner","sehe","ich","anders",",","weil","es","besser"]},{"i":3,"row":["_","_","_","bequeme","_","_","Bruders"],"parts":["das","ist","der","Stuhl","meines"]},{"i":4,"row":["_","_","_","Mannes","_","_","_","_","sie","_","kreativ"],"parts":["die","Arbeit","des","ist","interessant",",","denn","ist"]},{"i":5,"row":["_","_","_","Sohnes","_","_","in","_","Nähe"],"parts":["der","Kindergarten","meines","liegt","ganz","der"]},{"i":6,"row":["_","_","_","meines","_","Fehlers","_"],"parts":["ich","bin","mir","großen","bewusst"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

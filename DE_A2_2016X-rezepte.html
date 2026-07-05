@@ -1003,7 +1003,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":2};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":2};
   var SBGAP = [{"i":0,"row":["_","_","_","Zucker","_","genau","_"],"parts":["hast","du","den","schon","abgemessen"]},{"i":1,"row":["_","_","_","einen","_","Zucker","_"],"parts":["geben","Sie","jetzt","Teelöffel","hinzu"]},{"i":2,"row":["_","_","_","Zutaten","_","einer","Schüssel","_"],"parts":["sie","mischt","alle","in","zusammen"]},{"i":3,"row":["_","_","_","die","Soße","langsam","_","_","_","sie","_","_"],"parts":["der","Koch","rührt","um",",","weil","sonst","anbrennt"]},{"i":4,"row":["_","_","_","Kaffee","_","gut","_"],"parts":["lass","den","heißen","erst","abkühlen"]},{"i":5,"row":["_","_","Reibe","_","man","_","Käse","_"],"parts":["mit","einer","kann","leicht","reiben"]},{"i":6,"row":["_","_","_","_","_","man","_","guten","Rezept","_"],"parts":["es","hilft","sehr",",","wenn","einem","folgt"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

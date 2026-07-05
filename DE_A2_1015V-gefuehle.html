@@ -1572,7 +1572,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","_","von","Paul"],"parts":["Tina","ist","sehr","enttäuscht"]},{"i":1,"row":["_","_","_","stolz","_","_","Freund","Alex"],"parts":["Louise","ist","sehr","auf","ihren"]},{"i":2,"row":["_","_","Alex","_","_","_","Gespräch"],"parts":["warum","hat","Angst","vor","dem"]},{"i":3,"row":["_","_","_","_","Date","nervös","_","_","_","_","ganz","ruhig"],"parts":["Gwyneth","war","beim","ersten",",","aber","Alex","blieb"]},{"i":4,"row":["_","_","_","Freude","_","_","_","Hochzeit","_","wunderschön"],"parts":["Louise","weint","vor",",","denn","die","ist"]},{"i":5,"row":["_","_","_","froh","_","die","_","Einladung"],"parts":["Tina","ist","sehr","über","nette"]},{"i":6,"row":["_","_","_","_","_","der","Tanzfläche"],"parts":["die","Freunde","lachen","zusammen","auf"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

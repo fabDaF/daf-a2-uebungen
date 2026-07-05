@@ -1452,7 +1452,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","du","_","_","der","Party"],"parts":["welches","Kleid","trägst","morgen","auf"]},{"i":1,"row":["_","_","_","nicht","_","was","_","heute","Abend","_","_"],"parts":["ich","weiß","noch",",","ich","anziehen","soll"]},{"i":2,"row":["_","_","Pullover","_","_","schöner","_","_","rote"],"parts":["der","weiße","ist","viel","als","der"]},{"i":3,"row":["_","_","_","_","groß","_","_","ich","_","_"],"parts":["die","Jacke","ist","zu",",","weil","abgenommen","habe"]},{"i":4,"row":["_","_","_","man","_","Anzug","_","Maß","_","_"],"parts":["beim","Schneider","kann","einen","nach","anfertigen","lassen"]},{"i":5,"row":["_","_","_","dir","_","besser"],"parts":["welches","Hemd","gefällt","eigentlich"]},{"i":6,"row":["_","_","_","man","_","_","Anlässen","_"],"parts":["einen","Smoking","zieht","zu","besonderen","an"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

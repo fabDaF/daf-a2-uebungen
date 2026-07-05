@@ -1169,7 +1169,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","Küche","_","wirklich","_","_"],"parts":["die","bayerische","ist","weltweit","bekannt"]},{"i":1,"row":["_","_","_","gut","_","_","sie","_","_","Zwiebeln"],"parts":["Käsespätzle","schmecken","sehr",",","denn","haben","geröstete"]},{"i":2,"row":["_","_","_","in","_","Deutschland","sehr","_"],"parts":["der","Döner","ist","ganz","beliebt"]},{"i":3,"row":["_","_","_","_","Senf","_","_","niemals","_","Ketchup"],"parts":["Weißwurst","isst","man","mit",",","aber","mit"]},{"i":4,"row":["_","_","_","einmal","_","Sauerkraut","_"],"parts":["haben","Sie","schon","echtes","probiert"]},{"i":6,"row":["_","_","_","im","_","oft","_","Eintöpfe"],"parts":["meine","Mutter","kocht","Winter","warme"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

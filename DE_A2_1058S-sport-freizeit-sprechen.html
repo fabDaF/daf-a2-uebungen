@@ -789,7 +789,7 @@ document.addEventListener('DOMContentLoaded', function(){
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","Sport","_","_","er","fit","_","_"],"parts":["Fred","macht","viel",",","weil","bleiben","möchte"]},{"i":1,"row":["_","_","_","_","dem","Training","gerne","_"],"parts":["ich","lasse","mich","nach","massieren"]},{"i":2,"row":["_","_","_","dich","_","_","Arbeit"],"parts":["wie","erholst","du","nach","der"]},{"i":3,"row":["_","_","_","ihm","_","_","_","es","_","gesund"],"parts":["manches","Gemüse","schmeckt","gut",",","denn","ist"]},{"i":4,"row":["_","_","_","Stress","_","_","genug"],"parts":["ich","vermeide","viel","und","schlafe"]},{"i":5,"row":["_","_","_","_","eine","_","Ernährung"],"parts":["ich","achte","immer","auf","gesunde"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

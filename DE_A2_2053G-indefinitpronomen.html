@@ -1425,7 +1425,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","Deutschland","_","alles","_"],"parts":["man","kann","in","fast","kaufen"]},{"i":1,"row":["_","_","_","_","_","_","er","meine","Hilfe","_"],"parts":["jemand","hat","mir","geschrieben",",","weil","braucht"]},{"i":2,"row":["_","_","_","_","wie","das","_","alles","_","_"],"parts":["niemand","weiß","genau",",","gestern","passiert","ist"]},{"i":3,"row":["_","_","_","_","meinem","_","Geburtstag"],"parts":["kommen","wirklich","alle","zu","großen"]},{"i":4,"row":["_","_","_","sehr","_","_","andere","_","viel","_","Zeit"],"parts":["manche","Studenten","lernen","schnell",",","brauchen","mehr"]},{"i":5,"row":["_","_","_","niemandem","darüber","_"],"parts":["ich","habe","mit","gesprochen"]},{"i":6,"row":["_","_","_","heute","_","_","günstig"],"parts":["einige","Angebote","waren","wirklich","sehr"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

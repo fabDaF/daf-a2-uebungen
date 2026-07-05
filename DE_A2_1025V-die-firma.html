@@ -1212,7 +1212,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","Jahren","_","_","Buchhaltung"],"parts":["Georg","arbeitet","seit","in","der"]},{"i":1,"row":["_","_","_","gut","_","_","er","_","_","guter","Mitarbeiter"],"parts":["er","verdient","sehr",",","denn","ist","ein"]},{"i":2,"row":["_","_","_","_","_","_","sie","_","schon","_","neue","Stelle"],"parts":["sie","hat","heute","gekündigt",",","aber","sucht","eine"]},{"i":3,"row":["_","_","_","fleißig","_","immer","_"],"parts":["ich","bin","sehr","und","motiviert"]},{"i":4,"row":["_","_","_","lange","_","eine","Kündigung","_"],"parts":["er","denkt","schon","über","nach"]},{"i":5,"row":["_","_","_","endlich","_","_","Ruhestand"],"parts":["wann","geht","er","in","den"]},{"i":6,"row":["_","_","_","eine","Absage","_"],"parts":["leider","hat","sie","erhalten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

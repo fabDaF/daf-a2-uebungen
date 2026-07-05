@@ -1519,7 +1519,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","Croissant","_","_","_","lecker"],"parts":["das","frische","riecht","heute","sehr"]},{"i":1,"row":["_","_","_","etwas","scharf","_","_","_","_","sehr","lecker"],"parts":["die","Soße","schmeckt",",","aber","sie","ist"]},{"i":2,"row":["_","_","_","Frühstück","_","_","_","alles","frisch","_"],"parts":["er","genießt","sein","sehr",",","weil","schmeckt"]},{"i":3,"row":["_","_","_","_","alle","_","allergisch"],"parts":["ich","bin","leider","gegen","Nüsse"]},{"i":4,"row":["_","_","Obst","_","_","schon","_"],"parts":["das","frische","ist","leider","verdorben"]},{"i":5,"row":["_","_","Zunge","_","_","Geschmäcker","_"],"parts":["dank","der","können","wir","wahrnehmen"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

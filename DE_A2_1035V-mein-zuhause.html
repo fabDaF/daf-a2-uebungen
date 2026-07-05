@@ -1500,7 +1500,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","_","schönes","_","Haus"],"parts":["Familie","Ludwig","baut","ein","neues"]},{"i":1,"row":["_","_","_","im","Erdgeschoss","_","_","_","Schlafzimmer","_","oben"],"parts":["die","Küche","ist",",","aber","die","sind"]},{"i":2,"row":["_","_","_","_","im","_","Garten"],"parts":["die","Kinder","spielen","draußen","großen"]},{"i":3,"row":["_","_","Stockwerke","_","_","Gebäude"],"parts":["wie","viele","hat","das"]},{"i":4,"row":["_","_","_","sehr","grün","_","_","_","_","hohe","Bäume"],"parts":["die","Umgebung","ist",",","denn","überall","stehen"]},{"i":5,"row":["_","_","Haus","_","_","eine","_","Mauer"],"parts":["um","das","herum","steht","hohe"]},{"i":6,"row":["_","_","Baustelle","_","_","_","Bauarbeiter"],"parts":["auf","der","arbeiten","viele","fleißige"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

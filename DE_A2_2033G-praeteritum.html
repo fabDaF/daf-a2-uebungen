@@ -1413,7 +1413,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","einer","_","Geburtstagsfeier"],"parts":["ich","war","gestern","auf","schönen"]},{"i":1,"row":["_","_","_","den","_","Nachmittag","_","Garten"],"parts":["die","Kinder","spielten","ganzen","im"]},{"i":2,"row":["_","_","_","_","_","_","er","einen","Termin","_"],"parts":["er","musste","früh","aufstehen",",","weil","hatte"]},{"i":3,"row":["_","_","_","viel","_","_","der","Party"],"parts":["wir","hatten","gestern","Spaß","auf"]},{"i":4,"row":["_","_","_","_","_","_","_","nicht","lange","_"],"parts":["als","ich","klein","war",",","durfte","ich","aufbleiben"]},{"i":5,"row":["_","_","_","wirklich","_","zur","Feier","_"],"parts":["konntest","du","gestern","nicht","kommen"]},{"i":6,"row":["_","_","_","viel","_","Essen","_","Getränke"],"parts":["der","Caterer","brachte","leckeres","und"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

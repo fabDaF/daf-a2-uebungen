@@ -1214,7 +1214,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","das","_","Haus","_"],"parts":["Familie","Miller","möchte","große","mieten"]},{"i":1,"row":["_","_","_","eine","Einbauküche","_","_","_","_","ziemlich","teuer"],"parts":["die","Wohnung","hat",",","aber","sie","ist"]},{"i":2,"row":["_","_","_","endlich","_","die","Wohnung","_"],"parts":["wann","können","wir","in","einziehen"]},{"i":3,"row":["_","_","_","Kaution","_","_","_","sie","_","_","Wohnung"],"parts":["Tina","muss","die","bezahlen",",","denn","mietet","die"]},{"i":4,"row":["_","_","_","_","Euro","_","Monat"],"parts":["die","Miete","beträgt","achthundert","pro"]},{"i":5,"row":["_","_","Markus","_","bald","_","_"],"parts":["Lisa","und","wollen","zusammen","umziehen"]},{"i":6,"row":["_","_","_","lange","_","Wohnungssuche"],"parts":["Gerd","ist","schon","auf"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

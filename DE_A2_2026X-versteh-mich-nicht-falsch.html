@@ -1400,7 +1400,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","bitte","_","einmal","_"],"parts":["kannst","du","das","noch","wiederholen"]},{"i":1,"row":["_","_","_","nicht","_","_","_","es","_","_","_"],"parts":["ich","habe","dich","verstanden",",","weil","zu","laut","war"]},{"i":2,"row":["_","_","_","_","großes","Missverständnis","_"],"parts":["hier","muss","wohl","ein","vorliegen"]},{"i":3,"row":["_","_","_","gerne","_","einmal","_"],"parts":["ich","möchte","das","noch","klarstellen"]},{"i":4,"row":["_","_","_","oft","unklar","_","_","_","er","_","nervös"],"parts":["er","drückt","sich","aus",",","denn","ist"]},{"i":5,"row":["_","_","_","ich","_","_","Händen","_","Füßen","_"],"parts":["im","Urlaub","habe","mich","mit","und","verständigt"]},{"i":6,"row":["_","_","_","Meinung","_","sehr","_"],"parts":["sie","vertritt","ihre","immer","vehement"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

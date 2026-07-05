@@ -854,7 +854,7 @@ document.addEventListener('DOMContentLoaded', function(){
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","ins","Ausland","_"],"parts":["ich","werde","bald","reisen"]},{"i":1,"row":["_","_","_","Ziele","_","_","dann","_","_","erfolgreich","_"],"parts":["wenn","du","deine","verfolgst",",","wirst","du","sein"]},{"i":2,"row":["_","_","_","Vermutung","_","_","sie","den","Job","_","_"],"parts":["Mia","hat","die",",","dass","nicht","bekommt"]},{"i":3,"row":["_","_","_","es","_","_","gesunde","Familie","_","_"],"parts":["Leons","Lebensziel","ist",",","eine","zu","haben"]},{"i":4,"row":["_","_","_","eine","_","_","meine","Zukunft"],"parts":["die","Wahrsagerin","macht","Vorhersage","über"]},{"i":5,"row":["_","_","_","Million","gewinne","_","_","_","_","_","die","Welt","_"],"parts":["wenn","ich","eine",",","dann","kann","ich","um","reisen"]},{"i":6,"row":["_","_","_","dir","_","_","Zukunft"],"parts":["was","wünschst","du","für","deine"]},{"i":7,"row":["_","_","_","_","eines","_","im","Ausland","_","_"],"parts":["ich","wünsche","mir",",","Tages","zu","arbeiten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

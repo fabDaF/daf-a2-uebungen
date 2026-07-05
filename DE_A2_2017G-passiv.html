@@ -1059,7 +1059,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","Käsespätzle","_","_","frisch","_"],"parts":["die","leckeren","werden","gerade","gekocht"]},{"i":1,"row":["_","_","_","_","_","_","die","Gäste","hungrig","_"],"parts":["die","Vorspeise","wird","serviert",",","weil","sind"]},{"i":2,"row":["_","_","_","_","dem","Löffel","gut","_"],"parts":["der","Teig","wird","mit","umgerührt"]},{"i":3,"row":["_","_","_","_","_","_","es","_","schon","_"],"parts":["das","Essen","wird","aufgewärmt",",","denn","ist","kalt"]},{"i":4,"row":["_","_","_","Hause","_","richtig","_"],"parts":["wirst","du","zu","manchmal","bekocht"]},{"i":5,"row":["_","_","_","von","ihm","_","_"],"parts":["die","Getränke","werden","kalt","mitgebracht"]},{"i":6,"row":["_","_","Mikrowellen","_","der","_","häufig","_"],"parts":["heute","werden","in","Küche","benutzt"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

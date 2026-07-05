@@ -1072,7 +1072,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","dem","Tisch"],"parts":["das","Glas","steht","auf"]},{"i":1,"row":["_","_","_","Glas","_","_","Tisch"],"parts":["ich","stelle","das","auf","den"]},{"i":2,"row":["_","_","_","_","der","Wand","_","_","_","_","etwas","schief"],"parts":["das","Bild","hängt","an",",","aber","es","hängt"]},{"i":3,"row":["_","_","_","dicke","Buch","_","_","Regal"],"parts":["er","legt","das","auf","das"]},{"i":4,"row":["_","_","_","_","den","Stuhl","_","_","_","_","sehr","müde"],"parts":["sie","setzt","sich","auf",",","denn","sie","ist"]},{"i":5,"row":["_","_","_","Sofa","_","_","große","Fenster"],"parts":["Mia","stellt","das","neben","das"]},{"i":6,"row":["_","_","_","Handy","_","Mia"],"parts":["wo","liegt","das","von"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

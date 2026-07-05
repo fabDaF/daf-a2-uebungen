@@ -1423,7 +1423,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","Kind","_","_","_","Eis"],"parts":["das","kleine","isst","ein","leckeres"]},{"i":1,"row":["_","_","_","dem","netten","_","_","_","_","er","höflich","_"],"parts":["ich","habe","mit","Mann","gesprochen",",","weil","war"]},{"i":2,"row":["_","_","_","leckere","_","Kuchen"],"parts":["schmeckt","dir","der","warme"]},{"i":3,"row":["_","_","Mann","_","_","schnell","_","_","Straße"],"parts":["ein","junger","läuft","sehr","über","die"]},{"i":4,"row":["_","_","_","blaue","Bluse","_","_","_","_","etwas","Neues"],"parts":["Nina","kauft","eine",",","denn","sie","braucht"]},{"i":5,"row":["_","_","_","immer","_","gesund"],"parts":["frisches","Obst","ist","sehr"]},{"i":6,"row":["_","_","Lehrerin","_","_","sehr","_"],"parts":["die","neue","ist","wirklich","nett"]},{"i":7,"row":["_","_","_","einen","_","_","Wein"],"parts":["ich","trinke","gern","guten","roten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1286,7 +1286,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","eine","_","Stelle"],"parts":["Jonas","bewirbt","sich","um","neue"]},{"i":1,"row":["_","_","_","eine","Bewerbung","_"],"parts":["er","hat","gestern","geschickt"]},{"i":2,"row":["_","_","_","gut","_","_","_","er","_","noch","nervös"],"parts":["das","Vorstellungsgespräch","ist","gelaufen",",","aber","ist"]},{"i":3,"row":["_","_","_","gut","_","Computern","_"],"parts":["er","kennt","sich","mit","aus"]},{"i":4,"row":["_","_","_","alle","Anforderungen","_","_","_","_","viel","Erfahrung"],"parts":["sein","Lebenslauf","erfüllt",",","denn","er","hat"]},{"i":5,"row":["_","_","_","für","_","Stelle","_"],"parts":["wann","wurde","sie","die","eingestellt"]},{"i":6,"row":["_","_","_","wirklich","sehr","_"],"parts":["die","Stellenanzeige","klingt","interessant"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -823,7 +823,7 @@ function timerResetOne(n) {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":2};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":2};
   var SBGAP = [{"i":0,"row":["_","_","_","fünf","_","_","Berlin"],"parts":["ich","wohne","seit","Jahren","in"]},{"i":1,"row":["_","_","_","Potsdam","_","_","_","sie","_","in","Berlin"],"parts":["Marina","ist","nach","gezogen",",","aber","arbeitet"]},{"i":2,"row":["_","_","Monat","_","_","in","_","_","Wohnung"],"parts":["ab","nächstem","wohne","ich","der","neuen"]},{"i":3,"row":["_","_","_","du","_","_","den","Umzug","_"],"parts":["wie","lange","musst","noch","auf","warten"]},{"i":4,"row":["_","_","Umzug","_","ich","Kontakt","_","_","_","kenne","_"],"parts":["nach","dem","suche",",","denn","ich","niemanden"]},{"i":5,"row":["_","_","_","heller","_","_","_","die","alte"],"parts":["die","Wohnung","ist","und","größer","als"]},{"i":6,"row":["_","_","_","im","_","am","_"],"parts":["die","Umgebung","ist","Sommer","ruhigsten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

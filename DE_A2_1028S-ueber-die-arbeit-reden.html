@@ -881,7 +881,7 @@ window.addEventListener('DOMContentLoaded', function() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","die","Stelle","_"],"parts":["ich","habe","mich","um","beworben"]},{"i":1,"row":["_","_","_","Vorstellungsgespräch","_","_","_","mein","Lebenslauf","_","gut"],"parts":["ich","wurde","zum","eingeladen",",","denn","ist"]},{"i":2,"row":["_","_","Stärke","_","_","Teamarbeit"],"parts":["meine","größte","ist","die"]},{"i":3,"row":["_","_","_","Herrn","Franz","_"],"parts":["kannst","du","bitte","anrufen"]},{"i":4,"row":["_","_","_","_","im","Büro","_","_","_","_","ihre","Mails"],"parts":["sie","ist","heute","nicht",",","aber","sie","liest"]},{"i":5,"row":["_","_","_","_","_","immer","fleißig"],"parts":["ich","bin","sehr","motiviert","und"]},{"i":6,"row":["_","_","_","Ihnen","heute","_"],"parts":["wie","kann","ich","weiterhelfen"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

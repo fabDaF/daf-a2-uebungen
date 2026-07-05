@@ -1279,7 +1279,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","Kino","_","_","ich","den","Film","_","_"],"parts":["ich","gehe","ins",",","weil","sehen","möchte"]},{"i":1,"row":["_","_","_","letzten","Sommer","_","Mallorca","_"],"parts":["warum","bist","du","nach","geflogen"]},{"i":2,"row":["_","_","_","ganzen","Tag","_","_","_","sehr","traurig","_"],"parts":["er","weint","den",",","weil","er","ist"]},{"i":3,"row":["_","_","_","_","es","_","den","_","Tag","_"],"parts":["ich","glaube",",","dass","heute","ganzen","regnet"]},{"i":4,"row":["_","_","_","schade","_","_","du","_","nicht","_","_"],"parts":["es","ist","wirklich",",","dass","morgen","kommen","kannst"]},{"i":5,"row":["_","_","_","viel","_","_","sie","_","Tag","gerne","_"],"parts":["Tina","weiß","sehr",",","weil","jeden","liest"]},{"i":6,"row":["_","_","_","_","das","_","Museum","_","schön","_"],"parts":["ich","finde",",","dass","neue","wirklich","ist"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

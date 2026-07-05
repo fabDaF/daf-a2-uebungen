@@ -1388,7 +1388,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","heute","_","_","schön"],"parts":["das","Wetter","ist","aber","wirklich"]},{"i":1,"row":["_","_","_","mal","_","kurz","_"],"parts":["kannst","du","mir","eben","helfen"]},{"i":2,"row":["_","_","_","schon","_","_","_","_","Feiertag","_"],"parts":["du","weißt","ja",",","dass","morgen","ein","ist"]},{"i":3,"row":["_","_","_","leider","_","so"],"parts":["das","ist","eben","einfach"]},{"i":4,"row":["_","_","_","Abend","_","kurz","_"],"parts":["komm","doch","heute","mal","vorbei"]},{"i":5,"row":["_","_","_","_","_","Abend","so","lange"],"parts":["wo","warst","du","denn","gestern"]},{"i":6,"row":["_","_","_","wirklich","_","_","er","_","wohl","noch","_"],"parts":["ich","frage","mich",",","ob","heute","kommt"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

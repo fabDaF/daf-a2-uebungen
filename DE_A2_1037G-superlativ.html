@@ -1236,7 +1236,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":2};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":2};
   var SBGAP = [{"i":0,"row":["_","_","_","Älteste","_","der","_","Familie"],"parts":["Maria","ist","die","in","ganzen"]},{"i":1,"row":["_","_","_","_","Gebäude","der","_","_","_","es","_","alt"],"parts":["das","ist","das","größte","Stadt",",","aber","ist"]},{"i":2,"row":["_","_","_","der","Klasse","am","_","_"],"parts":["wer","kann","in","schnellsten","rennen"]},{"i":3,"row":["_","_","_","das","_","im","_","Regal"],"parts":["dieses","Buch","ist","beste","ganzen"]},{"i":4,"row":["_","_","_","_","Schokolade","_","_","sie","_","ihm","gut"],"parts":["Paul","isst","am","liebsten",",","denn","schmeckt"]},{"i":5,"row":["_","_","_","nächster","_","_","Bahnhof"],"parts":["wir","wohnen","in","Nähe","zum"]},{"i":6,"row":["_","_","_","alt","_","ihre","_","Mia"],"parts":["Anna","ist","genauso","wie","Freundin"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

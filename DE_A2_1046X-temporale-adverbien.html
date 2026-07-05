@@ -1169,7 +1169,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","immer","_","_","Uhr","_"],"parts":["morgens","stehe","ich","um","sieben","auf"]},{"i":1,"row":["_","_","_","eine","_","Pause","_","Büro"],"parts":["mittags","mache","ich","kurze","im"]},{"i":2,"row":["_","_","_","oft","müde","_","_","_","viel","_"],"parts":["abends","bin","ich",",","weil","ich","arbeite"]},{"i":3,"row":["_","_","_","mehr","Zeit","_","_","heute","_","_","viel"],"parts":["früher","hatte","ich",",","aber","arbeite","ich"]},{"i":4,"row":["_","_","_","normalerweise","_","Morgen","_"],"parts":["wann","stehst","du","am","auf"]},{"i":5,"row":["_","_","_","noch","_","_","Supermarkt"],"parts":["später","gehe","ich","kurz","zum"]},{"i":6,"row":["_","_","_","ganze","_","ruhig"],"parts":["nachts","schläft","die","Stadt"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

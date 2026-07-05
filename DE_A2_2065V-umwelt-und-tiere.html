@@ -1696,7 +1696,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","Erwärmung","_","_","_","Umwelt"],"parts":["die","globale","schadet","leider","der"]},{"i":1,"row":["_","_","_","Fußabdruck","klein","_","_","_","die","Erde","_"],"parts":["wir","müssen","unseren","halten",",","weil","leidet"]},{"i":2,"row":["_","_","_","es","_","_","Artenvielfalt"],"parts":["im","Dschungel","gibt","eine","große"]},{"i":3,"row":["_","_","_","vom","Aussterben","_","_","_","der","Wald","_"],"parts":["viele","Tierarten","sind","bedroht",",","denn","verschwindet"]},{"i":4,"row":["_","_","_","_","die","_","tun"],"parts":["was","können","wir","gegen","Erwärmung"]},{"i":5,"row":["_","_","_","mehr","_","dem","Fahrrad","_"],"parts":["wir","sollten","viel","mit","fahren"]},{"i":6,"row":["_","_","_","Natur","_","_","sehr","wichtig"],"parts":["der","Schutz","der","ist","wirklich"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

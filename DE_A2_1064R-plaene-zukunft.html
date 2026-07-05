@@ -1435,7 +1435,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","Woche","_","_","in","Berlin"],"parts":["Hermine","ist","diese","zu","Besuch"]},{"i":1,"row":["_","_","_","_","der","Schule","_"],"parts":["was","möchtest","du","nach","machen"]},{"i":2,"row":["_","_","_","Hermine","_","Schule","_"],"parts":["nächstes","Jahr","wird","die","beenden"]},{"i":3,"row":["_","_","Krankenschwester","_","_","_","sie","Menschen","_","_"],"parts":["Hermine","möchte","werden",",","weil","helfen","will"]},{"i":4,"row":["_","_","_","Praktikum","_","Krankenhaus","_"],"parts":["ich","werde","ein","im","machen"]},{"i":5,"row":["_","_","_","_","_","du","_","großes","Ziel","_"],"parts":["ich","hoffe","wirklich",",","dass","dein","erreichst"]},{"i":6,"row":["_","_","_","Hoffnung","niemals","_"],"parts":["du","darfst","die","aufgeben"]},{"i":7,"row":["_","_","_","_","_","_","_","deinen","Traum","_"],"parts":["wenn","du","fleißig","bist",",","wirst","du","erreichen"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

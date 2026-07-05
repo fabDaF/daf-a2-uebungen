@@ -1441,7 +1441,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","Sommerurlaub","_","im","Januar","_"],"parts":["wir","müssen","unseren","schon","buchen"]},{"i":1,"row":["_","_","_","einen","Rabatt","_","_","_","_","früh"],"parts":["dann","bekommen","wir",",","denn","wir","buchen"]},{"i":2,"row":["_","_","Pension","_","_","_","nur","_","Euro"],"parts":["in","einer","kostet","die","Übernachtung","vierzig"]},{"i":3,"row":["_","_","Kinder","_","_","_","Hotelpool"],"parts":["haben","die","Spaß","am","großen"]},{"i":4,"row":["_","_","_","ich","froh","_","_","ich","endlich","_","_"],"parts":["im","Urlaub","bin",",","weil","ausschlafen","kann"]},{"i":5,"row":["_","_","_","keinen","_","einen","Sonnenbrand","_"],"parts":["ich","möchte","auf","Fall","bekommen"]},{"i":6,"row":["_","_","Ferienort","_","_","_","Mittelmeer"],"parts":["der","schöne","liegt","direkt","am"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

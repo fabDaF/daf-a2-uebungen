@@ -1259,7 +1259,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":2};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":2};
   var SBGAP = [{"i":0,"row":["_","_","_","eine","_","Reise","_"],"parts":["ich","werde","bald","lange","machen"]},{"i":1,"row":["_","_","_","Jahr","_","Australien","_"],"parts":["Nina","wird","nächstes","nach","fliegen"]},{"i":2,"row":["_","_","_","_","dem","Studium","_"],"parts":["was","wirst","du","nach","machen"]},{"i":3,"row":["_","_","_","_","_","es","_","den","ganzen","Tag","_","_"],"parts":["ich","glaube","fest",",","dass","morgen","regnen","wird"]},{"i":4,"row":["_","_","_","Haus","_","_","_","wir","mehr","Platz","_"],"parts":["wir","werden","ein","kaufen",",","weil","brauchen"]},{"i":5,"row":["_","_","_","sehr","lange","_","_"],"parts":["er","wird","morgen","arbeiten","müssen"]},{"i":6,"row":["_","_","_","_","_","_","_","den","Test","_"],"parts":["wenn","du","fleißig","lernst",",","wirst","du","bestehen"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

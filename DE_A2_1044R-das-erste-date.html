@@ -1404,7 +1404,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","_","_","er","_","heute","_","Date"],"parts":["Alex","ist","nervös",",","denn","hat","ein"]},{"i":1,"row":["_","_","_","_","_","_","dem","Abend","alles","schön","_"],"parts":["er","möchte","unbedingt",",","dass","an","wird"]},{"i":2,"row":["_","_","_","sie","_","_","Picknick"],"parts":["im","Lustgarten","machen","ein","schönes"]},{"i":3,"row":["_","_","_","das","Ischtar-Tor","_"],"parts":["kann","Alex","endlich","sehen"]},{"i":4,"row":["_","_","_","_","_","_","die","Musik","_","wunderschön"],"parts":["Louise","ist","sehr","begeistert",",","denn","ist"]},{"i":5,"row":["_","_","_","_","_","das","_","Louise","gut","_"],"parts":["Alex","merkt","sofort",",","dass","Date","gefällt"]},{"i":6,"row":["_","_","_","_","es","_","_","zweites","Date","_"],"parts":["er","hofft",",","dass","bald","ein","gibt"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;
