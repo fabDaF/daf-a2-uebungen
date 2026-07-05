@@ -1238,7 +1238,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","Louise","_","_","_","dem","Sofa"],"parts":["Alex","und","sitzen","gemütlich","auf"]},{"i":1,"row":["_","_","_","_","_","_","_","_","schon","lange"],"parts":["draußen","ist","es","kalt",",","denn","es","regnet"]},{"i":2,"row":["_","_","_","Jahr","_","in","_","Urlaub"],"parts":["Alex","fährt","jedes","gern","den"]},{"i":3,"row":["_","_","_","_","Urlaub","_","_","alles","gut","_"],"parts":["das","war","der","beste",",","weil","war"]},{"i":4,"row":["_","_","_","fast","_","Flug","_"],"parts":["hatten","sie","wirklich","ihren","verpasst"]},{"i":5,"row":["_","_","_","seinen","Reisepass","_"],"parts":["Nils","hatte","leider","vergessen"]},{"i":6,"row":["_","_","_","sie","_","Glück","_","Flughafen"],"parts":["am","Ende","hatten","großes","am"]},{"i":7,"row":["_","_","_","viele","_","Sehenswürdigkeiten"],"parts":["die","beiden","besichtigten","schöne"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

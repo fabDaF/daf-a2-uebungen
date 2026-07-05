@@ -1533,7 +1533,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","lange","_","_","nächsten","Bus"],"parts":["ich","warte","schon","auf","den"]},{"i":1,"row":["_","_","_","_","ihren","Urlaub","_","_","_","so","schön","_"],"parts":["Lisa","denkt","oft","an",",","weil","er","war"]},{"i":2,"row":["_","_","_","noch","_","_","schwierige","Aufgabe"],"parts":["erinnerst","du","dich","an","die"]},{"i":3,"row":["_","_","_","einem","_","Urlaub","_","Strand"],"parts":["Jack","träumt","von","langen","am"]},{"i":4,"row":["_","_","_","_","das","Unwetter","_","_","_","es","_","bald"],"parts":["ich","bereite","mich","auf","vor",",","denn","kommt"]},{"i":5,"row":["_","_","_","herzlich","_","_","guten","Witz"],"parts":["wir","lachen","alle","über","den"]},{"i":6,"row":["_","_","_","heute","_","_","Lisa"],"parts":["ich","treffe","mich","Abend","mit"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -986,7 +986,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","_","_","sich","gesünder","_","_"],"parts":["Alex","hat","vor",",","abzunehmen","und","zu","ernähren"]},{"i":1,"row":["_","_","_","Fast","_","_","_","einem","Ernährungsplan","_"],"parts":["er","muss","weniger","Food","essen","und","folgen"]},{"i":2,"row":["_","_","Alex","_","_","_","_","etwas","allergisch","_"],"parts":["Louise","fragt",",","ob","er","gegen","ist"]},{"i":3,"row":["_","_","_","heimische","Produkte","_","Bioprodukte","_"],"parts":["er","soll","viele","und","kaufen"]},{"i":4,"row":["_","_","_","schon","_","_","_","sie","_","_"],"parts":["die","Aubergine","ist","schlecht",",","denn","ist","verfault"]},{"i":5,"row":["_","_","Gemüse","_","_","_","Vitamine"],"parts":["hat","das","wirklich","zu","wenig"]},{"i":6,"row":["_","_","_","_","_","dem","Ernährungsplan","_"],"parts":["dann","fangen","wir","morgen","mit","an"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

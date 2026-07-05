@@ -1342,7 +1342,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":1,"row":["_","_","_","_","_","_","_","_","großes","Haus","_"],"parts":["wenn","ich","reich","wäre",",","würde","ich","ein","kaufen"]},{"i":2,"row":["_","_","_","viel","_","Freizeit"],"parts":["sie","hätte","gerne","mehr"]},{"i":3,"row":["_","_","_","bitte","kurz","_"],"parts":["würdest","du","mir","helfen"]},{"i":4,"row":["_","_","_","besser","Deutsch","_"],"parts":["er","könnte","eigentlich","sprechen"]},{"i":5,"row":["_","_","_","Zeit","_","_","_","_","viel","_","_"],"parts":["wenn","er","mehr","hätte",",","würde","er","mehr","lesen"]},{"i":6,"row":["_","_","_","gerne","_","_","Lehrerin"],"parts":["ich","wäre","wirklich","eine","gute"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

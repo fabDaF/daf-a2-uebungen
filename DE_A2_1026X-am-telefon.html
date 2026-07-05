@@ -972,7 +972,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","Anna","_","_","der","_","Müller"],"parts":["hier","ist","Schmidt","von","Firma"]},{"i":1,"row":["_","_","Gruber","_","_","Büro"],"parts":["ist","Frau","gerade","im"]},{"i":2,"row":["_","_","_","gerade","_","_","_","ich","_","Sie","später"],"parts":["die","Leitung","ist","besetzt",",","aber","verbinde"]},{"i":3,"row":["_","_","_","bitte","später","_"],"parts":["könnte","sie","mich","zurückrufen"]},{"i":4,"row":["_","_","_","noch","einmal","_","_","_","es","_","wichtig"],"parts":["ich","rufe","später","an",",","denn","ist"]},{"i":5,"row":["_","_","_","_","im","Büro","_"],"parts":["er","hat","mich","gestern","angerufen"]},{"i":6,"row":["_","_","_","das","Gespräch","_","_","Wiederhören"],"parts":["vielen","Dank","für","und","auf"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1826,7 +1826,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","Mann","_","_","Morgen","_","Kaffee"],"parts":["der","alte","trinkt","jeden","frischen"]},{"i":1,"row":["_","_","_","_","Schal","_","_","er","ihr","gut","_"],"parts":["sie","kauft","einen","bunten",",","weil","gefällt"]},{"i":2,"row":["_","_","_","Auto","_","_","_","Tag","_","Arbeit"],"parts":["mit","dem","neuen","fährt","er","jeden","zur"]},{"i":3,"row":["_","_","Kinder","_","_","_","Park"],"parts":["die","kleinen","spielen","im","schönen"]},{"i":4,"row":["_","_","_","besser","_","_","Suppe"],"parts":["frischer","Salat","schmeckt","als","warme"]},{"i":5,"row":["_","_","_","guter","_","Wein","_","Abend"],"parts":["schmeckt","dir","ein","roter","am"]},{"i":6,"row":["_","_","Mädchen","_","_","Buch","_","_","es","_","_"],"parts":["das","junge","liest","ein",",","denn","regnet","draußen"]},{"i":7,"row":["_","_","_","_","das","offene","Fenster","_"],"parts":["kalte","Luft","kommt","durch","herein"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1267,7 +1267,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","sehr","_","_","Geschenk"],"parts":["ich","freue","mich","über","das"]},{"i":1,"row":["_","_","_","_","das","Wetter","_","_","er","_","ruhig"],"parts":["er","ärgert","sich","über",",","aber","bleibt"]},{"i":2,"row":["_","_","_","_","der","Firma","_"],"parts":["sie","hat","sich","bei","beworben"]},{"i":3,"row":["_","_","_","auch","_","Kunst"],"parts":["interessierst","du","dich","für"]},{"i":4,"row":["_","_","_","im","Wald","_","_","_","es","_","dunkel"],"parts":["wir","haben","uns","verlaufen",",","denn","war"]},{"i":5,"row":["_","_","_","heute","leider","_"],"parts":["du","hast","dich","verspätet"]},{"i":6,"row":["_","_","_","_","Abend","stark","_"],"parts":["Lisa","hat","sich","gestern","erkältet"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

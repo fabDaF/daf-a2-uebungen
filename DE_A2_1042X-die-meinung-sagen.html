@@ -1243,7 +1243,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","_","das","_","sehr","schön"],"parts":["meiner","Meinung","nach","ist","Hotel"]},{"i":1,"row":["_","_","_","lecker","_","_","_","_","sehr","teuer"],"parts":["das","Essen","ist",",","aber","es","ist"]},{"i":2,"row":["_","_","_","Film","_","_","_","er","_","langweilig"],"parts":["ich","mag","den","nicht",",","denn","ist"]},{"i":3,"row":["_","_","_","eigentlich","_","_","Chef"],"parts":["wie","findest","du","den","neuen"]},{"i":4,"row":["_","_","_","_","ich","_","die","_","gut"],"parts":["ich","bin","dafür","und","finde","Idee"]},{"i":5,"row":["_","_","_","nicht","_","_","_","_","sehr","gut"],"parts":["deine","Idee","ist","schlecht",",","sondern","wirklich"]},{"i":6,"row":["_","_","_","mir","_","_","sicher"],"parts":["da","bin","ich","nicht","ganz"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

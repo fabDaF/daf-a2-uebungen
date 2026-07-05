@@ -1266,7 +1266,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","einer","_","Stadt"],"parts":["Hermine","wohnt","in","kleinen"]},{"i":1,"row":["_","_","_","der","_","Universität"],"parts":["Louise","studiert","an","Freien"]},{"i":2,"row":["_","_","_","verschiedene","Vorlesungen","_"],"parts":["Hermine","hat","viele","besucht"]},{"i":3,"row":["_","_","_","noch","_","unsicher"],"parts":["sie","ist","sich","sehr"]},{"i":4,"row":["_","_","_","auch","gut","_"],"parts":["eine","Ausbildung","würde","passen"]},{"i":5,"row":["_","_","_","sehr","lange","_"],"parts":["das","Medizinstudium","würde","dauern"]},{"i":6,"row":["_","_","Zeit","_","_","_","Ruhe"],"parts":["nimm","dir","und","überlege","in"]},{"i":7,"row":["_","_","_","_","sich","_","mehr","Zeit","_","_"],"parts":["sie","hat","beschlossen",",","noch","zu","nehmen"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1398,7 +1398,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","sehr","_","Ernährungsplan"],"parts":["ich","folge","einem","strengen"]},{"i":1,"row":["_","_","_","vegan","_","_","nur","Bio-Produkte"],"parts":["Sarah","ernährt","sich","und","kauft"]},{"i":2,"row":["_","_","_","das","_","_","viel","Liebe","_"],"parts":["der","Koch","bereitet","Gericht","mit","zu"]},{"i":3,"row":["_","_","_","_","_","_","das","Produkt","Zusatzstoffe","_"],"parts":["können","Sie","mir","sagen",",","ob","enthält"]},{"i":4,"row":["_","_","Pizza","_","_","Tomaten","_","_","sehr","_","Käse"],"parts":["auf","der","sind","wenige",",","aber","viel"]},{"i":5,"row":["_","_","_","Brötchen","_","noch","kurz","_"],"parts":["man","muss","die","nur","aufbacken"]},{"i":6,"row":["_","_","_","regionale","Produkte","_","_","_","die","Wirtschaft","_","_"],"parts":["er","kauft","immer",",","weil","er","unterstützen","möchte"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

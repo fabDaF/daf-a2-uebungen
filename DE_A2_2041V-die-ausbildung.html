@@ -1364,7 +1364,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","gute","Ausbildung","_"],"parts":["ich","habe","eine","gemacht"]},{"i":1,"row":["_","_","_","vier","Jahre","_","_","Kinder","viel","_","_"],"parts":["die","Grundschule","dauert",",","weil","lernen","müssen"]},{"i":2,"row":["_","_","Abitur","_","_","_","der","Universität","_"],"parts":["nach","dem","kann","man","an","studieren"]},{"i":3,"row":["_","_","Stärke","_","_","Teamarbeit","_","_","_","_","gern","_","Team"],"parts":["meine","größte","ist","die",",","denn","ich","arbeite","im"]},{"i":4,"row":["_","_","_","wirklich","_","Zeugnis","_"],"parts":["er","hat","ein","gutes","bekommen"]},{"i":5,"row":["_","_","_","große","_","_","Berlin"],"parts":["sie","besucht","das","Gymnasium","in"]},{"i":6,"row":["_","_","_","du","früher","_"],"parts":["welche","Schule","hast","besucht"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

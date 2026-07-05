@@ -1412,7 +1412,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","Bank","_","man","_","Girokonto","_"],"parts":["bei","der","kann","ein","eröffnen"]},{"i":1,"row":["_","_","_","Bargeld","dabei","_","_","_","es","_","praktisch"],"parts":["man","sollte","immer","haben",",","denn","ist"]},{"i":2,"row":["_","_","EC-Karte","_","man","_","Geld","_"],"parts":["mit","der","kann","leicht","abheben"]},{"i":3,"row":["_","_","_","Börse","wirklich","_","Aktien","_"],"parts":["wird","an","der","mit","gehandelt"]},{"i":4,"row":["_","_","_","Schulden","_","_","er","_","viel","_"],"parts":["er","hat","viele",",","weil","zu","ausgibt"]},{"i":5,"row":["_","_","_","Kredits","_","_","Jahre"],"parts":["die","Laufzeit","des","beträgt","drei"]},{"i":6,"row":["_","_","Währung","_","Deutschland","_","_","Euro"],"parts":["die","offizielle","in","ist","der"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1251,7 +1251,7 @@ loadBestTimes();
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":5};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":5};
   var SBGAP = [{"i":0,"row":["_","_","_","_","dem","Auto","_","Hause"],"parts":["heute","fahre","ich","mit","nach"]},{"i":1,"row":["_","_","_","müde","_","_","alle","Gäste","_","_"],"parts":["das","Brautpaar","war",",","aber","tanzten","weiter"]},{"i":2,"row":["_","_","_","_","einer","Hochzeit","_"],"parts":["wir","haben","uns","auf","kennengelernt"]},{"i":3,"row":["_","_","_","ihr","_","schon","_"],"parts":["wie","lange","seid","eigentlich","zusammen"]},{"i":4,"row":["_","_","_","wunderschön","_","_","_","Himmel","_","klar"],"parts":["das","Feuerwerk","war",",","denn","der","war"]},{"i":5,"row":["_","_","_","sehr","_","_","schöne","Einladung"],"parts":["Tina","freut","sich","über","die"]},{"i":6,"row":["_","_","Date","_","_","wunderschön"],"parts":["unser","erstes","war","wirklich"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

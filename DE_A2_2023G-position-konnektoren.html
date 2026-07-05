@@ -1430,7 +1430,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","sehr","_","_","_","Sonne","heute","_"],"parts":["ich","freue","mich",",","dass","die","scheint"]},{"i":1,"row":["_","_","_","_","_","bleibe","_","heute","_","Hause"],"parts":["weil","es","stark","regnet",",","ich","zu"]},{"i":2,"row":["_","_","_","Hunger","_","_","_","_","ins","Restaurant"],"parts":["er","hatte","großen",",","deshalb","ging","er"]},{"i":3,"row":["_","_","_","_","_","_","sie","_","zum","Arzt"],"parts":["sie","ist","krank",",","deshalb","geht","heute"]},{"i":4,"row":["_","_","_","_","_","_","der","Urlaub","schön","_"],"parts":["kannst","du","mir","sagen",",","ob","war"]},{"i":5,"row":["_","_","Geld","_","_","_","_","_","die","Seychellen"],"parts":["wenn","ich","habe",",","fliege","ich","auf"]},{"i":6,"row":["_","_","_","vieles","_","_","_","ich","_","Reisetagebuch"],"parts":["ich","vergesse","oft",",","darum","schreibe","ein"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

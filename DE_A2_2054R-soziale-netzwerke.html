@@ -1342,7 +1342,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","_","zwei","_","Nutzer"],"parts":["WhatsApp","hat","weltweit","über","Milliarden"]},{"i":1,"row":["_","_","_","_","_","_","die","Videos","lustig","_"],"parts":["TikTok","ist","sehr","beliebt",",","weil","sind"]},{"i":2,"row":["_","_","_","_","den","_","kostenlos"],"parts":["die","Anmeldung","ist","bei","meisten"]},{"i":3,"row":["_","_","_","viele","_","_","_","auch","_","Nachteile"],"parts":["soziale","Netzwerke","haben","Vorteile",",","aber","einige"]},{"i":4,"row":["_","_","_","Daten","_","wirklich","_","sicher"],"parts":["sind","die","persönlichen","dort","immer"]},{"i":5,"row":["_","_","_","man","_","_","News"],"parts":["falsche","Informationen","nennt","oft","Fake"]},{"i":6,"row":["_","_","_","viel","_","in","_","Netzwerken"],"parts":["Jugendliche","verbringen","zu","Zeit","sozialen"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

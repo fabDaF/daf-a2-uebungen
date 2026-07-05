@@ -1352,7 +1352,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","sich","_","wirklich"],"parts":["diese","Stadtführung","lohnt","heute"]},{"i":1,"row":["_","_","_","leider","nicht","_","_","_","wir","_","_"],"parts":["es","hat","sich","gelohnt",",","aber","waren","zufrieden"]},{"i":2,"row":["_","_","_","die","_","Altstadt","_"],"parts":["wir","haben","gestern","schöne","besichtigt"]},{"i":3,"row":["_","_","_","_","_","_","das","Hotel","schmutzig","_"],"parts":["ich","muss","mich","beschweren",",","weil","ist"]},{"i":4,"row":["_","_","_","_","des","_","Sturms","_"],"parts":["der","Flug","ist","wegen","starken","ausgefallen"]},{"i":5,"row":["_","_","Senioren","_","_","_","Ermäßigung"],"parts":["Kinder","und","bekommen","oft","eine"]},{"i":6,"row":["_","_","_","_","_","_","ich","_","Visum","brauche"],"parts":["kannst","du","mir","sagen",",","ob","ein"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

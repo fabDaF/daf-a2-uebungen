@@ -1304,7 +1304,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","heute","_","_","Finale"],"parts":["die","Mannschaft","gewinnt","das","wichtige"]},{"i":1,"row":["_","_","_","Tag","_","_","er","_","Profi","_"],"parts":["Oscar","trainiert","jeden",",","weil","ein","ist"]},{"i":2,"row":["_","_","_","dein","_","in","_","Woche"],"parts":["wie","oft","trainiert","Team","der"]},{"i":3,"row":["_","_","_","den","Sieg","_","_","_","Mannschaft","_","stark"],"parts":["die","Fans","feiern",",","denn","ihre","war"]},{"i":4,"row":["_","_","_","Goldmedaille","_","den","_","Platz"],"parts":["sie","bekommt","eine","für","ersten"]},{"i":5,"row":["_","_","_","dreimal","_","Woche","_","Training"],"parts":["das","Team","hat","pro","ein"]},{"i":6,"row":["_","_","_","Mannschaft","_","Spiel","_"],"parts":["leider","hat","die","das","verloren"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

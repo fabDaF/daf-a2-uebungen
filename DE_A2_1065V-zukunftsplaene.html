@@ -1278,7 +1278,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","Wahrsagerin","_","_","Zukunft"],"parts":["was","sagt","die","über","deine"]},{"i":1,"row":["_","_","_","tolles","_","_","mich"],"parts":["das","war","ein","Erlebnis","für"]},{"i":2,"row":["_","_","_","eine","_","_","meine","Zukunft"],"parts":["die","Wahrsagerin","macht","Vorhersage","über"]},{"i":3,"row":["_","_","_","optimistisch","_","_","am","_","alles","gut","_"],"parts":["ich","bin","sehr",",","dass","Ende","wird"]},{"i":4,"row":["_","_","_","eine","_","_","für","_","Familie"],"parts":["ein","Baby","bringt","große","Veränderung","die"]},{"i":5,"row":["_","_","_","Vermutung","_","_","_","Vorhersage","unsicher","_"],"parts":["Anna","hat","die",",","dass","die","ist"]},{"i":6,"row":["_","_","_","eine","_","Überraschung","_"],"parts":["bald","wird","es","große","geben"]},{"i":7,"row":["_","_","_","positive","_","in","_","Zukunft"],"parts":["sie","erwartet","viele","Erlebnisse","der"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

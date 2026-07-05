@@ -1334,7 +1334,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","dir","_","besten"],"parts":["welcher","Pullover","gefällt","am"]},{"i":1,"row":["_","_","_","mir","nicht","_","_","_","andere","_","schön"],"parts":["dieser","Pullover","gefällt",",","aber","der","ist"]},{"i":2,"row":["_","_","_","heute","_","_","Kuchen"],"parts":["jeder","Gast","bekommt","ein","Stück"]},{"i":3,"row":["_","_","_","oft","_","_","sie","_","_","wenig"],"parts":["manche","Teams","verlieren",",","denn","trainieren","zu"]},{"i":4,"row":["_","_","Frauen","_","_","_","Film"],"parts":["nicht","alle","mögen","diesen","alten"]},{"i":5,"row":["_","_","_","Mittwoch","_","Freitag","_"],"parts":["wir","trainieren","jeden","und","zusammen"]},{"i":6,"row":["_","_","_","dir","_","_","besten"],"parts":["welche","Sportart","gefällt","eigentlich","am"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1299,7 +1299,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","Kollegen","_","_","tatkräftig"],"parts":["er","hilft","seinem","jeden","Tag"]},{"i":1,"row":["_","_","_","ihr","_","gut"],"parts":["das","Gehalt","gefällt","sehr"]},{"i":2,"row":["_","_","_","Arbeitgeber","herzlich","_","_","_","_","die","Stelle","_"],"parts":["sie","dankt","dem",",","aber","sie","nimmt","nicht"]},{"i":3,"row":["_","_","Martin","_","_","Blumenstrauß"],"parts":["wem","schenkt","heute","den"]},{"i":4,"row":["_","_","_","zum","_","Job","_","_","sie","_","es","_"],"parts":["wir","gratulieren","ihr","neuen",",","denn","hat","verdient"]},{"i":5,"row":["_","_","_","von","_","_","Erfolg"],"parts":["ich","wünsche","dir","Herzen","viel"]},{"i":6,"row":["_","_","_","Arbeitgeber","_","Unterlagen"],"parts":["sie","schickt","dem","ihre"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1355,7 +1355,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":3};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":3};
   var SBGAP = [{"i":0,"row":["_","_","_","kleinen","_","_","schönes","Geschenk"],"parts":["ich","gebe","dem","Kind","ein"]},{"i":1,"row":["_","_","_","dem","_","zur","Arbeit","_","_","_","Auto","_","_"],"parts":["er","fährt","mit","Bus",",","weil","das","kaputt","ist"]},{"i":2,"row":["_","_","_","eine","_","_","für","_","Chef"],"parts":["die","Frau","schreibt","wichtige","E-Mail","ihren"]},{"i":3,"row":["_","_","_","schöne","_","_","den","Tisch"],"parts":["er","stellt","die","Vase","auf"]},{"i":4,"row":["_","_","Buch","_","_","wirklich","_","_","Tisch"],"parts":["liegt","das","des","Mannes","auf","dem"]},{"i":5,"row":["_","_","_","unsere","_","ins","_","_","_","sie","_","_","Zeit"],"parts":["wir","gehen","ohne","Freunde","Kino",",","denn","haben","keine"]},{"i":6,"row":["_","_","_","einem","_","_","meinen","_","Gasteltern"],"parts":["ich","wohne","seit","Jahr","bei","netten"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

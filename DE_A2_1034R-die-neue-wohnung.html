@@ -1055,7 +1055,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","_","in","_","neue","Wohnung","_"],"parts":["Louise","möchte","gerne","eine","umziehen"]},{"i":1,"row":["_","_","Wohnung","_","größer","_","_","_","sie","_","teurer"],"parts":["die","neue","soll","sein",",","aber","ist"]},{"i":2,"row":["_","_","Wohnung","_","_","dunkler","_","meine"],"parts":["die","erste","ist","noch","als"]},{"i":3,"row":["_","_","_","endlich","_","die","Wohnung","_"],"parts":["wann","kann","ich","in","einziehen"]},{"i":4,"row":["_","_","_","viel","ruhiger","_","_","_","_","wenige","Autos"],"parts":["die","Umgebung","ist",",","denn","hier","fahren"]},{"i":5,"row":["_","_","_","leider","_","Euro"],"parts":["die","Kaution","beträgt","sechshundert"]},{"i":6,"row":["_","_","_","noch","_","Möbel"],"parts":["ich","brauche","außerdem","neue"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;

@@ -1231,7 +1231,7 @@ function schreibLeeren() {
 /* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
    hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
 (function(){
-  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":false,"tab":4};
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
   var SBGAP = [{"i":0,"row":["_","_","Anwalt","_","_","_","Firma"],"parts":["Tim","ist","und","hat","eine"]},{"i":1,"row":["_","_","_","ihm","_","_","er","_","sie","_","_"],"parts":["die","Firma","gehört",",","denn","hat","selbst","gegründet"]},{"i":2,"row":["_","_","_","Tag","_","Hamburg","_","Berlin"],"parts":["er","pendelt","jeden","zwischen","und"]},{"i":3,"row":["_","_","_","Angestellte","_","_","er","_","keine","_","Leute"],"parts":["Tim","braucht","mehr",",","aber","findet","guten"]},{"i":4,"row":["_","_","_","sich","_","die","Stelle","_"],"parts":["viele","Personen","haben","auf","beworben"]},{"i":5,"row":["_","_","Personen","_","Tim","_"],"parts":["wie","viele","möchte","einladen"]},{"i":6,"row":["_","_","Bewerbungen","_","_","_","gut"],"parts":["die","meisten","gefallen","ihm","sehr"]}];
   SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
     ex.row = g.row; ex.parts = g.parts;
