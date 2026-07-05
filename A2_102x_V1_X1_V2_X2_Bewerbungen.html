@@ -219,7 +219,8 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- ===== TAB 1: X1 BEWERBUNG LUECKENTEXT ===== -->
     <div class="section" id="sec-1">
         <h2>&#9998; L&uuml;ckentext</h2>
-        <div class="wortbank" id="wortbank-luecken"></div>
+        <div style="display:flex;gap:8px;margin:0 0 14px;"><button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="fbLtReset();" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div>
+    <div class="wortbank" id="wortbank-luecken"></div>
         <div id="lueckenContainer" class="luecken-story">
           <p>Lena war seit drei Monaten <input class="blank" data-answer="arbeitssuchend">. Jeden Morgen las sie Stellenanzeigen und suchte nach einer passenden <input class="blank" data-answer="Stelle">.</p>
 

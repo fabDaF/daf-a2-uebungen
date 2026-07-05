@@ -209,7 +209,8 @@ input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; }
     <!-- TAB 1: Umzug Lückentext -->
     <div class="section" id="sec1">
         <h2>&#9997; L&uuml;ckentext</h2>
-        <div class="wortbank" id="wortbank-luecken"></div>
+        <div style="display:flex;gap:8px;margin:0 0 14px;"><button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="fbLtReset();" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div>
+    <div class="wortbank" id="wortbank-luecken"></div>
         <div id="lueckenContainer" class="luecken-story">
           <p>Nina wollte unbedingt <input class="blank" data-answer="umziehen"> — ihre alte Wohnung war zu klein geworden. Sie begann, mehrere Wohnungen zu <input class="blank" data-answer="besichtigen">.</p>
 
@@ -876,7 +877,7 @@ function resetSatzbau() {
 function initWortschatz() {
     var container = document.getElementById('wortschatzContainer');
     container.innerHTML = '';
-    var shuffled = WORTSCHATZ.slice().sort(function() { return Math.random() - 0.5; });
+    var shuffled = VOCAB_DATA.slice().sort(function() { return Math.random() - 0.5; });
     shuffled.forEach(function(item) {
         var row = document.createElement('div');
         row.className = 'luecken-item';
@@ -891,20 +892,20 @@ function initWortschatz() {
             artInp.className = 'blank art'; artInp.placeholder = 'Artikel'; artInp.style.width = '80px';
             artInp.dataset.answer = item.artikel; artInp.dataset.field = 'art';
             artInp.setAttribute('autocomplete','off'); artInp.setAttribute('spellcheck','false');
-            artInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            artInp.oninput = function() { wortschatzCheck(this); startTimer(5); checkWortschatzAllOk(); };
             inputs.appendChild(artInp);
             var wordInp = document.createElement('input');
             wordInp.className = 'blank wort'; wordInp.placeholder = 'Deutsch'; wordInp.style.width = '140px';
             wordInp.dataset.answer = item.de; wordInp.dataset.field = 'wort';
             wordInp.setAttribute('autocomplete','off'); wordInp.setAttribute('spellcheck','false');
-            wordInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            wordInp.oninput = function() { wortschatzCheck(this); startTimer(5); checkWortschatzAllOk(); };
             inputs.appendChild(wordInp);
             if (item.plural && item.plural !== '—') {
                 var plInp = document.createElement('input');
                 plInp.className = 'blank plural'; plInp.placeholder = 'Plural'; plInp.style.width = '120px';
                 plInp.dataset.answer = item.plural; plInp.dataset.field = 'plural';
                 plInp.setAttribute('autocomplete','off'); plInp.setAttribute('spellcheck','false');
-                plInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+                plInp.oninput = function() { wortschatzCheck(this); startTimer(5); checkWortschatzAllOk(); };
                 inputs.appendChild(plInp);
             }
         } else {
@@ -912,7 +913,7 @@ function initWortschatz() {
             deInp.className = 'blank wort'; deInp.placeholder = 'Deutsch'; deInp.style.width = '200px';
             deInp.dataset.answer = item.de; deInp.dataset.field = 'wort';
             deInp.setAttribute('autocomplete','off'); deInp.setAttribute('spellcheck','false');
-            deInp.oninput = function() { wortschatzCheck(this); timerAutoStart(5); checkWortschatzAllOk(); };
+            deInp.oninput = function() { wortschatzCheck(this); startTimer(5); checkWortschatzAllOk(); };
             inputs.appendChild(deInp);
         }
         row.appendChild(inputs);
@@ -1293,6 +1294,6 @@ function resetGenus(){ initGenus(); genusTimerReset(); }
 
 </script>
 
-<!-- FB-LT-STORY-HOOKS --><script>window.fbLtTimerStart=function(){if(typeof timerAutoStart==='function')timerAutoStart(1);};window.fbLtTimerStop=function(){if(typeof timerStop==='function')timerStop(1);};</script>
+<!-- FB-LT-STORY-HOOKS --><script>window.fbLtTimerStart=function(){if(typeof startTimer==='function')startTimer(1);};window.fbLtTimerStop=function(){if(typeof timerStop==='function')timerStop(1);};</script>
 </body>
 </html>
