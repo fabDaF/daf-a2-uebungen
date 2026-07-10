@@ -1816,6 +1816,7 @@ function wsUpdateScore() {
 
 function wsInit() {
   var grid = document.getElementById('vocabContainer');
+  if (!grid) return;
   grid.innerHTML = '';
   var _s_total4 = document.getElementById('total4'); if (_s_total4) _s_total4.textContent = WS_DATA.length;
   var _s_score4 = document.getElementById('score4'); if (_s_score4) _s_score4.textContent = '0';
