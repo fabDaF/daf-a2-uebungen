@@ -596,6 +596,14 @@ function showTab(n) {
     document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
 }
 
+/* Sicherer localStorage-Zugriff: verhindert Abbruch der Init-Kette,
+   wenn der Browser Speicher blockiert (Privat-Modus, Firmen-Proxy). */
+var LS = {
+    get: function(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set: function(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
+    remove: function(k){ try { localStorage.removeItem(k); } catch(e){} }
+};
+
 /* ════════════════════════════════════════════════════════════
    TIMER
    ════════════════════════════════════════════════════════════ */
@@ -625,9 +633,9 @@ function timerStop(tab) {
     if (timers[tab] && timers[tab].interval) {
         clearInterval(timers[tab].interval);
         var key = timerKey(tab);
-        var prev = localStorage.getItem(key);
+        var prev = LS.get(key);
         if (!prev || timers[tab].seconds < parseInt(prev)) {
-            localStorage.setItem(key, timers[tab].seconds);
+            LS.set(key, timers[tab].seconds);
             var bel = document.getElementById('best-' + tab);
             if (bel) bel.textContent = timerFmt(timers[tab].seconds);
         }
@@ -646,7 +654,7 @@ function timerResetOne(tab) {
 function loadBestTimes() {
     [3,4,5].forEach(function(tab) {
         var key = timerKey(tab);
-        var v = localStorage.getItem(key);
+        var v = LS.get(key);
         var bel = document.getElementById('best-' + tab);
         if (v && bel) bel.textContent = timerFmt(parseInt(v));
     });
@@ -1071,22 +1079,22 @@ var SCHREIB_MIN_CHARS     = 8;
 function initSchreibwerkstatt() {
   var nameInp = document.getElementById('sw-name');
   if (nameInp) {
-    var savedName = localStorage.getItem(SCHREIB_NAME_KEY);
+    var savedName = LS.get(SCHREIB_NAME_KEY);
     if (savedName) nameInp.value = savedName;
     nameInp.addEventListener('input', function () {
-      localStorage.setItem(SCHREIB_NAME_KEY, nameInp.value);
+      LS.set(SCHREIB_NAME_KEY, nameInp.value);
     });
   }
   document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
     var nr = ta.dataset.aufgabe;
-    var saved = localStorage.getItem(SCHREIB_KEY_PREFIX + nr);
+    var saved = LS.get(SCHREIB_KEY_PREFIX + nr);
     if (saved) ta.value = saved;
     schreibUpdateCount(ta);
-    var sentInfo = localStorage.getItem(SCHREIB_SENT_PREFIX + nr);
+    var sentInfo = LS.get(SCHREIB_SENT_PREFIX + nr);
     if (sentInfo) schreibKarteAlsGesendetMarkieren(nr, sentInfo, true);
     ta.addEventListener('input', function () {
       schreibUpdateCount(ta);
-      localStorage.setItem(SCHREIB_KEY_PREFIX + nr, ta.value);
+      LS.set(SCHREIB_KEY_PREFIX + nr, ta.value);
       var btn = document.getElementById('sw-send-' + nr);
       if (btn && btn.classList.contains('gesendet')) {
         btn.classList.remove('gesendet');
@@ -1279,7 +1287,7 @@ function schreibSendenEinzeln(nr) {
       btn.disabled = false;
       var jetzt = new Date();
       var info = 'gesendet um ' + String(jetzt.getHours()).padStart(2, '0') + ':' + String(jetzt.getMinutes()).padStart(2, '0');
-      localStorage.setItem(SCHREIB_SENT_PREFIX + nr, info);
+      LS.set(SCHREIB_SENT_PREFIX + nr, info);
       schreibKarteAlsGesendetMarkieren(nr, info, false);
     },
     function (err) { btn.disabled = false; btn.innerHTML = origLabel; schreibZeigeFehler(nr, err, subject, message); });
@@ -1295,7 +1303,7 @@ function schreibSendenAlleNochOffenen() {
   document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
     var nr = ta.dataset.aufgabe;
     var text = ta.value.trim();
-    var sent = localStorage.getItem(SCHREIB_SENT_PREFIX + nr);
+    var sent = LS.get(SCHREIB_SENT_PREFIX + nr);
     if (text.length >= SCHREIB_MIN_CHARS && !sent) offene.push({ nr: nr, ta: ta, text: text });
   });
   if (offene.length === 0) {
@@ -1318,7 +1326,7 @@ function schreibSendenAlleNochOffenen() {
       var jetzt = new Date();
       var info = 'gesendet um ' + String(jetzt.getHours()).padStart(2, '0') + ':' + String(jetzt.getMinutes()).padStart(2, '0');
       offene.forEach(function (o) {
-        localStorage.setItem(SCHREIB_SENT_PREFIX + o.nr, info);
+        LS.set(SCHREIB_SENT_PREFIX + o.nr, info);
         schreibKarteAlsGesendetMarkieren(o.nr, info, false);
       });
       schreibStatusZeigen('success', '✓ <strong>' + offene.length + ' Antworten übermittelt.</strong> Ich melde mich.');
@@ -1361,8 +1369,8 @@ function schreibLeeren() {
   document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
     var nr = ta.dataset.aufgabe;
     ta.value = '';
-    localStorage.removeItem(SCHREIB_KEY_PREFIX + nr);
-    localStorage.removeItem(SCHREIB_SENT_PREFIX + nr);
+    LS.remove(SCHREIB_KEY_PREFIX + nr);
+    LS.remove(SCHREIB_SENT_PREFIX + nr);
     schreibUpdateCount(ta);
     var karte = ta.closest('.schreib-aufgabe-karte');
     if (karte) karte.classList.remove('gesendet');
