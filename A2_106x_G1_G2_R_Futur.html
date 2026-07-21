@@ -3,35 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7971e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#372b1d" media="(prefers-color-scheme: dark)">
 <title>A2 · Lektion 106x · Futur I &amp; Modalverben Präteritum</title>
-<style>
+<style>/* ===== FB-DESIGN-TOKENS (auto) ===== */
+:root {
+  --grad-head-a: #f7971e;
+  --grad-head-b: #ffd200;
+  --grad-page-a: #f7971e;
+  --grad-page-b: #ffd200;
+  --sf-container: #fff;
+  --sf-pill: #fff;
+  --bd-1565c0: #1565c0;
+  --bd-1b5e20: #1b5e20;
+  --bd-27ae60: #27ae60;
+  --bd-2e7d32: #2e7d32;
+  --bd-5e35b1: #5e35b1;
+  --bd-667eea: #667eea;
+  --bd-999: #999;
+  --bd-ad1457: #ad1457;
+  --bd-b0bec5: #b0bec5;
+  --bd-b2dfdb: #b2dfdb;
+  --bd-bbb: #bbb;
+  --bd-c5cae9: #c5cae9;
+  --bd-c62828: #c62828;
+  --bd-ccc: #ccc;
+  --bd-e53935: #e53935;
+  --bd-e65100: #e65100;
+  --bd-e74c3c: #e74c3c;
+  --bd-e9ecef: #e9ecef;
+  --bd-f39c12: #f39c12;
+  --bd-f5f5f5: #f5f5f5;
+  --bd-f7971e: #f7971e;
+  --bd-ffe082: #ffe082;
+  --bg-2e7d32: #2e7d32;
+  --bg-78909c: #78909c;
+  --bg-90a4ae: #90a4ae;
+  --bg-c62828: #c62828;
+  --bg-c8e6c9: #c8e6c9;
+  --bg-e1e5fb: #e1e5fb;
+  --bg-e3f2fd: #e3f2fd;
+  --bg-e65100: #e65100;
+  --bg-e8f5e9: #e8f5e9;
+  --bg-e8f8f0: #e8f8f0;
+  --bg-eef0fb: #eef0fb;
+  --bg-eef1ff: #eef1ff;
+  --bg-ef6c00: #ef6c00;
+  --bg-f0f0f8: #f0f0f8;
+  --bg-f3e5f5: #f3e5f5;
+  --bg-f57c00: #f57c00;
+  --bg-f5f5f5: #f5f5f5;
+  --bg-f7971e: #f7971e;
+  --bg-f8f9ff: #f8f9ff;
+  --bg-fafafa: #fafafa;
+  --bg-fafaff: #fafaff;
+  --bg-fdeaea: #fdeaea;
+  --bg-ffcdd2: #ffcdd2;
+  --bg-ffe082: #ffe082;
+  --bg-ffe0b2: #ffe0b2;
+  --bg-ffebee: #ffebee;
+  --bg-fff: #fff;
+  --bg-fff3cd: #fff3cd;
+  --bg-fff8e1: #fff8e1;
+  --bg-fffde7: #fffde7;
+  --bg-white: white;
+  --tx-1565c0: #1565c0;
+  --tx-1b5e20: #1b5e20;
+  --tx-241048: #241048;
+  --tx-27ae60: #27ae60;
+  --tx-2c2c2c: #2c2c2c;
+  --tx-2e7d32: #2e7d32;
+  --tx-333: #333;
+  --tx-34206b: #34206b;
+  --tx-5e35b1: #5e35b1;
+  --tx-666: #666;
+  --tx-667eea: #667eea;
+  --tx-6a1b9a: #6a1b9a;
+  --tx-999: #999;
+  --tx-ad1457: #ad1457;
+  --tx-b71c1c: #b71c1c;
+  --tx-c62828: #c62828;
+  --tx-d32f2f: #d32f2f;
+  --tx-e65100: #e65100;
+  --tx-e74c3c: #e74c3c;
+  --tx-f7971e: #f7971e;
+  --tx-fb8c00: #fb8c00;
+  --tx-fff: #fff;
+  --tx-white: white;
+}
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+    background: linear-gradient(135deg, var(--grad-page-a) 0%, var(--grad-page-b) 100%);
     min-height: 100vh; padding: 20px;
   }
-  .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+  .container { max-width: 1000px; margin: 0 auto; background: var(--sf-container); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
   .header {
-    background: linear-gradient(135deg, #f7971e, #ffd200);
-    color: #fff; padding: 24px 32px;
+    background: linear-gradient(135deg, var(--grad-head-a), var(--grad-head-b));
+    color: var(--tx-fff); padding: 24px 32px;
   }
   .header h1 { font-size: 1.5rem; font-weight: 700; }
   .header p { opacity: 0.85; margin-top: 4px; font-size: 0.95rem; }
   /* ===== NAV (Variante C: Aktiv-Pille) ===== */
 .nav {
   display: flex; flex-wrap: wrap; gap: 4px;
-  background: #eef0fb; padding: 6px;
-  border-bottom: 2px solid #e9ecef;
+  background: var(--bg-eef0fb); padding: 6px;
+  border-bottom: 2px solid var(--bd-e9ecef);
 }
 .nav-btn {
   flex: 1 1 auto; min-width: 64px; padding: 12px 8px;
   border: none; background: none; cursor: pointer;
-  font-weight: 500; color: #666; transition: all 0.2s; border-radius: 10px;
+  font-weight: 500; color: var(--tx-666); transition: all 0.2s; border-radius: 10px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-.nav-btn:hover { background: #e1e5fb; color: #667eea; }
-.nav-btn.active { background: #fff; color: #667eea; font-weight: 700; box-shadow: 0 1px 4px rgba(102,126,234,.25); }
+.nav-btn:hover { background: var(--bg-e1e5fb); color: var(--tx-667eea); }
+.nav-btn.active { background: var(--sf-pill); color: var(--tx-667eea); font-weight: 700; box-shadow: 0 1px 4px rgba(102,126,234,.25); }
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 
@@ -43,143 +130,143 @@
   /* Timer Bar */
   .timer-bar {
     display: flex; align-items: center; gap: 10px;
-    background: #fff8e1; border-radius: 10px;
+    background: var(--bg-fff8e1); border-radius: 10px;
     padding: 8px 14px; margin-bottom: 20px;
-    border: 1px solid #ffe082; font-size: 0.95rem;
+    border: 1px solid var(--bd-ffe082); font-size: 0.95rem;
   }
   .timer-icon { font-size: 1.1rem; }
-  .timer-display { font-size: 1.3rem; font-weight: 700; color: #e65100; min-width: 58px; }
-  .timer-best { font-size: 0.8rem; color: #fb8c00; }
+  .timer-display { font-size: 1.3rem; font-weight: 700; color: var(--tx-e65100); min-width: 58px; }
+  .timer-best { font-size: 0.8rem; color: var(--tx-fb8c00); }
 
   /* Buttons */
   .btn {
     padding: 7px 16px; border: none; border-radius: 8px;
     cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all .2s;
   }
-  .btn-reset { background: #90a4ae; color: #fff; }
-  .btn-reset:hover { background: #78909c; }
-  .btn-show { background: #f57c00; color: #fff; }
-  .btn-show:hover { background: #e65100; }
+  .btn-reset { background: var(--bg-90a4ae); color: var(--tx-fff); }
+  .btn-reset:hover { background: var(--bg-78909c); }
+  .btn-show { background: var(--bg-f57c00); color: var(--tx-fff); }
+  .btn-show:hover { background: var(--bg-e65100); }
   .btn-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
 
   /* Lückentext */
   .luecken-list { list-style: none; padding: 0; margin: 0; }
   .luecken-list li {
-    background: #f5f5f5; padding: 12px 16px; margin-bottom: 10px;
+    background: var(--bg-f5f5f5); padding: 12px 16px; margin-bottom: 10px;
     border-radius: 6px; line-height: 1.6; font-size: 0.95rem;
   }
   .blank {
-    background: #fff; border: 2px solid #b0bec5; border-radius: 4px;
+    background: var(--bg-fff); border: 2px solid var(--bd-b0bec5); border-radius: 4px;
     padding: 4px 8px; font-size: 0.95rem; min-width: 80px; text-align: center;
   }
-  .blank:focus { outline: none; border-color: #e65100; }
-  .blank.correct { background: #c8e6c9; border-color: #2e7d32; color: #1b5e20; }
-  .blank.wrong { background: #ffcdd2; border-color: #c62828; color: #b71c1c; }
-  .hint-text { color: #fb8c00; font-size: 0.8rem; font-weight: 500; }
-  .loesung-text { display: none; color: #2e7d32; font-weight: 600; background: #c8e6c9; padding: 2px 6px; border-radius: 3px; }
+  .blank:focus { outline: none; border-color: var(--bd-e65100); }
+  .blank.correct { background: var(--bg-c8e6c9); border-color: var(--bd-2e7d32); color: var(--tx-1b5e20); }
+  .blank.wrong { background: var(--bg-ffcdd2); border-color: var(--bd-c62828); color: var(--tx-b71c1c); }
+  .hint-text { color: var(--tx-fb8c00); font-size: 0.8rem; font-weight: 500; }
+  .loesung-text { display: none; color: var(--tx-2e7d32); font-weight: 600; background: var(--bg-c8e6c9); padding: 2px 6px; border-radius: 3px; }
 
   /* Feedback */
-  .feedback-ok { color: #2e7d32; font-weight: 600; }
-  .feedback-err { color: #c62828; font-weight: 600; }
+  .feedback-ok { color: var(--tx-2e7d32); font-weight: 600; }
+  .feedback-err { color: var(--tx-c62828); font-weight: 600; }
 
   /* Gram boxes */
-  .gram-box { border-left: 4px solid #e53935; background: #fafafa; padding: 16px; margin-bottom: 16px; border-radius: 4px; }
-  .gram-box h3 { color: #d32f2f; margin-bottom: 10px; font-size: 1.1rem; }
+  .gram-box { border-left: 4px solid var(--bd-e53935); background: var(--bg-fafafa); padding: 16px; margin-bottom: 16px; border-radius: 4px; }
+  .gram-box h3 { color: var(--tx-d32f2f); margin-bottom: 10px; font-size: 1.1rem; }
   .gram-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  .gram-table th { background: #fff8e1; color: #e65100; padding: 8px; text-align: left; font-weight: 600; border: 1px solid #ffe082; }
-  .gram-table td { padding: 8px; border: 1px solid #f5f5f5; vertical-align: top; }
-  .gram-table tr:nth-child(even) { background: #fffde7; }
-  .hl-r { color: #c62828; font-weight: 700; }
-  .hl-b { color: #1565c0; font-weight: 700; }
-  .hl-o { color: #e65100; font-weight: 700; }
+  .gram-table th { background: var(--bg-fff8e1); color: var(--tx-e65100); padding: 8px; text-align: left; font-weight: 600; border: 1px solid var(--bd-ffe082); }
+  .gram-table td { padding: 8px; border: 1px solid var(--bd-f5f5f5); vertical-align: top; }
+  .gram-table tr:nth-child(even) { background: var(--bg-fffde7); }
+  .hl-r { color: var(--tx-c62828); font-weight: 700; }
+  .hl-b { color: var(--tx-1565c0); font-weight: 700; }
+  .hl-o { color: var(--tx-e65100); font-weight: 700; }
 
   /* Discovery */
-  .discovery-item { background: #fff8e1; padding: 16px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #f7971e; }
-  .discovery-item span { background: #fff3cd; padding: 2px 6px; border-radius: 3px; font-weight: 500; }
+  .discovery-item { background: var(--bg-fff8e1); padding: 16px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--bd-f7971e); }
+  .discovery-item span { background: var(--bg-fff3cd); padding: 2px 6px; border-radius: 3px; font-weight: 500; }
 
   /* MC Buttons */
   .mc-container { margin-bottom: 24px; }
-  .mc-btn { padding: 10px 16px; border: 2px solid #f7971e; background: #fff; color: #f7971e; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all .2s; margin: 6px 6px 6px 0; }
-  .mc-btn:hover { background: #fff8e1; }
-  .mc-btn.correct { background: #2e7d32; color: #fff; border-color: #2e7d32; }
-  .mc-btn.wrong { background: #c62828; color: #fff; border-color: #c62828; }
+  .mc-btn { padding: 10px 16px; border: 2px solid var(--bd-f7971e); background: var(--bg-fff); color: var(--tx-f7971e); border-radius: 8px; cursor: pointer; font-weight: 600; transition: all .2s; margin: 6px 6px 6px 0; }
+  .mc-btn:hover { background: var(--bg-fff8e1); }
+  .mc-btn.correct { background: var(--bg-2e7d32); color: var(--tx-fff); border-color: var(--bd-2e7d32); }
+  .mc-btn.wrong { background: var(--bg-c62828); color: var(--tx-fff); border-color: var(--bd-c62828); }
   .mc-feedback { height: 24px; margin-top: 8px; font-size: 0.9rem; }
-  .mc-feedback.ok { color: #2e7d32; font-weight: 600; }
-  .mc-feedback.err { color: #c62828; font-weight: 600; }
+  .mc-feedback.ok { color: var(--tx-2e7d32); font-weight: 600; }
+  .mc-feedback.err { color: var(--tx-c62828); font-weight: 600; }
 
   /* Progressbar */
   .progress-dots { display: flex; gap: 10px; margin-bottom: 16px; justify-content: center; }
-  .p-dot { width: 16px; height: 16px; border-radius: 50%; background: #ffe082; border: 2px solid #f7971e; cursor: pointer; }
-  .p-dot.active { background: #f7971e; }
-  .p-dot.done { background: #2e7d32; border-color: #2e7d32; }
+  .p-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--bg-ffe082); border: 2px solid var(--bd-f7971e); cursor: pointer; }
+  .p-dot.active { background: var(--bg-f7971e); }
+  .p-dot.done { background: var(--bg-2e7d32); border-color: var(--bd-2e7d32); }
 
   /* Satzbau */
-  .satzbau-area { background: #fffde7; padding: 16px; border-radius: 8px; }
-  .satzbau-item { background: #fff; padding: 16px; margin-bottom: 16px; border-radius: 6px; border-left: 4px solid #f7971e; }
-  .satzbau-item p { color: #e65100; font-weight: 600; margin-bottom: 12px; }
-  .chip-bank { display: flex; flex-wrap: wrap; gap: 8px; background: #fff8e1; padding: 12px; border-radius: 6px; min-height: 40px; margin-bottom: 8px; }
-  .s-chip { background: #f7971e; color: #fff; padding: 6px 12px; border-radius: 20px; cursor: pointer; white-space: nowrap; user-select: none; transition: all .2s; }
-  .s-chip:hover { background: #e65100; }
-  .s-chip.placed { background: #ef6c00; }
+  .satzbau-area { background: var(--bg-fffde7); padding: 16px; border-radius: 8px; }
+  .satzbau-item { background: var(--bg-fff); padding: 16px; margin-bottom: 16px; border-radius: 6px; border-left: 4px solid var(--bd-f7971e); }
+  .satzbau-item p { color: var(--tx-e65100); font-weight: 600; margin-bottom: 12px; }
+  .chip-bank { display: flex; flex-wrap: wrap; gap: 8px; background: var(--bg-fff8e1); padding: 12px; border-radius: 6px; min-height: 40px; margin-bottom: 8px; }
+  .s-chip { background: var(--bg-f7971e); color: var(--tx-fff); padding: 6px 12px; border-radius: 20px; cursor: pointer; white-space: nowrap; user-select: none; transition: all .2s; }
+  .s-chip:hover { background: var(--bg-e65100); }
+  .s-chip.placed { background: var(--bg-ef6c00); }
   .s-chip.correct { background: linear-gradient(135deg, #2e7d32, #43a047) !important; }
   .s-chip.wrong   { background: linear-gradient(135deg, #c62828, #e53935) !important; }
-  .drop-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; background: #fff; border: 2px dashed #b0bec5; padding: 12px; border-radius: 6px; min-height: 40px; }
-  .fixed-dot { color: #999; font-size: 1.4rem; }
-  .satzbau-fb { color: #fb8c00; font-size: 0.9rem; margin-top: 8px; font-weight: 600; }
-  .satzbau-fb.ok { color: #2e7d32; }
-  .satzbau-fb.err { color: #c62828; }
+  .drop-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; background: var(--bg-fff); border: 2px dashed var(--bd-b0bec5); padding: 12px; border-radius: 6px; min-height: 40px; }
+  .fixed-dot { color: var(--tx-999); font-size: 1.4rem; }
+  .satzbau-fb { color: var(--tx-fb8c00); font-size: 0.9rem; margin-top: 8px; font-weight: 600; }
+  .satzbau-fb.ok { color: var(--tx-2e7d32); }
+  .satzbau-fb.err { color: var(--tx-c62828); }
 
   /* Lesetext */
-  .lesetext-box { background: #fffde7; padding: 16px; border-radius: 8px; border-left: 4px solid #f7971e; line-height: 1.8; }
-  .lesetext-box h3 { color: #e65100; margin-bottom: 12px; }
-  .lesetext-box p { margin-bottom: 12px; color: #333; }
-  .dw { background: #ffe0b2; padding: 2px 4px; border-radius: 3px; color: #e65100; font-weight: 600; }
-  .fut { background: #e3f2fd; padding: 2px 4px; border-radius: 3px; color: #1565c0; font-weight: 600; }
-  .mod { background: #f3e5f5; padding: 2px 4px; border-radius: 3px; color: #6a1b9a; font-weight: 600; }
+  .lesetext-box { background: var(--bg-fffde7); padding: 16px; border-radius: 8px; border-left: 4px solid var(--bd-f7971e); line-height: 1.8; }
+  .lesetext-box h3 { color: var(--tx-e65100); margin-bottom: 12px; }
+  .lesetext-box p { margin-bottom: 12px; color: var(--tx-333); }
+  .dw { background: var(--bg-ffe0b2); padding: 2px 4px; border-radius: 3px; color: var(--tx-e65100); font-weight: 600; }
+  .fut { background: var(--bg-e3f2fd); padding: 2px 4px; border-radius: 3px; color: var(--tx-1565c0); font-weight: 600; }
+  .mod { background: var(--bg-f3e5f5); padding: 2px 4px; border-radius: 3px; color: var(--tx-6a1b9a); font-weight: 600; }
   .legende { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 16px; font-size: 0.9rem; }
   .leg-dot { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 3px; }
 /* Aliase für neues satzbau-drag-drop Pattern */
 .chips-container { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; min-height: 40px; }
-.sentence-builder { display: flex; flex-wrap: wrap; gap: 7px; min-height: 40px; border: 2px dashed #b2dfdb; border-radius: 8px; padding: 6px 10px; background: #fff; align-items: center; margin-bottom: 8px; }
-.chip.incorrect { background: linear-gradient(135deg, #c62828, #e53935) !important; color: white !important; }
-.sb-punkt { font-size: 1.1em; font-weight: 700; color: #27ae60; margin-left: 2px; align-self: center; user-select: none; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 7px; min-height: 40px; border: 2px dashed var(--bd-b2dfdb); border-radius: 8px; padding: 6px 10px; background: var(--bg-fff); align-items: center; margin-bottom: 8px; }
+.chip.incorrect { background: linear-gradient(135deg, #c62828, #e53935) !important; color: var(--tx-white) !important; }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: var(--tx-27ae60); margin-left: 2px; align-self: center; user-select: none; }
 .satzbau-feedback { font-size: 0.85rem; margin-top: 6px; min-height: 1.2em; font-weight: 600; }
-.satzbau-feedback.correct { color: #2e7d32; }
-.satzbau-feedback.incorrect { color: #c62828; }
+.satzbau-feedback.correct { color: var(--tx-2e7d32); }
+.satzbau-feedback.incorrect { color: var(--tx-c62828); }
 @media (max-width: 600px) {
 
     
 }
 /* ── WORTBANK ── */
-.wortbank-label {display:none; font-weight:700; color:#667eea; font-size:0.85em; margin-bottom:8px; }
+.wortbank-label {display:none; font-weight:700; color:var(--tx-667eea); font-size:0.85em; margin-bottom:8px; }
 .wortbank {
   display:flex; flex-wrap:wrap; gap:8px; padding:14px;
-  background:#f0f0f8; border-radius:10px; min-height:48px;
-  margin-bottom:18px; border:1px dashed #bbb;
+  background:var(--bg-f0f0f8); border-radius:10px; min-height:48px;
+  margin-bottom:18px; border:1px dashed var(--bd-bbb);
 }
 .wortbank-chip {
-  background:white; border:2px solid #667eea; color:#667eea;
+  background:var(--bg-white); border:2px solid var(--bd-667eea); color:var(--tx-667eea);
   padding:5px 12px; border-radius:14px; cursor:default;
   font-weight:500; font-size:0.9em; transition:all 0.2s; user-select:none;
 }
 
 /* ===== GENUS-TAB ===== */
-.genus-pool { display:flex; flex-wrap:wrap; gap:10px; padding:16px; background:#f0f0f8; border:1px dashed #bbb; border-radius:10px; min-height:60px; margin-bottom:18px; }
-.genus-chip { background:#fff; border:2px solid #667eea; color:#333; padding:8px 14px; border-radius:14px; font-weight:600; font-size:0.95em; cursor:grab; user-select:none; }
+.genus-pool { display:flex; flex-wrap:wrap; gap:10px; padding:16px; background:var(--bg-f0f0f8); border:1px dashed var(--bd-bbb); border-radius:10px; min-height:60px; margin-bottom:18px; }
+.genus-chip { background:var(--bg-fff); border:2px solid var(--bd-667eea); color:var(--tx-333); padding:8px 14px; border-radius:14px; font-weight:600; font-size:0.95em; cursor:grab; user-select:none; }
 .genus-chip.dragging { opacity:0.5; }
-.genus-chip.selected { outline:3px solid #f39c12; }
-.genus-chip.correct { border-color:#2e7d32; background:#e8f5e9; color:#1b5e20; }
-.genus-chip.wrong { border-color:#c62828; background:#ffebee; color:#b71c1c; }
+.genus-chip.selected { outline:3px solid var(--bd-f39c12); }
+.genus-chip.correct { border-color:var(--bd-2e7d32); background:var(--bg-e8f5e9); color:var(--tx-1b5e20); }
+.genus-chip.wrong { border-color:var(--bd-c62828); background:var(--bg-ffebee); color:var(--tx-b71c1c); }
 .genus-kategorien { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-.genus-kat { background:#fafaff; border-radius:10px; padding:10px; border-top:4px solid #999; }
-.genus-kat.kat-der { border-top-color:#1565c0; }
-.genus-kat.kat-die { border-top-color:#ad1457; }
-.genus-kat.kat-das { border-top-color:#1b5e20; }
-.genus-kat.kat-pl  { border-top-color:#5e35b1; }
+.genus-kat { background:var(--bg-fafaff); border-radius:10px; padding:10px; border-top:4px solid var(--bd-999); }
+.genus-kat.kat-der { border-top-color:var(--bd-1565c0); }
+.genus-kat.kat-die { border-top-color:var(--bd-ad1457); }
+.genus-kat.kat-das { border-top-color:var(--bd-1b5e20); }
+.genus-kat.kat-pl  { border-top-color:var(--bd-5e35b1); }
 .kat-title { text-align:center; font-weight:700; margin-bottom:8px; font-size:1.05em; }
-.kat-der .kat-title { color:#1565c0; } .kat-die .kat-title { color:#ad1457; } .kat-das .kat-title { color:#1b5e20; } .kat-pl .kat-title { color:#5e35b1; }
-.genus-drop { min-height:90px; background:#fff; border:2px dashed #ccc; border-radius:8px; padding:8px; display:flex; flex-direction:column; gap:6px; }
-.genus-drop.dragover { border-color:#667eea; background:#eef1ff; }
+.kat-der .kat-title { color:var(--tx-1565c0); } .kat-die .kat-title { color:var(--tx-ad1457); } .kat-das .kat-title { color:var(--tx-1b5e20); } .kat-pl .kat-title { color:var(--tx-5e35b1); }
+.genus-drop { min-height:90px; background:var(--bg-fff); border:2px dashed var(--bd-ccc); border-radius:8px; padding:8px; display:flex; flex-direction:column; gap:6px; }
+.genus-drop.dragover { border-color:var(--bd-667eea); background:var(--bg-eef1ff); }
 @media (max-width:600px){ .genus-kategorien { grid-template-columns:repeat(2,1fr); } }
 
 /* FB-JUMPTOP - Nach-oben-Button (Glas-Look) */
@@ -189,7 +276,7 @@
   background: rgba(118, 75, 162, 0.26);
   -webkit-backdrop-filter: blur(14px) saturate(180%);
   backdrop-filter: blur(14px) saturate(180%);
-  color: #34206b; border: 1.5px solid rgba(255,255,255,0.75); border-radius: 28px;
+  color: var(--tx-34206b); border: 1.5px solid rgba(255,255,255,0.75); border-radius: 28px;
   padding: 15px 26px; font-size: 1.05em; font-weight: 800;
   letter-spacing: 0.2px;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -201,29 +288,231 @@
   z-index: 9999; display: inline-flex; align-items: center; gap: 8px;
 }
 .fb-jumptop.show { opacity: 1; visibility: visible; transform: translateY(0); }
-.fb-jumptop:hover { background: rgba(118, 75, 162, 0.40); color: #241048; box-shadow: 0 10px 32px rgba(102,126,234,0.50), inset 0 1px 0 rgba(255,255,255,0.65); }
+.fb-jumptop:hover { background: rgba(118, 75, 162, 0.40); color: var(--tx-241048); box-shadow: 0 10px 32px rgba(102,126,234,0.50), inset 0 1px 0 rgba(255,255,255,0.65); }
 @media (max-width: 600px) { .fb-jumptop { bottom: 18px; right: 16px; padding: 12px 18px; font-size: 0.95em; } }
 
 /* FB-LT-STORY-CSS */
 /* FB-LT-STORY-CSS — kanonische CSS des Story-Lückentexts (EINE Quelle der Wahrheit).
    Vom Produzenten scripts/inject_lt.py eingespielt. Nicht pro Datei von Hand kopieren. */
-.luecken-story { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 2.1; color: #2c2c2c; text-align: justify; background: #f8f9ff; border-left: 4px solid #667eea; border-radius: 0 10px 10px 0; padding: 18px 22px; }
+.luecken-story { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 2.1; color: var(--tx-2c2c2c); text-align: justify; background: var(--bg-f8f9ff); border-left: 4px solid var(--bd-667eea); border-radius: 0 10px 10px 0; padding: 18px 22px; }
 .luecken-story p { margin: 0 0 14px; }
 .luecken-story p:last-child { margin-bottom: 0; }
-.luecken-story input.blank { font-family: Georgia, 'Times New Roman', serif; border: none; border-bottom: 2px solid #c5cae9; background: transparent; outline: none; font-size: 1em; color: #2c2c2c; text-align: center; padding: 1px 4px; min-width: 4ch; transition: all .2s; }
-.luecken-story input.blank:focus { border-bottom-color: #667eea; }
-.luecken-story input.blank.correct { border-bottom-color: #27ae60; background: #e8f8f0; color: #27ae60; font-weight: 700; }
-.luecken-story input.blank.wrong { border-bottom-color: #e74c3c; background: #fdeaea; color: #e74c3c; }
-.wortbank { display:flex; flex-wrap:wrap; gap:8px; padding:14px; background:#f0f0f8; border-radius:10px; min-height:48px; margin-bottom:18px; border:1px dashed #bbb; }
-.wortbank-chip { background:white; border:2px solid #667eea; color:#667eea; padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
+.luecken-story input.blank { font-family: Georgia, 'Times New Roman', serif; border: none; border-bottom: 2px solid var(--bd-c5cae9); background: transparent; outline: none; font-size: 1em; color: var(--tx-2c2c2c); text-align: center; padding: 1px 4px; min-width: 4ch; transition: all .2s; }
+.luecken-story input.blank:focus { border-bottom-color: var(--bd-667eea); }
+.luecken-story input.blank.correct { border-bottom-color: var(--bd-27ae60); background: var(--bg-e8f8f0); color: var(--tx-27ae60); font-weight: 700; }
+.luecken-story input.blank.wrong { border-bottom-color: var(--bd-e74c3c); background: var(--bg-fdeaea); color: var(--tx-e74c3c); }
+.wortbank { display:flex; flex-wrap:wrap; gap:8px; padding:14px; background:var(--bg-f0f0f8); border-radius:10px; min-height:48px; margin-bottom:18px; border:1px dashed var(--bd-bbb); }
+.wortbank-chip { background:var(--bg-white); border:2px solid var(--bd-667eea); color:var(--tx-667eea); padding:5px 12px; border-radius:14px; font-weight:500; font-size:0.9em; user-select:none; }
 .wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
 
+
+/* FB-THEME-TOGGLE */
+.header { position: relative; }
+.theme-toggle {
+  position: absolute; top: 14px; right: 14px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4);
+  color: white; font-size: 1.05em; cursor: pointer; line-height: 1;
+  transition: background 0.2s; z-index: 5;
+}
+.theme-toggle:hover { background: rgba(255,255,255,0.3); }
+
+/* ===== FB-DARK-MODE (System-Default + manueller Schalter) ===== */
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) {
+  --grad-head-a: #aa7531;
+  --grad-head-b: #a69130;
+  --grad-page-a: #372b1d;
+  --grad-page-b: #36311c;
+  --sf-container: #23263a;
+  --sf-pill: #343a5e;
+  --bd-1565c0: #284a71;
+  --bd-27ae60: #3f9d6d;
+  --bd-5e35b1: #443465;
+  --bd-667eea: #7b88e8;
+  --bd-999: #414258;
+  --bd-ad1457: #712848;
+  --bd-b0bec5: #415058;
+  --bd-b2dfdb: #3a5f5c;
+  --bd-bbb: #4a4e6a;
+  --bd-c5cae9: #464b70;
+  --bd-c62828: #a04a42;
+  --bd-ccc: #4a4e6a;
+  --bd-e53935: #702b29;
+  --bd-e65100: #7a3f1f;
+  --bd-e74c3c: #b0584d;
+  --bd-e9ecef: #2e3250;
+  --bd-f39c12: #c67f16;
+  --bd-f7971e: #775122;
+  --bd-ffe082: #7a641f;
+  --bg-78909c: #29353b;
+  --bg-90a4ae: #273338;
+  --bg-c62828: #491f1f;
+  --bg-c8e6c9: #213421;
+  --bg-e1e5fb: #2e3350;
+  --bg-e3f2fd: #1e2a3f;
+  --bg-e65100: #542b15;
+  --bg-e8f5e9: #1e3328;
+  --bg-e8f8f0: #1e3328;
+  --bg-eef0fb: #1d2032;
+  --bg-eef1ff: #262a44;
+  --bg-ef6c00: #533115;
+  --bg-f0f0f8: #1d2032;
+  --bg-f3e5f5: #2a2547;
+  --bg-f57c00: #523415;
+  --bg-f5f5f5: #20212e;
+  --bg-f7971e: #4e3516;
+  --bg-f8f9ff: #262a44;
+  --bg-fafafa: #20202e;
+  --bg-fafaff: #262a44;
+  --bg-fdeaea: #3a2228;
+  --bg-ffcdd2: #411015;
+  --bg-ffe082: #473a12;
+  --bg-ffe0b2: #432f11;
+  --bg-ffebee: #3a2228;
+  --bg-fff: #262a44;
+  --bg-fff3cd: #413510;
+  --bg-fff8e1: #322c1c;
+  --bg-fffde7: #322c1c;
+  --bg-white: #262a44;
+  --tx-1565c0: #90bff9;
+  --tx-1b5e20: #a5d6a7;
+  --tx-241048: #d9cef8;
+  --tx-27ae60: #58c98b;
+  --tx-2c2c2c: #d6d8e8;
+  --tx-2e7d32: #8fd7ae;
+  --tx-333: #d6d8e8;
+  --tx-34206b: #cbbcf6;
+  --tx-5e35b1: #b39af0;
+  --tx-666: #9ba0bd;
+  --tx-667eea: #93a0f2;
+  --tx-6a1b9a: #c587ea;
+  --tx-999: #7d8199;
+  --tx-ad1457: #e57ba1;
+  --tx-b71c1c: #f28b7d;
+  --tx-c62828: #ef7365;
+  --tx-d32f2f: #e37878;
+  --tx-e65100: #eca077;
+  --tx-e74c3c: #ef7365;
+  --tx-f7971e: #ebb470;
+  --tx-fb8c00: #ebb571;
+}
+:root:not([data-theme="light"]) .tab-banner { box-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+:root:not([data-theme="light"]) body { color: #c6cade; }
+:root:not([data-theme="light"]) button, :root:not([data-theme="light"]) input, :root:not([data-theme="light"]) select, :root:not([data-theme="light"]) textarea { color: inherit; }
+}
+:root[data-theme="dark"] {
+  --grad-head-a: #aa7531;
+  --grad-head-b: #a69130;
+  --grad-page-a: #372b1d;
+  --grad-page-b: #36311c;
+  --sf-container: #23263a;
+  --sf-pill: #343a5e;
+  --bd-1565c0: #284a71;
+  --bd-27ae60: #3f9d6d;
+  --bd-5e35b1: #443465;
+  --bd-667eea: #7b88e8;
+  --bd-999: #414258;
+  --bd-ad1457: #712848;
+  --bd-b0bec5: #415058;
+  --bd-b2dfdb: #3a5f5c;
+  --bd-bbb: #4a4e6a;
+  --bd-c5cae9: #464b70;
+  --bd-c62828: #a04a42;
+  --bd-ccc: #4a4e6a;
+  --bd-e53935: #702b29;
+  --bd-e65100: #7a3f1f;
+  --bd-e74c3c: #b0584d;
+  --bd-e9ecef: #2e3250;
+  --bd-f39c12: #c67f16;
+  --bd-f7971e: #775122;
+  --bd-ffe082: #7a641f;
+  --bg-78909c: #29353b;
+  --bg-90a4ae: #273338;
+  --bg-c62828: #491f1f;
+  --bg-c8e6c9: #213421;
+  --bg-e1e5fb: #2e3350;
+  --bg-e3f2fd: #1e2a3f;
+  --bg-e65100: #542b15;
+  --bg-e8f5e9: #1e3328;
+  --bg-e8f8f0: #1e3328;
+  --bg-eef0fb: #1d2032;
+  --bg-eef1ff: #262a44;
+  --bg-ef6c00: #533115;
+  --bg-f0f0f8: #1d2032;
+  --bg-f3e5f5: #2a2547;
+  --bg-f57c00: #523415;
+  --bg-f5f5f5: #20212e;
+  --bg-f7971e: #4e3516;
+  --bg-f8f9ff: #262a44;
+  --bg-fafafa: #20202e;
+  --bg-fafaff: #262a44;
+  --bg-fdeaea: #3a2228;
+  --bg-ffcdd2: #411015;
+  --bg-ffe082: #473a12;
+  --bg-ffe0b2: #432f11;
+  --bg-ffebee: #3a2228;
+  --bg-fff: #262a44;
+  --bg-fff3cd: #413510;
+  --bg-fff8e1: #322c1c;
+  --bg-fffde7: #322c1c;
+  --bg-white: #262a44;
+  --tx-1565c0: #90bff9;
+  --tx-1b5e20: #a5d6a7;
+  --tx-241048: #d9cef8;
+  --tx-27ae60: #58c98b;
+  --tx-2c2c2c: #d6d8e8;
+  --tx-2e7d32: #8fd7ae;
+  --tx-333: #d6d8e8;
+  --tx-34206b: #cbbcf6;
+  --tx-5e35b1: #b39af0;
+  --tx-666: #9ba0bd;
+  --tx-667eea: #93a0f2;
+  --tx-6a1b9a: #c587ea;
+  --tx-999: #7d8199;
+  --tx-ad1457: #e57ba1;
+  --tx-b71c1c: #f28b7d;
+  --tx-c62828: #ef7365;
+  --tx-d32f2f: #e37878;
+  --tx-e65100: #eca077;
+  --tx-e74c3c: #ef7365;
+  --tx-f7971e: #ebb470;
+  --tx-fb8c00: #ebb571;
+}
+html[data-theme="dark"] .tab-banner { box-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+html[data-theme="dark"] body { color: #c6cade; }
+html[data-theme="dark"] button, html[data-theme="dark"] input, html[data-theme="dark"] select, html[data-theme="dark"] textarea { color: inherit; }
 </style>
+<script>/* FB-THEME-INIT */
+(function(){
+  var saved = null;
+  try { saved = localStorage.getItem('fb-theme'); } catch(e) {}
+  if (saved === 'dark' || saved === 'light') document.documentElement.dataset.theme = saved;
+  function effDark() {
+    var t = document.documentElement.dataset.theme;
+    if (t === 'dark') return true;
+    if (t === 'light') return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function paint() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = effDark() ? '☀️' : '🌙';
+  }
+  window.fbToggleTheme = function() {
+    var next = effDark() ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('fb-theme', next); } catch(e) {}
+    paint();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paint); else paint();
+})();
+</script>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
+  <button class="theme-toggle" id="themeToggle" onclick="fbToggleTheme()" aria-label="Hell/Dunkel umschalten">🌙</button>
     <h1>A2 · Lektion 106x</h1>
     <p>Futur I (<em>werden</em> + Infinitiv) &amp; Modalverben im Präteritum</p>
   </div>
@@ -239,7 +528,7 @@
 
   <!-- TAB 0: ENTDECKUNG -->
   <div class="section active" id="sec-0">
-    <h2 style="color:#e65100;margin-bottom:20px;">&#128161; Futur I entdecken</h2>
+    <h2 style="color:var(--tx-e65100);margin-bottom:20px;">&#128161; Futur I entdecken</h2>
 
     <div class="progress-dots">
       <div class="p-dot active" id="pdot0"></div>
@@ -249,9 +538,9 @@
     </div>
 
     <div id="mc-step0" class="mc-container">
-      <p style="margin-bottom:12px;color:#333;"><strong>Schritt 1:</strong> Was ist der Unterschied zwischen diesen Sätzen?</p>
-      <p style="background:#fff3cd;padding:12px;border-radius:6px;margin-bottom:8px;"><strong>A (Präsens):</strong> Ich mache morgen Sport.</p>
-      <p style="background:#c8e6c9;padding:12px;border-radius:6px;margin-bottom:14px;"><strong>B (Futur I):</strong> Ich <span style="background:#e65100;color:#fff;padding:2px 6px;border-radius:3px;font-weight:700;">werde</span> morgen Sport <span style="background:#e65100;color:#fff;padding:2px 6px;border-radius:3px;font-weight:700;">machen</span>.</p>
+      <p style="margin-bottom:12px;color:var(--tx-333);"><strong>Schritt 1:</strong> Was ist der Unterschied zwischen diesen Sätzen?</p>
+      <p style="background:var(--bg-fff3cd);padding:12px;border-radius:6px;margin-bottom:8px;"><strong>A (Präsens):</strong> Ich mache morgen Sport.</p>
+      <p style="background:var(--bg-c8e6c9);padding:12px;border-radius:6px;margin-bottom:14px;"><strong>B (Futur I):</strong> Ich <span style="background:var(--bg-e65100);color:var(--tx-fff);padding:2px 6px;border-radius:3px;font-weight:700;">werde</span> morgen Sport <span style="background:var(--bg-e65100);color:var(--tx-fff);padding:2px 6px;border-radius:3px;font-weight:700;">machen</span>.</p>
       <button class="mc-btn" onclick="mcCheck(0,this,false)">Satz B ist falsch</button>
       <button class="mc-btn" onclick="mcCheck(0,this,true)">Satz B betont die Absicht für die Zukunft stärker</button>
       <button class="mc-btn" onclick="mcCheck(0,this,false)">Satz A ist höflicher</button>
@@ -259,9 +548,9 @@
     </div>
 
     <div id="mc-step1" class="mc-container">
-      <p style="margin-bottom:12px;color:#333;"><strong>Schritt 2:</strong> Wie wird das Futur I gebildet?</p>
-      <p style="background:#c8e6c9;padding:12px;border-radius:6px;margin-bottom:14px;">
-        Er <span style="background:#e65100;color:#fff;padding:2px 4px;border-radius:3px;font-weight:700;">wird</span> nächste Woche trainier<span style="background:#e65100;color:#fff;padding:2px 4px;border-radius:3px;font-weight:700;">en</span>.
+      <p style="margin-bottom:12px;color:var(--tx-333);"><strong>Schritt 2:</strong> Wie wird das Futur I gebildet?</p>
+      <p style="background:var(--bg-c8e6c9);padding:12px;border-radius:6px;margin-bottom:14px;">
+        Er <span style="background:var(--bg-e65100);color:var(--tx-fff);padding:2px 4px;border-radius:3px;font-weight:700;">wird</span> nächste Woche trainier<span style="background:var(--bg-e65100);color:var(--tx-fff);padding:2px 4px;border-radius:3px;font-weight:700;">en</span>.
       </p>
       <button class="mc-btn" onclick="mcCheck(1,this,false)">haben/sein + Partizip II</button>
       <button class="mc-btn" onclick="mcCheck(1,this,true)">werden (konjugiert) + Infinitiv</button>
@@ -270,9 +559,9 @@
     </div>
 
     <div id="mc-step2" class="mc-container">
-      <p style="margin-bottom:12px;color:#333;"><strong>Schritt 3:</strong> Wo steht der Infinitiv im Hauptsatz?</p>
-      <p style="background:#c8e6c9;padding:12px;border-radius:6px;margin-bottom:14px;">
-        Wir <span style="background:#e65100;color:#fff;padding:2px 4px;border-radius:3px;font-weight:700;">werden</span> das Spiel <span style="background:#1565c0;color:#fff;padding:2px 4px;border-radius:3px;font-weight:700;">gewinnen</span>.
+      <p style="margin-bottom:12px;color:var(--tx-333);"><strong>Schritt 3:</strong> Wo steht der Infinitiv im Hauptsatz?</p>
+      <p style="background:var(--bg-c8e6c9);padding:12px;border-radius:6px;margin-bottom:14px;">
+        Wir <span style="background:var(--bg-e65100);color:var(--tx-fff);padding:2px 4px;border-radius:3px;font-weight:700;">werden</span> das Spiel <span style="background:#1565c0;color:var(--tx-fff);padding:2px 4px;border-radius:3px;font-weight:700;">gewinnen</span>.
       </p>
       <button class="mc-btn" onclick="mcCheck(2,this,false)">an zweiter Stelle</button>
       <button class="mc-btn" onclick="mcCheck(2,this,true)">am Ende des Satzes</button>
@@ -281,24 +570,24 @@
     </div>
 
     <div id="mc-step3" class="mc-container">
-      <p style="margin-bottom:12px;color:#333;"><strong>Schritt 4:</strong> Was kann man mit dem Futur I ausdrücken?</p>
+      <p style="margin-bottom:12px;color:var(--tx-333);"><strong>Schritt 4:</strong> Was kann man mit dem Futur I ausdrücken?</p>
       <button class="mc-btn" onclick="mcCheck(3,this,false)">nur Pläne für morgen</button>
       <button class="mc-btn" onclick="mcCheck(3,this,true)">Pläne, Vorhersagen und Vermutungen über die Zukunft</button>
       <button class="mc-btn" onclick="mcCheck(3,this,false)">nur Versprechen</button>
       <div class="mc-feedback" id="mcfb3"></div>
     </div>
 
-    <div id="regelkarte0" style="display:none;background:#c8e6c9;padding:16px;border-radius:8px;border-left:4px solid #2e7d32;margin-top:16px;">
-      <h3 style="color:#1b5e20;margin-bottom:8px;">&#10003; Regel: Futur I</h3>
-      <p style="color:#1b5e20;line-height:1.6;">
+    <div id="regelkarte0" style="display:none;background:var(--bg-c8e6c9);padding:16px;border-radius:8px;border-left:4px solid var(--bd-2e7d32);margin-top:16px;">
+      <h3 style="color:var(--tx-1b5e20);margin-bottom:8px;">&#10003; Regel: Futur I</h3>
+      <p style="color:var(--tx-1b5e20);line-height:1.6;">
         <strong>Bildung:</strong> <em>werden</em> (Position 2) + Infinitiv (am Satzende)<br>
         <strong>Verwendung:</strong> Pläne · Vorhersagen · Prognosen · Vermutungen<br>
         <strong>Merkhilfe:</strong> <em>werden</em> konjugieren wie ein normales Verb — der Infinitiv bleibt unverändert am Ende.
       </p>
       <table style="width:100%;margin-top:10px;border-collapse:collapse;font-size:0.88rem;">
-        <tr><td style="padding:4px 8px;"><em>ich</em></td><td style="padding:4px 8px;font-weight:700;color:#e65100;">werde</td><td style="padding:4px 8px;"><em>du</em></td><td style="padding:4px 8px;font-weight:700;color:#e65100;">wirst</td></tr>
-        <tr><td style="padding:4px 8px;"><em>er/sie/es</em></td><td style="padding:4px 8px;font-weight:700;color:#e65100;">wird</td><td style="padding:4px 8px;"><em>wir</em></td><td style="padding:4px 8px;font-weight:700;color:#e65100;">werden</td></tr>
-        <tr><td style="padding:4px 8px;"><em>ihr</em></td><td style="padding:4px 8px;font-weight:700;color:#e65100;">werdet</td><td style="padding:4px 8px;"><em>sie/Sie</em></td><td style="padding:4px 8px;font-weight:700;color:#e65100;">werden</td></tr>
+        <tr><td style="padding:4px 8px;"><em>ich</em></td><td style="padding:4px 8px;font-weight:700;color:var(--tx-e65100);">werde</td><td style="padding:4px 8px;"><em>du</em></td><td style="padding:4px 8px;font-weight:700;color:var(--tx-e65100);">wirst</td></tr>
+        <tr><td style="padding:4px 8px;"><em>er/sie/es</em></td><td style="padding:4px 8px;font-weight:700;color:var(--tx-e65100);">wird</td><td style="padding:4px 8px;"><em>wir</em></td><td style="padding:4px 8px;font-weight:700;color:var(--tx-e65100);">werden</td></tr>
+        <tr><td style="padding:4px 8px;"><em>ihr</em></td><td style="padding:4px 8px;font-weight:700;color:var(--tx-e65100);">werdet</td><td style="padding:4px 8px;"><em>sie/Sie</em></td><td style="padding:4px 8px;font-weight:700;color:var(--tx-e65100);">werden</td></tr>
       </table>
     </div>
   </div>
@@ -306,8 +595,8 @@
   <!-- TAB 1: LÜCKENTEXT (Futur I + Modalverben Präteritum, FB-LT-STORY) -->
   <div class="section" id="sec-1">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td2">0:00</span><span class="timer-best" id="tb2">Bestzeit: &mdash;</span></div>
-    <h2 style="color:#e65100;margin-bottom:16px;">Futur I &amp; Modalverben im Pr&auml;teritum &mdash; L&uuml;ckentext</h2>
-    <div style="display:flex;gap:8px;margin:0 0 14px;"><button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="fbLtReset();" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div>
+    <h2 style="color:var(--tx-e65100);margin-bottom:16px;">Futur I &amp; Modalverben im Pr&auml;teritum &mdash; L&uuml;ckentext</h2>
+    <div style="display:flex;gap:8px;margin:0 0 14px;"><button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="fbLtReset();" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button></div>
     <div class="wortbank" id="wortbank-luecken"></div>
     <div id="lueckenContainer" class="luecken-story">
       <p>Ich <input class="blank" data-answer="werde" data-base="werden"> nächste Woche mit einem neuen Trainingsplan anfangen. Du <input class="blank" data-answer="wirst" data-base="werden"> sehen, wie viel besser ich dann laufen kann!</p>
@@ -321,16 +610,16 @@
       <p>Trotzdem <input class="blank" data-answer="sollte" data-base="sollen"> ich weitermachen, sagte mein Trainer. Und obwohl ich als Kind Fußball nicht besonders <input class="blank" data-answer="mochte" data-base="mögen">, liebe ich den Sport heute umso mehr.</p>
     </div>
     <div class="btn-row">
-      <button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">👁 Lösung</button>
-      <button onclick="fbLtReset()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
+      <button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">👁 Lösung</button>
+      <button onclick="fbLtReset()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
     </div>
   </div>
 
   <!-- TAB 2: GRAMMATIK -->
   <div class="section" id="sec-2">
-    <h2 style="color:#e65100;margin-bottom:16px;">&#128202; Grammatik: Futur I &amp; Modalverben im Präteritum</h2>
+    <h2 style="color:var(--tx-e65100);margin-bottom:16px;">&#128202; Grammatik: Futur I &amp; Modalverben im Präteritum</h2>
 
-    <div class="gram-box" style="border-left-color:#e65100;">
+    <div class="gram-box" style="border-left-color:var(--bd-e65100);">
       <h3>Futur I — Konjugation von <em>werden</em></h3>
       <table class="gram-table">
         <thead>
@@ -348,7 +637,7 @@
       <p style="margin-top:10px;font-size:0.85rem;color:#555;">&#128161; Struktur: <strong>werden (Pos. 2) + ... + Infinitiv (Satzende)</strong></p>
     </div>
 
-    <div class="gram-box" style="border-left-color:#f7971e;">
+    <div class="gram-box" style="border-left-color:var(--bd-f7971e);">
       <h3>Futur I — Verwendung</h3>
       <table class="gram-table">
         <thead>
@@ -364,7 +653,7 @@
       <p style="margin-top:10px;font-size:0.85rem;color:#555;">&#128161; Zeitangaben wie <em>morgen, nächste Woche, bald, in der Zukunft</em> helfen beim Erkennen.</p>
     </div>
 
-    <div class="gram-box" style="border-left-color:#1565c0;">
+    <div class="gram-box" style="border-left-color:var(--bd-1565c0);">
       <h3>Modalverben im Präteritum</h3>
       <p style="margin-bottom:10px;font-size:0.88rem;color:#555;">Modalverben verwenden wir im Präteritum (nicht Perfekt!) — auch in der Alltagssprache.</p>
       <table class="gram-table">
@@ -402,10 +691,10 @@
   <!-- TAB 3: SATZBAU -->
   <div class="section" id="sec-3">
     <div class="timer-bar"><span class="timer-icon">&#9201;</span><span class="timer-display" id="td5">0:00</span><span class="timer-best" id="tb5">Bestzeit: &mdash;</span></div>
-    <h2 style="color:#e65100;margin-bottom:16px;">Satzbau &mdash; Futur I &amp; Modalverben</h2>
+    <h2 style="color:var(--tx-e65100);margin-bottom:16px;">Satzbau &mdash; Futur I &amp; Modalverben</h2>
     <div class="satzbau-area" id="satzbau5"></div>
     <div class="btn-row">
-      <button onclick="resetSatzbau(5)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
+      <button onclick="resetSatzbau(5)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
     </div>
   </div>
 
@@ -439,16 +728,16 @@
     </div>
 
     <div class="legende">
-      <span><span class="leg-dot" style="background:#e3f2fd;border:1px solid #1565c0;"></span> <b>Futur I</b> (wird … + Infinitiv)</span>
-      <span><span class="leg-dot" style="background:#f3e5f5;border:1px solid #6a1b9a;"></span> <b>Modalverb</b> (Präteritum/Präsens)</span>
+      <span><span class="leg-dot" style="background:var(--bg-e3f2fd);border:1px solid var(--bd-1565c0);"></span> <b>Futur I</b> (wird … + Infinitiv)</span>
+      <span><span class="leg-dot" style="background:var(--bg-f3e5f5);border:1px solid #6a1b9a;"></span> <b>Modalverb</b> (Präteritum/Präsens)</span>
     </div>
 
-    <hr style="margin:24px 0;border-color:#ffe082;">
-    <h3 style="color:#e65100;margin-bottom:14px;">&#128221; Verst&auml;ndnisfragen</h3>
+    <hr style="margin:24px 0;border-color:var(--bd-ffe082);">
+    <h3 style="color:var(--tx-e65100);margin-bottom:14px;">&#128221; Verst&auml;ndnisfragen</h3>
     <ul class="luecken-list" id="luecken6"></ul>
     <div class="btn-row">
-      <button onclick="showLueckenLoesung(6)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">&#128065; L&ouml;sung</button>
-      <button onclick="resetLuecken(6)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button>
+      <button onclick="showLueckenLoesung(6)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">&#128065; L&ouml;sung</button>
+      <button onclick="resetLuecken(6)" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
     </div>
     <div id="fb6" style="margin-top:12px;font-size:0.95rem;"></div>
   </div>
@@ -456,7 +745,7 @@
     <div class="section" id="sec-5">
         <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJHZW51cyDigJQgZGVyLCBkaWUsIGRhcyI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVkNmZjMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YTRhOTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIyMjAiIGZpbGw9InVybCgjYmcpIi8+CgoKICA8IS0tIEtpY2tlcjoga2xlaW5lLCBnZXNwZXJydGUgVmVyc2FsaWVuIC0tPgogIDx0ZXh0IHg9IjUwMCIgeT0iNzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInU2Vnb2UgVUknLCBzeXN0ZW0tdWksIHNhbnMtc2VyaWYiCiAgICAgICAgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9IjYwMCIgbGV0dGVyLXNwYWNpbmc9IjciIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC43OCI+R0VOVVMmIzE2MDsmIzE2MDsmIzE4MzsmIzE2MDsmIzE2MDtBUlRJS0VMIEJFU1RJTU1FTjwvdGV4dD4KCiAgPCEtLSBIYXVwdHplaWxlOiBydWhpZ2UgU2VyaWYgLS0+CiAgPHRleHQgeD0iMzIwIiB5PSIxNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iNjYiIGZpbGw9IiNmZmZmZmYiPmRlcjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjE0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsICdUaW1lcyBOZXcgUm9tYW4nLCBzZXJpZiIgZm9udC1zaXplPSI2NiIgZmlsbD0iI2ZmZmZmZiI+ZGllPC90ZXh0PgogIDx0ZXh0IHg9IjY4MCIgeT0iMTQ4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjY2IiBmaWxsPSIjZmZmZmZmIj5kYXM8L3RleHQ+CgogIDwhLS0gZGV6ZW50ZSBGYXJiYWt6ZW50ZSB1bnRlciBqZWRlbSBBcnRpa2VsIC0tPgogIDxyZWN0IHg9IjI4OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzdlYTJlNiIvPgogIDxyZWN0IHg9IjQ2OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2Q5OGNhZSIvPgogIDxyZWN0IHg9IjY0OSIgeT0iMTY2IiB3aWR0aD0iNjIiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzg2Y2JhYiIvPgo8L3N2Zz4K" alt="Genus üben — der, die, das">
         <h2>🏷️ Genus</h2>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:6px 12px;background:#f8f9fa;border-radius:8px;"><div style="display:flex;gap:6px;"><button onclick="showGenusLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:#667eea;cursor:pointer;font-weight:600;">↺ Neustart</button></div><div style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:#888;font-variant-numeric:tabular-nums;"><span>⏱ <span id="timer-6">00:00</span></span><span>🏆 <span id="best-6">--:--</span></span></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:6px 12px;background:#f8f9fa;border-radius:8px;"><div style="display:flex;gap:6px;"><button onclick="showGenusLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button></div><div style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:#888;font-variant-numeric:tabular-nums;"><span>⏱ <span id="timer-6">00:00</span></span><span>🏆 <span id="best-6">--:--</span></span></div></div>
         <div class="genus-pool" id="genusPool"></div>
         <div class="genus-kategorien"><div class="genus-kat kat-der"><div class="kat-title">der</div><div class="genus-drop" id="drop-der" data-cat="der"></div></div><div class="genus-kat kat-die"><div class="kat-title">die</div><div class="genus-drop" id="drop-die" data-cat="die"></div></div><div class="genus-kat kat-das"><div class="kat-title">das</div><div class="genus-drop" id="drop-das" data-cat="das"></div></div><div class="genus-kat kat-pl"><div class="kat-title">Plural</div><div class="genus-drop" id="drop-pl" data-cat="pl"></div></div></div>
         <div id="genusFeedback" style="margin-top:14px;font-weight:600;"></div>

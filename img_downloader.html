@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Image Downloader</title></head>
+<head><meta charset="UTF-8"><title>Image Downloader</title><style>/* ===== FB-DARK-MODE (Minimal-Layer Hilfsseite) ===== */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body { background: #171a28 !important; color: #d6d8e8; }
+  :root:not([data-theme="light"]) input, :root:not([data-theme="light"]) textarea, :root:not([data-theme="light"]) select, :root:not([data-theme="light"]) button { color: inherit; background: #23263a; border-color: #3a3e58; }
+  :root:not([data-theme="light"]) a { color: #93a0f2; }
+}
+html[data-theme="dark"] body { background: #171a28 !important; color: #d6d8e8; }
+html[data-theme="dark"] input, html[data-theme="dark"] textarea, html[data-theme="dark"] select, html[data-theme="dark"] button { color: inherit; background: #23263a; border-color: #3a3e58; }
+html[data-theme="dark"] a { color: #93a0f2; }
+</style>
+</head>
 <body>
 <h2>Lade Bilder herunter und bettet sie ein...</h2>
 <pre id="log">Starte...</pre>

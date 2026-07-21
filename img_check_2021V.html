@@ -3,15 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Bildprüfung 2021V — aktualisiert</title>
-<style>
-body { font-family: Arial, sans-serif; background: #2c1654; padding: 20px; }
-h1 { color: #fff; margin-bottom: 20px; font-size: 1rem; }
+<style>/* ===== FB-DESIGN-TOKENS (auto) ===== */
+:root {
+  --bg-2c1654: #2c1654;
+  --bg-eee: #eee;
+  --bg-fff: #fff;
+  --tx-241048: #241048;
+  --tx-34206b: #34206b;
+  --tx-4a235a: #4a235a;
+  --tx-999: #999;
+  --tx-fff: #fff;
+}
+
+body { font-family: Arial, sans-serif; background: var(--bg-2c1654); padding: 20px; }
+h1 { color: var(--tx-fff); margin-bottom: 20px; font-size: 1rem; }
 .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-.card { background: #fff; border-radius: 8px; overflow: hidden; }
-.card img { width: 100%; height: 90px; object-fit: cover; display: block; background: #eee; }
+.card { background: var(--bg-fff); border-radius: 8px; overflow: hidden; }
+.card img { width: 100%; height: 90px; object-fit: cover; display: block; background: var(--bg-eee); }
 .card-info { padding: 5px 7px; font-size: 0.7rem; }
-.wort { font-weight: 700; color: #4a235a; }
-.pid { color: #999; font-size: 0.63rem; }
+.wort { font-weight: 700; color: var(--tx-4a235a); }
+.pid { color: var(--tx-999); font-size: 0.63rem; }
 
 /* FB-JUMPTOP - Nach-oben-Button (Glas-Look) */
 .fb-jumptop {
@@ -20,7 +31,7 @@ h1 { color: #fff; margin-bottom: 20px; font-size: 1rem; }
   background: rgba(118, 75, 162, 0.26);
   -webkit-backdrop-filter: blur(14px) saturate(180%);
   backdrop-filter: blur(14px) saturate(180%);
-  color: #34206b; border: 1.5px solid rgba(255,255,255,0.75); border-radius: 28px;
+  color: var(--tx-34206b); border: 1.5px solid rgba(255,255,255,0.75); border-radius: 28px;
   padding: 15px 26px; font-size: 1.05em; font-weight: 800;
   letter-spacing: 0.2px;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -32,11 +43,72 @@ h1 { color: #fff; margin-bottom: 20px; font-size: 1rem; }
   z-index: 9999; display: inline-flex; align-items: center; gap: 8px;
 }
 .fb-jumptop.show { opacity: 1; visibility: visible; transform: translateY(0); }
-.fb-jumptop:hover { background: rgba(118, 75, 162, 0.40); color: #241048; box-shadow: 0 10px 32px rgba(102,126,234,0.50), inset 0 1px 0 rgba(255,255,255,0.65); }
+.fb-jumptop:hover { background: rgba(118, 75, 162, 0.40); color: var(--tx-241048); box-shadow: 0 10px 32px rgba(102,126,234,0.50), inset 0 1px 0 rgba(255,255,255,0.65); }
 @media (max-width: 600px) { .fb-jumptop { bottom: 18px; right: 16px; padding: 12px 18px; font-size: 0.95em; } }
+
+/* FB-THEME-TOGGLE (fixiert, Datei ohne Header) */
+.theme-toggle {
+  position: fixed; top: 14px; right: 14px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(102,126,234,0.45); border: 1px solid rgba(255,255,255,0.4);
+  color: white; font-size: 1.05em; cursor: pointer; line-height: 1;
+  transition: background 0.2s; z-index: 50;
+}
+.theme-toggle:hover { background: rgba(102,126,234,0.7); }
+
+/* ===== FB-DARK-MODE (System-Default + manueller Schalter) ===== */
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) {
+  --bg-eee: #21212f;
+  --bg-fff: #262a44;
+  --tx-241048: #d9cef8;
+  --tx-34206b: #cbbcf6;
+  --tx-4a235a: #cca6dc;
+  --tx-999: #7d8199;
+}
+:root:not([data-theme="light"]) .tab-banner { box-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+:root:not([data-theme="light"]) body { color: #c6cade; }
+:root:not([data-theme="light"]) button, :root:not([data-theme="light"]) input, :root:not([data-theme="light"]) select, :root:not([data-theme="light"]) textarea { color: inherit; }
+}
+:root[data-theme="dark"] {
+  --bg-eee: #21212f;
+  --bg-fff: #262a44;
+  --tx-241048: #d9cef8;
+  --tx-34206b: #cbbcf6;
+  --tx-4a235a: #cca6dc;
+  --tx-999: #7d8199;
+}
+html[data-theme="dark"] .tab-banner { box-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+html[data-theme="dark"] body { color: #c6cade; }
+html[data-theme="dark"] button, html[data-theme="dark"] input, html[data-theme="dark"] select, html[data-theme="dark"] textarea { color: inherit; }
 </style>
+<script>/* FB-THEME-INIT */
+(function(){
+  var saved = null;
+  try { saved = localStorage.getItem('fb-theme'); } catch(e) {}
+  if (saved === 'dark' || saved === 'light') document.documentElement.dataset.theme = saved;
+  function effDark() {
+    var t = document.documentElement.dataset.theme;
+    if (t === 'dark') return true;
+    if (t === 'light') return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function paint() {
+    var b = document.getElementById('themeToggle');
+    if (b) b.textContent = effDark() ? '☀️' : '🌙';
+  }
+  window.fbToggleTheme = function() {
+    var next = effDark() ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('fb-theme', next); } catch(e) {}
+    paint();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paint); else paint();
+})();
+</script>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle" onclick="fbToggleTheme()" aria-label="Hell/Dunkel umschalten">🌙</button>
 <h1>🖼️ Bildprüfung 2021V (aktualisiert — 18 Bilder)</h1>
 <div class="grid">
   <div class="card">
