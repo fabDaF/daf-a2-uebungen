@@ -1666,5 +1666,74 @@ function schreibToFormData(o){var fd=new FormData();Object.keys(o).forEach(funct
 })();
 </script>
 
+
+
+<!-- FB-TABS-ROBUST -->
+<script>
+(function () {
+  if (window.__fbTabsRobust) { return; }
+  window.__fbTabsRobust = true;
+
+  function sections() { return document.querySelectorAll('.section'); }
+  function buttons()  { return document.querySelectorAll('.nav-btn'); }
+
+  function activate(idx) {
+    var secs = sections();
+    var btns = buttons();
+    if (!secs.length) { return false; }
+    idx = parseInt(idx, 10);
+    if (isNaN(idx) || idx < 0 || idx >= secs.length) { return false; }
+    for (var i = 0; i < secs.length; i++) { secs[i].classList.remove('active'); }
+    for (var k = 0; k < btns.length; k++) { btns[k].classList.remove('active'); }
+    secs[idx].classList.add('active');
+    if (btns[idx]) { btns[idx].classList.add('active'); }
+    return true;
+  }
+
+  window.showSection = function (idx) { return activate(idx); };
+  window.showTab     = function (idx) { return activate(idx); };
+
+  function navBtnOf(node) {
+    while (node && node !== document) {
+      if (node.classList && node.classList.contains('nav-btn')) { return node; }
+      node = node.parentNode;
+    }
+    return null;
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = navBtnOf(e.target);
+    if (!btn) { return; }
+    var list = buttons();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] === btn) { activate(i); return; }
+    }
+  }, true);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') { return; }
+    var btn = navBtnOf(document.activeElement);
+    if (!btn) { return; }
+    e.preventDefault();
+    btn.click();
+  });
+
+  function init() {
+    var list = buttons();
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i].hasAttribute('role'))     { list[i].setAttribute('role', 'button'); }
+      if (!list[i].hasAttribute('tabindex')) { list[i].setAttribute('tabindex', '0'); }
+    }
+    if (!document.querySelector('.section.active')) { activate(0); }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+<!-- /FB-TABS-ROBUST -->
 </body>
 </html>
