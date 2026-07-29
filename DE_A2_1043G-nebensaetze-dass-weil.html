@@ -1906,7 +1906,7 @@ function initGenus(){
   ['der','die','das','pl'].forEach(function(c){ var z=document.getElementById('drop-'+c); if(z) z.innerHTML=''; });
   var fb=document.getElementById('genusFeedback'); if(fb) fb.textContent='';
   shuffleGenus(GENUS_DATA).forEach(function(d){ pool.appendChild(createGenusChip(d)); });
-  document.querySelectorAll('#tab-6 .genus-drop').forEach(function(zone){
+  document.querySelectorAll('#tab-5 .genus-drop').forEach(function(zone){
     zone.addEventListener('dragover',function(e){ e.preventDefault(); zone.classList.add('dragover'); });
     zone.addEventListener('dragleave',function(){ zone.classList.remove('dragover'); });
     zone.addEventListener('drop',function(e){ e.preventDefault(); zone.classList.remove('dragover'); if(!draggedGenus) return; zone.appendChild(draggedGenus); checkGenusChip(draggedGenus, zone.dataset.cat); draggedGenus=null; updateGenusFeedback(); });
@@ -1921,8 +1921,8 @@ function checkGenusChip(chip,cat){
   if(!ok){ setTimeout(function(){ chip.classList.remove('wrong'); document.getElementById('genusPool').appendChild(chip); updateGenusFeedback(); },900); }
 }
 function updateGenusFeedback(){
-  var platziert=document.querySelectorAll('#tab-6 .genus-drop .genus-chip').length;
-  var richtig=document.querySelectorAll('#tab-6 .genus-drop .genus-chip.correct').length;
+  var platziert=document.querySelectorAll('#tab-5 .genus-drop .genus-chip').length;
+  var richtig=document.querySelectorAll('#tab-5 .genus-drop .genus-chip.correct').length;
   var fb=document.getElementById('genusFeedback'); if(!fb) return;
   if(platziert===0){ fb.textContent=''; return; }
   fb.textContent=richtig+' von '+GENUS_DATA.length+' richtig zugeordnet.';
@@ -1930,7 +1930,7 @@ function updateGenusFeedback(){
   if(richtig===GENUS_DATA.length) genusTimerStop();
 }
 function showGenusLoesung(){
-  Array.from(document.querySelectorAll('#tab-6 .genus-chip')).forEach(function(chip){
+  Array.from(document.querySelectorAll('#tab-5 .genus-chip')).forEach(function(chip){
     var z=document.getElementById('drop-'+chip.dataset.cat);
     if(z){ z.appendChild(chip); chip.classList.remove('wrong'); chip.classList.add('correct'); }
   });
