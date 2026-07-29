@@ -8,6 +8,8 @@
 <title>Romantik & Date – A2 Lektion 1012X</title>
 <style>/* ===== FB-DESIGN-TOKENS (auto) ===== */
 :root {
+  --bg-e8eaf6: #e8eaf6;
+  --bg-ede7f6: #ede7f6;
   --grad-head-a: #667eea;
   --grad-head-b: #764ba2;
   --grad-page-a: #667eea;
@@ -158,7 +160,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .vocab-beispiel { font-size: 0.8em; color: var(--tx-444); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--bd-f0f0f0); font-style: italic; }
 
 /* ── REGELKARTE ── */
-.regel-box { background: linear-gradient(135deg, #e8eaf6, #ede7f6); border-radius: 12px; padding: 20px 24px; border-left: 5px solid var(--bd-667eea); margin-bottom: 22px; }
+.regel-box { background: linear-gradient(135deg, var(--bg-e8eaf6), var(--bg-ede7f6)); border-radius: 12px; padding: 20px 24px; border-left: 5px solid var(--bd-667eea); margin-bottom: 22px; }
 .regel-box h3 { color: var(--tx-1a1a2e); font-size: 1.05em; margin-bottom: 14px; }
 .regel-tabelle { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-bottom: 12px; }
 .regel-tabelle th { background: var(--bg-667eea); color: var(--tx-white); padding: 8px 12px; text-align: left; }
@@ -402,6 +404,8 @@ input.blank.wrong   { border-bottom-color: var(--bd-e74c3c); background: var(--b
 /* ===== FB-DARK-MODE (System-Default + manueller Schalter) ===== */
 @media (prefers-color-scheme: dark) {
 :root:not([data-theme="light"]) {
+  --bg-e8eaf6: #262a44;
+  --bg-ede7f6: #2a2547;
   --grad-head-a: #4a52a8;
   --grad-head-b: #5c4585;
   --grad-page-a: #23263e;
@@ -502,6 +506,8 @@ input.blank.wrong   { border-bottom-color: var(--bd-e74c3c); background: var(--b
 :root:not([data-theme="light"]) button, :root:not([data-theme="light"]) input, :root:not([data-theme="light"]) select, :root:not([data-theme="light"]) textarea { color: inherit; }
 }
 :root[data-theme="dark"] {
+  --bg-e8eaf6: #262a44;
+  --bg-ede7f6: #2a2547;
   --grad-head-a: #4a52a8;
   --grad-head-b: #5c4585;
   --grad-page-a: #23263e;
