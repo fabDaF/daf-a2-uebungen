@@ -785,10 +785,10 @@ html[data-theme="dark"] button, html[data-theme="dark"] input, html[data-theme="
                     </div>
                 </div>
             </div>
-            <div class="btn-row">
-                <button class="btn btn-primary" onclick="initZuordnung()">↺ Neu mischen</button>
+            <div class="btn-row" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="initZuordnung(); timerResetOne(6);">↺ Neu mischen</button>
                 <button onclick="zuordLoesungen()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button>
-            </div>
+            <div class="timer-display" style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:var(--tx-bbb,#bbb);font-variant-numeric:tabular-nums;"><span class="current-time">⏱ <span id="timer-6">00:00</span></span><span class="best-time">🏆 <span id="best-6">--:--</span></span></div></div>
         </div>
     </div>
 
@@ -902,10 +902,10 @@ function showSection(idx) {
 
 // ─── Timer ───────────────────────────────────────────────────────────────────
 var TIMER_PREFIX = 'a2-1032x-';
-var timerStarted = [false,false,false,false,false];
-var timerRunning = [false,false,false,false,false];
-var timerSeconds = [0,0,0,0,0];
-var timerIntervals = [null,null,null,null,null];
+var timerStarted = [false, false, false, false, false, false, false];
+var timerRunning = [false, false, false, false, false, false, false];
+var timerSeconds = [0, 0, 0, 0, 0, 0, 0];
+var timerIntervals = [null, null, null, null, null, null, null];
 function fmtTime(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
 function timerAutoStart(n){
     if(timerStarted[n])return; timerStarted[n]=true; timerRunning[n]=true; timerSeconds[n]=0;
@@ -962,6 +962,19 @@ function colorZuordChips(){
             else chip.classList.add('incorrect');
         });
     });
+
+    /* FB-ZUORD-TIMER */
+    (function(){
+        var placed = 0, ok = 0;
+        ['zuord-dativ','zuord-akk'].forEach(function(id){
+            var z = document.getElementById(id); if (!z) return;
+            z.querySelectorAll('.chip').forEach(function(c){
+                placed++; if (c.classList.contains('correct')) ok++;
+            });
+        });
+        if (placed > 0 && typeof timerAutoStart === 'function') timerAutoStart(6);
+        if (ok === ZUORD_DATA.length && typeof timerStop === 'function') timerStop(6);
+    })();
 }
 
 function initZuordnung(){

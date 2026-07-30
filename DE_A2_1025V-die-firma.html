@@ -705,10 +705,10 @@ html[data-theme="dark"] button, html[data-theme="dark"] input, html[data-theme="
                     <div id="qa-drops"></div>
                 </div>
             </div>
-            <div style="margin-top:12px;">
-                <button onclick="qaInit()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:12px;">
+                <button onclick="qaInit(); timerResetOne(7);" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
                 <button class="btn btn-loesung" style="margin-left:8px;" onclick="qaShowSolution()">💡 Lösungen</button>
-            </div>
+            <div class="timer-display" style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:var(--tx-bbb,#bbb);font-variant-numeric:tabular-nums;"><span class="current-time">⏱ <span id="timer-7">00:00</span></span><span class="best-time">🏆 <span id="best-7">--:--</span></span></div></div>
         </div>
     </div>
 
@@ -887,10 +887,10 @@ var swInit = false;
 // TIMER
 // ══════════════════════════════════════
 var TIMER_PREFIX = 'a2-1025v-';
-var timerStarted  = [false,false,false,false,false,false];
-var timerRunning  = [false,false,false,false,false,false];
-var timerSeconds  = [0,0,0,0,0,0];
-var timerIntervals = [null,null,null,null,null,null];
+var timerStarted = [false, false, false, false, false, false, false, false];
+var timerRunning = [false, false, false, false, false, false, false, false];
+var timerSeconds = [0, 0, 0, 0, 0, 0, 0, 0];
+var timerIntervals = [null, null, null, null, null, null, null, null];
 
 function timerAutoStart(n) {
     if (timerStarted[n]) return;
@@ -1020,6 +1020,18 @@ function colorAllQaChips() {
         });
         if (!chips.length && fb) { fb.textContent=''; fb.className='qa-fb'; }
     });
+
+    /* FB-QA-TIMER */
+    (function(){
+        var z = document.querySelectorAll('#qa-drops .drop-zone');
+        var filled = 0, ok = 0;
+        Array.prototype.forEach.call(z, function(zz){
+            var c = zz.querySelector('.chip');
+            if (c) { filled++; if (c.classList.contains('correct')) ok++; }
+        });
+        if (filled > 0 && typeof timerAutoStart === 'function') timerAutoStart(7);
+        if (z.length > 0 && ok === z.length && typeof timerStop === 'function') timerStop(7);
+    })();
 }
 function qaShowSolution() {
     var bank=document.getElementById('qaBank');

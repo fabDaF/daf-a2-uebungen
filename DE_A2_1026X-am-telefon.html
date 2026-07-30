@@ -687,10 +687,10 @@ html[data-theme="dark"] button, html[data-theme="dark"] input, html[data-theme="
                     <div id="qa-drops"></div>
                 </div>
             </div>
-            <div style="margin-top:12px;">
-                <button onclick="qaInit()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:12px;">
+                <button onclick="qaInit(); timerResetOne(6);" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
                 <button class="btn btn-loesung" style="margin-left:8px;" onclick="qaShowSolution()">💡 Lösungen</button>
-            </div>
+            <div class="timer-display" style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:var(--tx-bbb,#bbb);font-variant-numeric:tabular-nums;"><span class="current-time">⏱ <span id="timer-6">00:00</span></span><span class="best-time">🏆 <span id="best-6">--:--</span></span></div></div>
         </div>
     </div>
 
@@ -823,10 +823,10 @@ function showSection(idx){
 // TIMER
 // ══════════════════════════════════════
 var TIMER_PREFIX='a2-1026x-';
-var timerStarted=[false,false,false,false,false];
-var timerRunning=[false,false,false,false,false];
-var timerSeconds=[0,0,0,0,0];
-var timerIntervals=[null,null,null,null,null];
+var timerStarted = [false, false, false, false, false, false, false];
+var timerRunning = [false, false, false, false, false, false, false];
+var timerSeconds = [0, 0, 0, 0, 0, 0, 0];
+var timerIntervals = [null, null, null, null, null, null, null];
 function timerAutoStart(n){if(timerStarted[n])return;timerStarted[n]=true;timerRunning[n]=true;timerIntervals[n]=setInterval(function(){timerSeconds[n]++;var el=document.getElementById('timer-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);},1000);}
 function timerStop(n){if(!timerRunning[n])return;clearInterval(timerIntervals[n]);timerRunning[n]=false;var best=parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n)||'999999');if(timerSeconds[n]>0&&timerSeconds[n]<best){localStorage.setItem(TIMER_PREFIX+'best-'+n,timerSeconds[n]);var el=document.getElementById('best-'+n);if(el)el.textContent=fmtTime(timerSeconds[n]);}}
 function timerResetOne(n){clearInterval(timerIntervals[n]);timerRunning[n]=false;timerStarted[n]=false;timerSeconds[n]=0;var el=document.getElementById('timer-'+n);if(el)el.textContent='0:00';}
@@ -879,7 +879,19 @@ var QA_DATA=[
 function qaInit(){draggedChip=null;var bank=document.getElementById('qaBank');var items=document.getElementById('qa-items');var drops=document.getElementById('qa-drops');bank.innerHTML='';items.innerHTML='';drops.innerHTML='';var answers=QA_DATA.map(function(d){return d.a;}).sort(function(){return Math.random()-0.5;});answers.forEach(function(ans){bank.appendChild(makeChip(ans));});QA_DATA.forEach(function(d,i){var qDiv=document.createElement('div');qDiv.innerHTML='<div class="qa-label">'+d.q+'</div>';items.appendChild(qDiv);var zone=document.createElement('div');zone.className='drop-zone';zone.dataset.answer=d.a;zone.dataset.idx=i;zone.innerHTML='<div class="qa-fb" id="qa-fb-'+i+'"></div>';registerZone(zone);drops.appendChild(zone);});registerZone(bank);}
 function makeChip(text){var chip=document.createElement('div');chip.className='chip';chip.textContent=text;chip.draggable=true;chip.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain','');draggedChip=chip;setTimeout(function(){chip.style.opacity='0.4';},0);});chip.addEventListener('dragend',function(){chip.style.opacity='';colorAllQaChips();});return chip;}
 function registerZone(zone){zone.addEventListener('dragover',function(e){e.preventDefault();zone.classList.add('dragover');});zone.addEventListener('dragleave',function(){zone.classList.remove('dragover');});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('dragover');if(draggedChip){zone.appendChild(draggedChip);draggedChip=null;colorAllQaChips();}});}
-function colorAllQaChips(){var drops=document.querySelectorAll('#qa-drops .drop-zone');drops.forEach(function(zone,i){var chips=zone.querySelectorAll('.chip');var fb=document.getElementById('qa-fb-'+i);chips.forEach(function(c){c.classList.remove('correct','wrong');if(c.textContent===zone.dataset.answer){c.classList.add('correct');if(fb){fb.textContent='✓';fb.className='qa-fb ok';}}else{c.classList.add('wrong');if(fb){fb.textContent='✗';fb.className='qa-fb no';}}});if(!chips.length&&fb){fb.textContent='';fb.className='qa-fb';}});}
+function colorAllQaChips(){var drops=document.querySelectorAll('#qa-drops .drop-zone');drops.forEach(function(zone,i){var chips=zone.querySelectorAll('.chip');var fb=document.getElementById('qa-fb-'+i);chips.forEach(function(c){c.classList.remove('correct','wrong');if(c.textContent===zone.dataset.answer){c.classList.add('correct');if(fb){fb.textContent='✓';fb.className='qa-fb ok';}}else{c.classList.add('wrong');if(fb){fb.textContent='✗';fb.className='qa-fb no';}}});if(!chips.length&&fb){fb.textContent='';fb.className='qa-fb';}});
+    /* FB-QA-TIMER */
+    (function(){
+        var z = document.querySelectorAll('#qa-drops .drop-zone');
+        var filled = 0, ok = 0;
+        Array.prototype.forEach.call(z, function(zz){
+            var c = zz.querySelector('.chip');
+            if (c) { filled++; if (c.classList.contains('correct')) ok++; }
+        });
+        if (filled > 0 && typeof timerAutoStart === 'function') timerAutoStart(6);
+        if (z.length > 0 && ok === z.length && typeof timerStop === 'function') timerStop(6);
+    })();
+}
 function qaShowSolution(){var bank=document.getElementById('qaBank');var drops=document.querySelectorAll('#qa-drops .drop-zone');bank.querySelectorAll('.chip').forEach(function(c){bank.appendChild(c);});drops.forEach(function(zone){zone.querySelectorAll('.chip').forEach(function(c){bank.appendChild(c);});});drops.forEach(function(zone){var ans=zone.dataset.answer;var chips=Array.from(document.querySelectorAll('#qaBank .chip'));var match=chips.find(function(c){return c.textContent===ans;});if(match)zone.appendChild(match);});colorAllQaChips();}
 
 // ══════════════════════════════════════
