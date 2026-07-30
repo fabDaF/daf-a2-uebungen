@@ -956,8 +956,6 @@ var TIMER_PREFIX = 'a2-1037g-';
 var mcDone = [false, false, false, false];
 
 function mcCheck(step, btn, correct) {
-  /* FB-MC-TIMER */ if (typeof timerAutoStart === 'function') timerAutoStart(5);
-
   var btns = btn.parentElement.querySelectorAll('.mc-btn');
   btns.forEach(function(b) { b.disabled = true; b.classList.remove('correct','wrong'); });
   var fb = document.getElementById('mcfb' + step);
@@ -966,7 +964,6 @@ function mcCheck(step, btn, correct) {
     fb.textContent = '\u2713 Richtig! Weiter zum nächsten Schritt.';
     fb.className = 'mc-feedback ok';
     mcDone[step] = true;
-    /* FB-MC-TIMER */ if (mcDone.every(function(x){return x;}) && typeof timerStop === 'function') timerStop(5);
     document.getElementById('pdot' + step).classList.add('done');
     setTimeout(function() {
       var next = document.getElementById('mc-step' + (step + 1));
@@ -1214,7 +1211,10 @@ initSchreibwerkstatt();
                 btn.classList.add(correct ? 'ok' : 'no');
                 fb.className = 'mc-fb ' + (correct ? 'ok' : 'no');
                 fb.textContent = correct ? '✓ Richtig!' : '✗ Nicht ganz — versuche es nochmal.';
+                /* FB-MC-TIMER */ if (typeof timerAutoStart === 'function') timerAutoStart(5);
                 if (correct) mcDoneArr[idx] = true;
+                /* FB-MC-TIMER */ if (mcDoneArr.every(function(x){ return x; })
+                    && typeof timerStop === 'function') timerStop(5);
             });
             choicesDiv.appendChild(btn);
         });
@@ -1235,6 +1235,7 @@ function mcShowSolution() {
         fb.textContent = '✓ Richtig: ' + item.correct;
         mcDoneArr[idx] = true;
     });
+    /* FB-MC-TIMER */ if (typeof timerStop === 'function') timerStop(5);
 }
 function mcReset() {
     mcDoneArr = new Array(MC_DATA.length).fill(false);
