@@ -920,7 +920,7 @@ function initSort() {
   shuffled.forEach(function(item) {
     var chip = document.createElement('div');
     chip.className = 'sort-chip';
-    chip.textContent = item.wort;
+    chip.textContent = item.word;
     chip.dataset.zone = item.zone;
     chip.draggable = true;
     chip.addEventListener('dragstart', function(e) {
