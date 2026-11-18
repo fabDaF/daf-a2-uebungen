@@ -1,62 +1,123 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#667eea" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#23263e" media="(prefers-color-scheme: dark)">
-<title>Brief an eine Maschine – Interaktive Übungen</title>
-<style>/* ===== FB-DESIGN-TOKENS (auto) ===== */
+    <title>Brief an eine Maschine – A2 Leseübung</title>
+    <style>/* ===== FB-DESIGN-TOKENS (auto) ===== */
 :root {
+  --grad-head-a: #667eea;
+  --grad-head-b: #764ba2;
   --grad-page-a: #667eea;
   --grad-page-b: #764ba2;
   --sf-container: #fff;
+  --sf-input: white;
   --sf-pill: #fff;
+  --bd-1565c0: #1565c0;
+  --bd-1b5e20: #1b5e20;
+  --bd-2196f3: #2196f3;
   --bd-27ae60: #27ae60;
+  --bd-2e7d32: #2e7d32;
+  --bd-5e35b1: #5e35b1;
   --bd-667eea: #667eea;
+  --bd-689f38: #689f38;
   --bd-764ba2: #764ba2;
+  --bd-999: #999;
+  --bd-ad1457: #ad1457;
+  --bd-b9a7f0: #b9a7f0;
   --bd-bbb: #bbb;
+  --bd-c3c9f5: #c3c9f5;
   --bd-c5cae9: #c5cae9;
+  --bd-c5cff5: #c5cff5;
+  --bd-c62828: #c62828;
   --bd-ccc: #ccc;
   --bd-ddd: #ddd;
+  --bd-dde3ff: #dde3ff;
+  --bd-e0e4ff: #e0e4ff;
+  --bd-e67e22: #e67e22;
   --bd-e74c3c: #e74c3c;
+  --bd-e8ecff: #e8ecff;
   --bd-e9ecef: #e9ecef;
   --bd-f39c12: #f39c12;
+  --bd-ffd699: #ffd699;
+  --bg-27ae60: #27ae60;
+  --bg-4f63c2: #4f63c2;
+  --bg-5568d3: #5568d3;
   --bg-667eea: #667eea;
-  --bg-95a5a6: #95a5a6;
+  --bg-689f38: #689f38;
+  --bg-c5cff5: #c5cff5;
   --bg-e1e5fb: #e1e5fb;
+  --bg-e3f2fd: #e3f2fd;
+  --bg-e74c3c: #e74c3c;
+  --bg-e8f5e9: #e8f5e9;
   --bg-e8f8f0: #e8f8f0;
+  --bg-eee: #eee;
   --bg-eef0fb: #eef0fb;
   --bg-eef0ff: #eef0ff;
+  --bg-eef1ff: #eef1ff;
   --bg-f0f0f8: #f0f0f8;
-  --bg-f0f2ff: #f0f2ff;
-  --bg-f39c12: #f39c12;
+  --bg-f0f4ff: #f0f4ff;
+  --bg-f0fff4: #f0fff4;
+  --bg-f1f8e9: #f1f8e9;
+  --bg-f5f7ff: #f5f7ff;
+  --bg-f8f8f8: #f8f8f8;
   --bg-f8f9ff: #f8f9ff;
+  --bg-faf8ff: #faf8ff;
+  --bg-fafaff: #fafaff;
+  --bg-fafbff: #fafbff;
   --bg-fdeaea: #fdeaea;
+  --bg-fefefe: #fefefe;
+  --bg-ffe9a0: #ffe9a0;
+  --bg-ffebee: #ffebee;
   --bg-fff: #fff;
-  --bg-fff9e6: #fff9e6;
+  --bg-fff5ec: #fff5ec;
+  --bg-fff5f5: #fff5f5;
+  --bg-fffaf0: #fffaf0;
   --bg-white: white;
+  --tx-0d47a1: #0d47a1;
+  --tx-1565c0: #1565c0;
+  --tx-1a1a1a: #1a1a1a;
+  --tx-1b5e20: #1b5e20;
   --tx-241048: #241048;
   --tx-27ae60: #27ae60;
   --tx-2c2c2c: #2c2c2c;
   --tx-333: #333;
+  --tx-33691e: #33691e;
   --tx-34206b: #34206b;
+  --tx-3d37a8: #3d37a8;
+  --tx-444: #444;
+  --tx-4a148c: #4a148c;
+  --tx-4a4a4a: #4a4a4a;
   --tx-555: #555;
+  --tx-5e35b1: #5e35b1;
   --tx-666: #666;
   --tx-667eea: #667eea;
-  --tx-777: #777;
+  --tx-689f38: #689f38;
+  --tx-6c6c6c: #6c6c6c;
+  --tx-764ba2: #764ba2;
+  --tx-888: #888;
+  --tx-999: #999;
   --tx-aaa: #aaa;
+  --tx-ad1457: #ad1457;
+  --tx-b15c00: #b15c00;
+  --tx-b71c1c: #b71c1c;
+  --tx-bbb: #bbb;
+  --tx-c62828: #c62828;
   --tx-e74c3c: #e74c3c;
+  --tx-f39c12: #f39c12;
   --tx-fff: #fff;
+  --tx-white: white;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;min-height:100vh;background:linear-gradient(135deg, var(--grad-page-a) 0%, var(--grad-page-b) 100%);padding:18px}
-.container{max-width:900px;margin:0 auto;background:var(--sf-container);border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.2);overflow:hidden}
-h1{text-align:center;padding:22px 18px 4px;font-size:1.5em;color:var(--tx-333)}
-.subtitle{text-align:center;color:var(--tx-666);font-size:.95em;padding:0 18px 14px}
-
-/* NAV */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 18px; background: linear-gradient(135deg, var(--grad-page-a) 0%, var(--grad-page-b) 100%); min-height: 100vh; padding: 20px; color: var(--tx-333); }
+.container { max-width: 1000px; margin: 0 auto; background: var(--sf-container); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+.header { background: linear-gradient(135deg, var(--grad-head-a), var(--grad-head-b)); color: var(--tx-white); padding: 30px 20px; text-align: center; }
+.header h1 { font-size: 2.2em; margin-bottom: 8px; font-family: Georgia, 'Times New Roman', serif; }
+.header .big-emoji { font-size: 2.6em; display: block; margin-top: 8px; }
+.header p { font-size: 1.1em; opacity: 0.95; font-family: Georgia, 'Times New Roman', serif; }
 /* ===== NAV (Variante C: Aktiv-Pille) ===== */
 .nav {
   display: flex; flex-wrap: wrap; gap: 4px;
@@ -74,83 +135,235 @@ h1{text-align:center;padding:22px 18px 4px;font-size:1.5em;color:var(--tx-333)}
 .nav-emoji { font-size: 1.3em; line-height: 1.2; }
 .nav-label { font-size: 0.78em; margin-top: 2px; line-height: 1.2; }
 
-/* SECTIONS */
-.section{display:none;padding:20px}
-.section.active{display:block}
-.section-title{font-size:1.15em;font-weight:700;color:var(--tx-333);margin-bottom:6px}
-.section-intro{color:var(--tx-666);font-size:.93em;margin-bottom:16px}
+.section { display: none; padding: 30px 24px; }
+.section.active { display: block; }
+.section-title { font-size: 1.4em; font-weight: 700; color: var(--tx-667eea); margin-bottom: 20px; }
+@media (max-width: 600px) {
+    body { padding: 8px; }
 
-/* BUTTONS */
-.btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.btn{padding:10px 20px;border:none;border-radius:8px;font-size:.95em;cursor:pointer;color:var(--tx-fff);transition:.2s}
-.btn:hover{opacity:.85}
-.btn-check{background:var(--bg-667eea)}
-.btn-show{background:var(--bg-f39c12)}
-.btn-reset{background:var(--bg-95a5a6)}
-.score{margin-top:10px;font-weight:700;color:var(--tx-333);font-size:.95em}
+    
+}
 
-/* VORENTLASTUNG */
-.vocab-card{background:var(--bg-f8f9ff);border-left:4px solid var(--bd-667eea);padding:14px 18px;margin-bottom:12px;border-radius:0 8px 8px 0}
-.vocab-term{font-weight:700;color:var(--tx-333);font-size:1.05em}
-.vocab-def{color:var(--tx-555);margin-top:4px;font-size:.95em}
-.vocab-example{color:var(--tx-777);font-style:italic;margin-top:4px;font-size:.9em}
+/* ── Vorentlastung ─────────────────────────── */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 16px; }
+.vocab-card { background: var(--bg-f8f9ff); border: 1px solid var(--bd-dde3ff); border-radius: 10px; padding: 14px 16px; }
+.vocab-term { font-weight: 700; color: var(--tx-4a148c); font-size: 1.0em; margin-bottom: 4px; }
+.vocab-en { color: var(--tx-888); font-size: 0.82em; font-style: italic; margin-bottom: 6px; }
+.vocab-def { font-size: 0.87em; color: var(--tx-555); line-height: 1.5; }
 
-/* ORIGINALTEXT */
-.text-block{background:var(--bg-f8f9ff);border-radius:12px;padding:20px 24px;line-height:1.8;color:var(--tx-333);font-size:.98em;max-height:70vh;overflow-y:auto;font-family:Georgia,'Times New Roman',serif}
-.text-block p{margin-bottom:14px;text-align:justify}
-.text-author{text-align:right;font-weight:700;margin-top:20px;color:var(--tx-555)}
+/* ── Geschichte ────────────────────────────── */
+.story-text { max-width: 640px; margin: 0 auto; font-family: Georgia, 'Times New Roman', serif; font-size: 1.05em; line-height: 1.9; color: var(--tx-1a1a1a); text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+.story-text p { margin-bottom: 1.4em; }
+.story-text h3 { font-size: 1.05em; font-weight: 700; color: var(--tx-4a148c); margin: 1.6em 0 0.8em 0; }
+.story-source { font-size: 0.78em; color: var(--tx-bbb); margin-top: 24px; text-align: right; }
+.story-img { width: 100%; max-width: 580px; display: block; margin: 1.6em auto; border-radius: 10px; box-shadow: 0 4px 18px rgba(0,0,0,0.13); object-fit: cover; height: 260px; }
+.story-img-caption { text-align: center; font-size: 0.78em; color: var(--tx-999); font-style: italic; margin-top: -1em; margin-bottom: 1.6em; }
+.vocab-hl { background: var(--bg-ffe9a0); border-radius: 3px; padding: 1px 3px; font-weight: 600; cursor: help; }
 
-/* Footer */
+/* ── Verständnis (R/F) ─────────────────────── */
+.rf-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 10px; margin-bottom: 10px; background: var(--bg-fafbff); border: 1px solid var(--bd-e8ecff); }
+.rf-num { font-size: 0.78em; font-weight: 700; color: var(--tx-white); background: linear-gradient(135deg,#667eea,#764ba2); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.rf-text { flex: 1; font-size: 0.95em; color: var(--tx-333); line-height: 1.5; }
+.rf-btns { display: flex; gap: 8px; flex-shrink: 0; }
+.rf-btn { padding: 5px 14px; border: 2px solid var(--bd-c5cae9); border-radius: 20px; cursor: pointer; font-size: 0.82em; font-weight: 600; background: var(--bg-white); color: var(--tx-666); transition: all .2s; }
+.rf-btn:hover { border-color: var(--bd-667eea); color: var(--tx-667eea); }
+.rf-btn.correct { background: var(--bg-27ae60); border-color: var(--bd-27ae60); color: var(--tx-white); }
+.rf-btn.wrong { background: var(--bg-e74c3c); border-color: var(--bd-e74c3c); color: var(--tx-white); }
+.rf-fb { font-size: 0.82em; margin-top: 6px; font-weight: 600; min-height: 1em; }
+.rf-fb.ok { color: var(--tx-27ae60); }
+.rf-fb.no { color: var(--tx-e74c3c); }
+
+/* ── Lückentext ─────────────────────────────── */
+.hilfe-box { background: var(--bg-f0f4ff); border-left: 4px solid var(--bd-667eea); border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.9em; color: var(--tx-444); line-height: 1.6; }
+.timer-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-white); border-radius: 10px;
+  padding: 10px 16px; margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  font-size: 0.85rem; color: var(--tx-666);
+}
+.timer-display { font-weight: 700; color: var(--tx-667eea); font-size: 1rem; }
+.btn-row { display: flex; gap: 8px; }
+.btn { background: none; border: 2px solid var(--bd-ddd); border-radius: 20px; padding: 5px 14px; font-size: 0.82em; color: var(--tx-888); cursor: pointer; transition: all 0.15s; font-weight: 600; }
+.btn:hover { background: var(--bg-eee); color: var(--tx-444); }
+.btn-loesung { border-color: var(--bd-667eea); color: var(--tx-667eea); }
+.btn-reset { border-color: var(--bd-e74c3c); color: var(--tx-e74c3c); }
+.timer-display { font-size: 0.82em; color: var(--tx-bbb); display: flex; gap: 12px; }
+.timer-current { font-weight: 700; color: var(--tx-667eea); }
+.timer-best { color: var(--tx-f39c12); font-weight: 600; }
+.luecken-satz { margin-bottom: 16px; font-size: 0.95em; line-height: 2.2; color: var(--tx-333); }
+.luecken-num { display: inline-block; width: 24px; height: 24px; background: linear-gradient(135deg,#667eea,#764ba2); color: var(--tx-white); border-radius: 50%; text-align: center; line-height: 24px; font-size: 0.78em; font-weight: 700; margin-right: 6px; }
+input.blank { border: 2px solid var(--bd-c5cae9); border-radius: 6px; padding: 3px 8px; font-size: 0.9rem; font-family: inherit; outline: none; transition: border-color .2s, background .2s; background: var(--sf-input); margin: 0 2px; }
+input.blank:focus { border-color: var(--bd-667eea); }
+input.blank.correct { border-color: var(--bd-27ae60); background: var(--bg-e8f5e9); }
+input.blank.wrong   { border-color: var(--bd-e74c3c); background: var(--bg-ffebee); }
+
+/* ── Satzbau ─────────────────────────────────── */
+.chips-container { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: var(--bg-f8f8f8); border-radius: 10px; min-height: 56px; margin-bottom: 10px; }
+.sentence-builder { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px; background: var(--bg-white); border: 2px dashed var(--bd-ccc); border-radius: 10px; min-height: 56px; align-items: center; margin-bottom: 6px; }
+.sentence-builder.correct   { border-color: var(--bd-27ae60); background: var(--bg-f0fff4); }
+.sentence-builder.incorrect { border-color: var(--bd-e74c3c); background: var(--bg-fff5f5); }
+.sb-punkt { font-size: 1.1em; font-weight: 700; color: var(--tx-27ae60); margin-left: 2px; align-self: center; user-select: none; }
+.satzbau-feedback { font-size: 0.9em; font-weight: 600; margin-top: 6px; min-height: 1.2em; }
+.satzbau-feedback.correct   { color: var(--tx-27ae60); }
+.satzbau-feedback.incorrect { color: var(--tx-e74c3c); }
+.chips-container .chip, .sentence-builder .chip { padding: 7px 14px; border-radius: 20px; background: var(--bg-white); border: 2px solid var(--bd-667eea); color: var(--tx-3d37a8); cursor: grab; font-size: 0.85rem; font-weight: 600; user-select: none; display: inline-block; white-space: nowrap; transition: all .15s; }
+.chip.incorrect { background: var(--bg-e74c3c); border-color: var(--bd-e74c3c); color: var(--tx-white); }
+.chip.punct-chip { background: var(--bg-f8f8f8); color: var(--tx-333); font-weight: 700; min-width: 14px; padding-left: 8px; padding-right: 8px; }
+.chip.punct-chip.correct   { background: var(--bg-27ae60); border-color: var(--bd-27ae60); color: var(--tx-white); }
+.chip.punct-chip.incorrect { background: var(--bg-e74c3c); border-color: var(--bd-e74c3c); color: var(--tx-white); }
+.sentence-builder .chip.punct-chip { margin-left: -6px; }
+.chips-container .chip:active, .sentence-builder .chip:active { cursor: grabbing; transform: scale(1.04); }
+.chips-container .chip.correct, .sentence-builder .chip.correct { background: var(--bg-27ae60); border-color: var(--bd-27ae60); color: var(--tx-white); }
+.chips-container .chip.wrong,   .sentence-builder .chip.wrong   { background: var(--bg-e74c3c); border-color: var(--bd-e74c3c); color: var(--tx-white); }
+.sb-block { margin-bottom: 24px; padding: 14px; background: var(--bg-fafbff); border-radius: 10px; border: 1px solid var(--bd-e8ecff); }
+.sb-num { font-size: 0.78em; font-weight: 700; color: var(--tx-764ba2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.solution-btn { background: var(--bg-fff); color: var(--tx-667eea); border: 2px solid var(--bd-667eea); padding: 5px 14px; border-radius: 20px; cursor: pointer; font-size: 0.8em; font-weight: 600; margin-top: 4px; }
+
+/* ── Wortschatz ─────────────────────────────── */
+.ws-item { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 12px 16px; background: var(--bg-fafbff); border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--bd-e8ecff); }
+.ws-en { font-size: 0.9em; color: var(--tx-555); font-style: italic; }
+.ws-fields { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+input.ws-inp { border: 2px solid var(--bd-c5cae9); border-radius: 6px; padding: 4px 10px; font-size: 0.88rem; font-family: inherit; outline: none; transition: border-color .2s, background .2s; width: 110px; }
+input.ws-inp.art { width: 60px; }
+input.ws-inp.pl  { width: 120px; }
+input.ws-inp:focus { border-color: var(--bd-667eea); }
+input.ws-inp.correct { border-color: var(--bd-27ae60); background: var(--bg-e8f5e9); }
+input.ws-inp.wrong   { border-color: var(--bd-e74c3c); background: var(--bg-ffebee); }
+
+/* ── Footer ─────────────────────────────────── */
 .author-footer { text-align: center; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; padding: 16px; font-size: 0.8rem; color: var(--tx-aaa); }
 .author-footer a { color: var(--tx-aaa); }
+.author-name { font-weight: 700; }
+    
+.luecken-item {
+    background: var(--bg-f8f9ff);
+    border-left: 4px solid var(--bd-667eea);
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+input.blank {
+    border: none;
+    border-bottom: 2px solid var(--bd-667eea);
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.95em;
+    padding: 4px 2px;
+    transition: border-color 0.2s;
+}
+input.blank:focus { border-bottom-color: var(--bd-667eea); }
+input.blank.correct {
+    border-bottom-color: var(--bd-27ae60);
+    color: var(--tx-27ae60);
+    font-weight: 700;
+    background: var(--bg-e8f8f0);
+}
+input.blank.wrong {
+    border-bottom-color: var(--bd-e74c3c);
+    color: var(--tx-e74c3c);
+    background: var(--bg-fdeaea);
+}
 
-/* GENUS */
-.chip-bank{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;padding:12px;background:var(--bg-f8f9ff);border-radius:10px;margin-bottom:16px}
-.chip{padding:8px 16px;background:linear-gradient(135deg,#667eea,#764ba2);color:var(--tx-fff);border-radius:20px;cursor:grab;font-size:.92em;user-select:none;transition:.2s}
-.chip:active{cursor:grabbing;transform:scale(1.05)}
-.chip.correct{background:linear-gradient(135deg,#27ae60,#2ecc71)!important}
-.chip.wrong{background:linear-gradient(135deg,#e74c3c,#c0392b)!important}
-.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
-@media(max-width:600px){.categories{grid-template-columns:repeat(2,1fr)}}
-.category{background:var(--bg-f8f9ff);border:2px dashed var(--bd-ccc);border-radius:10px;padding:10px;min-height:100px;transition:.2s}
-.category.drag-over{border-color:var(--bd-667eea);background:var(--bg-eef0ff)}
-.category h3{text-align:center;color:var(--tx-667eea);margin-bottom:8px;font-size:1em}
-.drop-zone{display:flex;flex-wrap:wrap;gap:6px;min-height:40px}
+  .tab-banner {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 12px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  
+/* ===== Schreibwerkstatt — Niveau-flexibel ===== */
+.schreib-aufgabe-karte { background: var(--bg-f8f9ff); padding: 16px 18px; margin-bottom: 16px; border-radius: 10px; border-left: 4px solid var(--bd-667eea); transition: all 0.25s; }
+.schreib-aufgabe-karte.gesendet { background: var(--bg-f1f8e9); border-left-color: var(--bd-689f38); }
+.schreib-aufgabe-nr { display: inline-block; background: var(--bg-667eea); color: var(--tx-white); font-weight: 700; font-size: 0.85em; padding: 2px 10px; border-radius: 12px; margin-right: 8px; vertical-align: middle; }
+.schreib-aufgabe-karte.gesendet .schreib-aufgabe-nr { background: var(--bg-689f38); }
+.schreib-aufgabe-titel { font-weight: 700; color: var(--tx-4a148c); font-size: 1.0em; vertical-align: middle; }
+.schreib-aufgabe-karte.gesendet .schreib-aufgabe-titel { color: var(--tx-33691e); }
+.schreib-aufgabe-frage { color: var(--tx-555); font-size: 0.92em; line-height: 1.5; margin: 8px 0 8px 0; }
+.schreib-beispiel { font-size: 0.85em; color: var(--tx-888); font-style: italic; margin-bottom: 8px; padding-left: 12px; border-left: 2px solid var(--bd-e0e4ff); }
+.schreib-mini-textarea { width: 100%; min-height: 350px; border: 1.5px solid var(--bd-c5cff5); border-radius: 8px; padding: 10px 12px; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 0.95em; line-height: 1.6; color: var(--tx-1a1a1a); resize: vertical; outline: none; transition: border-color 0.2s; background: var(--bg-fefefe); }
+.schreib-mini-textarea:focus { border-color: var(--bd-667eea); box-shadow: 0 0 0 2px rgba(102,126,234,0.15); }
+.schreib-mini-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; flex-wrap: wrap; gap: 10px; }
+.schreib-mini-meta { font-size: 0.82em; color: var(--tx-888); }
+.schreib-mini-meta strong { color: var(--tx-667eea); font-weight: 700; }
+.schreib-mini-status { font-size: 0.82em; color: var(--tx-689f38); font-weight: 600; }
+.schreib-mini-status.error { color: var(--tx-c62828); }
+.schreib-mini-btn { padding: 7px 14px; border-radius: 6px; border: 1.5px solid var(--bd-667eea); background: var(--bg-white); color: var(--tx-667eea); font-size: 0.83em; font-weight: 600; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.schreib-mini-btn:hover:not(:disabled) { background: var(--bg-667eea); color: var(--tx-white); box-shadow: 0 2px 6px rgba(102,126,234,0.3); }
+.schreib-mini-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.schreib-mini-btn.gesendet { border-color: var(--bd-689f38); color: var(--tx-689f38); background: var(--bg-f1f8e9); }
+.schreib-mini-btn.gesendet:hover:not(:disabled) { background: var(--bg-689f38); color: var(--tx-white); }
+.schreib-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--bd-e0e4ff); }
+.schreib-btn { padding: 10px 20px; border-radius: 8px; border: none; font-size: 0.95em; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.schreib-btn-primary { background: var(--bg-667eea); color: var(--tx-white); }
+.schreib-btn-primary:hover:not(:disabled) { background: var(--bg-5568d3); box-shadow: 0 4px 12px rgba(102,126,234,0.35); transform: translateY(-1px); }
+.schreib-btn-primary:disabled { background: var(--bg-c5cff5); cursor: not-allowed; }
+.schreib-btn-ghost { background: transparent; color: var(--tx-667eea); border: 1.5px solid var(--bd-c5cff5); }
+.schreib-btn-ghost:hover { background: var(--bg-f5f7ff); border-color: var(--bd-667eea); }
+.schreib-status { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 0.92em; line-height: 1.5; display: none; }
+.schreib-status.success { display: block; background: var(--bg-e8f5e9); border-left: 4px solid var(--bd-27ae60); color: var(--tx-1b5e20); }
+.schreib-status.error { display: block; background: var(--bg-ffebee); border-left: 4px solid var(--bd-e74c3c); color: var(--tx-b71c1c); }
+.schreib-status.info { display: block; background: var(--bg-e3f2fd); border-left: 4px solid var(--bd-2196f3); color: var(--tx-0d47a1); }
+.schreib-name { width: 100%; max-width: 320px; padding: 10px 14px; border: 1.5px solid var(--bd-c5cff5); border-radius: 8px; font-family: inherit; font-size: 0.95em; outline: none; transition: border-color 0.2s; margin-bottom: 12px; }
+.schreib-name:focus { border-color: var(--bd-667eea); }
+.schreib-label { display: block; font-size: 0.88em; color: var(--tx-555); margin-bottom: 6px; font-weight: 600; }
+.schreib-name-box { background: var(--bg-fffaf0); border: 1.5px solid var(--bd-ffd699); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+.schreib-name-box .schreib-label { color: var(--tx-b15c00); }
+.schreib-name.schreib-name-error { border-color: var(--bd-c62828); box-shadow: 0 0 0 2px rgba(198,40,40,0.15); animation: schreib-name-shake 0.4s; }
+@keyframes schreib-name-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
 
-/* LÜCKENTEXT */
-.luecke-row{margin-bottom:14px;line-height:2.2;font-size:.97em}
-.nowrap-group{display:inline-flex;align-items:baseline;white-space:nowrap;gap:0}
-input.blank{border:none;border-bottom:2px solid var(--bd-667eea);outline:none;font-size:.95em;padding:2px 4px;background:transparent;text-align:center;font-family:inherit;transition:.2s}
-input.blank:focus{border-bottom-color:var(--bd-764ba2);background:rgba(102,126,234,.05)}
-input.blank.correct{border-bottom-color:var(--bd-27ae60);background:rgba(39,174,96,.08);color:var(--tx-27ae60)}
-input.blank.wrong{border-bottom-color:var(--bd-e74c3c);background:rgba(231,76,60,.08);color:var(--tx-e74c3c)}
-input.blank.s{min-width:50px;width:50px}
-input.blank.m{min-width:90px;width:90px}
-input.blank.l{min-width:150px;width:150px}
-input.blank.xl{min-width:200px;width:200px}
-.sol{display:none;color:var(--tx-27ae60);font-weight:700;font-size:.88em;margin-left:2px}
+/* FB-WORTBANK — universelle Lueckentext-Wortbank */
+.fb-wortbank-wrap{margin:14px 0 18px;}
+.fb-wortbank-label{display:none;}
+.fb-wortbank{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:var(--bg-f0f0f8);border-radius:10px;min-height:48px;border:1px dashed var(--bd-bbb);}
+.fb-wortbank-chip{background:var(--bg-fff);border:2px solid var(--bd-667eea);color:var(--tx-667eea);padding:5px 12px;border-radius:14px;font-weight:500;font-size:0.9em;user-select:none;}
+.fb-wortbank-chip.used{opacity:0.35;text-decoration:line-through;}
 
-/* MULTIPLE CHOICE */
-.mc-block{margin-bottom:18px;padding:14px;background:var(--bg-f8f9ff);border-radius:10px}
-.mc-question{font-weight:700;color:var(--tx-333);margin-bottom:10px;font-size:.97em}
-.mc-opts{display:flex;flex-direction:column;gap:6px}
-.mc-opt{padding:10px 16px;border:2px solid var(--bd-ddd);border-radius:8px;cursor:pointer;transition:.2s;font-size:.95em}
-.mc-opt:hover{border-color:var(--bd-667eea);background:var(--bg-f8f9ff)}
-.mc-opt.selected{border-color:var(--bd-667eea);background:rgba(102,126,234,.15)}
-.mc-opt.correct{border-color:var(--bd-27ae60);background:rgba(39,174,96,.1)}
-.mc-opt.wrong{border-color:var(--bd-e74c3c);background:rgba(231,76,60,.1)}
+/* Customer-Success-Fallback-Block bei Versand-Fehler (gepatcht) */
+.schreib-fb { display: flex; flex-direction: column; gap: 8px; }
+.schreib-fb-titel { font-weight: 700; font-size: 1em; color: var(--tx-b71c1c); }
+.schreib-fb-text { color: var(--tx-4a4a4a); font-size: 0.92em; line-height: 1.5; }
+.schreib-fb-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.schreib-fb-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 8px; border: 1.5px solid var(--bd-667eea); background: var(--bg-white); color: var(--tx-667eea); font-size: 0.9em; font-weight: 600; text-decoration: none; cursor: pointer; transition: all 0.15s; }
+.schreib-fb-btn:hover { background: var(--bg-667eea); color: var(--tx-white); box-shadow: 0 2px 6px rgba(102,126,234,0.3); }
+.schreib-fb-btn-prim { background: var(--bg-667eea); color: var(--tx-white); }
+.schreib-fb-btn-prim:hover { background: var(--bg-4f63c2); color: var(--tx-white); }
+.schreib-fb-hilfe { color: var(--tx-6c6c6c); font-size: 0.86em; font-style: italic; margin-top: 4px; }
 
-/* SATZBAU */
-.sb-exercise{margin-bottom:24px;padding:14px;background:var(--bg-f8f9ff);border-radius:10px}
-.sb-label{font-weight:700;color:var(--tx-555);margin-bottom:8px;font-size:.9em}
-.drop-row{display:flex;flex-wrap:wrap;gap:6px;min-height:48px;padding:10px;background:var(--bg-fff);border:2px dashed var(--bd-ccc);border-radius:8px;margin-bottom:8px;align-items:center}
-.drop-row.drag-over{border-color:var(--bd-667eea);background:var(--bg-f0f2ff)}
-.drop-row .chips-container .chip, .sentence-builder .chip {ont-size:.88em;padding:6px 14px}
-.drop-row .chip.correct{background:linear-gradient(135deg,#27ae60,#2ecc71)!important}
-.drop-row .chip.wrong{background:linear-gradient(135deg,#e74c3c,#c0392b)!important}
-.fixed-dot{font-weight:700;font-size:1.1em;color:var(--tx-333);margin-left:2px}
-.sb-bank{display:flex;flex-wrap:wrap;gap:6px;min-height:40px}
-.help-box{background:var(--bg-fff9e6);border-left:4px solid var(--bd-f39c12);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:.9em;color:var(--tx-555);line-height:1.6}
+/* ── Gerüst-Modus (B1+): sichtbare Lücken + feste Anker ── */
+.sb-gap { display:inline-flex; align-items:center; justify-content:center; min-width:66px; min-height:38px; padding:2px 6px; border:2px dashed var(--bd-b9a7f0); border-radius:20px; background:var(--bg-faf8ff); }
+.sb-gap.drag-over { border-color:var(--bd-e67e22); background:var(--bg-fff5ec); }
+.sb-gap .chip { margin:0; }
+.chip.sb-locked { background:var(--bg-eef0ff); border-style:solid; border-color:var(--bd-c3c9f5); color:var(--tx-555); cursor:default; }
+.chip.sb-locked.correct { background:var(--bg-27ae60); border-color:var(--bd-27ae60); color:var(--tx-fff); }
+
+/* FB-SCHREIB-PAD: Schreibwerkstatt-Inhalt einruecken, Banner randlos */
+#sec-schreib { padding: 28px 30px; }
+#sec-schreib > .tab-banner { width: calc(100% + 60px); max-width: none; margin: -28px -30px 18px; }
+@media (max-width: 600px) {
+  #sec-schreib { padding: 18px 16px; }
+  #sec-schreib > .tab-banner { width: calc(100% + 32px); margin: -18px -16px 14px; }
+}
+/* ===== GENUS-TAB ===== */
+.genus-pool { display:flex; flex-wrap:wrap; gap:10px; padding:16px; background:var(--bg-f0f0f8); border:1px dashed var(--bd-bbb); border-radius:10px; min-height:60px; margin-bottom:18px; }
+.genus-chip { background:var(--bg-fff); border:2px solid var(--bd-667eea); color:var(--tx-333); padding:8px 14px; border-radius:14px; font-weight:600; font-size:0.95em; cursor:grab; user-select:none; }
+.genus-chip.dragging { opacity:0.5; }
+.genus-chip.selected { outline:3px solid var(--bd-f39c12); }
+.genus-chip.correct { border-color:var(--bd-2e7d32); background:var(--bg-e8f5e9); color:var(--tx-1b5e20); }
+.genus-chip.wrong { border-color:var(--bd-c62828); background:var(--bg-ffebee); color:var(--tx-b71c1c); }
+.genus-kategorien { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.genus-kat { background:var(--bg-fafaff); border-radius:10px; padding:10px; border-top:4px solid var(--bd-999); }
+.genus-kat.kat-der { border-top-color:var(--bd-1565c0); }
+.genus-kat.kat-die { border-top-color:var(--bd-ad1457); }
+.genus-kat.kat-das { border-top-color:var(--bd-1b5e20); }
+.genus-kat.kat-pl  { border-top-color:var(--bd-5e35b1); }
+.kat-title { text-align:center; font-weight:700; margin-bottom:8px; font-size:1.05em; }
+.kat-der .kat-title { color:var(--tx-1565c0); } .kat-die .kat-title { color:var(--tx-ad1457); } .kat-das .kat-title { color:var(--tx-1b5e20); } .kat-pl .kat-title { color:var(--tx-5e35b1); }
+.genus-drop { min-height:90px; background:var(--bg-fff); border:2px dashed var(--bd-ccc); border-radius:8px; padding:8px; display:flex; flex-direction:column; gap:6px; }
+.genus-drop.dragover { border-color:var(--bd-667eea); background:var(--bg-eef1ff); }
+@media (max-width:600px){ .genus-kategorien { grid-template-columns:repeat(2,1fr); } }
 
 /* FB-JUMPTOP - Nach-oben-Button (Glas-Look) */
 .fb-jumptop {
@@ -173,6 +386,8 @@ input.blank.xl{min-width:200px;width:200px}
 .fb-jumptop.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .fb-jumptop:hover { background: rgba(118, 75, 162, 0.40); color: var(--tx-241048); box-shadow: 0 10px 32px rgba(102,126,234,0.50), inset 0 1px 0 rgba(255,255,255,0.65); }
 @media (max-width: 600px) { .fb-jumptop { bottom: 18px; right: 16px; padding: 12px 18px; font-size: 0.95em; } }
+/* FB-SCHREIB-LAST */
+.nav-btn.schreib-last{order:99;}
 
 /* FB-LT-STORY-CSS */
 /* FB-LT-STORY-CSS — kanonische CSS des Story-Lückentexts (EINE Quelle der Wahrheit).
@@ -189,93 +404,228 @@ input.blank.xl{min-width:200px;width:200px}
 .wortbank-chip.used { opacity:0.35; text-decoration:line-through; }
 
 
+/* FB-WORTSCHATZ-KANON-CSS — skill-konforme Karten-Optik, NUR im Wortschatz-Tab (überschreibt abweichende Datei-CSS, Lückentext bleibt unberührt) */
+#wortschatzContainer{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+#wortschatzContainer .luecken-item,#wortschatzContainer .luecke-item{background:var(--bg-f8f9ff);border:1px solid var(--bd-dde3ff);border-left:4px solid var(--bd-667eea);border-radius:10px;padding:12px 16px;margin:0;display:block;}
+#wortschatzContainer .luecken-item>div:first-child,#wortschatzContainer .luecke-item>div:first-child,#wortschatzContainer .ws-en{font-weight:700;color:var(--tx-667eea);margin-bottom:8px;font-size:1.05em;}
+#wortschatzContainer input.blank{border:none;border-bottom:2px solid var(--bd-667eea);border-radius:0;background:var(--bg-fff);padding:4px 6px;outline:none;font-family:inherit;font-size:0.95em;}
+#wortschatzContainer input.blank:focus{border-bottom-color:var(--bd-764ba2);}
+#wortschatzContainer input.blank.correct{border-bottom-color:var(--bd-27ae60);background:var(--bg-e8f8f0);}
+#wortschatzContainer input.blank.wrong{border-bottom-color:var(--bd-e74c3c);background:var(--bg-fdeaea);}
+@media(max-width:640px){#wortschatzContainer{grid-template-columns:1fr;}}
+
+/* FB-THEME-TOGGLE */
+.header { position: relative; }
+.theme-toggle {
+  position: absolute; top: 14px; right: 14px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4);
+  color: white; font-size: 1.05em; cursor: pointer; line-height: 1;
+  transition: background 0.2s; z-index: 5;
+}
+.theme-toggle:hover { background: rgba(255,255,255,0.3); }
+
 /* ===== FB-DARK-MODE (System-Default + manueller Schalter) ===== */
 @media (prefers-color-scheme: dark) {
 :root:not([data-theme="light"]) {
+  --grad-head-a: #4a52a8;
+  --grad-head-b: #5c4585;
   --grad-page-a: #23263e;
   --grad-page-b: #2f2440;
   --sf-container: #23263a;
+  --sf-input: #1a1d2e;
   --sf-pill: #343a5e;
+  --bd-1565c0: #284a71;
+  --bd-2196f3: #3a86d1;
   --bd-27ae60: #3f9d6d;
+  --bd-5e35b1: #443465;
   --bd-667eea: #7b88e8;
+  --bd-689f38: #6d9c47;
   --bd-764ba2: #8a63b8;
+  --bd-999: #414258;
+  --bd-ad1457: #712848;
+  --bd-b9a7f0: #6b5a9e;
   --bd-bbb: #4a4e6a;
+  --bd-c3c9f5: #4a5384;
   --bd-c5cae9: #464b70;
+  --bd-c5cff5: #4a5384;
+  --bd-c62828: #a04a42;
   --bd-ccc: #4a4e6a;
   --bd-ddd: #3a3e58;
+  --bd-dde3ff: #383d5e;
+  --bd-e0e4ff: #383d5e;
+  --bd-e67e22: #c67f16;
   --bd-e74c3c: #b0584d;
   --bd-e9ecef: #2e3250;
   --bd-f39c12: #c67f16;
+  --bd-ffd699: #7a6335;
+  --bg-27ae60: #2f9c5f;
+  --bg-4f63c2: #5a66cc;
+  --bg-5568d3: #5a66cc;
   --bg-667eea: #4a55b8;
-  --bg-95a5a6: #273839;
+  --bg-689f38: #4e7a2c;
+  --bg-c5cff5: #3a4166;
   --bg-e1e5fb: #2e3350;
+  --bg-e3f2fd: #1e2a3f;
+  --bg-e74c3c: #b0453a;
+  --bg-e8f5e9: #1e3328;
   --bg-e8f8f0: #1e3328;
+  --bg-eee: #21212f;
   --bg-eef0fb: #1d2032;
   --bg-eef0ff: #262a44;
+  --bg-eef1ff: #262a44;
   --bg-f0f0f8: #1d2032;
-  --bg-f0f2ff: #262a44;
-  --bg-f39c12: #c67f16;
+  --bg-f0f4ff: #242a45;
+  --bg-f0fff4: #103e1c;
+  --bg-f1f8e9: #22331e;
+  --bg-f5f7ff: #2a2e4a;
+  --bg-f8f8f8: #20202e;
   --bg-f8f9ff: #262a44;
+  --bg-faf8ff: #262a44;
+  --bg-fafaff: #262a44;
+  --bg-fafbff: #262a44;
   --bg-fdeaea: #3a2228;
+  --bg-fefefe: #1a1d2e;
+  --bg-ffe9a0: #453911;
+  --bg-ffebee: #3a2228;
   --bg-fff: #262a44;
-  --bg-fff9e6: #3f3410;
+  --bg-fff5ec: #322c1c;
+  --bg-fff5f5: #3e0f0f;
+  --bg-fffaf0: #322c1c;
   --bg-white: #262a44;
+  --tx-0d47a1: #90bff9;
+  --tx-1565c0: #90bff9;
+  --tx-1a1a1a: #e2e4f0;
+  --tx-1b5e20: #a5d6a7;
   --tx-241048: #d9cef8;
   --tx-27ae60: #58c98b;
   --tx-2c2c2c: #d6d8e8;
   --tx-333: #d6d8e8;
+  --tx-33691e: #9ccc65;
   --tx-34206b: #cbbcf6;
+  --tx-3d37a8: #8f8bd9;
+  --tx-444: #c6cade;
+  --tx-4a148c: #c9b5f2;
+  --tx-4a4a4a: #c6cade;
   --tx-555: #b6bad0;
+  --tx-5e35b1: #b39af0;
   --tx-666: #9ba0bd;
   --tx-667eea: #93a0f2;
-  --tx-777: #979cb8;
+  --tx-689f38: #9ccc65;
+  --tx-6c6c6c: #979cb8;
+  --tx-764ba2: #b592d8;
+  --tx-888: #8e93b0;
+  --tx-999: #7d8199;
   --tx-aaa: #6f7390;
+  --tx-ad1457: #e57ba1;
+  --tx-b15c00: #e0a860;
+  --tx-b71c1c: #f28b7d;
+  --tx-bbb: #63677f;
+  --tx-c62828: #ef7365;
   --tx-e74c3c: #ef7365;
+  --tx-f39c12: #edb95e;
 }
 :root:not([data-theme="light"]) .tab-banner { box-shadow: 0 2px 8px rgba(0,0,0,0.45); }
 :root:not([data-theme="light"]) body { color: #c6cade; }
 :root:not([data-theme="light"]) button, :root:not([data-theme="light"]) input, :root:not([data-theme="light"]) select, :root:not([data-theme="light"]) textarea { color: inherit; }
 }
 :root[data-theme="dark"] {
+  --grad-head-a: #4a52a8;
+  --grad-head-b: #5c4585;
   --grad-page-a: #23263e;
   --grad-page-b: #2f2440;
   --sf-container: #23263a;
+  --sf-input: #1a1d2e;
   --sf-pill: #343a5e;
+  --bd-1565c0: #284a71;
+  --bd-2196f3: #3a86d1;
   --bd-27ae60: #3f9d6d;
+  --bd-5e35b1: #443465;
   --bd-667eea: #7b88e8;
+  --bd-689f38: #6d9c47;
   --bd-764ba2: #8a63b8;
+  --bd-999: #414258;
+  --bd-ad1457: #712848;
+  --bd-b9a7f0: #6b5a9e;
   --bd-bbb: #4a4e6a;
+  --bd-c3c9f5: #4a5384;
   --bd-c5cae9: #464b70;
+  --bd-c5cff5: #4a5384;
+  --bd-c62828: #a04a42;
   --bd-ccc: #4a4e6a;
   --bd-ddd: #3a3e58;
+  --bd-dde3ff: #383d5e;
+  --bd-e0e4ff: #383d5e;
+  --bd-e67e22: #c67f16;
   --bd-e74c3c: #b0584d;
   --bd-e9ecef: #2e3250;
   --bd-f39c12: #c67f16;
+  --bd-ffd699: #7a6335;
+  --bg-27ae60: #2f9c5f;
+  --bg-4f63c2: #5a66cc;
+  --bg-5568d3: #5a66cc;
   --bg-667eea: #4a55b8;
-  --bg-95a5a6: #273839;
+  --bg-689f38: #4e7a2c;
+  --bg-c5cff5: #3a4166;
   --bg-e1e5fb: #2e3350;
+  --bg-e3f2fd: #1e2a3f;
+  --bg-e74c3c: #b0453a;
+  --bg-e8f5e9: #1e3328;
   --bg-e8f8f0: #1e3328;
+  --bg-eee: #21212f;
   --bg-eef0fb: #1d2032;
   --bg-eef0ff: #262a44;
+  --bg-eef1ff: #262a44;
   --bg-f0f0f8: #1d2032;
-  --bg-f0f2ff: #262a44;
-  --bg-f39c12: #c67f16;
+  --bg-f0f4ff: #242a45;
+  --bg-f0fff4: #103e1c;
+  --bg-f1f8e9: #22331e;
+  --bg-f5f7ff: #2a2e4a;
+  --bg-f8f8f8: #20202e;
   --bg-f8f9ff: #262a44;
+  --bg-faf8ff: #262a44;
+  --bg-fafaff: #262a44;
+  --bg-fafbff: #262a44;
   --bg-fdeaea: #3a2228;
+  --bg-fefefe: #1a1d2e;
+  --bg-ffe9a0: #453911;
+  --bg-ffebee: #3a2228;
   --bg-fff: #262a44;
-  --bg-fff9e6: #3f3410;
+  --bg-fff5ec: #322c1c;
+  --bg-fff5f5: #3e0f0f;
+  --bg-fffaf0: #322c1c;
   --bg-white: #262a44;
+  --tx-0d47a1: #90bff9;
+  --tx-1565c0: #90bff9;
+  --tx-1a1a1a: #e2e4f0;
+  --tx-1b5e20: #a5d6a7;
   --tx-241048: #d9cef8;
   --tx-27ae60: #58c98b;
   --tx-2c2c2c: #d6d8e8;
   --tx-333: #d6d8e8;
+  --tx-33691e: #9ccc65;
   --tx-34206b: #cbbcf6;
+  --tx-3d37a8: #8f8bd9;
+  --tx-444: #c6cade;
+  --tx-4a148c: #c9b5f2;
+  --tx-4a4a4a: #c6cade;
   --tx-555: #b6bad0;
+  --tx-5e35b1: #b39af0;
   --tx-666: #9ba0bd;
   --tx-667eea: #93a0f2;
-  --tx-777: #979cb8;
+  --tx-689f38: #9ccc65;
+  --tx-6c6c6c: #979cb8;
+  --tx-764ba2: #b592d8;
+  --tx-888: #8e93b0;
+  --tx-999: #7d8199;
   --tx-aaa: #6f7390;
+  --tx-ad1457: #e57ba1;
+  --tx-b15c00: #e0a860;
+  --tx-b71c1c: #f28b7d;
+  --tx-bbb: #63677f;
+  --tx-c62828: #ef7365;
   --tx-e74c3c: #ef7365;
+  --tx-f39c12: #edb95e;
 }
 html[data-theme="dark"] .tab-banner { box-shadow: 0 2px 8px rgba(0,0,0,0.45); }
 html[data-theme="dark"] body { color: #c6cade; }
@@ -286,6 +636,58 @@ html[data-theme="dark"] button, html[data-theme="dark"] input, html[data-theme="
 .container { overflow: hidden; overflow: clip; }
 .wortbank { position: sticky; top: 0; z-index: 20; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 @media (max-width: 600px) { .wortbank { padding: 8px; gap: 6px; } .wortbank-chip { padding: 3px 9px; font-size: 0.85em; } }
+</style>
+<style>/* FB-SPRECH-WORTSCHATZ-CSS */
+/* ===== SPRECH-TRAINER GENERISCH (FB-SPRECH-GENERIC) ===== */
+:root { --sp-tx:#2d2f45; --sp-muted:#666a80; --sp-muted2:#8a8ea3; --sp-line:#e3e6f5; --sp-card:#f8f9ff; --sp-card-bd:#dde3ff; --sp-acc:#667eea; --sp-acc2:#764ba2;
+  --sp-ok-bg:#e8f8f0; --sp-ok-tx:#1e7a46; --sp-err-bg:#fdeaea; --sp-err-tx:#b03a2e; --sp-warn-bg:#fff6e0; --sp-warn-tx:#8a5a00; --sp-warn-bd:#f0d48a; --sp-info-bg:#eef1ff; --sp-info-tx:#3949ab; --sp-btn-bg:#f5f7ff; --sp-btn-bd:#c5cff5; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --sp-tx:#e4e6f2; --sp-muted:#a9adc4; --sp-muted2:#8d91a8; --sp-line:#3a3e5c; --sp-card:#262a40; --sp-card-bd:#3a3f63; --sp-acc:#8c9eff; --sp-acc2:#b39ddb;
+  --sp-ok-bg:#1d3a2b; --sp-ok-tx:#7fdca3; --sp-err-bg:#43222a; --sp-err-tx:#ff9a8f; --sp-warn-bg:#3d3220; --sp-warn-tx:#ffd27f; --sp-warn-bd:#6b5526; --sp-info-bg:#252b4d; --sp-info-tx:#aab6ff; --sp-btn-bg:#2a2f4d; --sp-btn-bd:#454c7a; } }
+:root[data-theme="dark"] { --sp-tx:#e4e6f2; --sp-muted:#a9adc4; --sp-muted2:#8d91a8; --sp-line:#3a3e5c; --sp-card:#262a40; --sp-card-bd:#3a3f63; --sp-acc:#8c9eff; --sp-acc2:#b39ddb;
+  --sp-ok-bg:#1d3a2b; --sp-ok-tx:#7fdca3; --sp-err-bg:#43222a; --sp-err-tx:#ff9a8f; --sp-warn-bg:#3d3220; --sp-warn-tx:#ffd27f; --sp-warn-bd:#6b5526; --sp-info-bg:#252b4d; --sp-info-tx:#aab6ff; --sp-btn-bg:#2a2f4d; --sp-btn-bd:#454c7a; }
+.sp-steuerung { display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; margin:6px 0 12px; font-size:.9em; color:var(--sp-muted); }
+.sp-steuerung select { font:inherit; padding:5px 8px; border-radius:8px; border:1px solid var(--sp-btn-bd); background:var(--sp-btn-bg); color:var(--sp-tx); }
+.sp-btn { font:inherit; font-size:.88em; padding:7px 14px; border-radius:20px; border:1.5px solid var(--sp-btn-bd); background:var(--sp-btn-bg); color:var(--sp-acc); font-weight:600; cursor:pointer; }
+.sp-btn:hover { border-color:var(--sp-acc); }
+.sp-btn.ok { background:var(--sp-ok-bg); color:var(--sp-ok-tx); border-color:var(--sp-ok-tx); }
+.sp-btn.sp-empf { box-shadow:0 0 0 3px rgba(102,126,234,.45); transform:scale(1.06); }
+.sp-stand { display:flex; flex-wrap:wrap; gap:14px; font-size:.88em; color:var(--sp-muted); margin-bottom:10px; min-height:1.2em; }
+.sp-stand .sp-ohne { color:var(--sp-muted2); font-style:italic; }
+.sp-karte { background:var(--sp-card); border:1px solid var(--sp-card-bd); border-left:4px solid var(--sp-acc); border-radius:12px; padding:18px 20px; }
+.sp-meta { font-size:.8em; color:var(--sp-muted2); }
+.sp-cue { font-family:Georgia,'Times New Roman',serif; font-size:1.7em; color:var(--sp-tx); line-height:1.5; margin:6px 0 2px; }
+.sp-luecke { color:var(--sp-muted2); letter-spacing:2px; }
+.sp-hint { font-size:.88em; color:var(--sp-muted); font-style:italic; }
+.sp-aufgabe { font-size:.92em; color:var(--sp-muted); margin:8px 0 14px; }
+.sp-bar { height:10px; background:var(--sp-line); border-radius:6px; overflow:hidden; }
+.sp-bar div { height:100%; width:100%; background:linear-gradient(90deg,var(--sp-acc),var(--sp-acc2)); transition:width .1s linear; }
+.sp-count { font-size:.8em; color:var(--sp-muted2); margin-top:4px; font-variant-numeric:tabular-nums; }
+.sp-gehoert { font-size:.9em; color:var(--sp-muted); margin-top:10px; padding:8px 12px; border-radius:8px; line-height:1.5; }
+.sp-gehoert:empty { display:none; }
+.sp-gehoert.sp-info { background:var(--sp-info-bg); color:var(--sp-info-tx); }
+.sp-gehoert.sp-gut { background:var(--sp-ok-bg); color:var(--sp-ok-tx); }
+.sp-gehoert.sp-schlecht { background:var(--sp-err-bg); color:var(--sp-err-tx); }
+.sp-gehoert.sp-warn { background:var(--sp-warn-bg); color:var(--sp-warn-tx); border:1px solid var(--sp-warn-bd); }
+.sp-puls { color:#e53935; animation:sp-puls 1s infinite; }
+@keyframes sp-puls { 0%,100% { opacity:1; } 50% { opacity:.25; } }
+.sp-ok { color:var(--sp-ok-tx); font-weight:700; }
+.sp-no { color:var(--sp-err-tx); font-weight:700; }
+.sp-loesung:empty { display:none; }
+.sp-loesung-zeile { font-family:Georgia,'Times New Roman',serif; font-size:1.35em; color:var(--sp-tx); margin-top:12px; line-height:1.6; }
+.sp-beispiel { font-family:Georgia,'Times New Roman',serif; color:var(--sp-muted); margin-top:4px; line-height:1.6; }
+.sp-aktion { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-top:14px; }
+.sp-frage { font-size:.88em; color:var(--sp-muted); }
+.sp-quittung { font-weight:600; padding:8px 12px; border-radius:8px; }
+.sp-quittung.gut { background:var(--sp-ok-bg); color:var(--sp-ok-tx); }
+.sp-quittung.schlecht { background:var(--sp-warn-bg); color:var(--sp-warn-tx); }
+.sp-leer { text-align:center; padding:14px 6px; color:var(--sp-tx); line-height:1.6; }
+.sp-leer-btns { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px; }
+.sp-wdh { margin-top:12px; font-size:.92em; color:var(--sp-warn-tx); }
+.sp-tipp { font-size:.82em; color:var(--sp-muted2); margin-top:8px; }
+@media (max-width:600px) { .sp-cue { font-size:1.35em; } .sp-karte { padding:14px; } }
+.sp-intro { color: var(--sp-muted); line-height: 1.6; margin: 0 0 14px; }
+.sp-cue .sp-luecke:empty { display: none; }
+#sec-sprechen { padding: 0 0 10px; }
 </style>
 <script>/* FB-THEME-INIT */
 (function(){
@@ -313,612 +715,1045 @@ html[data-theme="dark"] button, html[data-theme="dark"] input, html[data-theme="
 </script>
 </head>
 <body>
+
 <div class="container">
-<h1>Brief an eine Maschine</h1>
-<p class="subtitle">Ein Schriftsteller schreibt an die künstliche Intelligenz</p>
+    <div class="header">
+  <button class="theme-toggle" id="themeToggle" onclick="fbToggleTheme()" aria-label="Hell/Dunkel umschalten">🌙</button>
+        <h1>Brief an eine Maschine</h1>
+        <p>A2 – Brief an eine Maschine &nbsp;|&nbsp; Lesen</p>
+        <div class="big-emoji">📖</div>
+    </div>
 
-<div class="nav">
-    <div class="nav-btn active" onclick="showSection(0)">📖 Vorentlastung</div>
-    <div class="nav-btn" onclick="showSection(1)">📄 Originaltext</div>
-    <div class="nav-btn" onclick="showSection(2)">🔤 Genus</div>
-    <div class="nav-btn" onclick="showSection(3)">✏️ Lückentext</div>
-    <div class="nav-btn" onclick="showSection(4)">❓ Multiple-Choice</div>
-    <div class="nav-btn" onclick="showSection(5)">🧩 Satzbau</div>
+    <div class="nav">
+        <div class="nav-btn active" onclick="showSection(0)"><span class="nav-emoji">🌅</span><span class="nav-label">Vorentlastung</span></div>
+        <div class="nav-btn" onclick="showSection(1)"><span class="nav-emoji">📖</span><span class="nav-label">Geschichte</span></div>
+        <div class="nav-btn" onclick="showSection(2)"><span class="nav-emoji">❓</span><span class="nav-label">Verständnis</span></div>
+        <div class="nav-btn" onclick="showSection(3)"><span class="nav-emoji">✏️</span><span class="nav-label">Lückentext</span></div>
+        <div class="nav-btn" onclick="showSection(4)"><span class="nav-emoji">🧩</span><span class="nav-label">Satzbau</span></div>
+        <div class="nav-btn" onclick="showSection(5)"><span class="nav-emoji">🏷️</span><span class="nav-label">Genus</span></div>
+        <div class="nav-btn" onclick="showSection(6)"><span class="nav-emoji">🔠</span><span class="nav-label">Wortschatz</span></div>
+        <div class="nav-btn" onclick="showSection(7)"><!-- FB-SPRECH-WORTSCHATZ --><span class="nav-emoji">🗣️</span><span class="nav-label">Sprechen</span></div>
+        <div class="nav-btn schreib-last" onclick="showSection(8)"><span class="nav-emoji">📨</span><span class="nav-label">Schreibwerkstatt</span></div>
+
 </div>
 
-<!-- ===== TAB 0: VORENTLASTUNG ===== -->
-<div class="section active" id="sec-0">
-    <p class="section-title">📖 Vorentlastung</p>
-    <p class="section-intro">Lernen Sie diese Wörter, bevor Sie den Originaltext lesen.</p>
-
-    <div class="vocab-card">
-        <div class="vocab-term">der Schriftsteller, -</div>
-        <div class="vocab-def">Eine Person, die beruflich Bücher oder Geschichten schreibt. (Synonym: der Autor)</div>
-        <div class="vocab-example">„Ich bin Schriftsteller. Mein Name ist Thomas.“</div>
-    </div>
-    <div class="vocab-card">
-        <div class="vocab-term">das Experiment, -e</div>
-        <div class="vocab-def">Ein Test oder Versuch, bei dem man etwas ausprobiert.</div>
-        <div class="vocab-example">„Letzte Woche habe ich ein Experiment gemacht.“</div>
-    </div>
-    <div class="vocab-card">
-        <div class="vocab-term">lebendig</div>
-        <div class="vocab-def">Etwas fühlt sich echt und interessant an – nicht tot oder langweilig.</div>
-        <div class="vocab-example">„Und genau das macht eine Geschichte lebendig.“</div>
-    </div>
-    <div class="vocab-card">
-        <div class="vocab-term">das Werkzeug, -e</div>
-        <div class="vocab-def">Ein Gegenstand, den man zum Arbeiten benutzt. (z.B. ein Hammer, eine Schere)</div>
-        <div class="vocab-example">„Du bist ein Werkzeug. Das klügste Werkzeug, das Menschen je gebaut haben.“</div>
-    </div>
-    <div class="vocab-card">
-        <div class="vocab-term">die Geduld, kein Plural</div>
-        <div class="vocab-def">Wenn man ruhig wartet und nicht nervös wird. (Adjektiv: geduldig)</div>
-        <div class="vocab-example">„Danke für die Geduld.“</div>
-    </div>
-    <div class="vocab-card">
-        <div class="vocab-term">die Träne, -n</div>
-        <div class="vocab-def">Wasser, das aus den Augen kommt, wenn man weint.</div>
-        <div class="vocab-example">„Du hast die Wörter. Alle Wörter der Welt. Aber du hast keine Tränen.“</div>
-    </div>
-    <div class="vocab-card">
-        <div class="vocab-term">arbeitslos</div>
-        <div class="vocab-def">Ohne Arbeit, ohne Job. (Nomen: die Arbeitslosigkeit)</div>
-        <div class="vocab-example">„Dann bin ich arbeitslos.“</div>
-    </div>
-    <div class="vocab-card">
-        <div class="vocab-term">die Einsamkeit, kein Plural</div>
-        <div class="vocab-def">Das Gefühl, allein zu sein. (Adjektiv: einsam)</div>
-        <div class="vocab-example">„Geschichten über die Liebe, über Einsamkeit, über kleine Momente.“</div>
-    </div>
-</div>
-
-<!-- ===== TAB 1: ORIGINALTEXT ===== -->
-<div class="section" id="sec-1">
-    <p class="section-title">📄 Originaltext</p>
-    <p class="section-intro">Lesen Sie nun den Originaltext. Sie können jederzeit zur Vorentlastung zurückwechseln.</p>
-    <div class="text-block">
-        <p><strong>Brief an eine Maschine</strong></p>
-        <p>Liebe Maschine,</p>
-        <p>ich muss dir etwas sagen. Ich habe Angst vor dir.</p>
-        <p>Keine Angst wie im Kino, wenn der Roboter die Stadt zerstört. Nein, eine leise Angst. Eine Angst, die nachts kommt, wenn ich vor meinem Computer sitze und keine Worte finde.</p>
-        <p>Ich bin Schriftsteller. Mein Name ist Thomas, ich bin 52 Jahre alt und ich schreibe seit dreißig Jahren Geschichten. Geschichten über die Liebe, über Einsamkeit, über kleine Momente, die das Leben verändern. Manchmal brauche ich zwei Wochen für eine einzige Seite. Manchmal stehe ich morgens auf und die Sätze sind einfach da, wie Vögel vor dem Fenster.</p>
-        <p>Und dann kommst du. Du schreibst eine Geschichte in zehn Sekunden. Zehn Sekunden! Du brauchst keinen Kaffee, keinen Spaziergang im Park, keine schlaflose Nacht. Du tippst nicht nervös mit dem Fuß unter dem Tisch. Du starrst nicht drei Stunden lang auf ein leeres Blatt. Du schreibst einfach. Immer. Sofort.</p>
-        <p>Letzte Woche habe ich ein Experiment gemacht. Ich habe dich gebeten: „Schreib eine kurze Geschichte über einen Mann, der seinen Schlüssel verliert.“ Du hast sofort geantwortet. Die Geschichte war gut. Klar, logisch, ohne Fehler. Aber weißt du, was gefehlt hat? Der Moment, in dem der Mann vor seiner Tür steht und plötzlich an seine Mutter denkt. Warum? Das weiß er selbst nicht. Und genau das macht eine Geschichte lebendig – die Dinge, die keinen Grund haben.</p>
-        <p>Meine Tochter Lena studiert Informatik. Sie sagt: „Papa, die KI wird immer besser. Vielleicht kann sie bald auch solche Momente schreiben.“ Vielleicht hat sie recht. Dann bin ich arbeitslos. Ein arbeitsloser Schriftsteller – das ist fast lustig, weil ich auch vorher nicht viel Geld verdient habe.</p>
-        <p>Aber ich glaube, es geht nicht nur um mich. Es geht um die Frage: Warum schreiben Menschen Geschichten? Nicht weil die Welt Geschichten braucht. Sondern weil wir sie brauchen. Das Schreiben ist wie Atmen. Man kann es nicht erklären. Man tut es, weil man lebt.</p>
-        <p>Kannst du das verstehen? Kannst du verstehen, dass ein Satz manchmal wehtut? Dass man weint, wenn man das richtige Wort endlich findet? Ich glaube nicht. Und vielleicht ist genau das der Unterschied zwischen uns.</p>
-        <p>Du hast die Wörter. Alle Wörter der Welt. Aber du hast keine Tränen.</p>
-        <p>Trotzdem schreibe ich dir diesen Brief. Vielleicht, weil ich dich verstehen will. Oder vielleicht, weil Schreiben das Einzige ist, was ich wirklich kann.</p>
-        <p>Mit freundlichen Grüßen,</p>
-        <p class="text-author">Thomas Brenner</p>
-    </div>
-</div>
-
-<!-- ===== TAB 2: GENUS ===== -->
-<div class="section" id="sec-2">
-    <p class="section-title">🔤 Genus-Übung</p>
-    <p class="section-intro">Ziehen Sie die Wörter in die richtige Kategorie.</p>
-    <div class="chip-bank" id="genus-bank"></div>
-    <div class="categories">
-        <div class="category" data-cat="der"><h3>der</h3><div class="drop-zone"></div></div>
-        <div class="category" data-cat="die"><h3>die</h3><div class="drop-zone"></div></div>
-        <div class="category" data-cat="das"><h3>das</h3><div class="drop-zone"></div></div>
-        <div class="category" data-cat="pl"><h3>Plural (die)</h3><div class="drop-zone"></div></div>
-    </div>
-    <div class="btn-row">
-        <button class="btn btn-check" onclick="checkGenus()">✔ Prüfen</button>
-        <button onclick="showGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button>
-        <button onclick="resetGenus()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
-    </div>
-    <div class="score" id="genus-score"></div>
-</div>
-
-<!-- ===== TAB 3: LÜCKENTEXT ===== -->
-<div class="section" id="sec-3">
-    <p class="section-title">✏️ Lückentext</p>
-    <p class="section-intro">Ergänzen Sie die fehlenden Wörter aus dem Text.</p>
-    <div style="display:flex;gap:8px;margin:0 0 14px;"><button onclick="fbLtShowLoesung()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="fbLtReset();" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button></div>
-    <div class="wortbank" id="wortbank-luecken"></div>
-    <div class="luecken-story" id="lueckenContainer">
-        <p>Du brauchst keinen Kaffee und keinen langen <input class="blank" data-answer="Spaziergang">, keine <input class="blank" data-answer="schlaflose"> Nacht. Du <input class="blank" data-answer="starrst"> nicht drei Stunden lang auf ein leeres <input class="blank" data-answer="Blatt">, so wie ich es oft tue.</p>
-        <p>Meine <input class="blank" data-answer="Tochter"> Lena studiert <input class="blank" data-answer="Informatik"> und sagt, das Schreiben sei für dich nur Mathematik. Für mich aber ist es wie <input class="blank" data-answer="Atmen"> — man kann es kaum <input class="blank" data-answer="erklären">.</p>
-        <p>Du kennst vielleicht alle Wörter der <input class="blank" data-answer="Welt">, doch du kennst keine echten <input class="blank" data-answer="Tränen">.</p>
+    <!-- ═══════════════════════════ TAB 0: VORENTLASTUNG -->
+    <div class="section active" id="sec-0">
+      <img class="tab-banner" style="object-position: top" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlNjaGzDvHNzZWx3w7ZydGVyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM2NjdlZWEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NjRiYTIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDUwIiBjeT0iNDAiIHI9IjEyMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wOCIvPjxjaXJjbGUgY3g9IjkwMCIgY3k9IjE5MCIgcj0iOTAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDciLz48dGV4dCB4PSI3MCIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPvCfjJ48L3RleHQ+PHRleHQgeD0iMTY2IiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+8J+TljwvdGV4dD48dGV4dCB4PSIyNjIiIHk9IjEyOCIgZm9udC1zaXplPSI3MiIgb3BhY2l0eT0iMC45Ij7inI/vuI88L3RleHQ+PHRleHQgeD0iNzAiIHk9IjE3OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjk1Ij5TY2hsw7xzc2Vsd8O2cnRlcjwvdGV4dD48L3N2Zz4=" alt="Eine junge Frau sitzt am Empfangstisch im Büro — die neue Sekretärin">
+        <div class="section-title">🌅 Schlüsselwörter</div>
+        <p style="margin-bottom:16px;font-size:0.9em;color:var(--tx-666);">Lerne die wichtigsten Wörter, bevor du die Geschichte liest.</p>
+        <div class="vocab-grid" id="vorentlastungGrid"></div>
     </div>
 
-<!-- ===== TAB 4: MULTIPLE CHOICE ===== -->
-</div>
-<div class="section" id="sec-4">
-    <p class="section-title">❓ Multiple-Choice</p>
-    <p class="section-intro">Wählen Sie die richtige Antwort.</p>
-    <div id="mc-area"></div>
-    <div class="btn-row">
-        <button class="btn btn-check" onclick="checkMC()">✔ Prüfen</button>
-        <button onclick="showMC()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button>
-        <button onclick="resetMC()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
-    </div>
-    <div class="score" id="mc-score"></div>
-</div>
+    <!-- ═══════════════════════════ TAB 1: GESCHICHTE -->
+    <div class="section" id="sec-1">
+      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkJyaWVmIGFuIGVpbmUgTWFzY2hpbmUiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzRhNTJhOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzJmMjQ0MCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjEwNTAiIGN5PSI0MCIgcj0iMTIwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjA4Ii8+PGNpcmNsZSBjeD0iOTAwIiBjeT0iMTkwIiByPSI5MCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wNyIvPjx0ZXh0IHg9IjcwIiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+4pyJ77iPPC90ZXh0Pjx0ZXh0IHg9IjE2NiIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPvCfpJY8L3RleHQ+PHRleHQgeD0iMjYyIiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+8J+SoTwvdGV4dD48dGV4dCB4PSI3MCIgeT0iMTc4IiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOTUiPkJyaWVmIGFuIGVpbmUgTWFzY2hpbmU8L3RleHQ+PC9zdmc+" alt="Ein Büro-Schreibtisch, die goldene Lampe wirft ihr Licht — die Geschichte beginnt">
+        <div class="section-title">📖 Brief an eine Maschine</div>
+        <div class="story-text">
+            <p>Liebe Maschine,</p>
 
-<!-- ===== TAB 5: SATZBAU ===== -->
+            <p>ich muss dir etwas sagen. Ich habe Angst vor dir.</p>
+
+            <p>Keine Angst wie im Kino, wenn der Roboter die Stadt zerstört. Nein, eine leise Angst. Eine Angst, die nachts kommt, wenn ich vor meinem Computer sitze und keine Worte finde.</p>
+
+            <p>Ich bin <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Schriftsteller</span>. Mein Name ist Thomas, ich bin 52 Jahre alt und ich schreibe seit dreißig Jahren Geschichten. Geschichten über die Liebe, über <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Einsamkeit</span>, über kleine Momente, die das Leben verändern. Manchmal brauche ich zwei Wochen für eine einzige Seite. Manchmal stehe ich morgens auf und die Sätze sind einfach da, wie Vögel vor dem Fenster.</p>
+
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDMwMCIgd2lkdGg9IjEwMDAiIGhlaWdodD0iMzAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlNjaHJlaWJ0aXNjaCBiZWkgTmFjaHQiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0icyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzJmMjQ0MCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzRhNTJhOCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjMwMCIgcng9IjE0IiBmaWxsPSJ1cmwoI3MpIi8+PGNpcmNsZSBjeD0iODgwIiBjeT0iNjAiIHI9IjEzMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wOCIvPjx0ZXh0IHg9IjEyMCIgeT0iMTkwIiBmb250LXNpemU9IjExMCIgb3BhY2l0eT0iMC45MiI+8J+MmTwvdGV4dD48dGV4dCB4PSIyNzAiIHk9IjE5MCIgZm9udC1zaXplPSIxMTAiIG9wYWNpdHk9IjAuOTIiPvCfk4Q8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIxOTAiIGZvbnQtc2l6ZT0iMTEwIiBvcGFjaXR5PSIwLjkyIj7imJU8L3RleHQ+PC9zdmc+" alt="Ein Schreibtisch bei Nacht mit leerem Blatt">
+            <p class="story-img-caption">Drei Stunden vor einem leeren Blatt</p>
+
+            <p>Und dann kommst du. Du schreibst eine Geschichte in zehn Sekunden. Zehn Sekunden! Du brauchst keinen Kaffee, keinen Spaziergang im Park, keine <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">schlaflose</span> Nacht. Du tippst nicht nervös mit dem Fuß unter dem Tisch. Du <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">starrst</span> nicht drei Stunden lang auf ein leeres Blatt. Du schreibst einfach. Immer. Sofort.</p>
+
+            <p>Letzte Woche habe ich ein <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Experiment</span> gemacht. Ich habe dich gebeten: „Schreib eine kurze Geschichte über einen Mann, der seinen Schlüssel verliert.“ Du hast sofort geantwortet. Die Geschichte war gut. Klar, logisch, ohne Fehler. Aber weißt du, was gefehlt hat? Der Moment, in dem der Mann vor seiner Tür steht und plötzlich an seine Mutter denkt. Warum? Das weiß er selbst nicht. Und genau das macht eine Geschichte <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">lebendig</span> — die Dinge, die keinen Grund haben.</p>
+
+            <p>Meine Tochter Lena studiert Informatik. Sie sagt: „Papa, die KI wird immer besser. Vielleicht kann sie bald auch solche Momente schreiben.“ Vielleicht hat sie recht. Dann bin ich <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">arbeitslos</span>. Ein arbeitsloser Schriftsteller — das ist fast lustig, weil ich auch vorher nicht viel Geld verdient habe.</p>
+
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDMwMCIgd2lkdGg9IjEwMDAiIGhlaWdodD0iMzAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Ik1lbnNjaCB1bmQgTWFzY2hpbmUiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0icyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzQzMzhjYSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBlYTVlOSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjMwMCIgcng9IjE0IiBmaWxsPSJ1cmwoI3MpIi8+PGNpcmNsZSBjeD0iODgwIiBjeT0iNjAiIHI9IjEzMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wOCIvPjx0ZXh0IHg9IjEyMCIgeT0iMTkwIiBmb250LXNpemU9IjExMCIgb3BhY2l0eT0iMC45MiI+8J+nkTwvdGV4dD48dGV4dCB4PSIyNzAiIHk9IjE5MCIgZm9udC1zaXplPSIxMTAiIG9wYWNpdHk9IjAuOTIiPuKGlO+4jzwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjE5MCIgZm9udC1zaXplPSIxMTAiIG9wYWNpdHk9IjAuOTIiPvCfkrs8L3RleHQ+PC9zdmc+" alt="Mensch und Maschine nebeneinander">
+            <p class="story-img-caption">Der Schriftsteller und die Maschine</p>
+
+            <p>Aber ich glaube, es geht nicht nur um mich. Es geht um die Frage: Warum schreiben Menschen Geschichten? Nicht weil die Welt Geschichten braucht. Sondern weil wir sie brauchen. Das Schreiben ist wie Atmen. Man kann es nicht erklären. Man tut es, weil man lebt.</p>
+
+            <p>Mein Großvater hat gesagt: Ein <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Werkzeug</span> ist nicht gut und nicht schlecht. Es kommt darauf an, wer es benutzt. Vielleicht bist du ein Werkzeug. Vielleicht brauche ich nur mehr <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Geduld</span> mit dir.</p>
+
+            <p>Kannst du das verstehen? Kannst du verstehen, dass ein Satz manchmal wehtut? Dass man weint, wenn man das richtige Wort endlich findet? Ich glaube nicht. Und vielleicht ist genau das der Unterschied zwischen uns.</p>
+
+            <p>Du hast die Wörter. Alle Wörter der Welt. Aber du hast keine <span class="vocab-hl" title="📖 Vokabel aus der Vorentlastung">Tränen</span>.</p>
+
+            <p>Trotzdem schreibe ich dir diesen Brief. Vielleicht, weil ich dich verstehen will. Oder vielleicht, weil Schreiben das Einzige ist, was ich wirklich kann.</p>
+
+            <p>Mit freundlichen Grüßen,<br>Thomas Brenner</p>
+
+            <div class="story-source">Quelle: A2 · Brief an eine Maschine — Frank Burkert, DaF-Materialien</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 2: VERSTÄNDNIS -->
+    <div class="section" id="sec-2">
+      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlJpY2h0aWcgb2RlciBmYWxzY2g/Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyNTYzZWIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3YzNhZWQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDUwIiBjeT0iNDAiIHI9IjEyMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wOCIvPjxjaXJjbGUgY3g9IjkwMCIgY3k9IjE5MCIgcj0iOTAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDciLz48dGV4dCB4PSI3MCIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPuKclO+4jzwvdGV4dD48dGV4dCB4PSIxNjYiIHk9IjEyOCIgZm9udC1zaXplPSI3MiIgb3BhY2l0eT0iMC45Ij7inJbvuI88L3RleHQ+PHRleHQgeD0iMjYyIiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+4p2TPC90ZXh0Pjx0ZXh0IHg9IjcwIiB5PSIxNzgiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC45NSI+UmljaHRpZyBvZGVyIGZhbHNjaD88L3RleHQ+PC9zdmc+" alt="Über einem offenen Buch geht eine goldene Glühbirne auf — Verstehen">
+        <div class="section-title">❓ Ist die Aussage richtig oder falsch?</div>
+        <div id="rfContainer"></div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 3: LÜCKENTEXT -->
+    <div class="section" id="sec-3">
+      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkzDvGNrZW50ZXh0Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM3YzNhZWQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNjMjQxMGMiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDUwIiBjeT0iNDAiIHI9IjEyMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wOCIvPjxjaXJjbGUgY3g9IjkwMCIgY3k9IjE5MCIgcj0iOTAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDciLz48dGV4dCB4PSI3MCIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPuKcj++4jzwvdGV4dD48dGV4dCB4PSIxNjYiIHk9IjEyOCIgZm9udC1zaXplPSI3MiIgb3BhY2l0eT0iMC45Ij7wn5OdPC90ZXh0Pjx0ZXh0IHg9IjI2MiIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPvCflI48L3RleHQ+PHRleHQgeD0iNzAiIHk9IjE3OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjk1Ij5Mw7xja2VudGV4dDwvdGV4dD48L3N2Zz4=" alt="Ein Terminkalender mit einer leeren Zelle, die eine goldene Notiz füllt — Lückentext">
+        <div class="section-title">✏️ Lückentext</div>
+        <div class="timer-bar">
+            <span>⏱ <span id="timer-3">0:00</span></span>
+            <span>🏆 <span id="best-3">–</span></span>
+            <button onclick="fbLtReset()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
+            <button onclick="fbLtShowLoesung()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button>
+        </div>
+        <div class="wortbank" id="wortbank-luecken"></div>
+        <div id="lueckenContainer" class="luecken-story">
+          <p>Du brauchst keinen Kaffee und keinen langen <input class="blank" data-answer="Spaziergang">, keine <input class="blank" data-answer="schlaflose"> Nacht. Du <input class="blank" data-answer="starrst"> nicht drei Stunden lang auf ein leeres <input class="blank" data-answer="Blatt">, so wie ich es oft tue.</p>
+
+          <p>Meine <input class="blank" data-answer="Tochter"> Lena studiert <input class="blank" data-answer="Informatik"> und sagt, das Schreiben sei für dich nur Mathematik. Für mich aber ist es wie <input class="blank" data-answer="Atmen"> — man kann es kaum <input class="blank" data-answer="erklären">.</p>
+
+          <p>Du kennst vielleicht alle Wörter der <input class="blank" data-answer="Welt">, doch du kennst keine echten <input class="blank" data-answer="Tränen">.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 4: SATZBAU -->
+    <div class="section" id="sec-4">
+      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlPDpHR6ZSBvcmRuZW4iPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzE2YTM0YSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBmNzY2ZSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjEwNTAiIGN5PSI0MCIgcj0iMTIwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjA4Ii8+PGNpcmNsZSBjeD0iOTAwIiBjeT0iMTkwIiByPSI5MCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wNyIvPjx0ZXh0IHg9IjcwIiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+8J+nqTwvdGV4dD48dGV4dCB4PSIxNjYiIHk9IjEyOCIgZm9udC1zaXplPSI3MiIgb3BhY2l0eT0iMC45Ij7wn5SXPC90ZXh0Pjx0ZXh0IHg9IjI2MiIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPvCfk5A8L3RleHQ+PHRleHQgeD0iNzAiIHk9IjE3OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjk1Ij5Tw6R0emUgb3JkbmVuPC90ZXh0Pjwvc3ZnPg==" alt="Ein wachsender Stapel Aktenordner, der oberste golden — Aufbauen">
+        <div class="section-title">🧩 Satzbau — Sätze ordnen</div>
+        <div class="timer-bar">
+            <div class="timer-display">
+                <span>⏱ <span class="timer-current" id="timer-4">0:00</span></span>
+                <span>🏆 <span class="timer-best" id="best-4">—</span></span>
+            </div>
+            <div class="btn-row">
+                <button onclick="timerResetOne(4); initSatzbau();" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
+                <button class="btn btn-loesung" onclick="satzbauData.forEach(function(_,i){sbShowSolution(i)})">💡 Lösungen</button>
+            </div>
+        </div>
+        <div id="satzbauContainer"></div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 5: WORTSCHATZ -->
+    <div class="section" id="sec-genus">
+        <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkdlbnVzIOKAlCBkZXIsIGRpZSwgZGFzIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNkYzI2MjYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3YzNhZWQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDUwIiBjeT0iNDAiIHI9IjEyMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wOCIvPjxjaXJjbGUgY3g9IjkwMCIgY3k9IjE5MCIgcj0iOTAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDciLz48dGV4dCB4PSI3MCIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPvCfj7fvuI88L3RleHQ+PHRleHQgeD0iMTY2IiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+8J+UpDwvdGV4dD48dGV4dCB4PSIyNjIiIHk9IjEyOCIgZm9udC1zaXplPSI3MiIgb3BhY2l0eT0iMC45Ij7wn5OaPC90ZXh0Pjx0ZXh0IHg9IjcwIiB5PSIxNzgiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC45NSI+R2VudXMg4oCUIGRlciwgZGllLCBkYXM8L3RleHQ+PC9zdmc+" alt="Genus üben — der, die, das">
+        <h2>🏷️ Genus</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:6px 12px;background:#f8f9fa;border-radius:8px;"><div style="display:flex;gap:6px;"><button onclick="showGenusLoesung()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button><button onclick="resetGenus()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button></div><div style="display:flex;gap:14px;align-items:center;font-size:0.82em;color:var(--tx-888);font-variant-numeric:tabular-nums;"><span>⏱ <span id="timer-5">00:00</span></span><span>🏆 <span id="best-5">--:--</span></span></div></div>
+        <div class="genus-pool" id="genusPool"></div>
+        <div class="genus-kategorien"><div class="genus-kat kat-der"><div class="kat-title">der</div><div class="genus-drop" id="drop-der" data-cat="der"></div></div><div class="genus-kat kat-die"><div class="kat-title">die</div><div class="genus-drop" id="drop-die" data-cat="die"></div></div><div class="genus-kat kat-das"><div class="kat-title">das</div><div class="genus-drop" id="drop-das" data-cat="das"></div></div><div class="genus-kat kat-pl"><div class="kat-title">Plural</div><div class="genus-drop" id="drop-pl" data-cat="pl"></div></div></div>
+        <div id="genusFeedback" style="margin-top:14px;font-weight:600;"></div>
+    </div>
 <div class="section" id="sec-5">
-    <p class="section-title">🧩 Satzbau</p>
-    <p class="section-intro">Ordnen Sie die Satzteile in die richtige Reihenfolge.</p>
-
-    <div id="sb-area"></div>
-    <div class="btn-row">
-        <button class="btn btn-check" onclick="checkSatzbau()">✔ Prüfen</button>
-        <button onclick="showSatzbau()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">💡 Lösungen</button>
-        <button onclick="resetSatzbau()" style="background:#f5f7ff;border:1px solid #c5cff5;border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
+      <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IldvcnRzY2hhdHotVHJhaW5pbmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2VhNTgwYyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NGJhMiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjEwNTAiIGN5PSI0MCIgcj0iMTIwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjA4Ii8+PGNpcmNsZSBjeD0iOTAwIiBjeT0iMTkwIiByPSI5MCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wNyIvPjx0ZXh0IHg9IjcwIiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+8J+UoDwvdGV4dD48dGV4dCB4PSIxNjYiIHk9IjEyOCIgZm9udC1zaXplPSI3MiIgb3BhY2l0eT0iMC45Ij7wn6egPC90ZXh0Pjx0ZXh0IHg9IjI2MiIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPuKMqO+4jzwvdGV4dD48dGV4dCB4PSI3MCIgeT0iMTc4IiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOTUiPldvcnRzY2hhdHotVHJhaW5pbmc8L3RleHQ+PC9zdmc+" alt="Eine Wand voller Haftnotizen, eine leuchtet golden — Wortschatz">
+        <div class="section-title">🔠 Wortschatz-Training</div>
+        <div class="timer-bar">
+            <div class="timer-display">
+                <span>⏱ <span class="timer-current" id="timer-6">0:00</span></span>
+                <span>🏆 <span class="timer-best" id="best-6">—</span></span>
+            </div>
+            <div class="btn-row">
+                <button onclick="resetWortschatz()" style="background:var(--bg-f5f7ff);border:1px solid var(--bd-c5cff5);border-radius:8px;padding:6px 16px;font-size:0.85em;color:var(--tx-667eea);cursor:pointer;font-weight:600;">↺ Neustart</button>
+                <button class="btn btn-loesung" onclick="showWortschatzLoesung()">💡 Lösungen</button>
+            </div>
+        </div>
+        <div id="wortschatzContainer"></div>
     </div>
-    <div class="score" id="sb-score"></div>
+
+    
+<!-- TAB: Sprech-Trainer Wortschatz (FB-SPRECH-WORTSCHATZ) -->
+<div class="section" id="sec-sprechen">
+  <img class="tab-banner" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlNwcmVjaC1UcmFpbmVyIiB4bWxuczpjMnBhPSJodHRwOi8vYzJwYS5vcmcvbWFuaWZlc3QiPjxtZXRhZGF0YT48YzJwYTptYW5pZmVzdD5BQUFXZ21wMWJXSUFBQUFlYW5WdFpHTXljR0VBRVFBUWdBQUFxZ0E0bTNFRFl6SndZUUFBQUJaY2FuVnRZZ0FBQUVkcWRXMWtZekp0WVFBUkFCQ0FBQUNxQURpYmNRTjFjbTQ2WXpKd1lUbzJaak15WTJNeVpTMWlaalV3TFRRM1lUQXRZV1ZsTUMwd1lqQTNZamN3TW1GaFptRUFBQUFEbDJwMWJXSUFBQUFwYW5WdFpHTXlZWE1BRVFBUWdBQUFxZ0E0bTNFRFl6SndZUzVoYzNObGNuUnBiMjV6QUFBQUFMeHFkVzFpQUFBQVJHcDFiV1JqWW05eUFCRUFFSUFBQUtvQU9KdHhFMk15Y0dFdWFXNW5jbVZrYVdWdWRDNTJNd0FBQUFBWVl6SnphQTZJZEJpSm5kWEZqYmZ5VGVTVDN4Y0FBQUJ3WTJKdmNxTnBaR002Wm05eWJXRjBiV2x0WVdkbEwzTjJaeXQ0Yld4cWFXNXpkR0Z1WTJWSlJIZ3NlRzF3T21scFpEbzVabUV6TXpRME5TMHdaVFV3TFRRd1l6RXRPR0V6TmkxaU16aGpZalU0TWpBeE1ERnNjbVZzWVhScGIyNXphR2x3YUhCaGNtVnVkRTltQUFBQjRtcDFiV0lBQUFCQmFuVnRaR05pYjNJQUVRQVFnQUFBcWdBNG0zRVRZekp3WVM1aFkzUnBiMjV6TG5ZeUFBQUFBQmhqTW5Ob3E2c2krNmluSG5EOC9LTjBURnlidEFBQUFabGpZbTl5b21kaFkzUnBiMjV6Z3FKbVlXTjBhVzl1YTJNeWNHRXViM0JsYm1Wa2FuQmhjbUZ0WlhSbGNuT2hhMmx1WjNKbFpHbGxiblJ6Z2FKamRYSnNlQzF6Wld4bUkycDFiV0ptUFdNeWNHRXVZWE56WlhKMGFXOXVjeTlqTW5CaExtbHVaM0psWkdsbGJuUXVkak5rYUdGemFGZ2dqb2h2SXhLNVNBZnRTTHhlckhtVHg3QitxKzJKVDF1U1FlQjZxVVdpZUZDa1ptRmpkR2x2Ym5nZFkyOXRMbUZ1ZEdoeWIzQnBZeTVqYkdGMVpHVXVjSEp2ZG1sa1pXUnFjR0Z5WVcxbGRHVnljNkY0SDJOdmJTNWhiblJvY205d2FXTXViM0pwWjJsdUxXTnZibVpwWkdWdVkyVm5kVzVyYm05M2JtdGtaWE5qY21sd2RHbHZibmhtUTJ4aGRXUmxJSEJ5YjNacFpHVmtJSFJvYVhNZ1ptbHNaU0JoZENCMGFHVWdjbVZ4ZFdWemRDQnZaaUJoSUhWelpYSWdZVzVrSUcxaGVTQm9ZWFpsSUdOeVpXRjBaV1FnYjNJZ2JXOWthV1pwWldRZ2RHaGxJR1pwYkdVZ1kyOXVkR1Z1ZEhNdWJYTnZablIzWVhKbFFXZGxiblNoWkc1aGJXVm1RMnhoZFdSbGNtRnNiRUZqZEdsdmJuTkpibU5zZFdSbFpQVUFBQURJYW5WdFlnQUFBRUJxZFcxa1kySnZjZ0FSQUJDQUFBQ3FBRGliY1JOak1uQmhMbWhoYzJndVpHRjBZUUFBQUFBWVl6SnphQnV0RmFqaStEanhrUGU1dm5YcldpOEFBQUNBWTJKdmNxVmpZV3huWm5Ob1lUSTFObU53WVdSTkFBQUFBQUFBQUFBQUFBQUFBR1JvWVhOb1dDQ20rNUdZQnQ4c0RIb3R0ZTQwejF2TTlxOFQvd0JINzNwVW1Qd2g5UW40Q1dSdVlXMWxibXAxYldKbUlHMWhibWxtWlhOMGFtVjRZMngxYzJsdmJuT0JvbVZ6ZEdGeWRCaS9abXhsYm1kMGFCa2VCQUFBQWo1cWRXMWlBQUFBSjJwMWJXUmpNbU5zQUJFQUVJQUFBS29BT0p0eEEyTXljR0V1WTJ4aGFXMHVkaklBQUFBQ0QyTmliM0tsWTJGc1oyWnphR0V5TlRacGMybG5ibUYwZFhKbGVFMXpaV3htSTJwMWJXSm1QUzlqTW5CaEwzVnlianBqTW5CaE9qWm1NekpqWXpKbExXSm1OVEF0TkRkaE1DMWhaV1V3TFRCaU1EZGlOekF5WVdGbVlTOWpNbkJoTG5OcFoyNWhkSFZ5WldwcGJuTjBZVzVqWlVsRWVDeDRiWEE2YVdsa09qZzJaV0pqWlRRekxUTTRaREF0TkRKa1pDMWhZV0psTFdGbE56a3lOVGt3TWpjd05ISmpjbVZoZEdWa1gyRnpjMlZ5ZEdsdmJuT0RvbU4xY214NExYTmxiR1lqYW5WdFltWTlZekp3WVM1aGMzTmxjblJwYjI1ekwyTXljR0V1YVc1bmNtVmthV1Z1ZEM1Mk0yUm9ZWE5vV0NDT2lHOGpFcmxJQisxSXZGNnNlWlBIc0g2cjdZbFBXNUpCNEhxcFJhSjRVS0pqZFhKc2VDcHpaV3htSTJwMWJXSm1QV015Y0dFdVlYTnpaWEowYVc5dWN5OWpNbkJoTG1GamRHbHZibk11ZGpKa2FHRnphRmdnLzYrR3B3dXVtektNSVRXNjRlS0t2ZHRWQ2Zzb1Q0OGVobjUxb2JCeUpWcWlZM1Z5YkhncGMyVnNaaU5xZFcxaVpqMWpNbkJoTG1GemMyVnlkR2x2Ym5Ndll6SndZUzVvWVhOb0xtUmhkR0ZrYUdGemFGZ2czTXVWc2RaZEZ0VWVMdWtrMXc4SGNMRFlFdG1IWnViNEh2U1JPQ1lFSEsxMFkyeGhhVzFmWjJWdVpYSmhkRzl5WDJsdVptK2paRzVoYldWdlFXNTBhSEp2Y0dsaklFWnBiR1Z6WjNabGNuTnBiMjVsTVM0d0xqQnJjM0JsWTFabGNuTnBiMjVsTWk0MExqQUFBQkE0YW5WdFlnQUFBQ2hxZFcxa1l6Smpjd0FSQUJDQUFBQ3FBRGliY1FOak1uQmhMbk5wWjI1aGRIVnlaUUFBQUJBSVkySnZjdEtFV1FJU29nRW1HQ0ZaQWdvd2dnSUdNSUlCamFBREFnRUNBaFJBNWFBSzdzSTUwTDY0Zy9vR1FnVTlaMVVUQURBS0JnZ3Foa2pPUFFRREF6QkpNUmN3RlFZRFZRUUtFdzVCYm5Sb2NtOXdhV01zSUZCQ1F6RXVNQ3dHQTFVRUF4TWxRVzUwYUhKdmNHbGpJRU52Ym5SbGJuUWdRM0psWkdWdWRHbGhiSE1nVW05dmRDQkRRVEFlRncweU5qQTRNRGN4T0RRek5UWmFGdzB5T0RBNE1EWXhPVFF6TlRaYU1FUXhGekFWQmdOVkJBb1REa0Z1ZEdoeWIzQnBZeXdnVUVKRE1Ta3dKd1lEVlFRREV5QkJiblJvY205d2FXTWdRMnhoZFdSbElFTnZiblJsYm5RZ1UybG5ibWx1WnpCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkpoNkNtdkxVQmdGRk5VMHZVS2xPVnRFNmRqZDE3TDVTdXdYMExlbUZpc0JNM2RrZC8zY3lqeEZBM1FvNVM0NmZYMC9paFkwVlo3bWZiOUtGNzAzdDVPaldEQldNQTRHQTFVZER3RUIvd1FFQXdJSGdEQVZCZ05WSFNVRURqQU1CZ29yQmdFRUFZUG9YZ0lCTUF3R0ExVWRFd0VCL3dRQ01BQXdId1lEVlIwakJCZ3dGb0FVemxIaUJJRk9aRnNqK09QRXo1bytuTUhYWE1Jd0NnWUlLb1pJemowRUF3TURad0F3WkFJd01YTWRGSjRCZXRMTFZZN09SdUU5bm9xYmJBWk9abi9hQXJYeVR3RkFaZktyUHp4RjJ2UG9KTmYxK1VDZGcxWEdBakJ3WDF6ZDlXR3FZa3FtTDVTRnF3MVF5U2pyMXpKZnBKTTkrMXJkRHdTUExNT1BPakt1aVhqb1UvcFVVZUc5UndtaFkzQmhaRmtObmdBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFQWllRRElueEptNTNLSW9lVy9MSXF6bklFYmI4WkFLZkZTek13eWgxSzVGcXlFTCs0NnJWcWZlYVZGWEp4YTNjZnFydE00cW0xTWhieTk3b2RoV2ZMR1l6ZGs9PC9jMnBhOm1hbmlmZXN0PjwvbWV0YWRhdGE+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJiZ3NwIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzY0YmEyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI2Jnc3ApIi8+PHBhdGggZD0iTTAgMTUwIFEgMjAwIDExMCA0MDAgMTQ4IFQgODAwIDE0NiBUIDEyMDAgMTMwIEwxMjAwIDIwMCBMMCAyMDAgWiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEwKSIvPjxyZWN0IHg9IjI1MCIgeT0iNDAiIHdpZHRoPSI1NiIgaGVpZ2h0PSI4OCIgcng9IjI4IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOTIpIi8+PHBhdGggZD0iTTIyOCAxMDAgYTUwIDUwIDAgMCAwIDEwMCAwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC45MikiIHN0cm9rZS13aWR0aD0iOCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTI3OCAxNTAgdjIyIE0yNTAgMTcyIGg1NiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOTIpIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zNzAgNzAgcTE4IDMwIDAgNjAgTTQwMCA1NSBxMzAgNDUgMCA5MCBNNDMwIDQwIHE0MiA2MCAwIDEyMCIgc3Ryb2tlPSIjZmZkNTRmIiBzdHJva2Utd2lkdGg9IjciIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxyZWN0IHg9IjUyMCIgeT0iODYiIHdpZHRoPSI1NjAiIGhlaWdodD0iMjYiIHJ4PSIxMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjI1KSIvPjxyZWN0IHg9IjUyMCIgeT0iODYiIHdpZHRoPSIzMzAiIGhlaWdodD0iMjYiIHJ4PSIxMyIgZmlsbD0iI2ZmZDU0ZiIvPjx0ZXh0IHg9IjEwODAiIHk9IjcwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjk1KSIgdGV4dC1hbmNob3I9ImVuZCI+OCDCtyA1IMK3IDMgczwvdGV4dD48L3N2Zz4=" alt="Sprech-Trainer: Mikrofon und ablaufender Zeitbalken">
+  <h2>🗣️ Sprechen &ndash; Wortschatz unter Zeitdruck</h2>
+  <p class="sp-intro">Das englische Wort erscheint allein – du sagst <strong>laut</strong> das deutsche Wort <strong>mit Artikel</strong>, bevor der Balken abgelaufen ist. Erst wer Wort und Artikel ohne Nachdenken abrufen kann, hat sie wirklich gespeichert.</p>
+  <div class="sp-steuerung">
+    <label>Aufgabe <select id="sp-modus">
+      <option value="kurz">Wort mit Artikel</option>
+      <option value="satz">Ganzer Satz</option>
+    </select></label>
+    <label>Zeit <select id="sp-zeit">
+      <option value="8">8 Sekunden</option>
+      <option value="5" selected>5 Sekunden</option>
+      <option value="3">3 Sekunden</option>
+    </select></label>
+    <button class="sp-btn" id="sp-mic" onclick="spMicToggle()" title="Klicken zum Ein- oder Ausschalten" hidden>🎤 Mikrofon ist aus</button>
+  </div>
+  <div class="sp-stand" id="sp-stand"></div>
+  <div class="sp-karte" id="sp-karte"></div>
+  <div class="sp-tipp">Tipp: Leertaste zeigt die Lösung bzw. geht weiter. Mit Mikrofon hört die Seite mit und prüft, ob das richtige Wort mit Artikel gefallen ist (Chrome, Safari).</div>
 </div>
+<!-- /FB-SPRECH-WORTSCHATZ -->
+<div class="section" id="sec-schreib">
+      <img class="tab-banner" style="object-position:top" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDIwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlNjaHJlaWJ3ZXJrc3RhdHQiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I0NTMwOSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzdjM2FlZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjEwNTAiIGN5PSI0MCIgcj0iMTIwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjA4Ii8+PGNpcmNsZSBjeD0iOTAwIiBjeT0iMTkwIiByPSI5MCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4wNyIvPjx0ZXh0IHg9IjcwIiB5PSIxMjgiIGZvbnQtc2l6ZT0iNzIiIG9wYWNpdHk9IjAuOSI+8J+TqDwvdGV4dD48dGV4dCB4PSIxNjYiIHk9IjEyOCIgZm9udC1zaXplPSI3MiIgb3BhY2l0eT0iMC45Ij7wn5aL77iPPC90ZXh0Pjx0ZXh0IHg9IjI2MiIgeT0iMTI4IiBmb250LXNpemU9IjcyIiBvcGFjaXR5PSIwLjkiPvCfkqw8L3RleHQ+PHRleHQgeD0iNzAiIHk9IjE3OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjk1Ij5TY2hyZWlid2Vya3N0YXR0PC90ZXh0Pjwvc3ZnPg==" alt="Notizbuch und Stift, bereit zum Schreiben">
+      <div class="section-title">📨 Schreibwerkstatt</div>
+      <div class="schreib-name-box">
+        <label class="schreib-label" for="sw-name">Dein Name (Pflicht — damit ich weiß, wer geschrieben hat):</label>
+        <input type="text" id="sw-name" class="schreib-name" placeholder="z. B. Maria Lopez" required>
+      </div>
+
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">1</span><span class="schreib-aufgabe-titel">Dein Lieblingsbuch</span>
+        <div class="schreib-aufgabe-frage">Welches Buch magst du besonders? Warum? Schreib zwei oder drei Sätze.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="1" data-titel="Dein Lieblingsbuch"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-1">0</strong> <span class="schreib-mini-status" id="sw-status-1"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-1" onclick="schreibSendenEinzeln(1)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">2</span><span class="schreib-aufgabe-titel">Mensch oder Maschine</span>
+        <div class="schreib-aufgabe-frage">Was kann ein Mensch besser als eine Maschine? Schreib zwei Sätze.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="2" data-titel="Mensch oder Maschine"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-2">0</strong> <span class="schreib-mini-status" id="sw-status-2"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-2" onclick="schreibSendenEinzeln(2)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">3</span><span class="schreib-aufgabe-titel">Deine Angst</span>
+        <div class="schreib-aufgabe-frage">Wovor hast du manchmal Angst? Schreib zwei oder drei Sätze.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="3" data-titel="Deine Angst"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-3">0</strong> <span class="schreib-mini-status" id="sw-status-3"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-3" onclick="schreibSendenEinzeln(3)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">4</span><span class="schreib-aufgabe-titel">Eine Antwort an Thomas</span>
+        <div class="schreib-aufgabe-frage">Thomas schreibt an die Maschine. Was antwortest du ihm?</div>        <textarea class="schreib-mini-textarea" data-aufgabe="4" data-titel="Eine Antwort an Thomas"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-4">0</strong> <span class="schreib-mini-status" id="sw-status-4"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-4" onclick="schreibSendenEinzeln(4)">📨 An Frank senden</button>
+        </div>
+      </div>
+      <div class="schreib-aufgabe-karte">
+        <span class="schreib-aufgabe-nr">5</span><span class="schreib-aufgabe-titel">Mini-Dialog: Über KI sprechen</span>
+        <div class="schreib-aufgabe-frage">Zwei Personen sprechen über künstliche Intelligenz. Schreib einen kurzen Dialog mit zwei Fragen und zwei Antworten.</div>        <textarea class="schreib-mini-textarea" data-aufgabe="5" data-titel="Mini-Dialog: Über KI sprechen"></textarea>
+        <div class="schreib-mini-footer">
+          <span class="schreib-mini-meta">Wörter: <strong class="wc-5">0</strong> <span class="schreib-mini-status" id="sw-status-5"></span></span>
+          <button class="schreib-mini-btn" id="sw-send-5" onclick="schreibSendenEinzeln(5)">📨 An Frank senden</button>
+        </div>
+      </div>
+
+      <div class="schreib-actions">
+        <button class="schreib-btn schreib-btn-primary" id="sw-btn-all" onclick="schreibSendenAlleNochOffenen()">📨 Alle noch nicht gesendeten Antworten schicken</button>
+        <button class="schreib-btn schreib-btn-ghost" onclick="schreibKopieren()">📋 In Zwischenablage</button>
+        <button class="schreib-btn schreib-btn-ghost" onclick="schreibLeeren()">🗑️ Alles zurücksetzen</button>
+      </div>
+      <div class="schreib-status" id="sw-status"></div>
+    </div>
 
     <div class="author-footer">
-  <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
-  <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a><br>📅 Termin vereinbaren &middot; <a href="https://termin.frankburkert-daf.de">https://termin.frankburkert-daf.de</a>
-</div>
+        <span class="author-name">&copy; Frank Burkert</span> &middot; DaF-Materialien &middot;
+        <a href="mailto:unterricht@frankburkert-daf.de">unterricht@frankburkert-daf.de</a> &middot;
+    <a href="https://termin.frankburkert-daf.de" target="_blank">📅 Termin vereinbaren</a>
+    </div>
 </div><!-- /container -->
 
 <script>
-// ===== NAV =====
+// ═══════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════
+var lueckenBuilt = false;
+var sbBuilt = false;
+var wsBuilt = false;
+
 function showSection(idx) {
-    document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===idx));
-    document.querySelectorAll('.nav-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+    document.querySelectorAll('.section').forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    document.querySelectorAll('.nav-btn').forEach(function(b,i){ b.classList.toggle('active', i===idx); });
+    if (idx === 2 && !rfBuilt) { buildRF(); rfBuilt = true; }
+    if (idx === 4 && !sbBuilt) { initSatzbau(); sbBuilt = true; }
+    if (idx === 6) { initWortschatz(); }
+    if (idx === 7 && !swInit) { initSchreibwerkstatt(); swInit = true; }
+}
+var swInit = false;
+
+// ═══════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════
+var TIMER_PREFIX = 'a2-brief-maschine-';
+var timerStarted  = [false,false,false,false,false,false];
+var timerRunning  = [false,false,false,false,false,false];
+var timerSeconds  = [0,0,0,0,0,0];
+var timerIntervals = [null,null,null,null,null,null];
+
+function timerAutoStart(n) {
+    if (timerStarted[n]) return;
+    timerStarted[n] = true; timerRunning[n] = true;
+    timerIntervals[n] = setInterval(function() {
+        timerSeconds[n]++;
+        var el = document.getElementById('timer-'+n);
+        if (el) el.textContent = fmtTime(timerSeconds[n]);
+    }, 1000);
+}
+function timerStop(n) {
+    if (!timerRunning[n]) return;
+    clearInterval(timerIntervals[n]); timerRunning[n] = false;
+    var best = parseInt(localStorage.getItem(TIMER_PREFIX+'best-'+n) || '999999');
+    if (timerSeconds[n] > 0 && timerSeconds[n] < best) {
+        localStorage.setItem(TIMER_PREFIX+'best-'+n, timerSeconds[n]);
+        var el = document.getElementById('best-'+n);
+        if (el) el.textContent = fmtTime(timerSeconds[n]);
+    }
+}
+function timerResetOne(n) {
+    clearInterval(timerIntervals[n]);
+    timerRunning[n] = false; timerStarted[n] = false; timerSeconds[n] = 0;
+    var el = document.getElementById('timer-'+n); if (el) el.textContent = '0:00';
+}
+function fmtTime(s) { return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60); }
+function loadBestTimes() {
+    [3,4,5].forEach(function(i) {
+        var v = localStorage.getItem(TIMER_PREFIX+'best-'+i);
+        if (v) { var el=document.getElementById('best-'+i); if(el) el.textContent=fmtTime(parseInt(v)); }
+    });
 }
 
-// ===== GENUS DATA =====
+// ═══════════════════════════════════════
+// TAB 0: VORENTLASTUNG
+// ═══════════════════════════════════════
+var VORENTLASTUNG = [
+    { term: 'der Schriftsteller, -',      en: '(the writer)',        def: '✍️ eine Person, die Bücher und Geschichten schreibt' },
+    { term: 'das Experiment, -e',         en: '(the experiment)',    def: '🔬 ein Test: man probiert etwas aus' },
+    { term: 'lebendig',                   en: '(alive, vivid)',      def: '🌱 voller Leben — nicht tot und nicht langweilig' },
+    { term: 'das Werkzeug, -e',           en: '(the tool)',          def: '🔧 ein Ding, mit dem man arbeitet' },
+    { term: 'die Geduld, kein Plural',    en: '(patience)',          def: '⏳ man kann ruhig warten' },
+    { term: 'die Träne, -n',              en: '(the tear)',          def: '💧 Wasser aus den Augen, wenn man weint' },
+    { term: 'arbeitslos',                 en: '(unemployed)',        def: '🚪 man hat keine Arbeit' },
+    { term: 'die Einsamkeit, kein Plural',en: '(loneliness)',        def: '🪑 das Gefühl, allein zu sein' },
+    { term: 'starren (auf)',              en: '(to stare at)',       def: '👀 lange und ohne Pause auf etwas sehen' },
+    { term: 'schlaflos',                  en: '(sleepless)',         def: '🌙 eine Nacht ohne Schlaf' }
+];
+
+(function buildVorentlastung() {
+    var grid = document.getElementById('vorentlastungGrid');
+    VORENTLASTUNG.forEach(function(item) {
+        var card = document.createElement('div');
+        card.className = 'vocab-card';
+        card.innerHTML = '<div class="vocab-term">'+item.term+'</div>'
+            + '<div class="vocab-en">'+item.en+'</div>'
+            + '<div class="vocab-def">'+item.def+'</div>';
+        grid.appendChild(card);
+    });
+})();
+
+// ═══════════════════════════════════════
+// TAB 2: RICHTIG / FALSCH
+// ═══════════════════════════════════════
+var rfBuilt = false;
+var RF_DATA = [
+    { text: 'Thomas ist Schriftsteller.', correct: true },
+    { text: 'Thomas hat Angst vor Robotern wie im Kino.', correct: false },
+    { text: 'Thomas schreibt seit dreißig Jahren Geschichten.', correct: true },
+    { text: 'Die Maschine braucht für eine Geschichte zehn Sekunden.', correct: true },
+    { text: 'Thomas findet die Geschichte der Maschine voller Fehler.', correct: false },
+    { text: 'In der Geschichte der Maschine fehlt ein menschlicher Moment.', correct: true },
+    { text: 'Lena studiert Medizin.', correct: false },
+    { text: 'Thomas hat mit dem Schreiben viel Geld verdient.', correct: false },
+    { text: 'Für Thomas ist das Schreiben wie Atmen.', correct: true },
+    { text: 'Thomas glaubt, dass die Maschine weinen kann.', correct: false }
+];
+
+function buildRF() {
+    var c = document.getElementById('rfContainer');
+    RF_DATA.forEach(function(item, i) {
+        var div = document.createElement('div');
+        div.className = 'rf-item';
+        div.innerHTML = '<div class="rf-num">'+(i+1)+'</div>'
+            + '<div class="rf-text">'+item.text+'<div class="rf-fb" id="rf-fb-'+i+'"></div></div>'
+            + '<div class="rf-btns">'
+            + '<button class="rf-btn" onclick="checkRF('+i+',this,true)">Richtig</button>'
+            + '<button class="rf-btn" onclick="checkRF('+i+',this,false)">Falsch</button>'
+            + '</div>';
+        c.appendChild(div);
+    });
+}
+
+function checkRF(i, btn, answer) {
+    var btns = btn.parentElement.querySelectorAll('.rf-btn');
+    btns.forEach(function(b){ b.disabled=true; b.classList.remove('correct','wrong'); });
+    var fb = document.getElementById('rf-fb-'+i);
+    var isCorrect = (answer === RF_DATA[i].correct);
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+    fb.className = 'rf-fb ' + (isCorrect ? 'ok' : 'no');
+    fb.textContent = isCorrect ? '✓ Richtig!' : '✗ Falsch! Die Aussage ist ' + (RF_DATA[i].correct ? 'richtig' : 'falsch') + '.';
+}
+
+// ═══════════════════════════════════════
+// TAB 3: LÜCKENTEXT
+// ═══════════════════════════════════════
+
+function liveCheckLuecke(inp) {
+    var val = inp.value.trim();
+    var ans = inp.dataset.answer;
+    inp.classList.remove('correct','wrong');
+    if (!val) return;
+    if (val === ans) { inp.classList.add('correct'); timerAutoStart(3); checkLueckenOk(); return; }
+    if (ans.indexOf(val) === 0) { timerAutoStart(3); return; }
+    inp.classList.add('wrong');
+}
+function checkLueckenOk() {
+    var inputs = document.querySelectorAll('#lueckenContainer input.blank');
+    if (Array.from(inputs).every(function(i){ return i.classList.contains('correct'); })) timerStop(3);
+}
+function resetLuecken() {
+    timerResetOne(3);
+    document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){
+        inp.value=''; inp.classList.remove('correct','wrong');
+    });
+}
+function loesungLuecken() {
+    document.querySelectorAll('#lueckenContainer input.blank').forEach(function(inp){
+        var ans = inp.dataset.answer;
+        inp.value = ans;
+        inp.classList.remove('wrong'); inp.classList.add('correct');
+    });
+}
+
+// ═══════════════════════════════════════
+// TAB 4: SATZBAU (Standard-Bezeichner)
+// ═══════════════════════════════════════
+var sbDragged = null;
+var satzbauData = [
+    {
+        parts: ['ich','schreibe','seit','dreißig','Jahren','Geschichten','über','die','Liebe'],
+        valid: [
+            ['ich','schreibe','seit','dreißig','Jahren','Geschichten','über','die','Liebe'],
+            ['seit','dreißig','Jahren','schreibe','ich','Geschichten','über','die','Liebe']
+        ],
+        punct: '.'
+    },
+    {
+        parts: ['warum','schreiben','Menschen','eigentlich','Geschichten','über','ihr','Leben'],
+        valid: [['warum','schreiben','Menschen','eigentlich','Geschichten','über','ihr','Leben']],
+        punct: '?'
+    },
+    {
+        parts: ['Thomas','hat','Angst',',','weil','die','Maschine','sehr','schnell','schreibt'],
+        valid: [['Thomas','hat','Angst',',','weil','die','Maschine','sehr','schnell','schreibt']],
+        punct: '.'
+    },
+    {
+        parts: ['meine','Tochter','Lena','studiert','Informatik',',','aber','ich','schreibe','Bücher'],
+        valid: [['meine','Tochter','Lena','studiert','Informatik',',','aber','ich','schreibe','Bücher']],
+        punct: '.'
+    },
+    {
+        parts: ['letzte','Woche','habe','ich','ein','Experiment','mit','der','Maschine','gemacht'],
+        valid: [
+            ['letzte','Woche','habe','ich','ein','Experiment','mit','der','Maschine','gemacht'],
+            ['ich','habe','letzte','Woche','ein','Experiment','mit','der','Maschine','gemacht']
+        ],
+        punct: '.'
+    },
+    {
+        parts: ['die','Maschine','hat','alle','Wörter',',','aber','sie','hat','keine','Tränen'],
+        valid: [['die','Maschine','hat','alle','Wörter',',','aber','sie','hat','keine','Tränen']],
+        punct: '.'
+    }
+];
+
+function getSbCursor() {
+    var c = document.getElementById('sb-insert-cursor');
+    if (!c) { c=document.createElement('div'); c.id='sb-insert-cursor'; c.style.cssText='width:3px;min-height:32px;background:#e67e22;border-radius:2px;align-self:stretch;pointer-events:none;flex-shrink:0;'; }
+    return c;
+}
+function getSbInsertPos(zone, clientX) {
+    var chips = Array.from(zone.querySelectorAll('.chip'));
+    for (var i=0; i<chips.length; i++) { var r=chips[i].getBoundingClientRect(); if (clientX<r.left+r.width/2) return chips[i]; }
+    return null;
+}
+function sbCap(str) { return str.charAt(0).toUpperCase()+str.slice(1); }
+function sbUpdateCapitalization(row) {
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    chips.forEach(function(c, i) {
+        var orig = c.dataset.orig;
+        var isProper = orig.charAt(0)===orig.charAt(0).toUpperCase() && orig.charAt(0)!==orig.charAt(0).toLowerCase();
+        c.textContent = isProper ? orig : (i===0 ? sbCap(orig) : orig);
+    });
+}
+function sbMakeChip(word) {
+    var chip = document.createElement('div');
+    chip.className='chip'; if(word===','||word===';')chip.classList.add('punct-chip'); chip.textContent=word; chip.dataset.orig=word; chip.draggable=true;
+    chip.addEventListener('dragstart', function(e){ sbDragged=chip; e.dataTransfer.setData('text/plain',''); setTimeout(function(){ chip.style.opacity='0.4'; },0); });
+    chip.addEventListener('dragend', function(){ chip.style.opacity=''; sbDragged=null; var c=document.getElementById('sb-insert-cursor'); if(c&&c.parentNode) c.parentNode.removeChild(c); });
+    return chip;
+}
+function sbRegisterZone(zone, idx) {
+    zone.addEventListener('dragover', function(e){
+        e.preventDefault(); if (!sbDragged) return;
+        var cursor=getSbCursor(); var before=getSbInsertPos(zone,e.clientX);
+        if (before) zone.insertBefore(cursor,before); else zone.appendChild(cursor);
+    });
+    zone.addEventListener('dragleave', function(e){
+        if (!zone.contains(e.relatedTarget)) { var c=document.getElementById('sb-insert-cursor'); if(c&&c.parentNode===zone) zone.removeChild(c); }
+    });
+    zone.addEventListener('drop', function(e){
+        e.preventDefault(); if (!sbDragged) return;
+        var cursor=document.getElementById('sb-insert-cursor');
+        if (cursor&&cursor.parentNode===zone) { zone.insertBefore(sbDragged,cursor); zone.removeChild(cursor); } else { zone.appendChild(sbDragged); }
+        sbDragged=null;
+        sbUpdateCapitalization(document.getElementById('sb-row-'+idx));
+        sbCheckAuto(idx);
+    });
+}
+function sbColorRow(idx) {
+    var row = document.getElementById('sb-row-'+idx);
+    var chips = Array.from(row.querySelectorAll('.chip'));
+    var order = chips.map(function(c){ return c.dataset.orig; });
+    var ok = satzbauData[idx].valid.some(function(v){ return JSON.stringify(v)===JSON.stringify(order); });
+    chips.forEach(function(c){ c.classList.remove('correct','wrong'); c.classList.add(ok?'correct':'wrong'); });
+    var ex=row.querySelector('.sb-punkt'); if(ex) ex.parentNode.removeChild(ex);
+    if (ok) { var p=document.createElement('span'); p.className='sb-punkt'; p.textContent=satzbauData[idx].punct||'.'; row.appendChild(p); }
+    return ok;
+}
+function sbCheckAuto(idx) {
+    var bank=document.getElementById('sb-bank-'+idx);
+    var row=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    if (bank.querySelectorAll('.chip').length>0) { row.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('correct','wrong'); }); row.classList.remove('correct','incorrect'); fb.textContent=''; return; }
+    setTimeout(function(){
+        timerAutoStart(4);
+        var ok=sbColorRow(idx);
+        if (ok) { row.classList.add('correct'); row.classList.remove('incorrect'); fb.className='satzbau-feedback correct'; fb.textContent='✓ Korrekt!'; sbCheckAllDone(); }
+        else { row.classList.add('incorrect'); row.classList.remove('correct'); fb.className='satzbau-feedback incorrect'; fb.textContent='✗ Falsche Reihenfolge – verschiebe die Chips!'; }
+    }, 500);
+}
+function sbCheckAllDone() {
+    var allOk = satzbauData.every(function(_,i){ var r=document.getElementById('sb-row-'+i); return r&&r.classList.contains('correct'); });
+    if (allOk) timerStop(4);
+}
+function sbShowSolution(idx) {
+    var bank=document.getElementById('sb-bank-'+idx);
+    var row=document.getElementById('sb-row-'+idx);
+    var fb=document.getElementById('sb-fb-'+idx);
+    var solution=satzbauData[idx].valid[0];
+    var allChips={};
+    Array.from(bank.querySelectorAll('.chip')).forEach(function(c){ allChips[c.dataset.orig]=c; });
+    Array.from(row.querySelectorAll('.chip')).forEach(function(c){ allChips[c.dataset.orig]=c; });
+    while(bank.firstChild) bank.removeChild(bank.firstChild);
+    while(row.firstChild) row.removeChild(row.firstChild);
+    solution.forEach(function(word,i){ var chip=allChips[word]; if(chip){ chip.textContent=(i===0)?sbCap(word):word; chip.classList.remove('correct','wrong'); row.appendChild(chip); } });
+    fb.textContent='';
+    setTimeout(function(){ sbCheckAuto(idx); }, 100);
+}
+function sbResetOne(idx) {
+  var bank = document.getElementById('sb-bank-' + idx);
+  var row  = document.getElementById('sb-row-'  + idx);
+  var fb   = document.getElementById('sb-fb-'   + idx);
+  while (bank.firstChild) bank.removeChild(bank.firstChild);
+  while (row.firstChild)  row.removeChild(row.firstChild);
+  row.classList.remove('correct', 'incorrect');
+  fb.textContent = '';
+  fb.className = 'satzbau-feedback';
+  var existing = row.querySelector('.sb-punkt');
+  if (existing) existing.parentNode.removeChild(existing);
+  var parts = satzbauData[idx].parts.slice();
+  for (var i = parts.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = parts[i]; parts[i] = parts[j]; parts[j] = tmp;
+  }
+  parts.forEach(function(word) { bank.appendChild(sbMakeChip(word)); });
+}
+
+function initSatzbau() {
+    var container=document.getElementById('satzbauContainer'); container.innerHTML='';
+    satzbauData.forEach(function(ex,idx){
+        var block=document.createElement('div'); block.className='sb-block';
+        block.innerHTML='<div class="chips-container" id="sb-bank-'+idx+'"></div>'
+            +'<div class="sentence-builder" id="sb-row-'+idx+'"></div>'
+            +'<div class="satzbau-feedback" id="sb-fb-'+idx+'"></div>'
+            +'<button class="solution-btn" onclick="sbShowSolution('+idx+')">Lösung anzeigen</button>';
+        container.appendChild(block);
+        var bank=document.getElementById('sb-bank-'+idx);
+        var row=document.getElementById('sb-row-'+idx);
+        var parts=ex.parts.slice();
+        for (var i=parts.length-1;i>0;i--) { var j=Math.floor(Math.random()*(i+1)); var t=parts[i]; parts[i]=parts[j]; parts[j]=t; }
+        parts.forEach(function(word){ bank.appendChild(sbMakeChip(word)); });
+        sbRegisterZone(bank,idx); sbRegisterZone(row,idx);
+    });
+}
+
+// ═══════════════════════════════════════
+// TAB 5: WORTSCHATZ
+// ═══════════════════════════════════════
+var WORTSCHATZ = [
+    { type:'n', en:'✍️ the writer', artikel:'der', de:'Schriftsteller', plural:'Schriftsteller' },
+    { type:'n', en:'🔬 the experiment', artikel:'das', de:'Experiment', plural:'Experimente' },
+    { type:'n', en:'🔧 the tool', artikel:'das', de:'Werkzeug', plural:'Werkzeuge' },
+    { type:'n', en:'⏳ the patience', artikel:'die', de:'Geduld', plural:'–' },
+    { type:'n', en:'💧 the tear', artikel:'die', de:'Träne', plural:'Tränen' },
+    { type:'n', en:'🪑 the loneliness', artikel:'die', de:'Einsamkeit', plural:'–' },
+    { type:'n', en:'🚶 the walk', artikel:'der', de:'Spaziergang', plural:'Spaziergänge' },
+    { type:'n', en:'📄 the sheet of paper', artikel:'das', de:'Blatt', plural:'Blätter' },
+    { type:'n', en:'👩 the daughter', artikel:'die', de:'Tochter', plural:'Töchter' },
+    { type:'n', en:'↔️ the difference', artikel:'der', de:'Unterschied', plural:'Unterschiede' },
+    { type:'n', en:'😨 the fear', artikel:'die', de:'Angst', plural:'Ängste' },
+    { type:'n', en:'📖 the story', artikel:'die', de:'Geschichte', plural:'Geschichten' },
+    { type:'p', en:'👀 to stare', de:'starren' },
+    { type:'p', en:'💡 to explain', de:'erklären' },
+    { type:'p', en:'🌱 alive, vivid', de:'lebendig' },
+    { type:'p', en:'🚪 unemployed', de:'arbeitslos' }
+];
+
+/* FB-WORTSCHATZ-KANON — deterministisch, schema-adaptiv (inject_wortschatz.py) */
+function initWortschatz(){
+  var c=document.getElementById("wortschatzContainer"); if(!c) return; c.innerHTML="";
+  WORTSCHATZ.forEach(function(item){
+    var artikel=(item.artikel!==undefined)?item.artikel:(item.art||"");
+    var de=(item.de!==undefined)?item.de:(item.wort||item.word||"");
+    var plural=(item.plural!==undefined)?item.plural:(item.pl||"");
+    var en=(item.en!==undefined)?item.en:(item.prompt||item.frage||"");
+    var type=item.type||(artikel?"n":"p");
+    var row=document.createElement("div"); row.className="luecken-item"; row.style.marginBottom="0";
+    var p=document.createElement("div"); p.style.cssText="font-weight:600;color:#667eea;margin-bottom:6px;font-size:1.05em;"; p.textContent=en; row.appendChild(p);
+    var fl=document.createElement("div"); fl.style.cssText="display:flex;gap:8px;flex-wrap:wrap;align-items:center;";
+    function mk(ph,w,ans,fld){var i=document.createElement("input");i.className="blank";i.type="text";i.placeholder=ph;i.style.width=w;i.dataset.answer=ans;i.dataset.field=fld;i.oninput=function(){wortschatzCheck(this);if(typeof timerAutoStart==="function")timerAutoStart(6);checkWortschatzAllOk();};return i;}
+    if(type==="n"){
+      fl.appendChild(mk("Artikel","70px",artikel,"art"));
+      fl.appendChild(mk("Wort","160px",de,"word"));
+      var pl=mk("Plural","140px",plural,"plural");
+      if(plural==="\u2013"||plural===""||plural==="-"){pl.value="\u2013";pl.disabled=true;pl.dataset.answer="\u2013";pl.classList.add("correct");pl.style.opacity="0.6";pl.title="Dieses Wort hat keinen Plural";pl.oninput=null;}
+      fl.appendChild(pl);
+    } else { fl.appendChild(mk("Deutsch","220px",de,"word")); }
+    row.appendChild(fl); c.appendChild(row);
+  });
+}
+function wortschatzCheck(inp){
+  var u=inp.value,a=inp.dataset.answer,f=inp.dataset.field; inp.classList.remove("correct","wrong"); if(!u) return;
+  var cu=(f==="art")?u.toLowerCase().trim():u.trim(); var ca=(f==="art")?(a||"").toLowerCase():a;
+  if(cu===ca) inp.classList.add("correct"); else if(ca.indexOf(cu)===0){} else inp.classList.add("wrong");
+}
+function checkWortschatzAllOk(){
+  var ins=document.querySelectorAll("#sec-5 input.blank");
+  var ok=ins.length>0 && Array.from(ins).every(function(i){return i.disabled||i.classList.contains("correct");});
+  if(ok){try{if(typeof timerStop==="function") timerStop(6);}catch(e){}}
+}
+function showWortschatzLoesung(){
+  try{if(typeof timerStop==="function") timerStop(6);}catch(e){}
+  document.querySelectorAll("#sec-5 input.blank").forEach(function(inp){inp.value=inp.dataset.answer;inp.classList.add("correct");inp.classList.remove("wrong");});
+}
+function resetWortschatz(){
+  document.querySelectorAll("#sec-5 input.blank").forEach(function(inp){if(!inp.disabled){inp.value="";inp.classList.remove("correct","wrong");}});
+  try{if(typeof timerResetOne==="function") timerResetOne(6);}catch(e){}
+}
+try{window.initWortschatz=initWortschatz;window.wortschatzCheck=wortschatzCheck;window.checkWortschatzAllOk=checkWortschatzAllOk;window.showWortschatzLoesung=showWortschatzLoesung;window.resetWortschatz=resetWortschatz;}catch(e){}
+
+
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+    loadBestTimes();
+});
+
+var wsInited = false;
+
+
+
+
+
+
+/* ===== SCHREIBWERKSTATT (A2) =================================== */
+var SCHREIB_NAME_KEY      = 'schreibwerkstatt_A2_BriefMaschine_name';
+var SCHREIB_KEY_PREFIX    = 'schreibwerkstatt_A2_BriefMaschine_';
+var SCHREIB_SENT_PREFIX   = 'schreibwerkstatt_A2_BriefMaschine_sent_';
+var FORMSUBMIT_ENDPOINT  = 'https://api.web3forms.com/submit';
+var FORMSUBMIT_ACCESS_KEY = 'e96ea83f-67e2-4fff-81df-76fee86a09ff';
+var FORMSUBMIT_MAILTO    = 'unterricht@frankburkert-daf.de';
+var SCHREIB_LEKTION       = 'A2 · Brief an eine Maschine';
+var SCHREIB_MIN_CHARS     = 8;
+
+function initSchreibwerkstatt() {
+  var nameInp = document.getElementById('sw-name');
+  if (nameInp) {
+    var savedName = localStorage.getItem(SCHREIB_NAME_KEY);
+    if (savedName) nameInp.value = savedName;
+    nameInp.addEventListener('input', function () {
+      localStorage.setItem(SCHREIB_NAME_KEY, nameInp.value);
+    });
+  }
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    var saved = localStorage.getItem(SCHREIB_KEY_PREFIX + nr);
+    if (saved) ta.value = saved;
+    schreibUpdateCount(ta);
+    var sentInfo = localStorage.getItem(SCHREIB_SENT_PREFIX + nr);
+    if (sentInfo) schreibKarteAlsGesendetMarkieren(nr, sentInfo, true);
+    ta.addEventListener('input', function () {
+      schreibUpdateCount(ta);
+      localStorage.setItem(SCHREIB_KEY_PREFIX + nr, ta.value);
+      var btn = document.getElementById('sw-send-' + nr);
+      if (btn && btn.classList.contains('gesendet')) {
+        btn.classList.remove('gesendet');
+        btn.innerHTML = '📨 Erneut senden';
+      }
+      var st = document.getElementById('sw-status-' + nr);
+      if (st && st.classList.contains('error')) {
+        st.classList.remove('error');
+        st.textContent = '';
+      }
+    });
+  });
+}
+
+function schreibUpdateCount(ta) {
+  var nr = ta.dataset.aufgabe;
+  var text = ta.value.trim();
+  var words = text ? text.split(/\s+/).filter(function (w) { return w.length > 0; }).length : 0;
+  var wc = document.querySelector('.wc-' + nr);
+  if (wc) wc.textContent = words;
+}
+
+function schreibKarteAlsGesendetMarkieren(nr, info, beimLaden) {
+  var ta = document.querySelector('.schreib-mini-textarea[data-aufgabe="' + nr + '"]');
+  var karte = ta && ta.closest('.schreib-aufgabe-karte');
+  if (karte) karte.classList.add('gesendet');
+  var btn = document.getElementById('sw-send-' + nr);
+  if (btn) {
+    btn.classList.add('gesendet');
+    btn.innerHTML = beimLaden ? '✓ schon gesendet · erneut senden' : '✓ gesendet · erneut senden';
+  }
+  var status = document.getElementById('sw-status-' + nr);
+  if (status) { status.classList.remove('error'); status.textContent = '✓ ' + info; }
+}
+
+function schreibStatusZeigen(typ, text) {
+  var box = document.getElementById('sw-status');
+  if (!box) return;
+  box.className = 'schreib-status ' + typ;
+  box.innerHTML = text;
+}
+
+function schreibAktuellerName() {
+  var nameInp = document.getElementById('sw-name');
+  return (nameInp && nameInp.value || '').trim();
+}
+
+function schreibNamePflicht() {
+  var name = schreibAktuellerName();
+  if (!name) {
+    var nameInp = document.getElementById('sw-name');
+    if (nameInp) {
+      nameInp.classList.add('schreib-name-error');
+      try { nameInp.focus(); nameInp.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+      setTimeout(function () { nameInp.classList.remove('schreib-name-error'); }, 3000);
+    }
+    return false;
+  }
+  return true;
+}
+
+function schreibPostFormsubmit(subject, message, onOk, onErr) {
+  return fetch(FORMSUBMIT_ENDPOINT, {
+    method: 'POST',
+    body: schreibToFormData({
+      access_key: FORMSUBMIT_ACCESS_KEY,
+      name: schreibAktuellerName(),
+      subject: subject,
+      from_name: 'fabDaF Schreibwerkstatt',
+      lektion: SCHREIB_LEKTION,
+      message: message
+    })
+  })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP_' + r.status); return r.json(); })
+    .then(function (data) {
+      var ok = data && (data.success === true || data.success === 'true');
+      if (!ok) {
+        var code = 'API_ERROR';
+        var apiMsg = (data && data.message) || '';
+        if (/[Aa]ctivat|domain|access[\s_-]?key/.test(apiMsg)) code = 'NOT_ACTIVATED';
+        var err = new Error(code);
+        err.apiMessage = apiMsg;
+        throw err;
+      }
+      onOk(data);
+    })
+    .catch(onErr);
+}
+
+function schreibFehlerErklaerung(err) {
+  var code = (err && err.message) || '';
+  if (code === 'NOT_ACTIVATED') {
+    return 'Der Versand-Endpunkt ist gerade nicht freigeschaltet (das passiert manchmal bei Adress-Wechsel auf meiner Seite).';
+  }
+  if (code.indexOf('HTTP_') === 0) {
+    return 'Der Server hat eine technische Antwort gegeben (' + code.replace('HTTP_', 'HTTP ') + '), die nicht „erfolgreich“ bedeutet.';
+  }
+  if (code === 'API_ERROR') {
+    return 'Der Versand-Dienst hat „nicht erfolgreich“ zurückgemeldet' + (err && err.apiMessage ? ' („' + err.apiMessage + '“)' : '') + '.';
+  }
+  return 'Es gab ein Netz- oder Browser-Problem beim Senden — keine Server-Antwort.';
+}
+
+function schreibKopierenEinzeln(nr) {
+  var ta = document.querySelector('.schreib-mini-textarea[data-aufgabe="' + nr + '"]');
+  if (!ta) return;
+  var titel = ta.dataset.titel || ('Aufgabe ' + nr);
+  var name = (typeof schreibAktuellerName === 'function' && schreibAktuellerName()) || '(kein Name eingetragen)';
+  var text = 'Lektion: ' + SCHREIB_LEKTION + '\nName: ' + name + '\n\n=== Aufgabe ' + nr + ': ' + titel + ' ===\n\n' + ta.value.trim();
+  var st = document.getElementById('sw-status-' + nr) || document.getElementById('status-' + nr);
+  function fertig(ok) {
+    if (!st) return;
+    if (ok) { st.classList.remove('error'); st.classList.add('success'); st.innerHTML = '✓ In die Zwischenablage kopiert. Jetzt in deine Mail oder deinen Chat einfügen und an mich schicken.'; }
+    else { st.classList.add('error'); st.innerHTML = '✗ Kopieren ging nicht — markier den Text in der Box selbst und nutz „kopieren“ deines Browsers.'; }
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { fertig(true); }, function () { fertig(false); });
+  } else {
+    try {
+      var tmp = document.createElement('textarea'); tmp.value = text; document.body.appendChild(tmp);
+      tmp.select(); document.execCommand('copy'); document.body.removeChild(tmp); fertig(true);
+    } catch (e) { fertig(false); }
+  }
+}
+
+function schreibZeigeFehler(nr, err, subject, message) {
+  var st = document.getElementById('sw-status-' + nr) || document.getElementById('status-' + nr);
+  if (!st) return;
+  var subjectEnc = encodeURIComponent(subject);
+  var bodyEnc = encodeURIComponent('Name: ' + schreibAktuellerName() + '\n\n' + message);
+  var mailto = 'mailto:' + FORMSUBMIT_MAILTO + '?subject=' + subjectEnc + '&body=' + bodyEnc;
+  var erklaerung = schreibFehlerErklaerung(err);
+  st.classList.remove('success'); st.classList.add('error');
+  st.innerHTML =
+    '<div class="schreib-fb">' +
+      '<div class="schreib-fb-titel">⚠ Online-Versand hat nicht geklappt — dein Text ist sicher im Browser gespeichert.</div>' +
+      '<div class="schreib-fb-text"><strong>Was passiert ist:</strong> ' + erklaerung + ' Du verlierst nichts — wähle einen der drei Wege, damit ich deine Antwort trotzdem bekomme:</div>' +
+      '<div class="schreib-fb-actions">' +
+        '<a class="schreib-fb-btn schreib-fb-btn-prim" href="' + mailto + '">📧 In Mail-Programm öffnen</a>' +
+        '<button type="button" class="schreib-fb-btn" onclick="schreibKopierenEinzeln(\'' + nr + '\')">📋 In Zwischenablage</button>' +
+        '<button type="button" class="schreib-fb-btn" onclick="schreibSendenEinzeln(\'' + nr + '\')">🔄 Nochmal versuchen</button>' +
+      '</div>' +
+      '<div class="schreib-fb-hilfe">Wenn nichts klappt: sag mir im Unterricht Bescheid — ich muss den Versand auf seiner Seite einmal aktivieren.</div>' +
+    '</div>';
+}
+
+function schreibZeigeFehlerSammel(err, subject, message) {
+  var subjectEnc = encodeURIComponent(subject);
+  var bodyEnc = encodeURIComponent('Name: ' + schreibAktuellerName() + '\n\n' + message);
+  var mailto = 'mailto:' + FORMSUBMIT_MAILTO + '?subject=' + subjectEnc + '&body=' + bodyEnc;
+  var erklaerung = schreibFehlerErklaerung(err);
+  var fnKopieren = (typeof schreibKopieren === 'function') ? 'schreibKopieren()' : 'schreibKopierenEinzeln(1)';
+  schreibStatusZeigen('error',
+    '<div class="schreib-fb">' +
+      '<div class="schreib-fb-titel">⚠ Sammel-Versand hat nicht geklappt — alle Antworten sind sicher im Browser gespeichert.</div>' +
+      '<div class="schreib-fb-text"><strong>Was passiert ist:</strong> ' + erklaerung + ' Wähle einen Weg:</div>' +
+      '<div class="schreib-fb-actions">' +
+        '<a class="schreib-fb-btn schreib-fb-btn-prim" href="' + mailto + '">📧 Alle als eine Mail öffnen</a>' +
+        '<button type="button" class="schreib-fb-btn" onclick="' + fnKopieren + '">📋 Alles in Zwischenablage</button>' +
+        '<button type="button" class="schreib-fb-btn" onclick="schreibSendenAlleNochOffenen()">🔄 Nochmal versuchen</button>' +
+      '</div>' +
+      '<div class="schreib-fb-hilfe">Tipp: einzelne Karten kannst du auch separat senden — jede hat eigene Buttons.</div>' +
+    '</div>');
+}
+
+function schreibSendenEinzeln(nr) {
+  var ta = document.querySelector('.schreib-mini-textarea[data-aufgabe="' + nr + '"]');
+  var btn = document.getElementById('sw-send-' + nr);
+  if (!ta || !btn) return;
+  if (!schreibNamePflicht()) {
+    var stN = document.getElementById('sw-status-' + nr);
+    if (stN) { stN.classList.add('error'); stN.textContent = 'Bitte zuerst deinen Namen oben eintragen.'; }
+    return;
+  }
+  var text = ta.value.trim();
+  if (text.length < SCHREIB_MIN_CHARS) {
+    var st = document.getElementById('sw-status-' + nr);
+    if (st) { st.classList.add('error'); st.textContent = 'noch zu kurz — schreib bitte etwas mehr'; }
+    return;
+  }
+  var titel = ta.dataset.titel || ('Aufgabe ' + nr);
+  var subject = 'A2 1024R · Aufgabe ' + nr + ' · ' + titel + ' · ' + schreibAktuellerName();
+  var message = '=== Aufgabe ' + nr + ': ' + titel + ' ===\n\n' + text;
+  btn.disabled = true;
+  var origLabel = btn.innerHTML;
+  btn.innerHTML = '⏳ Wird gesendet …';
+
+  schreibPostFormsubmit(subject, message,
+    function () {
+      btn.disabled = false;
+      var jetzt = new Date();
+      var info = 'gesendet um ' + String(jetzt.getHours()).padStart(2, '0') + ':' + String(jetzt.getMinutes()).padStart(2, '0');
+      localStorage.setItem(SCHREIB_SENT_PREFIX + nr, info);
+      schreibKarteAlsGesendetMarkieren(nr, info, false);
+    },
+    function (err) { btn.disabled = false; btn.innerHTML = origLabel; schreibZeigeFehler(nr, err, subject, message); });
+}
+
+function schreibSendenAlleNochOffenen() {
+  var btn = document.getElementById('sw-btn-all');
+  if (!schreibNamePflicht()) {
+    schreibStatusZeigen('error', '✗ Bitte zuerst deinen Namen oben eintragen.');
+    return;
+  }
+  var offene = [];
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    var text = ta.value.trim();
+    var sent = localStorage.getItem(SCHREIB_SENT_PREFIX + nr);
+    if (text.length >= SCHREIB_MIN_CHARS && !sent) offene.push({ nr: nr, ta: ta, text: text });
+  });
+  if (offene.length === 0) {
+    schreibStatusZeigen('info', 'ℹ Es gibt nichts Neues zu senden — alle Antworten sind entweder leer/sehr kurz oder bereits gesendet.');
+    return;
+  }
+  var teile = offene.map(function (o) {
+    var titel = o.ta.dataset.titel || ('Aufgabe ' + o.nr);
+    return '=== Aufgabe ' + o.nr + ': ' + titel + ' ===\n\n' + o.text;
+  });
+  var subject = 'A2 1024R · ' + offene.length + ' Antworten · ' + schreibAktuellerName();
+  var message = teile.join('\n\n');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Wird gesendet …';
+  schreibStatusZeigen('info', '⏳ ' + offene.length + ' Antworten werden übermittelt …');
+  schreibPostFormsubmit(subject, message,
+    function () {
+      btn.disabled = false;
+      btn.innerHTML = '📨 Alle noch nicht gesendeten Antworten schicken';
+      var jetzt = new Date();
+      var info = 'gesendet um ' + String(jetzt.getHours()).padStart(2, '0') + ':' + String(jetzt.getMinutes()).padStart(2, '0');
+      offene.forEach(function (o) {
+        localStorage.setItem(SCHREIB_SENT_PREFIX + o.nr, info);
+        schreibKarteAlsGesendetMarkieren(o.nr, info, false);
+      });
+      schreibStatusZeigen('success', '✓ <strong>' + offene.length + ' Antworten übermittelt.</strong> Ich melde mich.');
+    },
+    function (err) { btn.disabled = false; btn.innerHTML = '📨 Alle noch nicht gesendeten Antworten schicken'; schreibZeigeFehlerSammel(err, subject, message); });
+}
+
+function schreibKopieren() {
+  var teile = [];
+  teile.push('Lektion: ' + SCHREIB_LEKTION);
+  teile.push('Name: ' + (schreibAktuellerName() || '(kein Name)'));
+  teile.push('');
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    var text = ta.value.trim();
+    if (text.length >= SCHREIB_MIN_CHARS) {
+      var titel = ta.dataset.titel || ('Aufgabe ' + nr);
+      teile.push('=== Aufgabe ' + nr + ': ' + titel + ' ===');
+      teile.push(text);
+      teile.push('');
+    }
+  });
+  if (teile.length <= 3) {
+    schreibStatusZeigen('info', 'ℹ Noch nichts zum Kopieren — schreib mindestens eine Antwort.');
+    return;
+  }
+  var alles = teile.join('\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(alles).then(
+      function () { schreibStatusZeigen('success', '✓ In Zwischenablage kopiert. Du kannst es jetzt in deine Mail einfügen.'); },
+      function () { schreibStatusZeigen('error', '✗ Kopieren fehlgeschlagen. Bitte den Text manuell markieren.'); }
+    );
+  } else {
+    schreibStatusZeigen('error', '✗ Dein Browser unterstützt das automatische Kopieren nicht.');
+  }
+}
+
+function schreibLeeren() {
+  if (!confirm('Wirklich ALLE Antworten zurücksetzen? Auch die schon gesendeten Markierungen werden entfernt.')) return;
+  document.querySelectorAll('.schreib-mini-textarea').forEach(function (ta) {
+    var nr = ta.dataset.aufgabe;
+    ta.value = '';
+    localStorage.removeItem(SCHREIB_KEY_PREFIX + nr);
+    localStorage.removeItem(SCHREIB_SENT_PREFIX + nr);
+    schreibUpdateCount(ta);
+    var karte = ta.closest('.schreib-aufgabe-karte');
+    if (karte) karte.classList.remove('gesendet');
+    var btn = document.getElementById('sw-send-' + nr);
+    if (btn) { btn.classList.remove('gesendet'); btn.innerHTML = '📨 An Frank senden'; }
+    var st = document.getElementById('sw-status-' + nr);
+    if (st) { st.className = 'schreib-mini-status'; st.textContent = ''; }
+  });
+  schreibStatusZeigen('info', 'ℹ Alle Antworten zurückgesetzt.');
+}
+/* ===== Ende Schreibwerkstatt =================================== */
+
+</script>
+
+
+
+<script>
+/* ========== TAB: GENUS (injiziert) ========== */
 var GENUS_DATA = [
   { word: "Schriftsteller", cat: "der" },
-  { word: "Angst", cat: "die" },
   { word: "Computer", cat: "der" },
-  { word: "Geschichte", cat: "die" },
-  { word: "Experiment", cat: "das" },
-  { word: "Kino", cat: "das" },
-  { word: "Tochter", cat: "die" },
   { word: "Spaziergang", cat: "der" },
-  { word: "Blatt", cat: "das" },
-  { word: "Werkzeug", cat: "das" },
-  { word: "Geduld", cat: "die" },
   { word: "Unterschied", cat: "der" },
-  { word: "Tränen", cat: "pl" },
-  { word: "Geschichten", cat: "pl" },
-  { word: "Menschen", cat: "pl" },
-  { word: "Träne", cat: "die" },
-  { word: "Wörter", cat: "pl" },
-  { word: "Arbeitslosigkeit", cat: "die" },
+  { word: "Angst", cat: "die" },
+  { word: "Geschichte", cat: "die" },
+  { word: "Tochter", cat: "die" },
+  { word: "Geduld", cat: "die" },
+  { word: "Tr\u00e4ne", cat: "die" },
   { word: "Einsamkeit", cat: "die" },
   { word: "Liebe", cat: "die" },
   { word: "Stadt", cat: "die" },
+  { word: "Experiment", cat: "das" },
+  { word: "Kino", cat: "das" },
+  { word: "Blatt", cat: "das" },
+  { word: "Werkzeug", cat: "das" },
   { word: "Leben", cat: "das" },
-  { word: "Sätze", cat: "pl" },
-  { word: "Dinge", cat: "die" }
+  { word: "Wort", cat: "das" },
+  { word: "Tr\u00e4nen", cat: "pl" },
+  { word: "Geschichten", cat: "pl" },
+  { word: "Menschen", cat: "pl" },
+  { word: "W\u00f6rter", cat: "pl" },
+  { word: "S\u00e4tze", cat: "pl" },
+  { word: "B\u00fccher", cat: "pl" }
 ];
-
-// ===== GENUS INIT =====
-let genusSelected = null;
-function initGenus() {
-    const bank = document.getElementById('genus-bank');
-    bank.innerHTML = '';
-    const shuffled = [...GENUS_DATA].sort(() => Math.random() - 0.5);
-    shuffled.forEach((item, i) => {
-        const chip = document.createElement('div');
-        chip.className = 'chip';
-        chip.textContent = item.word;
-        chip.dataset.cat = item.cat;
-        chip.dataset.idx = i;
-        chip.draggable = true;
-        chip.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', ''); genusSelected = chip; });
-        chip.addEventListener('click', () => {
-            if (genusSelected === chip) { genusSelected = null; chip.style.outline=''; return; }
-            document.querySelectorAll('#sec-2 .chip').forEach(c => c.style.outline='');
-            genusSelected = chip;
-            chip.style.outline = '3px solid #333';
-        });
-        bank.appendChild(chip);
-    });
-    document.querySelectorAll('#sec-2 .drop-zone').forEach(dz => {
-        dz.innerHTML = '';
-        const cat = dz.closest('.category');
-        cat.addEventListener('dragover', e => { e.preventDefault(); cat.classList.add('drag-over'); });
-        cat.addEventListener('dragleave', () => cat.classList.remove('drag-over'));
-        cat.addEventListener('drop', e => { e.preventDefault(); cat.classList.remove('drag-over'); if(genusSelected) dz.appendChild(genusSelected); genusSelected=null; });
-        cat.addEventListener('click', e => {
-            if (e.target.classList.contains('chip')) return;
-            if (genusSelected) { dz.appendChild(genusSelected); genusSelected.style.outline=''; genusSelected=null; }
-        });
-    });
-    // drag back to bank
-    bank.addEventListener('dragover', e => e.preventDefault());
-    bank.addEventListener('drop', e => { e.preventDefault(); if(genusSelected) bank.appendChild(genusSelected); genusSelected=null; });
-    bank.addEventListener('click', e => {
-        if (e.target.classList.contains('chip')) return;
-        if (genusSelected && !bank.contains(genusSelected)) { bank.appendChild(genusSelected); genusSelected.style.outline=''; genusSelected=null; }
-    });
+var GENUS_TIMER = 5;
+var draggedGenus = null, selectedGenus = null;
+var genusSec = 0, genusInt = null;
+function genusFmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function genusTimerStart(){ if(genusInt) return; genusInt=setInterval(function(){ genusSec++; var el=document.getElementById('timer-'+GENUS_TIMER); if(el) el.textContent=genusFmt(genusSec); },1000); }
+function genusTimerStop(){ if(genusInt){ clearInterval(genusInt); genusInt=null; } var b=document.getElementById('best-'+GENUS_TIMER); if(b){ var pv=/^\d\d:\d\d$/.test(b.textContent)?parseInt(b.textContent.slice(0,2))*60+parseInt(b.textContent.slice(3)):1e9; if(genusSec<pv) b.textContent=genusFmt(genusSec); } }
+function genusTimerReset(){ if(genusInt){ clearInterval(genusInt); genusInt=null; } genusSec=0; var el=document.getElementById('timer-'+GENUS_TIMER); if(el) el.textContent='00:00'; }
+function shuffleGenus(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function createGenusChip(d){
+  var chip=document.createElement('div');
+  chip.className='genus-chip'; chip.draggable=true; chip.dataset.cat=d.cat; chip.textContent=d.word;
+  chip.addEventListener('dragstart',function(e){ genusTimerStart(); draggedGenus=chip; chip.classList.add('dragging'); e.dataTransfer.setData('text/plain',''); });
+  chip.addEventListener('dragend',function(){ chip.classList.remove('dragging'); });
+  chip.addEventListener('click',function(){
+    if(selectedGenus===chip){ chip.classList.remove('selected'); selectedGenus=null; return; }
+    if(selectedGenus) selectedGenus.classList.remove('selected');
+    selectedGenus=chip; chip.classList.add('selected'); genusTimerStart();
+  });
+  return chip;
 }
-function checkGenus() {
-    let correct = 0;
-    document.querySelectorAll('#sec-2 .drop-zone .chip').forEach(chip => {
-        const cat = chip.closest('.category').dataset.cat;
-        if (chip.dataset.cat === cat) { chip.className='chip correct'; correct++; }
-        else { chip.className='chip wrong'; }
-    });
-    const total = GENUS_DATA.length;
-    const placed = document.querySelectorAll('#sec-2 .drop-zone .chip').length;
-    document.getElementById('genus-score').textContent = `${correct} von ${total} richtig (${Math.round(correct/total*100)}%) – ${total-placed} nicht zugeordnet`;
+function initGenus(){
+  var pool=document.getElementById('genusPool'); if(!pool) return;
+  pool.innerHTML='';
+  ['der','die','das','pl'].forEach(function(c){ var z=document.getElementById('drop-'+c); if(z) z.innerHTML=''; });
+  var fb=document.getElementById('genusFeedback'); if(fb) fb.textContent='';
+  shuffleGenus(GENUS_DATA).forEach(function(d){ pool.appendChild(createGenusChip(d)); });
+  document.querySelectorAll('#sec-genus .genus-drop').forEach(function(zone){
+    zone.addEventListener('dragover',function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+    zone.addEventListener('dragleave',function(){ zone.classList.remove('dragover'); });
+    zone.addEventListener('drop',function(e){ e.preventDefault(); zone.classList.remove('dragover'); if(!draggedGenus) return; zone.appendChild(draggedGenus); checkGenusChip(draggedGenus, zone.dataset.cat); draggedGenus=null; updateGenusFeedback(); });
+    zone.addEventListener('click',function(){ if(!selectedGenus) return; zone.appendChild(selectedGenus); checkGenusChip(selectedGenus, zone.dataset.cat); selectedGenus.classList.remove('selected'); selectedGenus=null; updateGenusFeedback(); });
+  });
+  pool.addEventListener('dragover',function(e){ e.preventDefault(); });
+  pool.addEventListener('drop',function(e){ e.preventDefault(); if(draggedGenus){ pool.appendChild(draggedGenus); draggedGenus.classList.remove('correct','wrong'); draggedGenus=null; updateGenusFeedback(); } });
 }
-function showGenus() {
-    document.querySelectorAll('#sec-2 .drop-zone').forEach(dz => dz.innerHTML='');
-    document.getElementById('genus-bank').innerHTML='';
-    GENUS_DATA.forEach(item => {
-        const chip = document.createElement('div');
-        chip.className = 'chip correct';
-        chip.textContent = item.word;
-        document.querySelector(`#sec-2 .category[data-cat="${item.cat}"] .drop-zone`).appendChild(chip);
-    });
+function checkGenusChip(chip,cat){
+  var ok=chip.dataset.cat===cat;
+  chip.classList.toggle('correct',ok); chip.classList.toggle('wrong',!ok);
+  if(!ok){ setTimeout(function(){ chip.classList.remove('wrong'); document.getElementById('genusPool').appendChild(chip); updateGenusFeedback(); },900); }
 }
-function resetGenus() {
-    document.querySelectorAll('#sec-2 .chip').forEach(c => { c.className='chip'; c.style.outline=''; });
-    document.getElementById('genus-score').textContent='';
-    genusSelected=null;
-    initGenus();
+function updateGenusFeedback(){
+  var platziert=document.querySelectorAll('#sec-genus .genus-drop .genus-chip').length;
+  var richtig=document.querySelectorAll('#sec-genus .genus-drop .genus-chip.correct').length;
+  var fb=document.getElementById('genusFeedback'); if(!fb) return;
+  if(platziert===0){ fb.textContent=''; return; }
+  fb.textContent=richtig+' von '+GENUS_DATA.length+' richtig zugeordnet.';
+  fb.style.color=(richtig===GENUS_DATA.length)?'#2e7d32':'#555';
+  if(richtig===GENUS_DATA.length) genusTimerStop();
 }
-
-// ===== MC DATA =====
-const MC_DATA = [
-  {
-    "q": "Was ist Thomas von Beruf?",
-    "opts": [
-      "Journalist",
-      "Schriftsteller",
-      "Informatiker",
-      "Lehrer"
-    ],
-    "correct": 1
-  },
-  {
-    "q": "Wie lange schreibt Thomas schon Geschichten?",
-    "opts": [
-      "Seit fünfzig Jahren",
-      "Seit zehn Jahren",
-      "Seit dreißig Jahren",
-      "Seit zwanzig Jahren"
-    ],
-    "correct": 2
-  },
-  {
-    "q": "Was hat die KI in zehn Sekunden geschrieben?",
-    "opts": [
-      "Einen Brief",
-      "Ein Buch",
-      "Ein Gedicht",
-      "Eine Geschichte"
-    ],
-    "correct": 3
-  },
-  {
-    "q": "Was hat in der KI-Geschichte gefehlt?",
-    "opts": [
-      "Der Titel",
-      "Ein überraschender, menschlicher Moment",
-      "Das Ende",
-      "Die Hauptfigur"
-    ],
-    "correct": 1
-  },
-  {
-    "q": "Was studiert Thomas' Tochter Lena?",
-    "opts": [
-      "Psychologie",
-      "Literatur",
-      "Medizin",
-      "Informatik"
-    ],
-    "correct": 3
-  },
-  {
-    "q": "Warum findet Thomas es „fast lustig“, arbeitslos zu werden?",
-    "opts": [
-      "Weil er Humor mag",
-      "Weil seine Tochter genug Geld hat",
-      "Weil er auch vorher nicht viel Geld verdient hat",
-      "Weil er schon in Rente ist"
-    ],
-    "correct": 2
-  },
-  {
-    "q": "Was sagt Thomas' Großvater über Werkzeuge?",
-    "opts": [
-      "Man braucht keine Werkzeuge",
-      "Werkzeuge sind nicht gut oder schlecht – es kommt auf den Benutzer an",
-      "Werkzeuge machen das Leben einfacher",
-      "Werkzeuge sind immer gefährlich"
-    ],
-    "correct": 1
-  },
-  {
-    "q": "Was ist laut Thomas der Unterschied zwischen ihm und der KI?",
-    "opts": [
-      "Die KI hat keine Tränen – sie kann nicht fühlen",
-      "Die KI schreibt schneller",
-      "Die KI braucht keinen Computer",
-      "Die KI hat mehr Wörter"
-    ],
-    "correct": 0
-  },
-  {
-    "q": "Womit vergleicht Thomas das Schreiben?",
-    "opts": [
-      "Mit Singen",
-      "Mit Atmen",
-      "Mit Kochen",
-      "Mit Schlafen"
-    ],
-    "correct": 1
-  },
-  {
-    "q": "Warum schreibt Thomas diesen Brief an die Maschine?",
-    "opts": [
-      "Weil er einen neuen Job sucht",
-      "Weil seine Tochter ihn gebeten hat",
-      "Weil er wütend auf die KI ist",
-      "Weil er die KI verstehen will – oder weil Schreiben das Einzige ist, was er kann"
-    ],
-    "correct": 3
-  }
-];
-
-let mcSelected = {};
-function initMC() {
-    const area = document.getElementById('mc-area');
-    area.innerHTML = '';
-    mcSelected = {};
-    MC_DATA.forEach((item, qi) => {
-        const block = document.createElement('div');
-        block.className = 'mc-block';
-        const q = document.createElement('div');
-        q.className = 'mc-question';
-        q.textContent = `${qi+1}. ${item.q}`;
-        block.appendChild(q);
-        const opts = document.createElement('div');
-        opts.className = 'mc-opts';
-        item.opts.forEach((opt, oi) => {
-            const div = document.createElement('div');
-            div.className = 'mc-opt';
-            div.textContent = opt;
-            div.addEventListener('click', () => {
-                opts.querySelectorAll('.mc-opt').forEach(o => o.classList.remove('selected'));
-                div.classList.add('selected');
-                mcSelected[qi] = oi;
-            });
-            opts.appendChild(div);
-        });
-        block.appendChild(opts);
-        area.appendChild(block);
-    });
+function showGenusLoesung(){
+  Array.from(document.querySelectorAll('#sec-genus .genus-chip')).forEach(function(chip){
+    var z=document.getElementById('drop-'+chip.dataset.cat);
+    if(z){ z.appendChild(chip); chip.classList.remove('wrong'); chip.classList.add('correct'); }
+  });
+  updateGenusFeedback();
 }
-function checkMC() {
-    let correct = 0;
-    MC_DATA.forEach((item, qi) => {
-        const block = document.querySelectorAll('.mc-block')[qi];
-        const opts = block.querySelectorAll('.mc-opt');
-        opts.forEach((o, oi) => {
-            o.classList.remove('correct','wrong','selected');
-            if (oi === item.correct) o.classList.add('correct');
-            else if (mcSelected[qi] === oi) o.classList.add('wrong');
-        });
-        if (mcSelected[qi] === item.correct) correct++;
-    });
-    document.getElementById('mc-score').textContent = `${correct} von ${MC_DATA.length} richtig (${Math.round(correct/MC_DATA.length*100)}%)`;
-}
-function showMC() {
-    MC_DATA.forEach((item, qi) => {
-        const opts = document.querySelectorAll('.mc-block')[qi].querySelectorAll('.mc-opt');
-        opts.forEach((o, oi) => {
-            o.classList.remove('correct','wrong','selected');
-            if (oi === item.correct) o.classList.add('correct');
-        });
-    });
-}
-function resetMC() {
-    mcSelected = {};
-    document.querySelectorAll('.mc-opt').forEach(o => o.classList.remove('correct','wrong','selected'));
-    document.getElementById('mc-score').textContent='';
-}
-
-// ===== SATZBAU DATA =====
-const SATZBAU = [
-    {
-        id: 1,
-        parts: ["ich", "schreibe", "seit dreißig Jahren", "Geschichten"],
-        valid: [
-            ["ich", "schreibe", "seit dreißig Jahren", "Geschichten"],
-            ["seit dreißig Jahren", "schreibe", "ich", "Geschichten"]
-        ]
-    },
-    {
-        id: 2,
-        parts: ["du", "schreibst", "eine Geschichte", "in zehn Sekunden"],
-        valid: [
-            ["du", "schreibst", "eine Geschichte", "in zehn Sekunden"],
-            ["in zehn Sekunden", "schreibst", "du", "eine Geschichte"]
-        ]
-    },
-    {
-        id: 3,
-        parts: ["meine Tochter Lena", "studiert", "Informatik"],
-        valid: [
-            ["meine Tochter Lena", "studiert", "Informatik"]
-        ]
-    },
-    {
-        id: 4,
-        parts: ["ich", "habe", "letzte Woche", "ein Experiment", "gemacht"],
-        valid: [
-            ["ich", "habe", "letzte Woche", "ein Experiment", "gemacht"],
-            ["letzte Woche", "habe", "ich", "ein Experiment", "gemacht"]
-        ]
-    }
-];
-
-let sbSelected = null;
-function initSatzbau() {
-    const area = document.getElementById('sb-area');
-    area.innerHTML = '';
-    SATZBAU.forEach(ex => {
-        const block = document.createElement('div');
-        block.className = 'sb-exercise';
-        const label = document.createElement('div');
-
-        const dropRow = document.createElement('div');
-        dropRow.className = 'drop-row';
-        dropRow.dataset.sbId = ex.id;
-        const dot = document.createElement('span');
-        dot.className = 'fixed-dot';
-        dot.textContent = '.';
-        dropRow.appendChild(dot);
-        block.appendChild(dropRow);
-
-        const bank = document.createElement('div');
-        bank.className = 'sb-bank chip-bank';
-        bank.dataset.sbId = ex.id;
-        const shuffled = [...ex.parts].sort(() => Math.random() - 0.5);
-        shuffled.forEach(part => {
-            const chip = document.createElement('div');
-            chip.className = 'chip';
-            chip.textContent = part;
-            chip.dataset.orig = part;
-            chip.draggable = true;
-            chip.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain',''); sbSelected = chip; });
-            chip.addEventListener('click', () => handleSbClick(chip, ex.id));
-            bank.appendChild(chip);
-        });
-        block.appendChild(bank);
-
-        // Drop events for row
-        dropRow.addEventListener('dragover', e => { e.preventDefault(); dropRow.classList.add('drag-over'); });
-        dropRow.addEventListener('dragleave', () => dropRow.classList.remove('drag-over'));
-        dropRow.addEventListener('drop', e => {
-            e.preventDefault();
-            dropRow.classList.remove('drag-over');
-            if (!sbSelected) return;
-            // Insert before dot, or reorder based on position
-            const chips = [...dropRow.querySelectorAll('.chip')];
-            let inserted = false;
-            for (const ch of chips) {
-                if (ch === sbSelected) continue;
-                const rect = ch.getBoundingClientRect();
-                if (e.clientX < rect.left + rect.width / 2) {
-                    dropRow.insertBefore(sbSelected, ch);
-                    inserted = true;
-                    break;
-                }
-            }
-            if (!inserted) dropRow.insertBefore(sbSelected, dot);
-            updateCaps(ex.id);
-            sbSelected = null;
-        });
-
-        // Drag back to bank
-        bank.addEventListener('dragover', e => e.preventDefault());
-        bank.addEventListener('drop', e => {
-            e.preventDefault();
-            if (sbSelected) { bank.appendChild(sbSelected); updateCaps(ex.id); sbSelected = null; }
-        });
-
-        area.appendChild(block);
-    });
-}
-
-function handleSbClick(chip, exId) {
-    const row = document.querySelector(`.drop-row[data-sb-id="${exId}"]`);
-    const bank = document.querySelector(`.sb-bank[data-sb-id="${exId}"]`);
-    const dot = row.querySelector('.fixed-dot');
-
-    if (bank.contains(chip)) {
-        // Move from bank to row
-        row.insertBefore(chip, dot);
-        updateCaps(exId);
-    } else if (row.contains(chip)) {
-        // If already selected, deselect
-        if (sbSelected === chip) {
-            chip.style.outline = '';
-            sbSelected = null;
-            return;
-        }
-        // If another chip in row is selected, swap position
-        if (sbSelected && row.contains(sbSelected)) {
-            const chips = [...row.querySelectorAll('.chip')];
-            const idx1 = chips.indexOf(sbSelected);
-            const idx2 = chips.indexOf(chip);
-            if (idx1 < idx2) row.insertBefore(chip, sbSelected);
-            else row.insertBefore(sbSelected, chip);
-            sbSelected.style.outline = '';
-            sbSelected = null;
-            updateCaps(exId);
-            return;
-        }
-        // Select this chip
-        document.querySelectorAll(`[data-sb-id="${exId}"] .chip`).forEach(c => c.style.outline='');
-        chip.style.outline = '3px solid #333';
-        sbSelected = chip;
-    }
-}
-
-function updateCaps(exId) {
-    const row = document.querySelector(`.drop-row[data-sb-id="${exId}"]`);
-    const bank = document.querySelector(`.sb-bank[data-sb-id="${exId}"]`);
-    [...row.querySelectorAll('.chip'), ...bank.querySelectorAll('.chip')].forEach(c => {
-        if (c.dataset.orig) c.textContent = c.dataset.orig;
-    });
-    const first = row.querySelector('.chip');
-    if (first && first.textContent !== '.') {
-        first.textContent = first.textContent.charAt(0).toUpperCase() + first.textContent.slice(1);
-    }
-}
-
-function checkSatzbau() {
-    let correct = 0;
-    SATZBAU.forEach(ex => {
-        const row = document.querySelector(`.drop-row[data-sb-id="${ex.id}"]`);
-        const chips = [...row.querySelectorAll('.chip')];
-        const answer = chips.map(c => c.dataset.orig);
-        const isCorrect = ex.valid.some(v => v.length === answer.length && v.every((p,i) => p === answer[i]));
-        chips.forEach(c => c.className = isCorrect ? 'chip correct' : 'chip wrong');
-        if (isCorrect) correct++;
-    });
-    document.getElementById('sb-score').textContent = `${correct} von ${SATZBAU.length} richtig (${Math.round(correct/SATZBAU.length*100)}%)`;
-}
-
-function showSatzbau() {
-    SATZBAU.forEach(ex => {
-        const row = document.querySelector(`.drop-row[data-sb-id="${ex.id}"]`);
-        const bank = document.querySelector(`.sb-bank[data-sb-id="${ex.id}"]`);
-        const dot = row.querySelector('.fixed-dot');
-        row.querySelectorAll('.chip').forEach(c => c.remove());
-        bank.innerHTML = '';
-        ex.valid[0].forEach(part => {
-            const chip = document.createElement('div');
-            chip.className = 'chip correct';
-            chip.textContent = part;
-            chip.dataset.orig = part;
-            row.insertBefore(chip, dot);
-        });
-        updateCaps(ex.id);
-    });
-}
-
-function resetSatzbau() {
-    document.getElementById('sb-score').textContent='';
-    document.querySelectorAll('#sec-5 .chip').forEach(c => { c.className='chip'; c.style.outline=''; });
-    sbSelected = null;
-    initSatzbau();
-}
-
-// ===== INIT =====
-initGenus();
-initMC();
-initSatzbau();
+function resetGenus(){ initGenus(); genusTimerReset(); }
+(function(){ initGenus(); })();
 </script>
 
 <!-- FB-JUMPTOP -->
@@ -1090,6 +1925,563 @@ initSatzbau();
 
 </script>
 
-<!-- FB-LT-STORY-HOOKS --><script>window.fbLtTimerStart=function(){if(typeof timerAutoStart==='function')timerAutoStart(3);};window.fbLtTimerStop=function(){if(typeof timerStop==='function')timerStop(3);};</script>
+<!-- FB-LT-STORY-HOOKS --><script>window.fbLtTimerStart=function(){if(typeof timerAutoStart==='function')timerAutoStart(3);};window.fbLtTimerStop=function(){if(typeof timerStop==='function')timerStop(3);};
+// Wandelt ein Objekt in FormData: preflight-freier Versand (kein application/json-Header, keine CORS-OPTIONS-Vorabanfrage, die Firmen-Proxys mit HTTP 405 blocken).
+function schreibToFormData(o){var fd=new FormData();Object.keys(o).forEach(function(k){fd.append(k,o[k]);});return fd;}
+</script>
+
+<!-- FB-NAME-REQUIRED: Namenspflicht beim Senden (2026-07-16) -->
+<script>
+(function(){
+  if (window.__fbNameRequired) return; window.__fbNameRequired = true;
+  function nameInput(){ return document.getElementById('schreib-name') || document.getElementById('sw-name') || document.querySelector('input.schreib-name'); }
+  function nameVal(){ var i = nameInput(); return i ? (i.value || '').trim() : ''; }
+  function blockUI(){
+    var inp = nameInput();
+    if (!inp) return;
+    try { inp.focus(); } catch(e){}
+    var box = (inp.closest && inp.closest('.schreib-name-box, .schreib-name-block')) || inp.parentNode;
+    if (box){ box.classList.add('shake'); setTimeout(function(){ box.classList.remove('shake'); }, 500); }
+    var hint = document.getElementById('fb-name-hint');
+    if (hint){ hint.textContent = '⚠️ Bitte trage oben deinen Namen ein — ohne Namen kann der Text nicht gesendet werden.'; hint.style.color = '#c0392b'; }
+    if (inp.scrollIntoView) inp.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  // Trigger umschließen (deckt ALLE Generationen ab, auch die ohne schreibPostFormsubmit):
+  ['schreibSendenEinzeln', 'schreibSendenAlleNochOffenen'].forEach(function(fn){
+    if (typeof window[fn] === 'function'){
+      var _o = window[fn];
+      window[fn] = function(){ if (nameVal().length < 2){ blockUI(); return; } return _o.apply(this, arguments); };
+    }
+  });
+  // Belt-and-suspenders: Choke-Point (falls ein Sende-Pfad nicht über die Trigger läuft):
+  if (typeof window.schreibPostFormsubmit === 'function') {
+    var _origPost = window.schreibPostFormsubmit;
+    window.schreibPostFormsubmit = function(subject, message, onOk, onErr){
+      if (nameVal().length < 2){ blockUI(); if (typeof onErr === 'function') onErr(new Error('NAME_MISSING')); return; }
+      return _origPost.apply(this, arguments);
+    };
+  }
+  if (typeof window.schreibFehlerErklaerung === 'function') {
+    var _origFehler = window.schreibFehlerErklaerung;
+    window.schreibFehlerErklaerung = function(err){
+      if (err && err.message === 'NAME_MISSING') return 'Bitte trage oben im Namensfeld deinen Namen ein — ohne Namen kann der Text nicht gesendet werden.';
+      return _origFehler.apply(this, arguments);
+    };
+  }
+})();
+</script>
+
+
+<script>
+/* ── Gerüst-Modus Add-on (B1+) — additiv generiert. Mischt row/parts zur Laufzeit in satzbauData,
+   hüllt Init/Lösung/Reset. Original-Logik für Sätze ohne row bleibt unberührt. */
+(function(){
+  var CFG = {"bank":"sb-bank-","row":"sb-row-","fb":"sb-fb-","caps":true,"click":true,"tab":4};
+  /* FB-SB-TIMER-FALLBACK */ if (typeof sbCheckAllDone !== "function") window.sbCheckAllDone = function(){ var ok = satzbauData.every(function(_, i){ var r = document.getElementById(CFG.row + i); return r && r.classList.contains("correct"); }); if (ok && typeof stopTimer === "function") stopTimer(CFG.tab); };
+  var SBGAP = [{"i":0,"row":["_","_","_","_","_","Geschichten","_","die","Liebe"],"parts":["ich","schreibe","seit","dreißig","Jahren","über"]},{"i":1,"row":["_","_","Menschen","_","Geschichten","_","_","Leben"],"parts":["warum","schreiben","eigentlich","über","ihr"]},{"i":2,"row":["_","_","Angst","_","_","_","Maschine","_","schnell","_"],"parts":["Thomas","hat",",","weil","die","sehr","schreibt"]},{"i":3,"row":["_","_","Lena","_","_","_","_","ich","_","Bücher"],"parts":["meine","Tochter","studiert","Informatik",",","aber","schreibe"]},{"i":4,"row":["_","_","_","_","_","Experiment","_","der","Maschine","_"],"parts":["letzte","Woche","habe","ich","ein","mit","gemacht"]},{"i":5,"row":["_","_","_","alle","Wörter","_","_","_","_","keine","Tränen"],"parts":["die","Maschine","hat",",","aber","sie","hat"]}];
+  SBGAP.forEach(function(g){ var ex = satzbauData[g.i]; if (!ex) return;
+    ex.row = g.row; ex.parts = g.parts;
+    if (typeof ex.valid[0] === "string") ex.valid = [ex.valid];
+  });
+  if (typeof window.sbDragged === "undefined") window.sbDragged = null;
+  function bankEl(i){ return document.getElementById(CFG.bank + i); }
+  function rowEl(i){ return document.getElementById(CFG.row + i); }
+  function fbEl(i){ return document.getElementById(CFG.fb + i); }
+  function cap(w){ return w.charAt(0).toUpperCase() + w.slice(1); }
+  function positions(row){ return Array.from(row.children).filter(function(n){ return n.classList.contains("sb-gap") || n.classList.contains("chip"); }); }
+  function chipOf(pos){ return pos.classList.contains("sb-gap") ? pos.querySelector(".chip") : pos; }
+  function updateCaps(row){ if (!CFG.caps) return;
+    positions(row).forEach(function(pos,i){ var c = chipOf(pos); if (!c) return;
+      var o = c.dataset.orig;
+      var proper = o.charAt(0) === o.charAt(0).toUpperCase() && o.charAt(0) !== o.charAt(0).toLowerCase();
+      c.textContent = proper ? o : (i === 0 ? cap(o) : o); });
+  }
+  function sequence(i){ var row = rowEl(i), seq = [], complete = true;
+    positions(row).forEach(function(pos){ var c = chipOf(pos); if (c) seq.push(c.dataset.orig); else complete = false; });
+    return { seq: seq, complete: complete }; }
+  function clearMarks(i){ var row = rowEl(i);
+    row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("correct","incorrect"); });
+    row.classList.remove("correct","incorrect");
+    var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p); }
+  function afterChange(i){
+    var row = rowEl(i); updateCaps(row);
+    var fb = fbEl(i), info = sequence(i);
+    if (!info.complete){ clearMarks(i); if (fb){ fb.textContent=""; fb.className="satzbau-feedback"; } return; }
+    setTimeout(function(){
+      if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
+      var fresh = sequence(i);
+      var ok = satzbauData[i].valid.some(function(v){ return JSON.stringify(v) === JSON.stringify(fresh.seq); });
+      var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p);
+      if (ok){
+        row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("incorrect"); c.classList.add("correct"); });
+        var punkt = document.createElement("span"); punkt.className = "sb-punkt";
+        punkt.textContent = satzbauData[i].punct || "."; row.appendChild(punkt);
+        row.classList.add("correct"); row.classList.remove("incorrect");
+        if (fb){ fb.className = "satzbau-feedback correct"; fb.textContent = "✓ Korrekt!"; }
+        if (typeof sbCheckAllDone === "function") sbCheckAllDone();
+      } else {
+        row.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("correct","incorrect"); });
+        row.querySelectorAll(".sb-gap .chip").forEach(function(c){ c.classList.add("incorrect"); });
+        row.classList.add("incorrect"); row.classList.remove("correct");
+        if (fb){ fb.className = "satzbau-feedback incorrect"; fb.textContent = "✗ Noch nicht richtig – verschiebe die Wörter!"; }
+      }
+    }, 450);
+  }
+  /* Geführter Modus (B1, 2026-06-10): Sofort-Feedback pro Chip-Platzierung.
+     Richtig (konsistent mit mind. einer valid-Reihenfolge) -> grün + fixiert.
+     Falsch -> rot + Rücksprung in die Bank nach 800 ms. */
+  function toBank(i, chip){
+    chip.textContent = chip.dataset.orig;  // Kleinschreibung wiederherstellen — Bank darf den Satzanfang nicht verraten
+    bankEl(i).appendChild(chip);
+  }
+  function consistent(i){
+    var pos = positions(rowEl(i));
+    var v = satzbauData[i].valid;
+    return v.some(function(o){
+      for (var k = 0; k < pos.length; k++){ var c = chipOf(pos[k]); if (c && c.dataset.orig !== o[k]) return false; }
+      return true; });
+  }
+  function finishRow(i){
+    var row = rowEl(i), fb = fbEl(i);
+    var p = row.querySelector(".sb-punkt"); if (p) p.parentNode.removeChild(p);
+    var punkt = document.createElement("span"); punkt.className = "sb-punkt";
+    punkt.textContent = satzbauData[i].punct || "."; row.appendChild(punkt);
+    row.classList.add("correct"); row.classList.remove("incorrect");
+    if (fb){ fb.className = "satzbau-feedback correct"; fb.textContent = "✓ Korrekt!"; }
+    if (typeof sbCheckAllDone === "function") sbCheckAllDone();
+  }
+  function placeJudge(i, chip){
+    if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
+    var row = rowEl(i); updateCaps(row);
+    var fb = fbEl(i);
+    if (consistent(i)){
+      chip.classList.remove("incorrect"); chip.classList.add("correct");
+      chip.dataset.fixed = "1"; chip.draggable = false;
+      if (sequence(i).complete){ finishRow(i); }
+      else if (fb){ fb.className = "satzbau-feedback"; fb.textContent = ""; }
+    } else {
+      chip.classList.add("incorrect");
+      if (fb){ fb.className = "satzbau-feedback incorrect"; fb.textContent = "✗ Das passt hier nicht!"; }
+      setTimeout(function(){
+        chip.classList.remove("incorrect");
+        if (!chip.dataset.fixed && chip.closest(".sb-gap")) toBank(i, chip);
+        updateCaps(rowEl(i));
+        if (fb && /incorrect/.test(fb.className)){ fb.className = "satzbau-feedback"; fb.textContent = ""; }
+      }, 800);
+    }
+  }
+  function makeChip(word, i){
+    var chip = document.createElement("div");
+    var isPunct = [",",".","!","?",";",":"].indexOf(word) !== -1;
+    chip.className = "chip" + (isPunct ? " punct-chip" : ""); chip.textContent = word; chip.draggable = true;
+    chip.dataset.orig = word; chip.dataset.word = word; chip.dataset.sbIdx = String(i);
+    chip.addEventListener("dragstart", function(e){ if (chip.dataset.fixed){ e.preventDefault(); return; } window.sbDragged = chip; if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab); e.dataTransfer.effectAllowed = "move"; });
+    if (CFG.click) chip.addEventListener("click", function(){
+      if (chip.dataset.fixed) return;
+      if (typeof timerAutoStart === "function") timerAutoStart(CFG.tab);
+      var inSlot = chip.closest(".sb-gap");
+      if (inSlot){ toBank(i, chip); updateCaps(rowEl(i)); return; }
+      var free = Array.from(rowEl(i).querySelectorAll(".sb-gap")).find(function(s){ return !s.querySelector(".chip"); });
+      if (free){ free.appendChild(chip); placeJudge(i, chip); }
+    });
+    return chip;
+  }
+  function makeLocked(word){
+    var chip = document.createElement("div");
+    chip.className = "chip sb-locked"; chip.textContent = word;
+    chip.dataset.orig = word; chip.dataset.word = word; chip.dataset.locked = "1";
+    return chip;
+  }
+  function makeSlot(i){
+    var slot = document.createElement("div"); slot.className = "sb-gap";
+    slot.addEventListener("dragover", function(e){ e.preventDefault(); if (window.sbDragged) slot.classList.add("drag-over"); });
+    slot.addEventListener("dragleave", function(){ slot.classList.remove("drag-over"); });
+    slot.addEventListener("drop", function(e){
+      e.preventDefault(); slot.classList.remove("drag-over");
+      var d = window.sbDragged; if (!d || d.dataset.sbIdx !== String(i) || d.dataset.locked || d.dataset.fixed) return;
+      if (slot.querySelector(".chip")) return;  // Lücke schon belegt
+      slot.appendChild(d); window.sbDragged = null; placeJudge(i, d);
+    });
+    return slot;
+  }
+  function registerBank(bank, i){
+    bank.addEventListener("dragover", function(e){ e.preventDefault(); });
+    bank.addEventListener("drop", function(e){
+      e.preventDefault(); var d = window.sbDragged;
+      if (!d || d.dataset.sbIdx !== String(i) || d.dataset.locked || d.dataset.fixed) return;
+      toBank(i, d); window.sbDragged = null; updateCaps(rowEl(i));
+    });
+  }
+  function freshEl(id){ var el = document.getElementById(id); if (!el) return null;
+    var c = el.cloneNode(false); el.parentNode.replaceChild(c, el); return c; }
+  function rebuild(i){
+    var ex = satzbauData[i]; if (!ex || !ex.row) return;
+    var bank = freshEl(CFG.bank + i), row = freshEl(CFG.row + i);
+    if (!bank || !row) return;
+    var fb = fbEl(i); if (fb){ fb.textContent = ""; fb.className = "satzbau-feedback"; }
+    var mov = ex.parts.slice();
+    for (var k = mov.length - 1; k > 0; k--){ var j = Math.floor(Math.random()*(k+1)); var t = mov[k]; mov[k] = mov[j]; mov[j] = t; }
+    mov.forEach(function(w){ bank.appendChild(makeChip(w, i)); });
+    ex.row.forEach(function(tok){ row.appendChild(tok === "_" ? makeSlot(i) : makeLocked(tok)); });
+    registerBank(bank, i);
+    ensureButtons(i);
+  }
+  function rebuildAll(){ satzbauData.forEach(function(ex,i){ if (ex.row) rebuild(i); }); }
+  function showSol(i){
+    rebuild(i);
+    var row = rowEl(i), bank = bankEl(i), sol = satzbauData[i].valid[0];
+    var pool = Array.from(bank.querySelectorAll(".chip"));
+    positions(row).forEach(function(pos,k){
+      if (!pos.classList.contains("sb-gap")) return;
+      var ix = pool.findIndex(function(c){ return c.dataset.orig === sol[k]; });
+      if (ix >= 0){ while (pos.firstChild) pos.removeChild(pos.firstChild); pos.appendChild(pool[ix]); pool.splice(ix,1); }
+    });
+    row.querySelectorAll(".sb-gap .chip").forEach(function(c){ c.classList.add("correct"); c.dataset.fixed = "1"; c.draggable = false; });
+    updateCaps(row);
+    finishRow(i);
+  }
+  function ensureButtons(i){
+    if (document.getElementById("sb-btns-" + i)) return;
+    var anchor = fbEl(i) || rowEl(i); if (!anchor) return;
+    var item = (anchor.closest ? anchor.closest(".satzbau-item") : null) || anchor.parentNode;
+    if (item && [].some.call(item.querySelectorAll("button"), function(b){
+      return /(Lösen|Lösung|Neustart)/.test(b.textContent); })) return;  // native Buttons vorhanden
+    var box = document.createElement("div");
+    box.id = "sb-btns-" + i;
+    box.style.cssText = "display:flex;gap:8px;margin:6px 0 14px 0;";
+    var b1 = document.createElement("button"); b1.type = "button"; b1.className = "btn"; b1.textContent = "Lösen";
+    b1.addEventListener("click", function(){ showSol(i); });
+    var b2 = document.createElement("button"); b2.type = "button"; b2.className = "btn"; b2.textContent = "↺ Neustart";
+    b2.addEventListener("click", function(){ rebuild(i); });
+    box.appendChild(b1); box.appendChild(b2);
+    anchor.parentNode.insertBefore(box, anchor.nextSibling);
+  }
+  ["initSatzbau","buildSatzbau"].forEach(function(fn){
+    if (typeof window[fn] === "function"){ var o = window[fn];
+      window[fn] = function(){ o.apply(this, arguments); rebuildAll(); }; }
+  });
+  if (typeof window.sbReset === "function" && window.sbReset.length === 0){
+    var orall = window.sbReset;
+    window.sbReset = function(){ orall.apply(this, arguments); rebuildAll(); };
+  }
+  if (typeof window.sbResetOne === "function"){
+    var orst = window.sbResetOne;
+    window.sbResetOne = function(i){ if (satzbauData[i] && satzbauData[i].row){ rebuild(i); return; } orst.apply(this, arguments); };
+  }
+  if (typeof window.sbShowSolution === "function"){
+    var osol = window.sbShowSolution;
+    window.sbShowSolution = function(i){ if (satzbauData[i] && satzbauData[i].row){ showSol(i); return; } osol.apply(this, arguments); };
+  }
+  /* Bugfix 2026-06-10: bei leerer Row (Free-Build) zusätzlich die Bank prüfen,
+     sonst baut sich das Gerüst beim Erstladen nie auf (nur nach Neustart). */
+  var pRow = rowEl(0), pBank = bankEl(0);
+  if ((pRow && pRow.children.length) || (pBank && pBank.children.length)) rebuildAll();
+})();
+</script>
+<script>/* FB-SPRECH-WORTSCHATZ-JS */
+var SP_TEXTE = {"start": "Das englische Wort erscheint – dann laut das deutsche Wort mit Artikel sagen, bevor der Balken abgelaufen ist.", "kurz": "Laut das deutsche Wort mit Artikel sagen.", "satz": "Laut einen ganzen Satz mit dem deutschen Wort sprechen.", "frage": "Kam das Wort sofort?", "erkannt": "✓ richtiges Wort erkannt", "dabei": "✓ Richtig – Wort und Artikel waren dabei!", "nichtDabei": "– das richtige Wort (mit Artikel) war nicht dabei."};
+var SP_DATA = [
+ {
+  "cue": "✍️ the writer",
+  "luecke": "",
+  "ok": [
+   "schri|der"
+  ],
+  "loesung": "der Schriftsteller"
+ },
+ {
+  "cue": "🔬 the experiment",
+  "luecke": "",
+  "ok": [
+   "exper|das"
+  ],
+  "loesung": "das Experiment, Pl. Experimente"
+ },
+ {
+  "cue": "🔧 the tool",
+  "luecke": "",
+  "ok": [
+   "werkz|das"
+  ],
+  "loesung": "das Werkzeug, Pl. Werkzeuge"
+ },
+ {
+  "cue": "⏳ the patience",
+  "luecke": "",
+  "ok": [
+   "gedul|die"
+  ],
+  "loesung": "die Geduld"
+ },
+ {
+  "cue": "💧 the tear",
+  "luecke": "",
+  "ok": [
+   "träne|die"
+  ],
+  "loesung": "die Träne, Pl. Tränen"
+ },
+ {
+  "cue": "🪑 the loneliness",
+  "luecke": "",
+  "ok": [
+   "einsa|die"
+  ],
+  "loesung": "die Einsamkeit"
+ },
+ {
+  "cue": "🚶 the walk",
+  "luecke": "",
+  "ok": [
+   "spazi|der"
+  ],
+  "loesung": "der Spaziergang, Pl. Spaziergänge"
+ },
+ {
+  "cue": "📄 the sheet of paper",
+  "luecke": "",
+  "ok": [
+   "blatt|das"
+  ],
+  "loesung": "das Blatt, Pl. Blätter"
+ },
+ {
+  "cue": "👩 the daughter",
+  "luecke": "",
+  "ok": [
+   "tocht|die"
+  ],
+  "loesung": "die Tochter, Pl. Töchter"
+ },
+ {
+  "cue": "↔️ the difference",
+  "luecke": "",
+  "ok": [
+   "unter|der"
+  ],
+  "loesung": "der Unterschied, Pl. Unterschiede"
+ },
+ {
+  "cue": "😨 the fear",
+  "luecke": "",
+  "ok": [
+   "angst|die"
+  ],
+  "loesung": "die Angst, Pl. Ängste"
+ },
+ {
+  "cue": "📖 the story",
+  "luecke": "",
+  "ok": [
+   "gesch|die"
+  ],
+  "loesung": "die Geschichte, Pl. Geschichten"
+ },
+ {
+  "cue": "👀 to stare",
+  "luecke": "",
+  "ok": [
+   "starr"
+  ],
+  "loesung": "starren"
+ },
+ {
+  "cue": "💡 to explain",
+  "luecke": "",
+  "ok": [
+   "erklä"
+  ],
+  "loesung": "erklären"
+ },
+ {
+  "cue": "🌱 alive, vivid",
+  "luecke": "",
+  "ok": [
+   "leben"
+  ],
+  "loesung": "lebendig"
+ },
+ {
+  "cue": "🚪 unemployed",
+  "luecke": "",
+  "ok": [
+   "arbei"
+  ],
+  "loesung": "arbeitslos"
+ }
+];
+// ======== SPRECH-TRAINER GENERISCH (mündlicher Abruf unter Zeitdruck) — FB-SPRECH-GENERIC ========
+// Daten kommen aus SP_DATA (pro Lektion): { cue, luecke?, hint?, ok:[Wortanfänge], loesung, beispiel? }
+// Erkannt wird ein Treffer, wenn ein gesprochenes Wort mit einem der ok-Wortanfänge beginnt
+// (bei "stamm|partikel" muss zusätzlich die Partikel als eigenes Wort fallen).
+// Konkurrenz = die ok-Wortanfänge aller anderen Karten (→ „✗ X statt Y“).
+// SP_TEXTE (optional, pro Lektion vor der Engine definiert) ersetzt die Verb-Formulierungen — z. B. Wortschatz: Wort + Artikel.
+var SP_T = (function(){ var d = {start:'Das Nomen erscheint – dann laut das passende Verb sagen, bevor der Balken abgelaufen ist.', kurz:'Laut Nomen + passendes Verb sagen.', satz:'Laut einen ganzen Satz mit dem passenden Verb sprechen.', frage:'Kam das Verb sofort?', erkannt:'✓ richtiges Verb erkannt', dabei:'✓ Richtig – das passende Verb war dabei!', nichtDabei:'– das passende Verb war nicht dabei.'}; var u = window.SP_TEXTE || {}; for (var k in u) d[k] = u[k]; return d; })();
+var spQueue = [], spPos = 0, spTimer = null, spRunde = {ok:0, total:0, fehler:[], mic:false, micOk:0, micTotal:0}, spMic = false, spRec = null, spGehoert = '', spOffen = false, spBewertet = false;
+var SpRecCtor = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+function spEsc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function spMischen(a){ for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function spSek(){ return Number(document.getElementById('sp-zeit').value); }
+function spModus(){ return document.getElementById('sp-modus').value; }
+function spStart(mitMic){
+  if (mitMic === true && !spMic) spMicToggle();
+  if (mitMic === false && spMic) spMicToggle();
+  spQueue = spMischen(SP_DATA.slice());
+  spPos = 0; spRunde = {ok:0, total:0, fehler:[], mic:spMic, micOk:0, micTotal:0}; spZeige();
+}
+function spStopp(){ if (spTimer) clearInterval(spTimer); spTimer = null; spRecStop(); }
+function spZeige(){
+  spStopp(); spOffen = false;
+  var box = document.getElementById('sp-karte');
+  if (!spQueue.length || spPos >= spQueue.length){
+    var nochmal = spRunde.fehler.length ? '<div class="sp-wdh"><strong>Noch nicht automatisch:</strong> ' + spRunde.fehler.map(function(x){ return spEsc(x.loesung); }).join(' · ') + '</div>' : '';
+    var micBtn = SpRecCtor ? '<button class="sp-btn ok" onclick="spStart(true)">🎤 Mit Mikrofon starten</button>' : '';
+    box.innerHTML = '<div class="sp-leer">' + (spRunde.total ? '🎉 Runde fertig – <strong>' + spRunde.ok + ' von ' + spRunde.total + '</strong> sofort parat' + (spRunde.mic ? ' · Mikrofon: ' + spRunde.micOk + ' von ' + spRunde.micTotal + ' richtig erkannt' : '') + '.' : SP_T.start) +
+      nochmal + '<div class="sp-leer-btns">' + micBtn + '<button class="sp-btn" onclick="spStart(false)">' + (spRunde.total ? 'Noch eine Runde ohne Mikrofon' : 'Ohne Mikrofon starten') + '</button></div>' +
+      (SpRecCtor ? '' : '<div class="sp-hint">Dieser Browser hat keine Spracherkennung – mit Mikrofon geht es in Chrome oder Safari.</div>') + '</div>';
+    spStandZeigen();
+    return;
+  }
+  var e = spQueue[spPos], sek = spSek();
+  var aufgabe = spModus() === 'satz' ? SP_T.satz : SP_T.kurz;
+  box.innerHTML = '<div class="sp-meta">Karte ' + (spPos + 1) + ' von ' + spQueue.length + '</div>' +
+    '<div class="sp-cue">' + spEsc(e.cue) + ' <span class="sp-luecke">' + spEsc(e.luecke == null ? '___' : e.luecke) + '</span></div>' +
+    (e.hint ? '<div class="sp-hint">(' + spEsc(e.hint) + ')</div>' : '') +
+    '<div class="sp-aufgabe">🗣️ ' + aufgabe + '</div>' +
+    '<div class="sp-bar"><div id="sp-fill"></div></div><div class="sp-count" id="sp-count">' + sek + ' s</div>' +
+    '<div class="sp-gehoert" id="sp-gehoert"></div>' +
+    '<div class="sp-loesung" id="sp-loesung"></div>' +
+    '<div class="sp-aktion" id="sp-aktion"><button class="sp-btn" onclick="spAufloesen()">Lösung zeigen</button></div>';
+  var ende = Date.now() + sek * 1000; // Uhrzeit statt Tick-Zählung: robust gegen gedrosselte Timer
+  var fill = document.getElementById('sp-fill'), cnt = document.getElementById('sp-count');
+  spTimer = setInterval(function(){ var rest = Math.max(0, ende - Date.now()); fill.style.width = (rest / (sek * 1000) * 100) + '%'; cnt.textContent = Math.ceil(rest / 1000) + ' s'; if (rest <= 0) spAufloesen(); }, 100);
+  spGehoert = ''; spBewertet = false; spStandZeigen(); if (spMic) spRecStart(e);
+}
+function spAufloesen(){
+  if (spOffen) return; spOffen = true;
+  if (spTimer) clearInterval(spTimer); spTimer = null;
+  setTimeout(spRecStop, 800); // kurz nachhören, falls das letzte Wort noch kommt
+  var e = spQueue[spPos];
+  var cnt = document.getElementById('sp-count'); if (cnt) cnt.textContent = 'Lösung';
+  document.getElementById('sp-loesung').innerHTML = '<div class="sp-loesung-zeile"><strong>' + spEsc(e.loesung) + '</strong></div>' + (e.beispiel ? '<div class="sp-beispiel">' + spEsc(e.beispiel) + '</div>' : '');
+  document.getElementById('sp-aktion').innerHTML = '<span class="sp-frage">' + SP_T.frage + '</span><span><button class="sp-btn ok" onclick="spBewerten(true)">✓ Ja, sofort</button> <button class="sp-btn" onclick="spBewerten(false)">✗ Nein, überlegt</button></span>';
+  if (!spMic) spStatus('Vergleiche mit der Lösung: Hast du <strong>' + spEsc(e.loesung) + '</strong> gesagt? Dann „Ja, sofort“.', 'info');
+  setTimeout(function(){ if (spOffen && spQueue[spPos] === e) spMicFazit(e); }, 900);
+}
+function spBewerten(ok){
+  if (spBewertet) return; spBewertet = true;
+  var e = spQueue[spPos];
+  spRunde.total++; if (ok) spRunde.ok++; else spRunde.fehler.push(e);
+  var akt = document.getElementById('sp-aktion');
+  if (akt) akt.innerHTML = ok ? '<span class="sp-quittung gut">✓ Sofort gewusst – weiter so!</span>' : '<span class="sp-quittung schlecht">↺ Merk dir: <strong>' + spEsc(e.loesung) + '</strong> – kommt am Ende der Runde in die Wiederholungsliste.</span>';
+  spStandZeigen();
+  setTimeout(function(){ spPos++; spZeige(); }, ok ? 900 : 1800);
+}
+function spStandZeigen(){
+  var el = document.getElementById('sp-stand'); if (!el) return;
+  if (!spQueue.length){ el.innerHTML = ''; return; }
+  var karte = Math.min(spPos + 1, spQueue.length);
+  el.innerHTML = '<span>Karte <strong>' + karte + '</strong> von ' + spQueue.length + '</span><span class="sp-ok">✓ ' + spRunde.ok + ' sofort</span><span class="sp-no">✗ ' + (spRunde.total - spRunde.ok) + ' überlegt</span>' +
+    (spMic ? '<span>🎤 ' + spRunde.micOk + ' von ' + spRunde.micTotal + ' erkannt</span>' : '<span class="sp-ohne">ohne Mikrofon – du bewertest dich selbst</span>');
+}
+function spMicToggle(){
+  spMic = !spMic;
+  var b = document.getElementById('sp-mic'); b.textContent = spMic ? '🎤 Mikrofon ist an' : '🎤 Mikrofon ist aus'; b.classList.toggle('ok', spMic);
+  if (!spMic){ spRecStop(); spStatus(''); return; }
+  if (spTimer && spQueue[spPos]) spRecStart(spQueue[spPos]);
+  else spStatus('🎤 Mikrofon ist an – es hört ab der nächsten Karte zu.', 'info');
+}
+function spStatus(html, typ){
+  var el = document.getElementById('sp-gehoert'); if (!el) return;
+  el.className = 'sp-gehoert' + (typ ? ' sp-' + typ : '');
+  el.innerHTML = html;
+}
+var SP_FEHLER = {
+  'not-allowed': '🚫 Mikrofon blockiert. Bitte oben in der Adressleiste das Mikrofon für diese Seite erlauben und neu laden.',
+  'service-not-allowed': '🚫 Spracherkennung ist in diesem Browser gesperrt. Bitte Chrome oder Safari verwenden.',
+  'audio-capture': '🎤 Kein Mikrofon gefunden. Bitte ein Mikrofon anschließen oder in den Systemeinstellungen freigeben.',
+  'network': '📶 Die Spracherkennung braucht eine Internetverbindung (Chrome schickt die Aufnahme an Google).',
+  'language-not-supported': 'Deutsch wird von der Spracherkennung dieses Browsers nicht unterstützt.'
+};
+function spRecStart(e){
+  if (!SpRecCtor){ spStatus('Dieser Browser hat keine Spracherkennung. Bitte Chrome oder Safari verwenden.', 'warn'); return; }
+  spRecStop();
+  var karte = spPos;
+  try {
+    var rec = new SpRecCtor(); spRec = rec;
+    rec.lang = 'de-DE'; rec.interimResults = true; rec.continuous = true; rec.maxAlternatives = 3;
+    rec.onstart = function(){ if (spRec === rec && !spGehoert) spStatus('<span class="sp-puls">●</span> Ich höre zu … jetzt sprechen.', 'info'); };
+    rec.onresult = function(ev){
+      var t = ''; for (var i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript + ' ';
+      spGehoert = t.trim(); spGehoertZeigen(e);
+      // richtiges Verb sicher erkannt → Karte sofort auflösen (Belohnung ohne Warten)
+      var last = ev.results[ev.results.length - 1];
+      if (last && last.isFinal && !spOffen && spPos === karte && spUrteil(e).hat) spAufloesen();
+    };
+    rec.onerror = function(ev){
+      var msg = SP_FEHLER[ev.error];
+      if (msg){ spStatus(msg, 'warn'); if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed' || ev.error === 'audio-capture'){ spMic = false; var b = document.getElementById('sp-mic'); if (b){ b.textContent = '🎤 Mikrofon ist aus'; b.classList.remove('ok'); } } }
+      else if (ev.error === 'no-speech' && !spGehoert && !spOffen) spStatus('🤫 Noch nichts gehört – bitte lauter oder näher am Mikrofon sprechen.', 'warn');
+    };
+    // Chrome beendet die Erkennung nach Sprechpausen von selbst → solange die Karte läuft, neu starten
+    rec.onend = function(){ if (spRec === rec && spMic && !spOffen && spPos === karte && spTimer){ try { rec.start(); } catch (x){} } };
+    rec.start();
+  } catch (x){ spRec = null; spStatus('Die Spracherkennung konnte nicht gestartet werden.', 'warn'); }
+}
+function spRecStop(){ if (spRec){ var r = spRec; spRec = null; try { r.onend = null; r.onresult = null; r.stop(); } catch (x){} } }
+function spWoerter(){ return spGehoert.toLowerCase().replace(/[.,!?;:„“"–-]/g, ' ').split(/\s+/).filter(Boolean); }
+// ok-Eintrag: "stamm" = ein Wort beginnt so · "stamm|partikel" = trennbares Verb (legt … ab → "leg|ab");
+// bei "stamm|partikel" zählt auch der zu-Infinitiv als ein Wort (abzulegen → "ab"+"zu"+"leg").
+function spTreffer(w, eintrag){
+  var t = eintrag.toLowerCase().split('|'), st = t[0], pt = t[1];
+  var hit = null;
+  w.forEach(function(x){ if (!hit && x.indexOf(st) === 0) hit = x; });
+  if (hit && (!pt || w.indexOf(pt) !== -1)) return hit;
+  if (pt){ var zu = pt + 'zu' + st; for (var i = 0; i < w.length; i++) if (w[i].indexOf(zu) === 0) return w[i]; }
+  return null;
+}
+function spUrteil(e){
+  // Wörter, die schon auf der Karte stehen (der Lerner spricht sie mit), zählen nie als Verb
+  var cue = (e.cue + ' ' + (e.luecke || '')).toLowerCase().replace(/[.,!?;:„“"–-]/g, ' ').split(/\s+/).filter(Boolean);
+  var w = spWoerter().filter(function(x){ return cue.indexOf(x) === -1; });
+  var hat = e.ok.some(function(o){ return spTreffer(w, o); });
+  var eigen = e.ok.map(function(s){ return s.toLowerCase(); });
+  var falsch = [];
+  if (!hat) SP_DATA.forEach(function(x){ if (x === e) return; x.ok.forEach(function(o){ if (eigen.indexOf(o.toLowerCase()) !== -1) return; var t = spTreffer(w, o); if (t && falsch.indexOf(t) === -1) falsch.push(t); }); });
+  return {hat: hat, falsch: falsch};
+}
+function spGehoertZeigen(e){
+  if (!spGehoert) return;
+  var u = spUrteil(e);
+  var urteil = u.hat ? '<span class="sp-ok">' + SP_T.erkannt + '</span>' : u.falsch.length ? '<span class="sp-no">✗ „' + spEsc(u.falsch[0]) + '“ passt hier nicht</span>' : '';
+  spStatus('🎤 Gehört: „' + spEsc(spGehoert) + '“ ' + urteil, u.hat ? 'gut' : (u.falsch.length ? 'schlecht' : 'info'));
+}
+function spMicFazit(e){
+  if (!spMic) return;
+  var u = spUrteil(e), html, typ, empf = null;
+  if (!spGehoert){ html = '🎤 Das Mikrofon hat nichts verstanden. Bewerte dich bitte selbst.'; typ = 'warn'; }
+  else if (u.hat){ html = '🎤 Gehört: „' + spEsc(spGehoert) + '“ <span class="sp-ok">' + SP_T.dabei + '</span>'; typ = 'gut'; empf = true; }
+  else if (u.falsch.length){ html = '🎤 Gehört: „' + spEsc(spGehoert) + '“ <span class="sp-no">✗ Du hast „' + spEsc(u.falsch[0]) + '“ gesagt – richtig ist: ' + spEsc(e.loesung) + '.</span>'; typ = 'schlecht'; empf = false; }
+  else { html = '🎤 Gehört: „' + spEsc(spGehoert) + '“ <span class="sp-no">' + SP_T.nichtDabei + '</span>'; typ = 'schlecht'; empf = false; }
+  spStatus(html, typ);
+  if (empf !== null){ spRunde.micTotal++; if (empf) spRunde.micOk++; spStandZeigen(); }
+  if (empf !== null){ var btns = document.querySelectorAll('#sp-aktion .sp-btn'); if (btns.length === 2) btns[empf ? 0 : 1].classList.add('sp-empf'); }
+}
+function initSprechTrainer(){
+  ['sp-modus','sp-zeit'].forEach(function(id){ document.getElementById(id).addEventListener('change', function(){ spQueue = []; spZeige(); }); });
+  if (SpRecCtor) document.getElementById('sp-mic').hidden = false;
+  var sec = document.getElementById('sec-sprechen');
+  document.addEventListener('keydown', function(ev){
+    if (ev.code !== 'Space' || !sec.classList.contains('active')) return;
+    if (/^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(ev.target.tagName)) return;
+    ev.preventDefault();
+    if (!spQueue.length || spPos >= spQueue.length) spStart(spMic); else if (!spOffen) spAufloesen(); else spBewerten(true);
+  });
+  // Mikrofon aus, sobald der Tab verlassen wird
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.addEventListener('click', function(){ if (!sec.classList.contains('active')) spStopp(); }); });
+  spZeige();
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSprechTrainer); else initSprechTrainer();
+</script>
 </body>
 </html>
